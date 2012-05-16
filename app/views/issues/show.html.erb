@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @issue.title %>
+</p>
+
+<p>
+  <b>Number:</b>
+  <%= @issue.number %>
+</p>
+
+<p>
+  <b>Release:</b>
+  <%= @issue.release %>
+</p>
+
+
+<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<%= link_to 'Back', issues_path %>
