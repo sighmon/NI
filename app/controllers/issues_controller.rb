@@ -1,4 +1,8 @@
 class IssuesController < ApplicationController
+
+  # Devise authorisation
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   # GET /issues
   # GET /issues.json
   def index

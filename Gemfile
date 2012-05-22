@@ -7,6 +7,8 @@ gem 'rails', '3.2.3'
 
 gem 'sqlite3'
 
+# User authentication via Devise https://github.com/plataformatec/devise
+gem 'devise'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,20 +1,26 @@
+// was verdana, arial, helvetica, sans-serif;
+$font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
 body {
-  background-color: #fff;
+  // background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px; }
+  font-family: $font-family;
+  font-size: 14px;
+  // line-height: 19px;
+}
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px; }
+  font-family: $font-family;
+  font-size: 14px;
+  // line-height: 19px; 
+}
 
 pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px; }
 
+/*
 a {
   color: #000;
   &:visited {
@@ -22,6 +28,7 @@ a {
   &:hover {
     color: #fff;
     background-color: #000; } }
+*/
 
 div {
   &.field, &.actions {

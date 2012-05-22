@@ -1,4 +1,6 @@
 NI::Application.routes.draw do
+  devise_for :users
+
   resources :issues
 
   get "home/index"
