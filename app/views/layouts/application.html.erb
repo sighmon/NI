@@ -17,6 +17,12 @@
 
 		<div id="user_nav">
 			<% if user_signed_in? %>
+				<% if current_user.try(:admin?) %>
+					<b style="color: red;"><%= current_user.admin? ? 'A' : '' %></b>
+				<% end %>
+				<% if current_user.try(:subscriber?) %>
+					<b style="color: green;"><%= current_user.subscriber? ? 'S' : '' %></b>
+				<% end %>
 				Signed in as <%= current_user.username %>. Not you?
 				<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 			<% else %>

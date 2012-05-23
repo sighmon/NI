@@ -15,6 +15,14 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
+  <div><%= f.label :admin %><br />
+    <%= f.check_box :admin %>
+  </div>
+
+  <div><%= f.label :subscriber %><br />
+    <%= f.check_box :subscriber %>
+  </div>
+
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 

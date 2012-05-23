@@ -5,6 +5,8 @@
     <th>Title</th>
     <th>Number</th>
     <th>Release</th>
+    <th>Trial?</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,13 +17,20 @@
     <td><%= issue.title %></td>
     <td><%= issue.number %></td>
     <td><%= issue.release %></td>
+    <td><%= issue.trialissue? ? 'Yes' : 'No' %></td>
     <td><%= link_to 'Show', issue %></td>
-    <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-    <td><%= link_to 'Destroy', issue, confirm: 'Are you sure?', method: :delete %></td>
+    <% if can? :update, @issue %>
+      <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+    <% end %>
+    <% if can? :destroy, @issue %>
+      <td><%= link_to 'Destroy', issue, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Issue', new_issue_path %>
+<% if can? :create, Issue %>
+  <%= link_to 'New Issue', new_issue_path %>
+<% end %>

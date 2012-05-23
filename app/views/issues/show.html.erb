@@ -15,6 +15,11 @@
   <%= @issue.release %>
 </p>
 
+<p>
+	<b>Trial issue?</b>
+	<%= @issue.trialissue? ? 'Yes' : 'No' %>
+</p>
 
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
+
+<% if can? :update, @issue %><%= link_to 'Edit', edit_issue_path(@issue) %> |<% end %>
 <%= link_to 'Back', issues_path %>

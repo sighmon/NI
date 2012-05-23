@@ -1,5 +1,8 @@
 class IssuesController < ApplicationController
 
+  # Cancan authorisation
+  # load_and_authorize_resource
+
   # Devise authorisation
   before_filter :authenticate_user!, :except => [:show, :index]
 
