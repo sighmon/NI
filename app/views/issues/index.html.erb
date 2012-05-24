@@ -16,7 +16,7 @@
   <tr>
     <td><%= issue.title %></td>
     <td><%= issue.number %></td>
-    <td><%= issue.release %></td>
+    <td><%= issue.release.strftime("%B, %Y") %></td>
     <td><%= issue.trialissue? ? 'Yes' : 'No' %></td>
     <td><%= link_to 'Show', issue %></td>
     <% if can? :update, @issue %>

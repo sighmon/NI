@@ -1,15 +1,15 @@
 class IssuesController < ApplicationController
 
   # Cancan authorisation
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   # Devise authorisation
-  before_filter :authenticate_user!, :except => [:show, :index]
+  # before_filter :authenticate_user!, :except => [:show, :index]
 
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    # @issues = Issue.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,7 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
-    @issue = Issue.find(params[:id])
+    # @issue = Issue.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -31,7 +31,7 @@ class IssuesController < ApplicationController
   # GET /issues/new
   # GET /issues/new.json
   def new
-    @issue = Issue.new
+    # @issue = Issue.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,13 +41,15 @@ class IssuesController < ApplicationController
 
   # GET /issues/1/edit
   def edit
-    @issue = Issue.find(params[:id])
+    # @issue = Issue.find(params[:id])
+    # Use cancan to check for individual authorisation
+    # authorize! :update, @issue
   end
 
   # POST /issues
   # POST /issues.json
   def create
-    @issue = Issue.new(params[:issue])
+    # @issue = Issue.new(params[:issue])
 
     respond_to do |format|
       if @issue.save
@@ -63,7 +65,7 @@ class IssuesController < ApplicationController
   # PUT /issues/1
   # PUT /issues/1.json
   def update
-    @issue = Issue.find(params[:id])
+    # @issue = Issue.find(params[:id])
 
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
@@ -79,7 +81,7 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
-    @issue = Issue.find(params[:id])
+    # @issue = Issue.find(params[:id])
     @issue.destroy
 
     respond_to do |format|
