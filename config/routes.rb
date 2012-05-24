@@ -1,7 +1,9 @@
 NI::Application.routes.draw do
   devise_for :users, :path_names => { :sign_up => "subscribe" }
 
-  resources :issues
+  resources :issues do
+    resources :articles
+  end
 
   get "home/index"
 
