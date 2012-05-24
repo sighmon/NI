@@ -20,7 +20,8 @@ end
 
 group :test do
   gem 'cucumber-rails'
-  gem 'capybara'
+  gem 'database_cleaner'
+  # gem 'capybara'
 end
 
 # Gems used only for assets and not required
