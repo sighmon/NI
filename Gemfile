@@ -13,6 +13,7 @@ gem 'devise'
 # User role management via Cancan https://github.com/ryanb/cancan
 gem 'cancan'
 
+# Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'
 end
