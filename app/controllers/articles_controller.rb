@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
 
     def show
     	@issue = Issue.find(params[:issue_id])
-    	@article = Issue.find(params[:issue_id])
+    	@article = Article.find(params[:id])
     end
 
 end
