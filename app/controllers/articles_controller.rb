@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController
 
+	# Cancan authorisation
+  	load_and_authorize_resource
+
   	def index
   		@issue = Issue.find(params[:issue_id])
   		@article = Issue.find(params[:issue_id])
@@ -18,7 +21,7 @@ class ArticlesController < ApplicationController
 
     def show
     	@issue = Issue.find(params[:issue_id])
-    	@article = Article.find(params[:issue_id])
+    	@article = Issue.find(params[:issue_id])
     end
 
 end
