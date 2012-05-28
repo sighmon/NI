@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @article.title %></h1>
+
+<p>
+  <b>Teaser:</b>
+  <%= @article.teaser %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @article.author %>
+</p>
+
+<p>
+  <b>Publication:</b>
+  <%= @article.publication.strftime("%B, %Y") %>
+</p>
+
+<p>
+	<b>Body:</b>
+	<%= @article.body %>
+</p>
+
+<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@article) %> |<% end %>
+<%= link_to 'Back', issues_path %>

@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @issue.title %>
-</p>
+<h1><%= @issue.title %></h1>
 
 <p>
   <b>Number:</b>
@@ -22,6 +19,31 @@
 
 <% if can? :update, @issue %><%= link_to 'Edit', edit_issue_path(@issue) %> |<% end %>
 <%= link_to 'Back', issues_path %>
+
+<h2>Articles listing</h2>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Teaser</th>
+    <th>Author</th>
+    <th>Publication</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @issue.articles.each do |article| %>
+  <tr>
+    <td><%= article.title %></td>
+    <td><%= article.teaser %></td>
+    <td><%= article.author %></td>
+    <td><%= article.publication %></td>
+    
+  </tr>
+<% end %>
+</table>
 
 <% if can? :create, Article %>
   <p><%= link_to 'New Article', new_issue_article_path(@issue) %></p>

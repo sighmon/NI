@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
 
   	def index
-  		@articles = Article.all
+  		@issue = Issue.find(params[:issue_id])
+  		@article = Issue.find(params[:issue_id])
   	end
 
   	def new
@@ -16,7 +17,8 @@ class ArticlesController < ApplicationController
     end
 
     def show
-    	@article = Article.find(params[:id])
+    	@issue = Issue.find(params[:issue_id])
+    	@article = Article.find(params[:issue_id])
     end
 
 end
