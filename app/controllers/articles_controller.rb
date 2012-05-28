@@ -19,7 +19,38 @@ class ArticlesController < ApplicationController
         redirect_to issue_path(@issue)
     end
 
+    def update
+    	@issue = Issue.find(params[:issue_id])
+    	@article = Article.find(params[:id])
+
+    	respond_to do |format|
+	      if @article.update_attributes(params[:article])
+	        format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
+	        format.json { head :no_content }
+	      else
+	        format.html { render action: "edit" }
+	        format.json { render json: @article.errors, status: :unprocessable_entity }
+	      end
+	    end
+    end
+
+    def destroy
+    	@issue = Issue.find(params[:issue_id])
+    	@article = Article.find(params[:id])
+    	@article.destroy
+
+    	respond_to do |format|
+	      format.html { redirect_to issue_path(@issue) }
+	      format.json { head :no_content }
+	    end
+	end
+
     def show
+    	@issue = Issue.find(params[:issue_id])
+    	@article = Article.find(params[:id])
+    end
+
+    def edit
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
     end

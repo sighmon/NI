@@ -22,5 +22,5 @@
 	<%= @article.body %>
 </p>
 
-<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@article) %> |<% end %>
-<%= link_to 'Back', issues_path %>
+<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,@article) %> |<% end %>
+<%= link_to 'Back', issue_path(@issue) %>
