@@ -23,3 +23,7 @@
 
 <% if can? :update, @issue %><%= link_to 'Edit', edit_issue_path(@issue) %> |<% end %>
 <%= link_to 'Back', issues_path %>
+
+<% if can? :create, Article %>
+  <p><%= link_to 'New Article', new_issue_article_path %></p>
+<% end %>
