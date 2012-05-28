@@ -25,5 +25,5 @@
 <%= link_to 'Back', issues_path %>
 
 <% if can? :create, Article %>
-  <p><%= link_to 'New Article', new_issue_article_path %></p>
+  <p><%= link_to 'New Article', new_issue_article_path(@issue) %></p>
 <% end %>
