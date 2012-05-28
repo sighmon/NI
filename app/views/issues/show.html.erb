@@ -20,7 +20,6 @@
 	<%= @issue.trialissue? ? 'Yes' : 'No' %>
 </p>
 
-
 <% if can? :update, @issue %><%= link_to 'Edit', edit_issue_path(@issue) %> |<% end %>
 <%= link_to 'Back', issues_path %>
 
