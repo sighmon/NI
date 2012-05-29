@@ -14,12 +14,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def subscritionvalid?
+    user.expirydate > Date.today
+  end
+
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :admin, :subscriber, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :login, :username, :expirydate, :admin, :subscriber, :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
 end

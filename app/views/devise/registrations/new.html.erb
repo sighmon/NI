@@ -23,6 +23,10 @@
     <%= f.check_box :subscriber %>
   </div>
 
+  <div><%= f.label :expirydate %><br />
+    <%= f.datetime_select :expirydate %>
+  </div>
+
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 

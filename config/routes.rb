@@ -7,6 +7,15 @@ NI::Application.routes.draw do
 
   get "home/index"
 
+  # Change the page logged in users are directed to
+  authenticated :user do
+    root :to => 'issues#index'
+  end
+
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  root :to => 'home#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -53,10 +62,6 @@ NI::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
