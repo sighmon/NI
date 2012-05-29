@@ -22,5 +22,10 @@
 	<%= @article.body %>
 </p>
 
+<p>
+  <b>Trial article:</b>
+  <%= @article.trialarticle? ? 'Yes' : 'No' %>
+</p>
+
 <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,@article) %> |<% end %>
 <%= link_to 'Back', issue_path(@issue) %>

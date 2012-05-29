@@ -1,4 +1,4 @@
 class Article < ActiveRecord::Base
   belongs_to :issue
-  attr_accessible :author, :body, :publication, :teaser, :title
+  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle
 end

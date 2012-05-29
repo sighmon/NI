@@ -6,8 +6,6 @@
     <th>Teaser</th>
     <th>Author</th>
     <th>Publication</th>
-    <th>Body</th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,9 +18,13 @@
     <td><%= article.teaser %></td>
     <td><%= article.author %></td>
     <td><%= article.publication %></td>
-    <td><%= article.body %></td>
+    <td><%= link_to 'Show', issue_article_path(@issue,article) %></td>
+    <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article) %></td><% end %>
+    <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete %></td><% end %>
   </tr>
 <% end %>
 </table>
 
-<%= link_to 'Back', issues_path %>
+<% if can? :create, Article %>
+  <p><%= link_to 'New Article', new_issue_article_path(@issue) %></p>
+<% end %>
