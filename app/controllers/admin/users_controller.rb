@@ -7,6 +7,10 @@ class Admin::UsersController < Admin::BaseController
 		@users = User.all(:order => "username")
 	end
 
+	def show
+
+	end
+
 	def new
 		@user = User.new
 	end
@@ -19,6 +23,24 @@ class Admin::UsersController < Admin::BaseController
 		else
 			flash[:alert] = "User has not been created!"
 			render :action => "new"
+		end
+	end
+
+	def edit
+
+	end
+
+	def update
+		if params[:user][:password].blank?
+			params[:user].delete(:password)
+			params[:user].delete(:password_confirmation)
+		end
+		if @user.update_attributes(params[:user])
+			flash[:notice] = "User has been updated."
+			redirect_to admin_users_path
+		else
+			flash[:alert] = "User has not been updated."
+			render :action => "edit"
 		end
 	end
 end

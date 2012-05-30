@@ -1,8 +1,6 @@
 class Admin::BaseController < ApplicationController
 
-	# Cancan authorisation (TODO: not working!)
-  	# load_and_authorize_resource
-
+	# Cancan won't work here, so we use verify_admin
   	before_filter :verify_admin
 	private
 	def verify_admin

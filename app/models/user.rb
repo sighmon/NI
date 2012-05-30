@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def subscriptionvalid?
-    User.expirydate > Date.today
+  def subscription_valid?
+    expirydate and (expirydate > Date.today)
   end
 
   # Virtual attribute for authenticating by either username or email
@@ -28,13 +28,18 @@ class User < ActiveRecord::Base
 
   #Override to_s to show user details instead of #string
   def to_s
+    "#{username}"
+  end
+
+  def user_type
     t = "Guest"
     if admin?
       t = "Admin"
     elsif subscriber?
       t = "Subscriber"
     end
-    "#{username} (#{t})"
+    "#{t}"
   end
+
 
 end
