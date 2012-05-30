@@ -18,6 +18,9 @@
 		<div id="user_nav">
 			<% if user_signed_in? %>
 				<% if current_user.try(:admin?) %>
+					<%= link_to "Admin", admin_root_path %>
+				<% end %>
+				<% if current_user.try(:admin?) %>
 					<b style="color: red;"><%= current_user.admin? ? 'A' : '' %></b>
 				<% end %>
 				<% if current_user.try(:subscriber?) %>

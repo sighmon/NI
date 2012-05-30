@@ -26,4 +26,15 @@ class User < ActiveRecord::Base
   attr_accessible :login, :username, :expirydate, :admin, :subscriber, :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
+  #Override to_s to show user details instead of #string
+  def to_s
+    t = "Guest"
+    if admin?
+      t = "Admin"
+    elsif subscriber?
+      t = "Subscriber"
+    end
+    "#{username} (#{t})"
+  end
+
 end

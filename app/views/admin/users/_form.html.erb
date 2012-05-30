@@ -1,0 +1,30 @@
+<%= form_for [:admin, @user] do |f| %>
+  <!-- f.error_messages -->
+  <!-- add gem 'dynamic_form' to GEMFILE if we want error messages -->
+
+  <div><%= f.label :username %><br />
+  <%= f.text_field :username %></div>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <div><%= f.label :admin %><br />
+    <%= f.check_box :admin %>
+  </div>
+
+  <div><%= f.label :subscriber %><br />
+    <%= f.check_box :subscriber %>
+  </div>
+
+  <div><%= f.label :expirydate %><br />
+    <%= f.datetime_select :expirydate %>
+  </div>
+
+  <div><%= f.submit "Create user" %></div>
+<% end %>

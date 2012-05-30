@@ -1,8 +1,16 @@
 NI::Application.routes.draw do
+  # created by the admin/users controller creation
+  # get "users/index"
+
   devise_for :users, :path_names => { :sign_up => "subscribe" }
 
   resources :issues do
     resources :articles
+  end
+
+  namespace :admin do
+    root :to => "base#index"
+    resources :users
   end
 
   get "home/index"
