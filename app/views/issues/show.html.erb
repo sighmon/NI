@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @issue.title %></h1>
 
 <p>
@@ -28,6 +26,8 @@
     <th>Teaser</th>
     <th>Author</th>
     <th>Publication</th>
+    <th>Trial</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -39,7 +39,8 @@
     <td><%= article.title %></td>
     <td><%= article.teaser %></td>
     <td><%= article.author %></td>
-    <td><%= article.publication %></td>
+    <td><%= article.publication.strftime("%B, %Y") %></td>
+    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
     <td><%= link_to 'Show', issue_article_path(@issue,article) %></td>
     <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article) %></td><% end %>
     <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete %></td><% end %>

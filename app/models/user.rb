@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def subscritionvalid?
-    user.expirydate > Date.today
+  def subscriptionvalid?
+    User.expirydate > Date.today
   end
 
   # Virtual attribute for authenticating by either username or email
