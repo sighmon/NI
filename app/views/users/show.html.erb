@@ -1,0 +1,10 @@
+<h2><%= @user %></h2>
+<% if current_user == @user %><p><b>Email address</b>: <%= @user.email %></p><% end %>
+<p><b>Expiry date</b>: <%= @user.expirydate.strftime("%e %B, %Y") %></p>
+<p><b>Account type</b>: <%= @user.user_type %></p>
+<p><b>Issues purchased:</b> TODO:</p>
+<% if current_user == @user %>
+        <%= link_to "Edit User", edit_user_registration_path(@user) %> | 
+<% elsif current_user.admin? %>
+        <%= link_to "Edit User", edit_admin_user_path(@user) %> | 
+<% end %><%= link_to "Back", issues_path %>

@@ -23,7 +23,7 @@
 				<% if current_user.try(:subscriber?) %>
 					<b style="color: green;"><%= current_user.subscriber? ? 'S' : '' %></b>
 				<% end %>
-				Signed in as <%= link_to current_user.username, edit_user_registration_path %>. Not you?
+				Signed in as <%= link_to current_user.username, current_user %>. Not you?
 				<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 			<% else %>
 				<%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
