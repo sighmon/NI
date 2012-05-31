@@ -2,8 +2,6 @@ class ArticlesController < ApplicationController
 
 	# Cancan authorisation
   	load_and_authorize_resource
-    # load_and_authorize_resource :issue
-    # load_and_authorize_resource :article, :through => :issue
 
   	def index
   		@issue = Issue.find(params[:issue_id])
