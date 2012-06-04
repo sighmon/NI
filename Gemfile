@@ -13,6 +13,9 @@ gem 'devise'
 # User role management via Cancan https://github.com/ryanb/cancan
 gem 'cancan'
 
+# Form rendering via Formtastic https://github.com/justinfrench/formtastic
+gem 'formtastic'
+
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'

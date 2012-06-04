@@ -1,8 +1,9 @@
-<%= form_for [:admin, @user] do |f| %>
+<!-- Pre-Formtastic form -->
+<!-- <%= form_for [:admin, @user] do |f| %> -->
   <!-- f.error_messages -->
   <!-- add gem 'dynamic_form' to GEMFILE if we want error messages -->
 
-  <div><%= f.label :username %><br />
+  <!-- <div><%= f.label :username %><br />
   <%= f.text_field :username %></div>
 
   <div><%= f.label :email %><br />
@@ -26,5 +27,25 @@
     <%= f.datetime_select :expirydate %>
   </div>
 
+  <div><%= f.label :issues %><br />
+    <%= f.text_field :issues %>
+  </div>
+
   <div><%= f.submit %></div>
+<% end %> -->
+
+<%= semantic_form_for [:admin, @user] do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :username %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+    <%= f.input :admin %>
+    <%= f.input :subscriber %>
+    <%= f.input :expirydate, :as => :datetime_select %>
+    <%= f.input :issues, :as => :check_boxes %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :button %>
+  <% end %>
 <% end %>

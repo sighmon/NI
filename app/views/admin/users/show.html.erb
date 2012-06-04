@@ -2,6 +2,6 @@
 <p><b>Email address</b>: <%= @user.email %></p>
 <p><b>Expiry date</b>: <%= @user.expirydate.strftime("%e %B, %Y") %></p>
 <p><b>User type</b>: <%= @user.user_type %></p>
-<p><b>Purchases:</b> <%= @purchases %></p>
+<p><b>Purchases:</b> <%= issues_as_table(@user.issues) %></p>
 <%= link_to "Edit User", edit_admin_user_path(@user) %> | <%= link_to "Back", admin_users_path %><br /><br />
 <%= link_to "Delete User", admin_user_path(@user), :method => :delete, :confirm => "Are you sure you want to delete this user?" %>

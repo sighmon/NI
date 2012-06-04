@@ -12,7 +12,7 @@
     <th></th>
   </tr>
 
-<% @issues.each do |issue| %>
+<% @issues.sort_by{|x|x.release}.each do |issue| %>
   <tr>
     <td><%= issue.title %></td>
     <td><%= issue.number %></td>

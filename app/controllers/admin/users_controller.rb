@@ -37,7 +37,7 @@ class Admin::UsersController < Admin::BaseController
 		end
 		if @user.update_attributes(params[:user])
 			flash[:notice] = "User has been updated."
-			redirect_to admin_users_path
+			redirect_to admin_user_path
 		else
 			flash[:alert] = "User has not been updated."
 			render :action => "edit"
