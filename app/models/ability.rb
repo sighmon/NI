@@ -8,11 +8,17 @@ class Ability
     if user.admin?
         can :manage, :all
     elsif user.subscriber? and user.subscription_valid?
-        can :read, :all
+        can :read, :all        
     else
-        can :read, Issue, :trialissue => true
+        # can :read, Issue, :trialissue => true
+        # can :index, Issue
+        can :read, Issue
         can :read, Article, :trialarticle => true
+        # test to see if the user has purchased an issue
+        can :read, Article, :issue => { :users => { :id => user.id } }
         can :read, User
+        # TODO: just for testing, edit manage when we implement purchases
+        can :manage, Purchase
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

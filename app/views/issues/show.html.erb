@@ -41,7 +41,13 @@
     <td><%= article.author %></td>
     <td><%= article.publication.strftime("%B, %Y") %></td>
     <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
-    <td><%= link_to 'Show', issue_article_path(@issue,article) %></td>
+    <td>
+        <% if can? :read, article %>
+          <%= link_to 'Show', issue_article_path(@issue,article) %>
+        <% else %>
+          <%= link_to 'Buy', new_issue_purchase_path(@issue) %>
+        <% end %>
+    </td>
     <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article) %></td><% end %>
     <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete %></td><% end %>
   </tr>

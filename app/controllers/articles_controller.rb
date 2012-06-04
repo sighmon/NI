@@ -3,6 +3,10 @@ class ArticlesController < ApplicationController
 	# Cancan authorisation
   	load_and_authorize_resource
 
+    rescue_from CanCan::AccessDenied do |exception|
+        redirect_to new_issue_purchase_path(@article.issue), :alert => "You need to purchase this issue or subscribe to read this article."
+    end
+
   	def index
   		@issue = Issue.find(params[:issue_id])
   		@article = Issue.find(params[:issue_id])
