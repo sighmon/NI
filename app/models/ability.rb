@@ -14,7 +14,7 @@ class Ability
         # can :index, Issue
         can :read, Issue
         can :read, Article, :trialarticle => true
-        # test to see if the user has purchased an issue
+        # test to see if the user has purchased an issue (to read article)
         can :read, Article, :issue => { :users => { :id => user.id } }
         can :read, User
         # TODO: just for testing, edit manage when we implement purchases
