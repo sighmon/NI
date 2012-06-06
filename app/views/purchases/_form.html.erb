@@ -1,10 +1,10 @@
-<%= form_for(@purchase) do |f| %>
-  <% if @purchase.errors.any? %>
+<!-- <%= form_for(@issue) do |f| %>
+  <% if @issue.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being made:</h2>
+      <h2><%= pluralize(@issue.errors.count, "error") %> prohibited this purchase from being made:</h2>
 
       <ul>
-      <% @purchase.errors.full_messages.each do |msg| %>
+      <% @issue.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -19,13 +19,13 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
+<% end %> -->
 
-<!-- <%= semantic_form_for(@purchase) do |f| %>
+<%= semantic_form_for(@issue) do |f| %>
   <%= f.inputs do %>
     <%= f.input :issues, :as => :check_boxes %>
   <% end %>
   <%= f.actions do %>
     <%= f.action :submit, :as => :button %>
   <% end %>
-<% end %> -->
+<% end %>

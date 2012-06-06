@@ -3,10 +3,10 @@ class PurchasesController < ApplicationController
     load_and_authorize_resource
 
     def new
-        @issue = Issue.find(params[:issue_id])
+        # @issue = Issue.find(params[:issue_id])
         @user = User.find(current_user)
         # TODO: How do we create a join, rather than a new issue?
-        @purchase = @user.issues.build
+        @issue = @user.issues.build(params[:issue])
 
         respond_to do |format|
             format.html # new.html.erb
@@ -15,10 +15,10 @@ class PurchasesController < ApplicationController
   end
 
     def create
-        @issue = Issue.find(params[:issue_id])
+        # @issue = Issue.find(params[:issue_id])
         @user = User.find(current_user)
         # TODO: How do we create a join, rather than a new issue?
-        @purchase = @user.issues.create(params[:purchase])
+        @issue = @user.issues.create(params[:issue])
 
         respond_to do |format|
             if @purchase.save
