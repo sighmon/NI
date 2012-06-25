@@ -1,6 +1,7 @@
-<h2><%= @user %></h2>
+<h1>New Internationalist Magazine</h1>
+<h3>Username: <%= @user %></h3>
 <% if current_user == @user %><p><b>Email address</b>: <%= @user.email %></p><% end %>
-<p><b>Expiry date</b>: <%= @user.expirydate.strftime("%e %B, %Y") %></p>
+<% if @user.user_type == "Subscriber" || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: <%= @user.expirydate.strftime("%e %B, %Y") %></p><% end %>
 <p><b>Account type</b>: <%= @user.user_type %></p>
 <p><b>Issues purchased:</b> <%= issues_as_table(@user.issues) %></p>
 <% if current_user == @user %>

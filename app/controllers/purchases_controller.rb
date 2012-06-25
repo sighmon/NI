@@ -17,8 +17,6 @@ class PurchasesController < ApplicationController
     def create
         @issue = Issue.find(params[:issue_id])
         @user = User.find(current_user)
-        # TODO: How do we create a join, rather than a new issue?
-        # @purchase = @user.purchases.create(params[:issue])
         # FIXME: Work out how to simplify this call.
         @purchase = Purchase.create(:user_id => @user.id, :issue_id => @issue.id)
 
