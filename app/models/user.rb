@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :purchases
   has_many :issues, :through => :purchases
 
+  # association for subscriptions
+  has_one :subscriptions
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
