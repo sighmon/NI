@@ -8,6 +8,8 @@ NI::Application.routes.draw do
   resources :users, :only => [:show]
 
   resource :subscription
+  # hack to create /subscriptions route
+  resources :subscriptions, :only => [:create]
 
   resources :issues do
     resources :articles
