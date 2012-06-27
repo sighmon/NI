@@ -21,6 +21,8 @@ class Ability
         if !user.guest?
             can :manage, Purchase
         end
+        # TODO: just for testing. remove when we implement paypal transactions
+        can :manage, Subscription
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

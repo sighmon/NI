@@ -7,6 +7,8 @@ NI::Application.routes.draw do
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
 
+  resource :subscription
+
   resources :issues do
     resources :articles
     resources :purchases, :only => [:new, :create]
