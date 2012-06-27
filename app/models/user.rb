@@ -48,5 +48,9 @@ class User < ActiveRecord::Base
     "#{t}"
   end
 
+  def guest?
+    return id.nil?
+  end
+
 
 end
