@@ -8,7 +8,7 @@ class Ability
     if user.admin?
         can :manage, :all
     elsif user.subscriber? and user.subscription_valid?
-        can :read, :all        
+        can :read, :all
     else
         # can :read, Issue, :trialissue => true
         # can :index, Issue
@@ -17,8 +17,10 @@ class Ability
         # test to see if the user has purchased an issue (to read article)
         can :read, Article, :issue => { :users => { :id => user.id } }
         can :read, User
-        # TODO: just for testing, edit manage when we implement purchases
-        can :manage, Purchase
+        # TODO: just for testing. remove when we implement paypal transactions
+        if !user.guest?
+            can :manage, Purchase
+        end
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

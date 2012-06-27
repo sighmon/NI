@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :issues, :through => :purchases
 
   # association for subscriptions
-  has_one :subscriptions
+  has_one :subscription
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
