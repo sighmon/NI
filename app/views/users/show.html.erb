@@ -1,7 +1,14 @@
 <h1>New Internationalist Magazine</h1>
 <h3>Username: <%= @user %></h3>
 <% if current_user == @user %><p><b>Email address</b>: <%= @user.email %></p><% end %>
-<% if @user.user_type == "Subscriber" || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: <%= @user.expirydate.strftime("%e %B, %Y") %></p><% end %>
+<% if @user.user_type == "Subscriber" || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: 
+	<% begin %>
+		<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+	<% rescue NoMethodError %>
+		No current subscription.
+	<% end %>
+</p><% end %>
+<p><%= link_to "Subscribe!", new_subscription_path %></p>
 <p><b>Account type</b>: <%= @user.user_type %></p>
 <p><b>Issues purchased:</b> <%= issues_as_table(@user.issues) %></p>
 <% if current_user == @user %>

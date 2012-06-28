@@ -11,4 +11,8 @@ module ApplicationHelper
             return raw table
         end
     end
+
+    def user_expiry_as_string(user)
+        return (user.subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
+    end
 end

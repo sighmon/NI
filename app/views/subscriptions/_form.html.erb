@@ -1,4 +1,8 @@
 <%= semantic_form_for(@subscription) do |f| %>
+
+  <%= radio_button_tag 'duration', '3', 'false' %> 3 Month Subscription<br />
+  <%= radio_button_tag 'duration', '6', 'false' %> 6 Month Subscription<br />
+  <%= radio_button_tag 'duration', '12', 'true' %> 12 Month Subscription<br />
   
   <%= f.actions do %>
     <%= f.action :submit, :as => :button %>
