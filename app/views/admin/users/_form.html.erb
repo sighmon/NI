@@ -19,14 +19,6 @@
     <%= f.check_box :admin %>
   </div>
 
-  <div><%= f.label :subscriber %><br />
-    <%= f.check_box :subscriber %>
-  </div>
-
-  <div><%= f.label :expirydate %><br />
-    <%= f.datetime_select :expirydate %>
-  </div>
-
   <div><%= f.label :issues %><br />
     <%= f.text_field :issues %>
   </div>
@@ -41,8 +33,9 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.input :admin %>
-    <%= f.input :subscriber %>
-    <%= f.input :expirydate, :as => :datetime_select %>
+    <%= fields_for @user.subscription do |f| %>
+      <%= f.datetime_select :expiry_date %>
+    <% end %>
     <%= f.input :issues, :as => :check_boxes %>
   <% end %>
   <%= f.actions do %>

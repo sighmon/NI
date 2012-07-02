@@ -27,6 +27,8 @@ class SubscriptionsController < ApplicationController
             @subscription.expiry_date += months.months
         end
 
+        # TODO: implement automatically purchase the current issue
+
     	respond_to do |format|
             if @subscription.save
                 format.html { redirect_to current_user, notice: 'Subscription was successfully purchased.' }
@@ -37,4 +39,20 @@ class SubscriptionsController < ApplicationController
             end
         end
     end
+
+    # TOFIX: Not sure how to update subscription expiry_date on user edit page
+    # def update
+    #     @subscription = current_user.subscription
+    #     @subscription.update_attributes(params[:expiry_date])
+
+    #     respond_to do |format|
+    #         if @subscription.save
+    #             format.html { redirect_to current_user, notice: 'Subscription date updated.' }
+    #             format.json { render json: @subscription, status: :created, location: @subscription }
+    #         else
+    #             format.html { redirect_to current_user, notice: "Couldn't update your subscription date, sorry." }
+    #             format.json { render json: @subscription.errors, status: :unprocessable_entity }
+    #         end
+    #     end
+    # end
 end
