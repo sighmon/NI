@@ -33,9 +33,11 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.input :admin %>
-    <%= fields_for @user.subscription do |f| %>
+    <!-- TODO: use try or if to avoid trying to render null object -->
+    <%= fields_for :subscription do |f| %>
       <%= f.datetime_select :expiry_date %>
     <% end %>
+    <br /><br /><!-- TODO: Fix in CSS -->
     <%= f.input :issues, :as => :check_boxes %>
   <% end %>
   <%= f.actions do %>

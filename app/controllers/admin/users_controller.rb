@@ -27,7 +27,7 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def edit
-
+		@subscription = @user.subscription
 	end
 
 	def update
@@ -36,6 +36,8 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:password_confirmation)
 		end
 		if @user.update_attributes(params[:user])
+			@user.build_subscription(params[:subscription])
+			@user.save
 			flash[:notice] = "User has been updated."
 			redirect_to admin_user_path
 		else
