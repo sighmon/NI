@@ -33,7 +33,6 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.input :admin %>
-    <!-- TODO: use try or if to avoid trying to render null object -->
     <%= fields_for :subscription do |f| %>
       <%= f.datetime_select :expiry_date %>
     <% end %>

@@ -16,6 +16,9 @@ gem 'cancan'
 # Form rendering via Formtastic https://github.com/justinfrench/formtastic
 gem 'formtastic'
 
+# Active Merchant for purchasing https://github.com/Shopify/active_merchant
+gem 'activemerchant', :require => 'active_merchant'
+
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'

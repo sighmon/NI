@@ -7,6 +7,18 @@ class PurchasesController < ApplicationController
         redirect_to new_user_session_path, :alert => "You need to be logged in to do that."
     end
 
+    def express
+        # TODO: have purchase_price stored in the db
+        # TODO: add this to routes so we can link to making the purchase
+        express_purchase_price = 200
+        response = EXPRESS_GATEWAY.setup_purchase(express_purchase_price,
+            :ip                => request.remote_ip,
+            :return_url        => issue_url(@issue),
+            :cancel_return_url => issue_url(@issue)
+        )
+        redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
+    end
+
     def new
         @issue = Issue.find(params[:issue_id])
         @user = User.find(current_user)

@@ -37,4 +37,15 @@ NI::Application.configure do
 
   # Default URL for Devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # Active Merchant Gateway
+
+  ActiveMerchant::Billing::Base.mode = :test
+
+  ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
+    :login => "EXAMPLE",
+    :password => "EXAMPLE",
+    :signature => "EXAMPLE"
+  )
+
 end
