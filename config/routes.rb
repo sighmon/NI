@@ -13,7 +13,11 @@ NI::Application.routes.draw do
 
   resources :issues do
     resources :articles
-    resources :purchases, :only => [:new, :create]
+    resources :purchases, :only => [:new, :create] do
+      new do
+        get :express
+      end
+    end
   end
 
   namespace :admin do

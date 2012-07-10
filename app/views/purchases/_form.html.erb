@@ -1,6 +1,14 @@
-<%= semantic_form_for([@issue, @purchase]) do |f| %>
-  
-  <%= f.actions do %>
-    <%= f.action :submit, :as => :button %>
-  <% end %>
+<% if @has_token %>
+
+	<%= semantic_form_for([@issue, @purchase]) do |f| %>
+	  
+	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
+	  Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
+	  <%= f.actions do %>
+	    <%= f.action :submit, :as => :button %>
+	  <% end %>
+	<% end %>
+
+<% else %>
+	<%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_new_issue_purchase_path %>
 <% end %>

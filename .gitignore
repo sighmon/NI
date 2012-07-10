@@ -18,4 +18,4 @@
 /tmp
 
 # Ignore PayPal Auth
-/config/environments/paypal_auth.yaml
+/config/environments/paypal_auth.yml

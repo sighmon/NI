@@ -10,24 +10,44 @@ class PurchasesController < ApplicationController
     def express
         # TODO: add this to a new Orders controller
         @express_purchase_price = 200
+        session[:express_purchase_price] = @express_purchase_price
+        @issue = Issue.find(params[:issue_id])
         response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-            :ip                => request.remote_ip,
-            :return_url        => issue_url(@issue),
-            :cancel_return_url => issue_url(@issue),
-            :allow_note =>  true,
-            :items => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}]
+            :ip                 => request.remote_ip,
+            :return_url         => new_issue_purchase_url(@issue),
+            :cancel_return_url  => new_issue_purchase_url(@issue),
+            :allow_note         => true,
+            :items              => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}],
+            :currency           => 'AUD'
         )
         redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
     end
 
-    def new
-        @issue = Issue.find(params[:issue_id])
-        @user = User.find(current_user)
-        # TODO: How do we create a join, rather than a new issue?
-        @purchase = @user.purchases.build(params[:issue])
+    def retrieve_paypal_express_details(token)
+        details = EXPRESS_GATEWAY.details_for(token)
+        # logger.info details.params
+        session[:express_payer_id] = details.payer_id
+        session[:express_first_name] = details.params["first_name"]
+        session[:express_last_name] = details.params["last_name"]
+    end
 
-        # Test PayPal Express
-        # express
+    def new
+        @user = User.find(current_user)
+        @purchase = @user.purchases.build(params[:issue])
+        @express_token = params[:token]
+        @express_payer_id = params[:PayerID]
+
+        @has_token = not(@express_token.blank? or @express_payer_id.blank?)
+
+        if @has_token
+            # store issue_id in the session
+            @issue = Issue.find(session[:issue_id_being_purchased])
+            retrieve_paypal_express_details(@express_token)
+            session[:express_token] = @express_token
+        else
+            @issue = Issue.find(params[:issue_id])
+            session[:issue_id_being_purchased] = @issue.id
+        end
 
         respond_to do |format|
             format.html # new.html.erb
@@ -36,13 +56,18 @@ class PurchasesController < ApplicationController
     end
 
     def create
-        @issue = Issue.find(params[:issue_id])
+        @issue = Issue.find(session[:issue_id_being_purchased])
         @user = User.find(current_user)
-        # FIXME: Work out how to simplify this call.
-        @purchase = Purchase.create(:user_id => @user.id, :issue_id => @issue.id)
+
+        # Make the PayPal purchase
+        response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
+        if response.success?
+            # FIXME: Work out how to simplify this call.
+            @purchase = Purchase.create(:user_id => @user.id, :issue_id => @issue.id)
+        end
 
         respond_to do |format|
-            if @purchase.save
+            if response.success? and @purchase.save
                 format.html { redirect_to issue_path(@issue), notice: 'Issue was successfully purchased.' }
                 format.json { render json: @purchase, status: :created, location: @purchase }
             else
@@ -50,6 +75,17 @@ class PurchasesController < ApplicationController
                 format.json { render json: @purchase.errors, status: :unprocessable_entity }
             end
         end
+    end
+
+    private
+
+    def express_purchase_options
+      {
+        :ip => request.remote_ip,
+        :token => session[:express_token],
+        :payer_id => session[:express_payer_id],
+        :currency => 'AUD'
+      }
     end
 
 end
