@@ -8,13 +8,14 @@ class PurchasesController < ApplicationController
     end
 
     def express
-        # TODO: have purchase_price stored in the db
-        # TODO: add this to routes so we can link to making the purchase
-        express_purchase_price = 200
-        response = EXPRESS_GATEWAY.setup_purchase(express_purchase_price,
+        # TODO: add this to a new Orders controller
+        @express_purchase_price = 200
+        response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
             :ip                => request.remote_ip,
             :return_url        => issue_url(@issue),
-            :cancel_return_url => issue_url(@issue)
+            :cancel_return_url => issue_url(@issue),
+            :allow_note =>  true,
+            :items => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}]
         )
         redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
     end
@@ -24,6 +25,9 @@ class PurchasesController < ApplicationController
         @user = User.find(current_user)
         # TODO: How do we create a join, rather than a new issue?
         @purchase = @user.purchases.build(params[:issue])
+
+        # Test PayPal Express
+        # express
 
         respond_to do |format|
             format.html # new.html.erb

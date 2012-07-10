@@ -42,10 +42,12 @@ NI::Application.configure do
 
   ActiveMerchant::Billing::Base.mode = :test
 
+  paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
+
   ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-    :login => "EXAMPLE",
-    :password => "EXAMPLE",
-    :signature => "EXAMPLE"
+    :login => paypal_auth["login"],
+    :password => paypal_auth["password"],
+    :signature => paypal_auth["signature"]
   )
 
 end

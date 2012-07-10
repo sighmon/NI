@@ -16,3 +16,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore PayPal Auth
+/config/environments/paypal_auth.yaml
