@@ -8,7 +8,7 @@ class PurchasesController < ApplicationController
     end
 
     def express
-        # TODO: add this to a new Orders controller
+        # TODO: move the purchase price to an admin model
         @express_purchase_price = 200
         session[:express_purchase_price] = @express_purchase_price
         @issue = Issue.find(params[:issue_id])
@@ -40,7 +40,6 @@ class PurchasesController < ApplicationController
         @has_token = not(@express_token.blank? or @express_payer_id.blank?)
 
         if @has_token
-            # store issue_id in the session
             @issue = Issue.find(session[:issue_id_being_purchased])
             retrieve_paypal_express_details(@express_token)
             session[:express_token] = @express_token
@@ -81,10 +80,11 @@ class PurchasesController < ApplicationController
 
     def express_purchase_options
       {
-        :ip => request.remote_ip,
-        :token => session[:express_token],
-        :payer_id => session[:express_payer_id],
-        :currency => 'AUD'
+        :ip         => request.remote_ip,
+        :token      => session[:express_token],
+        :payer_id   => session[:express_payer_id],
+        :items      => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => session[:express_purchase_price]}],
+        :currency   => 'AUD'
       }
     end
 

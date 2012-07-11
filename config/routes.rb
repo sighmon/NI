@@ -7,7 +7,11 @@ NI::Application.routes.draw do
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
 
-  resource :subscription
+  resource :subscription do
+    new do
+      post :express
+    end
+  end
   # hack to create /subscriptions route
   resources :subscriptions, :only => [:create]
 
