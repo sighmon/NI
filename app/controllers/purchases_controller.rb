@@ -17,7 +17,7 @@ class PurchasesController < ApplicationController
             :return_url         => new_issue_purchase_url(@issue),
             :cancel_return_url  => new_issue_purchase_url(@issue),
             :allow_note         => true,
-            :items              => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}],
+            :items              => [{:name => "NI #{@issue.number} - #{@issue.title}", :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}],
             :currency           => 'AUD'
         )
         redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
@@ -83,7 +83,7 @@ class PurchasesController < ApplicationController
         :ip         => request.remote_ip,
         :token      => session[:express_token],
         :payer_id   => session[:express_payer_id],
-        :items      => [{:name => @issue.title, :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => session[:express_purchase_price]}],
+        :items      => [{:name => "NI #{@issue.number} - #{@issue.title}", :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => session[:express_purchase_price]}],
         :currency   => 'AUD'
       }
     end

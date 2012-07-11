@@ -2,25 +2,25 @@
 
 	<%= semantic_form_for(@subscription) do |f| %>
 
-	  <%= radio_button_tag 'duration', '3', 'false' %> 3 Month Subscription<br />
-	  <%= radio_button_tag 'duration', '6', 'false' %> 6 Month Subscription<br />
-	  <%= radio_button_tag 'duration', '12', 'true' %> 12 Month Subscription<br />
+	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
+	  Subscription length: <%= session[:express_purchase_subscription_duration] %> months<br />
+	  Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
 	  
 	  <%= f.actions do %>
-	    <%= f.action :submit, :as => :button %>
+	    <%= f.action :submit, :label => "Complete your purchase", :as => :button %>
 	  <% end %>
 	<% end %>
 
 <% else %>
 	
-	<%= semantic_form_for(@subscription, :url => { :action => "express" }) do |f| %>
+	<%= semantic_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
 
 	  <%= radio_button_tag 'duration', '3', 'false' %> 3 Month Subscription<br />
 	  <%= radio_button_tag 'duration', '6', 'false' %> 6 Month Subscription<br />
 	  <%= radio_button_tag 'duration', '12', 'true' %> 12 Month Subscription<br />
 
 	  <%= f.actions do %>
-	    <%= f.action :submit, :as => :button %>
+	    <%= f.action :submit, :label => "Pay with PayPal Express", :as => :button %>
 	  <% end %>
 	<% end %>
 

@@ -9,7 +9,7 @@ NI::Application.routes.draw do
 
   resource :subscription do
     new do
-      post :express
+      get :express
     end
   end
   # hack to create /subscriptions route
