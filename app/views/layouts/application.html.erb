@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NI</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title>New Internationalist Magazine - Digital Edition</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -18,7 +18,7 @@
 		<div id="user_nav">
 			<% if user_signed_in? %>
 				<% if current_user.try(:admin?) %>
-					<b style="color: red;"><%= link_to "A", admin_root_path %></b>
+					<b style="color: red;"><%= link_to "A", admin_users_path %></b>
 				<% end %>
 				<% if current_user.try(:subscriber?) %>
 					<b style="color: green;"><%= current_user.subscriber? ? 'S' : '' %></b>

@@ -51,6 +51,14 @@ NI::Application.configure do
       :password => paypal_auth["password"],
       :signature => paypal_auth["signature"]
     )
+
+    PayPal::Recurring.configure do |config|
+      config.sandbox = true
+      config.username = paypal_auth["login"]
+      config.password = paypal_auth["password"]
+      config.signature = paypal_auth["signature"]
+    end
+
   end
 
 end

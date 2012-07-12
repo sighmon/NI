@@ -17,20 +17,38 @@ class SubscriptionsController < ApplicationController
         when "12"
             @express_purchase_price = 1200
             @express_purchase_subscription_duration = 12
-        end            
+        end
+
+        if params[:autodebit] == "1"
+            @autodebit = true
+            session[:express_autodebit] = @autodebit
+        end
 
         session[:express_purchase_price] = @express_purchase_price
         session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
 
-        response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-            :ip                 => request.remote_ip,
-            :return_url         => new_subscription_url,
-            :cancel_return_url  => new_subscription_url,
-            :allow_note         => true,
-            :items              => [{:name => "#{@express_purchase_subscription_duration} Month Subscription to NI", :quantity => 1, :description => "New Internationalist Magazine - subscription to the digital edition", :amount => @express_purchase_price}],
-            :currency           => 'AUD'
-        )
-        redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
+        if @autodebit
+            # Autodebit setup
+            ppr = PayPal::Recurring.new({
+              :return_url   => new_subscription_url,
+              :cancel_url   => new_subscription_url,
+              :description  => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
+              :amount       => (session[:express_purchase_price] / 100),
+              :currency     => 'AUD'
+            })
+            response = ppr.checkout
+            redirect_to response.checkout_url if response.valid?
+        else
+            response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
+                :ip                 => request.remote_ip,
+                :return_url         => new_subscription_url,
+                :cancel_return_url  => new_subscription_url,
+                :allow_note         => true,
+                :items              => [{:name => "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", :quantity => 1, :description => "New Internationalist Magazine - subscription to the digital edition", :amount => session[:express_purchase_price]}],
+                :currency           => 'AUD'
+            )
+            redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
+        end
     end
 
     def retrieve_paypal_express_details(token)
@@ -45,6 +63,9 @@ class SubscriptionsController < ApplicationController
 
         @express_token = params[:token]
         @express_payer_id = params[:PayerID]
+
+        # TODO: setup a payment request and then a recurring profile
+        # https://github.com/fnando/paypal-recurring
 
         @has_token = not(@express_token.blank? or @express_payer_id.blank?)
 

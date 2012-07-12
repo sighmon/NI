@@ -1,7 +1,7 @@
 module ApplicationHelper
     def issues_as_table(issues)
         if issues.try(:empty?)
-            return "You haven't purchased anything yet!"
+            return "You haven't purchased any individual issues yet!"
         else
             table = "<table class='issues_as_table'>"
             for issue in issues.sort_by {|x| x.release} do

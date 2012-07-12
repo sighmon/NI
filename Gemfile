@@ -19,6 +19,9 @@ gem 'formtastic'
 # Active Merchant for purchasing https://github.com/Shopify/active_merchant
 gem 'activemerchant', :require => 'active_merchant'
 
+# PayPal recurring billing https://github.com/fnando/paypal-recurring
+gem 'paypal-recurring'
+
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'

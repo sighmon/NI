@@ -3,8 +3,13 @@
 	<%= semantic_form_for(@subscription) do |f| %>
 
 	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  Subscription length: <%= session[:express_purchase_subscription_duration] %> months<br />
-	  Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
+	  <% if session[:express_autodebit] %>
+	  	Automatic debit every: <%= session[:express_purchase_subscription_duration] %> months.<br />
+	  	Debit amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
+	  <% else %>
+	  	Subscription length: <%= session[:express_purchase_subscription_duration] %> months.<br />
+	  	Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
+	  <% end %><br /><br />
 	  
 	  <%= f.actions do %>
 	    <%= f.action :submit, :label => "Complete your purchase", :as => :button %>
@@ -18,6 +23,11 @@
 	  <%= radio_button_tag 'duration', '3', 'false' %> 3 Month Subscription<br />
 	  <%= radio_button_tag 'duration', '6', 'false' %> 6 Month Subscription<br />
 	  <%= radio_button_tag 'duration', '12', 'true' %> 12 Month Subscription<br />
+	  <hr />
+	  <h3>Automatic debit</h3>
+	  <p>Would you like NI to automatically debit your PayPal account until you tell us to stop?</p>
+	  <%= radio_button_tag 'autodebit', '1', 'false' %> Yes please!<br />
+	  <%= radio_button_tag 'autodebit', '0', 'true' %> No thanks, just a single debit this time.<br /><br />
 
 	  <%= f.actions do %>
 	    <%= f.action :submit, :label => "Pay with PayPal Express", :as => :button %>
