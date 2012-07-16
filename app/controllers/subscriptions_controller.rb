@@ -64,9 +64,6 @@ class SubscriptionsController < ApplicationController
         @express_token = params[:token]
         @express_payer_id = params[:PayerID]
 
-        # TODO: setup a payment request and then a recurring profile
-        # https://github.com/fnando/paypal-recurring
-
         @has_token = not(@express_token.blank? or @express_payer_id.blank?)
 
         if @has_token
@@ -84,16 +81,45 @@ class SubscriptionsController < ApplicationController
 
         @subscription = current_user.subscription
 
-        # Make the PayPal purchase
-        response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
-        if response.success?
-            # If successful, update the user's subscription date.
-            if @subscription.nil?
-                @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
-            elsif @subscription.expiry_date < DateTime.now
-                @subscription.expiry_date = Date.today + months.months
-            else
-                @subscription.expiry_date += months.months
+        if session[:express_autodebit]
+            # It's an autodebit, so set that up
+            # 1. setup autodebit
+            ppr = PayPal::Recurring.new({
+              :token       => session[:express_token],
+              :payer_id    => session[:express_payer_id],
+              :amount      => (session[:express_purchase_price] / 100),
+              :currency    => 'AUD',
+              :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
+            })
+            response_request = ppr.request_payment
+
+            # 2. create profile & save recurring profile token
+            ppr = PayPal::Recurring.new({
+              :token       => session[:express_token],
+              :payer_id    => session[:express_payer_id],
+              :amount      => (session[:express_purchase_price] / 100),
+              :currency    => 'AUD',
+              :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
+              :frequency   => session[:express_purchase_subscription_duration],
+              :period      => :monthly,
+              :reference   => "NI ID #{current_user.id}",
+              :start_at    => Time.zone.now,
+            })
+
+            response_create = ppr.create_recurring_profile
+            # TODO: Save response_create.profile_id to @subscription model
+            # puts response_create.profile_id
+
+            if response_request.approved? and response_request.completed? and not(response_create.profile_id.blank?)
+                # If successful, update the user's subscription date.
+                update_subscription_expiry_date
+            end
+        else
+            # It's a single purchase so make the PayPal purchase
+            response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
+            if response.success?
+                # If successful, update the user's subscription date.
+                update_subscription_expiry_date
             end
         end
 
@@ -111,6 +137,16 @@ class SubscriptionsController < ApplicationController
     end
 
     private
+
+    def update_subscription_expiry_date
+        if @subscription.nil?
+                    @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
+        elsif @subscription.expiry_date < DateTime.now
+            @subscription.expiry_date = Date.today + months.months
+        else
+            @subscription.expiry_date += months.months
+        end
+    end
 
     def express_purchase_options
       {
