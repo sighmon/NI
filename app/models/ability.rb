@@ -12,12 +12,11 @@ class Ability
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
     can :read, User
-    # TODO: just for testing. remove when we implement paypal transactions
+
     if !user.guest?
         can :manage, Purchase
-    end
-    # TODO: just for testing. remove when we implement paypal transactions
-    can :manage, Subscription
+        can :manage, Subscription
+    end   
 
     if user.subscriber?
         can :read, :all

@@ -2,7 +2,10 @@ class SubscriptionsController < ApplicationController
 	# Cancan authorisation
     load_and_authorize_resource
 
-    # TODO: rescue from trying to subscribe without signing in/up.
+    rescue_from CanCan::AccessDenied do |exception|
+        session[:user_return_to] = request.referer
+        redirect_to new_user_session_path, :alert => "You need to be logged in to buy a subscription."
+    end
 
     def express
         # TODO: move the purchase price to an admin model
@@ -77,13 +80,13 @@ class SubscriptionsController < ApplicationController
 
     def create
 
-        months = session[:express_purchase_subscription_duration]
+        payment_complete = false
 
         @subscription = current_user.subscription
 
         if session[:express_autodebit]
             # It's an autodebit, so set that up
-            # 1. setup autodebit
+            # 1. setup autodebit by requesting payment
             ppr = PayPal::Recurring.new({
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
@@ -93,40 +96,54 @@ class SubscriptionsController < ApplicationController
             })
             response_request = ppr.request_payment
 
-            # 2. create profile & save recurring profile token
-            ppr = PayPal::Recurring.new({
-              :token       => session[:express_token],
-              :payer_id    => session[:express_payer_id],
-              :amount      => (session[:express_purchase_price] / 100),
-              :currency    => 'AUD',
-              :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
-              :frequency   => session[:express_purchase_subscription_duration],
-              :period      => :monthly,
-              :reference   => "NI ID #{current_user.id}",
-              :start_at    => Time.zone.now,
-            })
+            if response_request.approved? and response_request.completed?
+                # 2. create profile & save recurring profile token
+                ppr = PayPal::Recurring.new({
+                  :token       => session[:express_token],
+                  :payer_id    => session[:express_payer_id],
+                  :amount      => (session[:express_purchase_price] / 100),
+                  :currency    => 'AUD',
+                  :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
+                  :frequency   => session[:express_purchase_subscription_duration],
+                  :period      => :monthly,
+                  :reference   => "NI UID #{current_user.id}",
+                  :start_at    => Time.zone.now,
+                  :failed      => 1,
+                  :outstanding => :next_billing
+                })
 
-            response_create = ppr.create_recurring_profile
-            # TODO: Save response_create.profile_id to @subscription model
-            # puts response_create.profile_id
-
-            if response_request.approved? and response_request.completed? and not(response_create.profile_id.blank?)
-                # If successful, update the user's subscription date.
-                update_subscription_expiry_date
+                response_create = ppr.create_recurring_profile
+                if not(response_create.profile_id.blank?)
+                    @subscription.paypal_profile_id = response_create.profile_id
+                    # If successful, update the user's subscription date.
+                    update_subscription_expiry_date
+                    # Save the PayPal data to the @subscription model for receipts
+                    save_paypal_data_to_subscription_model
+                    payment_complete = true
+                else
+                    # Why didn't this work? Log it.
+                    logger.warn "create_recurring_profile failed: #{response_create.params}"
+                end
+            else
+                # Why didn't this work? Log it.
+                logger.warn "request_payment failed: #{response_request.params}"
             end
         else
             # It's a single purchase so make the PayPal purchase
             response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
+
             if response.success?
                 # If successful, update the user's subscription date.
                 update_subscription_expiry_date
+                save_paypal_data_to_subscription_model
+                payment_complete = true
             end
         end
 
         # TODO: implement automatically purchase the current issue
 
     	respond_to do |format|
-            if response.success? and @subscription.save
+            if payment_complete and @subscription.save
                 format.html { redirect_to current_user, notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else
@@ -136,11 +153,18 @@ class SubscriptionsController < ApplicationController
         end
     end
 
-    private
+private
+
+    def save_paypal_data_to_subscription_model
+        @subscription.paypal_payer_id = session[:express_payer_id]
+        @subscription.paypal_first_name = session[:express_first_name]
+        @subscription.paypal_last_name = session[:express_last_name]
+    end
 
     def update_subscription_expiry_date
+        months = session[:express_purchase_subscription_duration]
         if @subscription.nil?
-                    @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
+            @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
         elsif @subscription.expiry_date < DateTime.now
             @subscription.expiry_date = Date.today + months.months
         else
