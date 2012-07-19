@@ -78,6 +78,48 @@ class SubscriptionsController < ApplicationController
 
     end
 
+    def edit
+        @user = current_user
+        @subscription = @user.subscription
+
+        # TODO: cancel_recurring_subscription
+        # TODO: make subscription expiry date today -1
+    end
+
+    def update
+        @user = current_user
+        @subscription = @user.subscription
+        cancel_complete = false
+
+        if params[:cancel] == 'true'
+            if !@subscription.paypal_profile_id.blank?
+                # user has a recurring subscription
+                if cancel_recurring_subscription
+                    expire_subscription
+                    cancel_complete = true
+                else 
+                    redirect_to user_path(@user), notice: "Couldn't cancel your PayPal recurring subscription, try again later."
+                end
+            else
+                # user has a normal subscription
+                expire_subscription
+                cancel_complete = true
+            end
+        else
+            redirect_to user_path(@user)
+        end
+
+        respond_to do |format|
+            if cancel_complete and @subscription.save
+                format.html { redirect_to root_path, notice: 'Subscription was successfully cancelled.' }
+                format.json { render json: @subscription, status: :created, location: @subscription }
+            else
+                format.html { redirect_to root_path, notice: "Something went wrong in the last step, sorry." }
+                format.json { render json: @subscription.errors, status: :unprocessable_entity }
+            end
+        end
+    end
+
     def create
 
         payment_complete = false
@@ -117,6 +159,10 @@ class SubscriptionsController < ApplicationController
                     @subscription.paypal_profile_id = response_create.profile_id
                     # If successful, update the user's subscription date.
                     update_subscription_expiry_date
+
+                    # TODO: Check paypal recurring profile id still valid
+                    # TODO: Setup future update_subscription_expiry_date
+
                     # Save the PayPal data to the @subscription model for receipts
                     save_paypal_data_to_subscription_model
                     payment_complete = true
@@ -155,10 +201,22 @@ class SubscriptionsController < ApplicationController
 
 private
 
+    def cancel_recurring_subscription
+        ppr = PayPal::Recurring.new(:profile_id => @subscription.paypal_profile_id)
+        response = ppr.cancel
+        if response.success?
+            @subscription.paypal_profile_id = nil
+            return true
+        else
+            return false
+        end
+    end
+
     def save_paypal_data_to_subscription_model
         @subscription.paypal_payer_id = session[:express_payer_id]
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
+        # @subscription.paypal_profile_id also saved for recurring payments
     end
 
     def update_subscription_expiry_date
@@ -169,6 +227,14 @@ private
             @subscription.expiry_date = Date.today + months.months
         else
             @subscription.expiry_date += months.months
+        end
+    end
+
+    def expire_subscription
+        if @subscription.nil?
+            # do nothing
+        elsif @subscription.expiry_date > DateTime.now
+            @subscription.expiry_date = Date.today - 1
         end
     end
 

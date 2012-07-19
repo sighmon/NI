@@ -1,9 +1,33 @@
-<% if @has_token %>
+<% if !@subscription.paypal_profile_id.blank? %>
+
+	<% if @user.subscriber? %>
+		<p><b>Subscription expiry date</b>: 
+		<% begin %>
+			<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+		<% rescue NoMethodError %>
+			No current subscription.
+		<% end %>
+		</p>
+	<% end %>
+
+	<%= semantic_form_for(@subscription) do |f| %>
+
+	  <h3>Are you sure you want to cancel your subscription?</h3>
+
+	  <%= radio_button_tag 'cancel', 'true', 'false' %> Yes.<br />
+	  <%= radio_button_tag 'cancel', 'false', 'true' %> No.<br />
+	  
+	  <%= f.actions do %>
+	    <%= f.action :submit, :label => "Make it so.", :as => :button %>
+	  <% end %>
+	<% end %>
+
+<% elsif @has_token %>
 
 	<%= semantic_form_for(@subscription) do |f| %>
 
 	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  <% if session[:express_autodebit] %>
+	  <% if !@subscription.paypal_profile_id.blank? %>
 	  	Automatic debit every: <%= session[:express_purchase_subscription_duration] %> months.<br />
 	  	Debit amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
 	  <% else %>

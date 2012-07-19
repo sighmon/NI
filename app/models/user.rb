@@ -21,14 +21,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def subscription_valid?
-    if subscription 
-      return (subscription.expiry_date and (subscription.expiry_date > Date.today))
-    else
-      return false
-    end
-  end
-
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
@@ -40,6 +32,22 @@ class User < ActiveRecord::Base
   #Override to_s to show user details instead of #string
   def to_s
     "#{username}"
+  end
+
+  def subscription_valid?
+    if subscription 
+      return (subscription.expiry_date and (subscription.expiry_date > Date.today))
+    else
+      return false
+    end
+  end
+
+  def subscription_lapsed?
+    if subscription
+      return (subscription.expiry_date and (subscription.expiry_date < Date.today))
+    else
+      return false
+    end
   end
 
   def subscriber?

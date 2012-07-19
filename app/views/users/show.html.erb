@@ -1,17 +1,23 @@
 <h3>Username: <%= @user %></h3>
 <% if current_user == @user %><p><b>Email address</b>: <%= @user.email %></p><% end %>
-<% if @user.user_type == "Subscriber" || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: 
+<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: 
 	<% begin %>
 		<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
 	<% rescue NoMethodError %>
 		No current subscription.
 	<% end %>
 </p><% end %>
-<p><%= link_to "Subscribe!", new_subscription_path %></p>
+<% if @user.subscriber? %>
+	<p><%= link_to "Extend your subscription", new_subscription_path %>, <%= link_to "Cancel your subscription", edit_subscription_path %></p>
+<% elsif @user.subscription_lapsed? %>
+	<p><%= link_to "Renew your subscription", new_subscription_path %></p>
+<% else %>
+	<p><%= link_to "Subscribe", new_subscription_path %></p>
+<% end %>
 <p><b>Account type</b>: <%= @user.user_type %></p>
 <p><b>Issues purchased:</b> <%= issues_as_table(@user.issues) %></p>
-<% if current_user == @user %>
-        <%= link_to "Edit my profile", edit_user_registration_path(@user) %> | 
-<% elsif current_user.admin? %>
+<% if current_user.admin? %>
         <%= link_to "Edit User", edit_admin_user_path(@user) %> | 
+<% elsif current_user == @user %>
+        <%= link_to "Edit my profile", edit_user_registration_path(@user) %> | 
 <% end %><%= link_to "Back", issues_path %>
