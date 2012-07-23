@@ -7,7 +7,9 @@
 		No current subscription.
 	<% end %>
 </p><% end %>
-<% if @user.subscriber? %>
+<% if @user.subscriber? and !@user.subscription.paypal_profile_id.blank? %>
+	<p>You have an automatic renewal, <%= link_to "Cancel your subscription", edit_subscription_path %></p>
+<% elsif @user.subscriber? %>
 	<p><%= link_to "Extend your subscription", new_subscription_path %>, <%= link_to "Cancel your subscription", edit_subscription_path %></p>
 <% elsif @user.subscription_lapsed? %>
 	<p><%= link_to "Renew your subscription", new_subscription_path %></p>

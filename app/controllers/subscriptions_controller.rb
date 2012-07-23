@@ -25,6 +25,9 @@ class SubscriptionsController < ApplicationController
         if params[:autodebit] == "1"
             @autodebit = true
             session[:express_autodebit] = @autodebit
+        else
+            @autodebit = false
+            session[:express_autodebit] = @autodebit
         end
 
         session[:express_purchase_price] = @express_purchase_price
@@ -64,6 +67,7 @@ class SubscriptionsController < ApplicationController
 
     def new
 
+        @user = current_user
         @express_token = params[:token]
         @express_payer_id = params[:PayerID]
 
@@ -81,43 +85,10 @@ class SubscriptionsController < ApplicationController
     def edit
         @user = current_user
         @subscription = @user.subscription
+        @cancel_subscription = true
 
         # TODO: cancel_recurring_subscription
         # TODO: make subscription expiry date today -1
-    end
-
-    def update
-        @user = current_user
-        @subscription = @user.subscription
-        cancel_complete = false
-
-        if params[:cancel] == 'true'
-            if !@subscription.paypal_profile_id.blank?
-                # user has a recurring subscription
-                if cancel_recurring_subscription
-                    expire_subscription
-                    cancel_complete = true
-                else 
-                    redirect_to user_path(@user), notice: "Couldn't cancel your PayPal recurring subscription, try again later."
-                end
-            else
-                # user has a normal subscription
-                expire_subscription
-                cancel_complete = true
-            end
-        else
-            redirect_to user_path(@user)
-        end
-
-        respond_to do |format|
-            if cancel_complete and @subscription.save
-                format.html { redirect_to root_path, notice: 'Subscription was successfully cancelled.' }
-                format.json { render json: @subscription, status: :created, location: @subscription }
-            else
-                format.html { redirect_to root_path, notice: "Something went wrong in the last step, sorry." }
-                format.json { render json: @subscription.errors, status: :unprocessable_entity }
-            end
-        end
     end
 
     def create
@@ -160,6 +131,7 @@ class SubscriptionsController < ApplicationController
                     # If successful, update the user's subscription date.
                     update_subscription_expiry_date
 
+                    # TODO: Background task
                     # TODO: Check paypal recurring profile id still valid
                     # TODO: Setup future update_subscription_expiry_date
 
@@ -199,6 +171,49 @@ class SubscriptionsController < ApplicationController
         end
     end
 
+    def update
+        @user = current_user
+        @subscription = @user.subscription
+        cancel_complete = false
+
+        if params[:cancel] == 'true'
+            if !@subscription.paypal_profile_id.blank?
+                # user has a recurring subscription
+                if cancel_recurring_subscription
+                    expire_subscription
+                    cancel_complete = true
+                else 
+                    redirect_to user_path(@user), notice: "Sorry, we couldn't cancel your PayPal recurring subscription, please try again later."
+                end
+            else
+                # user has a normal subscription
+                expire_subscription
+                cancel_complete = true
+            end
+        else
+            redirect_to user_path(@user)
+        end
+
+        if cancel_complete and @subscription.save
+            # TODO: Send email to user & subscribe@newint.com.au asking whether they'd like a refund or not.
+            redirect_to user_path(@user), notice: "Subscription was successfully cancelled."
+        else
+            redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry."
+        end
+
+        # TODO: Check with pix that my above fix is okay.
+
+        # respond_to do |format|
+        #     if cancel_complete and @subscription.save
+        #         format.html { redirect_to user_path(@user), notice: 'Subscription was successfully cancelled.' }
+        #         format.json { render json: @subscription, status: :created, location: @subscription }
+        #     else
+        #         format.html { redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry." }
+        #         format.json { render json: @subscription.errors, status: :unprocessable_entity }
+        #     end
+        # end
+    end
+
 private
 
     def cancel_recurring_subscription
@@ -206,6 +221,7 @@ private
         response = ppr.cancel
         if response.success?
             @subscription.paypal_profile_id = nil
+            session[:express_autodebit] = false
             return true
         else
             return false
@@ -216,7 +232,7 @@ private
         @subscription.paypal_payer_id = session[:express_payer_id]
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
-        # @subscription.paypal_profile_id also saved for recurring payments
+        # @subscription.paypal_profile_id also saved for recurring payments earlier
     end
 
     def update_subscription_expiry_date
@@ -234,6 +250,7 @@ private
         if @subscription.nil?
             # do nothing
         elsif @subscription.expiry_date > DateTime.now
+            # TODO: write refund_due to @subscription model
             @subscription.expiry_date = Date.today - 1
         end
     end

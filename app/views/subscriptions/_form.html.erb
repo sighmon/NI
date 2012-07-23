@@ -1,4 +1,4 @@
-<% if !@subscription.paypal_profile_id.blank? %>
+<% if @cancel_subscription %>
 
 	<% if @user.subscriber? %>
 		<p><b>Subscription expiry date</b>: 
@@ -27,7 +27,7 @@
 	<%= semantic_form_for(@subscription) do |f| %>
 
 	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  <% if !@subscription.paypal_profile_id.blank? %>
+	  <% if session[:express_autodebit] %>
 	  	Automatic debit every: <%= session[:express_purchase_subscription_duration] %> months.<br />
 	  	Debit amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
 	  <% else %>
