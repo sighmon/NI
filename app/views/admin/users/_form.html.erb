@@ -34,7 +34,12 @@
     <%= f.input :password_confirmation %>
     <%= f.input :admin %>
     <%= fields_for :subscription do |f| %>
-      <%= f.datetime_select :expiry_date %>
+      Expiry date: <%= f.datetime_select :expiry_date %>
+      <%= f.hidden_field :refund %>
+      <%= f.hidden_field :paypal_payer_id %>
+      <%= f.hidden_field :paypal_profile_id %>
+      <%= f.hidden_field :paypal_first_name %>
+      <%= f.hidden_field :paypal_last_name %>
     <% end %>
     <br /><br /><!-- TODO: Fix in CSS -->
     <%= f.input :issues, :as => :check_boxes %>

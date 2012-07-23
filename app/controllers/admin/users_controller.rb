@@ -36,6 +36,7 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:password_confirmation)
 		end
 		if @user.update_attributes(params[:user])
+			# TODO: work out how to update subscription attributes intead of BUILD
 			@user.build_subscription(params[:subscription])
 			@user.save
 			flash[:notice] = "User has been updated."

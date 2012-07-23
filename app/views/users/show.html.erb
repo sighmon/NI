@@ -1,12 +1,14 @@
 <h3>Username: <%= @user %></h3>
 <% if current_user == @user %><p><b>Email address</b>: <%= @user.email %></p><% end %>
-<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %><p><b>Subscription expiry date</b>: 
-	<% begin %>
-		<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
-	<% rescue NoMethodError %>
-		No current subscription.
-	<% end %>
-</p><% end %>
+<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
+	<p><b>Subscription expiry date</b>: 
+		<% begin %>
+			<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+		<% rescue NoMethodError %>
+			No current subscription.
+		<% end %>
+	</p>
+<% end %>
 <% if @user.subscriber? and !@user.subscription.paypal_profile_id.blank? %>
 	<p>You have an automatic renewal, <%= link_to "Cancel your subscription", edit_subscription_path %></p>
 <% elsif @user.subscriber? %>

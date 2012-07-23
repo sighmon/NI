@@ -180,6 +180,7 @@ class SubscriptionsController < ApplicationController
             if !@subscription.paypal_profile_id.blank?
                 # user has a recurring subscription
                 if cancel_recurring_subscription
+                    calculate_refund
                     expire_subscription
                     cancel_complete = true
                 else 
@@ -187,6 +188,7 @@ class SubscriptionsController < ApplicationController
                 end
             else
                 # user has a normal subscription
+                calculate_refund
                 expire_subscription
                 cancel_complete = true
             end
@@ -226,6 +228,11 @@ private
         else
             return false
         end
+    end
+
+    def calculate_refund
+        @subscription.refund = (@subscription.expiry_date - Time.now) / 2592000
+        logger.warn "Refund of #{@subscription.refund} months due."
     end
 
     def save_paypal_data_to_subscription_model
