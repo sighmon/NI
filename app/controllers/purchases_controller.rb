@@ -27,6 +27,7 @@ class PurchasesController < ApplicationController
         details = EXPRESS_GATEWAY.details_for(token)
         # logger.info details.params
         session[:express_payer_id] = details.payer_id
+        session[:express_email] = details.email
         session[:express_first_name] = details.params["first_name"]
         session[:express_last_name] = details.params["last_name"]
     end

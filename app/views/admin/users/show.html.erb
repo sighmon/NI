@@ -11,6 +11,7 @@
 <% if @user.subscription and @user.subscription.paypal_payer_id %>
 	<p><b>PayPal Name</b>: <%= @user.subscription.paypal_first_name %> <%= @user.subscription.paypal_last_name %><br />
 		<b>PayPal Payer ID</b>: <%= @user.subscription.paypal_payer_id %><br />
+		<b>PayPal email</b>: <%= @user.subscription.paypal_email %><br />
 		<% if !@user.subscription.paypal_profile_id.blank? %>
 			<b>PayPal Recurring Profile ID</b>: <%= @user.subscription.paypal_profile_id %>
 		<% end %>

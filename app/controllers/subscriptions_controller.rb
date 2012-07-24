@@ -57,14 +57,6 @@ class SubscriptionsController < ApplicationController
         end
     end
 
-    def retrieve_paypal_express_details(token)
-        details = EXPRESS_GATEWAY.details_for(token)
-        # logger.info details.params
-        session[:express_payer_id] = details.payer_id
-        session[:express_first_name] = details.params["first_name"]
-        session[:express_last_name] = details.params["last_name"]
-    end
-
     def new
 
         @user = current_user
@@ -216,6 +208,15 @@ class SubscriptionsController < ApplicationController
         # end
     end
 
+    def retrieve_paypal_express_details(token)
+        details = EXPRESS_GATEWAY.details_for(token)
+        # logger.info details.params
+        session[:express_payer_id] = details.payer_id
+        session[:express_email] = details.email
+        session[:express_first_name] = details.params["first_name"]
+        session[:express_last_name] = details.params["last_name"]
+    end
+
 private
 
     def cancel_recurring_subscription
@@ -237,6 +238,7 @@ private
 
     def save_paypal_data_to_subscription_model
         @subscription.paypal_payer_id = session[:express_payer_id]
+        @subscription.paypal_email = session[:express_email]
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
         # @subscription.paypal_profile_id also saved for recurring payments earlier
