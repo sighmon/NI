@@ -43,13 +43,13 @@ NI::Application.configure do
   gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "newint.com.au",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: gmail_auth["user_name"],
-    password: gmail_auth["password"]
+    :address => "smtp.gmail.com",
+    :port => 587,
+    # :domain => "ppp250-143.static.internode.on.net",
+    :authentication => :plain,
+    :enable_starttls_auto => true,
+    :user_name => gmail_auth["user_name"],
+    :password => gmail_auth["password"]
   }
 
   # Active Merchant Gateway

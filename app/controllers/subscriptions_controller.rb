@@ -154,6 +154,7 @@ class SubscriptionsController < ApplicationController
 
     	respond_to do |format|
             if payment_complete and @subscription.save
+                UserMailer.subscription_confirmation(current_user).deliver
                 format.html { redirect_to current_user, notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else

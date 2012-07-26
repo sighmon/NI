@@ -11,11 +11,11 @@ class Ability
     can :read, Article, :trialarticle => true
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
-    can :read, User
 
     if !user.guest?
         can :manage, Purchase
         can :manage, Subscription
+        can :read, User
     end   
 
     if user.subscriber?
