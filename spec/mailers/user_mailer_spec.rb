@@ -2,12 +2,13 @@ require "spec_helper"
 
 describe UserMailer do
   describe "subscription_confirmation" do
-    let(:mail) { UserMailer.subscription_confirmation }
+    user = FactoryGirl.create(:user)
+    let(:mail) { UserMailer.subscription_confirmation(user) }
 
     it "renders the headers" do
-      mail.subject.should eq("Subscription confirmation")
-      mail.to.should eq(["to@example.org"])
-      mail.from.should eq(["from@example.com"])
+      mail.subject.should eq("New Internationalist Digital Subscription")
+      mail.to.should eq([user.email])
+      mail.from.should eq(["subscribe@newint.com.au"])
     end
 
     it "renders the body" do

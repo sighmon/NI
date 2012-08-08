@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Admin::UsersController do
+  before :each do
+    user = FactoryGirl.create(:admin_user)
+    sign_in user
+  end
 
   describe "GET 'index'" do
     it "returns http success" do
