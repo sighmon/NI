@@ -20,3 +20,6 @@
 # Ignore PayPal Auth and gmail auth
 /config/environments/paypal_auth.yml
 /config/environments/gmail_auth.yml
+
+# Ignore coverage data
+/coverage

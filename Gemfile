@@ -28,9 +28,11 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
-  # gem 'capybara'
+  gem 'simplecov', :require => false
+  gem 'factory_girl'
+
 end
 
 # Gems used only for assets and not required
