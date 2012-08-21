@@ -154,6 +154,7 @@ class SubscriptionsController < ApplicationController
 
     	respond_to do |format|
             if payment_complete and @subscription.save
+                # Send the user an email
                 UserMailer.subscription_confirmation(current_user).deliver
                 format.html { redirect_to current_user, notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
@@ -190,7 +191,8 @@ class SubscriptionsController < ApplicationController
         end
 
         if cancel_complete and @subscription.save
-            # TODO: Send email to user & subscribe@newint.com.au asking whether they'd like a refund or not.
+            # Send the user an email to confirm the cancellation.
+            UserMailer.subscription_cancellation(current_user).deliver
             redirect_to user_path(@user), notice: "Subscription was successfully cancelled."
         else
             redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry."
