@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+// Pre-Twitter Bootstrap code. TODO: Delete before production.
+
+/*
 $border-radius: 2px;
 $shadow: 0px 2px 5px #999999;
 $font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -31,12 +35,12 @@ a:hover {
 	margin: 20px auto 20px auto;
 	padding: 10px 20px 20px 20px;
 	
-	/* Shadow */
+	// Shadow
 	-moz-box-shadow: $shadow;
 	-webkit-box-shadow: $shadow;
 	box-shadow: $shadow;
 	
-	/* Rounded corners */
+	// Rounded corners
 	border-radius: $border-radius;
 	-moz-border-radius: $border-radius;
 	-webkit-border-radius: $border-radius;
@@ -52,3 +56,4 @@ a:hover {
 	float: right;
 	font-size: 0.9em;
 }
+*/
