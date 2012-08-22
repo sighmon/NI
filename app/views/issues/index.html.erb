@@ -1,37 +1,48 @@
-<h1>New Internationalist Magazine</h1>
-<h2>List of issues</h2>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Number</th>
-    <th>Release</th>
-    <th>Trial?</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @issues.sort_by{|x|x.release}.each do |issue| %>
-  <tr>
-    <td><%= issue.title %></td>
-    <td><%= issue.number %></td>
-    <td><%= issue.release.strftime("%B, %Y") %></td>
-    <td><%= issue.trialissue? ? 'Yes' : 'No' %></td>
-    <td><%= link_to 'Show', issue %></td>
-    <% if can? :update, @issue %>
-      <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
+<%- model_class = Issue -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:number) %></th>
+      <th><%= model_class.human_attribute_name(:release) %></th>
+      <th><%= model_class.human_attribute_name(:trialissue) %></th>
+      <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
+      <% if can? :update, @issue %><th><%=t '.actions', :default => t("helpers.actions") %></th><% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issues.sort_by{|x|x.release}.each do |issue| %>
+      <tr>
+        <!-- <td><%= link_to issue.id, issue_path(issue) %></td> -->
+        <td><%= link_to issue.title, issue_path(issue) %></td>
+        <td><%= issue.number %></td>
+        <td><%= issue.release.strftime("%B, %Y") %></td>
+        <td><%= issue.trialissue? ? 'Yes' : 'No' %></td>
+        <!-- <td><%=l issue.created_at %></td> -->
+        <% if can? :update, @issue %>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_issue_path(issue), :class => 'btn btn-mini' %>
+          <% if can? :destroy, @issue %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      issue_path(issue),
+                      :method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                      :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+        <% end %>
+      </tr>
     <% end %>
-    <% if can? :destroy, @issue %>
-      <td><%= link_to 'Destroy', issue, confirm: 'Are you sure?', method: :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
 
-<br />
-
 <% if can? :create, Issue %>
-  <%= link_to 'New Issue', new_issue_path %>
+	<%= link_to t('.new', :default => t("helpers.links.new")),
+	            new_issue_path,
+	            :class => 'btn btn-primary' %>
 <% end %>
