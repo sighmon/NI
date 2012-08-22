@@ -32,42 +32,40 @@
   <% end %>
 </div>
 
-<h3>Articles in this issue</h3>
+<h2>Articles in this issue</h2>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Teaser</th>
-    <th>Author</th>
-    <th>Publication</th>
-    <th>Trial</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @issue.articles.each do |article| %>
-  <tr>
-    <td><%= article.title %></td>
-    <td><%= article.teaser %></td>
-    <td><%= article.author %></td>
-    <td><%= article.publication.strftime("%B, %Y") %></td>
-    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
-    <td>
-        <% if can? :read, article %>
-          <%= link_to 'Show', issue_article_path(@issue,article) %>
-        <% else %>
-          <%= link_to 'Buy', new_issue_purchase_path(@issue) %>
-        <% end %>
-    </td>
-    <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article) %></td><% end %>
-    <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete %></td><% end %>
-  </tr>
-<% end %>
+<table class="table table-striped">
+  <thead>
+	  <tr>
+	    <th>Title</th>
+	    <th>Teaser</th>
+	    <th>Author</th>
+	    <th>Publication</th>
+	    <th>Trial</th>
+	  </tr>
+  </thead>
+  <tbody>
+  <% @issue.articles.each do |article| %>
+	  <tr>
+	    <td><% if can? :read, article %><%= link_to article.title, issue_article_path(@issue,article) %><% else %><%= article.title %><% end %></td>
+	    <td><%= article.teaser %></td>
+	    <td><%= article.author %></td>
+	    <td><%= article.publication.strftime("%B, %Y") %></td>
+	    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
+	    <td>
+	        <% if can? :read, article %>
+	          <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+	        <% else %>
+	          <%= link_to 'Buy', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+	        <% end %>
+	    </td>
+	    <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %></td><% end %>
+	    <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %></td><% end %>
+	  </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <% if can? :create, Article %>
-  <p><%= link_to 'New Article', new_issue_article_path(@issue) %></p>
+  <p><%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %></p>
 <% end %>

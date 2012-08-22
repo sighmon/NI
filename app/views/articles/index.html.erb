@@ -1,34 +1,48 @@
-<h1>New Internationalist Magazine</h1>
-<h3>All of the articles from NI <%= @issue.number %> - <%= @issue.title %></h3>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Teaser</th>
-    <th>Author</th>
-    <th>Publication</th>
-    <th>Trial</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @issue.articles.each do |article| %>
-  <tr>
-    <td><%= article.title %></td>
-    <td><%= article.teaser %></td>
-    <td><%= article.author %></td>
-    <td><%= article.publication %></td>
-    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
-    <td><%= link_to 'Show', issue_article_path(@issue,article) %></td>
-    <% if can? :update, @article %><td><%= link_to 'Edit', edit_issue_article_path(@issue,article) %></td><% end %>
-    <% if can? :destroy, @article %><td><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete %></td><% end %>
-  </tr>
-<% end %>
+<%- model_class = Article -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:teaser) %></th>
+      <th><%= model_class.human_attribute_name(:author) %></th>
+      <th><%= model_class.human_attribute_name(:publication) %></th>
+      <th><%= model_class.human_attribute_name(:body) %></th>
+      <th><%= model_class.human_attribute_name(:issue_id) %></th>
+      <th><%= model_class.human_attribute_name(:trialarticle) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issue.articles.each do |article| %>
+      <tr>
+        <td><%= link_to article.id, issue_article_path(article) %></td>
+        <td><%= article.title %></td>
+        <td><%= article.teaser %></td>
+        <td><%= article.author %></td>
+        <td><%= article.publication %></td>
+        <td><%= article.body %></td>
+        <td><%= article.issue_id %></td>
+        <td><%= article.trialarticle %></td>
+        <td><%=l article.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_issue_article_path(article), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      issue_article_path(article),
+                      :method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<% if can? :create, Article %>
-  <p><%= link_to 'New Article', new_issue_article_path(@issue) %></p>
-<% end %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_issue_article_path,
+            :class => 'btn btn-primary' %>
