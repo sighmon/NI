@@ -1,6 +1,6 @@
-<h2>Buy this issue</h2>
-<h3><%= @issue.number %> - <%= @issue.title %></h3>
+<div class="page-header">
+	<h2>Buy this issue</h2>
+</div>
+<h3><%= @issue.title %> - <%= @issue.release.strftime("%B, %Y") %></h3>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', issue_path(@issue) %>

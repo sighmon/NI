@@ -12,14 +12,14 @@
   <dd><%= @article.author %></dd>
   <dt><strong><%= model_class.human_attribute_name(:publication) %>:</strong></dt>
   <dd><%= @article.publication.strftime("%B, %Y") %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:trialarticle) %>:</strong></dt>
+  <dd><%= @article.trialarticle? ? 'Yes' : 'No' %></dd>
   <dt><strong><%= model_class.human_attribute_name(:body) %>:</strong></dt>
   <dd><%= @article.body %></dd>
 <!--
   <dt><strong><%= model_class.human_attribute_name(:issue_id) %>:</strong></dt>
   <dd><%= @article.issue_id %></dd>
 -->
-  <dt><strong><%= model_class.human_attribute_name(:trialarticle) %>:</strong></dt>
-  <dd><%= @article.trialarticle? ? 'Yes' : 'No' %></dd>
 </dl>
 
 <div class="form-actions">

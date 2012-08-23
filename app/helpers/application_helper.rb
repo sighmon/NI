@@ -3,11 +3,11 @@ module ApplicationHelper
         if issues.try(:empty?)
             return "You haven't purchased any individual issues yet."
         else
-            table = "<table class='issues_as_table'>"
+            table = "<table class='table table-striped issues_as_table'><thead><tr><th>Title</th><th>Release date</th></tr></thead><tbody>"
             for issue in issues.sort_by {|x| x.release} do
                 table += "<tr><td>#{link_to issue.title, issue_path(issue)}</td><td>#{issue.release.strftime("%B, %Y")}</td></tr>"
             end
-            table += "</table>"
+            table += "</tbody></table>"
             return raw table
         end
     end

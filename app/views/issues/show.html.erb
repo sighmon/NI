@@ -18,7 +18,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issues_path, :class => 'btn'  %>
+              issues_path, :class => 'btn' %>
   <% if can? :update, @issue %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
 	              edit_issue_path(@issue), :class => 'btn' %>
