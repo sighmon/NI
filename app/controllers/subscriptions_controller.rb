@@ -156,10 +156,10 @@ class SubscriptionsController < ApplicationController
             if payment_complete and @subscription.save
                 # Send the user an email
                 UserMailer.subscription_confirmation(current_user).deliver
-                format.html { redirect_to current_user, notice: 'Subscription was successfully purchased.' }
+                format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else
-                format.html { redirect_to current_user, notice: "Couldn't subscribe, sorry." }
+                format.html { redirect_to user_path(current_user), notice: "Couldn't subscribe, sorry." }
                 format.json { render json: @subscription.errors, status: :unprocessable_entity }
             end
         end
