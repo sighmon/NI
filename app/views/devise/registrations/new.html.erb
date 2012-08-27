@@ -1,26 +1,19 @@
-<h2>Sign up</h2>
+<div class="page-header">
+	<h2>Sign up</h2>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
 
-  <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <!-- TODO: remove admin for launch -->
-  <div><%= f.label :admin %><br />
-    <%= f.check_box :admin %>
+  <div class="inputs">
+    <%= f.input :email, :required => true, :autofocus => true %>
+    <%= f.input :password, :required => true %>
+    <%= f.input :password_confirmation, :required => true %>
   </div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div class="actions">
+    <%= f.button :submit, "Sign up" %>
+  </div>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
