@@ -20,7 +20,7 @@
   <dd><% if @user.subscriber? and !@user.subscription.paypal_profile_id.blank? %>
 		You have an automatic renewal, <%= link_to "Cancel my subscription", edit_subscription_path, :class => 'btn btn-danger' %>
 	<% elsif @user.subscriber? %>
-		<%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %>, <%= link_to "Cancel my subscription", edit_subscription_path, :class => 'btn btn-danger' %>
+		<%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %> <%= link_to "Cancel my subscription", edit_subscription_path, :class => 'btn btn-danger' %>
 	<% elsif @user.subscription_lapsed? %>
 		<%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %>
 	<% else %>

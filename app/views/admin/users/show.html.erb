@@ -1,23 +1,44 @@
-<h2><%= @user %></h2>
-<p><b>Email address</b>: <%= @user.email %></p>
-<p><b>Subscription expiry date</b>: <%= user_expiry_as_string(@user) %><br />
-	<% if @user.subscription and !@user.subscription.paypal_profile_id.blank? %>
+<div class="page-header">
+	<h1><%= @user %></h1>
+</div>
+
+<dl class="dl-horizontal">
+	<dt><strong>Email address:</strong></dt>
+	<dd><%= @user.email %></dd>
+	<dt><strong>User type:</strong></dt>
+	<dd><%= @user.user_type %></dd>
+	<dt><strong>Expiry date:</strong></dt>
+	<dd><%= user_expiry_as_string(@user) %><br />
+		<% if @user.subscription and !@user.subscription.paypal_profile_id.blank? %>
 		(Automatic debit)
+		<% end %></dd>
+	<dt>&nbsp;</dt>
+	<dd>&nbsp;</dd>
+	<% if @user.subscription and @user.subscription.refund %>
+		<dt><strong>Refund due:</strong></dt>
+		<dd><%= @user.subscription.refund %> months.</dd>
 	<% end %>
-</p>
-<% if @user.subscription and @user.subscription.refund %>
-	<p><b>Refund due</b>: <%= @user.subscription.refund %> months.
-<% end %>
-<% if @user.subscription and @user.subscription.paypal_payer_id %>
-	<p><b>PayPal Name</b>: <%= @user.subscription.paypal_first_name %> <%= @user.subscription.paypal_last_name %><br />
-		<b>PayPal Payer ID</b>: <%= @user.subscription.paypal_payer_id %><br />
-		<b>PayPal email</b>: <%= @user.subscription.paypal_email %><br />
+	<dt>&nbsp;</dt>
+	<dd>&nbsp;</dd>
+	<% if @user.subscription and @user.subscription.paypal_payer_id %>
+		<dt><strong>PayPal Name:</strong></dt>
+		<dd><%= @user.subscription.paypal_first_name %> <%= @user.subscription.paypal_last_name %></dd>
+		<dt><strong>PayPal Payer ID:</strong></dt>
+		<dd><%= @user.subscription.paypal_payer_id %></dd>
+		<dt><strong>PayPal email:</strong></dt>
+		<dd><%= @user.subscription.paypal_email %></dd>
 		<% if !@user.subscription.paypal_profile_id.blank? %>
-			<b>PayPal Recurring Profile ID</b>: <%= @user.subscription.paypal_profile_id %>
+			<dt><strong>PayPal Recurring Profile ID:</strong></dt>
+			<dd><%= @user.subscription.paypal_profile_id %></dd>
 		<% end %>
-	</p>
-<% end %>
-<p><b>User type</b>: <%= @user.user_type %></p>
-<p><b>Purchases:</b> <%= issues_as_table(@user.issues) %></p>
-<%= link_to "Edit User", edit_admin_user_path(@user) %> | <%= link_to "Back", admin_users_path %><br /><br />
-<%= link_to "Delete User", admin_user_path(@user), :method => :delete, :confirm => "Are you sure you want to delete this user?" %>
+	<% end %>
+</dl>
+
+<h3>Purchases</h3>
+<%= issues_as_table(@user.issues) %>
+
+<div class="form-actions">
+	<%= link_to "Back", :back, :class => 'btn' %>
+	<%= link_to "Edit User", edit_admin_user_path(@user), :class => 'btn btn-primary' %>
+	<%= link_to "Delete User", admin_user_path(@user), :method => :delete, :confirm => "Are you sure you want to delete this user?", :class => 'btn btn-danger' %>
+</div>

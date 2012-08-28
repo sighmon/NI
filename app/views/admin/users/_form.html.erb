@@ -1,3 +1,27 @@
+<%= simple_form_for [:admin, @user], :html => {:class => 'form-horizontal' } do |f| %>
+    <%= f.input :username %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+    <%= f.input :admin %>
+    <%= f.association :issues, :as => :check_boxes %>
+    <%= simple_fields_for :subscription do |f| %>
+      <%= f.input :expiry_date, :as => :datetime %>
+      <%= f.input :refund, :as => :hidden %>
+      <%= f.input :paypal_payer_id, :as => :hidden %>
+      <%= f.input :paypal_profile_id, :as => :hidden %>
+      <%= f.input :paypal_email, :as => :hidden %>
+      <%= f.input :paypal_first_name, :as => :hidden %>
+      <%= f.input :paypal_last_name, :as => :hidden %>
+    <% end %>
+  
+  <div class="form-actions">
+    	<%= f.button :submit, :class => 'btn btn-success' %>
+	<%= link_to "Cancel", :back, :class => 'btn' %>
+  </div>
+  
+<% end %>
+
 <!-- Pre-Formtastic form -->
 <!-- <%= form_for [:admin, @user] do |f| %> -->
   <!-- f.error_messages -->
@@ -26,6 +50,7 @@
   <div><%= f.submit %></div>
 <% end %> -->
 
+<!-- Pre-simple_form
 <%= semantic_form_for [:admin, @user] do |f| %>
   <%= f.inputs do %>
     <%= f.input :username %>
@@ -42,10 +67,15 @@
       <%= f.hidden_field :paypal_first_name %>
       <%= f.hidden_field :paypal_last_name %>
     <% end %>
-    <br /><br /><!-- TODO: Fix in CSS -->
     <%= f.input :issues, :as => :check_boxes %>
   <% end %>
-  <%= f.actions do %>
-    <%= f.action :submit, :as => :button %>
-  <% end %>
+  
+  <div class="form-actions">
+  	<%= f.actions do %>
+    	<%= f.action :submit, :as => :button, :class => 'btn' %>
+    <% end %>
+	<%= link_to "Cancel", admin_users_path, :class => 'btn' %>
+  </div>
+  
 <% end %>
+-->
