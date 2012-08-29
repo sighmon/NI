@@ -52,7 +52,15 @@ end
 
 gem 'jquery-rails'
 
+# For forms to work with Bootstrap for twitter
+# https://github.com/plataformatec/simple_form
 gem 'simple_form'
+
+# RMagick for image editing
+gem 'rmagick'
+
+# CarrierWave for image uploading
+gem 'carrierwave'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

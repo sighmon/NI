@@ -16,6 +16,8 @@
   <dd><%= @issue.trialissue? ? 'Yes' : 'No' %></dd>
 </dl>
 
+<%= image_tag @issue.cover_url(:thumb).to_s %>
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               issues_path, :class => 'btn' %>

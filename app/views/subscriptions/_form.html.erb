@@ -1,61 +1,83 @@
 <% if @cancel_subscription %>
 
 	<% if @user.subscriber? %>
-		<p><b>Subscription expiry date</b>: 
+		<dl class="dl-horizontal">
+			<dt>Expiry date:</dt> 
 		<% begin %>
-			<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+			<dd><%= @user.subscription.expiry_date.strftime("%e %B, %Y") %></dd>
 		<% rescue NoMethodError %>
-			No current subscription.
+			<dd>No current subscription.</dd>
 		<% end %>
-		</p>
+		</dl>
 	<% end %>
 
-	<%= semantic_form_for(@subscription) do |f| %>
+	<%= simple_form_for(@subscription) do |f| %>
 
 	  <h3>Are you sure you want to cancel your subscription?</h3>
-
-	  <%= radio_button_tag 'cancel', 'true', 'false' %> Yes.<br />
-	  <%= radio_button_tag 'cancel', 'false', 'true' %> No.<br />
+	  <dl class="dl-horizontal subscribe-options">
+	  	<dt><%= radio_button_tag 'cancel', 'true', 'false' %></dt>
+	  	<dd>Yes, I'm sure.</dd>
+	  	<dt><%= radio_button_tag 'cancel', 'false', 'true' %></dt>
+	  	<dd>No, I'm not really sure.</dd>
 	  
-	  <%= f.actions do %>
-	    <%= f.action :submit, :label => "Make it so.", :as => :button %>
-	  <% end %>
+	  <div class="form-actions">
+	  	<%= f.button :submit, :class => 'btn-danger' %>
+	  	<%= link_to "Back", user_path(@user), :class => 'btn' %>
+	  </div>
 	<% end %>
 
 <% elsif @has_token %>
 
-	<%= semantic_form_for(@subscription) do |f| %>
+	<%= simple_form_for(@subscription) do |f| %>
 
-	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  <% if session[:express_autodebit] %>
-	  	Automatic debit every: <%= session[:express_purchase_subscription_duration] %> months.<br />
-	  	Debit amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
-	  <% else %>
-	  	Subscription length: <%= session[:express_purchase_subscription_duration] %> months.<br />
-	  	Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
-	  <% end %><br /><br />
+	  <dl class="dl-horizontal">
+	  	<dt><strong>Name:</strong></dt>
+	  	<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
+		<% if session[:express_autodebit] %>
+			<dt><strong>Debit every:</strong></dt>
+			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
+			<dt><strong>Debit amount:</strong></dt>
+			<dd>$<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %></dd>
+		<% else %>
+			<dt><strong>Subscription:</strong></dt>
+			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
+			<dt><strong>Amount:</strong></dt>
+			<dd>$<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %></dd>
+		<% end %>
+	  </dl>
 	  
-	  <%= f.actions do %>
-	    <%= f.action :submit, :label => "Complete your purchase", :as => :button %>
-	  <% end %>
+	  <div class="form-actions">
+	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success' %>
+	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
+	  </div>
 	<% end %>
 
 <% else %>
 	
-	<%= semantic_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
+	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
 
-	  <%= radio_button_tag 'duration', '3', 'false' %> 3 Month Subscription<br />
-	  <%= radio_button_tag 'duration', '6', 'false' %> 6 Month Subscription<br />
-	  <%= radio_button_tag 'duration', '12', 'true' %> 12 Month Subscription<br />
+	  <dl class="dl-horizontal subscribe-options">
+	  	<dt><%= radio_button_tag 'duration', '3', 'false' %></dt>
+	  	<dd>3 Month Subscription</dd>
+	  	<dt><%= radio_button_tag 'duration', '6', 'false' %></dt>
+	  	<dd>6 Month Subscription</dd>
+	  	<dt><%= radio_button_tag 'duration', '12', 'true' %></dt>
+	  	<dd>12 Month Subscription</dd>
+	  </dl>
 	  <hr />
-	  <h3>Automatic debit</h3>
+	  <h2>Automatic debit</h2>
 	  <p>Would you like NI to automatically debit your PayPal account until you tell us to stop?</p>
-	  <%= radio_button_tag 'autodebit', '1', 'false' %> Yes please!<br />
-	  <%= radio_button_tag 'autodebit', '0', 'true' %> No thanks, just a single debit this time.<br /><br />
+	  <dl class="dl-horizontal subscribe-options">
+	  	<dt><%= radio_button_tag 'autodebit', '1', 'false' %></dt>
+	  	<dd>Yes please!</dd>
+	  	<dt><%= radio_button_tag 'autodebit', '0', 'true' %></dt>
+	  	<dd>No thanks, just a single debit this time.</dd>
+	  </dl>
 
-	  <%= f.actions do %>
-	    <%= f.action :submit, :label => "Pay with PayPal Express", :as => :button %>
-	  <% end %>
+	  <div class="form-actions">
+	  	<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success' %>
+	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
+	  </div>
 	<% end %>
 
 <% end %>
