@@ -1,11 +1,32 @@
-<h2>Digital subscription</h2>
+<div class="page-header">
+	<h1>Digital edition</h1>
+</div>
 
-<p>Some lovely welcome copy goes here, explaining who we are, why you'd love to subscribe.</p>
+<p>Welcome to the New Internationalist digital edition, a paperless subscription to NI magazine.</p>
 
-<p>TODO: Add big subscribe button linking to sign-up / payment.</p>
+<p>To get started, you can browse the <%= link_to "magazine archive", issues_path %> to purchase a single issue of the magazine, or <%= link_to "subscribe", new_subscription_path %> for 3, 6 or 12 months.</p>
 
-<p>If you're not sure whether you want to subscribe just yet, have a read of a trial issue:</p>
+<p><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></p>
 
-<p>TODO: try the "Issue" link as a magazine trial cover or button.</p>
+<hr />
 
-<%= link_to "Issue", issues_path %>
+<div class="row-fluid">
+  <div class="span6">
+  	<h2>Try it first</h2>
+
+	<p>If you're not sure whether you want to subscribe just yet, we've put together a full magazine for you to try.</p>
+
+	<p><% @issues.sort_by{|x|x.release}.each do |issue| %>
+		<% if issue.trialissue %>
+			<%= link_to image_tag(issue.cover_url(:thumb).to_s), issue_path(issue) %>
+		<% end %>
+	<% end %></p>
+  </div>
+  <div class="span6">
+  	<h2>Magazine archive</h2>
+
+	<p>Browse a list of all of the magazines in our archive. Even if you haven't subscribed yet, you can still read the editor's letter for each issue and see a teaser of all the articles in that edition.</p>
+
+	<%= link_to "Magazine archive", issues_path, :class => 'btn' %>
+  </div>
+</div>
