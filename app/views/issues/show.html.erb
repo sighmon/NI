@@ -16,27 +16,25 @@
   <dd><%= @issue.trialissue? ? 'Yes' : 'No' %></dd>
 </dl>
 
-<%= image_tag @issue.cover_url(:thumb).to_s %>
+<%= image_tag @issue.cover_url(:thumb).to_s, :class => 'shadow' %>
 
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              issues_path, :class => 'btn' %>
-  <% if can? :update, @issue %>
+<div class="edit-issue-buttons">
+  <p><% if can? :update, @issue %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-	              edit_issue_path(@issue), :class => 'btn' %>
+	              edit_issue_path(@issue), :class => 'btn btn-mini' %>
   <% end %>
   <% if can? :destroy, @issue %>
 	  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
 	              issue_path(@issue),
 	              :method => 'delete',
 	              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-	              :class => 'btn btn-danger' %>
-  <% end %>
+	              :class => 'btn btn-mini btn-danger' %>
+  <% end %></p>
 </div>
 
 <h2>Articles in this issue</h2>
 
-<table class="table table-striped">
+<table class="table table-bordered">
   <thead>
 	  <tr>
 	    <th>Title</th>
@@ -68,6 +66,10 @@
   </tbody>
 </table>
 
-<% if can? :create, Article %>
-  <p><%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %></p>
-<% end %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              issues_path, :class => 'btn' %>
+  <% if can? :create, Article %>
+    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %>
+  <% end %>
+</div>

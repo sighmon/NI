@@ -1,4 +1,4 @@
-<%= form_for @issue, :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
+<%= simple_form_for @issue, :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
@@ -24,12 +24,12 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :cover, :class => 'control-label' %>
     <%= f.file_field :cover %>
   </div>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                :back, :class => 'btn' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn' %>
   </div>
 <% end %>

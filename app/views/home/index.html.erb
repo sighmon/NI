@@ -18,7 +18,7 @@
 
 	<p><% @issues.sort_by{|x|x.release}.each do |issue| %>
 		<% if issue.trialissue %>
-			<%= link_to image_tag(issue.cover_url(:thumb).to_s), issue_path(issue) %>
+			<%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow'), issue_path(issue) %>
 		<% end %>
 	<% end %></p>
   </div>
