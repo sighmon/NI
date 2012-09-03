@@ -12,6 +12,14 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :editors_letter, :class => 'control-label' %>
+    <%= f.text_area :editors_letter, :class => 'text_area' %>
+  </div>
+  <div class="control-group">
+    <%= f.label :cover, :class => 'control-label' %>
+    <%= f.file_field :cover %>
+  </div>
+  <div class="control-group">
     <%= f.label :release, :class => 'control-label' %>
     <div class="controls">
       <%= f.datetime_select :release, :class => 'datetime_select' %>
@@ -22,10 +30,6 @@
     <div class="controls">
       <%= f.check_box :trialissue, :class => 'check_box' %>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :cover, :class => 'control-label' %>
-    <%= f.file_field :cover %>
   </div>
 
   <div class="form-actions">

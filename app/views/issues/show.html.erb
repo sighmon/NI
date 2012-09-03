@@ -16,7 +16,12 @@
   <dd><%= @issue.trialissue? ? 'Yes' : 'No' %></dd>
 </dl>
 
-<%= image_tag @issue.cover_url(:thumb).to_s, :class => 'shadow' %>
+<%= image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow' %>
+
+<div class="editors-letter">
+  <p><strong>Editor's letter:</strong></p>
+  <%= simple_format @issue.editors_letter %>
+</div>
 
 <div class="edit-issue-buttons">
   <p><% if can? :update, @issue %>
