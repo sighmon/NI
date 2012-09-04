@@ -12,6 +12,14 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :editors_name, :class => 'control-label' %>
+    <%= f.text_field :editors_name, :class => 'text_field' %>
+  </div>
+  <div class="control-group">
+    <%= f.label :editors_photo, :class => 'control-label' %>
+    <%= f.file_field :editors_photo %>
+  </div>
+  <div class="control-group">
     <%= f.label :editors_letter, :class => 'control-label' %>
     <%= f.text_area :editors_letter, :class => 'text_area' %>
   </div>
