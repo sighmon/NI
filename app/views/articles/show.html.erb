@@ -12,22 +12,23 @@
   <dd><%= @article.author %></dd>
   <dt><strong><%= model_class.human_attribute_name(:publication) %>:</strong></dt>
   <dd><%= @article.publication.strftime("%B, %Y") %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:issue_id) %>:</strong></dt>
+  <dd><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:trialarticle) %>:</strong></dt>
   <dd><%= @article.trialarticle? ? 'Yes' : 'No' %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:body) %>:</strong></dt>
-  <dd><%= @article.body %></dd>
-<!--
-  <dt><strong><%= model_class.human_attribute_name(:issue_id) %>:</strong></dt>
-  <dd><%= @article.issue_id %></dd>
--->
 </dl>
+
+<div class="article-body">
+  <p><strong><%= model_class.human_attribute_name(:body) %>:</strong></p>
+  <%= simple_format @article.body %>
+</div>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               issue_path(@issue), :class => 'btn'  %>
   <% if can? :update, @article %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-	              edit_issue_article_path(@issue,@article), :class => 'btn' %>
+	              edit_issue_article_path(@issue,@article), :class => 'btn btn-primary' %>
   <% end %>
   <% if can? :destroy, @article %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

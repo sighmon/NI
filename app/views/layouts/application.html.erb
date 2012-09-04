@@ -34,8 +34,8 @@
 						</div>
 						<div class="btn-group user_nav">
 							<% if user_signed_in? %>
-							<%= link_to raw("<i class='icon-user icon-white'></i> #{current_user.username}"), current_user, :class => 'btn btn-primary' %>
-							<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<%= link_to raw("<i class='icon-user icon-white'></i> #{current_user.username}"), current_user, :class => 'btn btn-success' %>
+							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user.try(:subscriber?) %>
 									<li><%= link_to raw("Expiry date:<br />#{current_user.subscription.expiry_date.strftime("%e %B, %Y")}"), edit_user_registration_path(current_user) %></li>
