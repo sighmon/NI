@@ -32,6 +32,31 @@
 								<input type="text" class="search-query" placeholder="Search">
 							</form>
 						</div>
+						<div class="btn-group user_nav">
+							<% if user_signed_in? %>
+							<%= link_to raw("<i class='icon-user icon-white'></i> #{current_user.username}"), current_user, :class => 'btn btn-primary' %>
+							<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<% if current_user.try(:subscriber?) %>
+									<li><%= link_to raw("Expiry date:<br />#{current_user.subscription.expiry_date.strftime("%e %B, %Y")}"), edit_user_registration_path(current_user) %></li>
+									<li class="divider"></li>
+								<% end %>
+								<% if current_user.try(:admin?) %>
+									<li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_admin_user_path(current_user) %></li>
+								<% else %>
+									<li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_user_registration_path(current_user) %></li>
+								<% end %>
+								<% if current_user.try(:admin?) %>
+									<li><%= link_to raw("<i class='icon-heart'></i> Admin"), admin_users_path %></li>
+								<% end %>
+								<li class="divider"></li>
+								<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+							</ul>
+							<% else %>
+								<%= link_to "Sign in", new_user_session_path, :class => 'btn btn-link' %><%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-link' %>
+							<% end %>
+						</div>
+<!--
 						<div class="user_nav">
 							<% if user_signed_in? %>
 								<% if current_user.try(:admin?) %>
@@ -46,6 +71,7 @@
 								<%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
 							<% end %>
 						</div>
+-->
 				</div>
 			</div>
 		</div>
