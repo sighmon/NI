@@ -1,7 +1,6 @@
 @import "twitter/bootstrap/bootstrap";
 body { 
 	padding-top: 60px;
-	background-color: #fdfdfd;
 }
 
 @import "twitter/bootstrap/responsive";
@@ -31,32 +30,6 @@ body {
 //
 // Example:
 // @linkColor: #ff0000;
-
-
-//=================================
-// Twitter Bootstrap variable edits
-//=================================
-
-
-// Scaffolding
-// -------------------------
-@textColor:             #111;
-
-// Typography
-// -------------------------
-@sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@serifFontFamily:       "iABCRegular", serif;
-
-@baseFontSize:          14px;
-@baseFontFamily:        @sansFontFamily;
-@baseLineHeight:        20px;
-
-@headingsFontFamily:	inherit;
-
-
-//==============
-// General edits
-//==============
 
 
 // User login links & profile link
@@ -98,28 +71,26 @@ input, textarea, .uneditable-input {
 
 // Shadow
 
-@shadowColour: #999999;
-
 .shadow {
-	-moz-box-shadow:0px 2px 5px @shadowColour;
-	-webkit-box-shadow:0px 2px 5px @shadowColour;
-	box-shadow:0px 2px 5px @shadowColour;
+	-moz-box-shadow:0px 2px 5px #999999;
+	-webkit-box-shadow:0px 2px 5px #999999;
+	box-shadow:0px 2px 5px #999999;
 }
 
 a:hover .shadow {
 	margin-top: -1px;
 	margin-bottom: 1px;
-	-moz-box-shadow:0px 4px 7px @shadowColour;
-	-webkit-box-shadow:0px 4px 7px @shadowColour;
-	box-shadow:0px 4px 7px @shadowColour;
+	-moz-box-shadow:0px 4px 7px #999999;
+	-webkit-box-shadow:0px 4px 7px #999999;
+	box-shadow:0px 4px 7px #999999;
 }
 
 a:active .shadow {
 	margin-top: 0px;
 	margin-bottom: 0px;
-	-moz-box-shadow:0px 0px 7px @shadowColour;
-	-webkit-box-shadow:0px 0px 7px @shadowColour;
-	box-shadow:0px 0px 7px @shadowColour;
+	-moz-box-shadow:0px 0px 7px #999999;
+	-webkit-box-shadow:0px 0px 7px #999999;
+	box-shadow:0px 0px 7px #999999;
 }
 
 // Edit buttons
@@ -144,52 +115,4 @@ a:active .shadow {
 .editors-photo {
 	float: left;
 	margin: 10px 10px 10px 0px;
-}
-
-// Article styling
-
-.article-body {
-	font-family: @serifFontFamily;
-	font-size: 18px;
-	line-height: 27px;
-}
-
-
-
-//=============
-// @media fixes
-//=============
-
-
-/* Landscape phones and down */
-@media (max-width: 480px) {
-	.user_nav {
-		position: relative;
-		top: 1px;
-	}
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-	.user_nav {
-		position: relative;
-		top: 1px;
-	}
-}
- 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-	.user_nav {
-		position: relative;
-		top: 1px;
-	}
-}
- 
-/* Large desktop */
-@media (min-width: 1200px) {
-	.container {
-	  margin-right: auto;
-	  margin-left: auto;
-	  max-width: 945px;
-	}
 }
