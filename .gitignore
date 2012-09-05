@@ -23,3 +23,6 @@
 
 # Ignore coverage data
 /coverage
+
+# Ignore fonts
+/app/assets/fonts/iabc*
