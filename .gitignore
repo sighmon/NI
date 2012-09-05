@@ -25,4 +25,4 @@
 /coverage
 
 # Ignore fonts
-# /app/assets/fonts/iabc*
+/app/assets/fonts/**
