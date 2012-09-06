@@ -3,6 +3,13 @@
   <h1><%=t '.title', :default => model_class.model_name.human %>: <%= @issue.title %></h1>
 </div>
 
+<nav>
+  <ul class="breadcrumb">
+    <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
+    <li><%= link_to "Magazine archive", issues_path %></li>
+  </ul>
+</nav>
+
 <dl class="dl-horizontal">
 <!--
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>

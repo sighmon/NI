@@ -1,9 +1,19 @@
 <%- model_class = Article -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+<div class="page-header article-title">
+  <h1><%= @article.title %></h1>
+  <h2><%= @article.teaser %></h2>
 </div>
 
-<dl class="dl-horizontal">
+<nav>
+  <ul class="breadcrumb">
+    <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
+    <li><%= link_to "Magazine archive", issues_path %> <span class="divider">></span></li>
+    <li><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %> <span class="divider">></span></li>
+    <li><%= @article.publication.strftime("%B, %Y") %></li>
+  </ul>
+</nav>
+
+<!-- <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
   <dd><%= @article.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:teaser) %>:</strong></dt>
@@ -16,10 +26,9 @@
   <dd><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:trialarticle) %>:</strong></dt>
   <dd><%= @article.trialarticle? ? 'Yes' : 'No' %></dd>
-</dl>
+</dl> -->
 
 <div class="article-body">
-  <p><strong><%= model_class.human_attribute_name(:body) %>:</strong></p>
   <%= simple_format @article.body %>
 </div>
 
