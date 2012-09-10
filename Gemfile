@@ -62,6 +62,11 @@ gem 'rmagick'
 # CarrierWave for image uploading
 gem 'carrierwave'
 
+# Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
+# Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
+gem 'kaminari', '~> 0.13.0'
+gem 'kaminari-bootstrap', '~> 0.1.2'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

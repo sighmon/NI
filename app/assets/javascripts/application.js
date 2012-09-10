@@ -14,3 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
+jQuery( function($) {
+    $(".issue-cover-list img").tooltip()
+});

@@ -53,6 +53,7 @@ body {
 
 @headingsFontFamily:	inherit;
 
+// ABC news base body font Verdana 12px 18px line-height
 
 
 //==============
@@ -131,16 +132,14 @@ input, textarea, .uneditable-input {
 }
 
 a:hover .shadow {
-	margin-top: -1px;
-	margin-bottom: 1px;
+	position: relative;
+	top: -1px;
 	-moz-box-shadow:0px 4px 7px @shadowColour;
 	-webkit-box-shadow:0px 4px 7px @shadowColour;
 	box-shadow:0px 4px 7px @shadowColour;
 }
 
 a:active .shadow {
-	margin-top: 0px;
-	margin-bottom: 0px;
 	-moz-box-shadow:0px 0px 7px @shadowColour;
 	-webkit-box-shadow:0px 0px 7px @shadowColour;
 	box-shadow:0px 0px 7px @shadowColour;
@@ -152,11 +151,61 @@ a:active .shadow {
 	margin: 20px inherit 20px inherit;
 }
 
-// Issue.cover styling
+// Issue styling
+
+.pagination {
+	margin-top: -20px;
+}
+
+@issueCoverListMargin: 7px;
+
+.issue-cover-list {
+	margin: 0px -@issueCoverListMargin 20px -@issueCoverListMargin;
+}
+
+.issue-cover-list img {
+	margin-left: @issueCoverListMargin;
+	margin-right: @issueCoverListMargin;
+	margin-bottom: (@issueCoverListMargin * 2) + 3;
+}
+
+.issue-list-title {
+	// padding-bottom: 0px;
+	border: none;
+}
+
+.issue-list-title h1 {
+	padding-bottom: 0.25em;
+}
+
+.issue-list-title h2 {
+	font-size: @issueTitleH2FontSize;
+	line-height: @issueTitleH2FontSize;
+	font-weight: normal;
+	color: @gray;
+}
+
+.issue-title {
+	padding-bottom: 0px;
+	border: none;
+}
+
+.issue-title h1 {
+	padding-bottom: 0.25em;
+}
+
+@issueTitleH2FontSize: 1em;
+
+.issue-title h2 {
+	font-size: @issueTitleH2FontSize;
+	line-height: @issueTitleH2FontSize;
+	font-weight: normal;
+	color: @gray;
+}
 
 .issue-cover {
 	float: right;
-	margin: -90px 0px 20px 20px;
+	margin: -100px 0px 20px 20px;
 }
 
 // Issue.editors_letter styling
@@ -177,9 +226,14 @@ a:active .shadow {
 	border: none;
 }
 
+.article-title h1 {
+	padding-bottom: 0.25em;
+}
+
 .article-title h2 {
 	font-weight: normal;
 	font-size: 1.3em;
+	line-height: 1.3em;
 }
 
 .article-body {
@@ -188,6 +242,25 @@ a:active .shadow {
 	font-size: 18px;
 	line-height: 27px;
 */
+}
+
+.article-image {
+	float: right;
+	width: 300px;
+	margin: 0px 0px 1.5em 1.5em;
+	font-size: 0.85em;
+	color: @gray;
+}
+
+.article-image img {
+	.shadow;
+	margin-bottom: 1em;
+}
+
+.footnotes {
+	padding: 1em;
+	font-size: 0.9em;
+	color: @gray;
 }
 
 

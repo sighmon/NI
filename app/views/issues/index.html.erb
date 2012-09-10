@@ -1,7 +1,16 @@
 <%- model_class = Issue -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+<div class="page-header issue-list-title">
+  <h1>Magazine archive</h1>
+  <h2>Browse a list of all of the back issues of New Internationalist magazine.</h2>
 </div>
+
+<div class="issue-cover-list">
+  <% @issues.sort_by{|x|x.release}.each do |issue| %>
+    <%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip"), issue_path(issue) %>
+  <% end %>
+</div>
+<%= paginate @issues %>
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -9,7 +18,7 @@
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:number) %></th>
       <th><%= model_class.human_attribute_name(:release) %></th>
-      <th><%= model_class.human_attribute_name(:trialissue) %></th>
+      <!-- <th><%= model_class.human_attribute_name(:trialissue) %></th> -->
       <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
       <% if can? :update, @issue %><th><%=t '.actions', :default => t("helpers.actions") %></th><% end %>
     </tr>
@@ -21,7 +30,7 @@
         <td><%= link_to issue.title, issue_path(issue) %></td>
         <td><%= issue.number %></td>
         <td><%= issue.release.strftime("%B, %Y") %></td>
-        <td><%= issue.trialissue? ? 'Yes' : 'No' %></td>
+        <!-- <td><%= issue.trialissue? ? 'Yes' : 'No' %></td> -->
         <!-- <td><%=l issue.created_at %></td> -->
         <% if can? :update, @issue %>
         <td>

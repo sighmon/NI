@@ -10,6 +10,8 @@ class IssuesController < ApplicationController
   # GET /issues.json
   def index
     # @issues = Issue.all
+    # Testing pagination
+    @issues = Issue.order("release").page(params[:page]).per(12)
 
     respond_to do |format|
       format.html # index.html.erb
