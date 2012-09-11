@@ -44,21 +44,71 @@ body {
 
 // Typography
 // -------------------------
-@sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+// @sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
 @serifFontFamily:       "iABCRegular", serif;
 
-@baseFontSize:          14px;
 @baseFontFamily:        @sansFontFamily;
-@baseLineHeight:        20px;
+@baseFontSize:          12px;
+@baseLineHeight:        18px;
 
-@headingsFontFamily:	inherit;
+/*
+@baseFontFamily:        @serifFontFamily;
+@baseFontSize:          21px;
+@baseLineHeight:        32px;
+*/
+
+@headingsFontFamily:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 // ABC news base body font Verdana 12px 18px line-height
+
+// Navbar
+// -------------------------
+@navbarCollapseWidth:             979px;
+
+@navbarHeight:                    40px;
+@navbarBackgroundHighlight:       #ffffff;
+@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
+@navbarBorder:                    darken(@navbarBackground, 12%);
+
+@navbarText:                      #777;
+@navbarLinkColor:                 #777;
+@navbarLinkColorHover:            @grayDark;
+@navbarLinkColorActive:           @gray;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
+
+@navbarBrandColor:                @navbarLinkColor;
+
 
 
 //==============
 // General edits
 //==============
+
+// Top Nav Bar
+
+.navbar, .navbar-search .search-query {
+	font-family: @headingsFontFamily;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.navbar-search {
+	margin-top: 7px;
+}
+
+.navbar .nav > li > a {
+	text-shadow: none;
+	padding: 15px 10px 5px;
+}
+
+.navbar .brand {
+	font-family: "Bodega";
+	color: #f00d16;
+	font-size: 26px;
+	padding: 8px 20px 6px;
+}
 
 // Home page styling
 
@@ -76,6 +126,18 @@ body {
 	line-height: 1.2em;
 }
 
+@homeCoverListMargin: 7px;
+
+.home-cover-list {
+	margin: 20px -@homeCoverListMargin 20px -@homeCoverListMargin;
+}
+
+.home-cover-list img {
+	margin-left: @homeCoverListMargin;
+	margin-right: @homeCoverListMargin;
+	margin-bottom: (@homeCoverListMargin * 2) + 3;
+}
+
 // User login links & profile link
 
 .user_nav {
@@ -86,9 +148,17 @@ body {
 }
 
 .breadcrumb {
+	font-family: @headingsFontFamily;
 	background-image: none;
+	background-color: transparent;
+	padding: 0px;
 	border: none;
 	box-shadow: none;
+	color: @grayLighter;
+}
+
+.breadcrumb a {
+	color: @grayLight;	
 }
 
 // Issues listed as a table on the user profile
@@ -151,6 +221,12 @@ a:active .shadow {
 	margin: 20px inherit 20px inherit;
 }
 
+.form-actions {
+	padding: 18px 0px;
+	background-color: transparent;
+	border-top: 1px dashed #e5e5e5;
+}
+
 // Issue styling
 
 .pagination {
@@ -182,7 +258,7 @@ a:active .shadow {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
 	font-weight: normal;
-	color: @gray;
+	color: @grayLight;
 }
 
 .issue-title {
@@ -200,12 +276,12 @@ a:active .shadow {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
 	font-weight: normal;
-	color: @gray;
+	color: @grayLight;
 }
 
 .issue-cover {
 	float: right;
-	margin: -100px 0px 20px 20px;
+	margin: -65px 0px 20px 20px;
 }
 
 // Issue.editors_letter styling
@@ -223,7 +299,7 @@ a:active .shadow {
 
 .article-title {
 	padding-bottom: 0px;
-	border: none;
+	border-bottom: 1px dashed #eeeeee;
 }
 
 .article-title h1 {
@@ -231,16 +307,22 @@ a:active .shadow {
 }
 
 .article-title h2 {
-	font-weight: normal;
+	// font-weight: normal;
 	font-size: 1.3em;
 	line-height: 1.3em;
+	color: @grayLight;
+	padding-bottom: 0.75em;
+}
+
+.article-title p {
+	color: @grayLight;
 }
 
 .article-body {
 /*
 	font-family: @serifFontFamily;
-	font-size: 18px;
-	line-height: 27px;
+	font-size: 21px;
+	line-height: 32px;
 */
 }
 
@@ -274,7 +356,10 @@ a:active .shadow {
 @media (max-width: 480px) {
 	.user_nav {
 		position: relative;
-		top: 1px;
+		top: 0px;
+	}
+	.article-image {
+		width: 100%;
 	}
 }
  
@@ -282,7 +367,7 @@ a:active .shadow {
 @media (max-width: 767px) {
 	.user_nav {
 		position: relative;
-		top: 1px;
+		top: 0px;
 	}
 }
  
@@ -290,7 +375,7 @@ a:active .shadow {
 @media (min-width: 768px) and (max-width: 979px) {
 	.user_nav {
 		position: relative;
-		top: 1px;
+		top: 0px;
 	}
 }
  

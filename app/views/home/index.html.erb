@@ -25,17 +25,21 @@
 
 	<p>If you're not sure whether you want to subscribe just yet, we've put together a full magazine for you to try.</p>
 
-	<p><% @issues.sort_by{|x|x.release}.each do |issue| %>
+	<div class="home-cover-list"><% @issues.sort_by{|x|x.release}.each do |issue| %>
 		<% if issue.trialissue %>
-			<%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "Trial issue of New Internationalist magazine: #{issue.title}", :title => "Trial issue of New Internationalist magazine: #{issue.title}"), issue_path(issue) %>
+			<%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip"), issue_path(issue) %>
 		<% end %>
-	<% end %></p>
+	<% end %></div>
   </div>
   <div class="span6">
   	<h2>Magazine archive</h2>
 
 	<p>Browse a list of all of the magazines in our archive. Even if you haven't subscribed yet, you can still read the editor's letter for each issue and see a teaser of all the articles in that edition.</p>
-
-	<%= link_to "Magazine archive", issues_path, :class => 'btn' %>
+	<p><%= link_to "Browse the full archive", issues_path, :class => 'btn' %></p>
+	<div class="home-cover-list">
+	  <% @issues.sort_by(&:release).reverse.first(3).each do |issue| %>
+	    <%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip"), issue_path(issue) %>
+	  <% end %>
+	</div>
   </div>
 </div>

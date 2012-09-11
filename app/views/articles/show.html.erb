@@ -1,32 +1,19 @@
 <%- model_class = Article -%>
-<div class="page-header article-title">
-  <h1><%= @article.title %></h1>
-  <h2><%= @article.teaser %></h2>
-</div>
 
-<nav>
+<!-- <nav>
   <ul class="breadcrumb">
     <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
     <li><%= link_to "Magazine archive", issues_path %> <span class="divider">></span></li>
     <li><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %> <span class="divider">></span></li>
     <li><%= @article.publication.strftime("%B, %Y") %></li>
   </ul>
-</nav>
+</nav> -->
 
-<!-- <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
-  <dd><%= @article.title %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:teaser) %>:</strong></dt>
-  <dd><%= @article.teaser %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:author) %>:</strong></dt>
-  <dd><%= @article.author %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:publication) %>:</strong></dt>
-  <dd><%= @article.publication.strftime("%B, %Y") %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:issue_id) %>:</strong></dt>
-  <dd><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:trialarticle) %>:</strong></dt>
-  <dd><%= @article.trialarticle? ? 'Yes' : 'No' %></dd>
-</dl> -->
+<div class="page-header article-title">
+  <h1><%= @article.title %></h1>
+  <h2><%= @article.teaser %></h2>
+  <p class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></p>
+</div>
 
 <div class="article-body">
   <%= simple_format @article.body %>

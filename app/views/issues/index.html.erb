@@ -5,8 +5,8 @@
 </div>
 
 <div class="issue-cover-list">
-  <% @issues.sort_by{|x|x.release}.each do |issue| %>
-    <%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip"), issue_path(issue) %>
+  <% @issues.sort_by(&:release).reverse.each do |issue| %>
+    <%= link_to image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip"), issue_path(issue) %>
   <% end %>
 </div>
 <%= paginate @issues %>
