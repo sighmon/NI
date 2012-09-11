@@ -41,7 +41,7 @@
 <table class="table table-bordered">
   <thead>
 	  <tr>
-	    <th><h2>Articles in this issue</h2></th>
+	    <th><h4>Articles in this issue</h4></th>
 	    <!-- <th>Teaser</th> -->
 	    <!-- <th>Author</th> -->
 	    <!-- <th>Publication</th> -->
@@ -51,7 +51,7 @@
   <tbody>
   <% @issue.articles.each do |article| %>
 	  <tr>
-	    <td><h3><% if can? :read, article %><%= link_to article.title, issue_article_path(@issue,article) %><% else %><%= article.title %><% end %></h3><p><%= article.teaser %></p></td>
+	    <td><h5><% if can? :read, article %><%= link_to article.title, issue_article_path(@issue,article) %><% else %><%= article.title %><% end %></h5><p><%= article.teaser %></p></td>
 	    <!-- <td><%= article.teaser %></td> -->
 	    <!-- <td><%= article.author %></td> -->
 	    <!-- <td><%= article.publication.strftime("%B, %Y") %></td> -->
