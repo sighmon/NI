@@ -5,4 +5,13 @@ class Issue < ActiveRecord::Base
   has_many :users, :through => :purchases
   mount_uploader :cover, CoverUploader
   mount_uploader :editors_photo, EditorsPhotoUploader
+  # If versions need reprocssing
+  # after_update :reprocess_image
+
+  private
+
+  def reprocess_image
+    cover.recreate_versions!
+  end
+
 end

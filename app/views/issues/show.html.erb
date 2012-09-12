@@ -7,55 +7,73 @@
   </ul>
 </nav> -->
 
+<div class="edit-issue-buttons">
+  <% if can? :update, @issue %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_issue_path(@issue), :class => 'btn btn-mini' %>
+  <% end %>
+  <% if can? :destroy, @issue %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                issue_path(@issue),
+                :method => 'delete',
+                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                :class => 'btn btn-mini btn-danger' %>
+  <% end %>
+</div>
+
 <div class="page-header issue-title">
   <h1><%= @issue.title %></h1>
   <h2>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h2>
 </div>
 
-<%= image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}" %>
-
-<% if @issue.editors_letter != "" %>
-  <div class="editors-letter">
-    <%= image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}" %>
-    <%= simple_format @issue.editors_letter %>
-    <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
+<div class="row-fluid">
+  <div class="span6 issue-articles-container">
+    <%= image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}" %>
+    <h3>Articles in this issue.</h3>
+      <% @issue.articles.each do |article| %>
+        <div class="issue-article">
+        <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
+        <p><%= article.teaser %></p>
+        <p><% if can? :read, article %>
+        <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+        <% else %>
+          <%= link_to 'Buy', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+        <% end %>
+        <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %><% end %>
+        <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
+        </div>
+      <% end %>
   </div>
-<% end %>
-
-<div class="edit-issue-buttons">
-  <p><% if can? :update, @issue %>
-	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-	              edit_issue_path(@issue), :class => 'btn btn-mini' %>
-  <% end %>
-  <% if can? :destroy, @issue %>
-	  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-	              issue_path(@issue),
-	              :method => 'delete',
-	              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-	              :class => 'btn btn-mini btn-danger' %>
-  <% end %></p>
+  <div class="span6 editors-letter">
+    <% if @issue.editors_letter != "" %>
+      <h3>A note from this month's editor</h3>
+      <%= image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo img-polaroid', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}" %>
+      <%= simple_format @issue.editors_letter %>
+      <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
+    <% end %>
+  </div>
 </div>
 
-<!-- <h2>Articles in this issue</h2> -->
+<!-- Old table code -->
 
-<table class="table table-bordered">
+<!-- <table class="table table-bordered">
   <thead>
 	  <tr>
 	    <th><h4>Articles in this issue</h4></th>
-	    <!-- <th>Teaser</th> -->
-	    <!-- <th>Author</th> -->
-	    <!-- <th>Publication</th> -->
-	    <!-- <th>Trial</th> -->
+	    <th>Teaser</th>
+	    <th>Author</th>
+	    <th>Publication</th>
+	    <th>Trial</th>
 	  </tr>
   </thead>
   <tbody>
   <% @issue.articles.each do |article| %>
 	  <tr>
 	    <td><h5><% if can? :read, article %><%= link_to article.title, issue_article_path(@issue,article) %><% else %><%= article.title %><% end %></h5><p><%= article.teaser %></p></td>
-	    <!-- <td><%= article.teaser %></td> -->
-	    <!-- <td><%= article.author %></td> -->
-	    <!-- <td><%= article.publication.strftime("%B, %Y") %></td> -->
-	    <!-- <td><%= article.trialarticle? ? 'Yes' : 'No' %></td> -->
+	    <td><%= article.teaser %></td>
+	    <td><%= article.author %></td>
+	    <td><%= article.publication.strftime("%B, %Y") %></td>
+	    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
 	    <td>
         <% if can? :read, article %>
           <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
@@ -68,7 +86,7 @@
 	  </tr>
   <% end %>
   </tbody>
-</table>
+</table> -->
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

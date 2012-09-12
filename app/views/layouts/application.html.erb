@@ -47,7 +47,7 @@
 								<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
 							</ul>
 							<% else %>
-								<%= link_to "Sign in", new_user_session_path, :class => 'btn btn-mini' %><%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-mini' %>
+								<%= link_to "Sign in", new_user_session_path, :class => 'btn' %><%= link_to "Sign up", new_user_registration_path, :class => 'btn' %>
 							<% end %>
 						</div>
 						<div class="nav-collapse">

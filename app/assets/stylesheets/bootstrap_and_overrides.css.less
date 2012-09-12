@@ -147,9 +147,14 @@ body {
 
 .user_nav {
 	float: right;
-	/* font-size: 0.9em; */
 	position: relative;
 	top: -1px;
+}
+
+// Weird icon bug fix
+
+.dropdown-menu li a:hover .icon-star, .dropdown-menu li a:hover .icon-pencil, .dropdown-menu li a:hover .icon-heart {
+	background-image: none;
 }
 
 .breadcrumb {
@@ -199,31 +204,40 @@ input, textarea, .uneditable-input {
 // Shadow
 
 @shadowColour: #999999;
+@shadowSizeNormal: 0px 2px 5px;
+@shadowSizeHover: 0px 4px 7px;
+@shadowSizeActive: 0px 0px 7px;
 
 .shadow {
-	-moz-box-shadow:0px 2px 5px @shadowColour;
-	-webkit-box-shadow:0px 2px 5px @shadowColour;
-	box-shadow:0px 2px 5px @shadowColour;
+	-moz-box-shadow: @shadowSizeNormal @shadowColour;
+	-webkit-box-shadow: @shadowSizeNormal @shadowColour;
+	box-shadow: @shadowSizeNormal @shadowColour;
 }
 
 a:hover .shadow {
 	position: relative;
 	top: -1px;
-	-moz-box-shadow:0px 4px 7px @shadowColour;
-	-webkit-box-shadow:0px 4px 7px @shadowColour;
-	box-shadow:0px 4px 7px @shadowColour;
+	-moz-box-shadow: @shadowSizeHover @shadowColour;
+	-webkit-box-shadow: @shadowSizeHover @shadowColour;
+	box-shadow: @shadowSizeHover @shadowColour;
 }
 
 a:active .shadow {
-	-moz-box-shadow:0px 0px 7px @shadowColour;
-	-webkit-box-shadow:0px 0px 7px @shadowColour;
-	box-shadow:0px 0px 7px @shadowColour;
+	-moz-box-shadow: @shadowSizeActive @shadowColour;
+	-webkit-box-shadow: @shadowSizeActive @shadowColour;
+	box-shadow: @shadowSizeActive @shadowColour;
 }
 
 // Edit buttons
 
 .edit-issue-buttons {
-	margin: 20px inherit 20px inherit;
+	float: right;
+	.border-radius(5px);
+	border: 1px dashed @grayLight;
+	background-color: @grayLighter;
+	padding: 10px;
+	width: intrinsic;
+	// margin: 20px inherit 20px inherit;
 }
 
 .form-actions {
@@ -268,11 +282,13 @@ a:active .shadow {
 
 .issue-title {
 	padding-bottom: 0px;
+	margin-top: 0px;
 	border: none;
 }
 
 .issue-title h1 {
-	/* padding-bottom: 0.25em; */
+	padding-top: 0px;
+	margin-top: 0px;
 }
 
 @issueTitleH2FontSize: 1.2em;
@@ -286,18 +302,35 @@ a:active .shadow {
 
 .issue-cover {
 	float: right;
-	margin: -50px 0px 20px 20px;
+	margin: 0px 0px 20px 20px;
+}
+
+// Issue.articles styling
+
+.issue-articles-container {
+	
+}
+
+.issue-articles-container h3 {
+	margin-bottom: 1em;
+}
+
+.issue-article {
+	margin-bottom: 20px;
 }
 
 // Issue.editors_letter styling
 
-.editors-letter {
-	
+.editors-letter h3, .issue-articles-container h3 {
+	margin-top: 0px;
+	padding-top: 0px;
+	color: @grayLight;
+	line-height: 1em;
 }
 
 .editors-photo {
-	float: left;
-	margin: 10px 10px 10px 0px;
+	float: right;
+	margin: 0px 0px 10px 10px;
 }
 
 // Article styling
@@ -321,6 +354,10 @@ a:active .shadow {
 
 .article-title p {
 	color: @grayLight;
+}
+
+.article-title .issue-cover {
+	margin-top: -40px;
 }
 
 .article-body {
@@ -374,6 +411,9 @@ a:active .shadow {
 		position: relative;
 		top: 0px;
 	}
+	.article-title .issue-cover {
+		margin-top: 0px;
+	}
 }
  
 /* Portrait tablet to landscape and desktop */
@@ -381,6 +421,9 @@ a:active .shadow {
 	.user_nav {
 		position: relative;
 		top: 0px;
+	}
+	.article-title .issue-cover {
+		margin-top: 0px;
 	}
 }
  
