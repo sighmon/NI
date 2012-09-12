@@ -86,6 +86,10 @@ body {
 // General edits
 //==============
 
+// NI Colours
+
+@niBrown: #f1edd9;
+
 // Top Nav Bar
 
 .navbar, .navbar-search .search-query {
@@ -113,8 +117,9 @@ body {
 // Home page styling
 
 .hero-unit {
-	margin: 20px 0px 20px 0px;
-	padding: 30px 40px 30px 40px;
+	background-color: @niBrown;
+	margin: 10px 0px 20px 0px;
+	padding: 20px 40px 30px 40px;
 }
 
 .hero-unit h1 {
@@ -169,6 +174,10 @@ body {
 
 .breadcrumb a {
 	color: @grayLight;	
+}
+
+.page-header {
+	margin-top: 0px;
 }
 
 // Issues listed as a table on the user profile
@@ -241,7 +250,8 @@ a:active .shadow {
 }
 
 .form-actions {
-	padding: 18px 0px;
+	padding: 18px 0px 0px 0px;
+	margin-bottom: 0px;
 	background-color: transparent;
 	border-top: 1px dashed #e5e5e5;
 }
@@ -267,10 +277,12 @@ a:active .shadow {
 .issue-list-title {
 	// padding-bottom: 0px;
 	border: none;
+	margin-bottom: 1em;
 }
 
 .issue-list-title h1 {
 	/* padding-bottom: 0.25em; */
+	margin-top: 0px;
 }
 
 .issue-list-title h2 {
@@ -301,11 +313,22 @@ a:active .shadow {
 }
 
 .issue-cover {
-	float: right;
-	margin: 0px 0px 20px 20px;
+	float: left;
+	margin: 0px 20px 20px 0px;
 }
 
 // Issue.articles styling
+
+.keynote {
+	.border-radius(5px);
+	min-height: 200px;
+	padding: 1em;
+	background-color: @niBrown;
+}
+
+.keynote h5 {
+	text-transform: uppercase;
+}
 
 .issue-articles-container {
 	
@@ -337,11 +360,13 @@ a:active .shadow {
 
 .article-title {
 	padding-bottom: 0px;
+	margin-top: 0px;
 	border-bottom: 1px dashed #eeeeee;
 }
 
 .article-title h1 {
 	/* padding-bottom: 0.25em; */
+	margin-top: 0px;
 }
 
 .article-title h2 {
@@ -357,6 +382,8 @@ a:active .shadow {
 }
 
 .article-title .issue-cover {
+	float: right;
+	margin: 0px 0px 20px 20px;
 	margin-top: -40px;
 }
 
@@ -428,10 +455,20 @@ a:active .shadow {
 }
  
 /* Large desktop */
-@media (min-width: 1200px) {
+@media (min-width: 980px) {
 	.container {
-	  margin-right: auto;
-	  margin-left: auto;
-	  max-width: 945px;
+		.shadow;
+		.border-radius(5px);
+		margin: -60px auto 2em auto;
+		padding: 60px 2em 2em 2em;
+		max-width: 945px;
+	}
+	.navbar-inner {
+		height: 100px;
+	}
+	.navbar-inner .container {
+		-moz-box-shadow: none;
+		-webkit-box-shadow: none;
+		box-shadow: none;
 	}
 }

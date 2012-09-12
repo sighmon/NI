@@ -19,7 +19,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-  	<h2>Magazine archive</h2>
+  	<h2>Latest magazines</h2>
 
 	<p>Browse a list of all of the magazines in our archive. Even if you haven't subscribed yet, you can still read the editor's letter for each issue and see a teaser of all the articles in that edition.</p>
 	<div class="home-cover-list">
@@ -31,7 +31,7 @@
   <div class="span3">
   	<h2>Try it first</h2>
 
-	<p>Here's a full magazine to read before you buy a subscription.</p>
+	<p>Read a full sample magazine to see if you like it first.</p>
 
 	<div class="home-cover-list"><% @issues.sort_by{|x|x.release}.each do |issue| %>
 		<% if issue.trialissue %>

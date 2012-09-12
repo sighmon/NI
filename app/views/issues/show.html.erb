@@ -1,17 +1,9 @@
 <%- model_class = Issue -%>
 
-<!-- <nav>
-  <ul class="breadcrumb">
-    <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
-    <li><%= link_to "Magazine archive", issues_path %></li>
-  </ul>
-</nav> -->
-
+<% if can? :update, @issue %>
 <div class="edit-issue-buttons">
-  <% if can? :update, @issue %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_issue_path(@issue), :class => 'btn btn-mini' %>
-  <% end %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_issue_path(@issue), :class => 'btn btn-primary btn-mini' %>
   <% if can? :destroy, @issue %>
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 issue_path(@issue),
@@ -19,7 +11,12 @@
                 :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
                 :class => 'btn btn-mini btn-danger' %>
   <% end %>
+   | 
+  <% if can? :create, Article %>
+    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-mini btn-primary' %>
+  <% end %>
 </div>
+<% end %>
 
 <div class="page-header issue-title">
   <h1><%= @issue.title %></h1>
@@ -28,20 +25,36 @@
 
 <div class="row-fluid">
   <div class="span6 issue-articles-container">
-    <%= image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}" %>
-    <h3>Articles in this issue.</h3>
-      <% @issue.articles.each do |article| %>
-        <div class="issue-article">
-        <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
-        <p><%= article.teaser %></p>
-        <p><% if can? :read, article %>
-        <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-        <% else %>
-          <%= link_to 'Buy', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+      <div class="issue-article keynote">
+        <%= image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}" %>
+        <h5>The big story</h5>
+        <% @issue.articles.first(1).each do |article| %>
+          <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
+          <p><%= article.teaser %></p>
+          <p><% if can? :read, article %>
+          <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+          <% else %>
+            <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+          <% end %>
+          <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+          <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
         <% end %>
-        <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %><% end %>
-        <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
-        </div>
+      </div>
+      <% unless @issue.articles[2].nil? %>
+        <h3>Other articles in this issue.</h3>
+        <% @issue.articles[1..30].each do |article| %>
+          <div class="issue-article">
+          <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
+          <p><%= article.teaser %></p>
+          <p><% if can? :read, article %>
+          <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+          <% else %>
+            <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+          <% end %>
+          <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+          <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
+          </div>
+        <% end %>
       <% end %>
   </div>
   <div class="span6 editors-letter">
@@ -53,40 +66,6 @@
     <% end %>
   </div>
 </div>
-
-<!-- Old table code -->
-
-<!-- <table class="table table-bordered">
-  <thead>
-	  <tr>
-	    <th><h4>Articles in this issue</h4></th>
-	    <th>Teaser</th>
-	    <th>Author</th>
-	    <th>Publication</th>
-	    <th>Trial</th>
-	  </tr>
-  </thead>
-  <tbody>
-  <% @issue.articles.each do |article| %>
-	  <tr>
-	    <td><h5><% if can? :read, article %><%= link_to article.title, issue_article_path(@issue,article) %><% else %><%= article.title %><% end %></h5><p><%= article.teaser %></p></td>
-	    <td><%= article.teaser %></td>
-	    <td><%= article.author %></td>
-	    <td><%= article.publication.strftime("%B, %Y") %></td>
-	    <td><%= article.trialarticle? ? 'Yes' : 'No' %></td>
-	    <td>
-        <% if can? :read, article %>
-          <%= link_to 'Show', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-        <% else %>
-          <%= link_to 'Buy', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
-        <% end %>
-  	    <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %><% end %>
-  	    <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %>
-      </td>
-	  </tr>
-  <% end %>
-  </tbody>
-</table> -->
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
