@@ -44,6 +44,14 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [100, 150]
   end
 
+  # Retina display :thumb @2x version
+  version :thumb2x do
+    process :resize_to_limit => [200, 300]
+    def full_filename (for_file = model.cover.file) 
+      "thumb_#{model.editors_photo.file.basename}@2x.#{model.cover.file.extension}" 
+    end
+  end
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list

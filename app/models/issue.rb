@@ -12,6 +12,7 @@ class Issue < ActiveRecord::Base
 
   def reprocess_image
     cover.recreate_versions!
+    editors_photo.recreate_versions!
   end
 
 end

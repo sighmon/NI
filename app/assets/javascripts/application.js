@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+//= require retina_image_tag
 
 jQuery( function($) {
     $(".issue-cover-list img").tooltip()

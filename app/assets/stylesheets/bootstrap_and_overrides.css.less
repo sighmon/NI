@@ -89,6 +89,7 @@ body {
 // NI Colours
 
 @niBrown: #f1edd9;
+@niRed: #da2128; /* or #f00d16; */
 
 // Top Nav Bar
 
@@ -117,7 +118,7 @@ body {
 // Home page styling
 
 .hero-unit {
-	background-color: @niBrown;
+	background-color: @grayLighter;
 	margin: 10px 0px 20px 0px;
 	padding: 20px 40px 30px 40px;
 }
@@ -232,6 +233,8 @@ a:hover .shadow {
 }
 
 a:active .shadow {
+	position: relative;
+	top: 0px;
 	-moz-box-shadow: @shadowSizeActive @shadowColour;
 	-webkit-box-shadow: @shadowSizeActive @shadowColour;
 	box-shadow: @shadowSizeActive @shadowColour;

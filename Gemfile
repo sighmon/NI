@@ -62,6 +62,9 @@ gem 'rmagick'
 # CarrierWave for image uploading
 gem 'carrierwave'
 
+# RetinaImageTag for retina display support
+gem 'retina_image_tag'
+
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
 gem 'kaminari', '~> 0.13.0'

@@ -44,8 +44,24 @@ class CoverUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [200, 200]
   end
 
+  # Retina display :thumb @2x version
+  version :thumb2x do
+    process :resize_to_limit => [400,400]
+    def full_filename (for_file = model.cover.file) 
+      "thumb_#{model.cover.file.basename}@2x.#{model.cover.file.extension}" 
+    end
+  end
+
   version :tiny do
     process :resize_to_limit => [75, 75]
+  end
+
+  # Retina display :tiny @2x version
+  version :tiny2x do
+    process :resize_to_limit => [150, 150]
+    def full_filename (for_file = model.cover.file) 
+      "tiny_#{model.cover.file.basename}@2x.#{model.cover.file.extension}" 
+    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
