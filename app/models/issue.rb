@@ -8,6 +8,15 @@ class Issue < ActiveRecord::Base
   # If versions need reprocssing
   # after_update :reprocess_image
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  def self.search(params)
+    tire.search(load: true) do
+      query { string params[:query]} if params[:query].present?
+    end
+  end
+
   private
 
   def reprocess_image

@@ -11,7 +11,9 @@ class IssuesController < ApplicationController
   def index
     # @issues = Issue.all
     # Pagination
-    @issues = Issue.order("release").page(params[:page]).per(12)
+    @issues = Issue.order("release").page(params[:page]).per(12).search(params)
+    # Search
+    # @issues = Issue.search(params)
 
     respond_to do |format|
       format.html # index.html.erb

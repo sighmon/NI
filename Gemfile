@@ -7,6 +7,10 @@ gem 'rails', '3.2.3'
 
 gem 'sqlite3'
 
+# Postgresql to fix error 17th Sept 2012
+# http://stackoverflow.com/questions/7087385/pg-gem-trace-bpt-trap-5-error-on-mac-os-x-lion
+gem 'pg'
+
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
 
@@ -57,18 +61,24 @@ gem 'jquery-rails'
 gem 'simple_form'
 
 # RMagick for image editing
-gem 'rmagick'
+gem 'rmagick', :require => false
 
 # CarrierWave for image uploading
+# https://github.com/jnicklas/carrierwave
 gem 'carrierwave'
 
 # RetinaImageTag for retina display support
+# https://github.com/ffaerber/retina_image_tag
 gem 'retina_image_tag'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
 gem 'kaminari', '~> 0.13.0'
 gem 'kaminari-bootstrap', '~> 0.1.2'
+
+# Tire for elasticsearch
+# http://railscasts.com/episodes/306-elasticsearch-part-1
+gem 'tire'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
