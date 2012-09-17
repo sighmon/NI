@@ -6,7 +6,7 @@
 
 <div class="issue-search">
   <%= form_tag issues_path, method: :get do %>
-      <%= text_field_tag :query, params[:query], :placeholder => 'Search terms' %>
+      <%= text_field_tag :query, params[:query], :placeholder => 'Magazine search' %>
       <%= submit_tag "Search", name: nil, :class => 'btn' %>
   <% end %>
 </div>
@@ -16,7 +16,7 @@
     <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
   <% end %>
 </div>
-<!-- <%= paginate @issues %> -->
+<%= paginate @issues %>
 
 <table class="table table-bordered">
   <thead>
