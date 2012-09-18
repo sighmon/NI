@@ -1,4 +1,5 @@
 NI::Application.routes.draw do
+
   # created by the admin/users controller creation
   # get "users/index"
 
@@ -23,6 +24,10 @@ NI::Application.routes.draw do
       end
     end
   end
+
+  # PayPal payment notification IPN
+  # get "payment_notifications/create"
+  resource :payment_notifications, :only => [:create]
 
   namespace :admin do
     root :to => "base#index"

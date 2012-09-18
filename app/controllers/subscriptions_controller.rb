@@ -92,10 +92,12 @@ class SubscriptionsController < ApplicationController
         if session[:express_autodebit]
             # It's an autodebit, so set that up
             # 1. setup autodebit by requesting payment
+            # TODO: Check that the ipn_url is working.
             ppr = PayPal::Recurring.new({
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
               :amount      => (session[:express_purchase_price] / 100),
+              :ipn_url     => '#{payment_notifications_url}',
               :currency    => 'AUD',
               :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
             })
@@ -122,6 +124,8 @@ class SubscriptionsController < ApplicationController
                     @subscription.paypal_profile_id = response_create.profile_id
                     # If successful, update the user's subscription date.
                     update_subscription_expiry_date
+                    # Reset refund if they had one in the past
+                    @subscription.refund = nil
 
                     # TODO: Background task
                     # TODO: Check paypal recurring profile id still valid
