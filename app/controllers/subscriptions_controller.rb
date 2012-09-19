@@ -113,7 +113,7 @@ class SubscriptionsController < ApplicationController
                   :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
                   :frequency   => session[:express_purchase_subscription_duration],
                   :period      => :monthly,
-                  :reference   => "NI UID #{current_user.id}",
+                  :reference   => "#{current_user.id}",
                   :start_at    => Time.zone.now,
                   :failed      => 1,
                   :outstanding => :next_billing
