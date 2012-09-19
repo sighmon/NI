@@ -40,7 +40,7 @@
           <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
         <% end %>
       </div>
-      <% unless @issue.articles[2].nil? %>
+      <% unless @issue.articles[1].nil? %>
         <h3>Other articles in this issue.</h3>
         <% @issue.articles[1..30].each do |article| %>
           <div class="issue-article">
