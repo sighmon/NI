@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
 
   	def index
   		@issue = Issue.find(params[:issue_id])
-  		@article = Issue.find(params[:issue_id])
+  		# @article = Article.find(:all)
   	end
 
   	def new

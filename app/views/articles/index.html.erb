@@ -20,7 +20,7 @@
   <tbody>
     <% @issue.articles.each do |article| %>
       <tr>
-        <td><%= link_to article.id, issue_article_path(article) %></td>
+        <td><%= link_to article.id, issue_article_path(@issue,article) %></td>
         <td><%= article.title %></td>
         <td><%= article.teaser %></td>
         <td><%= article.author %></td>
@@ -31,9 +31,9 @@
         <td><%=l article.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_article_path(article), :class => 'btn btn-mini' %>
+                      edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      issue_article_path(article),
+                      issue_article_path(@issue,article),
                       :method => :delete,
                       :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
                       :class => 'btn btn-mini btn-danger' %>
