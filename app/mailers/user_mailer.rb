@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   # default from: "subscribe@newint.com.au"
   # TODO: set this to subscribe@newint.com.au for production
-  default :from => "newint.au@gmail.com"
+  default :from => "subscribe@newint.com.au"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:

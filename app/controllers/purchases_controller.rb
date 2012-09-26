@@ -64,6 +64,13 @@ class PurchasesController < ApplicationController
         if response.success?
             # FIXME: Work out how to simplify this call.
             @purchase = Purchase.create(:user_id => @user.id, :issue_id => @issue.id)
+            # Write purchase date & price to purchase object
+            @purchase.price_paid = session[:express_purchase_price]
+            @purchase.purchase_date = DateTime.now
+            # Save the paypal data to the purchase model
+            @purchase.paypal_payer_id = session[:express_payer_id]
+            @purchase.paypal_first_name = session[:express_first_name]
+            @purchase.paypal_last_name = session[:express_last_name]
         end
 
         respond_to do |format|

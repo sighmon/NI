@@ -8,17 +8,17 @@ class SubscriptionsController < ApplicationController
     end
 
     def express
-        # TODO: move the purchase price to an admin model
+        # Subscription price moved to Settings.subscription_price
 
         case params[:duration]
         when "3"
-            @express_purchase_price = 300
+            @express_purchase_price = Settings.subscription_price * 3
             @express_purchase_subscription_duration = 3
         when "6"
-            @express_purchase_price = 600
+            @express_purchase_price = Settings.subscription_price * 6
             @express_purchase_subscription_duration = 6
         when "12"
-            @express_purchase_price = 1200
+            @express_purchase_price = Settings.subscription_price * 12
             @express_purchase_subscription_duration = 12
         end
 
@@ -159,7 +159,7 @@ class SubscriptionsController < ApplicationController
     	respond_to do |format|
             if payment_complete and @subscription.save
                 # Send the user an email
-                UserMailer.subscription_confirmation(current_user).deliver
+                UserMailer.subscription_confirmation(@subscription.user).deliver
                 format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else
@@ -196,7 +196,7 @@ class SubscriptionsController < ApplicationController
 
         if cancel_complete and @subscription.save
             # Send the user an email to confirm the cancellation.
-            UserMailer.subscription_cancellation(current_user).deliver
+            UserMailer.subscription_cancellation(@user).deliver
             redirect_to user_path(@user), notice: "Subscription was successfully cancelled."
         else
             redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry."
@@ -248,6 +248,8 @@ private
         @subscription.paypal_email = session[:express_email]
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
+        @subscription.price_paid = session[:express_purchase_price]
+        @subscription.purchase_date = DateTime.now
         # @subscription.paypal_profile_id also saved for recurring payments earlier
     end
 

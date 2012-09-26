@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Set the subscription and issue price
+Settings.subscription_price = 100
+Settings.issue_price = 200
+
+# TODO: setup the admin user
