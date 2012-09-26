@@ -16,9 +16,12 @@ module ApplicationHelper
         if purchases.try(:empty?)
             return "You haven't purchased anything yet."
         else
-            table = "<table class='table table-bordered issues_as_table'><thead><tr><th>Title</th><th>Purchase date</th></tr></thead><tbody>"
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Release date</th><th>Purchase date</th><th>Price</th></tr></thead><tbody>"
             for purchase in purchases.sort_by {|x| x.issue.release} do
-                table += "<tr><td>#{link_to purchase.issue.title, issue_path(purchase.issue)}</td><td>#{purchase.updated_at.strftime("%B, %Y")}</td></tr>"
+                table += "<tr><td>#{link_to purchase.issue.title, issue_path(purchase.issue)}</td>"
+                table += "<td>#{purchase.issue.release.strftime("%B, %Y")}</td>"
+                table += "<td>#{purchase.purchase_date.try(:strftime,"%d %B, %Y")}</td>"
+                table += "<td>#{purchase.price_paid ? "$#{number_with_precision((purchase.price_paid / 100), :precision => 2)}" : "Free"}</td></tr>"
             end
             table += "</tbody></table>"
             return raw table
