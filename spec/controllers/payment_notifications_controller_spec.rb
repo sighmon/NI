@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PaymentNotificationController do
+describe PaymentNotificationsController do
 
   describe "GET 'create'" do
     it "returns http success" do

@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe UserMailer do
   describe "subscription_confirmation" do
-    user = FactoryGirl.create(:user)
+    subscription = FactoryGirl.create(:subscription)
+    user = subscription.user
     let(:mail) { UserMailer.subscription_confirmation(user) }
 
     it "renders the headers" do
