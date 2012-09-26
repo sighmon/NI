@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926024131) do
+ActiveRecord::Schema.define(:version => 20120926045115) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -53,8 +53,13 @@ ActiveRecord::Schema.define(:version => 20120926024131) do
   create_table "purchases", :force => true do |t|
     t.integer  "user_id"
     t.integer  "issue_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "price_paid"
+    t.datetime "purchase_date"
+    t.string   "paypal_payer_id"
+    t.string   "paypal_first_name"
+    t.string   "paypal_last_name"
   end
 
   create_table "sessions", :force => true do |t|
@@ -89,6 +94,8 @@ ActiveRecord::Schema.define(:version => 20120926024131) do
     t.string   "paypal_last_name"
     t.integer  "refund"
     t.string   "paypal_email"
+    t.integer  "price_paid"
+    t.datetime "purchase_date"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"

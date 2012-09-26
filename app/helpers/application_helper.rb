@@ -12,6 +12,19 @@ module ApplicationHelper
         end
     end
 
+    def purchases_as_table(purchases)
+        if purchases.try(:empty?)
+            return "You haven't purchased anything yet."
+        else
+            table = "<table class='table table-bordered issues_as_table'><thead><tr><th>Title</th><th>Purchase date</th></tr></thead><tbody>"
+            for purchase in purchases.sort_by {|x| x.issue.release} do
+                table += "<tr><td>#{link_to purchase.issue.title, issue_path(purchase.issue)}</td><td>#{purchase.updated_at.strftime("%B, %Y")}</td></tr>"
+            end
+            table += "</tbody></table>"
+            return raw table
+        end
+    end
+
     def user_expiry_as_string(user)
         return (user.subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end

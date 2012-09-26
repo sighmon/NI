@@ -36,7 +36,7 @@
 </dl>
 
 <h3>Issues purchased:</h3>
-<%= issues_as_table(@user.issues) %>
+<%= purchases_as_table(@user.purchases) %>
 <div class="form-actions">
 	<%= link_to "Back", issues_path, :class => 'btn' %>
 	<% if current_user.admin? %>
