@@ -26,6 +26,9 @@ gem 'activemerchant', :require => 'active_merchant'
 # PayPal recurring billing https://github.com/fnando/paypal-recurring
 gem 'paypal-recurring'
 
+# Rails settings file for prices & general settings
+gem 'ledermann-rails-settings', :require => 'rails-settings'
+
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'

@@ -17,6 +17,10 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def price
+    return Settings.issue_price
+  end
+
   private
 
   def reprocess_image

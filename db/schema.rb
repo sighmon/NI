@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120918054818) do
+ActiveRecord::Schema.define(:version => 20120926024131) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -66,6 +66,17 @@ ActiveRecord::Schema.define(:version => 20120918054818) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "settings", :force => true do |t|
+    t.string   "var",                       :null => false
+    t.text     "value"
+    t.integer  "target_id"
+    t.string   "target_type", :limit => 30
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "subscriptions", :force => true do |t|
     t.datetime "expiry_date"

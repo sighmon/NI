@@ -10,3 +10,7 @@ Learning Rails. :-)
 * Buy a single issue.
 * Read it in HTML, or a specific app.
 
+= Installation instructions
+
+* Install ElasticSearch and build the index:
+$ rake environment tire:import CLASS='Issue'

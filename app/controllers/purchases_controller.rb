@@ -8,10 +8,10 @@ class PurchasesController < ApplicationController
     end
 
     def express
-        # TODO: move the purchase price to an admin model
-        @express_purchase_price = 200
-        session[:express_purchase_price] = @express_purchase_price
         @issue = Issue.find(params[:issue_id])
+        # Issue price moved to Settings.issue_price
+        @express_purchase_price = @issue.price
+        session[:express_purchase_price] = @express_purchase_price
         response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
             :ip                 => request.remote_ip,
             :return_url         => new_issue_purchase_url(@issue),
