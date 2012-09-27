@@ -32,7 +32,7 @@
           <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
           <p><%= article.teaser %></p>
           <p><% if can? :read, article %>
-          <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+            <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
           <% else %>
             <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
           <% end %>

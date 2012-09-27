@@ -2,6 +2,15 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
 </div>
+
+<div class="article-search">
+  <%= form_tag search_path, method: :get do %>
+      <%= text_field_tag :query, params[:query], :placeholder => 'Article search' %>
+      <%= submit_tag "Search", name: nil, :class => 'btn' %>
+      <p>Or you can try the <%= link_to "Magazine search", issues_path %></p>
+  <% end %>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -18,9 +27,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @issue.articles.each do |article| %>
+    <% @article.sort_by(&:publication).reverse.each do |article| %>
       <tr>
-        <td><%= link_to article.id, issue_article_path(@issue,article) %></td>
+        <td><%= link_to article.id, issue_article_path(article.issue,article) %></td>
         <td><%= article.title %></td>
         <td><%= article.teaser %></td>
         <td><%= article.author %></td>
@@ -30,19 +39,15 @@
         <td><%= article.trialarticle %></td>
         <td><%=l article.created_at %></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      issue_article_path(@issue,article),
-                      :method => :delete,
-                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-                      :class => 'btn btn-mini btn-danger' %>
+          <% if can? :read, article %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' %>
+          <% else %>
+            <%= link_to 'Buy this issue', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' %>
+          <% end %>
+          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_issue_article_path,
-            :class => 'btn btn-primary' %>

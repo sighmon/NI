@@ -7,9 +7,15 @@ class ArticlesController < ApplicationController
         redirect_to new_issue_purchase_path(@article.issue), :alert => "You need to purchase this issue or subscribe to read this article."
     end
 
+    def search
+        @article = Article.search(params)
+        # @article = Article.all
+    end
+
   	def index
   		@issue = Issue.find(params[:issue_id])
-  		# @article = Article.find(:all)
+  		@article = Article.find(:all)
+        # @article = Article.order("created_at").page(params[:page]).per(2).search(params)
   	end
 
   	def new

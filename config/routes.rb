@@ -25,6 +25,8 @@ NI::Application.routes.draw do
     end
   end
 
+  get 'search' => 'articles#search'
+
   # PayPal payment notification IPN
   # get "payment_notifications/create"
   resource :payment_notifications, :only => [:create]
