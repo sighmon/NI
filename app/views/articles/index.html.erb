@@ -30,19 +30,15 @@
         <td><%= article.trialarticle %></td>
         <td><%=l article.created_at %></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      issue_article_path(@issue,article),
-                      :method => :delete,
-                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-                      :class => 'btn btn-mini btn-danger' %>
+          <% if can? :read, article %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' %>
+          <% else %>
+            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' %>
+          <% end %>
+          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_issue_article_path,
-            :class => 'btn btn-primary' %>

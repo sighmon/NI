@@ -8,8 +8,13 @@ class ArticlesController < ApplicationController
     end
 
     def search
-        @article = Article.search(params)
-        # @article = Article.all
+        if params[:query].present?
+            @articles = Article.search(params[:query], load: true)
+        else
+            @articles = Article.all
+        end
+        # @articles = Article.search(params)
+        # @articles = Article.all
     end
 
   	def index
