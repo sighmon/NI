@@ -9,9 +9,9 @@ class ArticlesController < ApplicationController
 
     def search
         if params[:query].present?
-            @articles = Article.search(params[:query], load: true)
+            @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
         else
-            @articles = Article.all
+            @articles = Article.order("publication").reverse_order.page(params[:page]).per(Settings.article_pagination)
         end
         # @articles = Article.search(params)
         # @articles = Article.all

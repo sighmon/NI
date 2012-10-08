@@ -8,14 +8,21 @@ class IssuesController < ApplicationController
 
   # GET /issues
   # GET /issues.json
+
   def index
     # @issues = Issue.all
     # Pagination
-    # @issues = Issue.order("release").page(params[:page]).per(12)
+    # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2)
     # Search
     # @issues = Issue.search(params)
     # TOFIX: TODO: Search + pagination?
-    @issues = Issue.order("release").page(params[:page]).per(12).search(params)
+    # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
+
+    if params[:query].present?
+        @issues = Issue.search(params[:query], load: true, :page => params[:page], :per_page => Settings.issue_pagination)
+    else
+        @issues = Issue.order("release").reverse_order.page(params[:page]).per(Settings.issue_pagination)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

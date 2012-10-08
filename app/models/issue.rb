@@ -11,11 +11,12 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  def self.search(params)
-    tire.search(load: true) do
-      query { string params[:query]} if params[:query].present?
-    end
-  end
+  # Not over-riding this anymore as it breaks kaminari-bootstrap styling
+  # def self.search(params)
+  #   tire.search(load: true) do
+  #     query { string params[:query]} if params[:query].present?
+  #   end
+  # end
 
   def price
     return Settings.issue_price

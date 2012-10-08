@@ -10,4 +10,8 @@
 Settings.subscription_price = 100
 Settings.issue_price = 200
 
+# Pagination settings
+Settings.issue_pagination = 12
+Settings.article_pagination = 10
+
 # TODO: setup the admin user
