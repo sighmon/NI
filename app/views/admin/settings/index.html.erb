@@ -1,0 +1,11 @@
+<h1>Admin::Settings#index</h1>
+<p>Find me in app/views/admin/settings/index.html.erb</p>
+<% @settings.each_pair do |name, value| %>
+
+	<%= form_tag("#{admin_setting_path(name)}", :method => "put") do %>
+	  <%= label_tag(:value, "#{name}") %>
+	  <%= text_field_tag(:value, "#{value}") %>
+	  <%= submit_tag("Save", :class => 'btn') %>
+	<% end %>
+
+<% end %>

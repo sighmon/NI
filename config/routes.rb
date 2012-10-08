@@ -1,5 +1,9 @@
 NI::Application.routes.draw do
 
+  get "settings/index"
+
+  get "settings/update"
+
   # created by the admin/users controller creation
   # get "users/index"
 
@@ -34,6 +38,7 @@ NI::Application.routes.draw do
   namespace :admin do
     root :to => "base#index"
     resources :users
+    resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
   end
 
   get "home/index"
