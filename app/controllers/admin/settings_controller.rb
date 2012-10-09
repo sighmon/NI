@@ -8,8 +8,8 @@ class Admin::SettingsController < Admin::BaseController
   end
 
   def update
-  	Settings[params[:id]] = params[:value]
-  	redirect_to admin_settings_path, notice: 'Settings were successfully updated.'
+  	Settings[params[:id]] = params[:value].to_i
+  	redirect_to admin_settings_path, notice: 'Setting was successfully updated.'
   end  
 
 end

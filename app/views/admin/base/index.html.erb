@@ -1,6 +1,10 @@
 <div class="page-header">
 	<h1>Admin section</h1>
 </div>
-<p>Edit the <%= link_to "default settings", admin_settings_path %>?</p>
-<p>Would you like a list of all <%= link_to "Users", admin_users_path %>?</p>
-<p>Or retreat back to a list of <%= link_to "Issues", issues_path %>.</p>
+
+<p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-primary' %> Set the pagination on search pages and change prices.</p>
+<p><%= link_to "List Users", admin_users_path, :class => 'btn' %> A list of all user accounts and their expiry dates.</p>
+
+<div class="form-actions">
+	<%= link_to 'Back', root_path, :class => 'btn' %>
+</div>
