@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926045115) do
+ActiveRecord::Schema.define(:version => 20121010010834) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(:version => 20120926045115) do
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "subscriptions", :force => true do |t|
-    t.datetime "expiry_date"
     t.integer  "user_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
@@ -96,6 +95,9 @@ ActiveRecord::Schema.define(:version => 20120926045115) do
     t.string   "paypal_email"
     t.integer  "price_paid"
     t.datetime "purchase_date"
+    t.datetime "cancellation_date"
+    t.datetime "valid_from"
+    t.integer  "duration"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"

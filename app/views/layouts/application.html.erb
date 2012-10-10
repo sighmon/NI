@@ -29,7 +29,7 @@
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user.try(:subscriber?) %>
-									<li><%= link_to raw("Expiry date:<br />#{current_user.subscription.expiry_date.strftime("%e %B, %Y")}"), current_user %></li>
+									<li><%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user %></li>
 									<li class="divider"></li>
 								<% else %>
 									<li><%= link_to raw("<i class='icon-star'></i> Subscribe"), new_subscription_path %></li>

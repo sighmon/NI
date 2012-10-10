@@ -1,9 +1,31 @@
 class Subscription < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :expiry_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund
+  attr_accessible :valid_from, :duration, :cancellation_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund
 
-  def recurring?
-  	return (not self.paypal_profile_id.nil?)
+  validates_presence_of :valid_from, :duration
+
+ #  def recurring?
+	# return (not self.paypal_profile_id.nil?)
+ #  end
+
+  def is_current?
+    return (expiry_date > DateTime.now and (not is_cancelled?))
+  end
+
+  def expiry_date
+    return (cancellation_date or (valid_from + duration.months))
+  end
+
+  def is_recurring?
+  	 return (was_recurring? and (not is_cancelled?))
+  end
+
+  def was_recurring?
+  	return (not self.paypal_profile_id.blank?)
+  end
+
+  def is_cancelled?
+  	return ( not ( cancellation_date.nil? or cancellation_date > DateTime.now ))
   end
 
 end

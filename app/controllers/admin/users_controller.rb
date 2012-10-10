@@ -27,7 +27,7 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def edit
-		@subscription = @user.subscription
+		# @subscription = @user.subscription
 	end
 
 	def update
@@ -37,7 +37,8 @@ class Admin::UsersController < Admin::BaseController
 		end
 		if @user.update_attributes(params[:user])
 			# TODO: work out how to update subscription attributes intead of BUILD
-			@user.build_subscription(params[:subscription])
+			# Can't do this since changing subscription to non-singleton
+			# @user.build_subscription(params[:subscription])
 			@user.save
 			flash[:notice] = "User has been updated."
 			redirect_to admin_user_path

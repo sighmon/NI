@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :issues, :through => :purchases
 
   # association for subscriptions
-  has_one :subscription
+  has_many :subscriptions
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
@@ -39,23 +39,37 @@ class User < ActiveRecord::Base
   end
 
   def subscription_valid?
-    if subscription 
-      return (subscription.expiry_date and (subscription.expiry_date > Date.today))
-    else
-      return false
-    end
+    return self.subscriptions.collect{|s| s.is_current?}.include?(true)
   end
 
   def subscription_lapsed?
-    if subscription
-      return (subscription.expiry_date and (subscription.expiry_date < Date.today))
-    else
-      return false
-    end
+    return ( not self.subscriptions.empty? and self.subscription_valid? )
   end
 
   def subscriber?
     return subscription_valid?
+  end
+
+  def is_recurring?
+    # TODO: need to differentiate between the first recurring subscription and the paypal IPN recurrances.
+    return self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
+  end
+
+  def expiry_date
+    # FIXME: check for cancelled subscriptions
+    return self.subscriptions.collect{|s| s.expiry_date}.sort.last
+  end
+
+  def recurring_subscription
+    return self.subscriptions.select{|s| s.is_recurring?}.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def last_subscription
+    return self.subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def refunds_due
+    return self.subscriptions.collect{|s| s.refund or 0}.sum
   end
 
   def user_type

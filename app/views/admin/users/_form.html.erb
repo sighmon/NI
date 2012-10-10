@@ -6,7 +6,7 @@
     <%= f.input :admin %>
     <%= f.association :issues, :as => :check_boxes %>
     <%= simple_fields_for :subscription do |f| %>
-      <%= f.input :expiry_date, :as => :datetime %>
+      <!-- <%= f.input :expiry_date, :as => :datetime %> -->
       <%= f.input :refund, :as => :hidden %>
       <%= f.input :paypal_payer_id, :as => :hidden %>
       <%= f.input :paypal_profile_id, :as => :hidden %>

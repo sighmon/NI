@@ -12,13 +12,13 @@ NI::Application.routes.draw do
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
 
-  resource :subscription do
+  resources :subscriptions do
     new do
       get :express
     end
   end
   # hack to create /subscriptions route
-  resources :subscriptions, :only => [:create]
+  # resources :subscriptions, :only => [:create]
 
   resources :issues do
     resources :articles

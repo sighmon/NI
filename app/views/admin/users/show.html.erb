@@ -9,33 +9,36 @@
 	<dd><%= @user.user_type %></dd>
 	<dt><strong>Expiry date:</strong></dt>
 	<dd><%= user_expiry_as_string(@user) %><br />
-		<% if @user.subscription and !@user.subscription.paypal_profile_id.blank? %>
+		<% if @user.is_recurring? %>
 		(Automatic debit)
 		<% end %></dd>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>
-	<% if @user.subscription and @user.subscription.refund %>
+	<% if @user.subscription_lapsed? and (@user.refunds_due > 0) %>
 		<dt><strong>Refund due:</strong></dt>
-		<dd><%= @user.subscription.refund %> months.</dd>
+		<dd><%= @user.refunds_due %> months.</dd>
 	<% end %>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>
-	<% if @user.subscription and @user.subscription.paypal_payer_id %>
+	<% if @user.subscriber? and @user.is_recurring? %>
 		<dt><strong>PayPal Name:</strong></dt>
-		<dd><%= @user.subscription.paypal_first_name %> <%= @user.subscription.paypal_last_name %></dd>
+		<dd><%= @user.recurring_subscription.paypal_first_name %> <%= @user.recurring_subscription.paypal_last_name %></dd>
 		<dt><strong>PayPal Payer ID:</strong></dt>
-		<dd><%= @user.subscription.paypal_payer_id %></dd>
+		<dd><%= @user.recurring_subscription.paypal_payer_id %></dd>
 		<dt><strong>PayPal email:</strong></dt>
-		<dd><%= @user.subscription.paypal_email %></dd>
-		<% if !@user.subscription.paypal_profile_id.blank? %>
+		<dd><%= @user.recurring_subscription.paypal_email %></dd>
+		<% if !@user.recurring_subscription.paypal_profile_id.blank? %>
 			<dt><strong>PayPal Recurring Profile ID:</strong></dt>
-			<dd><%= @user.subscription.paypal_profile_id %></dd>
+			<dd><%= @user.recurring_subscription.paypal_profile_id %></dd>
 		<% end %>
 	<% end %>
 </dl>
 
 <h3>Purchases</h3>
 <%= purchases_as_table(@user.purchases) %>
+
+<h3>Subscriptions</h3>
+<%= subscriptions_as_table(@user.subscriptions) %>
 
 <div class="form-actions">
 	<%= link_to "Back", admin_users_path, :class => 'btn' %>

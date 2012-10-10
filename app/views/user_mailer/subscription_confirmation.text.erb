@@ -10,12 +10,12 @@ Start reading now!
 Your username is: <%= @user.username %>
 Your user profile is: <%= user_url(@user) %>
 
-<% if @user.subscriber? and !@user.subscription.paypal_profile_id.blank? %>
+<% if @user.subscriber? and @user.is_recurring? %>
 Your next auto-debit will be on:
 <% else %>
 Your subscription is due for renewal:
 <% end %>
-<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
 
 If you come across any problems, simply hit 'reply' to this
 email and we'll reply as soon as we can.

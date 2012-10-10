@@ -76,18 +76,15 @@ class SubscriptionsController < ApplicationController
 
     def edit
         @user = current_user
-        @subscription = @user.subscription
+        @subscription = Subscription.find(params[:id])
         @cancel_subscription = true
-
-        # TODO: cancel_recurring_subscription
-        # TODO: make subscription expiry date today -1
     end
 
     def create
 
         payment_complete = false
-
-        @subscription = current_user.subscription
+        @user = current_user
+        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration])
 
         if session[:express_autodebit]
             # It's an autodebit, so set that up
@@ -123,7 +120,7 @@ class SubscriptionsController < ApplicationController
                 if not(response_create.profile_id.blank?)
                     @subscription.paypal_profile_id = response_create.profile_id
                     # If successful, update the user's subscription date.
-                    update_subscription_expiry_date
+                    # update_subscription_expiry_date
                     # Reset refund if they had one in the past
                     @subscription.refund = nil
 
@@ -148,7 +145,7 @@ class SubscriptionsController < ApplicationController
 
             if response.success?
                 # If successful, update the user's subscription date.
-                update_subscription_expiry_date
+                # update_subscription_expiry_date
                 save_paypal_data_to_subscription_model
                 payment_complete = true
             end
@@ -171,11 +168,11 @@ class SubscriptionsController < ApplicationController
 
     def update
         @user = current_user
-        @subscription = @user.subscription
+        @subscription = Subscription.find(params[:id])
         cancel_complete = false
 
         if params[:cancel] == 'true'
-            if !@subscription.paypal_profile_id.blank?
+            if @subscription.is_recurring?
                 # user has a recurring subscription
                 if cancel_recurring_subscription
                     calculate_refund
@@ -230,7 +227,8 @@ private
         ppr = PayPal::Recurring.new(:profile_id => @subscription.paypal_profile_id)
         response = ppr.cancel
         if response.success?
-            @subscription.paypal_profile_id = nil
+            # Don't nil out paypal recurring profile.
+            # @subscription.paypal_profile_id = nil
             session[:express_autodebit] = false
             return true
         else
@@ -239,7 +237,8 @@ private
     end
 
     def calculate_refund
-        @subscription.refund = (@subscription.expiry_date - Time.now) / 2592000
+        # TODO: Write autodebit renewal after we've implemented it.
+        @subscription.refund = @subscription.duration
         logger.warn "Refund of #{@subscription.refund} months due."
     end
 
@@ -265,12 +264,7 @@ private
     end
 
     def expire_subscription
-        if @subscription.nil?
-            # do nothing
-        elsif @subscription.expiry_date > DateTime.now
-            # TODO: write refund_due to @subscription model
-            @subscription.expiry_date = Date.today - 1
-        end
+        @subscription.cancellation_date = DateTime.now
     end
 
     def express_purchase_options

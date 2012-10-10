@@ -13,19 +13,19 @@
   <% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
   	<dt><strong>Expiry date:</strong></dt>
   	<dd><% begin %>
-			<%= @user.subscription.expiry_date.strftime("%e %B, %Y") %>
+			<%= @user.expiry_date.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
   <% end %>
-  <% if @user.subscriber? and !@user.subscription.paypal_profile_id.blank? %>
+  <% if @user.subscriber? and @user.is_recurring? %>
   	<dt></dt>
   	<dd>(Automatic renewal)</dd>
   	<dt></dt>
-  	<dd><%= link_to "Cancel my subscription", edit_subscription_path, :class => 'btn btn-danger' %></dd>
+  	<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
   <% elsif @user.subscriber? %>
 	<dt></dt>
-	<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %> <%= link_to "Cancel my subscription", edit_subscription_path, :class => 'btn btn-danger' %></dd>
+	<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' %></dd>
   <% elsif @user.subscription_lapsed? %>
 	<dt></dt>
 	<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
