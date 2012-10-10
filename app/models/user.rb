@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
 
+  # Validate username
+  validates_presence_of :username
+  validates_uniqueness_of :username
+
   # join-model for purchases
   has_many :purchases
   has_many :issues, :through => :purchases
