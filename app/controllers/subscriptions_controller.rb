@@ -252,16 +252,16 @@ private
         # @subscription.paypal_profile_id also saved for recurring payments earlier
     end
 
-    def update_subscription_expiry_date
-        months = session[:express_purchase_subscription_duration]
-        if @subscription.nil?
-            @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
-        elsif @subscription.expiry_date < DateTime.now
-            @subscription.expiry_date = Date.today + months.months
-        else
-            @subscription.expiry_date += months.months
-        end
-    end
+    # def update_subscription_expiry_date
+    #     months = session[:express_purchase_subscription_duration]
+    #     if @subscription.nil?
+    #         @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
+    #     elsif @subscription.expiry_date < DateTime.now
+    #         @subscription.expiry_date = Date.today + months.months
+    #     else
+    #         @subscription.expiry_date += months.months
+    #     end
+    # end
 
     def expire_subscription
         @subscription.cancellation_date = DateTime.now
