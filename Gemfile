@@ -42,10 +42,6 @@ group :test do
 
 end
 
-# Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
-  # http://twitter.github.com/bootstrap/
-  gem "twitter-bootstrap-rails", "~> 2.0.1.0"
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -56,6 +52,9 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
+  # http://twitter.github.com/bootstrap/
+  gem 'twitter-bootstrap-rails'
 end
 
 gem 'jquery-rails'
