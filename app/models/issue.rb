@@ -11,6 +11,8 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  index_name BONSAI_INDEX_NAME
+
   # Not over-riding this anymore as it breaks kaminari-bootstrap styling
   # def self.search(params)
   #   tire.search(load: true) do
