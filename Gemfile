@@ -29,6 +29,12 @@ gem 'paypal-recurring'
 # Rails settings file for prices & general settings
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
+# For development
+group :development do
+  gem 'taps', :require => false
+  # gem 'sqlite3'
+end
+
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'
