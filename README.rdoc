@@ -12,5 +12,33 @@ Learning Rails. :-)
 
 = Installation instructions
 
-* Install ElasticSearch and build the index:
+* Install ElasticSearch
+
+TODO: insert instructions.
+
+* To build the search index:
+
 $ rake environment tire:import CLASS='Issue'
+$ rake environment tire:import CLASS='Article'
+
+= Run instructions
+
+* Start postgresql server
+
+$ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+
+* Start a rails server
+
+$ rails s
+
+* Start the search server
+
+$ elasticsearch -f -D es.config=/usr/local/Cellar/elasticsearch/0.19.9/config/elasticsearch.yml
+
+= Stop instructions
+
+* To stop postgresql server
+
+$ pg_ctl -D /usr/local/var/postgres stop -s -m fast
+
+* You can stop rails server & elasticsearch using Control + C.
