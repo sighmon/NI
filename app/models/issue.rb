@@ -11,6 +11,7 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
   # Not over-riding this anymore as it breaks kaminari-bootstrap styling
