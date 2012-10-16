@@ -8,10 +8,13 @@ NI::Application.configure do
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   # Now using /config/application.yml figaro gem
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    # :domain => "ppp250-143.static.internode.on.net",
+    :domain => "newint.herokuapp.com",
     :authentication => :plain,
     :enable_starttls_auto => true,
     :user_name => ENV["GMAIL_USER_NAME"],
@@ -90,7 +93,7 @@ NI::Application.configure do
   # config.assets.precompile += %w( search.js )
 
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = true
 
   # Enable threaded mode
   # config.threadsafe!
