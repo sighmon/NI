@@ -1,6 +1,47 @@
 NI::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Default URL for Devise
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # Change mail delvery to either :smtp, :sendmail, :file, :test
+  # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
+  # Now using /config/application.yml figaro gem
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    # :domain => "ppp250-143.static.internode.on.net",
+    :authentication => :plain,
+    :enable_starttls_auto => true,
+    :user_name => ENV["GMAIL_USER_NAME"],
+    :password => ENV["GMAIL_PASSWORD"]
+  }
+
+  # Active Merchant Gateway
+
+  config.after_initialize do
+
+    ActiveMerchant::Billing::Base.mode = :test
+
+    # paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
+    # Now using /config/application.yml figaro gem
+
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
+      :login => ENV["PAYPAL_LOGIN"],
+      :password => ENV["PAYPAL_PASSWORD"],
+      :signature => ENV["PAYPAL_SIGNATURE"]
+    )
+
+    PayPal::Recurring.configure do |config|
+      config.sandbox = true
+      config.username = ENV["PAYPAL_LOGIN"]
+      config.password = ENV["PAYPAL_PASSWORD"]
+      config.signature = ENV["PAYPAL_SIGNATURE"]
+    end
+
+  end
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
