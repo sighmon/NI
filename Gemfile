@@ -29,6 +29,12 @@ gem 'paypal-recurring'
 # Rails settings file for prices & general settings
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
+# Environment settings via Figaro https://github.com/laserlemon/figaro
+gem 'figaro'
+
+# Heroku gem
+gem 'heroku'
+
 # For development
 group :development do
   gem 'taps', :require => false

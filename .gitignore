@@ -26,3 +26,6 @@
 
 # Ignore fonts
 # /app/assets/fonts/**
+
+# Ignore application configuration
+/config/application.yml

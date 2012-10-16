@@ -40,7 +40,8 @@ NI::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Change mail delvery to either :smtp, :sendmail, :file, :test
-  gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
+  # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
+  # Now using /config/application.yml figaro gem
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
@@ -48,8 +49,8 @@ NI::Application.configure do
     # :domain => "ppp250-143.static.internode.on.net",
     :authentication => :plain,
     :enable_starttls_auto => true,
-    :user_name => gmail_auth["user_name"],
-    :password => gmail_auth["password"]
+    :user_name => ENV["GMAIL_USER_NAME"],
+    :password => ENV["GMAIL_PASSWORD"]
   }
 
   # Active Merchant Gateway
@@ -58,19 +59,20 @@ NI::Application.configure do
 
     ActiveMerchant::Billing::Base.mode = :test
 
-    paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
+    # paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
+    # Now using /config/application.yml figaro gem
 
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => paypal_auth["login"],
-      :password => paypal_auth["password"],
-      :signature => paypal_auth["signature"]
+      :login => ENV["PAYPAL_LOGIN"],
+      :password => ENV["PAYPAL_PASSWORD"],
+      :signature => ENV["PAYPAL_SIGNATURE"]
     )
 
     PayPal::Recurring.configure do |config|
       config.sandbox = true
-      config.username = paypal_auth["login"]
-      config.password = paypal_auth["password"]
-      config.signature = paypal_auth["signature"]
+      config.username = ENV["PAYPAL_LOGIN"]
+      config.password = ENV["PAYPAL_PASSWORD"]
+      config.signature = ENV["PAYPAL_SIGNATURE"]
     end
 
   end
