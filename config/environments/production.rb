@@ -1,9 +1,6 @@
 NI::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # Search index name
-  ENV["SEARCH_INDEX"] = BONSAI_INDEX_NAME
-
   # Default URL for Devise
   config.action_mailer.default_url_options = { :host => 'newint.herokuapp.com' }
 
