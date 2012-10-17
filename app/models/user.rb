@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_lapsed?
-    return ( not self.subscriptions.empty? and self.subscription_valid? )
+    return ( not self.subscriptions.empty? and not self.subscription_valid? )
   end
 
   def subscriber?

@@ -33,8 +33,16 @@ class Subscription < ActiveRecord::Base
   def calculate_refund
     # TODO: Write autodebit renewal after we've implemented it.
     # FIXME: write the logic to calculate refunds properly.
-    self.refund = self.duration
-    logger.warn "Refund of #{self.refund} months due."
+    self.refund = [0,(1-(used_days/total_days))*self.price_paid].max.floor
+    logger.warn "Refund of #{self.refund} cents due."
+  end
+
+  def used_days
+    return (DateTime.now - self.valid_from.to_datetime).to_f
+  end
+
+  def total_days
+    return (self.expiry_date - self.valid_from.to_datetime).to_f
   end
 
   def expire_subscription

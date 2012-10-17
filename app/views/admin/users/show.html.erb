@@ -16,7 +16,7 @@
 	<dd>&nbsp;</dd>
 	<% if @user.subscription_lapsed? and (@user.refunds_due > 0) %>
 		<dt><strong>Refund due:</strong></dt>
-		<dd><%= @user.refunds_due %> months.</dd>
+		<dd>$<%= cents_to_dollars(@user.refunds_due) %></dd>
 	<% end %>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>

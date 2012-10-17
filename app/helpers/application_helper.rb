@@ -32,14 +32,15 @@ module ApplicationHelper
         if subscriptions.try(:empty?)
             return "You don't have any subscriptions."
         else
-            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Purchase date</th><th>Valid from</th><th>Duration</th><th>Cancellation date</th><th>Autodebit?</th><th>Price paid</th></tr></thead><tbody>"
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Purchase date</th><th>Valid from</th><th>Duration</th><th>Cancellation date</th><th>Autodebit?</th><th>Price paid</th><th>Refund due</th></tr></thead><tbody>"
             for subscription in subscriptions.sort_by {|x| x.purchase_date} do
                 table += "<tr><td>#{subscription.purchase_date.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.valid_from.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.duration}</td>"
                 table += "<td>#{subscription.cancellation_date.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.was_recurring? ? "Yes" : "No"}</td>"
-                table += "<td>#{subscription.price_paid ? "$#{number_with_precision((subscription.price_paid / 100), :precision => 2)}" : "Free"}</td></tr>"
+                table += "<td>#{subscription.price_paid ? "$#{number_with_precision((subscription.price_paid / 100), :precision => 2)}" : "Free"}</td>"
+                table += "<td>#{subscription.refund ? "$#{cents_to_dollars(subscription.refund)}" : ""}</td></tr>"
             end
             table += "</tbody></table>"
             return raw table
@@ -48,5 +49,9 @@ module ApplicationHelper
 
     def user_expiry_as_string(user)
         return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
+    end
+
+    def cents_to_dollars(value)
+        return number_with_precision((value / 100.0), :precision => 2)
     end
 end
