@@ -28,4 +28,17 @@ class Subscription < ActiveRecord::Base
   	return ( not ( cancellation_date.nil? or cancellation_date > DateTime.now ))
   end
 
+  # From controller
+
+  def calculate_refund
+    # TODO: Write autodebit renewal after we've implemented it.
+    # FIXME: write the logic to calculate refunds properly.
+    self.refund = self.duration
+    logger.warn "Refund of #{self.refund} months due."
+  end
+
+  def expire_subscription
+    self.cancellation_date = DateTime.now
+  end
+
 end

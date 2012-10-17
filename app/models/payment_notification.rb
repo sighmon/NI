@@ -6,6 +6,7 @@ class PaymentNotification < ActiveRecord::Base
 
 private
 	def update_subscription
+		@user = User.find(self.user_id)
 		# Log for testing.
 		# logger.info params
 
@@ -26,29 +27,18 @@ private
 	end
 
 	def calculate_refund
-        user.subscription.refund = (user.subscription.expiry_date - Time.now) / 2592000
-        user.subscription.save
+        @subscription.refund = @subscription.duration
+        logger.warn "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
 
 	def expire_subscription
-	    if user.subscription.nil?
-	        # do nothing
-	    elsif user.subscription.expiry_date > DateTime.now
-	        user.subscription.expiry_date = Date.today - 1
-	        user.subscription.save
-	    end
+	    @subscription.cancellation_date = DateTime.now
 	end
 
 	def renew_subscription(months)
-        if user.subscription.nil?
-            user.subscription = Subscription.create(:user_id => user.id, :expiry_date => Date.today + months.months)
-        elsif user.subscription.expiry_date < DateTime.now
-            user.subscription.expiry_date = Date.today + months.months
-        else
-            user.subscription.expiry_date += months.months
-        end
-        user.subscription.save
+        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration])
+        @subscription.save
     end
 
 end

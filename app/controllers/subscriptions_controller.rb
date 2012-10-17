@@ -175,20 +175,24 @@ class SubscriptionsController < ApplicationController
             if @subscription.is_recurring?
                 # user has a recurring subscription
                 if cancel_recurring_subscription
-                    calculate_refund
-                    expire_subscription
+                    @subscription.calculate_refund
+                    @subscription.expire_subscription
                     cancel_complete = true
                 else 
-                    redirect_to user_path(@user), notice: "Sorry, we couldn't cancel your PayPal recurring subscription, please try again later."
+                    # redirect_to user_path(@user), notice: "Sorry, we couldn't cancel your PayPal recurring subscription, please try again later."
+                    cancel_complete = false
+                    logger.warn "Sorry, we couldn't cancel your PayPal recurring subscription, please try again later."
                 end
             else
                 # user has a normal subscription
-                calculate_refund
-                expire_subscription
+                @subscription.calculate_refund
+                @subscription.expire_subscription
                 cancel_complete = true
             end
         else
-            redirect_to user_path(@user)
+            # redirect_to user_path(@user), notice: "Not trying to cancel?"
+            cancel_complete = false
+            logger.warn "Somehow we weren't passed the cancel param."
         end
 
         if cancel_complete and @subscription.save
@@ -236,12 +240,6 @@ private
         end
     end
 
-    def calculate_refund
-        # TODO: Write autodebit renewal after we've implemented it.
-        @subscription.refund = @subscription.duration
-        logger.warn "Refund of #{@subscription.refund} months due."
-    end
-
     def save_paypal_data_to_subscription_model
         @subscription.paypal_payer_id = session[:express_payer_id]
         @subscription.paypal_email = session[:express_email]
@@ -250,21 +248,6 @@ private
         @subscription.price_paid = session[:express_purchase_price]
         @subscription.purchase_date = DateTime.now
         # @subscription.paypal_profile_id also saved for recurring payments earlier
-    end
-
-    # def update_subscription_expiry_date
-    #     months = session[:express_purchase_subscription_duration]
-    #     if @subscription.nil?
-    #         @subscription = Subscription.create(:user_id => current_user.id, :expiry_date => Date.today + months.months)
-    #     elsif @subscription.expiry_date < DateTime.now
-    #         @subscription.expiry_date = Date.today + months.months
-    #     else
-    #         @subscription.expiry_date += months.months
-    #     end
-    # end
-
-    def expire_subscription
-        @subscription.cancellation_date = DateTime.now
     end
 
     def express_purchase_options

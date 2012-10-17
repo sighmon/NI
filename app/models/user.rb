@@ -65,7 +65,11 @@ class User < ActiveRecord::Base
   end
 
   def last_subscription
-    return self.subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+    return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def current_subscriptions
+    return self.subscriptions.select{|s| s.is_current?}
   end
 
   def refunds_due
