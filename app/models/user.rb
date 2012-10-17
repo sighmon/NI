@@ -73,7 +73,14 @@ class User < ActiveRecord::Base
   end
 
   def refunds_due
-    return self.subscriptions.collect{|s| s.refund or 0}.sum
+    refund = self.subscriptions.collect{|s| 
+      if s.refunded_on
+        next 0
+      else
+        next (s.refund or 0)
+      end
+    }
+    return refund.sum
   end
 
   def user_type

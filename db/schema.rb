@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011005640) do
+ActiveRecord::Schema.define(:version => 20121017060153) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20121011005640) do
     t.datetime "cancellation_date"
     t.datetime "valid_from"
     t.integer  "duration"
+    t.datetime "refunded_on"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"

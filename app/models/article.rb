@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   include Tire::Model::Callbacks
 
   # Index name for Heroku Bonzai/elasticsearch
-  index_name BONSAI_INDEX_NAME
+  index_name ENV["SEARCH_INDEX"]
 
   # Doesn't seem to list all of the articles when no params.
   # def self.search(params)

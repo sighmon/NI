@@ -12,7 +12,7 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Callbacks
 
   # Index name for Heroku Bonzai/elasticsearch
-  index_name BONSAI_INDEX_NAME
+  index_name ENV["SEARCH_INDEX"]
 
   # Not over-riding this anymore as it breaks kaminari-bootstrap styling
   # def self.search(params)

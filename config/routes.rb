@@ -1,5 +1,7 @@
 NI::Application.routes.draw do
 
+  get "subscriptions/update"
+
   get "settings/index"
 
   get "settings/update"
@@ -38,6 +40,7 @@ NI::Application.routes.draw do
   namespace :admin do
     root :to => "base#index"
     resources :users
+    resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
   end
 
