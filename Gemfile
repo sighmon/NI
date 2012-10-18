@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "1.9.3"
+# ruby "1.9.3"
 
 gem 'rails', '3.2.3'
 
@@ -35,7 +35,7 @@ gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'figaro'
 
 # Heroku gem
-gem 'heroku'
+# gem 'heroku'
 
 # For development
 group :development do
