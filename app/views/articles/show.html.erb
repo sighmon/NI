@@ -12,7 +12,7 @@
 <div class="page-header article-title">
   <h1><%= @article.title %></h1>
   <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover shadow', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
-  <h2><%= @article.teaser %></h2>
+  <h2><%= simple_format @article.teaser %></h2>
   <p class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></p>
 </div>
 

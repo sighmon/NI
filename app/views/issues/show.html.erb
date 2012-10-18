@@ -30,7 +30,7 @@
         <h5>The big story</h5>
         <% @issue.articles.first(1).each do |article| %>
           <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
-          <p><%= article.teaser %></p>
+          <p><%= simple_format article.teaser %></p>
           <p><% if can? :read, article %>
             <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
           <% else %>
@@ -45,7 +45,7 @@
         <% @issue.articles[1..30].each do |article| %>
           <div class="issue-article">
           <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
-          <p><%= article.teaser %></p>
+          <p><%= simple_format article.teaser %></p>
           <p><% if can? :read, article %>
           <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
           <% else %>
