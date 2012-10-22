@@ -1,12 +1,9 @@
 CarrierWave.configure do |config|
-  if Rails.env.production?
-    config.cache_dir = "#{Rails.root}/tmp/uploads"
-
-    config.storage = :s3
-    config.s3_access_key_id = ENV['S3_KEY']
-    config.s3_secret_access_key = ENV['S3_SECRET']
-    config.s3_bucket = ENV['S3_BUCKET']
-  else
-    config.storage = :file
-  end
+  config.fog_credentials = {
+    :provider               => 'AWS',
+    :aws_access_key_id      => ENV['S3_KEY'],
+    :aws_secret_access_key  => ENV['S3_SECRET'],
+    :region                 => 'tokyo'
+  }
+  config.fog_directory  = 'uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}'
 end
