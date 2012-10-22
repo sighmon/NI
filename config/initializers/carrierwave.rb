@@ -5,5 +5,5 @@ CarrierWave.configure do |config|
     :aws_secret_access_key  => ENV['S3_SECRET'],
     :region                 => 'tokyo'
   }
-  config.fog_directory  = 'uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}'
+  config.fog_directory  = 'nirailsapp'
 end
