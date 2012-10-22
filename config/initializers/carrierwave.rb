@@ -6,4 +6,6 @@ CarrierWave.configure do |config|
     :region                 => 'tokyo'
   }
   config.fog_directory  = 'nirailsapp'
+  config.fog_public = true
+  # config.fog_host = 's3-ap-northeast-1.amazonaws.com'
 end

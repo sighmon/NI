@@ -54,7 +54,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   version :thumb2x do
     process :resize_to_limit => [400,400]
     def full_filename (for_file = model.cover.file) 
-      "thumb_#{model.cover.file.basename}@2x.#{model.cover.file.extension}" 
+      "thumb_#{model.cover.file.basename}@2x.#{model.cover.file.extension}"
     end
   end
 
@@ -66,7 +66,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   version :tiny2x do
     process :resize_to_limit => [150, 150]
     def full_filename (for_file = model.cover.file) 
-      "tiny_#{model.cover.file.basename}@2x.#{model.cover.file.extension}" 
+      "tiny_#{model.cover.file.basename}@2x.#{model.cover.file.extension}"
     end
   end
 
