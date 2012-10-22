@@ -1,6 +1,6 @@
 CarrierWave.configure do |config|
   if Rails.env.production?
-    # config.cache_dir = "#{Rails.root}/tmp/uploads"
+    config.cache_dir = "#{Rails.root}/tmp/uploads"
 
     config.storage = :s3
     config.s3_access_key_id = ENV['S3_KEY']
