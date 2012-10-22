@@ -95,7 +95,9 @@ class IssuesController < ApplicationController
   # DELETE /issues/1.json
   def destroy
     # @issue = Issue.find(params[:id])
-    @issue.destroy
+    # For some reason @issue.destroy doesn't work anymore postgres?
+    # @issue.destroy
+    @issue.delete
 
     respond_to do |format|
       format.html { redirect_to issues_url }

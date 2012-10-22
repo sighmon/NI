@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-# ruby "1.9.3"
-
 gem 'rails', '3.2.3'
 
 # Bundle edge Rails instead:
@@ -85,6 +83,10 @@ gem 'rmagick', :require => false
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave
 gem 'carrierwave'
+
+# Using Fog for Amazon S3 image storage so it works with Heroku
+# https://github.com/jnicklas/carrierwave (see S3 section)
+gem 'fog', '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
