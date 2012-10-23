@@ -8,4 +8,9 @@ CarrierWave.configure do |config|
   config.fog_directory  = 'nirailsapp'
   config.fog_public = true
   # config.fog_host = 's3-ap-northeast-1.amazonaws.com'
+  if Rails.env.production?
+    config.storage = :fog
+  else
+    config.storage = :file
+  end
 end
