@@ -21,6 +21,14 @@ TODO: insert instructions.
 $ rake environment tire:import CLASS='Issue'
 $ rake environment tire:import CLASS='Article'
 
+* Install Postgresql
+
+TODO: insert instructions.
+
+Initialise the database and set it up from seeds.rb
+
+$ rake db:setup
+
 = Run instructions
 
 * Start postgresql server
