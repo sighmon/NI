@@ -14,7 +14,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:teaser) %></th>
       <th><%= model_class.human_attribute_name(:author) %></th>
@@ -29,23 +28,22 @@
   <tbody>
     <% @articles.sort_by(&:publication).reverse.each do |article| %>
       <tr>
-        <!-- <td><%= link_to article.id, issue_article_path(article.issue,article) %></td> -->
-        <td><%= link_to article.title, issue_article_path(article.issue,article) %></td>
-        <td><%= article.teaser %></td>
+        <td><%= link_to article.title, issue_article_path(article.issue,article) unless article.issue.nil? %></td>
+        <td><%= simple_format article.teaser %></td>
         <td><%= article.author %></td>
         <td><%= article.publication.strftime("%B, %Y") %></td>
         <!-- <td><%= article.body %></td> -->
-        <td><%= link_to article.issue.number, issue_path(article.issue) %></td>
+        <td><%= link_to article.issue.number, issue_path(article.issue) unless article.issue.nil? %></td>
         <!-- <td><%= article.trialarticle %></td> -->
         <!-- <td><%=l article.created_at %></td> -->
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' unless article.issue.nil? %>
           <% else %>
-            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' %>
+            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' unless article.issue.nil? %>
           <% end %>
-          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %>
+          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' unless article.issue.nil? %><% end %>
+          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' unless article.issue.nil? %><% end %>
         </td>
       </tr>
     <% end %>
