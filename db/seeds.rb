@@ -27,6 +27,6 @@ for issue_obj in YAML.load_file("db/seed_data/issues.yml")
   issue.delete("id")
   issue.delete("created_at")
   issue.delete("updated_at")
-  Issue.new(issue).save
+  Issue.create(issue)
 end
 
