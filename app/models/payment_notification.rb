@@ -8,7 +8,7 @@ private
 	def update_subscription
 		@user = User.find(self.user_id)
 		# Log for testing.
-		# logger.info params
+		logger.info params
 
 		# TODO: Check that the ipn_url is working on real server.
 
