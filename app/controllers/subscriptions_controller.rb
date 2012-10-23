@@ -102,14 +102,15 @@ class SubscriptionsController < ApplicationController
 
             if response_request.approved? and response_request.completed?
                 # 2. create profile & save recurring profile token
+                # Set :period to :daily and :frequency to 1 for testing IPN every minute
                 ppr = PayPal::Recurring.new({
                   :token       => session[:express_token],
                   :payer_id    => session[:express_payer_id],
                   :amount      => (session[:express_purchase_price] / 100),
                   :currency    => 'AUD',
                   :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
-                  :frequency   => session[:express_purchase_subscription_duration],
-                  :period      => :monthly, # Set to :daily and :frequency to 1 for testing IPN every minute
+                  :frequency   => 1, # session[:express_purchase_subscription_duration],
+                  :period      => :daily, # :monthly,
                   :reference   => "#{current_user.id}",
                   :ipn_url     => '#{payment_notifications_url}',
                   :start_at    => Time.zone.now,
