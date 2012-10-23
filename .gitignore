@@ -29,3 +29,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore image files generated in public/uploads
+/public/uploads/**

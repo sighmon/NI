@@ -30,7 +30,8 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :issue_ids, :login, :username, :expirydate, :admin, :subscriber, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me
+  # removed :admin so that public can't make themselves an admin
   # attr_accessible :title, :body
 
   #Override to_s to show user details instead of #string

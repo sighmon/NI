@@ -12,6 +12,10 @@ Learning Rails. :-)
 
 = Installation instructions
 
+* Setup an admin user
+
+$ User.create(:username=>"admin",:admin=>true,:email=>"admin@example.com":password=>"password")
+
 * Install ElasticSearch
 
 TODO: insert instructions.
