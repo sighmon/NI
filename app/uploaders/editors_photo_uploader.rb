@@ -53,8 +53,8 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
   # Retina display :thumb @2x version
   version :thumb2x do
     process :resize_to_limit => [200, 300]
-    def full_filename (for_file = model.editors_photo.file) 
-      "thumb_#{model.editors_photo.file.basename}@2x.#{model.editors_photo.file.extension}" 
+    def full_filename (for_file = model.editors_photo.file)
+      "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
