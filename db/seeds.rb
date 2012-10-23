@@ -23,11 +23,11 @@ require_dependency Rails.root.join("app/models/issue.rb").to_s
 def strip_path_head(path)
   return path.partition("/")[2].partition("/")[2]
 end
-
+#db/seed_data/issue/cover/1/452_cover.jpg
 for issue_obj in YAML.load_file(Rails.root.join("db/seed_data/issues.yml"))
   issue = issue_obj.to_hash
-  issue["editors_photo"] = File.open(Rails.root.join("db/seed_data/"+strip_path_head(issue_obj.editors_photo_url)))
-  issue["cover"] = File.open(Rails.root.join("db/seed_data/"+strip_path_head(issue_obj.cover_url)))
+  issue["editors_photo"] = File.open(Rails.root.join("db/seed_data/issue/editors_photo/#{issue['id']}/#{issue_obj['editors_photo']}"))
+  issue["cover"] = File.open(Rails.root.join("db/seed_data/issue/cover/#{issue['id']}/#{issue_obj['cover']}"))
   issue.delete("id")
   issue.delete("created_at")
   issue.delete("updated_at")
