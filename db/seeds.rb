@@ -18,8 +18,15 @@ Settings.article_pagination = 10
 
 # Setup an issue.
 
-Issue.new("issue"=>{"title"=>"Title", "number"=>"1234", "editors_name"=>"Editor Name", 
-	"editors_photo"=>File.open(Rails.root.join("public/uploads/issue/editors_photo/34/thumb_thumb_default_editors_photo.jpg")), 
-	"editors_letter"=>"Editor's Letter", 
-	"cover"=>File.open(Rails.root.join("public/uploads/issue/cover/34/thumb_thumb_default_cover.jpg")), 
-	"release(1i)"=>"2012", "release(2i)"=>"12", "release(3i)"=>"1", "release(4i)"=>"00", "release(5i)"=>"00", "trialissue"=>"0"})
+require_dependency "app/models/issue.rb"
+
+for issue_obj in YAML.load_file("db/seed_data/issues.yml")
+  issue = issue_obj.to_hash
+  issue["editors_photo"] = File.open(Rails.root.join("public/"+issue_obj.editors_photo_url))
+  issue["cover"] = File.open(Rails.root.join("public/"+issue_obj.cover_url))
+  issue.delete("id")
+  issue.delete("created_at")
+  issue.delete("updated_at")
+  Issue.new(issue).save
+end
+

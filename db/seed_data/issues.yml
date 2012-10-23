@@ -1,0 +1,245 @@
+- !ruby/object:Issue
+  attributes:
+    id: 1
+    title: Mental health
+    number: 452
+    release: 2012-05-01 00:00:00.000000000 Z
+    created_at: 2012-05-16 07:46:54.865067000 Z
+    updated_at: 2012-09-04 03:36:51.447939000 Z
+    trialissue: false
+    cover: 452_cover.jpg
+    editors_letter: ! "As an undergraduate, I took psychology for two years. People
+      who study the subject tend to be drawn to it because they are seeking to solve
+      puzzles in their own mental makeup. I was no exception.\r\n\r\nBut I was also
+      seeking another connection and answers to the question: what is my place in
+      the world? That led to an informal dalliance with philosophy as well. \r\n\r\nI
+      didn’t know it then, but the answers aren’t readymade, and I am still working
+      them out.  \r\n\r\nAn answer I find particularly important is: in order to find
+      my place in the world, I need to be of it. However much I love solitude, disconnection
+      is a dead end. \r\n\r\nThis has been painfully brought home on the many occasions
+      I have had to visit locked psychiatric wards. Whatever their faults – tedium
+      seems more common now than the horrors recounted by survivors just a couple
+      of decades ago – they can be places where some people in extreme mental distress
+      find the time and space to make peace with themselves. Society at large seldom
+      offers such a space. \r\n\r\nThe challenge of mental ill health is often seen
+      only as an individual challenge; the social challenge to build inclusive, supportive
+      communities is barely considered, perhaps because it appears too great a task.
+      Or perhaps because it is too much like common sense. \r\n\r\nSince this edition
+      was announced last month, readers have been writing in, wishing to contribute
+      on this theme. Sadly, we were fully commissioned by then, but as ever we want
+      to know what you think. So do email or write to us."
+    editors_name: Dinyar Godrej
+    editors_photo: dinyar_godrej.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 2
+    title: Protection racket
+    number: 453
+    release: 2012-06-01 00:00:00.000000000 Z
+    created_at: 2012-05-16 07:47:44.554654000 Z
+    updated_at: 2012-09-04 03:27:57.570832000 Z
+    trialissue: false
+    cover: 453_cover.jpg
+    editors_letter: ! "The United Nations says the global earth summit it is holding
+      in Rio this month ‘is a chance to move away from business as usual and to act
+      to end poverty, address environmental destruction and build a bridge to the
+      future’.\r\n\r\nSplendid aims. However, a great many of those involved in shaping
+      the outcome are from the fossil-fuel, mining, banking and carbon-trading sectors.\r\n\r\nSo
+      we reckon a reality check is in order. This month’s issue gives you the ‘unofficial
+      guide’ to Rio+20, as the summit is called. Writer and activist Danny Chivers
+      also removes the fig-leaves from a selection of corporate miscreants in his
+      exposé of ‘Eight Great Greenwashers’. Some on the list are household names;
+      others may be new to you.\r\n\r\nAlso this month, Richard Swift answers the
+      tricky question of why the political Right gained and the Left lost ground in
+      the wake of the financial crisis. This essay won him the prestigious US Daniel
+      Singer Millennium Prize. Time will tell if the tide can really be turned, in
+      Europe at any rate, following the French and Greek elections.\r\n\r\nElsewhere,
+      intrepid filmmaker Nadia El Fani explains why she had to leave her native Tunisia.
+      Outspoken US scholar Norman Finkelstein posits that Jewish Americans are falling
+      out of love with Israel – and discusses what that could mean for peace in the
+      Middle East. Charismatic Indian activist Bunker Roy talks about ‘granny power’,
+      and British comedian Jeremy Hardy reflects on being a Marxist at the tender
+      age of 10."
+    editors_name: Vanessa Baird
+    editors_photo: vanessa_baird.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 6
+    title: Adapt or die
+    number: 451
+    release: 2012-04-30 00:00:00.000000000 Z
+    created_at: 2012-05-30 01:07:05.264765000 Z
+    updated_at: 2012-09-05 03:40:58.223797000 Z
+    trialissue: true
+    cover: 451_cover.jpg
+    editors_letter: ! "Lurching through the streets of <i>Dhaka</i> on a narrow rickshaw
+      seat, I thought I would be catapulted out at any time.\r\n\r\nThen I peered
+      through the dust around me. I saw all sorts of precious cargo balanced on passengers’
+      knees: sleeping infants, panes of glass, towers of egg boxes.\r\n\r\nThe driver
+      understood his environment well, I realized, and could navigate the many hazards
+      on the roads.\r\n\r\nA nail-biting journey by rickshaw struck me as an analogy
+      for how Bangladesh is navigating the impacts of climate change: with grit, ingenuity,
+      limited technology and no safety net.\r\n\r\nI chose not to run photos of natural
+      disasters and floods in this issue. Devastation is already well documented on
+      rolling 24 hour news channels, but we hear less about Bangladeshis’ resilience
+      in the face of encroaching seas and erratic rains. \r\n\r\nI also met those
+      people for whom the only adaptation option was migration. This brought with
+      it the danger of cross country border-crossings or the misery of destitution
+      in bursting cities.\r\n\r\nAdaptation to climate change charts a path between
+      ecology, climate science and competing models of development. The latter is
+      the subject of both our Argument and special feature this month. \r\n\r\nOur
+      debaters consider whether aid should be cut to countries with poor human rights
+      records, while Andrew Bowman considers some of the downsides to Bill Gates’
+      brand of ‘venture philanthropy’.\r\n\r\nWorldbeater returns this issue, taking
+      aim at Equatorial Guinea’s Teodoro Obiang: ‘ruthless kleptocrat and good family
+      man’."
+    editors_name: Hazel Healy
+    editors_photo: hazel_healy.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 7
+    title: Co-operatives
+    number: 454
+    release: 2012-08-01 00:00:00.000000000 Z
+    created_at: 2012-09-03 06:57:31.982428000 Z
+    updated_at: 2012-09-04 02:53:21.629006000 Z
+    trialissue: false
+    cover: 454_cover.jpg
+    editors_letter: ! "Like a lot of recent graduates, in my early 20s I lived briefly
+      in a co-op house. It was a shaky experiment. The big social and political issues
+      of the day were submerged in the daily grind. Dirty dishes were our downfall.\r\n\r\nSince
+      then I’ve passed a major chunk of my life here at New Internationalist, a much
+      more successful co-operative with a long track record. We’ve had our ups and
+      downs but we’ve survived as a ‘worker co-op’ for almost three decades now. \r\n\r\nWe’re
+      not alone. Globally, co-operatives are thriving, a fact celebrated by this year’s
+      ‘International Year of the Co-operative’. In this time of economic chaos co-operatives
+      may be the only game in town, a human (and humane) alternative to business-as-usual.\r\n\r\nHere
+      at New Internationalist being a ‘worker co-op’ means we run the show ourselves.
+      Simple? No, it’s tricky being your own boss – satisfying, yes, but also frustrating.
+      Hard to put the blame on someone else when you’re in charge. \r\n\r\nNo doubt
+      we come across as a group of earnest do-gooders ceaselessly thrashing out the
+      best ways to save the world. But you’d be surprised at how little time we actually
+      spend talking about the ‘big issues’. \r\n\r\nThese days a lot of our time (meetings,
+      meetings, meetings) is spent managing the business, figuring out how to survive
+      in tough economic times. But we’re also not above having long, intense discussions
+      about life-altering decisions – like what colour to paint the doors.\r\n\r\nThis
+      issue also looks at another kind of work fraught with contradictions: voluntourism.
+      When our kids take off to spend a gap year in Malawi or Mongolia, are they just
+      paying patrons like any other tourist?\r\n\r\nIn addition, Tam Hussein, a writer
+      with deep roots in the Middle East, looks beyond the daily bloodshed in Syria
+      to probe the long-simmering tensions between contending ethnic factions in that
+      country. "
+    editors_name: Wayne Ellwood
+    editors_photo: wayne_ellwood.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 20
+    title: Illegal drugs
+    number: 455
+    release: 2012-09-01 00:00:00.000000000 Z
+    created_at: 2012-09-12 00:19:49.031141000 Z
+    updated_at: 2012-09-12 00:56:20.191380000 Z
+    trialissue: false
+    cover: 455_cover.jpg
+    editors_letter: ! "Journalism isn’t a bad profession. It can have its risks, dangers
+      and limitations, depending on what you do and where you do it. But, by and large,
+      it isn’t life-threatening.\r\nUnless, like Sandra Rodríguez, you live just on
+      the Mexican side of the border with the United States.\r\n\r\nSandra works for
+      <i>El Diario</i>, a newspaper in Ciudad Juárez. She investigates crime and corruption
+      in a city torn apart by the ‘war on drugs’. This is a place where journalists
+      are routinely murdered for just doing their job.\r\n\r\nThe courage and persistence
+      of Sandra and other reporters, who have lost colleagues when death threats turned
+      real, takes your breath away. It shows a commitment to freedom of speech, to
+      talking truth to power, way beyond what most of us will ever be called upon
+      to prove. Writing in this month’s issue of <strong>New Internationalist</strong>
+      on legalizing drugs, Sandra startlingly evokes what it is like to live and report,
+      day-by-day, in the cauldron of impunity. \r\n\r\nAnd while we are on the subject
+      of journalism, why is it that some conflicts get saturation coverage, while
+      others are ignored? Nick Harvey explores this in an article that delivers some
+      uncomfortable home truths.\r\n\r\nFinally, we are pleased to welcome the wonderful
+      North American writer Alice Walker to these pages. She turns a simple Q&A into
+      a kind of poetry that encompasses dust motes, the Dalai Lama, Fidel Castro and
+      the Universe.\r\n\r\nPS: Special thanks to Tony Jackson for his help and tireless
+      lobbying on the drugs issue."
+    editors_name: Vanessa Baird
+    editors_photo: vanessa_baird.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 21
+    title: Youth rising
+    number: 456
+    release: 2012-10-01 00:00:00.000000000 Z
+    created_at: 2012-09-12 03:05:55.728606000 Z
+    updated_at: 2012-10-18 05:33:43.181504000 Z
+    trialissue: false
+    cover: 456_cover.jpg
+    editors_letter: ! "Hip-hop artist Logic once rapped: ‘I get down for my people,
+      down for my people, down with the government until we’re all equal!’ When I
+      looked into the eyes of Logic’s first baby daughter, born a few weeks back,
+      it seemed like a long time since we sat down to write those lyrics. It was before
+      the police pulled me out of my wheelchair on a demonstration, when Hosni Mubarak
+      was still chilling, before the London riots.\r\n\r\nI struggle to imagine how
+      the world must look through a baby’s eyes. But when I see them smile, I know
+      that however much destruction we cause, the generations that follow will continue
+      to struggle to make things better.This issue celebrates youth movements working
+      to do exactly that. Far from being apathetic, young people are challenging an
+      unjust world and have the idealism and energy to change things.\r\n\r\nIn this
+      month’s <i>Big Story</i>, Farah Jassat challenges preconceptions, asking why
+      certain schools of feminist thought are ignored by the mainstream media. Laurie
+      Penny stokes up outrage with her lowdown on how youth in the West are shouldering
+      the burden of a broken economic model.\r\n\r\nWe take a look at the techniques
+      of the uncompromising Chilean student movement and listen to the frustrations
+      of youth activists in occupied Palestine.\r\n\r\nThe cover image is by Andre
+      Anderson, age 20, whom we found thanks to LIVE magazine (run by 15-24 year olds)
+      in Brixton, London. It was the ἀrst-ever publication I wrote for, at the tender
+      age of 15. \r\n\r\nInspired by LIVE’s principles of being written for young
+      people, by young people, this month’s <i>Big Story</i> is written almost wholly
+      by under 25s, with the exception of music makers Akala and Seun Kuti (both 28).
+      The next generation will inherit the planet we reside in. Who better to lead
+      the struggle?\r\n\r\nAlso this month, Australian journalist Ollie Milman writes
+      of the disgraceful way his country treats child asylum-seekers; and regular
+      contributor Stephanie Boyd visits Guatemala, where indigenous groups are leading
+      the ἀght against Canada’s Goldcorp goldmining corporation."
+    editors_name: Jody McIntyre
+    editors_photo: jody_mcintyre.jpg
+- !ruby/object:Issue
+  attributes:
+    id: 24
+    title: Bad medicine
+    number: 457
+    release: 2012-11-01 00:00:00.000000000 Z
+    created_at: 2012-10-18 05:45:09.277974000 Z
+    updated_at: 2012-10-18 05:46:19.699649000 Z
+    trialissue: false
+    cover: 457_cover.jpg
+    editors_letter: ! "Puberty is a strange affair. I spent a large part of mine at
+      the foot of our record player transfixed by a voice.\r\n\r\nWhile working on
+      this edition about healthcare and health inequality and how they are bound up
+      with economic inequality, a verse from a song from that time, ‘All My Trials’,
+      has been on repeat in my head. In Joan Baez’s doleful, piercing soprano, it
+      goes: ‘If living were a thing that money could buy/ Then the rich would live
+      and the poor would die...’\r\n\r\nSuch well-worn truths when put so simply appear
+      little more than clichés. But inspect the complexities of the debates around
+      the divided health of our divided world, and beneath all the intricacy there’s
+      that bedrock of inequity that still needs breaking up.\r\n\r\nMy attention has
+      been drawn many times by my British colleagues to what has been happening to
+      the National Health Service (NHS) in their country. A service conceived in the
+      spirit of providing reliable, free-at-the-point-of-delivery care to all is now
+      suffering fragmentation and marketization. There’s even a new political party,
+      the National Health Action party (<a href=\"http://nationalhealthaction.org.uk\">nationalhealthaction.org.uk</a>),
+      with the impetus coming from healthcare professionals, launching this month
+      to campaign for restoring the original principles of the NHS.\r\n\r\nSpeaking
+      of party politics, in news that will be old hat by the time you read this, Hugo
+      Chávez has been re-elected president in Venezuela (something that was accurately
+      predicted on our website by Jody McIntyre, guest editor of last month’s edition).
+      The country’s all-out effort to bring healthcare to marginalized communities,
+      with members of those communities being trained up as medics, will continue.
+      Here you will find an article about the country that pioneered this vision of
+      care – Cuba.\r\n\r\nIn the name of equal opportunities coverage, our <i>Worldbeater</i>
+      this month is about those heroes of the one per cent, the Koch brothers.\r\nAnd
+      the suspense is killing us about what kind of showing the Booker-shortlisted
+      author Jeet Thayil, who talks robustly about the work of writing in our interview,
+      will make. That decision will happen, annoyingly for us, just as this edition
+      goes to the printers."
+    editors_name: Dinyar Godrej
+    editors_photo: dinyar_godrej.jpg
