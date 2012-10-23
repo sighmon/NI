@@ -18,13 +18,13 @@ Settings.article_pagination = 10
 
 # Setup an issue.
 
-require_dependency "app/models/issue.rb"
+require_dependency Rails.root.join("app/models/issue.rb").to_s
 
 def strip_path_head(path)
   return path.partition("/")[2].partition("/")[2]
 end
 
-for issue_obj in YAML.load_file("db/seed_data/issues.yml")
+for issue_obj in YAML.load_file(Rails.root.join("db/seed_data/issues.yml"))
   issue = issue_obj.to_hash
   issue["editors_photo"] = File.open(Rails.root.join("db/seed_data/"+strip_path_head(issue_obj.editors_photo_url)))
   issue["cover"] = File.open(Rails.root.join("db/seed_data/"+strip_path_head(issue_obj.cover_url)))
