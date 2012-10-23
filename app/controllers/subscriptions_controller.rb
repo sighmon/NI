@@ -113,7 +113,7 @@ class SubscriptionsController < ApplicationController
                   :period      => :daily, # :monthly,
                   :reference   => "#{current_user.id}",
                   :ipn_url     => '#{payment_notifications_url}',
-                  :start_at    => Time.zone.now,
+                  :start_at    => Time.now, # Time.zone.now
                   :failed      => 1,
                   :outstanding => :next_billing
                 })
