@@ -14,7 +14,7 @@ Learning Rails. :-)
 
 * Setup an admin user
 
-$ User.create(:username=>"admin",:admin=>true,:email=>"admin@example.com":password=>"password")
+$ User.create(:username=>"admin",:admin=>true,:email=>"admin@example.com",:password=>"password")
 
 * Install ElasticSearch
 

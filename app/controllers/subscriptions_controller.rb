@@ -109,7 +109,7 @@ class SubscriptionsController < ApplicationController
                   :currency    => 'AUD',
                   :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
                   :frequency   => session[:express_purchase_subscription_duration],
-                  :period      => :daily, # Set to :daily for testing in minutes
+                  :period      => :monthly, # Set to :daily and :frequency to 1 for testing IPN every minute
                   :reference   => "#{current_user.id}",
                   :ipn_url     => '#{payment_notifications_url}',
                   :start_at    => Time.zone.now,
