@@ -84,7 +84,7 @@ class SubscriptionsController < ApplicationController
 
         payment_complete = false
         @user = current_user
-        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration])
+        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration], :purchase_date => DateTime.now)
 
         if session[:express_autodebit]
             # It's an autodebit, so set that up
@@ -248,7 +248,6 @@ private
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
         @subscription.price_paid = session[:express_purchase_price]
-        @subscription.purchase_date = DateTime.now
         # @subscription.paypal_profile_id also saved for recurring payments earlier
     end
 

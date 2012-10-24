@@ -9,9 +9,6 @@ private
 		@user = User.find(self.user_id)
 		# Log for testing.
 		logger.info params
-		logger.info "Self:"
-		logger.info self.status
-		logger.info self.transaction_type
 
 		# TODO: Check that the ipn_url is working on real server.
 
@@ -44,7 +41,7 @@ private
 	end
 
 	def renew_subscription(months)
-        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => months)
+        @subscription = Subscription.create(:paypal_profile_id => transaction_id, :price_paid => params[:mc_gross], :user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => months, :purchase_date => DateTime.now)
         @subscription.save
     end
 
