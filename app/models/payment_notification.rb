@@ -9,6 +9,8 @@ private
 		@user = User.find(self.user_id)
 		# Log for testing.
 		logger.info params
+		logger.info "Self:"
+		logger.info self
 
 		# TODO: Check that the ipn_url is working on real server.
 
@@ -29,7 +31,9 @@ private
 	end
 
 	def calculate_refund
-        @subscription.refund = @subscription.duration
+		@subscription = @user.recurring_subscription
+		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
+        @subscription.calculate_refund
         logger.warn "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
