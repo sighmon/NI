@@ -37,7 +37,7 @@ private
 	end
 
 	def renew_subscription(months)
-        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration])
+        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => months)
         @subscription.save
     end
 
