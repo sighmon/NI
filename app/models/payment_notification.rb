@@ -10,12 +10,13 @@ private
 		# Log for testing.
 		logger.info params
 		logger.info "Self:"
-		logger.info self.to_hash
+		logger.info self.status
+		logger.info self.transaction_type
 
 		# TODO: Check that the ipn_url is working on real server.
 
 		# Test to see if it's a subscription renewal, or a subscription cancellation
-		if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == 1
+		if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == "1"
 			# It's a recurring subscription debit
 			# Find out how many months & update expiry_date
 			renew_subscription(params[:period3])
