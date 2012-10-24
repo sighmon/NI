@@ -10,7 +10,7 @@ private
 		# Log for testing.
 		logger.info params
 		logger.info "Self:"
-		logger.info self
+		logger.info self.to_hash
 
 		# TODO: Check that the ipn_url is working on real server.
 
