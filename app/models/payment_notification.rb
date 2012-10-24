@@ -9,11 +9,14 @@ private
 		@user = User.find(self.user_id)
 		# Log for testing.
 		logger.info params
+		logger.info "Self:"
+		logger.info self.status
+		logger.info self.transaction_type
 
 		# TODO: Check that the ipn_url is working on real server.
 
 		# Test to see if it's a subscription renewal, or a subscription cancellation
-		if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == 1
+		if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == "1"
 			# It's a recurring subscription debit
 			# Find out how many months & update expiry_date
 			renew_subscription(params[:period3])
@@ -29,7 +32,9 @@ private
 	end
 
 	def calculate_refund
-        @subscription.refund = @subscription.duration
+		@subscription = @user.recurring_subscription
+		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
+        @subscription.calculate_refund
         logger.warn "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
