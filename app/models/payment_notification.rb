@@ -23,6 +23,8 @@ private
 			expire_subscription
 			# send email
 			UserMailer.subscription_cancellation(user).deliver
+		else
+			logger.info "Unkown transaction."
 		end
 	end
 
