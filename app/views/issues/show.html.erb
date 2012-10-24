@@ -28,16 +28,18 @@
       <div class="issue-article keynote">
         <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
         <h5>The big story</h5>
-        <% @issue.articles.find_by_keynote(true) do |article| %>
-          <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
-          <p><%= simple_format article.teaser %></p>
-          <p><% if can? :read, article %>
-            <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-          <% else %>
-            <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+        <% if @issue.articles.find_by_keynote(true) %>
+          <% @issue.articles.find_by_keynote(true) do |article| %>
+            <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
+            <p><%= simple_format article.teaser %></p>
+            <p><% if can? :read, article %>
+              <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+            <% else %>
+              <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+            <% end %>
+            <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+            <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
           <% end %>
-          <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-          <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
         <% end %>
       </div>
       <% unless @issue.articles[1].nil? %>
