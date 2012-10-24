@@ -1,7 +1,8 @@
 FactoryGirl.define do
   
   factory :subscription do
-    expiry_date DateTime.tomorrow
+    valid_from DateTime.now
+    duration 1
     user
   end
 
