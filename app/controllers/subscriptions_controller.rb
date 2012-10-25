@@ -94,7 +94,7 @@ class SubscriptionsController < ApplicationController
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
               :amount      => (session[:express_purchase_price] / 100),
-              :ipn_url     => '#{payment_notifications_url}',
+              :ipn_url     => "#{payment_notifications_url}",
               :currency    => 'AUD',
               :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
             })
@@ -112,11 +112,13 @@ class SubscriptionsController < ApplicationController
                   :frequency   => session[:express_purchase_subscription_duration], # 1,
                   :period      => :monthly, # :daily,
                   :reference   => "#{current_user.id}",
-                  :ipn_url     => '#{payment_notifications_url}',
+                  :ipn_url     => "#{payment_notifications_url}",
                   :start_at    => Time.now, # Time.zone.now
                   :failed      => 1,
                   :outstanding => :next_billing
                 })
+                logger.info "Payment Notifications URL:"
+                logger.info "#{payment_notifications_url}"
 
                 response_create = ppr.create_recurring_profile
                 if not(response_create.profile_id.blank?)
