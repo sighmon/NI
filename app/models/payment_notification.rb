@@ -6,7 +6,12 @@ class PaymentNotification < ActiveRecord::Base
 
 private
 	def update_subscription
-		@user = User.find(self.user_id)
+		if transaction_type == "express_checkout"
+			# TODO: Implement handling this.
+			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
+		else
+			@user = User.find(self.user_id)
+		end
 		# Log for testing.
 		logger.info params
 
