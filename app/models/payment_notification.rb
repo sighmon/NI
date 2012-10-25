@@ -14,9 +14,9 @@ private
 		if transaction_type == "express_checkout"
 			# TODO: Implement handling this.
 			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
-		elsif transaction_type == "instant"
-			# TODO: Implement handling this.
-			logger.info "Instant magazine purchase IPN ping received. TXN_ID: #{transaction_id}"
+		elsif transaction_type == "cart"
+			# TODO: Implement handling instant payments.
+			logger.info "Instant purchase IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
 			# TODO: Do we need to do anything with this?
 			logger.info "Recurring payment profile created: #{params[:recurring_payment_id]}"
