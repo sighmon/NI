@@ -14,7 +14,7 @@ module ApplicationHelper
 
     def purchases_as_table(purchases)
         if purchases.try(:empty?)
-            return "You haven't purchased anything yet."
+            return "You haven't purchased any individual magazines yet."
         else
             table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Release date</th><th>Purchase date</th><th>Price</th></tr></thead><tbody>"
             for purchase in purchases.sort_by {|x| x.issue.release} do
