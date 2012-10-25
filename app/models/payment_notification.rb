@@ -18,11 +18,15 @@ private
 			# Find out how many months & update expiry_date
 			renew_subscription(params[:period3])
 
-		elsif status == "Completed" and transaction_type == "subscr_cancel"
-			calculate_refund
-			expire_subscription
-			# send email
-			UserMailer.subscription_cancellation(user).deliver
+		elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
+			if @user.subscription_valid?
+				calculate_refund
+				expire_subscription
+				# send email
+				UserMailer.subscription_cancellation(user).deliver
+			else
+				logger.info "Subscription already cancelled."
+			end
 		else
 			logger.info "Unkown transaction."
 		end
@@ -32,7 +36,7 @@ private
 		@subscription = @user.recurring_subscription
 		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
         @subscription.calculate_refund
-        logger.warn "Refund of #{@subscription.refund} months due."
+        logger.info "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
 
