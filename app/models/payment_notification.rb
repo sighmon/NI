@@ -28,10 +28,14 @@ private
 
 			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				if @user.subscription_valid?
+					@subscription = @user.recurring_subscription
 					calculate_refund
 					expire_subscription
+					@subscription.save
+					logger.info "Subscription expired successfully, cancelled date: #{@subscription.cancellation_date}"
 					# send email
-					UserMailer.subscription_cancellation(user).deliver
+					# TODO: create a special email to send saying cancelled through paypal.
+					# UserMailer.subscription_cancellation(user).deliver
 				else
 					logger.info "Subscription already cancelled."
 				end
@@ -42,10 +46,10 @@ private
 	end
 
 	def calculate_refund
-		@subscription = @user.recurring_subscription
+		# @subscription = @user.recurring_subscription
 		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
         @subscription.calculate_refund
-        @subscription.save
+        # @subscription.save
         # logger.info "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
@@ -53,8 +57,7 @@ private
 	def expire_subscription
 		@subscription = @user.recurring_subscription
 	    @subscription.cancellation_date = DateTime.now
-	    logger.info "Subscription expired successfully, cancelled date: #{@subscription.cancellation_date}"
-	    @subscription.save
+	    # @subscription.save
 	end
 
 	def renew_subscription(months)
