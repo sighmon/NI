@@ -24,10 +24,13 @@ private
 			@user = User.find(self.user_id)
 
 			# Test to see if it's a subscription renewal, or a subscription cancellation
-			if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == "1"
+			if status == "Completed" and transaction_type == "recurring_payment" and params[:profile_status] == "Active"
 				# It's a recurring subscription debit
 				# Find out how many months & update expiry_date
-				renew_subscription(params[:period3])
+				# PayPal don't send us back the subscription :frequency, so we need to calculate that from price
+				months = params[:mc_gross] / ( Settings.subscription_price / 100 )
+				renew_subscription(months)
+				logger.info "Subscription renewed for another #{months} months."
 
 			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
