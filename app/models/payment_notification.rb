@@ -30,6 +30,7 @@ private
 				renew_subscription(params[:period3])
 
 			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
+				# It's a recurring subscription cancellation.
 				if @user.subscription_valid?
 					@subscription = @user.recurring_subscription
 					calculate_refund
