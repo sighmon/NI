@@ -38,7 +38,7 @@ module ApplicationHelper
                 table += "<td>#{subscription.valid_from.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.duration}</td>"
                 table += "<td>#{subscription.cancellation_date.try(:strftime,"%d %B, %Y")}</td>"
-                table += "<td>#{subscription.was_recurring? ? "Yes" : "No"}</td>"
+                table += "<td>#{subscription.was_recurring? ? "#{subscription.paypal_profile_id}" : "No"}</td>"
                 table += "<td>#{subscription.price_paid ? "$#{number_with_precision((subscription.price_paid / 100), :precision => 2)}" : "Free"}</td>"
                 table += "<td>#{subscription.refund ? "$#{cents_to_dollars(subscription.refund)}" : ""}</td>"
                 table += "<td>#{subscription.refunded_on ? "#{subscription.refunded_on.try(:strftime,"%d %B, %Y")} #{link_to('Undo?', admin_subscription_path(subscription), :method => :put, :class => 'btn btn-mini btn-success', :confirm => 'Are you sure you want to undo marking it refunded?')}" : "#{link_to('Refunded', admin_subscription_path(subscription), :method => :put, :class => 'btn btn-mini btn-danger', :confirm => 'Are you sure you want to mark this refund as paid?')}" }</td></tr>"

@@ -6,35 +6,39 @@ class PaymentNotification < ActiveRecord::Base
 
 private
 	def update_subscription
-		if transaction_type == "express_checkout"
-			# TODO: Implement handling this.
-			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
-		else
-			@user = User.find(self.user_id)
-		end
 		# Log for testing.
 		logger.info params
 
 		# TODO: Check that the ipn_url is working on real server.
 
-		# Test to see if it's a subscription renewal, or a subscription cancellation
-		if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == "1"
-			# It's a recurring subscription debit
-			# Find out how many months & update expiry_date
-			renew_subscription(params[:period3])
-
-		elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
-			if @user.subscription_valid?
-				calculate_refund
-				expire_subscription
-				# send email
-				UserMailer.subscription_cancellation(user).deliver
-			else
-				logger.info "Subscription already cancelled."
-			end
+		if transaction_type == "express_checkout"
+			# TODO: Implement handling this.
+			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
+		elsif transaction_type == "recurring_payment_profile_created"
+			# TODO: Do we need to do anything with this?
+			logger.info "Recurring payment profile created: #{transaction_id}"
 		else
-			logger.info "Unkown transaction."
-		end
+			@user = User.find(self.user_id)
+
+			# Test to see if it's a subscription renewal, or a subscription cancellation
+			if status == "Completed" and transaction_type == "subscr_payment" and params[:recurring] == "1"
+				# It's a recurring subscription debit
+				# Find out how many months & update expiry_date
+				renew_subscription(params[:period3])
+
+			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
+				if @user.subscription_valid?
+					calculate_refund
+					expire_subscription
+					# send email
+					UserMailer.subscription_cancellation(user).deliver
+				else
+					logger.info "Subscription already cancelled."
+				end
+			else
+				logger.info "Unkown transaction."
+			end
+		end		
 	end
 
 	def calculate_refund
