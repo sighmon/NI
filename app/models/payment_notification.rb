@@ -16,7 +16,7 @@ private
 			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
 			# TODO: Do we need to do anything with this?
-			logger.info "Recurring payment profile created: #{transaction_id}"
+			logger.info "Recurring payment profile created: #{params[:recurring_payment_id]}"
 		else
 			@user = User.find(self.user_id)
 
@@ -45,6 +45,7 @@ private
 		@subscription = @user.recurring_subscription
 		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
         @subscription.calculate_refund
+        @subscription.save
         # logger.info "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
@@ -53,6 +54,7 @@ private
 		@subscription = @user.recurring_subscription
 	    @subscription.cancellation_date = DateTime.now
 	    logger.info "Subscription expired successfully, cancelled date: #{@subscription.cancellation_date}"
+	    @subscription.save
 	end
 
 	def renew_subscription(months)
