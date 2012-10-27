@@ -68,7 +68,7 @@ private
 	end
 
 	def renew_subscription(months)
-        @subscription = Subscription.create(:paypal_profile_id => transaction_id, :price_paid => params[:mc_gross], :user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => months, :purchase_date => DateTime.now)
+        @subscription = Subscription.create(:paypal_profile_id => params[:recurring_payment_id], :price_paid => (params[:mc_gross].to_i * 100), :user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => months, :purchase_date => DateTime.now)
         @subscription.save
     end
 
