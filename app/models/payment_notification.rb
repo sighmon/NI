@@ -27,9 +27,8 @@ private
 			if status == "Completed" and transaction_type == "recurring_payment" and params[:profile_status] == "Active"
 				# It's a recurring subscription debit
 				# Find out how many months & update expiry_date
-				# PayPal doesn't send us back the subscription :frequency, so we need to calculate that from price
-				# TODO: Calculate months: find :duration from first valid recurring subscription with :paypal_profile_id same as this one.
-				months = @user.first_recurring_subscription(transaction_id).duration
+				# PayPal doesn't send us back the subscription :frequency, so we need to calculate that from initial recurring subscription
+				months = @user.first_recurring_subscription(params[:recurring_payment_id]).duration
 				# old hack method
 				# months = params[:mc_gross].to_i / ( Settings.subscription_price / 100 )
 				renew_subscription(months)
