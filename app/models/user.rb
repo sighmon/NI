@@ -65,6 +65,10 @@ class User < ActiveRecord::Base
     return self.subscriptions.select{|s| s.is_recurring?}.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 
+  def first_recurring_subscription(profile_id)
+    return self.subscriptions.select{|s| s.profile_id}.sort!{|a,b| a.purchase_date <=> b.purchase_date}.first
+  end
+
   def last_subscription
     return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
   end

@@ -24,12 +24,12 @@
 		<dt><strong>PayPal Name:</strong></dt>
 		<dd><%= @user.recurring_subscription.paypal_first_name %> <%= @user.recurring_subscription.paypal_last_name %></dd>
 		<dt><strong>PayPal Payer ID:</strong></dt>
-		<dd><%= @user.recurring_subscription.paypal_payer_id %></dd>
+		<dd><%= @user.recurring_subscription.paypal_payer_id %>&nbsp;</dd>
 		<dt><strong>PayPal email:</strong></dt>
-		<dd><%= @user.recurring_subscription.paypal_email %></dd>
+		<dd><%= @user.recurring_subscription.paypal_email %>&nbsp;</dd>
 		<% if !@user.recurring_subscription.paypal_profile_id.blank? %>
 			<dt><strong>PayPal Recurring Profile ID:</strong></dt>
-			<dd><%= @user.recurring_subscription.paypal_profile_id %></dd>
+			<dd><%= @user.recurring_subscription.paypal_profile_id %>&nbsp;</dd>
 		<% end %>
 	<% end %>
 </dl>
