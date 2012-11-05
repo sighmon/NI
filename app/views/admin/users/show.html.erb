@@ -22,7 +22,7 @@
 	<dd>&nbsp;</dd>
 	<% if @user.subscriber? and @user.is_recurring? %>
 		<dt><strong>PayPal Name:</strong></dt>
-		<dd><%= @user.recurring_subscription.paypal_first_name %> <%= @user.recurring_subscription.paypal_last_name %></dd>
+		<dd><%= @user.recurring_subscription.paypal_first_name %> <%= @user.recurring_subscription.paypal_last_name %>&nbsp;</dd>
 		<dt><strong>PayPal Payer ID:</strong></dt>
 		<dd><%= @user.recurring_subscription.paypal_payer_id %>&nbsp;</dd>
 		<dt><strong>PayPal email:</strong></dt>

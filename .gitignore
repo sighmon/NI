@@ -30,5 +30,8 @@
 # Ignore application configuration
 /config/application.yml
 
+# Ignore certificates
+/config/*.pem
+
 # Ignore image files generated in public/uploads
 /public/uploads/**
