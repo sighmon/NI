@@ -84,7 +84,7 @@ class SubscriptionsController < ApplicationController
 
         payment_complete = false
         @user = current_user
-        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration])
+        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration], :purchase_date => DateTime.now)
 
         if session[:express_autodebit]
             # It's an autodebit, so set that up
@@ -94,7 +94,7 @@ class SubscriptionsController < ApplicationController
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
               :amount      => (session[:express_purchase_price] / 100),
-              :ipn_url     => '#{payment_notifications_url}',
+              :ipn_url     => "#{payment_notifications_url}",
               :currency    => 'AUD',
               :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
             })
@@ -112,11 +112,13 @@ class SubscriptionsController < ApplicationController
                   :frequency   => session[:express_purchase_subscription_duration], # 1,
                   :period      => :monthly, # :daily,
                   :reference   => "#{current_user.id}",
-                  :ipn_url     => '#{payment_notifications_url}',
+                  :ipn_url     => "#{payment_notifications_url}",
                   :start_at    => Time.now, # Time.zone.now
                   :failed      => 1,
                   :outstanding => :next_billing
                 })
+                logger.info "Payment Notifications URL:"
+                logger.info "#{payment_notifications_url}"
 
                 response_create = ppr.create_recurring_profile
                 if not(response_create.profile_id.blank?)
@@ -248,7 +250,6 @@ private
         @subscription.paypal_first_name = session[:express_first_name]
         @subscription.paypal_last_name = session[:express_last_name]
         @subscription.price_paid = session[:express_purchase_price]
-        @subscription.purchase_date = DateTime.now
         # @subscription.paypal_profile_id also saved for recurring payments earlier
     end
 
