@@ -45,12 +45,20 @@ body {
 // Typography
 // -------------------------
 // @sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
+// @sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
+@sansFontFamily:		'Open Sans', sans-serif;
 @serifFontFamily:       "iABCRegular", serif;
 
 @baseFontFamily:        @sansFontFamily;
-@baseFontSize:          12px;
-@baseLineHeight:        18px;
+// @baseFontSize:          12px;
+// @baseLineHeight:        18px;
+// Open Sans
+@baseFontSize:          13px;
+@baseLineHeight:        20px;
+
+@articleFontSize:		14px;
+@articleLineHeight:		23px;
+@articleParagraphMargin:1em;
 
 /*
 @baseFontFamily:        @serifFontFamily;
@@ -58,13 +66,14 @@ body {
 @baseLineHeight:        32px;
 */
 
-@headingsFontFamily:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+// @headingsFontFamily:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+h1 { letter-spacing: -1px; }
 
 // ABC news base body font Verdana 12px 18px line-height
 
 // Navbar
 // -------------------------
-@navbarCollapseWidth:             979px;
+@navbarCollapseWidth:             767px;
 
 @navbarHeight:                    40px;
 @navbarBackgroundHighlight:       #ffffff;
@@ -105,7 +114,7 @@ body {
 
 .navbar .nav > li > a {
 	text-shadow: none;
-	padding: 15px 10px 5px;
+	padding: 13px 10px 7px;
 }
 
 .navbar .brand {
@@ -135,7 +144,7 @@ body {
 
 .hero-unit p {
 	font-size: 1.2em;
-	line-height: 1.2em;
+	line-height: 1.5em;
 }
 
 .hero-buttons {
@@ -398,8 +407,8 @@ a:active .shadow {
 }
 
 .article-title h2 {
-	// font-weight: normal;
-	font-size: 1.3em;
+	font-weight: 600;
+	font-size: 1.2em;
 	line-height: 1.3em;
 	color: @grayLight;
 	/* padding-bottom: 0.75em; */
@@ -421,6 +430,12 @@ a:active .shadow {
 	font-size: 21px;
 	line-height: 32px;
 */
+	font-size: @articleFontSize;
+	line-height: @articleLineHeight;
+}
+
+.article-body p {
+	margin-bottom: @articleParagraphMargin;
 }
 
 .article-image {
