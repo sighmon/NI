@@ -5,6 +5,7 @@ class Subscription < ActiveRecord::Base
   validates_presence_of :valid_from, :duration
 
   # PayPal encryption
+  # TODO: Do we need to implement this for Purhcase/Subscriptions?
   def encrypt_for_paypal(values)
     signed = OpenSSL::PKCS7::sign(OpenSSL::X509::Certificate.new(ENV["APP_CERT_PEM"]),        OpenSSL::PKey::RSA.new(ENV["APP_KEY_PEM"], ''), values.map { |k, v| "#{k}=#{v}" }.join("\n"), [], OpenSSL::PKCS7::BINARY)
     OpenSSL::PKCS7::encrypt([OpenSSL::X509::Certificate.new(ENV["PAYPAL_CERT_PEM"])], signed.to_der, OpenSSL::Cipher::Cipher::new("DES3"),        OpenSSL::PKCS7::BINARY).to_s.gsub("\n", "")

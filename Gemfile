@@ -32,6 +32,9 @@ gem 'ledermann-rails-settings', :require => 'rails-settings'
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
 
+# SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
+gem 'savon'
+
 # Heroku gem
 # gem 'heroku'
 
