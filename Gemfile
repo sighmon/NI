@@ -35,7 +35,7 @@ gem 'figaro'
 # SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
 gem 'savon'
 
-# different adapter for savon
+# Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
 
 # Heroku gem

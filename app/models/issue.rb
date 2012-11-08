@@ -31,10 +31,6 @@ class Issue < ActiveRecord::Base
     HTTPI.adapter = :curb
     Savon.configure do |config|
       config.env_namespace = :soap
-      # config.hooks.define(:verb, :soap_request) do |callback, request|
-      #   print request.http.to_s
-      #   callback.call
-      # end
     end
     client = Savon.client do
       wsdl.endpoint = "https://bric-new.newint.org/soap"
@@ -56,12 +52,11 @@ class Issue < ActiveRecord::Base
       }
     end
     print response.http.cookies
-    # TODO: Not returning a second AUTH cookie!
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
-      # TODO: We can't get the second cookie.
       http.set_cookies(response.http)
       soap.element_form_default = :qualified
+      # TODO: implement article import
       soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
