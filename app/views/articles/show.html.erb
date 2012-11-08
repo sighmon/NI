@@ -9,6 +9,20 @@
   </ul>
 </nav> -->
 
+<% if can? :update, @issue %>
+<div class="edit-article-buttons">
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_issue_article_path(@issue,@article), :class => 'btn btn-primary btn-mini' %>
+  <% if can? :destroy, @issue %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                issue_article_path(@issue,@article),
+              :method => 'delete',
+              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                :class => 'btn btn-mini btn-danger' %>
+  <% end %>
+</div>
+<% end %>
+
 <div class="page-header article-title">
   <h1><%= @article.title %></h1>
   <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover shadow', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
