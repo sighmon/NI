@@ -35,6 +35,9 @@ gem 'figaro'
 # SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
 gem 'savon'
 
+# different adapter for savon
+gem 'curb'
+
 # Heroku gem
 # gem 'heroku'
 

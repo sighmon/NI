@@ -28,6 +28,7 @@ class Issue < ActiveRecord::Base
   # Setting up SOAP to import articles from Bricolage using Savon
   def import_articles_from_bricolage()
     HTTPI.log_level = :debug
+    HTTPI.adapter = :curb
     Savon.configure do |config|
       config.env_namespace = :soap
       # config.hooks.define(:verb, :soap_request) do |callback, request|
@@ -54,12 +55,12 @@ class Issue < ActiveRecord::Base
         }
       }
     end
-    print response.http.cookies.to_json
+    print response.http.cookies
     # TODO: Not returning a second AUTH cookie!
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
       # TODO: We can't get the second cookie.
-      http.headers["Cookie"] = response.http.headers["Set-Cookie"]
+      http.set_cookies(response.http)
       soap.element_form_default = :qualified
       soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope 
