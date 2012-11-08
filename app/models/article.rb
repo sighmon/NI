@@ -15,13 +15,4 @@ class Article < ActiveRecord::Base
   #   end
   # end
 
-  # Setting up SOAP to import articles from Bricolage using Savon
-  def import_articles_from_bricolage(bric_date)
-    client = Savon::Client.new("https://bric-new.newint.org/soap?WSDL")
-    client.http.auth.ssl.verify_mode = :none
-    client.wsse_auth ENV["BRICOLAGE_USERNAME"], ENV["BRICOLAGE_PASSWORD"] #, :digest
-    # TODO: Make this work with Bric Soap
-    # response = client.request :web, :get_info_by_zip, body: { "USZip" => zip }
-  end
-
 end
