@@ -16,6 +16,13 @@ class User < ActiveRecord::Base
   # association for subscriptions
   has_many :subscriptions
 
+  # Send a welcome email after a user is created
+  after_create :send_welcome_mail
+
+  def send_welcome_mail
+    UserMailer.user_signup_confirmation(self).deliver
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)

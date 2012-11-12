@@ -8,6 +8,13 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.subscription_confirmation.subject
   #
+
+  def user_signup_confirmation(user)
+    @user = user
+    @greeting = "Hello"
+    mail(:to => user.email, :bcc => "design@newint.com.au", :subject => "New Internationalist - Welcome!")
+  end
+
   def subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
