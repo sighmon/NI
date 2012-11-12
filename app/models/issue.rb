@@ -52,6 +52,7 @@ class Issue < ActiveRecord::Base
       }
     end
     # print response.http.cookies
+    primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#list_ids\""
       http.set_cookies(response.http)
@@ -66,13 +67,14 @@ class Issue < ActiveRecord::Base
     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
     <list_ids xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
-      <primary_uri xsi:type="xsd:string">%/2012/10/01/%</primary_uri>
+      <primary_uri xsi:type="xsd:string">%s</primary_uri>
     </list_ids>
   </soap:Body>
-</soap:Envelope>'
+</soap:Envelope>' % primary_uri
     end
     #print response.to_json
     story_ids = response[:list_ids_response][:story_ids][:story_id]
+    story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
       http.set_cookies(response.http)
@@ -88,28 +90,19 @@ class Issue < ActiveRecord::Base
   <soap:Body>
     <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
       <story_ids soapenc:arrayType="xsd:int[12]" xsi:type="soapenc:Array">
-        <story_id xsi:type="xsd:int">19234</story_id>
-        <story_id xsi:type="xsd:int">19236</story_id>
-        <story_id xsi:type="xsd:int">19238</story_id>
-        <story_id xsi:type="xsd:int">19239</story_id>
-        <story_id xsi:type="xsd:int">19241</story_id>
-        <story_id xsi:type="xsd:int">19242</story_id>
-        <story_id xsi:type="xsd:int">19244</story_id>
-        <story_id xsi:type="xsd:int">19245</story_id>
-        <story_id xsi:type="xsd:int">19246</story_id>
-        <story_id xsi:type="xsd:int">19248</story_id>
-        <story_id xsi:type="xsd:int">19251</story_id>
-        <story_id xsi:type="xsd:int">19253</story_id>
+        %s
       </story_ids>
     </export>
   </soap:Body>
-</soap:Envelope>'
+</soap:Envelope>' % story_id_block
     end
     doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).encode())
-    doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd').collect do |element|
-      a = Article.create_from_element(element)
-      a.save
+    stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
+    #return stories
+    stories.collect do |element|
+      a = Article.create_from_element(self,element)
     end
+    stories
   end
 
   private
