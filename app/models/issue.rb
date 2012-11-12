@@ -58,20 +58,20 @@ class Issue < ActiveRecord::Base
       soap.element_form_default = :qualified
       # TODO: implement article import
       soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
-      <story_ids soapenc:arrayType="xsd:int[1]" xsi:type="soapenc:Array">
-        <story_id xsi:type="xsd:int">19238</story_id>
-      </story_ids>
-    </export>
-  </soap:Body>
-</soap:Envelope>'
+        <soap:Envelope 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+            xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+          <soap:Body>
+            <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
+              <story_ids soapenc:arrayType="xsd:int[1]" xsi:type="soapenc:Array">
+                <story_id xsi:type="xsd:int">19238</story_id>
+              </story_ids>
+            </export>
+          </soap:Body>
+        </soap:Envelope>'
     end
     print response.to_json
   end
