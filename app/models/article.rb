@@ -8,6 +8,11 @@ class Article < ActiveRecord::Base
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
+  def self.create_from_element(element)
+    print "NOT IMPLEMENTED!"
+    return nil
+  end
+
   # Doesn't seem to list all of the articles when no params.
   # def self.search(params)
   #   tire.search(load: true) do
