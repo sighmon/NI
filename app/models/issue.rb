@@ -89,12 +89,12 @@ class Issue < ActiveRecord::Base
     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
     <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
-      <story_ids soapenc:arrayType="xsd:int[12]" xsi:type="soapenc:Array">
+      <story_ids soapenc:arrayType="xsd:int[%d]" xsi:type="soapenc:Array">
         %s
       </story_ids>
     </export>
   </soap:Body>
-</soap:Envelope>' % story_id_block
+</soap:Envelope>' % [story_ids.length, story_id_block]
     end
     doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).encode())
     stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
