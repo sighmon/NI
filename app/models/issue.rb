@@ -52,6 +52,7 @@ class Issue < ActiveRecord::Base
       }
     end
     # print response.http.cookies
+    # Create primary_uri to search for based on Issue.release date
     primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#list_ids\""
@@ -72,7 +73,8 @@ class Issue < ActiveRecord::Base
   </soap:Body>
 </soap:Envelope>' % primary_uri
     end
-    #print response.to_json
+    # print response.to_json
+    # Pull the story_ids from the search results element passed from SOAP
     story_ids = response[:list_ids_response][:story_ids][:story_id]
     story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
     response = client.request "story", "story_ids" do
