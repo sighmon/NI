@@ -117,8 +117,6 @@ class SubscriptionsController < ApplicationController
                   :failed      => 1,
                   :outstanding => :next_billing
                 })
-                logger.info "Payment Notifications URL:"
-                logger.info "#{payment_notifications_url}"
 
                 response_create = ppr.create_recurring_profile
                 if not(response_create.profile_id.blank?)

@@ -37,14 +37,11 @@ private
 			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
 				if @user.subscription_valid?
-					@subscription = @user.recurring_subscription
-					calculate_refund
-					expire_subscription
-					@subscription.save
-					logger.info "Subscription expired successfully, cancelled date: #{@subscription.cancellation_date}"
-					# send email
-					# TODO: create a special email to send saying cancelled through paypal.
-					# UserMailer.subscription_cancellation(user).deliver
+					calculate_recurring_subscription_refunds(@user)
+					expire_recurring_subscriptions(@user)
+					logger.info "Recurring subscriptions expired successfully."
+					# send a special email saying cancelled through paypal.
+					UserMailer.subscription_cancelled_via_paypal(user).deliver
 				else
 					logger.info "Subscription already cancelled."
 				end
@@ -54,19 +51,25 @@ private
 		end		
 	end
 
-	def calculate_refund
-		# @subscription = @user.recurring_subscription
-		# TODO: Fix the following line so it takes into account all of the IPN subscriptions.
-        @subscription.calculate_refund
+	def calculate_recurring_subscription_refunds(user)
+		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
+		all_subscriptions.each do |s|
+			s.calculate_refund
+			s.save
+			logger.info "Refund for subscription id: #{s.id} is #{s.refund}"
+		end
         # @subscription.save
         # logger.info "Refund of #{@subscription.refund} months due."
         # logger.warn "Refund of #{user.subscription.refund} months due."
     end
 
-	def expire_subscription
-		@subscription = @user.recurring_subscription
-	    @subscription.cancellation_date = DateTime.now
-	    # @subscription.save
+	def expire_recurring_subscriptions(user)
+		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
+		all_subscriptions.each do |s|
+			s.expire_subscription
+			s.save
+			logger.info "Expired Subscription id: #{s.id} - cancel date: #{s.cancellation_date}"
+		end
 	end
 
 	def renew_subscription(months)
@@ -79,7 +82,8 @@ private
         	:price_paid => (params[:mc_gross].to_i * 100), 
         	:user_id => @user.id, 
         	:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), 
-        	:duration => months, :purchase_date => DateTime.now
+        	:duration => months, 
+        	:purchase_date => DateTime.now
         )
         @subscription.save
     end
