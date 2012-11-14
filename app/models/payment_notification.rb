@@ -53,7 +53,6 @@ private
 	def expire_recurring_subscriptions(user)
 		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
 		all_subscriptions.each do |s|
-			s.calculate_refund
 			s.expire_subscription
 			s.save
 			logger.info "Refund for subscription id: #{s.id} is #{s.refund} cents."
