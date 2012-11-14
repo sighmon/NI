@@ -58,6 +58,8 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl'
   gem 'timecop'
+  gem 'guard-rspec'
+  gem 'rb-inotify', '~> 0.8.8'
 end
 
 gem 'twitter-bootstrap-rails'

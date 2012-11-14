@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe User do
   describe "subscriber" do
-    subscription = FactoryGirl.create(:subscription)
-    user = subscription.user
+    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:user) { subscription.user }
 
     it "has a valid subscription" do
       user.subscriber?.should be_true
