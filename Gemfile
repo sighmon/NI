@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
 
-gem 'less-rails'
-gem 'therubyracer'
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -63,13 +60,18 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   gem 'guard-rspec'
-  # gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
-  # gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
   # Growl gem to send test notifications to OS X Notification
-  # gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
 
 gem 'twitter-bootstrap-rails'
+# gem 'less-rails'
+# gem 'therubyracer'
+gem 'sass-rails',   '~> 3.2.3'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'uglifier', '>= 1.0.3'
 
 # Gems used only for assets and not required
 # in production environments by default.
