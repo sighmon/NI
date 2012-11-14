@@ -37,7 +37,6 @@ private
 			elsif params[:profile_status] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
 				if @user.subscription_valid?
-					calculate_recurring_subscription_refunds(@user)
 					expire_recurring_subscriptions(@user)
 					logger.info "Recurring subscriptions expired successfully."
 					# send a special email saying cancelled through paypal.
@@ -51,23 +50,13 @@ private
 		end		
 	end
 
-	def calculate_recurring_subscription_refunds(user)
-		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
-		all_subscriptions.each do |s|
-			s.calculate_refund
-			s.save
-			logger.info "Refund for subscription id: #{s.id} is #{s.refund} cents."
-		end
-        # @subscription.save
-        # logger.info "Refund of #{@subscription.refund} months due."
-        # logger.warn "Refund of #{user.subscription.refund} months due."
-    end
-
 	def expire_recurring_subscriptions(user)
 		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
 		all_subscriptions.each do |s|
+			s.calculate_refund
 			s.expire_subscription
 			s.save
+			logger.info "Refund for subscription id: #{s.id} is #{s.refund} cents."
 			logger.info "Expired Subscription id: #{s.id} - cancel date: #{s.cancellation_date}"
 		end
 	end
