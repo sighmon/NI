@@ -9,6 +9,12 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
 
+  def import
+    @issue = Issue.find(params[:issue_id])
+    @issue.import_articles_from_bricolage
+    redirect_to issue_path(@issue)
+  end
+
   def index
     # @issues = Issue.all
     # Pagination

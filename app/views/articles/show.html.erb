@@ -9,11 +9,11 @@
   </ul>
 </nav> -->
 
-<% if can? :update, @issue %>
+<% if can? :update, @article %>
 <div class="edit-article-buttons">
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_issue_article_path(@issue,@article), :class => 'btn btn-primary btn-mini' %>
-  <% if can? :destroy, @issue %>
+  <% if can? :destroy, @article %>
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 issue_article_path(@issue,@article),
               :method => 'delete',
@@ -33,6 +33,13 @@
 <div class="article-body">
   <%= simple_format @article.body %>
 </div>
+
+<% if can? :update, @article %>
+  <button class="flip-button btn">Show/Hide source</button>
+  <div class="article-source well well-small div-to-flip">
+    <%= @article.source %>
+  </div>
+<% end %>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
