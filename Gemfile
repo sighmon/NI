@@ -57,7 +57,7 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', :require => false
   gem 'factory_girl'
-
+  gem 'timecop'
 end
 
 gem 'twitter-bootstrap-rails'
