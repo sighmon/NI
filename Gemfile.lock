@@ -193,8 +193,6 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     rake (10.0.0)
-    rb-inotify (0.8.8)
-      ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -313,7 +311,6 @@ DEPENDENCIES
   paypal-recurring
   pg
   rails (= 3.2.3)
-  rb-inotify (~> 0.8.8)
   retina_image_tag
   rmagick
   rspec-rails
