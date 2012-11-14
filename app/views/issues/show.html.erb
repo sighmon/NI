@@ -14,6 +14,8 @@
    | 
   <% if can? :create, Article %>
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-mini btn-primary' %>
+     |
+    <%= link_to 'Import articles', issue_import_path(@issue), :class => 'btn btn-mini btn-primary' %>
   <% end %>
 </div>
 <% end %>

@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
   belongs_to :issue
-  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote
+  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
@@ -15,7 +15,8 @@ class Article < ActiveRecord::Base
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text),
       :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
       :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
-      :body => Hash.from_xml(element.to_xml).to_json
+      # :body => Hash.from_xml(element.to_xml).to_json
+      :source => element.to_xml
     )
   end
 

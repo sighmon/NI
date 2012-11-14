@@ -16,6 +16,19 @@
 //= require_tree .
 //= require retina_image_tag
 
-jQuery( function($) {
-    $(".issue-cover-list img").tooltip()
+var flip = 0;
+
+jQuery(document).ready(function() {
+
+	// Tooltips for Magazine list page
+    $(".issue-cover-list img").tooltip();
+
+    // Toggle to show/hide divs .div-to-flip using .flip-button
+    $(".flip-button").click(function() {
+		$(".div-to-flip").toggle( flip++ % 2 == 0 );
+	});
+
 });
+
+
+

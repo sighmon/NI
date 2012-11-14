@@ -23,12 +23,14 @@ NI::Application.routes.draw do
   # resources :subscriptions, :only => [:create]
 
   resources :issues do
+    # Route for importing articles from bricolage to an issue
     resources :articles
     resources :purchases, :only => [:new, :create] do
       new do
         get :express
       end
     end
+    get :import
   end
 
   get 'search' => 'articles#search'
