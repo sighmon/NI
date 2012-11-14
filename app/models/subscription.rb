@@ -45,7 +45,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def used_days
-    return (DateTime.now - self.valid_from.to_datetime).to_f
+    return [0,(DateTime.now - self.valid_from.to_datetime).to_f].max
   end
 
   def total_days

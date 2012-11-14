@@ -22,25 +22,35 @@ describe User do
 
     before(:all) do
       Timecop.freeze(2012,1,1,0,0,0)
-      @subscription = FactoryGirl.create(:subscription)
-      @user = @subscription.user
     end
 
-    #let(:user) { subscription.user }
+    after(:all) do
+      Timecop.return() 
+    end
+  
+    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:user) { subscription.user }
 
     it "has a valid subscription" do
-      @user.subscriber?.should be_true
+      user.subscriber?.should be_true
     end
 
     it "receives a partial refund" do
-      @subscription.valid_from = DateTime.parse("2012/1/1")
       #set a predicatable duration
-      @subscription.duration = 3
+      subscription.duration = 3
       #price is 1 cent per day 
-      @subscription.price_paid = 91 
+      subscription.price_paid = 91 
       Timecop.freeze(2012,1,22,0,0,0) do
-        @subscription.expire_subscription
-        @subscription.refund.should == 91-21
+        subscription.expire_subscription
+        subscription.refund.should == 91-21
+      end
+    end
+
+    it "receives a full refund if the subscription hasn't started yet" do
+      subscription.price_paid = 91
+      Timecop.freeze(2011,1,1,0,0,0) do
+        subscription.expire_subscription
+        subscription.refund.should == 91
       end
     end
   end
