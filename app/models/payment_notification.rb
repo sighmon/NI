@@ -56,7 +56,7 @@ private
 		all_subscriptions.each do |s|
 			s.calculate_refund
 			s.save
-			logger.info "Refund for subscription id: #{s.id} is #{s.refund}"
+			logger.info "Refund for subscription id: #{s.id} is #{s.refund} cents."
 		end
         # @subscription.save
         # logger.info "Refund of #{@subscription.refund} months due."
