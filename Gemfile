@@ -62,9 +62,8 @@ group :test do
   gem 'factory_girl'
   gem 'timecop'
   gem 'guard-rspec'
-  # gem 'rb-inotify', '~> 0.8.8'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ &crarr; 
-    /darwin/i
+  gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
 
 gem 'twitter-bootstrap-rails'
