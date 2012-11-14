@@ -177,7 +177,7 @@ class SubscriptionsController < ApplicationController
             if @subscription.is_recurring?
                 # user has a recurring subscription
                 if cancel_recurring_subscription
-                    # Find all recurring subscription objects and cancel them.
+                    # Find all recurring subscriptions and cancel them.
                     all_subscriptions = @user.recurring_subscriptions(@subscription.paypal_profile_id)
                     all_subscriptions.each do |s|
                         s.expire_subscription

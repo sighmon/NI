@@ -38,6 +38,9 @@ gem 'savon'
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
 
+# Growl gem to send test notifications to OS X Notification
+gem 'growl'
+
 # Heroku gem
 # gem 'heroku'
 
@@ -59,7 +62,9 @@ group :test do
   gem 'factory_girl'
   gem 'timecop'
   gem 'guard-rspec'
-  gem 'rb-inotify', '~> 0.8.8'
+  # gem 'rb-inotify', '~> 0.8.8'
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ &crarr; 
+    /darwin/i
 end
 
 gem 'twitter-bootstrap-rails'
