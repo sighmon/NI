@@ -53,6 +53,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def expire_subscription
+    self.calculate_refund
     self.cancellation_date = DateTime.now
   end
 

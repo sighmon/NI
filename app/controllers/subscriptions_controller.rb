@@ -177,7 +177,6 @@ class SubscriptionsController < ApplicationController
             if @subscription.is_recurring?
                 # user has a recurring subscription
                 if cancel_recurring_subscription
-                    @subscription.calculate_refund
                     @subscription.expire_subscription
                     cancel_complete = true
                 else 
@@ -187,7 +186,6 @@ class SubscriptionsController < ApplicationController
                 end
             else
                 # user has a normal subscription
-                @subscription.calculate_refund
                 @subscription.expire_subscription
                 cancel_complete = true
             end
