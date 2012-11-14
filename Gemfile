@@ -38,8 +38,6 @@ gem 'savon'
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
 
-# Growl gem to send test notifications to OS X Notification
-gem 'growl'
 
 # Heroku gem
 # gem 'heroku'
@@ -53,17 +51,19 @@ end
 # Cucumber and Rspec install for testing
 group :test, :development do
   gem 'rspec-rails'
+  gem 'factory_girl'
 end
 
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'simplecov', :require => false
-  gem 'factory_girl'
   gem 'timecop'
   gem 'guard-rspec'
   gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
   gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
+  # Growl gem to send test notifications to OS X Notification
+  gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
 
 gem 'twitter-bootstrap-rails'

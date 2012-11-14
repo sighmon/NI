@@ -49,7 +49,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def total_days
-    return (self.expiry_date - self.valid_from.to_datetime).to_f
+    return (self.expiry_date.to_datetime - self.valid_from.to_datetime).to_f
   end
 
   def expire_subscription
