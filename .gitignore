@@ -35,3 +35,6 @@
 
 # Ignore image files generated in public/uploads
 /public/uploads/**
+
+# Adding Gemlock so that linux / OS X don't clash
+Gemfile.lock
