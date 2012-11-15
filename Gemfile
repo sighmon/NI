@@ -66,7 +66,7 @@ group :test do
   # gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
 
-# gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails'
 gem 'less-rails'
 gem 'therubyracer'
 
