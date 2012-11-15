@@ -62,9 +62,9 @@ group :test do
   gem 'guard-rspec'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
-  # gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
-  # gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
-  # gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-inotify', '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
 end
 
 gem 'twitter-bootstrap-rails'
