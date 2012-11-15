@@ -60,9 +60,10 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   gem 'guard-rspec'
+  # Guard automatic test notifications
+  # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
   # gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /linux/i
   # gem 'rb-fsevent', '~> 0.9.1', :require => false if RUBY_PLATFORM =~ /darwin/i
-  # Growl gem to send test notifications to OS X Notification
   # gem 'growl', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
 

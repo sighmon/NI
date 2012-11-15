@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
   def subscription_cancelled_via_paypal(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au", :subject => "Cancelled New Internationalist Digital Subscription via PayPal")
+    mail(:to => user.email, :bcc => "design@newint.com.au", :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
   def issue_purchase(user, issue)
