@@ -20,6 +20,16 @@ class Article < ActiveRecord::Base
     )
   end
 
+  def source_to_body
+    if not self.source.nil?
+      if self.body.nil? or self.body == ""
+        result = Hash.from_xml(self.source)["story"]["elements"]["field"]
+        # TODO: Do some work to re-order the paragraphs and parse any HTML.
+        self.body = result.join(" ")
+      end
+    end
+  end
+
   # Doesn't seem to list all of the articles when no params.
   # def self.search(params)
   #   tire.search(load: true) do

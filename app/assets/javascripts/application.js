@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
 
     // Toggle to show/hide divs .div-to-flip using .flip-button
     $(".flip-button").click(function() {
-		$(".div-to-flip").toggle( flip++ % 2 == 0 );
+		$(".div-to-flip").fadeToggle( flip++ % 2 == 0 );
 	});
 
 });

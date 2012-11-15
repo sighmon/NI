@@ -98,7 +98,7 @@ class Issue < ActiveRecord::Base
   </soap:Body>
 </soap:Envelope>' % [story_ids.length, story_id_block]
     end
-    doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).encode())
+    doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).force_encoding("UTF-8"))
     stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
     #return stories
     stories.collect do |element|
