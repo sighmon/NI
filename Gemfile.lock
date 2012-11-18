@@ -134,8 +134,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
-    kaminari-bootstrap (0.1.3)
-      kaminari (>= 0.13.0)
+    kaminari-bootstrap (0.1.2)
+      kaminari
       rails
     ledermann-rails-settings (1.2.0)
       activerecord (>= 2.3)
@@ -310,7 +310,7 @@ DEPENDENCIES
   guard-rspec
   jquery-rails
   kaminari (~> 0.13.0)
-  kaminari-bootstrap (~> 0.1.2)
+  kaminari-bootstrap (= 0.1.2)
   ledermann-rails-settings
   less-rails
   paypal-recurring

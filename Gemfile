@@ -110,7 +110,7 @@ gem 'retina_image_tag'
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
 gem 'kaminari', '~> 0.13.0'
-gem 'kaminari-bootstrap', '~> 0.1.2'
+gem 'kaminari-bootstrap', '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
 
 # Tire for elasticsearch
 # http://railscasts.com/episodes/306-elasticsearch-part-1
