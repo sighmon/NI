@@ -21,11 +21,17 @@ class Article < ActiveRecord::Base
   end
 
   def source_to_body
-    if not self.source.nil?
-      if self.body.nil? or self.body == ""
-        result = Hash.from_xml(self.source)["story"]["elements"]["field"]
-        # TODO: Do some work to re-order the paragraphs and parse any HTML.
-        self.body = result.join(" ")
+    if not self.source.blank?
+      if self.body.blank?
+        # TODO: Do some work to add in cross-head, pull-quotes, images into the right order with paragraphs and parse any HTML.
+        # 
+        doc = Nokogiri::XML(self.source)
+        paragraphs = doc.xpath("//story/elements/field[@type='paragraph']").select{|n| n}.join("<br /><br />").gsub(/\n/, " ")
+        self.body = paragraphs
+
+        # Hack code to just render all 'fields' elements.
+        # result = Hash.from_xml(self.source)["story"]["elements"]["field"]
+        # self.body = result.join(" ")
       end
     end
   end

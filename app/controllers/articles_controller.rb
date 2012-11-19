@@ -69,6 +69,7 @@ class ArticlesController < ApplicationController
     def edit
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
+        @article.source_to_body
     end
 
 end
