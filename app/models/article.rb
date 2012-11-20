@@ -24,10 +24,31 @@ class Article < ActiveRecord::Base
     if not self.source.blank?
       if self.body.blank?
         # TODO: Do some work to add in cross-head, pull-quotes, images into the right order with paragraphs and parse any HTML.
-        # 
+        
         doc = Nokogiri::XML(self.source)
-        paragraphs = doc.xpath("//story/elements/field[@type='paragraph']").select{|n| n}.join("<br /><br />").gsub(/\n/, " ")
-        self.body = paragraphs
+        # Test code to render just paragraphs nicely.
+        # paragraphs = doc.xpath("//story/elements/field[@type='paragraph']").select{|n| n}.join("<br /><br />").gsub(/\n/, " ")
+        paragraphs = doc.xpath("//story/elements/field[@type='paragraph']")
+        cross_heads = doc.xpath("//story/elements/container[@element_type='cross_head']")
+        pull_quotes = doc.xpath("//story/elements/container[@element_type='pull_quote']")
+        box = doc.xpath("//story/elements/container[@element_type='box']")
+        related_media = doc.xpath("//story/elements/container[@element_type='related_media']")
+
+        # Combine the xml
+        builder = Nokogiri::XML::Builder.new do |xml_out|
+          xml_out.Combined {
+            xml_out << paragraphs.to_xml.to_str
+            xml_out << cross_heads.to_xml.to_str
+          }
+        end
+
+        # For cross_head remove the container and copy the order from container to field
+        # TODO
+
+        # Re-order the XML by field attribute order
+        # TODO
+
+        self.body = builder.to_xml #paragraphs
 
         # Hack code to just render all 'fields' elements.
         # result = Hash.from_xml(self.source)["story"]["elements"]["field"]
