@@ -30,6 +30,8 @@
   <p class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></p>
 </div>
 
+<div class="article-image-top" style="background-image: url('https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash4/413678_10151894847485285_1736297380_o.jpg');"></div>
+
 <div class="article-body">
   <%= simple_format @article.body %>
 </div>

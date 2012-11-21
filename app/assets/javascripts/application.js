@@ -27,6 +27,18 @@ jQuery(document).ready(function() {
     $(".flip-button").click(function() {
 		$(".div-to-flip").fadeToggle( flip++ % 2 == 0 );
 	});
+	
+	// Article's top image height = 1/3 of its width
+	$(window).ready(updateHeight);
+	$(window).resize(updateHeight);
+
+	function updateHeight()
+	{
+		var articleImageDiv = $('.article-image-top');
+		var articleImageWidth = articleImageDiv.width() / 2;
+	
+		articleImageDiv.css('height', articleImageWidth);
+	}
 
 });
 
