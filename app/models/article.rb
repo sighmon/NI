@@ -28,27 +28,35 @@ class Article < ActiveRecord::Base
         doc = Nokogiri::XML(self.source)
         # Test code to render just paragraphs nicely.
         # paragraphs = doc.xpath("//story/elements/field[@type='paragraph']").select{|n| n}.join("<br /><br />").gsub(/\n/, " ")
+        
         paragraphs = doc.xpath("//story/elements/field[@type='paragraph']")
-        cross_heads = doc.xpath("//story/elements/container[@element_type='cross_head']")
+        cross_heads_container = doc.xpath("//story/elements/container[@element_type='cross_head']")
+        cross_heads = doc.xpath("//story/elements/container/field[@type='cross_head']")
         pull_quotes = doc.xpath("//story/elements/container[@element_type='pull_quote']")
         box = doc.xpath("//story/elements/container[@element_type='box']")
         related_media = doc.xpath("//story/elements/container[@element_type='related_media']")
 
+        # Copy 'container' order to 'field' order
+        # TODO.
+
         # Combine the xml
         builder = Nokogiri::XML::Builder.new do |xml_out|
           xml_out.Combined {
-            xml_out << paragraphs.to_xml.to_str
-            xml_out << cross_heads.to_xml.to_str
+            xml_out << paragraphs.to_xml
+            xml_out << cross_heads.to_xml
           }
         end
+
+        # Re-order the XML by field attribute order
+        doc = Nokogiri::XML(builder.to_xml)
+        all_fields  = doc.at_xpath('//Combined')
+        sorted_fields = all_fields.children.sort_by{ |n| n['@order'] }
+        sorted_fields.each{ |n| all_fields << n }
 
         # For cross_head remove the container and copy the order from container to field
         # TODO
 
-        # Re-order the XML by field attribute order
-        # TODO
-
-        self.body = builder.to_xml #paragraphs
+        self.body = all_fields.to_xml #builder.to_xml #paragraphs
 
         # Hack code to just render all 'fields' elements.
         # result = Hash.from_xml(self.source)["story"]["elements"]["field"]
