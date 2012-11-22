@@ -39,6 +39,10 @@ jQuery(document).ready(function() {
 	
 		articleImageDiv.css('height', articleImageWidth);
 	}
+	
+	// To fix touch dropdown menu issues
+	/* https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992 */
+	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
 });
 
