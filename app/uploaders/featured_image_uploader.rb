@@ -49,7 +49,7 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   # Retina display @2x version
   version :fullwidth2x do
     process :resize_to_fill => [1890, 800]
-    def full_filename (for_file = model.editors_photo.file)
+    def full_filename (for_file = model.featured_image.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
@@ -61,7 +61,7 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   # Retina display @2x version
   version :thumb2x do
     process :resize_to_fill => [160, 160]
-    def full_filename (for_file = model.editors_photo.file)
+    def full_filename (for_file = model.featured_image.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
