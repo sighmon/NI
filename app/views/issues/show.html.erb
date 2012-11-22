@@ -6,16 +6,17 @@
                 edit_issue_path(@issue), :class => 'btn btn-primary btn-mini' %>
   <% if can? :destroy, @issue %>
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                issue_path(@issue),
-                :method => 'delete',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?')),
-                :class => 'btn btn-mini btn-danger' %>
+          issue_path(@issue),
+          :method => 'delete',
+          :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?')),
+          :class => 'btn btn-mini btn-danger' %>
   <% end %>
    | 
   <% if can? :create, Article %>
-    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-mini btn-primary' %>
+    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-mini btn-success' %>
      |
-    <%= link_to 'Import articles', issue_import_path(@issue), :class => 'btn btn-mini btn-primary' %>
+    <%= link_to 'Import articles', issue_import_path(@issue), :class => 'btn btn-mini btn-warning',
+                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the articles from Bricolage.')) %>
   <% end %>
 </div>
 <% end %>
@@ -48,7 +49,13 @@
         <h3>Other articles in this issue.</h3>
         <% @issue.articles.select{|a| not a.keynote}.each do |article| %>
           <div class="issue-article">
-          <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
+          <% if can? :read, article %>
+            <% if not article.featured_image.blank? %><%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %><% end %>
+            <h4><%= link_to article.title, issue_article_path(@issue,article) %></h4>
+          <% else %>
+            <% if not article.featured_image.blank? %><%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80") %><% end %>
+            <h4><%= article.title %></h4>
+          <% end %>
           <p><%= simple_format article.teaser %></p>
           <p><% if can? :read, article %>
           <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>

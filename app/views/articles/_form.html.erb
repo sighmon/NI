@@ -1,4 +1,4 @@
-<%= form_for ([@issue, @article]), :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for ([@issue, @article]), :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
@@ -21,6 +21,16 @@
     <%= f.label :publication, :class => 'control-label' %>
     <div class="controls">
       <%= f.datetime_select :publication, :class => 'datetime_select' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :featured_image, :class => 'control-label' %>
+    <%= f.file_field :featured_image %>
+  </div>
+  <div class="control-group">
+    <%= f.label :featured_image_caption, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :featured_image_caption, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">

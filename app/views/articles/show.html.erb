@@ -30,7 +30,25 @@
   <p class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></p>
 </div>
 
-<div class="article-image-top" style="background-image: url('https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash4/413678_10151894847485285_1736297380_o.jpg');"></div>
+<% if not @article.featured_image.blank? %>
+  <div id="myCarousel" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <%= retina_image_tag @article.featured_image_url(:fullwidth).to_s, :alt => "#{strip_tags(@article.featured_image_caption)}", :title => "#{strip_tags(@article.featured_image_caption)}", :size => "945x400" %>
+        <div class="carousel-caption">
+          <p><%= simple_format @article.featured_image_caption %></p>
+        </div>
+      </div>
+      <!-- Add class="item" here for another item -->
+    </div>
+    <!-- Carousel nav -->
+    <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
+  </div>
+<% end %>
+
+<!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <div class="article-body">
   <%= simple_format @article.body %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114003200) do
+ActiveRecord::Schema.define(:version => 20121122011625) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -20,11 +20,13 @@ ActiveRecord::Schema.define(:version => 20121114003200) do
     t.datetime "publication"
     t.text     "body"
     t.integer  "issue_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.boolean  "trialarticle"
     t.boolean  "keynote"
     t.text     "source"
+    t.string   "featured_image"
+    t.string   "featured_image_caption"
   end
 
   add_index "articles", ["issue_id"], :name => "index_articles_on_issue_id"
@@ -106,8 +108,8 @@ ActiveRecord::Schema.define(:version => 20121114003200) do
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",    :null => false
-    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -116,10 +118,10 @@ ActiveRecord::Schema.define(:version => 20121114003200) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "username"
-    t.boolean  "admin",                  :default => false
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

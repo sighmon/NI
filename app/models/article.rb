@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
   belongs_to :issue
-  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source
+  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption
+  mount_uploader :featured_image, FeaturedImageUploader
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
