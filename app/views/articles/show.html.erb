@@ -51,7 +51,7 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <div class="article-body">
-  <%= simple_format @article.body %>
+  <%= @article.body %>
 </div>
 
 <% if can? :update, @article %>

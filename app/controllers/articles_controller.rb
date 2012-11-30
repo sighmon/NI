@@ -63,7 +63,7 @@ class ArticlesController < ApplicationController
     def show
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
-        @article.source_to_body
+        @article.source_to_body(:debug => current_user.try(:admin?))
     end
 
     def edit

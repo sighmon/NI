@@ -21,56 +21,61 @@ class Article < ActiveRecord::Base
     )
   end
 
-  def source_to_body
+  def source_to_body(options = {})
+    debug = options[:debug] or false
     if not self.source.blank?
       if self.body.blank?
-        # TODO: Do some work to add in cross-head, pull-quotes, images into the right order with paragraphs and parse any HTML.
         
         doc = Nokogiri::XML(self.source)
-        # Test code to render just paragraphs nicely.
-        # paragraphs = doc.xpath("//story/elements/field[@type='paragraph']").select{|n| n}.join("<br /><br />").gsub(/\n/, " ")
-        
-        paragraphs = doc.xpath("//story/elements/field[@type='paragraph']")
-        cross_heads_container = doc.xpath("//story/elements/container[@element_type='cross_head']")
-        cross_heads = doc.xpath("//story/elements/container/field[@type='cross_head']")
-        pull_quotes = doc.xpath("//story/elements/container[@element_type='pull_quote']")
-        box = doc.xpath("//story/elements/container[@element_type='box']")
-        related_media = doc.xpath("//story/elements/container[@element_type='related_media']")
 
-        # Copy 'container' order to 'field' order
-        # TODO.
-
-        # Combine the xml
-        builder = Nokogiri::XML::Builder.new do |xml_out|
-          xml_out.Combined {
-            xml_out << paragraphs.to_xml
-            xml_out << cross_heads.to_xml
-          }
+        def process_children(e,debug = false)
+          e.xpath("*").sort_by{|n| n["order"].to_i}.collect{|e| process_element(e,debug)}.join("")
         end
 
-        # Re-order the XML by field attribute order
-        doc = Nokogiri::XML(builder.to_xml)
-        all_fields  = doc.at_xpath('//Combined')
-        sorted_fields = all_fields.children.sort_by{ |n| n['@order'] }
-        sorted_fields.each{ |n| all_fields << n }
+	def process_element(e, debug = false)
+          if e.name == "container"
+            if e["element_type"] == "cross_head"
+              "<h4>"+process_children(e, debug)+"</h4>"
+            elsif e["element_type"] == "pull_quote"
+              alignment = e.at_xpath("field[@type='alignment']").text 
+              "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
+            elsif e["element_type"] == "box"
+              "<div class='box'>"+process_children(e,debug)+"</div>"
+            elsif e["element_type"] == "author_note"
+              "<div class='author-note'>"+process_children(e,debug)+"</div>"
+            elsif e["element_type"] == "related_media"
+              media_id = e["related_media_id"]
+              alignment = e.at_xpath("field[@type='alignment']").text 
+              "<div class='article-image' style='float: #{alignment}'><img src='#{media_id}'/>"+process_children(e,debug)+"</div>"
+            elsif ["page_no"].include? e["element_type"]
+              #ignore
+            else
+              "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
+            end
+          elsif e.name == "field"
+            if ["paragraph","quote","an_author_note"].include? e["type"]
+              # paragraph-like things
+              "<p>#{e.text}</p>"
+            elsif e["type"] == "rel_media_caption"
+              "<div class='new-image-caption'>#{e.text}</div>"
+            elsif e["type"] == "rel_media_credit"
+              "<div class='new-image-credit'>#{e.text}</div>"
+            elsif e["type"] == "cross_head"
+              e.text
+            elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
+              #ignore 
+            else
+              "[unknown field type "+e["type"]+"]" if debug
+            end
+          else
+            "[unknown tag #{e.name}]" if debug
+          end 
+        end
 
-        # For cross_head remove the container and copy the order from container to field
-        # TODO
+        self.body = process_children(doc.xpath("//story/elements"),debug).html_safe
 
-        self.body = all_fields.to_xml #builder.to_xml #paragraphs
-
-        # Hack code to just render all 'fields' elements.
-        # result = Hash.from_xml(self.source)["story"]["elements"]["field"]
-        # self.body = result.join(" ")
       end
     end
   end
-
-  # Doesn't seem to list all of the articles when no params.
-  # def self.search(params)
-  #   tire.search(load: true) do
-  #     query { string params[:query]} if params[:query].present?
-  #   end
-  # end
 
 end
