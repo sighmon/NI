@@ -28,11 +28,11 @@ class Article < ActiveRecord::Base
         
         doc = Nokogiri::XML(self.source)
 
-        def process_children(e,debug = false)
+        def process_children(e, debug = false)
           e.xpath("*").sort_by{|n| n["order"].to_i}.collect{|e| process_element(e,debug)}.join("")
         end
 
-	def process_element(e, debug = false)
+	      def process_element(e, debug = false)
           if e.name == "container"
             if e["element_type"] == "cross_head"
               "<h4>"+process_children(e, debug)+"</h4>"
@@ -47,6 +47,8 @@ class Article < ActiveRecord::Base
               media_id = e["related_media_id"]
               alignment = e.at_xpath("field[@type='alignment']").text 
               "<div class='article-image' style='float: #{alignment}'><img src='#{media_id}'/>"+process_children(e,debug)+"</div>"
+            elsif e["element_type"] == "footnotes"
+              "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
             elsif ["page_no"].include? e["element_type"]
               #ignore
             else
@@ -62,6 +64,8 @@ class Article < ActiveRecord::Base
               "<div class='new-image-credit'>#{e.text}</div>"
             elsif e["type"] == "cross_head"
               e.text
+            elsif e["type"] == "foot_ref"
+              "<li>#{e.text}</li>"
             elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
               #ignore 
             else
