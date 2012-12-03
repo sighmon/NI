@@ -100,6 +100,7 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
 @niBrown: #f1edd9;
 @niRed: #da2128; /* or #f00d16; */
+@boxBackgroundColour: #E4E1DF;
 
 // Top Nav Bar
 
@@ -490,8 +491,31 @@ a:active .shadow {
 	margin-bottom: 1em;
 }
 
+blockquote.pull-right, blockquote.pull-left {
+	border-right-style: none;
+	border-left-style: none;
+	color: @niRed;
+	width: 30%;
+}
+
+blockquote.pull-right p, blockquote.pull-left p {
+	margin-bottom: 0;
+}
+
 .footnotes {
 	padding: 1em;
+	font-size: 0.9em;
+	color: @gray;
+}
+
+.box {
+	background-color: @boxBackgroundColour;
+	padding: 1.5em 2em;
+	margin: 2em 0 2em 0;
+	.border-radius(5px);
+}
+
+.author-note {
 	font-size: 0.9em;
 	color: @gray;
 }

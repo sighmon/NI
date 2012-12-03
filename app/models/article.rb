@@ -35,6 +35,8 @@ class Article < ActiveRecord::Base
 	      def process_element(e, debug = false)
           if e.name == "container"
             if e["element_type"] == "cross_head"
+              "<h3>"+process_children(e, debug)+"</h3>"
+            elsif e["element_type"] == "cross_head_2"
               "<h4>"+process_children(e, debug)+"</h4>"
             elsif e["element_type"] == "pull_quote"
               alignment = e.at_xpath("field[@type='alignment']").text 
@@ -57,15 +59,19 @@ class Article < ActiveRecord::Base
           elsif e.name == "field"
             if ["paragraph","quote","an_author_note"].include? e["type"]
               # paragraph-like things
-              "<p>#{e.text}</p>"
+              "<p>#{e.text.gsub(/\n/, " ")}</p>"
             elsif e["type"] == "rel_media_caption"
-              "<div class='new-image-caption'>#{e.text}</div>"
+              "<div class='new-image-caption'>#{e.text.gsub(/\n/, " ")}</div>"
             elsif e["type"] == "rel_media_credit"
               "<div class='new-image-credit'>#{e.text}</div>"
             elsif e["type"] == "cross_head"
               e.text
+            elsif e["type"] == "cross_head_2"
+              e.text
             elsif e["type"] == "foot_ref"
-              "<li>#{e.text}</li>"
+              "<li>#{e.text.gsub(/\n/, " ")}</li>"
+            elsif e["type"] == "box_title"
+              "<h4>#{e.text}</h4>"
             elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
               #ignore 
             else
