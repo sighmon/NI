@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
   has_many :purchases
   has_many :issues, :through => :purchases
 
+  # join-model for favourites
+  has_many :favourites
+  has_many :articles, :through => :favourites
+
   # association for subscriptions
   has_many :subscriptions
 

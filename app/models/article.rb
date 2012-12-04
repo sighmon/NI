@@ -3,6 +3,10 @@ class Article < ActiveRecord::Base
   attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption
   mount_uploader :featured_image, FeaturedImageUploader
 
+  # join-model for favourites
+  has_many :favourites
+  has_many :users, :through => :favourites
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
