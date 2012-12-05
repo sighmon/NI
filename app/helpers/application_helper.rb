@@ -48,11 +48,36 @@ module ApplicationHelper
         end
     end
 
+    def favourites_as_table(favourites)
+        if favourites.try(:empty?)
+            return "You don't have any favourite articles yet."
+        else
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>From issue</th><th>Date favourited</th></tr></thead><tbody>"
+            for favourite in favourites.sort_by {|x| x.created_at}.reverse do
+                table += "<tr><td>#{link_to favourite.article.title, issue_article_path(favourite.issue_id, favourite.article_id)}</td>"
+                # table += "<td>#{favourite.article.publication.strftime("%B, %Y")}</td>"
+                table += "<td>#{link_to favourite.article.issue.title, issue_path(favourite.issue_id)}</td>"
+                table += "<td>#{favourite.created_at.try(:strftime,"%d %B, %Y")}</td></tr>"
+                # table += "<td>#{link_to 'Delete', issue_article_favourite_path(favourite.issue_id, favourite.article_id, favourite.id), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td></tr>"
+            end
+            table += "</tbody></table>"
+            return raw table
+        end
+    end
+
     def user_expiry_as_string(user)
         return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end
 
     def cents_to_dollars(value)
         return number_with_precision((value / 100.0), :precision => 2)
+    end
+
+    def current_article_favourited?
+        return current_user.favourites.collect{|f| f.article_id}.include?(@article.id)
+    end
+
+    def favourite_id_for_article(article)
+        return article.favourites.find_by_user_id(current_user.id).id
     end
 end

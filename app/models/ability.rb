@@ -16,6 +16,7 @@ class Ability
     if !user.guest?
         can :manage, Purchase
         can :manage, Subscription
+        can :manage, Favourite
         can :read, User
     end   
 
