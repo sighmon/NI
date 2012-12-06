@@ -16,7 +16,7 @@ class FavouritesController < ApplicationController
 
         respond_to do |format|
         	if @favourite.save
-        		format.html { redirect_to issue_article_path(@issue, @article), notice: 'This article was added to your favourites.' }
+        		format.html { redirect_to issue_article_path(@issue, @article), notice: 'This article has been added to your favourites.' }
                 format.json { render json: @favourite, status: :created, location: @favourite }
             else
                 format.html { redirect_to issue_article_path(@issue, @article), notice: "Sorry, couldn't favourite this article." }
@@ -33,7 +33,7 @@ class FavouritesController < ApplicationController
 
         respond_to do |format|
             if @favourite.destroy
-                format.html { redirect_to issue_article_path(@issue, @article), notice: 'This article was removed from your favourites.' }
+                format.html { redirect_to issue_article_path(@issue, @article), notice: 'This article has been removed from your favourites.' }
                 format.json { head :no_content }
             else
                 format.html { redirect_to user_path(@user), notice: "Sorry, couldn't remove this favourite." }

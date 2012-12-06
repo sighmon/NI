@@ -52,13 +52,16 @@ module ApplicationHelper
         if favourites.try(:empty?)
             return "You don't have any favourite articles yet."
         else
-            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>From issue</th><th>Date favourited</th></tr></thead><tbody>"
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Magazine</th><th>Date favourited</th></tr></thead><tbody>"
             for favourite in favourites.sort_by {|x| x.created_at}.reverse do
                 table += "<tr><td>#{link_to favourite.article.title, issue_article_path(favourite.issue_id, favourite.article_id)}</td>"
                 # table += "<td>#{favourite.article.publication.strftime("%B, %Y")}</td>"
                 table += "<td>#{link_to favourite.article.issue.title, issue_path(favourite.issue_id)}</td>"
-                table += "<td>#{favourite.created_at.try(:strftime,"%d %B, %Y")}</td></tr>"
-                # table += "<td>#{link_to 'Delete', issue_article_favourite_path(favourite.issue_id, favourite.article_id, favourite.id), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td></tr>"
+                table += "<td>#{favourite.created_at.try(:strftime,"%d %B, %Y")}</td>"
+                if current_user.try(:admin?)
+                    table += "<td>#{link_to 'Delete', issue_article_favourite_path(favourite.issue_id, favourite.article_id, favourite.id), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"
+                end
+                table += "</tr>"
             end
             table += "</tbody></table>"
             return raw table
