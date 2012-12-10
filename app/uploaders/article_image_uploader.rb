@@ -54,13 +54,13 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
 
   # Use RMagick
   version :halfwidth do
-    process :resize_to_limit => [340, 800]
+    process :resize_to_limit => [340, nil]
     # process :resize_to_fill => [945, 400]
   end
 
   # Retina display @2x version
   version :halfwidth2x do
-    process :resize_to_limit => [680, 1600]
+    process :resize_to_limit => [680, nil]
     def full_filename (for_file = model.article_image.file)
       "halfwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
