@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class FeaturedImageUploader < CarrierWave::Uploader::Base
+class ArticleImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
@@ -11,22 +11,23 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
-  # storage :file
+  #storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    # "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "uploads/#{model.class.to_s.underscore}/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  def default_url
-    # For Rails 3.1+ asset pipeline compatibility:
-    asset_path("fallback/" + [version_name, "default_featured_image.jpg"].compact.join('_'))
-  
-    #{ }"/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  end
+  # def default_url
+  #   # For Rails 3.1+ asset pipeline compatibility:
+  #   # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  #
+  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+  # end
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
@@ -41,28 +42,16 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Use RMagick
-  version :fullwidth do
-    # process :resize_to_limit => [945, 400]
-    process :resize_to_fill => [945, 400]
+  version :halfwidth do
+    process :resize_to_limit => [340, 800]
+    # process :resize_to_fill => [945, 400]
   end
 
   # Retina display @2x version
-  version :fullwidth2x do
-    process :resize_to_fill => [1890, 800]
-    def full_filename (for_file = model.featured_image.file)
-      "fullwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
-    end
-  end
-
-  version :thumb do
-    process :resize_to_fill => [80, 80]
-  end
-
-  # Retina display @2x version
-  version :thumb2x do
-    process :resize_to_fill => [160, 160]
-    def full_filename (for_file = model.featured_image.file)
-      "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
+  version :halfwidth2x do
+    process :resize_to_limit => [680, 1600]
+    def full_filename (for_file = model.article_image.file)
+      "halfwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 

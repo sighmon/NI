@@ -7,6 +7,8 @@ class Article < ActiveRecord::Base
   has_many :favourites
   has_many :users, :through => :favourites
 
+  has_many :images
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -51,8 +53,9 @@ class Article < ActiveRecord::Base
               "<div class='author-note'>"+process_children(e,debug)+"</div>"
             elsif e["element_type"] == "related_media"
               media_id = e["related_media_id"]
+              media_url = Image.find_by_media_id(media_id).try(:data_url, :halfwidth)
               alignment = e.at_xpath("field[@type='alignment']").text 
-              "<div class='article-image' style='float: #{alignment}'><img src='#{media_id}'/>"+process_children(e,debug)+"</div>"
+              "<div class='article-image' style='float: #{alignment}'><img src='#{media_url}'/>"+process_children(e,debug)+"</div>"
             elsif e["element_type"] == "footnotes"
               "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
             elsif ["page_no"].include? e["element_type"]
@@ -90,6 +93,74 @@ class Article < ActiveRecord::Base
 
       end
     end
+  end
+
+  def extract_media_ids_from_source
+    return Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}
+  end
+
+  # TODO: make private
+  # private
+
+  def import_media_from_bricolage(media_ids = self.extract_media_ids_from_source)
+    #HTTPI.log_level = :debug
+    HTTPI.adapter = :curb
+    Savon.configure do |config|
+      config.env_namespace = :soap
+    end
+    client = Savon.client do
+      wsdl.endpoint = "https://bric-new.newint.org/soap"
+      # wsdl.endpoint = "http://pixpad.local"
+      wsdl.namespace = "http://bricolage.sourceforge.net/Bric/SOAP/Auth"
+      http.auth.ssl.verify_mode = :none
+    end
+    response = client.request "auth", "login" do
+      # "env:encodingStyle" => "http://schemas.xmlsoap.org/soap/encoding/"
+      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Auth#login\""
+      soap.element_form_default = :qualified
+      soap.body = {
+        "username" => ENV["BRICOLAGE_USERNAME"],
+        "password" => ENV["BRICOLAGE_PASSWORD"],
+        :attributes! => { 
+          "username" => { "xsi:type" => "xsd:string" }, 
+          "password" => { "xsi:type" => "xsd:string" }
+        }
+      }
+    end
+    # Pull the media from the media_id
+    media_id_block = media_ids.collect{|id| '<media_id xsi:type="xsd:int">%s</media_id>' % id}.join("\n")
+    response = client.request "media", "media_ids" do
+      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Media#export\""
+      http.set_cookies(response.http)
+      soap.element_form_default = :qualified
+      # TODO: implement article import
+      soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Media">
+      <media_ids soapenc:arrayType="xsd:int[%d]" xsi:type="soapenc:Array">
+        %s
+      </media_ids>
+    </export>
+  </soap:Body>
+</soap:Envelope>' % [media_ids.length, media_id_block]
+    end
+    doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).force_encoding("UTF-8"))
+    images = doc.xpath("//assets:media",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
+    images.collect do |element|
+      Image.create_from_media_element(self,element)
+    end
+    # Process XML
+    # Pull out image name
+
+    # inside a loop
+
+    # string as data
   end
 
 end
