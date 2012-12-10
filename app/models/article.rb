@@ -27,82 +27,29 @@ class Article < ActiveRecord::Base
     )
   end
 
-  def source_to_body(options = {})
-    debug = options[:debug] or false
-    if not self.source.blank?
-      if self.body.blank?
-        
-        doc = Nokogiri::XML(self.source)
-
-        def process_children(e, debug = false)
-          e.xpath("*").sort_by{|n| n["order"].to_i}.collect{|e| process_element(e,debug)}.join("")
-        end
-
-	      def process_element(e, debug = false)
-          if e.name == "container"
-            if e["element_type"] == "cross_head"
-              "<h3>"+process_children(e, debug)+"</h3>"
-            elsif e["element_type"] == "cross_head_2"
-              "<h4>"+process_children(e, debug)+"</h4>"
-            elsif e["element_type"] == "pull_quote"
-              alignment = e.at_xpath("field[@type='alignment']").text 
-              "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
-            elsif e["element_type"] == "box"
-              "<div class='box'>"+process_children(e,debug)+"</div>"
-            elsif e["element_type"] == "author_note"
-              "<div class='author-note'>"+process_children(e,debug)+"</div>"
-            elsif e["element_type"] == "related_media"
-              media_id = e["related_media_id"]
-              media_url = Image.find_by_media_id(media_id).try(:data_url, :halfwidth)
-              alignment = e.at_xpath("field[@type='alignment']").text 
-              "<div class='article-image' style='float: #{alignment}'><img src='#{media_url}'/>"+process_children(e,debug)+"</div>"
-            elsif e["element_type"] == "footnotes"
-              "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
-            elsif ["page_no"].include? e["element_type"]
-              #ignore
-            else
-              "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
-            end
-          elsif e.name == "field"
-            if ["paragraph","quote","an_author_note"].include? e["type"]
-              # paragraph-like things
-              "<p>#{e.text.gsub(/\n/, " ")}</p>"
-            elsif e["type"] == "rel_media_caption"
-              "<div class='new-image-caption'>#{e.text.gsub(/\n/, " ")}</div>"
-            elsif e["type"] == "rel_media_credit"
-              "<div class='new-image-credit'>#{e.text}</div>"
-            elsif e["type"] == "cross_head"
-              e.text
-            elsif e["type"] == "cross_head_2"
-              e.text
-            elsif e["type"] == "foot_ref"
-              "<li>#{e.text.gsub(/\n/, " ")}</li>"
-            elsif e["type"] == "box_title"
-              "<h4>#{e.text}</h4>"
-            elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
-              #ignore 
-            else
-              "[unknown field type "+e["type"]+"]" if debug
-            end
-          else
-            "[unknown tag #{e.name}]" if debug
-          end 
-        end
-
-        self.body = process_children(doc.xpath("//story/elements"),debug).html_safe
-
-      end
-    end
-  end
-
   def extract_media_ids_from_source
-    return Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}
+    return Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}.select{|i|i}
   end
 
   # TODO: make private
   # private
 
-  def import_media_from_bricolage(media_ids = self.extract_media_ids_from_source)
+  def import_media_from_bricolage(opts = {})
+    # media_ids = self.extract_media_ids_from_source, force = false
+
+    media_ids = opts[:media_ids] || self.extract_media_ids_from_source
+    force = opts[:force] || false
+
+    # Check for previously imported images
+
+    if not force
+      media_ids = media_ids.select{|i| Image.find_by_media_id(i).try(:data_url).nil?}
+    end
+
+    if media_ids.empty?
+      return
+    end
+
     #HTTPI.log_level = :debug
     HTTPI.adapter = :curb
     Savon.configure do |config|

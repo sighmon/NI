@@ -2,8 +2,9 @@ class Image < ActiveRecord::Base
   belongs_to :article
   attr_accessible :data, :media_id
   mount_uploader :data, ArticleImageUploader
+  validates :media_id, :uniqueness => true
 
-  def self.create_from_media_element(article,media_element)
+  def self.create_from_media_element(article, media_element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     media_id = media_element["id"]
     file_element = media_element.at_xpath("./assets:file", 'assets' => assets)
@@ -14,10 +15,9 @@ class Image < ActiveRecord::Base
     sio.original_filename = file_element.at_xpath("./assets:name",'assets' => assets ).try(:text)
     sio.content_type = file_element.at_xpath("./assets:media_type",'assets' => assets ).try(:text)
 
-    return article.images.create(
-      :data => sio,
-      :media_id => media_id
-    )
+    image = article.images.find_or_create_by_media_id(:media_id => media_id)
+    image.data = sio
+    image.save
   end
 
 end

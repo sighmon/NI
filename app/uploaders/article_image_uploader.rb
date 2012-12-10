@@ -36,6 +36,17 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  process :store_geometry
+  def store_geometry
+    if @file
+      img = ::Magick::Image::read(@file.file).first
+      if model
+        model.width = img.columns
+        model.height = img.rows
+      end
+    end
+  end
+
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process :scale => [50, 50]

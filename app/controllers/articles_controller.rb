@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-
+    include ArticlesHelper
 	# Cancan authorisation
   	load_and_authorize_resource
 
@@ -15,6 +15,13 @@ class ArticlesController < ApplicationController
         end
         # @articles = Article.search(params)
         # @articles = Article.all
+    end
+
+    def import_images
+        @issue = Issue.find(params[:issue_id])
+        @article = Article.find(params[:article_id])
+        @article.import_media_from_bricolage(force: true)
+        redirect_to issue_article_path(@issue,@article)
     end
 
   	def index
@@ -63,13 +70,17 @@ class ArticlesController < ApplicationController
     def show
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
-        @article.source_to_body(:debug => current_user.try(:admin?))
+        # @article.source_to_body(:debug => current_user.try(:admin?))
     end
 
     def edit
+        
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
-        @article.source_to_body
+        if @article.body.blank?
+            @article.body = source_to_body(@article)
+        end
+        # @article.source_to_body
     end
 
 end

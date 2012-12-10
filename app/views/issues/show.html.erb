@@ -17,6 +17,9 @@
      |
     <%= link_to 'Import articles', issue_import_path(@issue), :class => 'btn btn-mini btn-warning',
                 :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the articles from Bricolage.')) %>
+     |
+    <%= link_to 'Import images', issue_import_images_path(@issue), :class => 'btn btn-mini btn-warning',
+                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will try and import all the images for each article listed here.')) %>
   <% end %>
 </div>
 <% end %>

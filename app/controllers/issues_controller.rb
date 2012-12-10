@@ -15,6 +15,14 @@ class IssuesController < ApplicationController
     redirect_to issue_path(@issue)
   end
 
+  def import_images
+    @issue = Issue.find(params[:issue_id])
+    @issue.articles.each do |article|
+      article.import_media_from_bricolage
+    end
+    redirect_to issue_path(@issue)
+  end
+
   def index
     # @issues = Issue.all
     # Pagination
