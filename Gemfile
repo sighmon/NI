@@ -67,8 +67,9 @@ group :test do
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
 end
 
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '2.1.6'
 gem 'less-rails'
+gem 'libv8', '~> 3.11.8'
 gem 'therubyracer'
 
 # Gems used only for assets and not required
@@ -83,7 +84,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
   # http://twitter.github.com/bootstrap/
-  gem 'twitter-bootstrap-rails'
+  gem 'twitter-bootstrap-rails', '2.1.6'
 end
 
 gem 'jquery-rails'
