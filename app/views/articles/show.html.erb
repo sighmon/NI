@@ -60,11 +60,13 @@
 
 <div class="article-body">
   <% if @article.body.blank? %>
-    <%= simple_format source_to_body(@article) %>
+    <%= simple_format source_to_body(@article, :debug => current_user.try(:admin?)) %>
   <% else %>
     <%= simple_format @article.body %>
   <% end %>
 </div>
+
+<div class="clearfix"></div>
 
 <% if can? :update, @article %>
   <button class="flip-button btn">Show/Hide source</button>

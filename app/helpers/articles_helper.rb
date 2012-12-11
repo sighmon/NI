@@ -20,7 +20,7 @@ module ArticlesHelper
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
           elsif e["element_type"] == "box"
             "<div class='box'>"+process_children(e,debug)+"</div>"
-          elsif e["element_type"] == "author_note"
+          elsif (e["element_type"] == "author_note") or (e["element_type"] == "author")
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "related_media"
             media_id = e["related_media_id"]
@@ -39,7 +39,7 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note"].include? e["type"]
+          if ["paragraph","quote","an_author_note", "author"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
           elsif e["type"] == "rel_media_caption"

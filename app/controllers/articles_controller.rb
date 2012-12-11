@@ -77,10 +77,10 @@ class ArticlesController < ApplicationController
         
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
-        if @article.body.blank?
-            @article.body = source_to_body(@article)
-        end
-        # @article.source_to_body
+        # Moved to _form.html.erb
+        # if @article.body.blank?
+        #     @article.body = source_to_body(@article, :debug => current_user.try(:admin?))
+        # end
     end
 
 end

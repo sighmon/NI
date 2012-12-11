@@ -219,6 +219,10 @@ input, textarea, .uneditable-input {
 	width: auto;
 }
 
+textarea#article_body {
+	width: 100%;
+}
+
 // Give the dl dd a little more breathing space between entries
 
 .dl-horizontal dd {
@@ -491,15 +495,29 @@ a:active .shadow {
 	margin-bottom: 1em;
 }
 
-blockquote.pull-right, blockquote.pull-left {
+blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 	border-right-style: none;
 	border-left-style: none;
 	color: @niRed;
 	width: 30%;
+	float: right;
+	text-align: right;
 }
 
-blockquote.pull-right p, blockquote.pull-left p {
+blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
 	margin-bottom: 0;
+}
+
+blockquote.pull-right, blockquote.pull- {
+	padding: 0px;
+	margin: 0px 0px 1em 1em;
+}
+
+blockquote.pull-left {
+	padding: 0px;
+	margin: 0px 1em 1em 0px;
+	text-align: left;
+	float: left;
 }
 
 .footnotes {
