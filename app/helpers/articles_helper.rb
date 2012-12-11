@@ -15,6 +15,8 @@ module ArticlesHelper
             "<h3>"+process_children(e, debug)+"</h3>"
           elsif e["element_type"] == "cross_head_2"
             "<h4>"+process_children(e, debug)+"</h4>"
+          elsif e["element_type"] == "html"
+            process_children(e, debug)            
           elsif e["element_type"] == "pull_quote"
             alignment = e.at_xpath("field[@type='alignment']").text 
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
@@ -42,6 +44,8 @@ module ArticlesHelper
           if ["paragraph","quote","an_author_note", "author"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
+          elsif e["type"] == "html"
+            e.text.gsub(/\n/, " ")
           elsif e["type"] == "rel_media_caption"
             "<div class='new-image-caption'>#{e.text.gsub(/\n/, " ")}</div>"
           elsif e["type"] == "rel_media_credit"
