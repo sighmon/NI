@@ -4,7 +4,7 @@ class Article < ActiveRecord::Base
   mount_uploader :featured_image, FeaturedImageUploader
 
   # join-model for favourites
-  has_many :favourites
+  has_many :favourites, :dependent => :destroy
   has_many :users, :through => :favourites
 
   has_many :images
