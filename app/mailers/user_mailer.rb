@@ -37,6 +37,6 @@ class UserMailer < ActionMailer::Base
     @user = user
     @issue = issue
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au", :subject => "New Internationalist Digital Issue")
+    mail(:to => user.email, :bcc => "design@newint.com.au", :subject => "New Internationalist Purchase - #{issue.number} - #{issue.title}")
   end
 end
