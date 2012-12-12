@@ -28,7 +28,9 @@ class Article < ActiveRecord::Base
   end
 
   def extract_media_ids_from_source
-    return Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}.select{|i|i}
+    related_media = Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}.select{|i|i}
+    related_media_graphic = Nokogiri::XML(self.source).xpath('//container[@element_type="related_media_graphic"]').collect{|e| e["related_media_id"]}.select{|i|i}
+    return related_media << related_media_graphic
   end
 
   # TODO: make private

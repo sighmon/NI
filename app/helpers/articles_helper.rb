@@ -22,9 +22,11 @@ module ArticlesHelper
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
           elsif e["element_type"] == "box"
             "<div class='box'>"+process_children(e,debug)+"</div>"
+          elsif e["element_type"] == "at_a_glance"
+            "<div class='at-a-glance'><h3>At a glance</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           elsif (e["element_type"] == "author_note") or (e["element_type"] == "author")
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
-          elsif e["element_type"] == "related_media"
+          elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
             image = Image.find_by_media_id(media_id)
             media_url = image.try(:data_url, :halfwidth)
@@ -44,9 +46,17 @@ module ArticlesHelper
           if ["paragraph","quote","an_author_note", "author"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
+          elsif e["type"].start_with?("aag_")
+            # make a nice list of 'at a glance' items
+            "<dt>#{e['type'].gsub(/aag_/, '').titlecase}</dt><dd>#{e.text.gsub(/\n/, " ")}</dd>"
+          elsif e["type"] == "last_profiled"
+            session[:last_profiled_link] = e.text
+            return
+          elsif e["type"] == "last_profiled_link"
+            "<dt>Last Profiled</dt><dd><a href='#{session[:last_profiled_link]}'>#{e.text}</a></dd>"
           elsif e["type"] == "html"
             e.text.gsub(/\n/, " ")
-          elsif e["type"] == "rel_media_caption"
+          elsif ["rel_media_caption", "alt_text"].include? e["type"]
             "<div class='new-image-caption'>#{e.text.gsub(/\n/, " ")}</div>"
           elsif e["type"] == "rel_media_credit"
             "<div class='new-image-credit'>#{e.text}</div>"
