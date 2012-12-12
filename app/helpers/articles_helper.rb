@@ -24,7 +24,9 @@ module ArticlesHelper
             "<div class='box'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "at_a_glance"
             "<div class='at-a-glance'><h3>At a glance</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
-          elsif (e["element_type"] == "author_note") or (e["element_type"] == "author")
+          elsif e["element_type"] == "star_ratings"
+            "<div class='star-ratings'><h3>Star ratings</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
+          elsif e["element_type"] == "author_note" or e["element_type"] == "author"
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
@@ -50,10 +52,27 @@ module ArticlesHelper
             # make a nice list of 'at a glance' items
             "<dt>#{e['type'].gsub(/aag_/, '').titlecase}</dt><dd>#{e.text.gsub(/\n/, " ")}</dd>"
           elsif e["type"] == "last_profiled"
-            session[:last_profiled_link] = e.text
+            @last_profiled_link = e.text
             return
           elsif e["type"] == "last_profiled_link"
-            "<dt>Last Profiled</dt><dd><a href='#{session[:last_profiled_link]}'>#{e.text}</a></dd>"
+            "<dt>Last Profiled</dt><dd><a href='#{@last_profiled_link}'>#{e.text}</a></dd>"
+          elsif ["income_distribution", "life_expectancy", "literacy", "position_of_women", "freedom", "sexual_minorities", "politics"].include? e["type"]
+            "<dt>#{e['type'].gsub(/_/, ' ').titlecase}</dt><dd>#{e.text}</dd>"
+          elsif e["type"] == "stars"
+            @star = "<i class='icon-star'></i> "
+            if e.text == "One"
+              "<dd>#{@star}</i></dd>"
+            elsif e.text == "Two"
+              "<dd>#{@star}#{@star}</dd>"
+            elsif e.text == "Three"
+              "<dd>#{@star}#{@star}#{@star}</dd>"
+            elsif e.text == "Four"
+              "<dd>#{@star}#{@star}#{@star}#{@star}</dd>"
+            elsif e.text == "Five"
+              "<dd>#{@star}#{@star}#{@star}#{@star}#{@star}</dd>"
+            end
+          elsif e["type"] == "year"
+            "<dt class='star-ratings-previous-year'>#{e.text}</dt>"
           elsif e["type"] == "html"
             e.text.gsub(/\n/, " ")
           elsif ["rel_media_caption", "alt_text"].include? e["type"]
