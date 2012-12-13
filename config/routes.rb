@@ -1,5 +1,8 @@
 NI::Application.routes.draw do
 
+  # routes for static pages - help, about etc..
+  resources :pages, except: :show
+
   get "subscriptions/update"
 
   get "settings/index"
@@ -60,6 +63,11 @@ NI::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'
+
+  # Routes for all Pages - About, help etc..
+  get ':id', to: 'pages#show', as: :page
+  put ':id', to: 'pages#update', as: :page
+  delete ':id', to: 'pages#destroy', as: :page
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

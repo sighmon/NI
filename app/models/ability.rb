@@ -10,6 +10,7 @@ class Ability
     can :read, Issue
     can :read, Article, :trialarticle => true
     can :search, Article
+    can :read, Page
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
 

@@ -1,0 +1,49 @@
+<%- model_class = Page -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:permalink) %></th>
+      <!-- <th><%= model_class.human_attribute_name(:body) %></th> -->
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= link_to page.id, page_path(page) %></td>
+        <td><%= link_to page.title, page_path(page) %></td>
+        <td><%= page.permalink %></td>
+        <!-- <td><%= page.body %></td> -->
+        <td><%=l page.created_at %></td>
+        <td>
+          <%= link_to 'Read', page_path(page), :class => 'btn btn-mini' %>
+          <% if can? :update, page %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_page_path(page), :class => 'btn btn-mini btn-primary' %>
+          <% end %>
+          <% if can? :destroy, page %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      page_path(page),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="form-actions">
+  <% if can? :create, @page %>
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_page_path,
+            :class => 'btn btn-primary' %>
+  <% end %>
+</div>

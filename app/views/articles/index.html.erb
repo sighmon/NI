@@ -35,8 +35,12 @@
           <% else %>
             <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' %>
           <% end %>
-          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %>
+          <% if can? :update, article %>
+            <%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %>
+          <% end %>
+          <% if can? :destroy, article %>
+            <%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
