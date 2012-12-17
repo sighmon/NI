@@ -63,7 +63,9 @@
 						<div class="nav-collapse">
 							<ul class="nav">
 								<li><%= link_to "Browse Magazines", issues_path %></li>
-								<% if not current_user.try(:subscriber?) %>
+								<% if current_user.nil? %>
+									<li><%= link_to "Subscribe", page_path("subscribe") %></li>
+								<% elsif not current_user.try(:subscriber?) %>
 									<li><%= link_to "Subscribe", new_subscription_path %></li>
 								<% end %>
 								<li><%= link_to "Search", search_path %></li>

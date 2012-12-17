@@ -8,11 +8,11 @@ class Ability
     # can :read, Issue, :trialissue => true
     # can :index, Issue
     can :read, Issue
+    # test to see if the user has purchased an issue (to read article)
+    can :read, Article, :issue => { :users => { :id => user.id } }
     can :read, Article, :trialarticle => true
     can :search, Article
     can :read, Page
-    # test to see if the user has purchased an issue (to read article)
-    can :read, Article, :issue => { :users => { :id => user.id } }
 
     if !user.guest?
         can :manage, Purchase

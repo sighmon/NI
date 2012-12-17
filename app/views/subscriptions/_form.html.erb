@@ -53,7 +53,9 @@
 	<% end %>
 
 <% else %>
-	
+
+	<%= subscription_price_table %>
+
 	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
 
 	  <dl class="dl-horizontal subscribe-options">
@@ -67,6 +69,7 @@
 	  <hr />
 	  <h2>Automatic debit</h2>
 	  <p>Would you like NI to automatically debit your PayPal account until you tell us to stop?</p>
+	  <p>The debits will occur every 3, 6 or 12 months, depending on the option you chose above.</p>
 	  <dl class="dl-horizontal subscribe-options">
 	  	<dt><%= radio_button_tag 'autodebit', '1', 'false' %></dt>
 	  	<dd>Yes please!</dd>

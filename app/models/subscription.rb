@@ -57,4 +57,27 @@ class Subscription < ActiveRecord::Base
     self.cancellation_date = DateTime.now
   end
 
+  def self.calculate_subscription_price(duration, options = {})
+    autodebit = options[:autodebit] or false
+    if autodebit
+        case duration
+        when 3
+            return Settings.subscription_price * duration * 15 / 18
+        when 6
+            return Settings.subscription_price * duration * 25 / 36
+        when 12
+            return Settings.subscription_price * duration * 40 / 72
+        end
+    else
+        case duration
+        when 3
+          return Settings.subscription_price * duration
+        when 6
+          return Settings.subscription_price * duration * 30 / 36
+        when 12
+          return Settings.subscription_price * duration * 50 / 72
+        end
+    end
+  end
+
 end

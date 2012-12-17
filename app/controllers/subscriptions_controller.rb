@@ -1,4 +1,5 @@
 class SubscriptionsController < ApplicationController
+    include SubscriptionsHelper
 	# Cancan authorisation
     load_and_authorize_resource
 
@@ -8,28 +9,16 @@ class SubscriptionsController < ApplicationController
     end
 
     def express
-        # Subscription price moved to Settings.subscription_price
-
-        case params[:duration]
-        when "3"
-            @express_purchase_price = Settings.subscription_price * 3
-            @express_purchase_subscription_duration = 3
-        when "6"
-            @express_purchase_price = Settings.subscription_price * 6
-            @express_purchase_subscription_duration = 6
-        when "12"
-            @express_purchase_price = Settings.subscription_price * 12
-            @express_purchase_subscription_duration = 12
-        end
-
+        
         if params[:autodebit] == "1"
             @autodebit = true
-            session[:express_autodebit] = @autodebit
         else
             @autodebit = false
-            session[:express_autodebit] = @autodebit
         end
 
+        @express_purchase_subscription_duration = params[:duration].to_i
+        @express_purchase_price = calculate_subscription_price(@express_purchase_subscription_duration, autodebit: @autodebit)
+        session[:express_autodebit] = @autodebit
         session[:express_purchase_price] = @express_purchase_price
         session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
 

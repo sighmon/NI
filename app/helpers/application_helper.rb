@@ -77,10 +77,15 @@ module ApplicationHelper
     end
 
     def current_article_favourited?
-        return current_user.favourites.collect{|f| f.article_id}.include?(@article.id)
+        if not current_user.nil?
+            return current_user.favourites.collect{|f| f.article_id}.include?(@article.id)
+        else 
+            return false
+        end
     end
 
     def favourite_id_for_article(article)
         return article.favourites.find_by_user_id(current_user.id).id
     end
+    
 end
