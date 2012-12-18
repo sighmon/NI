@@ -209,6 +209,42 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 	width: 60%;
 }
 
+.purchase-issue h3 {
+	font-size: 1.2em;
+	margin: 0px;
+}
+
+.purchase-issue h4 {
+	font-size: 1em;
+	font-weight: normal;
+	color: @grayLight;
+	margin-top: -10px;
+}
+
+.subscription-price-table {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+// Marketing box styling
+
+.marketing-subscribe {
+	.box;
+	float: right;
+	margin-top: -350px;
+	width: 30%;
+}
+
+.marketing-subscribe h3 {
+	margin: 0px;
+}
+
+.marketing-subscribe h4 {
+	margin-top: 0px;
+	color: @gray;
+}
+
 // Remove the 220px width on select form items & text inputs
 
 select {
@@ -237,6 +273,8 @@ textarea#article_body, textarea#issue_editors_letter {
 	padding-right: 2px;
 	padding-bottom: 2px;
 }
+
+
 
 // Shadow
 
@@ -629,6 +667,19 @@ blockquote.pull-left {
 		float: none;
 		width: auto;
 	}
+	
+	.marketing-subscribe {
+		float: none;
+		margin-top: 20px;
+		width: auto;
+	}
+	.dl-horizontal dt {
+		float: left;
+		margin-right: 10px;
+	}
+	.dl-horizontal dd {
+		margin-top: 2px;
+	}
 }
  
 /* Landscape phone to portrait tablet */
@@ -647,6 +698,13 @@ blockquote.pull-left {
 	.hero-unit {
 		padding: 10px 20px 20px 20px;
 	}
+	.dl-horizontal dt {
+		float: left;
+		margin-right: 10px;
+	}
+	.dl-horizontal dd {
+		margin-top: 2px;
+	}
 }
  
 /* Portrait tablet to landscape and desktop */
@@ -663,6 +721,13 @@ blockquote.pull-left {
 	}
 	.issue-search {
 		margin-top: -70px;
+	}
+	.dl-horizontal dt {
+		float: left;
+		margin-right: 10px;
+	}
+	.dl-horizontal dd {
+		margin-top: 2px;
 	}
 }
  
