@@ -73,7 +73,7 @@ module ArticlesHelper
             end
           elsif e["type"] == "year"
             "<dt class='star-ratings-previous-year'>#{e.text}</dt>"
-          elsif e["type"] == "html"
+          elsif e["type"] == "html" or e["type"] == "text"
             e.text.gsub(/\n/, " ")
           elsif ["rel_media_caption", "alt_text"].include? e["type"]
             "<div class='new-image-caption'>#{e.text.gsub(/\n/, " ")}</div>"

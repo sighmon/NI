@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213022913) do
+ActiveRecord::Schema.define(:version => 20121217231437) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20121213022913) do
     t.text     "editors_letter"
     t.string   "editors_name"
     t.string   "editors_photo"
+    t.boolean  "published"
   end
 
   create_table "pages", :force => true do |t|

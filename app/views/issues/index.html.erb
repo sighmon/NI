@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @issues.sort_by{|x|x.release}.each do |issue| %>
+    <% @issues.sort_by{|x|x.release}.reverse.each do |issue| %>
       <tr>
         <!-- <td><%= link_to issue.id, issue_path(issue) %></td> -->
         <td><%= link_to issue.title, issue_path(issue) %></td>

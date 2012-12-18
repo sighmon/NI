@@ -8,11 +8,12 @@ class ArticlesController < ApplicationController
     end
 
     def search
-        if params[:query].present?
-            @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
-        else
-            @articles = Article.order("publication").reverse_order.page(params[:page]).per(Settings.article_pagination)
-        end
+        @articles = Article.search(params, current_user.try(:admin?))
+        # if params[:query].present?
+        #     @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
+        # else
+        #     @articles = Article.order("publication").reverse_order.page(params[:page]).per(Settings.article_pagination)
+        # end
         # @articles = Article.search(params)
         # @articles = Article.all
     end

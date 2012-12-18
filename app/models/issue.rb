@@ -1,5 +1,5 @@
 class Issue < ActiveRecord::Base
-  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo
+  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published
   has_many :articles, :dependent => :destroy
   has_many :purchases
   has_many :users, :through => :purchases
@@ -20,6 +20,21 @@ class Issue < ActiveRecord::Base
   #     query { string params[:query]} if params[:query].present?
   #   end
   # end
+
+  def self.search(params, unpublished = false)
+    tire.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
+      query {string params[:query]} if params[:query].present?
+      filter :term, :published => true unless unpublished
+    end
+  end
+
+  # if params[:query].present?
+    #     @issues = Issue.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
+    #       query { string(params[:query]) }
+    #     end
+    # else
+    #     @issues = Issue.order("release").reverse_order.page(params[:page]).per(Settings.issue_pagination)
+    # end
 
   def price
     return Settings.issue_price

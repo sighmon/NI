@@ -32,11 +32,7 @@ class IssuesController < ApplicationController
     # TOFIX: TODO: Search + pagination?
     # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
 
-    if params[:query].present?
-        @issues = Issue.search(params[:query], load: true, :page => params[:page], :per_page => Settings.issue_pagination)
-    else
-        @issues = Issue.order("release").reverse_order.page(params[:page]).per(Settings.issue_pagination)
-    end
+    @issues = Issue.search(params, current_user.try(:admin?))
 
     respond_to do |format|
       format.html # index.html.erb

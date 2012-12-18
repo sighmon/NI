@@ -15,6 +15,28 @@ class Article < ActiveRecord::Base
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
+  def self.search(params, unpublished = false)
+    tire.search(load: true, :page => params[:page], :per_page => Settings.article_pagination) do
+      query {string params[:query]} if params[:query].present?
+      filter :term, :published => true unless unpublished
+    end
+  end
+
+  mapping do
+    indexes :id, type: 'integer'
+    indexes :title
+    indexes :teaser
+    indexes :author
+    indexes :body
+    indexes :featured_image_caption
+    indexes :publication, type: 'date'
+    indexes :published, type: 'boolean', as: 'published'
+  end
+
+  def published
+    issue.published
+  end
+
   def self.create_from_element(issue,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     return issue.articles.create(
