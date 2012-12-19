@@ -52,7 +52,11 @@ class Article < ActiveRecord::Base
   def extract_media_ids_from_source
     related_media = Nokogiri::XML(self.source).xpath('//container[@element_type="related_media"]').collect{|e| e["related_media_id"]}.select{|i|i}
     related_media_graphic = Nokogiri::XML(self.source).xpath('//container[@element_type="related_media_graphic"]').collect{|e| e["related_media_id"]}.select{|i|i}
-    return related_media << related_media_graphic
+    if not related_media_graphic.empty?
+      return related_media << related_media_graphic
+    else 
+      return related_media
+    end
   end
 
   # TODO: make private
