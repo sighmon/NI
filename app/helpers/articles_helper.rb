@@ -26,7 +26,7 @@ module ArticlesHelper
             "<div class='at-a-glance'><h3>At a glance</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           elsif e["element_type"] == "star_ratings"
             "<div class='star-ratings'><h3>Star ratings</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
-          elsif e["element_type"] == "author_note" or e["element_type"] == "author"
+          elsif e["element_type"] == "author_note" or e["element_type"] == "author" or e["element_type"] == "postscript"
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
@@ -45,7 +45,7 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note", "author"].include? e["type"]
+          if ["paragraph","quote","an_author_note", "author", "postscript_text"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
           elsif e["type"].start_with?("aag_")
