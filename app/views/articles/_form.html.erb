@@ -43,7 +43,7 @@
     <%= f.label :body, :class => 'control-label' %>
     <div class="controls">
       <% if @article.body.blank? %>
-        <% @article.body = source_to_body(@article) %>
+        <% @article.body = source_to_body(@article, :debug => current_user.try(:admin?)) %>
       <% end %>
       <%= f.text_area :body, :class => 'text_area' %>
     </div>
