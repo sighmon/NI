@@ -91,6 +91,13 @@ class Issue < ActiveRecord::Base
     # print response.to_json
     # Pull the story_ids from the search results element passed from SOAP
     story_ids = response[:list_ids_response][:story_ids][:story_id]
+    # Handle a blank response or one result
+    if story_ids.blank? or story_ids.nil?
+      story_ids = []
+    elsif story_ids.is_a? Array
+    else
+      story_ids = Array.new << story_ids
+    end
     story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
     response = client.request "story", "story_ids" do
       http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
