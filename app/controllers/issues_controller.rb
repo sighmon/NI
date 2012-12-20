@@ -34,6 +34,19 @@ class IssuesController < ApplicationController
 
     @issues = Issue.search(params, current_user.try(:admin?))
 
+    # Set meta tags
+    set_meta_tags :title => "Magazine archive",
+                  :description => "An archive of all the New Internationalist magazines available as digital editions.",
+                  :keywords => "new, internationalist, magazine, archive, digital, edition",
+                  :open_graph => {
+                    :title => "Magazine archive",
+                    :description => "An archive of all the New Internationalist magazines available as digital editions.",
+                    #:type  => :magazine,
+                    :url   => issues_url,
+                    :image => root_url.sub(/\/$/, '') + @issues.sort_by{|i| i.release}.last.cover_url(:thumb2x).to_s,
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  }
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @issues }
@@ -44,6 +57,19 @@ class IssuesController < ApplicationController
   # GET /issues/1.json
   def show
     # @issue = Issue.find(params[:id])
+
+    # Set meta tags
+    set_meta_tags :title => @issue.title,
+                  :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                  :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
+                  :open_graph => {
+                    :title => @issue.title,
+                    :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                    #:type  => :magazine,
+                    :url   => issue_url(@issue),
+                    :image => root_url.sub(/\/$/, '') + @issue.cover_url(:thumb2x).to_s,
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  }
 
     respond_to do |format|
       format.html # show.html.erb
@@ -67,6 +93,8 @@ class IssuesController < ApplicationController
     # @issue = Issue.find(params[:id])
     # Use cancan to check for individual authorisation
     # authorize! :update, @issue
+
+    set_meta_tags :title => "Edit this Issue"
   end
 
   # POST /issues

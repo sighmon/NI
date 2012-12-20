@@ -38,6 +38,8 @@ gem 'savon'
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
 
+# Using meta-tags for head meta https://github.com/kpumuk/meta-tags
+gem 'meta-tags', :require => 'meta_tags'
 
 # Heroku gem
 # gem 'heroku'

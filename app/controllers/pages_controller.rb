@@ -22,6 +22,17 @@ class PagesController < ApplicationController
     # Now finding by permalink
     @page = Page.find_by_permalink!(params[:id])
 
+    set_meta_tags :title => @page.title,
+                  #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                  :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",
+                  :open_graph => {
+                    :title => @page.title,
+                    #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                    #:type  => :magazine,
+                    :url   => page_url(@page.permalink),
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  }
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @page }

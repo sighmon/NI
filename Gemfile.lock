@@ -154,6 +154,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta-tags (1.2.6)
+      actionpack
     method_source (0.8.1)
     mime-types (1.19)
     money (5.1.0)
@@ -317,6 +319,7 @@ DEPENDENCIES
   ledermann-rails-settings
   less-rails
   libv8 (~> 3.11.8)
+  meta-tags
   paypal-recurring
   pg
   rails (= 3.2.3)
