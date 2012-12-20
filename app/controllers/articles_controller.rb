@@ -98,7 +98,7 @@ class ArticlesController < ApplicationController
                         :description => strip_tags(@article.teaser),
                         #:type  => :magazine,
                         :url   => issue_article_url(@issue, @article),
-                        :image => root_url.sub(/\/$/, '') + @article.try(:images).try(:first).try(:data).to_s,
+                        :image => @article.try(:images).try(:first).try(:data).to_s,
                         :site_name => "New Internationalist Magazine Digital Edition"
                       }
     end
