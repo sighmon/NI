@@ -27,7 +27,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              pages_path, :class => 'btn'  %>
+              :back, :class => 'btn'  %>
   <% if can? :update, @page %>
     <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_page_path(@page), :class => 'btn btn-primary' %>
