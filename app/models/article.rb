@@ -9,6 +9,9 @@ class Article < ActiveRecord::Base
 
   has_many :images
 
+  has_many :guest_passes
+  has_many :users, :through => :guest_passes
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
