@@ -35,6 +35,13 @@
     <% else %>
       <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourites_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Add to favourites', :title => 'Add to favourites' %>
     <% end %>
+    <!-- Sharing options -->
+    <% if current_article_has_a_guest_pass? %>
+      <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
+    <% else %>
+      <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_passes_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Share this article with a guest pass', :title => 'Share this article with a guest pass' %>
+    <% end %>
+    <!-- END Sharing options -->
   </p>
 </div>
 

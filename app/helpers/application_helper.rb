@@ -68,6 +68,26 @@ module ApplicationHelper
         end
     end
 
+    def guest_passess_as_table(guest_passes)
+        if guest_passes.try(:empty?)
+            return "You haven't shared any articles yet."
+        else
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Guest pass URL</th><th>Date shared</th></tr></thead><tbody>"
+            for guest_pass in guest_passes.sort_by {|x| x.created_at}.reverse do
+                table += "<tr><td>#{link_to guest_pass.article.title, issue_article_path(guest_pass.article.issue, guest_pass.article)}</td>"
+                # table += "<td>#{guest_pass.article.publication.strftime("%B, %Y")}</td>"
+                table += "<td>#{link_to guest_pass.key, issue_article_url(guest_pass.article.issue, guest_pass.article), :query => "utm_source=#{guest_pass.key}"}</td>"
+                table += "<td>#{guest_pass.created_at.try(:strftime,"%d %B, %Y")}</td>"
+                if current_user.try(:admin?)
+                    table += "<td>#{link_to 'Delete', issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"
+                end
+                table += "</tr>"
+            end
+            table += "</tbody></table>"
+            return raw table
+        end
+    end
+
     def user_expiry_as_string(user)
         return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end
@@ -87,5 +107,16 @@ module ApplicationHelper
     def favourite_id_for_article(article)
         return article.favourites.find_by_user_id(current_user.id).id
     end
+
+    def current_article_has_a_guest_pass?
+        if not current_user.nil?
+            return current_user.guest_passes.collect{|f| f.article_id}.include?(@article.id)
+        else 
+            return false
+        end
+    end
     
+    def guest_pass_id_for_article(article)
+        return article.guest_passes.find_by_user_id(current_user.id).id
+    end
 end

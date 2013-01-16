@@ -29,6 +29,7 @@ NI::Application.routes.draw do
     # Route for importing articles from bricolage to an issue
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
+      resources :guest_passes, :only => [:create, :destroy]
       get :import_images
     end
     resources :purchases, :only => [:new, :create] do
