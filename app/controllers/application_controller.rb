@@ -4,4 +4,11 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to issues_path, :alert => exception.message
   end
+
+  private
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user, params[:utm_source])
+  end
+
 end

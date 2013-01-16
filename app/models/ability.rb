@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, key=nil)
     # Define abilities for the passed in user here. For example:
     #
     user ||= User.new # guest user (not logged in)
@@ -10,6 +10,7 @@ class Ability
     can :read, Issue, :published => true
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
+    can :read, Article, :guest_passes => { :key => key } 
     can :read, Article, :trialarticle => true
     can :search, Article
     can :read, Page
