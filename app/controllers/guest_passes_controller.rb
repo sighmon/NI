@@ -1,5 +1,5 @@
 class GuestPassesController < ApplicationController
-
+    
 	# Cancan authorisation
     load_and_authorize_resource
 
@@ -17,7 +17,7 @@ class GuestPassesController < ApplicationController
 
         respond_to do |format|
         	if @guest_pass.save
-        		format.html { redirect_to issue_article_path(@issue, @article), notice: "Your guest pass has been created to share with friends. The URL to share is: #{@guest_pass.key}." }
+        		format.html { redirect_to issue_article_path(@issue, @article), notice: "A guest pass for this article has been created for you to share with friends. Click on your username to see all the articles you're sharing." }
                 format.json { render json: @guest_pass, status: :created, location: @guest_pass }
             else
                 format.html { redirect_to issue_article_path(@issue, @article), notice: "Sorry, couldn't share this article." }

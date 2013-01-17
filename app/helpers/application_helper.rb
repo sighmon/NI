@@ -72,11 +72,11 @@ module ApplicationHelper
         if guest_passes.try(:empty?)
             return "You haven't shared any articles yet."
         else
-            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Guest pass URL</th><th>Date shared</th></tr></thead><tbody>"
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Guest pass URL <br /><span style='font-weight:normal'>(right click + copy link)</span></th><th>Date shared</th></tr></thead><tbody>"
             for guest_pass in guest_passes.sort_by {|x| x.created_at}.reverse do
                 table += "<tr><td>#{link_to guest_pass.article.title, issue_article_path(guest_pass.article.issue, guest_pass.article)}</td>"
                 # table += "<td>#{guest_pass.article.publication.strftime("%B, %Y")}</td>"
-                table += "<td>#{link_to guest_pass.key, issue_article_url(guest_pass.article.issue, guest_pass.article), :query => "utm_source=#{guest_pass.key}"}</td>"
+                table += "<td>#{generate_guest_pass_link_to(guest_pass)}</td>"
                 table += "<td>#{guest_pass.created_at.try(:strftime,"%d %B, %Y")}</td>"
                 if current_user.try(:admin?)
                     table += "<td>#{link_to 'Delete', issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"
@@ -119,4 +119,13 @@ module ApplicationHelper
     def guest_pass_id_for_article(article)
         return article.guest_passes.find_by_user_id(current_user.id).id
     end
+
+    def generate_guest_pass_link_to(guest_pass)
+        return link_to "Guest pass link", issue_article_url(guest_pass.article.issue, guest_pass.article, :utm_source => "#{guest_pass.key}")
+    end
+
+    def generate_guest_pass_link_string(guest_pass)
+        return issue_article_url(guest_pass.article.issue, guest_pass.article).to_s+"?utm_source=#{guest_pass.key}"
+    end
+
 end
