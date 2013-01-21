@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116043453) do
+ActiveRecord::Schema.define(:version => 20130121023206) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(:version => 20130116043453) do
     t.integer  "user_id"
     t.integer  "article_id"
     t.string   "key"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.datetime "last_used"
+    t.integer  "use_count",  :default => 0
   end
 
   add_index "guest_passes", ["article_id"], :name => "index_guest_passes_on_article_id"

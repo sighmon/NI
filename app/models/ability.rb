@@ -10,7 +10,10 @@ class Ability
     can :read, Issue, :published => true
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
-    can :read, Article, :guest_passes => { :key => key } 
+    # can :read, Article, :guest_passes => { :key => key } 
+    can :read, Article do |article| 
+        article.is_valid_guest_pass(key)
+    end
     can :read, Article, :trialarticle => true
     can :search, Article
     can :read, Page

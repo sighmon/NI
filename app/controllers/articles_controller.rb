@@ -87,6 +87,7 @@ class ArticlesController < ApplicationController
     def show
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
+        @article.is_valid_guest_pass(params[:utm_source])
         # @article.source_to_body(:debug => current_user.try(:admin?))
 
         # Set meta tags

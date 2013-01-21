@@ -40,6 +40,19 @@ class Article < ActiveRecord::Base
     issue.published
   end
 
+  # Guest pass checking
+  def is_valid_guest_pass(key)
+    pass = self.guest_passes.where(:key => key).first
+    if pass
+      pass.last_used = DateTime.now
+      pass.use_count += 1
+      pass.save
+      return true
+    else
+      return false
+    end
+  end
+
   def self.create_from_element(issue,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     return issue.articles.create(

@@ -18,7 +18,7 @@
 			<td><%= link_to guest_pass.user, [:admin, guest_pass.user] %></td>
 			<td><%= link_to guest_pass.article.title, issue_article_path(guest_pass.article.issue, guest_pass.article) %></td>
 			<td><%= link_to guest_pass.key, generate_guest_pass_link_string(guest_pass) %></td>
-			<td>xxx</td>
+			<td><%= guest_pass.use_count %></td>
 			<td><%= link_to "Show", issue_article_path(guest_pass.article.issue, guest_pass.article), :class => 'btn btn-mini' %></td>
 		</tr>
 	<% end %>
