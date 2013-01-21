@@ -4,7 +4,8 @@
 
 <p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
 <p><%= link_to "List Users", admin_users_path, :class => 'btn' %> A list of all user accounts and their expiry dates.</p>
-<p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..).</p>
+<p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
+<p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn' %></p>
 
 <div class="form-actions">
 	<%= link_to 'Back', root_path, :class => 'btn' %>

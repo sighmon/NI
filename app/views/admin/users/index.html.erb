@@ -2,6 +2,9 @@
 	<h1>All users</h1>
 </div>
 
+<p>There are currently <b><%= pluralize @users.try(:size), "user" %></b> and <b><%= pluralize @subscribers.try(:size), "subscriber" %></b></p>
+<p>They have created <b><%= pluralize @guest_passes.try(:size), "guest pass" %></b></p>
+
 <table class="table table-bordered">
 	<thead>
 		<tr>

@@ -1,5 +1,7 @@
 NI::Application.routes.draw do
 
+  get "guest_passes/index"
+
   # routes for static pages - help, about etc..
   resources :pages, except: :show
 
@@ -52,6 +54,7 @@ NI::Application.routes.draw do
     resources :users
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
+    resources :guest_passes, :only => [:index]
   end
 
   get "home/index"

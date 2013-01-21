@@ -5,6 +5,8 @@ class Admin::UsersController < Admin::BaseController
 
 	def index
 		@users = User.all(:order => "username")
+		@subscribers = @users.select{|s| s.subscriber?}
+		@guest_passes = GuestPass.all
 	end
 
 	def show
