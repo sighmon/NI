@@ -22,6 +22,7 @@ class Ability
         can :manage, Purchase
         can :manage, Subscription
         can :manage, Favourite
+        can :manage, GuestPass
         can :read, User
     end   
 
