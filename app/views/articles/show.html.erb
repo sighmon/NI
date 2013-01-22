@@ -44,6 +44,13 @@
     <% end %>
     <!-- END Sharing options -->
   </p>
+  <% if can? :manage, Article %>
+    <ul class="unstyled">
+    <% @article.categories.each do |category| %>
+      <li><%= category.name %></li>
+    <% end %>
+    </ul>
+  <% end %>
 </div>
 
 <% if not @article.featured_image.blank? %>

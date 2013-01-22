@@ -17,6 +17,15 @@
       <%= f.text_field :author, :class => 'text_field' %>
     </div>
   </div>
+
+  <div class="control-group">
+    <b>Categories</b>
+    <%= f.fields_for :categories do |builder| %>
+      <%= render 'category_fields', f: builder %>
+    <% end %>
+    <%= link_to_add_fields "Add Category", f, :categories %>
+  </div>
+
   <div class="control-group">
     <%= f.label :publication, :class => 'control-label' %>
     <div class="controls">
