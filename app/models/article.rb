@@ -12,7 +12,8 @@ class Article < ActiveRecord::Base
   has_many :guest_passes, :dependent => :destroy
   has_many :users, :through => :guest_passes
 
-  has_many :categories
+  has_many :article_categorisations
+  has_many :categories, :through => :article_categorisations
   accepts_nested_attributes_for :categories, allow_destroy: true
 
   include Tire::Model::Search
@@ -59,16 +60,21 @@ class Article < ActiveRecord::Base
 
   def self.create_from_element(issue,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
-    return issue.articles.create(
+    a = issue.articles.create(
       :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
-      # Removed and created a Category Model.
-      # :category => element.at_xpath('./assets:categories/assets:category[@primary="1"]','assets' => assets).try(:text),
       :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
       :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
       # :body => Hash.from_xml(element.to_xml).to_json
       :source => element.to_xml
     )
+    category_list = element.xpath(".//assets:category",'assets' => assets)
+    logger.info category_list
+    logger.info "********"
+    category_list.collect do |cat|
+      c = Category.create_from_element(a,cat)
+    end
+    return a
   end
 
   def extract_media_ids_from_source
