@@ -41,6 +41,14 @@ class Article < ActiveRecord::Base
     indexes :published, type: 'boolean', as: 'published'
   end
 
+  # def autosave_associated_records_for_category
+  #   if new_category = Category.find_by_name(category.name)
+  #     self.category = new_category
+  #   else
+  #     self.category.save!
+  #   end
+  # end
+
   def published
     issue.published
   end

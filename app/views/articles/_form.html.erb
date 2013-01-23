@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="control-group">
+  <div class="control-group autocomplete-data" data-autocomplete-source="<%= Category.order(:name).map(&:name) %>">
     <b>Categories</b>
     <%= f.fields_for :categories do |builder| %>
       <%= render 'category_fields', f: builder %>

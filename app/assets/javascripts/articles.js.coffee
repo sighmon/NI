@@ -12,4 +12,9 @@ jQuery ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
+    $('.category_autocomplete').autocomplete
+      source: $('.autocomplete-data').data('autocomplete-source')
     event.preventDefault()
+
+  $('.category_autocomplete').autocomplete
+    source: $('.autocomplete-data').data('autocomplete-source')
