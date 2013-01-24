@@ -43,7 +43,7 @@ class IssuesController < ApplicationController
                     :description => "An archive of all the New Internationalist magazines available as digital editions.",
                     #:type  => :magazine,
                     :url   => issues_url,
-                    :image => @issues.sort_by{|i| i.release}.last.cover_url(:thumb2x).to_s,
+                    :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   }
 
