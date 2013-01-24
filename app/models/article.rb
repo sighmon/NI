@@ -41,13 +41,19 @@ class Article < ActiveRecord::Base
     indexes :published, type: 'boolean', as: 'published'
   end
 
-  # def autosave_associated_records_for_category
-  #   if new_category = Category.find_by_name(category.name)
-  #     self.category = new_category
-  #   else
-  #     self.category.save!
-  #   end
-  # end
+  # Fix so that nested Categories can be found and saved for Articles if they don't exist
+  def categories_attributes=(categories_attributes)
+    categories_attributes.values.each do |category_attributes|
+      if category_attributes[:id].nil? and category_attributes[:name].present?
+        category = Category.find_by_name(category_attributes[:name])
+        if category.present?
+          category_attributes[:id] = category.id
+          self.categories << category
+        end
+      end
+    end
+    assign_nested_attributes_for_collection_association(:categories, categories_attributes, mass_assignment_options)
+  end
 
   def published
     issue.published
