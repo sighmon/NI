@@ -38,6 +38,13 @@
           <% @issue.articles.find_by_keynote(true) do |article| %>
             <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
             <p><%= simple_format article.teaser %></p>
+            <% if can? :manage, Article %>
+              <ul class="unstyled">
+              <% article.categories.each do |category| %>
+                <li><%= category.name %></li>
+              <% end %>
+              </ul>
+            <% end %>
             <p><% if can? :read, article %>
               <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
             <% else %>
@@ -49,7 +56,7 @@
         <% end %>
       </div>
       <% unless @issue.articles[1].nil? %>
-        <h3>Other articles in this issue.</h3>
+        <h3>Feature articles in this issue.</h3>
         <% @issue.articles.select{|a| not a.keynote}.each do |article| %>
           <div class="issue-article">
           <% if can? :read, article %>
@@ -60,6 +67,13 @@
             <h4><%= article.title %></h4>
           <% end %>
           <p><%= simple_format article.teaser %></p>
+          <% if can? :manage, Article %>
+            <ul class="unstyled">
+            <% article.categories.each do |category| %>
+              <li><%= category.name %></li>
+            <% end %>
+            </ul>
+          <% end %>
           <p><% if can? :read, article %>
           <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
           <% else %>

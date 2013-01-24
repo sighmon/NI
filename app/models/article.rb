@@ -41,7 +41,7 @@ class Article < ActiveRecord::Base
     indexes :published, type: 'boolean', as: 'published'
   end
 
-  # Fix so that nested Categories can be found and saved for Articles if they don't exist
+  # Fix so that nested Categories can be found and saved for Articles if they exist
   def categories_attributes=(categories_attributes)
     categories_attributes.values.each do |category_attributes|
       if category_attributes[:id].nil? and category_attributes[:name].present?
