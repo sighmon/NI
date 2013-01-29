@@ -1,0 +1,22 @@
+<% if can? :read, article %>
+  <% if not article.featured_image.blank? %><%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %><% end %>
+  <h4><%= link_to article.title, issue_article_path(@issue,article) %></h4>
+<% else %>
+  <% if not article.featured_image.blank? %><%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80") %><% end %>
+  <h4><%= article.title %></h4>
+<% end %>
+<p><%= simple_format article.teaser %></p>
+<% if can? :manage, Article %>
+  <ul class="unstyled">
+  <% article.categories.each do |category| %>
+    <li><%= category.name %></li>
+  <% end %>
+  </ul>
+<% end %>
+<p><% if can? :read, article %>
+<%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+<% else %>
+  <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+<% end %>
+<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
+<% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
