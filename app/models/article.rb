@@ -55,6 +55,22 @@ class Article < ActiveRecord::Base
     assign_nested_attributes_for_collection_association(:categories, categories_attributes, mass_assignment_options)
   end
 
+  def create_categories_from_article_source
+    if self.categories.blank?
+      assets = 'http://bricolage.sourceforge.net/assets.xsd'
+      if not self.source.blank?
+        doc = Nokogiri::XML(self.source)
+        category_list = doc.xpath(".//category",'assets' => assets)
+        category_list.collect do |cat|
+          c = Category.create_from_element(self,cat)
+        end
+      end
+    else
+      logger.info "**** This Article already has categories ****"
+    end
+    return self.categories
+  end
+
   def published
     issue.published
   end
@@ -83,8 +99,6 @@ class Article < ActiveRecord::Base
       :source => element.to_xml
     )
     category_list = element.xpath(".//assets:category",'assets' => assets)
-    logger.info category_list
-    logger.info "********"
     category_list.collect do |cat|
       c = Category.create_from_element(a,cat)
     end

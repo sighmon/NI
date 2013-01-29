@@ -129,6 +129,29 @@ class Issue < ActiveRecord::Base
     stories
   end
 
+  def articles_of_category(category_name)
+    arts = self.articles.select{|a| not a.keynote}
+    g = []
+    arts.each do |article|
+      if not article.categories.select{|c| c.name.include?(category_name)}.empty?
+        g << article
+      end
+    end
+    return g
+  end
+
+  def all_category_names
+    n = []
+    self.articles.each do |article|
+      article.categories.each do |category|
+        if not category.name.include?("/themes/")
+          n << category.name
+        end
+      end
+    end
+    return n
+  end
+
   private
 
   def reprocess_image

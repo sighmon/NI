@@ -23,6 +23,14 @@ class IssuesController < ApplicationController
     redirect_to issue_path(@issue)
   end
 
+  def import_categories
+    @issue = Issue.find(params[:issue_id])
+    @issue.articles.each do |article|
+      article.import_categories_from_source
+    end
+    redirect_to issue_path(@issue)
+  end
+
   def index
     # @issues = Issue.all
     # Pagination

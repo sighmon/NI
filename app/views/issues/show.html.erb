@@ -36,54 +36,29 @@
         <h5>The big story</h5>
         <% if @issue.articles.find_by_keynote(true) %>
           <% @issue.articles.find_by_keynote(true) do |article| %>
-            <% if can? :read, article %><h4><%= link_to article.title, issue_article_path(@issue,article) %></h4><% else %><h4><%= article.title %></h4><% end %>
-            <p><%= simple_format article.teaser %></p>
-            <% if can? :manage, Article %>
-              <ul class="unstyled">
-              <% article.categories.each do |category| %>
-                <li><%= category.name %></li>
-              <% end %>
-              </ul>
-            <% end %>
-            <p><% if can? :read, article %>
-              <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-            <% else %>
-              <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
-            <% end %>
-            <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-            <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
+            <%= render :partial => "article", :object => article %>
           <% end %>
         <% end %>
       </div>
-      <% unless @issue.articles[1].nil? %>
-        <h3>Feature articles in this issue.</h3>
-        <% @issue.articles.select{|a| not a.keynote}.each do |article| %>
+
+      <% unless @issue.articles_of_category("/features/").blank? %>
+        <h3>Features.</h3>
+        <% @issue.articles_of_category("/features/").each do |article| %>
           <div class="issue-article">
-          <% if can? :read, article %>
-            <% if not article.featured_image.blank? %><%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %><% end %>
-            <h4><%= link_to article.title, issue_article_path(@issue,article) %></h4>
-          <% else %>
-            <% if not article.featured_image.blank? %><%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80") %><% end %>
-            <h4><%= article.title %></h4>
-          <% end %>
-          <p><%= simple_format article.teaser %></p>
-          <% if can? :manage, Article %>
-            <ul class="unstyled">
-            <% article.categories.each do |category| %>
-              <li><%= category.name %></li>
-            <% end %>
-            </ul>
-          <% end %>
-          <p><% if can? :read, article %>
-          <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
-          <% else %>
-            <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
-          <% end %>
-          <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-          <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
+            <%= render :partial => "article", :object => article %>
           </div>
         <% end %>
       <% end %>
+
+      <% unless @issue.articles_of_category("/sections/agenda/").blank? %>
+        <h3>Agenda.</h3>
+        <% @issue.articles_of_category("/sections/agenda/").each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      <% end %>
+
   </div>
   <div class="span6 editors-letter">
     <% if @issue.editors_letter != "" %>
@@ -91,6 +66,35 @@
       <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo img-polaroid', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
       <%= simple_format @issue.editors_letter %>
       <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
+      <hr />
+    <% end %>
+  </div>
+  <div class="span6 issue-articles-container">
+    <% unless @issue.articles_of_category("/argument/").blank? %>
+      <h3>Argument.</h3>
+      <% @issue.articles_of_category("/argument/").each do |article| %>
+        <div class="issue-article">
+          <%= render :partial => "article", :object => article %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% unless @issue.articles_of_category("/columns/").blank? %>
+      <h3>Regulars.</h3>
+      <% @issue.articles_of_category("/columns/").each do |article| %>
+        <div class="issue-article">
+          <%= render :partial => "article", :object => article %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% unless @issue.articles_of_category("/blog/").blank? %>
+      <h3>Blog.</h3>
+      <% @issue.articles_of_category("/blog/").each do |article| %>
+        <div class="issue-article">
+          <%= render :partial => "article", :object => article %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
