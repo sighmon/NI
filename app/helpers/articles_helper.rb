@@ -22,6 +22,8 @@ module ArticlesHelper
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
           elsif e["element_type"] == "box"
             "<div class='box'>"+process_children(e,debug)+"</div>"
+          elsif e["element_type"] == "list"
+            "<ul>"+process_children(e,debug)+"</ul>"
           elsif e["element_type"] == "at_a_glance"
             "<div class='at-a-glance'><h3>At a glance</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           elsif e["element_type"] == "star_ratings"
@@ -45,9 +47,12 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note", "author", "postscript_text"].include? e["type"]
+          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
+          elsif ["list_item"].include? e["type"]
+            # list-like things
+            "<li>#{e.text.gsub(/\n/, " ")}</li>"
           elsif e["type"].start_with?("aag_")
             # make a nice list of 'at a glance' items
             "<dt>#{e['type'].gsub(/aag_/, '').titlecase}</dt><dd>#{e.text.gsub(/\n/, " ")}</dd>"
