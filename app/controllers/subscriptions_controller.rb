@@ -214,11 +214,19 @@ class SubscriptionsController < ApplicationController
 
     def retrieve_paypal_express_details(token)
         details = EXPRESS_GATEWAY.details_for(token)
+        # logger.info "******"
         # logger.info details.params
+        # logger.info "******"
         session[:express_payer_id] = details.payer_id
         session[:express_email] = details.email
         session[:express_first_name] = details.params["first_name"]
         session[:express_last_name] = details.params["last_name"]
+        session[:express_street1] = details.params["street1"]
+        session[:express_street2] = details.params["street2"]
+        session[:express_city_name] = details.params["city_name"]
+        session[:express_state_or_province] = details.params["state_or_province"]
+        session[:express_country_name] = details.params["country_name"]
+        session[:express_postal_code] = details.params["postal_code"]
     end
 
 private
@@ -243,6 +251,12 @@ private
         @subscription.paypal_last_name = session[:express_last_name]
         @subscription.price_paid = session[:express_purchase_price]
         # @subscription.paypal_profile_id also saved for recurring payments earlier
+        @subscription.paypal_street1 = session[:express_street1]
+        @subscription.paypal_street2 = session[:express_street2]
+        @subscription.paypal_city_name = session[:express_city_name]
+        @subscription.paypal_state_or_province = session[:express_state_or_province]
+        @subscription.paypal_country_name = session[:express_country_name]
+        @subscription.paypal_postal_code = session[:express_postal_code]        
     end
 
     def express_purchase_options
