@@ -102,6 +102,16 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 @niRed: #da2128; /* or #f00d16; */
 @boxBackgroundColour: #E4E1DF;
 
+// Link colours
+
+a:visited {
+	color: #80bfde;
+}
+
+a.btn:visited { color: #333; }
+
+a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited { color: #fff; }
+
 // Top Nav Bar
 
 .navbar, .navbar-search .search-query {
@@ -186,11 +196,11 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 	padding: 0px;
 	border: none;
 	box-shadow: none;
-	color: @grayLighter;
+	color: @grayLight;
 }
 
 .breadcrumb a {
-	color: @grayLight;	
+	color: @gray;	
 }
 
 .page-header {
@@ -324,7 +334,7 @@ a:active .shadow {
 
 .form-actions {
 	padding: 18px 0px 0px 0px;
-	margin-bottom: 0px;
+	// margin-bottom: 0px;
 	background-color: transparent;
 	border-top: 1px dashed #e5e5e5;
 }
@@ -626,6 +636,16 @@ blockquote.pull-left {
 .quick-help {
 	float:right;
 	.box;
+	margin-top: 0px;
+}
+
+.span4.subscription-offer {
+	padding: 1em;
+	margin-bottom: 24px;
+	background-color: aqua;
+}
+
+.span4.subscription-offer h3 {
 	margin-top: 0px;
 }
 

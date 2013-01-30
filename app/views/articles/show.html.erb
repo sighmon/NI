@@ -1,14 +1,5 @@
 <%- model_class = Article -%>
 
-<!-- <nav>
-  <ul class="breadcrumb">
-    <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
-    <li><%= link_to "Magazine archive", issues_path %> <span class="divider">></span></li>
-    <li><%= link_to "#{@issue.number} - #{@issue.title}", issue_path(@issue) %> <span class="divider">></span></li>
-    <li><%= @article.publication.strftime("%B, %Y") %></li>
-  </ul>
-</nav> -->
-
 <% if can? :update, @article %>
 <div class="edit-article-buttons">
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
@@ -91,6 +82,16 @@
 <% end %>
 
 <div class="form-actions">
+
+  <nav>
+    <ul class="breadcrumb">
+      <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
+      <li><%= link_to "Magazine archive", issues_path %> <span class="divider">></span></li>
+      <li><%= link_to "#{@issue.number} - Table of contents", issue_path(@issue) %> <span class="divider">></span></li>
+      <li><%= @article.publication.strftime("%B, %Y") %></li>
+    </ul>
+  </nav>
+
   <%= link_to t('.back', :default => t("helpers.links.back")),
               issue_path(@issue), :class => 'btn'  %>
   <% if can? :update, @article %>
