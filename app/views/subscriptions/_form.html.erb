@@ -57,7 +57,8 @@
 	<%= subscription_price_table %>
 
 	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
-
+	  <hr />
+	  <h2>Please select the subscription duration you'd like</h2>
 	  <dl class="dl-horizontal subscribe-options">
 	  	<dt><%= radio_button_tag 'duration', '3', 'false' %></dt>
 	  	<dd>3 Month Subscription</dd>
@@ -67,7 +68,7 @@
 	  	<dd>12 Month Subscription</dd>
 	  </dl>
 	  <hr />
-	  <h2>Automatic debit</h2>
+	  <h2>Automatic debit?</h2>
 	  <p>Would you like NI to automatically debit your PayPal account until you tell us to stop?</p>
 	  <p>The debits will occur every 3, 6 or 12 months, depending on the option you chose above.</p>
 	  <dl class="dl-horizontal subscribe-options">
@@ -75,6 +76,15 @@
 	  	<dd>Yes please!</dd>
 	  	<dt><%= radio_button_tag 'autodebit', '0', 'true' %></dt>
 	  	<dd>No thanks, just a single debit this time.</dd>
+	  </dl>
+	  <hr />
+	  <h2>Paper edition?</h2>
+	  <p>Would you like a copy of the paper edition as well as the digital edition?</p>
+	  <dl class="dl-horizontal subscribe-options">
+	  	<dt><%= radio_button_tag 'paper', '1', 'false' %></dt>
+	  	<dd>Yes, paper copy too please.</dd>
+	  	<dt><%= radio_button_tag 'paper', '0', 'true' %></dt>
+	  	<dd>No thanks, just a digital edition.</dd>
 	  </dl>
 
 	  <div class="form-actions">

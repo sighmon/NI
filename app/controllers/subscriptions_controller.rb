@@ -16,18 +16,33 @@ class SubscriptionsController < ApplicationController
             @autodebit = false
         end
 
+        if params[:paper] == "1"
+            @paper = true
+        else
+            @paper = false
+        end
+
         @express_purchase_subscription_duration = params[:duration].to_i
-        @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, autodebit: @autodebit)
+        @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper})
         session[:express_autodebit] = @autodebit
+        session[:express_paper] = @paper
         session[:express_purchase_price] = @express_purchase_price
         session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
 
         if @autodebit
             # Autodebit setup
+
+            if @paper == true
+                payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
+            else
+                payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to New Internationalist Digital Edition."
+            end
+            session[:express_purchase_description] = payment_description
+
             ppr = PayPal::Recurring.new({
               :return_url   => new_subscription_url,
               :cancel_url   => new_subscription_url,
-              :description  => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
+              :description  => payment_description,
               :amount       => (session[:express_purchase_price] / 100),
               :currency     => 'AUD'
             })
@@ -85,7 +100,7 @@ class SubscriptionsController < ApplicationController
               :amount      => (session[:express_purchase_price] / 100),
               :ipn_url     => "#{payment_notifications_url}",
               :currency    => 'AUD',
-              :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI"
+              :description => session[:express_purchase_description]
             })
             response_request = ppr.request_payment
 
@@ -97,7 +112,7 @@ class SubscriptionsController < ApplicationController
                   :payer_id    => session[:express_payer_id],
                   :amount      => (session[:express_purchase_price] / 100),
                   :currency    => 'AUD',
-                  :description => "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to NI",
+                  :description => session[:express_purchase_description],
                   :frequency   => session[:express_purchase_subscription_duration], # 1,
                   :period      => :monthly, # :daily,
                   :reference   => "#{current_user.id}",
@@ -256,7 +271,8 @@ private
         @subscription.paypal_city_name = session[:express_city_name]
         @subscription.paypal_state_or_province = session[:express_state_or_province]
         @subscription.paypal_country_name = session[:express_country_name]
-        @subscription.paypal_postal_code = session[:express_postal_code]        
+        @subscription.paypal_postal_code = session[:express_postal_code]
+        @subscription.paper_copy = session[:express_paper]
     end
 
     def express_purchase_options

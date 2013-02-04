@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204024024) do
+ActiveRecord::Schema.define(:version => 20130204053946) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20130204024024) do
     t.string   "paypal_state_or_province"
     t.string   "paypal_country_name"
     t.string   "paypal_postal_code"
+    t.boolean  "paper_copy"
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"

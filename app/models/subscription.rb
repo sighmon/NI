@@ -59,25 +59,37 @@ class Subscription < ActiveRecord::Base
 
   def self.calculate_subscription_price(duration, options = {})
     autodebit = options[:autodebit] or false
+    paper = options[:paper] or false
     if autodebit
         case duration
         when 3
-            return Settings.subscription_price * duration * 15 / 18
+            price = Settings.subscription_price * duration * 15 / 18
         when 6
-            return Settings.subscription_price * duration * 25 / 36
+            price = Settings.subscription_price * duration * 25 / 36
         when 12
-            return Settings.subscription_price * duration * 40 / 72
+            price = Settings.subscription_price * duration * 40 / 72
         end
     else
         case duration
         when 3
-          return Settings.subscription_price * duration
+          price = Settings.subscription_price * duration
         when 6
-          return Settings.subscription_price * duration * 30 / 36
+          price = Settings.subscription_price * duration * 30 / 36
         when 12
-          return Settings.subscription_price * duration * 50 / 72
+          price = Settings.subscription_price * duration * 50 / 72
         end
     end
+    if paper
+      case duration
+      when 3
+        price += 1400
+      when 6
+        price += 3000
+      when 12
+        price += 6000
+      end
+    end
+    return price
   end
 
 end
