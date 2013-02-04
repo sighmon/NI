@@ -70,6 +70,10 @@ class User < ActiveRecord::Base
     return self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
   end
 
+  def has_paper_copy?
+    return self.subscriptions.collect{|s| s.paper_copy}.include?(true)
+  end
+
   def expiry_date
     # FIXME: check for cancelled subscriptions
     return self.subscriptions.collect{|s| s.expiry_date}.sort.last

@@ -9,9 +9,12 @@
 	<dd><%= @user.user_type %></dd>
 	<dt><strong>Expiry date:</strong></dt>
 	<dd><%= user_expiry_as_string(@user) %><br />
-		<% if @user.is_recurring? %>
-		(Automatic debit)
-		<% end %></dd>
+		<% if @user.is_recurring? and @user.has_paper_copy? %>
+			(Automatic debit, Digital + Paper edition)
+		<% elsif @user.is_recurring? %>
+			(Automatic debit)
+		<% end %>
+	</dd>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>
 	<% if @user.subscription_lapsed? and (@user.refunds_due > 0) %>

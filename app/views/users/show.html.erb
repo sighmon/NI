@@ -17,7 +17,12 @@
 			No current subscription.
 		<% end %></dd>
 	<% end %>
-	<% if @user.subscriber? and @user.is_recurring? %>
+	<% if @user.subscriber? and @user.is_recurring? and @user.has_paper_copy? %>
+		<dt></dt>
+		<dd>(Automatic renewal, Digital + Paper copy)</dd>
+		<dt></dt>
+		<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+	<% elsif @user.subscriber? and @user.is_recurring? %>
 		<dt></dt>
 		<dd>(Automatic renewal)</dd>
 		<dt></dt>
