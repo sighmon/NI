@@ -72,6 +72,7 @@ class SubscriptionsController < ApplicationController
         if @has_token
             retrieve_paypal_express_details(@express_token)
             session[:express_token] = @express_token
+            session[:express_payer_id] = @express_payer_id
         else
             
         end
