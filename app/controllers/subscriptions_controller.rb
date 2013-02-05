@@ -230,9 +230,9 @@ class SubscriptionsController < ApplicationController
 
     def retrieve_paypal_express_details(token)
         details = EXPRESS_GATEWAY.details_for(token)
-        # logger.info "******"
-        # logger.info details.params
-        # logger.info "******"
+        logger.info "******"
+        logger.info details.params
+        logger.info "******"
         session[:express_payer_id] = details.payer_id
         session[:express_email] = details.email
         session[:express_first_name] = details.params["first_name"]
