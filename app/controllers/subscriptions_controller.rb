@@ -43,7 +43,7 @@ class SubscriptionsController < ApplicationController
               :return_url   => new_subscription_url,
               :cancel_url   => new_subscription_url,
               :description  => payment_description,
-              :amount       => (session[:express_purchase_price] / 100),
+              :amount       => 1,#(session[:express_purchase_price] / 100),
               :currency     => 'AUD'
             })
             response = ppr.checkout
