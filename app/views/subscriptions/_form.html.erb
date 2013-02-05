@@ -47,7 +47,7 @@
 	  </dl>
 	  
 	  <div class="form-actions">
-	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success' %>
+	  	<%= f.button :submit, "Complete your purchase", :onclick => "trackConv(1072702417,'luYUCKztvAQQ0cfA_wM','#{number_with_precision((session[:express_purchase_price] / 100), :precision => 2)}');", :class => 'btn-success' %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
 	  </div>
 	<% end %>
