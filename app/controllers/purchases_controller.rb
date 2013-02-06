@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+    include ApplicationHelper
     # Cancan authorisation
     load_and_authorize_resource
 
@@ -23,15 +24,6 @@ class PurchasesController < ApplicationController
         redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
     end
 
-    def retrieve_paypal_express_details(token)
-        details = EXPRESS_GATEWAY.details_for(token)
-        # logger.info details.params
-        session[:express_payer_id] = details.payer_id
-        session[:express_email] = details.email
-        session[:express_first_name] = details.params["first_name"]
-        session[:express_last_name] = details.params["last_name"]
-    end
-
     def new
         @user = User.find(current_user)
         @purchase = @user.purchases.build(params[:issue])
@@ -44,6 +36,7 @@ class PurchasesController < ApplicationController
             @issue = Issue.find(session[:issue_id_being_purchased])
             retrieve_paypal_express_details(@express_token)
             session[:express_token] = @express_token
+            session[:express_payer_id] = @express_payer_id
         else
             @issue = Issue.find(params[:issue_id])
             session[:issue_id_being_purchased] = @issue.id

@@ -63,9 +63,9 @@ NI::Application.configure do
     # Now using /config/application.yml figaro gem
 
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => ENV["PAYPAL_LOGIN"],
-      :password => ENV["PAYPAL_PASSWORD"],
-      :signature => ENV["PAYPAL_SIGNATURE"]
+      :login => ENV["PAYPAL_SANDBOX_LOGIN"],
+      :password => ENV["PAYPAL_SANDBOX_PASSWORD"],
+      :signature => ENV["PAYPAL_SANDBOX_SIGNATURE"]
     )
 
     PayPal::Recurring.configure do |config|

@@ -2,18 +2,4 @@
 	<h2>Buy this issue</h2>
 </div>
 
-<div class="purchase-issue">
-	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200") %>
-	<h3><%= @issue.title %></h3>
-	<h4>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h4>
-	<p>Price: $<%= cents_to_dollars(Settings.issue_price) %></p>
-</div>
-
 <%= render 'form' %>
-
-<div class="marketing-subscribe">
-	<h3>Or you could subscribe!</h3>
-	<h4>And read our entire archive...</h4>
-	<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to over 20 years of New Internationalist magazines.</p>
-	<%= link_to "Subscription information...", new_subscription_path, :class => 'btn btn-info' %>
-</div>

@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
     include SubscriptionsHelper
+    include ApplicationHelper
 	# Cancan authorisation
     load_and_authorize_resource
 
@@ -70,11 +71,11 @@ class SubscriptionsController < ApplicationController
         @has_token = not(@express_token.blank? or @express_payer_id.blank?)
 
         if @has_token
-            retrieve_paypal_express_details(@express_token)
+            retrieve_paypal_express_details(@express_token, {autodebit: session[:express_autodebit]})
             session[:express_token] = @express_token
             session[:express_payer_id] = @express_payer_id
         else
-            
+            logger.info "*** No token. ***"
         end
 
     end
@@ -226,23 +227,6 @@ class SubscriptionsController < ApplicationController
         #         format.json { render json: @subscription.errors, status: :unprocessable_entity }
         #     end
         # end
-    end
-
-    def retrieve_paypal_express_details(token)
-        details = EXPRESS_GATEWAY.details_for(token)
-        # logger.info "******"
-        # logger.info details.params
-        # logger.info "******"
-        session[:express_payer_id] = details.payer_id
-        session[:express_email] = details.email
-        session[:express_first_name] = details.params["first_name"]
-        session[:express_last_name] = details.params["last_name"]
-        session[:express_street1] = details.params["street1"]
-        session[:express_street2] = details.params["street2"]
-        session[:express_city_name] = details.params["city_name"]
-        session[:express_state_or_province] = details.params["state_or_province"]
-        session[:express_country_name] = details.params["country_name"]
-        session[:express_postal_code] = details.params["postal_code"]
     end
 
 private
