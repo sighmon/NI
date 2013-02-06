@@ -37,7 +37,7 @@ NI::Application.configure do
 
   config.after_initialize do
 
-    ActiveMerchant::Billing::Base.mode = :test
+    #ActiveMerchant::Billing::Base.mode = :test
 
     # paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
     # Now using /config/application.yml figaro gem

@@ -70,9 +70,9 @@ NI::Application.configure do
 
     PayPal::Recurring.configure do |config|
       config.sandbox = true
-      config.username = ENV["PAYPAL_LOGIN"]
-      config.password = ENV["PAYPAL_PASSWORD"]
-      config.signature = ENV["PAYPAL_SIGNATURE"]
+      config.username = ENV["PAYPAL_SANDBOX_LOGIN"]
+      config.password = ENV["PAYPAL_SANDBOX_PASSWORD"]
+      config.signature = ENV["PAYPAL_SANDBOX_SIGNATURE"]
     end
 
   end
