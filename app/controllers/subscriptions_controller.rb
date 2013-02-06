@@ -44,7 +44,7 @@ class SubscriptionsController < ApplicationController
               :return_url   => new_subscription_url,
               :cancel_url   => new_subscription_url,
               :description  => payment_description,
-              :amount       => 1, #(session[:express_purchase_price] / 100),
+              :amount       => (session[:express_purchase_price] / 100),
               :currency     => 'AUD'
             })
             response = ppr.checkout
@@ -99,7 +99,7 @@ class SubscriptionsController < ApplicationController
             ppr = PayPal::Recurring.new({
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
-              :amount      => 1, #(session[:express_purchase_price] / 100),
+              :amount      => (session[:express_purchase_price] / 100),
               :ipn_url     => "#{payment_notifications_url}",
               :currency    => 'AUD',
               :description => session[:express_purchase_description]
@@ -112,11 +112,11 @@ class SubscriptionsController < ApplicationController
                 ppr = PayPal::Recurring.new({
                   :token       => session[:express_token],
                   :payer_id    => session[:express_payer_id],
-                  :amount      => 1, #(session[:express_purchase_price] / 100),
+                  :amount      => (session[:express_purchase_price] / 100),
                   :currency    => 'AUD',
                   :description => session[:express_purchase_description],
-                  :frequency   => 1, #session[:express_purchase_subscription_duration], # 1,
-                  :period      => :daily, #:monthly, # :daily,
+                  :frequency   => session[:express_purchase_subscription_duration], # 1,
+                  :period      => :monthly, # :daily,
                   :reference   => "#{current_user.id}",
                   :ipn_url     => "#{payment_notifications_url}",
                   :start_at    => Time.now, # Time.zone.now
