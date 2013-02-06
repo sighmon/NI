@@ -256,6 +256,7 @@ private
         @subscription.paypal_city_name = session[:express_city_name]
         @subscription.paypal_state_or_province = session[:express_state_or_province]
         @subscription.paypal_country_name = session[:express_country_name]
+        @subscription.paypal_country_code = session[:express_country_code]
         @subscription.paypal_postal_code = session[:express_postal_code]
         @subscription.paper_copy = session[:express_paper]
     end
