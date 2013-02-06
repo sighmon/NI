@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
     include SubscriptionsHelper
-    include ApplicationHelper
+    # include ApplicationHelper
 	# Cancan authorisation
     load_and_authorize_resource
 

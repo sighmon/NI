@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-    include ApplicationHelper
+    # include ApplicationHelper
     # Cancan authorisation
     load_and_authorize_resource
 
