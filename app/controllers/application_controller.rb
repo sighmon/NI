@@ -28,11 +28,11 @@ class ApplicationController < ActionController::Base
     if autodebit
       ppr = PayPal::Recurring.new(:token => token)
       details = ppr.checkout_details
-      session[:express_payer_id] = details.params["PAYERID"]
-      session[:express_email] = details.params["EMAIL"]
-      session[:express_first_name] = details.params["FIRSTNAME"]
-      session[:express_last_name] = details.params["LASTNAME"]
-      session[:express_country_code] = details.params["COUNTRYCODE"]
+      session[:express_payer_id] = details.payer_id
+      session[:express_email] = details.email
+      session[:express_first_name] = details.first_name
+      session[:express_last_name] = details.last_name
+      session[:express_country_code] = details.country
     else
       details = EXPRESS_GATEWAY.details_for(token)
       session[:express_payer_id] = details.payer_id
@@ -46,9 +46,9 @@ class ApplicationController < ActionController::Base
       session[:express_country_name] = details.params["country_name"]
       session[:express_postal_code] = details.params["postal_code"]
     end
-    logger.info "******"
-    logger.info details.params
-    logger.info "******"
+    #logger.info "******"
+    #logger.info details.params
+    #logger.info "******"
   end
 
 end
