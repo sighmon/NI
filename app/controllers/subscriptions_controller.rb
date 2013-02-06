@@ -50,12 +50,19 @@ class SubscriptionsController < ApplicationController
             response = ppr.checkout
             redirect_to response.checkout_url if response.valid?
         else
+            if @paper == true
+                payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
+            else
+                payment_description = "New Internationalist Magazine - subscription to the digital edition."
+            end
+            session[:express_purchase_description] = payment_description
+
             response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
                 :ip                 => request.remote_ip,
                 :return_url         => new_subscription_url,
                 :cancel_return_url  => new_subscription_url,
                 :allow_note         => true,
-                :items              => [{:name => "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", :quantity => 1, :description => "New Internationalist Magazine - subscription to the digital edition", :amount => session[:express_purchase_price]}],
+                :items              => [{:name => "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", :quantity => 1, :description => payment_description, :amount => session[:express_purchase_price]}],
                 :currency           => 'AUD'
             )
             redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
