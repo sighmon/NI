@@ -69,7 +69,7 @@ group :test do
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
 end
 
-gem 'twitter-bootstrap-rails', '2.1.6'
+gem 'twitter-bootstrap-rails'#, '2.1.6'
 gem 'less-rails'
 gem 'libv8', '~> 3.11.8'
 gem 'therubyracer'
@@ -77,8 +77,8 @@ gem 'therubyracer'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'#,   '~> 3.2.3'
+  gem 'coffee-rails'#, '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
@@ -86,7 +86,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
   # http://twitter.github.com/bootstrap/
-  gem 'twitter-bootstrap-rails', '2.1.6'
+  gem 'twitter-bootstrap-rails'#, '2.1.6'
 end
 
 gem 'jquery-rails'

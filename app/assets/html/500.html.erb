@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= ENV['APP_NAME'] %> 404</title>
+    <%= javascript_include_tag 'modernizr' %>
+    <%= stylesheet_link_tag 'application', :media => 'all', :digest => true %>
+  </head>
+  <body>
+    <section id="error">
+      <h1>404 Page not found</h1>
+      <a href="/" class="return">&larr; Return to Homepage</a>
+    </section>
+    <script>
+      Modernizr.load("#{javascript_path 'application'}");
+    </script>
+  </body>
+</html>

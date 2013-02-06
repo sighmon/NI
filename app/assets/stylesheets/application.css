@@ -10,9 +10,8 @@
  *
  *= require_self
  *= require_tree .
-
  *= require formtastic
-
+ *= require bootstrap_and_overrides
 */
 
 @import 'fonts'
