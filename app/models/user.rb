@@ -13,11 +13,11 @@ class User < ActiveRecord::Base
   has_many :purchases
   has_many :issues, :through => :purchases
 
-  has_many :guest_passes
+  has_many :guest_passes, :dependent => :destroy
   has_many :articles, :through => :guest_passes
 
   # join-model for favourites
-  has_many :favourites
+  has_many :favourites, :dependent => :destroy
   has_many :articles, :through => :favourites
 
   # association for subscriptions
