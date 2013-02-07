@@ -2,17 +2,22 @@
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= ENV['APP_NAME'] %> 404</title>
-    <%= javascript_include_tag 'modernizr' %>
+    <title><%= ENV['APP_NAME'] %> - 500</title>
+    <!-- <%= javascript_include_tag 'modernizr' %> -->
     <%= stylesheet_link_tag 'application', :media => 'all', :digest => true %>
   </head>
   <body>
     <section id="error">
-      <h1>404 Page not found</h1>
-      <a href="/" class="return">&larr; Return to Homepage</a>
+      <p><a href="/"><img alt="Uh oh!" src="/assets/error.png" title="Uh oh!"></a></p>
+      <p><a class="brand" href="/">New Internationalist</a></p>
+      <h1>500 Application error!</h1>
+      <p><a href="/" class="return">&larr; Return to the homepage</a></p>
+      <p>Uh oh, we broke something.</p>
+      <p>Terribly sorry!</p>
+      <p>If you'd like to help out and <a href="mailto:design@newint.com.au?Subject=404">let us know how you got here</a>, that'd be lovely.</p>
     </section>
-    <script>
+    <!-- <script>
       Modernizr.load("#{javascript_path 'application'}");
-    </script>
+    </script> -->
   </body>
 </html>
