@@ -51,6 +51,7 @@
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
 	  </div>
 	  <!-- Google Adwords conversion tracking -->
+	  <% if Rails.env.production? %>
 	  <script
 		type="text/javascript">
 		/* <![CDATA[ */
@@ -72,6 +73,7 @@
 		alValue&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
 		</div>
 	  </noscript>
+	  <% end %>
 	  <!-- END Google Adwords conversion tracking -->
 	<% end %>
 
