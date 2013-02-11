@@ -4,7 +4,7 @@
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <!-- <%= f.input :admin %> -->
-    <%= f.association :issues, :as => :check_boxes %>
+    <!-- <%= f.association :issues, :as => :check_boxes %>-->
     <%= simple_fields_for :subscription do |f| %>
       <!-- <%= f.input :expiry_date, :as => :datetime %> -->
       <%= f.input :refund, :as => :hidden %>
