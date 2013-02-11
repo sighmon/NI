@@ -41,6 +41,9 @@ gem 'curb'
 # Using meta-tags for head meta https://github.com/kpumuk/meta-tags
 gem 'meta-tags', :require => 'meta_tags'
 
+# BugHerd gem for bug reporting https://github.com/BugHerd/bugherd-ruby
+gem 'bugherd'
+
 # Heroku gem
 # gem 'heroku'
 

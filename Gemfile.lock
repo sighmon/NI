@@ -45,6 +45,8 @@ GEM
       nokogiri (>= 1.4.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bugherd (0.0.3)
+      rails (~> 3.0)
     builder (3.0.4)
     cancan (1.6.8)
     capybara (2.0.1)
@@ -301,6 +303,7 @@ PLATFORMS
 
 DEPENDENCIES
   activemerchant
+  bugherd
   cancan
   carrierwave
   coffee-rails

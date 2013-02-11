@@ -10,15 +10,12 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= favicon_link_tag %>
-  <!-- TODO: Remove this BugHerd tracking code for production -->
-  <script type='text/javascript'>
-	(function (d, t) {
-	  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-	  bh.type = 'text/javascript';
-	  bh.src = '//www.bugherd.com/sidebarv2.js?apikey=deitocvvukxxhtolckcypa';
-	  s.parentNode.insertBefore(bh, s);
-	  })(document, 'script');
-  </script>
+  <!-- BugHerd bug code -->
+  <% if current_user %>
+  	<%= bugherd_tag :metadata => { :user_id => current_user.id.to_s, :controller => controller.controller_name }, :reporter => { :email => current_user.email, :required => "true" } %>
+  <% else %>
+  	<%= bugherd_tag %>
+  <% end %>
   <!-- Google Analytics tracking code -->
   <script type="text/javascript">
 
