@@ -17,21 +17,7 @@
   	<%= bugherd_tag %>
   <% end %>
   <!-- Google Analytics tracking code -->
-  <script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-37462259-1']);
-	  _gaq.push(['_setDomainName', 'newint.com.au']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-  </script>
-  <!-- END Google Analytics tracking code -->
+  <%= analytics_init :local => Rails.env.development? %>
 </head>
 <body>
 	

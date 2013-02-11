@@ -33,6 +33,9 @@ NI::Application.configure do
     :domain         => 'heroku.com'
   }
 
+  # Google Analytics setup
+  GA.tracker = ENV["GOOGLE_ANALYTICS_PRODUCTION"]
+
   # Active Merchant Gateway
 
   config.after_initialize do

@@ -53,6 +53,9 @@ NI::Application.configure do
     :password => ENV["GMAIL_PASSWORD"]
   }
 
+  # Google Analytics setup
+  GA.tracker = ENV["GOOGLE_ANALYTICS_DEVELOPMENT"]
+
   # Active Merchant Gateway
 
   config.after_initialize do
