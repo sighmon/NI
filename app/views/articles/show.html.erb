@@ -11,7 +11,8 @@
               :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
                 :class => 'btn btn-mini btn-danger' %> | 
     <%= link_to 'Import images', issue_article_import_images_path(@issue,@article), :class => 'btn btn-mini btn-warning',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the images from Bricolage.')) %>
+                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the images from Bricolage.')) %> | 
+    <%= link_to 'New image', new_issue_article_image_path(@issue,@article), :class => 'btn btn-mini btn-success' %>
   <% end %>
 </div>
 <% end %>
@@ -74,13 +75,18 @@
 
 <div class="clearfix"></div>
 
+<div class="all-article-images">
+  <% @article.images.each do |i| %>
+    <%= retina_image_tag i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300" %>
+  <% end %>
+</div>
+
 <% if can? :update, @article %>
   <div class="image-uploader">
-    <p>Here:</p>
     <%= simple_form_for ([@issue, @article]), :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
-      <%= f.fields_for :images do |i| %>
+      <%= f.fields_for :image do |i| %>
         <%= i.label :data, "Upload images:" %>
-        <%= i.file_field :data %>
+        <%= f.file_field :data, multiple: true, name: "image[data]" %>
       <% end %>
     <% end %>
   </div>

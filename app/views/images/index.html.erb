@@ -18,7 +18,7 @@
   <tbody>
     <% @images.each do |image| %>
       <tr>
-        <td><%= link_to image.id, image_path(image) %></td>
+        <td><%= link_to image.id, issue_article_image_path(@issue, @article, image) %></td>
         <td><%= image.data %></td>
         <td><%= image.article_id %></td>
         <td><%= image.media_id %></td>
@@ -27,7 +27,7 @@
         <td><%=l image.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_image_path(image), :class => 'btn btn-mini' %>
+                      edit_issue_article_image_path(@issue, @article, image), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       image_path(image),
                       :method => :delete,
@@ -40,5 +40,5 @@
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_image_path,
+            new_issue_article_image_path,
             :class => 'btn btn-primary' %>

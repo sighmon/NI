@@ -1,11 +1,13 @@
 class ImagesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource
-  
+
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+  	@issue = Issue.find(params[:issue_id])
+  	@article = Article.find(params[:article_id])
+    @images = @article.images.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,6 +18,8 @@ class ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
+  	@issue = Issue.find(params[:issue_id])
+  	@article = Article.find(params[:article_id])
     @image = Image.find(params[:id])
 
     respond_to do |format|
@@ -27,7 +31,10 @@ class ImagesController < ApplicationController
   # GET /images/new
   # GET /images/new.json
   def new
-    @image = Image.new
+  	@issue = Issue.find(params[:issue_id])
+  	@article = Article.find(params[:article_id])
+    @image = @article.images.build
+    #@image = Image.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,11 +50,14 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = Image.new(params[:image])
+  	@issue = Issue.find(params[:issue_id])
+  	@article = Article.find(params[:article_id])
+    @image = @article.images.create(params[:image])
+    @image.media_id = (@article.id + 900000)
 
     respond_to do |format|
       if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
+        format.html { redirect_to issue_article_path(@issue,@article), notice: 'Image was successfully created.' }
         format.json { render json: @image, status: :created, location: @image }
       else
         format.html { render action: "new" }

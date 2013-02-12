@@ -93,6 +93,7 @@ group :assets do
   # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
   # http://twitter.github.com/bootstrap/
   gem 'twitter-bootstrap-rails'#, '2.1.6'
+  gem 'jquery-fileupload-rails'
 end
 
 gem 'jquery-rails'
