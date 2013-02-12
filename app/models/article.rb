@@ -15,6 +15,7 @@ class Article < ActiveRecord::Base
   has_many :article_categorisations
   has_many :categories, :through => :article_categorisations
   accepts_nested_attributes_for :categories, allow_destroy: true
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   include Tire::Model::Search
   include Tire::Model::Callbacks

@@ -33,6 +33,7 @@ NI::Application.routes.draw do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
       get :import_images
+      resources :images
     end
     resources :purchases, :only => [:new, :create] do
       new do

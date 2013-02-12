@@ -58,11 +58,22 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
     # process :resize_to_fill => [945, 400]
   end
 
+  version :threehundred do
+    process :resize_to_limit => [300, nil]
+  end
+
   # Retina display @2x version
   version :halfwidth2x do
     process :resize_to_limit => [680, nil]
     def full_filename (for_file = model.article_image.file)
       "halfwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
+    end
+  end
+
+  version :threehundred2x do
+    process :resize_to_limit => [600, nil]
+    def full_filename (for_file = model.article_image.file)
+      "threehundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 

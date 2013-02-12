@@ -1,0 +1,12 @@
+<%= simple_form_for @image, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :data %>
+  <%= f.input :article_id %>
+  <%= f.input :media_id %>
+  <%= f.input :height %>
+  <%= f.input :width %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                images_path, :class => 'btn' %>
+  </div>
+<% end %>
