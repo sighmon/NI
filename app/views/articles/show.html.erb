@@ -83,12 +83,15 @@
 
 <% if can? :update, @article %>
   <div class="image-uploader">
-    <%= simple_form_for ([@issue, @article]), :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
-      <%= f.fields_for :image do |i| %>
-        <%= i.label :data, "Upload images:" %>
-        <%= f.file_field :data, multiple: true, name: "image[data]" %>
-      <% end %>
+    <%= simple_form_for ([@issue, @article, @newimage]), :html => { :class => 'file-upload', :multipart => true } do |f| %>
+      <%= f.file_field :data, multiple: true, name: "image[data]" %>
     <% end %>
+    <script id="template-upload" type="text/x-tmpl">
+      <div class="upload">
+        {%=o.name%}
+        <div class="progress"><div class="bar" style="width: 0%;"></div></div>
+      </div>
+    </script>
   </div>
   <button class="flip-button btn">Show/Hide source</button>
   <div class="article-source well well-small div-to-flip">

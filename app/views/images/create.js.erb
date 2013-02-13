@@ -1,0 +1,5 @@
+<% if @newimage.new_record? %>
+  alert("Failed to upload image: <%= j @newimage.errors.full_messages.join(', ').html_safe %>");
+<% else %>
+  $(".all-article-images").append('<%= retina_image_tag @newimage.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300" %>');
+<% end %>

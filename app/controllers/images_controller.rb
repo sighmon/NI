@@ -20,7 +20,7 @@ class ImagesController < ApplicationController
   def show
   	@issue = Issue.find(params[:issue_id])
   	@article = Article.find(params[:article_id])
-    @image = Image.find(params[:id])
+    @showimage = Image.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -52,17 +52,12 @@ class ImagesController < ApplicationController
   def create
   	@issue = Issue.find(params[:issue_id])
   	@article = Article.find(params[:article_id])
-    @image = @article.images.create(params[:image])
-    @image.media_id = (@article.id + 900000)
+    @newimage = @article.images.create(params[:image])
 
     respond_to do |format|
-      if @image.save
-        format.html { redirect_to issue_article_path(@issue,@article), notice: 'Image was successfully created.' }
-        format.json { render json: @image, status: :created, location: @image }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to issue_article_path(@issue,@article), notice: 'Image was successfully created.' }
+      format.js
+      #format.json { render json: @newimage, status: :created, location: @newimage }
     end
   end
 
@@ -89,7 +84,7 @@ class ImagesController < ApplicationController
     @image.destroy
 
     respond_to do |format|
-      format.html { redirect_to images_url }
+      format.html { redirect_to issue_article_images_url }
       format.json { head :no_content }
     end
   end

@@ -2,7 +2,7 @@ class Image < ActiveRecord::Base
   belongs_to :article
   attr_accessible :data, :media_id, :height, :width
   mount_uploader :data, ArticleImageUploader
-  validates :media_id, :uniqueness => true
+  # validates :media_id, :uniqueness => true
 
   def self.create_from_media_element(article, media_element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'

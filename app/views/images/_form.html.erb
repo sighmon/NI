@@ -1,4 +1,4 @@
-<%= simple_form_for ([@issue, @article, @image]), :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
+<%= simple_form_for ([@issue, @article, @image]), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
   <%= f.input :data %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
