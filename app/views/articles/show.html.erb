@@ -65,7 +65,7 @@
 
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
-<% if not @article.images.empty? %>
+<% if not @article.images.collect{|i| i.media_id.nil?}.empty? %>
   <div class="all-article-images">
     <% @article.images.each do |i| %>
       <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{@article.images.index(i)}"), "#imageModal", :"data-toggle" => 'modal' %>
