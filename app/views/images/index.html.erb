@@ -27,7 +27,7 @@
         <td><%=l image.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_article_image_path(@issue, @article, image), :class => 'btn btn-mini' %>
+                      edit_issue_article_image_path(@issue, @article, image), :class => 'btn btn-mini btn-primary' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       issue_article_image_path(@issue, @article, image),
                       :method => :delete,
@@ -39,6 +39,8 @@
   </tbody>
 </table>
 
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              issue_article_path(@issue,@article), :class => 'btn' %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_issue_article_image_path,
-            :class => 'btn btn-primary' %>
+            :class => 'btn btn-success' %>

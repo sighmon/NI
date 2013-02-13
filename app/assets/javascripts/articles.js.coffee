@@ -18,3 +18,8 @@ jQuery ->
 
   $('.category_autocomplete').autocomplete
     source: $('.autocomplete-data').data('autocomplete-source')
+
+  $imageModal = $("#imageModal").modal(show: false)
+  $imageCarousel = $("#imageCarousel").carousel(interval: false)
+  $(".article-image-carousel").click ->
+    $imageCarousel.carousel $(this).data("slide-index")

@@ -44,7 +44,9 @@ class ImagesController < ApplicationController
 
   # GET /images/1/edit
   def edit
-    @image = Image.find(params[:id])
+    @issue = Issue.find(params[:issue_id])
+    @article = Article.find(params[:article_id])
+    @showimage = Image.find(params[:id])
   end
 
   # POST /images
@@ -68,7 +70,7 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       if @image.update_attributes(params[:image])
-        format.html { redirect_to @image, notice: 'Image was successfully updated.' }
+        format.html { redirect_to issue_article_image_url, notice: 'Image was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

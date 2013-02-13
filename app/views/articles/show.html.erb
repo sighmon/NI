@@ -65,6 +65,33 @@
 
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
+<% if not @article.images.empty? %>
+  <div class="all-article-images">
+    <% @article.images.each do |i| %>
+      <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{@article.images.index(i)}"), "#imageModal", :"data-toggle" => 'modal' %>
+    <% end %>
+  </div>
+  <!-- Modal -->
+  <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <!-- Carousel -->
+    <div id="imageCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            <% first = true %>
+            <% @article.images.each do |i| %>
+              <div class="<% if first %>active <% first = false %><% end %>item">
+                <div class="modal-body">
+                  <%= retina_image_tag i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300" %>
+                </div>
+              </div>
+            <% end %>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left hide" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right hide" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+  </div>
+<% end %>
+
 <div class="article-body">
   <% if @article.body.blank? %>
     <%= simple_format source_to_body(@article, :debug => current_user.try(:admin?)) %>
@@ -74,12 +101,6 @@
 </div>
 
 <div class="clearfix"></div>
-
-<div class="all-article-images">
-  <% @article.images.each do |i| %>
-    <%= retina_image_tag i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300" %>
-  <% end %>
-</div>
 
 <% if can? :update, @article %>
   <div class="image-uploader">

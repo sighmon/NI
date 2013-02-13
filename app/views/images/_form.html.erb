@@ -1,8 +1,8 @@
-<%= simple_form_for ([@issue, @article, @image]), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+<%= simple_form_for ([@issue, @article, @showimage]), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
   <%= f.input :data %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                issue_article_path(@issue,@article), :class => 'btn' %>
+                issue_article_images_path(@issue,@article), :class => 'btn' %>
   </div>
 <% end %>

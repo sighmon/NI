@@ -93,7 +93,30 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
 @navbarBrandColor:                @navbarLinkColor;
 
+.modal {
+	width: auto;
+}
+.modal-body {
+	max-height: intrinsic;
+	padding-bottom: 0px;
+}
 
+.carousel-control {
+	margin: 3px;
+	border-width: 0px;
+}
+
+.modal .carousel-control {
+	display: none;
+}
+.modal:hover .carousel-control {
+	display: inherit;
+}
+
+.article-image-carousel {
+	margin: 0px 13px 15px 0px;
+	padding: 0px;
+}
 
 //==============
 // General edits
