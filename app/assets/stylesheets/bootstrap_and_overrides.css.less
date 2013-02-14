@@ -95,9 +95,16 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
 .modal {
 	width: auto;
+	max-width: 1000px;
 }
+
+.modal.fade.in {
+	top: 2.5%;
+}
+
 .modal-body {
-	max-height: intrinsic;
+	//max-height: intrinsic;
+	overflow-y: scroll;
 	padding-bottom: 0px;
 }
 
@@ -117,6 +124,8 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 	margin: 0px 13px 15px 0px;
 	padding: 0px;
 }
+
+
 
 //==============
 // General edits
@@ -490,6 +499,10 @@ a:active .shadow {
 }
 
 // Article styling
+
+.image-uploader form {
+	margin-bottom: 0px;
+}
 
 .article-title {
 	padding-bottom: 0px;

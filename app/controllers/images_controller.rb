@@ -33,7 +33,7 @@ class ImagesController < ApplicationController
   def new
   	@issue = Issue.find(params[:issue_id])
   	@article = Article.find(params[:article_id])
-    @image = @article.images.build
+    @showimage = @article.images.build
     #@image = Image.new
 
     respond_to do |format|
