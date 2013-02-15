@@ -17,9 +17,7 @@ private
 		elsif transaction_type == "cart"
 			# TODO: Implement handling instant payments.
 			logger.info "Instant purchase IPN ping received. TXN_ID: #{transaction_id}"
-		elsif payment_type == "instant"
-			logger.info "Instant purchase or refund IPN ping received. TXN_ID: #{transaction_id}"
-		elsif payment_type == "web_accept"
+		elsif transaction_type == "web_accept"
 			logger.info "Web Accept IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
 			# TODO: Do we need to do anything with this?
