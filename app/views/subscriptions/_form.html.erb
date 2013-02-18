@@ -79,6 +79,10 @@
 
 <% else %>
 
+	<div class="subscription-top-image">
+		<%= retina_image_tag 'devices-paper.png', :alt => 'Subscription options', :title => 'Subscription options', :size => "272x105" %>
+	</div>
+
 	<%= subscription_price_table %>
 
 	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>

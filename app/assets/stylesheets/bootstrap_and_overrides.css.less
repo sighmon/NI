@@ -245,7 +245,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .page-header h3 {
 	font-size: 1em;
 	font-weight: normal;
+	line-height: 1.3em;
 	color: @gray;
+}
+
+.page-header img {
+	.pull-right;
+	margin-top: -40px;
 }
 
 // Issues listed as a tables
@@ -363,6 +369,8 @@ a:active .shadow {
 	background-color: @grayLighter;
 	padding: 10px;
 	width: intrinsic;
+	position: relative;
+	z-index: 1000;
 	// margin: 20px inherit 20px inherit;
 }
 
@@ -708,6 +716,11 @@ blockquote.pull-left {
 	float: right;
 }
 
+.subscription-top-image {
+	margin: 0 auto 20px auto;
+	text-align: center;
+}
+
 // 404 error page styling
 
 #error {
@@ -818,6 +831,11 @@ blockquote.pull-left {
 	}
 	.issues_as_table, .purchases_as_table {
 		width: 100%;
+	}
+	.page-header img {
+		float: none;
+		width: 175px;
+		margin-top: 0;
 	}
 }
  
