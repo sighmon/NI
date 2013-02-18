@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   validates_uniqueness_of :username
 
+  # How to validate the format of username (not used)
+  # validates_format_of :username, :with => /^[-_a-z0-9]+$/, :message => "Your username can only include lower case letters and numbers."
+
   # join-model for purchases
   has_many :purchases
   has_many :issues, :through => :purchases

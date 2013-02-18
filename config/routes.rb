@@ -74,6 +74,9 @@ NI::Application.routes.draw do
   put ':id', to: 'pages#update', as: :page
   delete ':id', to: 'pages#destroy', as: :page
 
+  # Pretty SEO permalink match for articles
+  match '/perma_article/:id' => 'articles#show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

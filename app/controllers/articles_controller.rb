@@ -85,8 +85,9 @@ class ArticlesController < ApplicationController
 	end
 
     def show
-    	@issue = Issue.find(params[:issue_id])
+    	#@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
+        @issue = Issue.find(@article.issue_id)
         @article.is_valid_guest_pass(params[:utm_source])
         @newimage = Image.new
         #@images = @article.images.all
