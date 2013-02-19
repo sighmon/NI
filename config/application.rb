@@ -65,5 +65,7 @@ module NI
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     # add app/assets/html to the asset path
     config.assets.paths << "#{Rails.root}/app/assets/html"
+    config.assets.paths << Rails.root.join("app", "assets", "images")
+    config.assets.paths << Rails.root.join("app", "assets", "images", "fallback")
   end
 end
