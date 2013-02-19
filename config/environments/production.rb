@@ -77,9 +77,8 @@ NI::Application.configure do
   config.assets.compress = false
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  #config.assets.compile = false
-  # TOFIX: Setting true to fix fallback image precompile issues.
-  config.assets.compile = true
+  config.assets.compile = false
+  
 
   # Generate digests for assets URLs
   config.assets.digest = true
