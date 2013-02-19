@@ -25,6 +25,7 @@ class Issue < ActiveRecord::Base
     tire.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
       query {string params[:query]} if params[:query].present?
       filter :term, :published => true unless unpublished
+      sort { by :release, 'desc' }
     end
   end
 

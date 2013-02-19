@@ -27,6 +27,7 @@ class Article < ActiveRecord::Base
     tire.search(load: true, :page => params[:page], :per_page => Settings.article_pagination) do
       query {string params[:query]} if params[:query].present?
       filter :term, :published => true unless unpublished
+      sort { by :publication, 'desc' }
     end
   end
 
