@@ -36,6 +36,15 @@ development:
   username:
   password:
 
+# Postgresql settings
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: ni_production
+  pool: 5
+  username:
+  password:
+
 test:
   adapter: postgresql
   encoding: unicode
