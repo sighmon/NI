@@ -18,3 +18,12 @@ jQuery ->
 			if data.context
 				progress = parseInt(data.loaded / data.total * 100, 10)
 				data.context.find('.bar').css('width', progress + '%')
+
+	# Sorting article images
+
+	$('#sortable-block').sortable(
+		axis: 'y'
+		axis: 'x'
+		update: ->
+			$.post($(this).data('update-url'), $(this).sortable('serialize'))
+	);

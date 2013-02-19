@@ -79,9 +79,13 @@
 <!-- Manually uploaded image slideshow -->
 <div class="all-article-images">
 <% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
-  <% @article.images.select{|i| i.media_id.nil?}.each do |i| %>
-    <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{@article.images.index(i)}"), "#imageModal", :"data-toggle" => 'modal' %>
-  <% end %>
+  <ul class="unstyled" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
+    <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
+      <%= content_tag_for :li, i do %>
+        <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{@article.images.index(i)}"), "#imageModal", :"data-toggle" => 'modal' %>
+      <% end %>
+    <% end %>
+  </ul>
   <!-- Modal -->
   <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
     <!-- Carousel -->

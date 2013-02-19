@@ -4,6 +4,9 @@ class Image < ActiveRecord::Base
   mount_uploader :data, ArticleImageUploader
   # validates :media_id, :uniqueness => true
 
+  # So we can sort images on the article pages via acts as list gem
+  acts_as_list
+
   def self.create_from_media_element(article, media_element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     media_id = media_element["id"]

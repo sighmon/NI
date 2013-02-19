@@ -126,6 +126,10 @@ gem 'kaminari-bootstrap', '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some r
 # http://railscasts.com/episodes/306-elasticsearch-part-1
 gem 'tire'
 
+# Acts as list for sortable lists
+# http://railscasts.com/episodes/147-sortable-lists-revised?view=asciicast
+gem 'acts_as_list'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
