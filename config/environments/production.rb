@@ -77,7 +77,9 @@ NI::Application.configure do
   config.assets.compress = false
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  #config.assets.compile = false
+  # TOFIX: Setting true to fix fallback image precompile issues.
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -109,7 +111,6 @@ NI::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
-  config.assets.precompile += %w( /images/fallback/*.png /images/fallback/*.jpg /images/fallback/*.jpeg /images/fallback/*.gif )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = true
