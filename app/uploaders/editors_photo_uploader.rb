@@ -23,7 +23,8 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
-    asset_path("fallback/" + [version_name, "default_editors_photo.jpg"].compact.join('_'))
+    # asset_path("fallback/" + [version_name, "default_editors_photo.jpg"].compact.join('_'))
+    asset_path("fallback/" + full_filename("default_editors_photo.jpg"))
   
     # "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   end
@@ -41,12 +42,12 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
   # end
   # Use RMagick
   version :thumb do
-    process :resize_to_limit => [100, 150]
+    process :resize_to_limit => [100, nil]
   end
 
   # Retina display :thumb @2x version
   version :thumb2x do
-    process :resize_to_limit => [200, 300]
+    process :resize_to_limit => [200, nil]
     def full_filename (for_file = model.editors_photo.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

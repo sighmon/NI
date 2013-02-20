@@ -22,8 +22,6 @@ jQuery ->
 	# Sorting article images
 
 	$('#sortable-block').sortable(
-		axis: 'y'
-		axis: 'x'
 		update: ->
 			$.post($(this).data('update-url'), $(this).sortable('serialize'))
 	);
