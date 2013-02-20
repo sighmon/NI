@@ -42,12 +42,12 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
   # end
   # Use RMagick
   version :thumb do
-    process :resize_to_limit => [100, 150]
+    process :resize_to_limit => [100, nil]
   end
 
   # Retina display :thumb @2x version
   version :thumb2x do
-    process :resize_to_limit => [200, 300]
+    process :resize_to_limit => [200, nil]
     def full_filename (for_file = model.editors_photo.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
