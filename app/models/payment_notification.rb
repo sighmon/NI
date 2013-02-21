@@ -12,17 +12,22 @@ private
 		# TODO: Check that the ipn_url is working on real server.
 
 		if transaction_type == "express_checkout"
-			# TODO: Implement handling this.
+			# Ignore this. It's an instant payment that's been handled.
 			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
+		elsif params[:test_ipn] == "1"
+			# Ignore test IPNs.
+			logger.info "Test IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "cart"
-			# TODO: Implement handling instant payments.
+			# Ignore this. It's an instant payment that's been handled.
 			logger.info "Instant purchase IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "web_accept"
+			# This is a ping from our web shop.
 			logger.info "Web Accept IPN ping received. TXN_ID: #{transaction_id}"
 		elsif status == "Refunded"
+			# This is a refund made through the paypal interface
 			logger.info "Refund IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
-			# TODO: Do we need to do anything with this?
+			# PayPal letting us know that the profile was created successfully
 			logger.info "Recurring payment profile created: #{params[:recurring_payment_id]}"
 		else
 			@user = User.find(self.user_id)
