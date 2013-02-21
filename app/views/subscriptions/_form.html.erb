@@ -47,19 +47,18 @@
 	  </dl>
 	  
 	  <div class="form-actions">
-	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success' %>
+	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success', :onclick => "#{ analytics_track_event ENV['GOOGLE_CONVERSION_ID'], 'buy', ENV['GOOGLE_CONVERSION_LABEL'], number_with_precision((session[:express_purchase_price] / 100), :precision => 2) }" %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
 	  </div>
 	  <!-- Google Adwords conversion tracking -->
 	  <% if Rails.env.production? %>
-	  <script
-		type="text/javascript">
+	  <script type="text/javascript">
 		/* <![CDATA[ */
 		var google_conversion_id = <%= ENV["GOOGLE_CONVERSION_ID"] %>;
 		var google_conversion_language = "en";
 		var google_conversion_format = "3";
 		var google_conversion_color = "ffffff";
-		var google_conversion_label = "<%= ENV["GOOGLE_CONVERSION_LABEL"] %>"; 
+		var google_conversion_label = "<%= ENV['GOOGLE_CONVERSION_LABEL'] %>"; 
 		var google_conversion_value = <%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>;
 		/* ]]> */
 	  </script>
