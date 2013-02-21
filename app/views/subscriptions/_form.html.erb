@@ -47,7 +47,7 @@
 	  </dl>
 	  
 	  <div class="form-actions">
-	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success', :onclick => "#{ analytics_track_event ENV['GOOGLE_CONVERSION_ID'], 'buy', ENV['GOOGLE_CONVERSION_LABEL'], number_with_precision((session[:express_purchase_price] / 100), :precision => 2) }" %>
+	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success' %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
 	  </div>
 	  <!-- Google Adwords conversion tracking -->
@@ -116,7 +116,7 @@
 	  </dl>
 
 	  <div class="form-actions">
-	  	<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success' %>
+	  	<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success', :onclick => "#{ analytics_track_event ENV['GOOGLE_CONVERSION_ID'], 'buy', ENV['GOOGLE_CONVERSION_LABEL'], number_with_precision((session[:express_purchase_price] / 100), :precision => 2) }" %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn' %>
 	  </div>
 	<% end %>
