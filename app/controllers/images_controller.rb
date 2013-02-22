@@ -57,9 +57,16 @@ class ImagesController < ApplicationController
     @newimage = @article.images.create(params[:image])
 
     respond_to do |format|
-      format.html { redirect_to issue_article_path(@issue,@article), notice: 'Image was successfully created.' }
-      format.js
-      #format.json { render json: @newimage, status: :created, location: @newimage }
+      if @newimage.save
+        format.html { redirect_to issue_article_path(@issue,@article), notice: 'Image was successfully created.' }
+        format.js
+        #format.json { render json: @newimage, status: :created, location: @newimage }
+      else
+        # _form partial expects "showimage"
+        @showimage = @newimage
+        format.html { render action: "new" }
+        format.js
+      end
     end
   end
 
