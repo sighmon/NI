@@ -47,6 +47,70 @@ describe ImagesController do
         response.should redirect_to(issues_url)
       end
     end
+
+    describe "POST create" do
+      describe "with valid params" do
+        it "does not create a new Image" do
+          expect {
+            image = FactoryGirl.build(:image)
+            post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          }.to change(Image, :count).by(0)
+        end
+
+        it "redirects to the issues" do
+          image = FactoryGirl.build(:image)
+          post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          response.should redirect_to(issues_path)
+        end
+      end
+
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "should not call update_attributes" do
+          image = FactoryGirl.create(:image)
+          # Assuming there are no other images in the database, this
+          # specifies that the Image created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          Image.any_instance.should_not_receive(:update_attributes)
+          put :update, {:id => image.to_param, :image => { :these => "params" }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        end
+
+        it "redirects to the issues" do
+          image = FactoryGirl.create(:image)
+          put :update, {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id} 
+          response.should redirect_to(issues_path)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the image as @image" do
+          image = FactoryGirl.create(:image)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Image.any_instance.stub(:save).and_return(false)
+          put :update, {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          assigns(:image).should eq(image)
+        end
+
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "should not destroy any images" do
+        image = FactoryGirl.create(:image)
+        expect {
+          delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        }.to change(Image, :count).by(0)
+      end
+
+      it "redirects to issues" do
+        image = FactoryGirl.create(:image)
+        delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        response.should redirect_to(issues_path)
+      end
+    end
   end
 
   context "as an admin" do
