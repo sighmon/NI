@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe "images/index" do
   before(:each) do
-    assign(:images, [
-      stub_model(Image),
-      stub_model(Image)
-    ])
+    image = FactoryGirl.create(:image)
+    FactoryGirl.create(:image,article: image.article)
+    @article = image.article
+    @issue = @article.issue
+    @images = @article.images
   end
 
   it "renders a list of images" do

@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe "images/show" do
   before(:each) do
-    @image = assign(:image, stub_model(Image))
+    @showimage = FactoryGirl.create(:image)
+    @article = @showimage.article
+    @issue = @article.issue
   end
 
   it "renders attributes in <p>" do

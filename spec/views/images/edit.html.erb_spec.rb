@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe "images/edit" do
   before(:each) do
-    @image = assign(:image, stub_model(Image))
+    @showimage = FactoryGirl.create(:image)
+    @article = @showimage.article
+    @issue = @article.issue
   end
 
   it "renders the edit image form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form", :action => images_path(@image), :method => "post" do
-    end
+    assert_select "form", :action => issue_article_images_path(@issue,@article,@showimage), :method => "post"
   end
 end
