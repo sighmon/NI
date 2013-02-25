@@ -29,30 +29,41 @@
   <h2>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h2>
 </div>
 
+<% if can? :update, @issue %>
+  <% if not @uncategorised.empty? %>
+    <div class="articles-not-categorised-for-display">
+      <h3>Articles not displayed.</h3>
+      <% @uncategorised.each do |article| %>
+        <div class="issue-article">
+          <%= render :partial => "article", :object => article %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
 <div class="row-fluid">
   <div class="span6 issue-articles-container">
       <div class="issue-article keynote">
         <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
         <h5>The big story</h5>
-        <% if @issue.articles.find_by_keynote(true) %>
-          <% @issue.articles.find_by_keynote(true) do |article| %>
-            <%= render :partial => "article", :object => article %>
-          <% end %>
+        <% if @keynote %>
+          <%= render :partial => "article", :object => @keynote %>
         <% end %>
       </div>
 
-      <% unless @issue.articles_of_category("/features/").blank? %>
+      <% if not @features.empty? %>
         <h3>Features.</h3>
-        <% @issue.articles_of_category("/features/").each do |article| %>
+        <% @features.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
         <% end %>
       <% end %>
 
-      <% unless @issue.articles_of_category("/sections/agenda/").blank? %>
+      <% if not @agendas.empty? %>
         <h3>Agenda.</h3>
-        <% @issue.articles_of_category("/sections/agenda/").each do |article| %>
+        <% @agendas.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
@@ -70,27 +81,27 @@
     <% end %>
   </div>
   <div class="span6 issue-articles-container">
-    <% unless @issue.articles_of_category("/argument/").blank? %>
+    <% if not @arguments.empty? %>
       <h3>Argument.</h3>
-      <% @issue.articles_of_category("/argument/").each do |article| %>
+      <% @arguments.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>
       <% end %>
     <% end %>
 
-    <% unless @issue.articles_of_category("/columns/").blank? %>
+    <% if not @columns.empty? %>
       <h3>Regulars.</h3>
-      <% @issue.articles_of_category("/columns/").each do |article| %>
+      <% @columns.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>
       <% end %>
     <% end %>
 
-    <% unless @issue.articles_of_category("/blog/").blank? %>
+    <% if not @blogs.empty? %>
       <h3>Blog.</h3>
-      <% @issue.articles_of_category("/blog/").each do |article| %>
+      <% @blogs.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>

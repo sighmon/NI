@@ -65,6 +65,13 @@ class IssuesController < ApplicationController
   # GET /issues/1.json
   def show
     # @issue = Issue.find(params[:id])
+    @keynote = @issue.articles.find_by_keynote(true)
+    @features = @issue.articles_of_category("/features/")
+    @agendas = @issue.articles_of_category("/sections/agenda/")
+    @arguments = @issue.articles_of_category("/argument/")
+    @columns = @issue.articles_of_category("/columns/")
+    @blogs = @issue.articles_of_category("/blog/")
+    @uncategorised = @issue.articles - [@keynote] - @features - @agendas - @arguments - @columns - @blogs
 
     # Set meta tags
     set_meta_tags :title => @issue.title,
