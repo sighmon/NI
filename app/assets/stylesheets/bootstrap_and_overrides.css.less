@@ -104,7 +104,7 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 // NI Colours
 
 @niBrown: #f1edd9;
-@niRed: #da2128; /* or #f00d16; */
+@niRed: #f00d16; /* or #da2128; */
 @boxBackgroundColour: #E4E1DF;
 
 // Link colours
@@ -136,7 +136,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar .brand {
 	font-family: "Bodega";
-	color: #f00d16;
+	color: @niRed;
 	font-size: 26px;
 	padding: 8px 20px 6px;
 }
@@ -434,7 +434,12 @@ a:active .shadow {
 }
 
 .articles-not-categorised-for-display h3 {
-	color: red;
+	color: @niRed;
+	margin-top: 0px;
+}
+
+.articles-not-categorised-for-display .issue-article {
+	border-bottom-color: white;
 }
 
 // Issue.articles styling
@@ -752,7 +757,7 @@ blockquote.pull-left {
 
 #error .brand {
 	font-family: "Bodega";
-	color: #f00d16;
+	color: @niRed;
 	font-size: 26px;
 }
 
