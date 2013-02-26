@@ -70,10 +70,10 @@ class IssuesController < ApplicationController
     @features = @issue.articles_of_category("/features/")
     @agendas = @issue.articles_of_category("/sections/agenda/")
     @arguments = @issue.articles_of_category("/argument/")
-    @alternatives = @issue.articles_of_category("/alternatives/")
+    @alternatives = @issue.articles_of_category("/sections/alternatives/")
     @columns = @issue.articles_of_category("/columns/")
     @blogs = @issue.articles_of_category("/blog/")
-    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @arguments - @columns - @blogs
+    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @arguments - @columns - @blogs - @alternatives
 
     # Set meta tags
     set_meta_tags :title => @issue.title,
