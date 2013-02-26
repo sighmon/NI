@@ -79,7 +79,7 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <!-- Manually uploaded image slideshow -->
-<div class="all-article-images" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
+<div class="all-article-images <% if not @letters_from.empty? %>letters-from<% end %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
 <% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
   <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
     <%= content_tag_for :div, i do %>
