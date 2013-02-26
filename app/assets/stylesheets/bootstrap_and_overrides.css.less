@@ -330,6 +330,12 @@ a:active .shadow {
 	box-shadow: @shadowSizeActive @shadowColour;
 }
 
+.shadow-light {
+	@shadowColour: #333333;
+	@shadowSizeNormal: 0px 1px 3px;
+	.shadow;
+}
+
 // Edit buttons
 
 .edit-issue-buttons {
@@ -580,7 +586,8 @@ a:active .shadow {
 }
 
 .article-thumb {
-	.shadow;
+	.shadow-light;
+	.border-radius(2px);
 	float: right;
 	margin-left: 20px;
 }
