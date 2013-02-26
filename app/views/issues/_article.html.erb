@@ -1,7 +1,7 @@
 <% if can? :read, article %>
   <% if not article.featured_image.blank? %>
     <%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %>
-  <% elsif (not article.images.first.blank?) and (not article.images.first.data_url(:thumb).blank?) %>
+  <% elsif not article.images.first.blank? %>
     <%= link_to retina_image_tag(article.images.first.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80"), issue_article_path(@issue,article) %>
   <% end %>
   <h4><%= link_to article.title, issue_article_path(@issue,article) %></h4>
