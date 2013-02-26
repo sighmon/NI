@@ -70,6 +70,15 @@
         <% end %>
       <% end %>
 
+      <% if not @alternatives.empty? %>
+        <h3>Alternatives.</h3>
+        <% @alternatives.each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      <% end %>
+
   </div>
   <div class="span6 editors-letter">
     <% if @issue.editors_letter != "" %>
