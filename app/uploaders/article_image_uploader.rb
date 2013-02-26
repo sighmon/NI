@@ -62,6 +62,10 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [300, 400]
   end
 
+  version :thumb do
+    process :resize_to_fill => [80, 80]
+  end
+
   # Retina display @2x version
   version :halfwidth2x do
     process :resize_to_limit => [680, nil]
@@ -74,6 +78,13 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [600, 800]
     def full_filename (for_file = model.article_image.file)
       "threehundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
+    end
+  end
+
+  version :thumb2x do
+    process :resize_to_fill => [160, 160]
+    def full_filename (for_file = model.article_image.file)
+      "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
