@@ -99,6 +99,7 @@ class ArticlesController < ApplicationController
         @issue = Issue.find(@article.issue_id)
         @article.is_valid_guest_pass(params[:utm_source])
         @newimage = Image.new
+        @letters = @article.categories.select{|c| c.name.include?("/letters/")}
         #@images = @article.images.all
         # @article.source_to_body(:debug => current_user.try(:admin?))
 
