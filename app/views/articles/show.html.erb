@@ -81,13 +81,11 @@
 <!-- Manually uploaded image slideshow -->
 <div class="all-article-images" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
 <% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
-  <!-- <ul class="unstyled" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>"> -->
-    <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
-      <%= content_tag_for :div, i do %>
-        <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{i.position - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
-      <% end %>
+  <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
+    <%= content_tag_for :div, i do %>
+      <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{i.position - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
     <% end %>
-  <!-- </ul> -->
+  <% end %>
   <!-- Modal -->
   <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
     <!-- Carousel -->
@@ -110,13 +108,7 @@
 <% end %>
 </div>
 
-<% if not @letters.empty? %>
-  <div class="letters-box">
-    <p>The <b>New Internationalist</b> welcomes your letters. But please keep them short. They may be edited for purposes of space or clarity. Letters should be sent to <a href="mailto:letters@newint.org?Subject=Letters submission">letters@newint.org</a> or to your local NI office. Please remember to include a town and country for your address.</p>
-  </div>
-<% end %>
-
-<div class="article-body">
+<div class="article-body <% if not @letters.empty? %>article-body-letters<% end %>">
   <% if @article.body.blank? %>
     <%= simple_format source_to_body(@article, :debug => current_user.try(:admin?)) %>
   <% else %>
@@ -125,6 +117,13 @@
 </div>
 
 <div class="clearfix"></div>
+
+<% if not @letters.empty? %>
+  <div class="letters-box">
+    <p>The <b>New Internationalist</b> welcomes your letters. But please keep them short. They may be edited for purposes of space or clarity. Letters should be sent to <a href="mailto:letters@newint.org?Subject=Letters submission">letters@newint.org</a> or to your local NI office. Please remember to include a town and country for your address.</p>
+    <p>The views expressed on this letters page are not necessarily those of the <b>New Internationalist</b>.</p>
+  </div>
+<% end %>
 
 <% if can? :update, @article %>
   <button class="flip-button btn">Show/Hide source</button>

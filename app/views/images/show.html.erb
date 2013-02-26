@@ -24,7 +24,7 @@
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_issue_article_image_path(@issue, @article, @showimage), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              image_path(@showimage),
+              issue_article_image_path(@issue,@article,@showimage),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
