@@ -100,7 +100,10 @@ class ArticlesController < ApplicationController
         @article.is_valid_guest_pass(params[:utm_source])
         @newimage = Image.new
         @letters = @article.categories.select{|c| c.name.include?("/letters/")}
-        @letters_from = @article.categories.select{|c| c.name.include?("/letters-from/")}
+        @image_top_right = @article.categories.select{|c| 
+            c.name.include?("/letters-from/") or 
+            c.name.include?("/sections/agenda/")
+        }
         #@images = @article.images.all
         # @article.source_to_body(:debug => current_user.try(:admin?))
 
