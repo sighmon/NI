@@ -33,6 +33,9 @@ module ArticlesHelper
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
             image = Image.find_by_media_id(media_id)
+            if image.hidden 
+              return nil
+            end
             media_url = image.try(:data_url, :halfwidth)
             if media_url
 	            media_caption = e.at_xpath('./field[@type = "rel_media_caption"]').try(:text)

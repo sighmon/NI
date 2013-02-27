@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219045755) do
+ActiveRecord::Schema.define(:version => 20130227005749) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -75,6 +75,9 @@ ActiveRecord::Schema.define(:version => 20130219045755) do
     t.integer  "height"
     t.integer  "width"
     t.integer  "position"
+    t.string   "credit"
+    t.text     "caption"
+    t.boolean  "hidden"
   end
 
   add_index "images", ["article_id"], :name => "index_images_on_article_id"

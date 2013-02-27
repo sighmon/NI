@@ -1,6 +1,6 @@
 class Image < ActiveRecord::Base
   belongs_to :article
-  attr_accessible :data, :media_id, :height, :width
+  attr_accessible :data, :media_id, :height, :width, :caption, :credit, :hidden
   mount_uploader :data, ArticleImageUploader
   # validates :media_id, :uniqueness => true
 
