@@ -33,7 +33,7 @@ module ArticlesHelper
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
             image = Image.find_by_media_id(media_id)
-            if image.hidden 
+            if image.try(:hidden)
               return nil
             end
             media_url = image.try(:data_url, :halfwidth)

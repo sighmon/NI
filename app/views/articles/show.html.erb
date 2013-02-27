@@ -79,8 +79,8 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <!-- Manually uploaded image slideshow -->
-<div class="all-article-images <% if not @image_top_right.empty? %>article-image-top-right article-image<% end %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
 <% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
+<div class="all-article-images <% if not @image_top_right.empty? %>article-image-top-right article-image<% end %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
     <%= content_tag_for :div, i do %>
       <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :width => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{i.position - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
@@ -118,8 +118,8 @@
         <a class="carousel-control right hide" href="#imageCarousel" data-slide="next">&rsaquo;</a>
     </div>
   </div>
-<% end %>
 </div>
+<% end %>
 
 <div class="article-body <% if not @letters.empty? %>article-body-letters<% end %>">
   <% if @article.body.blank? %>
@@ -128,6 +128,12 @@
     <%= simple_format @article.body %>
   <% end %>
 </div>
+
+<% if not @article.author.blank? %>
+  <div class="author-note">
+    <p><%= @article.author %></p>
+  </div>
+<% end %>
 
 <div class="clearfix"></div>
 
