@@ -102,7 +102,8 @@ class ArticlesController < ApplicationController
         @letters = @article.categories.select{|c| c.name.include?("/letters/")}
         @image_top_right = @article.categories.select{|c| 
             c.name.include?("/letters-from/") or 
-            c.name.include?("/sections/agenda/")
+            c.name.include?("/sections/agenda/") or
+            c.name.include?("/image-top-right/")
         }
         #@images = @article.images.all
         # @article.source_to_body(:debug => current_user.try(:admin?))
