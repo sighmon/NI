@@ -54,7 +54,9 @@ NI::Application.routes.draw do
 
   namespace :admin do
     root :to => "base#index"
-    resources :users
+    resources :users do
+      get :free_subscription
+    end
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
     resources :guest_passes, :only => [:index]

@@ -2,6 +2,13 @@
 	<h1><%= @user %></h1>
 </div>
 
+<% if can? :update, @user %>
+	<div class="edit-issue-buttons">
+	    <%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-mini btn-warning',
+                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?")) %>
+	</div>
+<% end %>
+
 <dl class="dl-horizontal">
 	<dt><strong>Email address:</strong></dt>
 	<dd><%= @user.email %></dd>

@@ -60,4 +60,21 @@ class Admin::UsersController < Admin::BaseController
 
 		redirect_to admin_users_path
 	end
+
+	def free_subscription
+		@user = User.find(params[:user_id])
+		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => 12, :purchase_date => DateTime.now, :price_paid => 0)
+
+		respond_to do |format|
+            if @free_subscription.save
+                # Send the user an email
+                UserMailer.free_subscription_confirmation(User.find(params[:user_id])).deliver
+                format.html { redirect_to admin_user_path(@user), notice: 'Free subscription was successfully created.' }
+                format.json { render json: @free_subscription, status: :created, location: @free_subscription }
+            else
+                format.html { redirect_to admin_user_path(@user), notice: "Couldn't add a free subscription, sorry." }
+                format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+            end
+        end
+	end
 end
