@@ -224,6 +224,23 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -40px;
 }
 
+.footer {
+	color: @grayDark;
+	background-color: rgba(250,176,59,0.38);
+	margin: 0 -4em -4em -4em;
+	padding: 2em;
+	text-align: center;
+	.border-radius(0 0 5px 5px);
+}
+
+.footer p {
+	margin: 0px;
+}
+
+.footer a {
+	color: @grayLight;
+}
+
 // Issues listed as a tables
 
 .issues_as_table {
@@ -908,6 +925,10 @@ blockquote.pull-left {
 	}
 	.article-image-top-right {
 		width: 50%;
+	}
+	.footer {
+		margin: 0 -20px 0 -20px;
+		.border-radius(0px);
 	}
 }
  
