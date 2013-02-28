@@ -67,12 +67,12 @@ class IssuesController < ApplicationController
     # @issue = Issue.find(params[:id])
     @all_articles = @issue.articles
     @keynote = @issue.articles.find_by_keynote(true)
-    @features = @issue.articles_of_category("/features/")
-    @agendas = @issue.articles_of_category("/sections/agenda/")
-    @arguments = @issue.articles_of_category("/argument/")
-    @alternatives = @issue.articles_of_category("/alternatives/")
-    @columns = @issue.articles_of_category("/columns/")
-    @blogs = @issue.articles_of_category("/blog/")
+    @features = @issue.articles_of_category("/features/").sort_by(&:publication)
+    @agendas = @issue.articles_of_category("/sections/agenda/").sort_by(&:publication)
+    @arguments = @issue.articles_of_category("/argument/").sort_by(&:publication)
+    @alternatives = @issue.articles_of_category("/alternatives/").sort_by(&:publication)
+    @columns = @issue.articles_of_category("/columns/").sort_by(&:publication)
+    @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
     @uncategorised = @all_articles - [@keynote] - @features - @agendas - @arguments - @columns - @blogs - @alternatives
 
     # Set meta tags
