@@ -65,6 +65,7 @@ class IssuesController < ApplicationController
   # GET /issues/1.json
   def show
     # @issue = Issue.find(params[:id])
+    # TOFIX: Sort articles by :position using jquery
     @all_articles = @issue.articles
     @keynote = @issue.articles.find_by_keynote(true)
     @features = @issue.articles_of_category("/features/").sort_by(&:publication)
