@@ -99,9 +99,18 @@
       <% end %>
     <% end %>
 
-    <% if not @columns.empty? %>
+    <% if not @regulars.empty? %>
       <h3>Regulars.</h3>
-      <% @columns.each do |article| %>
+      <% @regulars.each do |article| %>
+        <div class="issue-article">
+          <%= render :partial => "article", :object => article %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if not @mixedmedia.empty? %>
+      <h3>Film, Book &amp; Music Reviews.</h3>
+      <% @mixedmedia.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>
