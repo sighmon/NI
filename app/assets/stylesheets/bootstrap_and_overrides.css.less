@@ -602,16 +602,6 @@ a:active .shadow {
 	display: inline-block;
 }
 
-.all-article-images .new-image-caption {
-	width: 280px;
-	font-size: 0.9em;
-}
-
-.all-article-images .new-image-credit {
-	width: 300px;
-	font-size: 0.9em;
-}
-
 .article-thumb {
 	.shadow-light;
 	.border-radius(2px);
@@ -676,8 +666,6 @@ a:active .shadow {
 	float: right;
 	max-width: 340px;
 	margin: 0px 0px 2em 2em;
-	font-size: 0.85em;
-	color: @gray;
 }
 
 .article-image img {
@@ -687,12 +675,17 @@ a:active .shadow {
 
 .new-image-caption {
 	text-align: left;
+	max-width: 280px;
+	font-size: 0.9em;
+	color: @gray;
 }
 
 .new-image-credit {
 	text-align: left;
 	margin-top: -3px;
+	font-size: 0.9em;
 	color: @grayLight;
+	max-width: 280px;
 }
 
 .article-image-top-right .new-image-credit {
