@@ -849,7 +849,16 @@ blockquote.pull-left {
 // @media fixes
 //=============
 
-/* Landscape phones and down */
+/* Portrait phones */
+@media (max-width: 320px) {
+	.article-thumb {
+		float: none;
+		margin-left: 0px;
+		clear: right;
+	}
+}
+
+/* Landscape phones */
 @media (max-width: 480px) {
 	.user_nav {
 		position: relative;
