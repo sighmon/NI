@@ -106,6 +106,7 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 @niBrown: #f1edd9;
 @niRed: #f00d16; /* or #da2128; */
 @boxBackgroundColour: #E4E1DF;
+@boxGrayLightest: #F5F5F5;
 
 // Link colours
 
@@ -478,6 +479,13 @@ a:active .shadow {
 	text-transform: uppercase;
 }
 
+.issue-sections {
+	.border-radius(5px);
+	padding: 1em;
+	margin-bottom: 2em;
+	background-color: @boxGrayLightest;
+}
+
 .issue-articles-container {
 	
 }
@@ -489,7 +497,13 @@ a:active .shadow {
 .issue-article {
 	border-bottom: 1px solid @grayLighter;
 	padding-bottom: 15px;
-	margin-bottom: 20px;
+	margin-bottom: 2em;
+}
+
+.issue-article:last-child {
+	border-bottom: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 .article-search .btn {
@@ -945,6 +959,10 @@ blockquote.pull-left {
 	.footer {
 		margin: 0 -20px 0 -20px;
 		.border-radius(0px);
+	}
+	.span6.editors-letter {
+		background-color: #fdfdfd;
+		float: none;
 	}
 }
  
