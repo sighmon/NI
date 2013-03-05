@@ -90,9 +90,9 @@
     <% end %>
   </div>
   <div class="span6 issue-articles-container">
-    <% if not @arguments.empty? %>
-      <h3>Argument.</h3>
-      <% @arguments.each do |article| %>
+    <% if not @opinion.empty? %>
+      <h3>Opinion.</h3>
+      <% @opinion.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>

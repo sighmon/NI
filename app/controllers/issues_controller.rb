@@ -70,12 +70,19 @@ class IssuesController < ApplicationController
     @keynote = @issue.articles.find_by_keynote(true)
     @features = @issue.articles_of_category("/features/").sort_by(&:publication)
     @agendas = @issue.articles_of_category("/sections/agenda/").sort_by(&:publication)
-    @arguments = @issue.articles_of_category("/argument/").sort_by(&:publication)
+    @opinion = (@issue.articles_of_category("/argument/") +
+      @issue.articles_of_category("/columns/viewfrom/") +
+      @issue.articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
     @alternatives = @issue.articles_of_category("/alternatives/").sort_by(&:publication)
-    @regulars = (@issue.articles_of_category("/columns/") - @issue.articles_of_category("/columns/media/")).sort_by(&:publication)
+    @regulars = (@issue.articles_of_category("/columns/") - 
+      @issue.articles_of_category("/columns/media/") - 
+      @issue.articles_of_category("/columns/viewfrom/") - 
+      @issue.articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
     @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
     @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
-    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @arguments - @regulars - @blogs - @alternatives - @mixedmedia
+    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @opinion - @regulars - @blogs - @alternatives - @mixedmedia
 
     # Set meta tags
     set_meta_tags :title => @issue.title,
