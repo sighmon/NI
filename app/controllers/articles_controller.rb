@@ -54,7 +54,18 @@ class ArticlesController < ApplicationController
 
     def create
         @issue = Issue.find(params[:issue_id])
+
+        # HACK: assign_nested_attributes_for chokes accepting categories_attributes for a yet-to-be-created article
+        saved_article_params = params[:article]
+        extracted_categories_attributes = params[:article].try(:extract!,:categories_attributes)
         @article = @issue.articles.create(params[:article])
+        # HACK: strip out id's so that categories_attributes= pre-emptively associates these categories with the article before
+        # handing it to assign_nested_attributes_for
+        extracted_categories_attributes.try(:fetch,:categories_attributes).try(:values).try(:each) do |v|
+         v.delete(:id)
+         v.delete("id")  
+        end 
+        @article.update_attributes(extracted_categories_attributes)
         
         respond_to do |format|
             if @article.save

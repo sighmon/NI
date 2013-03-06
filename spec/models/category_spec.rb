@@ -1,5 +1,12 @@
 require 'spec_helper'
 
 describe Category do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+   it "can be added to an article" do
+     category = FactoryGirl.create(:category)
+     article = FactoryGirl.create(:article)
+     article.categories << category
+     category.articles.should eq([article])
+   end
+
 end

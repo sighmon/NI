@@ -50,11 +50,12 @@ class Article < ActiveRecord::Base
         category = Category.find_by_name(category_attributes[:name])
         if category.present?
           category_attributes[:id] = category.id
+          ## FIXME? check if we are adding twice?
           self.categories << category
         end
       end
     end
-    assign_nested_attributes_for_collection_association(:categories, categories_attributes, mass_assignment_options)
+    assign_nested_attributes_for_collection_association(:categories, categories_attributes.values, mass_assignment_options)
   end
 
   def create_categories_from_article_source

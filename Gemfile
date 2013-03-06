@@ -68,6 +68,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   gem 'guard-rspec'
+  gem 'debugger'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
   gem 'rb-inotify', '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
