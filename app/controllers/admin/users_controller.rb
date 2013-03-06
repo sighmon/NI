@@ -10,7 +10,7 @@ class Admin::UsersController < Admin::BaseController
 
 		respond_to do |format|
 			format.html
-			format.csv { render :csv => User.all(:order => :email) }
+			format.csv { render :csv => User.all(:order => :email), :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
 		end
 	end
 
