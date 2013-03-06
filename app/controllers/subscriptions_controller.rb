@@ -96,13 +96,13 @@ class SubscriptionsController < ApplicationController
     def create
 
         payment_complete = false
+        notice_message_for_user = "Something went wrong, sorry!"
         @user = current_user
-        @subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration], :purchase_date => DateTime.now)
+        @subscription = @user.subscriptions.build(:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration], :purchase_date => DateTime.now)
 
         if session[:express_autodebit]
             # It's an autodebit, so set that up
             # 1. setup autodebit by requesting payment
-            # TODO: Check that the ipn_url is working.
             ppr = PayPal::Recurring.new({
               :token       => session[:express_token],
               :payer_id    => session[:express_payer_id],
@@ -153,6 +153,7 @@ class SubscriptionsController < ApplicationController
             else
                 # Why didn't this work? Log it.
                 logger.warn "request_payment failed: #{response_request.params}"
+                notice_message_for_user = response_request.params[:L_LONGMESSAGE0]
             end
         else
             # It's a single purchase so make the PayPal purchase
@@ -163,6 +164,12 @@ class SubscriptionsController < ApplicationController
                 # update_subscription_expiry_date
                 save_paypal_data_to_subscription_model
                 payment_complete = true
+            else
+                # The user probably hit back and refresh or paypal is broken.
+                logger.warn response.params
+                notice_message_for_user = response.message
+                # redirect_to user_path(current_user), notice: response.message
+                # return
             end
         end
 
@@ -175,7 +182,8 @@ class SubscriptionsController < ApplicationController
                 format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else
-                format.html { redirect_to user_path(current_user), notice: "Couldn't subscribe, sorry." }
+                flash[:error] = notice_message_for_user
+                format.html { redirect_to user_path(current_user) }
                 format.json { render json: @subscription.errors, status: :unprocessable_entity }
             end
         end
