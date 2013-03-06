@@ -70,6 +70,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    comma (3.0.4)
     commonjs (0.2.6)
     cucumber (1.2.1)
       builder (>= 2.1.2)
@@ -313,6 +314,7 @@ DEPENDENCIES
   cancan
   carrierwave
   coffee-rails
+  comma (~> 3.0)
   cucumber-rails
   curb
   database_cleaner

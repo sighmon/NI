@@ -51,6 +51,26 @@ class User < ActiveRecord::Base
   # removed :admin so that public can't make themselves an admin
   # attr_accessible :title, :body
 
+  # CSV exporting
+  comma do
+
+    id
+    email
+    expiry_date
+    is_recurring?
+    has_paper_copy?
+
+    current_subscription :paypal_first_name
+    current_subscription :paypal_last_name
+    current_subscription :paypal_email
+    current_subscription :duration
+    current_subscription :paper_copy
+    current_subscription :purchase_date
+    current_subscription :valid_from
+    current_subscription :duration
+
+  end
+
   #Override to_s to show user details instead of #string
   def to_s
     "#{username}"
@@ -74,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def has_paper_copy?
-    return self.subscriptions.collect{|s| s.paper_copy}.include?(true)
+    return self.current_subscriptions.collect{|s| s.paper_copy}.include?(true)
   end
 
   def expiry_date
@@ -96,6 +116,10 @@ class User < ActiveRecord::Base
   end
 
   def last_subscription
+    return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def current_subscription
     return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 

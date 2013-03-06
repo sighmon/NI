@@ -130,6 +130,10 @@ gem 'tire'
 # http://railscasts.com/episodes/147-sortable-lists-revised?view=asciicast
 gem 'acts_as_list'
 
+# CSV exporting gem
+# https://github.com/crafterm/comma
+gem 'comma', '~> 3.0'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

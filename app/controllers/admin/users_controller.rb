@@ -7,6 +7,11 @@ class Admin::UsersController < Admin::BaseController
 		@users = User.all(:order => "username")
 		@subscribers = @users.select{|s| s.subscriber?}
 		@guest_passes = GuestPass.all
+
+		respond_to do |format|
+			format.html
+			format.csv { render :csv => User.all(:order => :email) }
+		end
 	end
 
 	def show
