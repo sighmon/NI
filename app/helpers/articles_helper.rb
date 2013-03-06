@@ -28,11 +28,16 @@ module ArticlesHelper
             "<div class='at-a-glance'><h3>At a glance</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           elsif e["element_type"] == "star_ratings"
             "<div class='star-ratings'><h3>Star ratings</h3><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
+          elsif e["element_type"] == "product_profile"
+            "<div class='product-profile'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "author_note" or e["element_type"] == "author" or e["element_type"] == "postscript"
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
             image = Image.find_by_media_id(media_id)
+            if image.try(:hidden)
+              return nil
+            end
             media_url = image.try(:data_url, :halfwidth)
             if media_url
 	            media_caption = e.at_xpath('./field[@type = "rel_media_caption"]').try(:text)
@@ -47,7 +52,7 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck"].include? e["type"]
+          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck", "product_information"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
           elsif ["list_item"].include? e["type"]
@@ -63,18 +68,23 @@ module ArticlesHelper
             "<dt>Last Profiled</dt><dd><a href='#{@last_profiled_link}'>#{e.text}</a></dd>"
           elsif ["income_distribution", "life_expectancy", "literacy", "position_of_women", "freedom", "sexual_minorities", "politics"].include? e["type"]
             "<dt>#{e['type'].gsub(/_/, ' ').titlecase}</dt><dd>#{e.text}</dd>"
-          elsif e["type"] == "stars"
-            @star = "<i class='icon-star'></i> "
-            if e.text == "One"
-              "<dd>#{@star}</i></dd>"
-            elsif e.text == "Two"
-              "<dd>#{@star}#{@star}</dd>"
-            elsif e.text == "Three"
-              "<dd>#{@star}#{@star}#{@star}</dd>"
-            elsif e.text == "Four"
-              "<dd>#{@star}#{@star}#{@star}#{@star}</dd>"
-            elsif e.text == "Five"
-              "<dd>#{@star}#{@star}#{@star}#{@star}#{@star}</dd>"
+          elsif ["stars", "product_stars"].include? e["type"]
+            star = "<i class='icon-star'></i> "
+            star_rating = if e.text == "One"
+                "#{star}"
+              elsif e.text == "Two"
+                "#{star}#{star}"
+              elsif e.text == "Three"
+                "#{star}#{star}#{star}"
+              elsif e.text == "Four"
+                "#{star}#{star}#{star}#{star}"
+              elsif e.text == "Five"
+                "#{star}#{star}#{star}#{star}#{star}"
+              end
+            if e["type"] == "product_stars"
+              "<p>NI review: #{star_rating}</p>"
+            else
+              "<dd>#{star_rating}</dd>"
             end
           elsif e["type"] == "year"
             "<dt class='star-ratings-previous-year'>#{e.text}</dt>"

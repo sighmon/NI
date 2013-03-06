@@ -62,6 +62,10 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [300, 400]
   end
 
+  version :sixhundred do
+    process :resize_to_limit => [600, 600]
+  end
+
   version :thumb do
     process :resize_to_fill => [80, 80]
   end
@@ -78,6 +82,13 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [600, 800]
     def full_filename (for_file = model.article_image.file)
       "threehundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
+    end
+  end
+
+  version :sixhundred2x do
+    process :resize_to_limit => [1200, 1200]
+    def full_filename (for_file = model.article_image.file)
+      "sixhundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 

@@ -79,11 +79,24 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <!-- Manually uploaded image slideshow -->
-<div class="all-article-images <% if not @letters_from.empty? %>letters-from<% end %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
 <% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
-  <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
+<div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
+  <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag_for :div, i do %>
-      <%= link_to retina_image_tag(i.data_url(:threehundred).to_s, :alt => "", :title => "", :size => "300", :class => 'article-image-carousel', :"data-slide-index" => "#{i.position - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
+      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{i.position - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
+      <div class="new-image-caption"><%= simple_format i.caption %></div>
+      <div class="new-image-credit"><%= i.credit %></div>
+      <% if can? :manage, Image %>
+        <%= link_to t('.show', :default => t("helpers.links.show")),
+                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-mini' %>
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                    edit_issue_article_image_path(@issue, @article, i), :class => 'btn btn-mini btn-primary' %>
+        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                    issue_article_image_path(@issue, @article, i),
+                    :method => :delete,
+                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                    :class => 'btn btn-mini btn-danger' %>
+      <% end %>
     <% end %>
   <% end %>
   <!-- Modal -->
@@ -105,8 +118,8 @@
         <a class="carousel-control right hide" href="#imageCarousel" data-slide="next">&rsaquo;</a>
     </div>
   </div>
-<% end %>
 </div>
+<% end %>
 
 <div class="article-body <% if not @letters.empty? %>article-body-letters<% end %>">
   <% if @article.body.blank? %>
@@ -115,6 +128,12 @@
     <%= simple_format @article.body %>
   <% end %>
 </div>
+
+<% if not @article.author.blank? %>
+  <div class="author-note">
+    <p><%= @article.author %></p>
+  </div>
+<% end %>
 
 <div class="clearfix"></div>
 

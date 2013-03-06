@@ -106,6 +106,7 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 @niBrown: #f1edd9;
 @niRed: #f00d16; /* or #da2128; */
 @boxBackgroundColour: #E4E1DF;
+@boxGrayLightest: #F5F5F5;
 
 // Link colours
 
@@ -222,6 +223,23 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .page-header img {
 	.pull-right;
 	margin-top: -40px;
+}
+
+.footer {
+	color: @grayDark;
+	background-color: rgba(250,176,59,0.38);
+	margin: 0 -4em -4em -4em;
+	padding: 2em;
+	text-align: center;
+	.border-radius(0 0 5px 5px);
+}
+
+.footer p {
+	margin: 0px;
+}
+
+.footer a {
+	color: @grayLight;
 }
 
 // Issues listed as a tables
@@ -461,6 +479,13 @@ a:active .shadow {
 	text-transform: uppercase;
 }
 
+.issue-sections {
+	.border-radius(5px);
+	padding: 1em;
+	margin-bottom: 2em;
+	background-color: @boxGrayLightest;
+}
+
 .issue-articles-container {
 	
 }
@@ -472,7 +497,13 @@ a:active .shadow {
 .issue-article {
 	border-bottom: 1px solid @grayLighter;
 	padding-bottom: 15px;
-	margin-bottom: 20px;
+	margin-bottom: 2em;
+}
+
+.issue-article:last-child {
+	border-bottom: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 .article-search .btn {
@@ -592,12 +623,13 @@ a:active .shadow {
 	margin-left: 20px;
 }
 
-.letters-from {
+.article-image-top-right {
+	width: 300px;
 	.pull-right;
 	margin-left: 20px;
 }
 
-.letters-from .article-image-carousel {
+.article-image-top-right .article-image-carousel {
 	margin-right: 0px;
 }
 
@@ -648,8 +680,6 @@ a:active .shadow {
 	float: right;
 	max-width: 340px;
 	margin: 0px 0px 2em 2em;
-	font-size: 0.85em;
-	color: @gray;
 }
 
 .article-image img {
@@ -657,9 +687,27 @@ a:active .shadow {
 	margin-bottom: 1em;
 }
 
+.new-image-caption {
+	text-align: left;
+	max-width: 280px;
+	font-size: 0.9em;
+	color: @gray;
+}
+
 .new-image-credit {
+	text-align: left;
 	margin-top: -3px;
+	font-size: 0.9em;
 	color: @grayLight;
+	max-width: 280px;
+}
+
+.article-image-top-right .new-image-credit {
+	margin-top: -7px;
+}
+
+.article-image-cartoon .new-image-caption, .article-image-cartoon .new-image-caption {
+	max-width: 600px;
 }
 
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
@@ -819,7 +867,16 @@ blockquote.pull-left {
 // @media fixes
 //=============
 
-/* Landscape phones and down */
+/* Portrait phones */
+@media (max-width: 360px) {
+	.article-thumb {
+		float: none;
+		margin-left: 0px;
+		clear: right;
+	}
+}
+
+/* Landscape phones */
 @media (max-width: 480px) {
 	.user_nav {
 		position: relative;
@@ -896,8 +953,16 @@ blockquote.pull-left {
 		width: 175px;
 		margin-top: 0;
 	}
-	.letters-from {
-		width: 100%;
+	.article-image-top-right {
+		width: 50%;
+	}
+	.footer {
+		margin: 0 -20px 0 -20px;
+		.border-radius(0px);
+	}
+	.span6.editors-letter {
+		background-color: #fdfdfd;
+		float: none;
 	}
 }
  

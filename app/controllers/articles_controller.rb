@@ -111,7 +111,28 @@ class ArticlesController < ApplicationController
         @article.is_valid_guest_pass(params[:utm_source])
         @newimage = Image.new
         @letters = @article.categories.select{|c| c.name.include?("/letters/")}
-        @letters_from = @article.categories.select{|c| c.name.include?("/letters-from/")}
+        # Push the single top image to the right for these categories
+        @image_top_right = @article.categories.select{|c| 
+            c.name.include?("/letters-from/") or 
+            c.name.include?("/sections/agenda/") or
+            c.name.include?("/image-top-right/") or 
+            c.name.include?("/columns/media/")
+        }
+        # Display the :sixhundred version for these cartoons
+        @cartoon = @article.categories.select{|c| 
+            c.name.include?("/columns/polyp/") or 
+            c.name.include?("/columns/only-planet/")
+        }
+        if not @cartoon.empty?
+            @image_url_string = :sixhundred
+            @image_css_string = " article-image-cartoon"
+        elsif not @image_top_right.empty?
+            @image_url_string = :threehundred
+            @image_css_string = " article-image-top-right article-image"
+        else
+            @image_url_string = :threehundred
+            @image_css_string = ""
+        end
         #@images = @article.images.all
         # @article.source_to_body(:debug => current_user.try(:admin?))
 

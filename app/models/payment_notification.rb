@@ -23,6 +23,12 @@ private
 		elsif transaction_type == "web_accept"
 			# This is a ping from our web shop.
 			logger.info "Web Accept IPN ping received. TXN_ID: #{transaction_id}"
+		elsif transaction_type == "send_money"
+			# This is someone manually sending us money.
+			logger.info "Send Money IPN ping received. TXN_ID: #{transaction_id}"
+		elsif params[:payment_type] == "echeck"
+			# This is a PayPal echeck refund or payment
+			logger.info "echeck IPN ping received. TXN_ID: #{transaction_id}"
 		elsif status == "Refunded"
 			# This is a refund made through the paypal interface
 			logger.info "Refund IPN ping received. TXN_ID: #{transaction_id}"

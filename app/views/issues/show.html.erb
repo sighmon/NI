@@ -53,21 +53,36 @@
       </div>
 
       <% if not @features.empty? %>
-        <h3>Features.</h3>
-        <% @features.each do |article| %>
-          <div class="issue-article">
-            <%= render :partial => "article", :object => article %>
-          </div>
-        <% end %>
+        <div class="issue-sections">
+          <h3>Features.</h3>
+          <% @features.each do |article| %>
+            <div class="issue-article">
+              <%= render :partial => "article", :object => article %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
 
       <% if not @agendas.empty? %>
-        <h3>Agenda.</h3>
-        <% @agendas.each do |article| %>
-          <div class="issue-article">
-            <%= render :partial => "article", :object => article %>
-          </div>
-        <% end %>
+        <div class="issue-sections">
+          <h3>Agenda.</h3>
+          <% @agendas.each do |article| %>
+            <div class="issue-article">
+              <%= render :partial => "article", :object => article %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if not @alternatives.empty? %>
+        <div class="issue-sections">
+          <h3>Alternatives.</h3>
+          <% @alternatives.each do |article| %>
+            <div class="issue-article">
+              <%= render :partial => "article", :object => article %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
 
   </div>
@@ -81,31 +96,49 @@
     <% end %>
   </div>
   <div class="span6 issue-articles-container">
-    <% if not @arguments.empty? %>
-      <h3>Argument.</h3>
-      <% @arguments.each do |article| %>
-        <div class="issue-article">
-          <%= render :partial => "article", :object => article %>
-        </div>
-      <% end %>
+
+    <% if not @opinion.empty? %>
+      <div class="issue-sections">
+        <h3>Opinion.</h3>
+        <% @opinion.each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
 
-    <% if not @columns.empty? %>
-      <h3>Regulars.</h3>
-      <% @columns.each do |article| %>
-        <div class="issue-article">
-          <%= render :partial => "article", :object => article %>
-        </div>
-      <% end %>
+    <% if not @regulars.empty? %>
+      <div class="issue-sections">
+        <h3>Regulars.</h3>
+        <% @regulars.each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if not @mixedmedia.empty? %>
+      <div class="issue-sections">
+        <h3>Film, Book &amp; Music Reviews.</h3>
+        <% @mixedmedia.each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
 
     <% if not @blogs.empty? %>
-      <h3>Blog.</h3>
-      <% @blogs.each do |article| %>
-        <div class="issue-article">
-          <%= render :partial => "article", :object => article %>
-        </div>
-      <% end %>
+      <div class="issue-sections">
+        <h3>Blog.</h3>
+        <% @blogs.each do |article| %>
+          <div class="issue-article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
