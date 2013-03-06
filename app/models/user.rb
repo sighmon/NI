@@ -56,17 +56,16 @@ class User < ActiveRecord::Base
 
     id
     email
-    expiry_date
-    is_recurring?
-    has_paper_copy?
+    expiry_date 'expiry_date'
+    is_recurring? 'is_recurring'
+    has_paper_copy? 'has_paper_copy'
 
-    current_subscription :paypal_first_name
-    current_subscription :paypal_last_name
-    current_subscription :paypal_email
-    current_subscription :duration
-    current_subscription :paper_copy
-    current_subscription :purchase_date
-    current_subscription :valid_from
+    current_subscription :paypal_first_name => 'paypal_first_name'
+    current_subscription :paypal_last_name => 'paypal_last_name'
+    current_subscription :paypal_email => 'paypal_email'
+    current_subscription :paper_copy => 'paper_copy'
+    current_subscription :purchase_date => 'purchase_date'
+    current_subscription :valid_from => 'valid_from'
     current_subscription :duration
 
   end
