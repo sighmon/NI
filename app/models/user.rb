@@ -60,14 +60,14 @@ class User < ActiveRecord::Base
     is_recurring? 'is_recurring'
     has_paper_copy? 'has_paper_copy'
 
-    current_subscription :paypal_first_name => 'paypal_first_name'
-    current_subscription :paypal_last_name => 'paypal_last_name'
-    current_subscription :paypal_email => 'paypal_email'
-    current_subscription :paper_copy => 'paper_copy'
-    current_subscription :purchase_date => 'purchase_date'
-    current_subscription :valid_from => 'valid_from'
-    current_subscription :duration
-    current_subscription :cancellation_date => 'cancellation_date'
+    last_subscription_including_cancelled :paypal_first_name => 'paypal_first_name'
+    last_subscription_including_cancelled :paypal_last_name => 'paypal_last_name'
+    last_subscription_including_cancelled :paypal_email => 'paypal_email'
+    last_subscription_including_cancelled :paper_copy => 'paper_copy'
+    last_subscription_including_cancelled :purchase_date => 'purchase_date'
+    last_subscription_including_cancelled :valid_from => 'valid_from'
+    last_subscription_including_cancelled :duration
+    last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
 
   end
 
@@ -117,6 +117,10 @@ class User < ActiveRecord::Base
 
   def last_subscription
     return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def last_subscription_including_cancelled
+    return self.subscriptions.sort!{|a,b| a.expiry_date_excluding_cancelled <=> b.expiry_date_excluding_cancelled}.last
   end
 
   def current_subscription

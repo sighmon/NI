@@ -23,6 +23,10 @@ class Subscription < ActiveRecord::Base
     return (cancellation_date or (valid_from + duration.months))
   end
 
+  def expiry_date_excluding_cancelled
+    return (valid_from + duration.months)
+  end
+
   def is_recurring?
   	 return (was_recurring? and (not is_cancelled?))
   end
