@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
     last_subscription_including_cancelled :valid_from => 'valid_from'
     last_subscription_including_cancelled :duration
     last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
+    last_subscription_including_cancelled :paypal_country_code => 'paypal_country_code'
 
   end
 
