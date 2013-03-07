@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
     current_subscription :purchase_date => 'purchase_date'
     current_subscription :valid_from => 'valid_from'
     current_subscription :duration
+    current_subscription :cancellation_date => 'cancellation_date'
 
   end
 
