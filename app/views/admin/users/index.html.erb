@@ -14,7 +14,7 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th>Username</th>
+			<th>Email</th>
 			<th>Type</th>
 			<th>Action</th>
 		</tr>
@@ -22,7 +22,7 @@
 	<tbody>
 	<% @users.each do |user| %>
 		<tr>
-			<td><%= link_to user, [:admin, user] %></td>
+			<td><%= link_to user.email, [:admin, user] %></td>
 			<td><%= user.user_type %></td>
 			<td><%= link_to "Show", [:admin, user], :class => 'btn btn-mini' %>
 				<%= link_to "Edit", edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
