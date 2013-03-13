@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cancan/matchers'
 
 describe User do
 
@@ -13,6 +14,20 @@ describe User do
 
     it "should not be a subscriber" do
       user.subscriber?.should be_false
+    end
+
+    context "with a subscriber parent" do
+      let(:ability){ Ability.new(user) }
+      before(:each) do
+        sub = FactoryGirl.create(:subscription)
+        sub.user.children << user
+      end
+      it "has a subscription" do
+        user.subscriber?.should be_true
+      end
+      it "can't update itself" do
+        ability.should_not be_able_to(:manage, user)
+      end
     end
 
   end

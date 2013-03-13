@@ -83,7 +83,12 @@ class User < ActiveRecord::Base
   end
 
   def subscription_valid?
-    return self.subscriptions.collect{|s| s.is_current?}.include?(true)
+    if self.parent
+      host = self.parent
+    else
+      host = self
+    end
+    return host.subscriptions.collect{|s| s.is_current?}.include?(true)
   end
 
   def subscription_lapsed?
