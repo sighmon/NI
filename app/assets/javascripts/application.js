@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
-//= require twitter/bootstrap
+//= require bootstrap
 //= require_tree .
 //= require retina_image_tag
 

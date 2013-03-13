@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227005749) do
+ActiveRecord::Schema.define(:version => 20130313052328) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -193,6 +193,8 @@ ActiveRecord::Schema.define(:version => 20130227005749) do
     t.datetime "updated_at",                             :null => false
     t.string   "username"
     t.boolean  "admin"
+    t.boolean  "institution"
+    t.integer  "parent_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
