@@ -466,6 +466,18 @@ a:active .shadow {
 	border-bottom-color: white;
 }
 
+.issue-unpublished {
+	-moz-box-shadow: @shadowSizeNormal @niRed;
+	-webkit-box-shadow: @shadowSizeNormal @niRed;
+	box-shadow: @shadowSizeNormal @niRed;
+}
+
+a:hover .issue-unpublished, a:active .issue-unpublished {
+	-moz-box-shadow: @shadowSizeHover @niRed;
+	-webkit-box-shadow: @shadowSizeHover @niRed;
+	box-shadow: @shadowSizeHover @niRed;
+}
+
 // Issue.articles styling
 
 .keynote {
