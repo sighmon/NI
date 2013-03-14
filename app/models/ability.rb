@@ -42,7 +42,8 @@ class Ability
         cannot :update, :all
     end
 
-    if user.institution?
+    # Institution ability
+    if user.institution
         can :create, User
     end
 
