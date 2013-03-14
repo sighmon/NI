@@ -8,6 +8,8 @@ describe User do
       FactoryGirl.create(:user)
     end
   
+    let(:ability) { Ability.new(user) }
+
     it "should have a username" do
       user.username.should_not == ""
     end
@@ -16,8 +18,13 @@ describe User do
       user.subscriber?.should be_false
     end
 
+    context "without a parent" do
+      it "can update itself" do
+        ability.should be_able_to(:manage, user)
+      end
+    end
+
     context "with a subscriber parent" do
-      let(:ability){ Ability.new(user) }
       before(:each) do
         sub = FactoryGirl.create(:subscription)
         sub.user.children << user
