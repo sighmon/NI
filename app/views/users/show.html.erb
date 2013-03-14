@@ -44,6 +44,16 @@
   <% end %>
 </dl>
 
+<% if not @user.children.empty? %>
+	<h3>Student accounts:</h3>
+	<dl class="dl-horizontal">
+		<% @user.children.each do |child| %>
+			<dt>Username:</dt>
+			<dd><%= child.username %> <%= link_to "Edit", edit_user_registration_path, :class => 'btn btn-mini btn-primary' %></dd>
+		<% end %>
+	</dl>
+<% end %>
+
 <% if not @user.parent %>
 	<h3>Favourite articles:</h3>
 	<%= favourites_as_table(@user.favourites) %>

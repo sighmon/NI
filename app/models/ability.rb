@@ -25,6 +25,8 @@ class Ability
         can :manage, GuestPass
         can :read, User
         can :manage, User, :id => user.id
+        # Ability for parents to manage children
+        can :manage, User, :parent => user
     end   
 
     if user.subscriber?
@@ -38,6 +40,10 @@ class Ability
     # Checks to see if a user has a parent, to stop institutional students from managing anything.
     if user.parent
         cannot :update, :all
+    end
+
+    if user.institution?
+        can :create, User
     end
 
     #

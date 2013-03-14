@@ -3,7 +3,31 @@ require 'cancan/matchers'
 
 describe User do
 
-  context "user" do
+  context "institution" do
+    let(:user) do
+      FactoryGirl.create(:user, :institution => true)
+    end
+
+    let(:ability) { Ability.new(user) }
+
+    context "with a child" do
+      before(:each) do
+        child = FactoryGirl.create(:user)
+        user.children << child
+      end
+      it "can manage child" do
+        ability.should be_able_to(:manage, user.children.first)
+      end
+      it "destroys child when destroyed" do
+        child_id = user.children.first.id
+        user.destroy
+        expect { User.find(child_id) }.to raise_exception
+      end
+    end
+
+  end
+
+  context "normal user" do
     let(:user) do
       FactoryGirl.create(:user)
     end
@@ -34,6 +58,25 @@ describe User do
       end
       it "can't update itself" do
         ability.should_not be_able_to(:update, user)
+      end
+      it "doesn't destroy parent when destroyed" do
+        parent_id = user.parent.id
+        user.destroy
+        User.find(parent_id).should_not be_nil
+      end
+    end
+
+    context "with a child" do
+      before(:each) do
+        child = FactoryGirl.create(:user)
+        user.children << child
+      end
+      it "can manage child" do
+        ability.should be_able_to(:manage, user.children.first)
+      end
+      it "cannot manage a non-child user" do
+        sibling = FactoryGirl.create(:user)
+        ability.should_not be_able_to(:manage, sibling)
       end
     end
 

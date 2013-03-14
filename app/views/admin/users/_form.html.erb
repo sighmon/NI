@@ -3,17 +3,6 @@
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
-    <!-- <%= f.input :admin %> -->
-    <!-- <%= f.association :issues, :as => :check_boxes %>-->
-    <%= simple_fields_for :subscription do |f| %>
-      <!-- <%= f.input :expiry_date, :as => :datetime %> -->
-      <%= f.input :refund, :as => :hidden %>
-      <%= f.input :paypal_payer_id, :as => :hidden %>
-      <%= f.input :paypal_profile_id, :as => :hidden %>
-      <%= f.input :paypal_email, :as => :hidden %>
-      <%= f.input :paypal_first_name, :as => :hidden %>
-      <%= f.input :paypal_last_name, :as => :hidden %>
-    <% end %>
   
   <div class="form-actions">
     	<%= f.button :submit, :class => 'btn btn-success' %>
@@ -21,61 +10,3 @@
   </div>
   
 <% end %>
-
-<!-- Pre-Formtastic form -->
-<!-- <%= form_for [:admin, @user] do |f| %> -->
-  <!-- f.error_messages -->
-  <!-- add gem 'dynamic_form' to GEMFILE if we want error messages -->
-
-  <!-- <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.label :admin %><br />
-    <%= f.check_box :admin %>
-  </div>
-
-  <div><%= f.label :issues %><br />
-    <%= f.text_field :issues %>
-  </div>
-
-  <div><%= f.submit %></div>
-<% end %> -->
-
-<!-- Pre-simple_form
-<%= semantic_form_for [:admin, @user] do |f| %>
-  <%= f.inputs do %>
-    <%= f.input :username %>
-    <%= f.input :email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
-    <%= f.input :admin %>
-    <%= fields_for :subscription do |f| %>
-      Expiry date: <%= f.datetime_select :expiry_date %>
-      <%= f.hidden_field :refund %>
-      <%= f.hidden_field :paypal_payer_id %>
-      <%= f.hidden_field :paypal_profile_id %>
-      <%= f.hidden_field :paypal_email %>
-      <%= f.hidden_field :paypal_first_name %>
-      <%= f.hidden_field :paypal_last_name %>
-    <% end %>
-    <%= f.input :issues, :as => :check_boxes %>
-  <% end %>
-  
-  <div class="form-actions">
-  	<%= f.actions do %>
-    	<%= f.action :submit, :as => :button, :class => 'btn' %>
-    <% end %>
-	<%= link_to "Cancel", admin_users_path, :class => 'btn' %>
-  </div>
-  
-<% end %>
--->

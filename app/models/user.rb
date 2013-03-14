@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   # parent-child relationships for institutional accounts
   belongs_to :parent, :class_name => 'User', :foreign_key => 'parent_id'
-  has_many :children, :class_name => 'User', :foreign_key => 'parent_id'
+  has_many :children, :class_name => 'User', :foreign_key => 'parent_id', :dependent => :destroy
 
   # Send a welcome email after a user is created
   after_create :send_welcome_mail
