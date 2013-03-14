@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   private
 
   def current_ability
-    @current_ability ||= Ability.new(current_user, params[:utm_source])
+    guest_pass_key = (params[:guest_pass] or params[:utm_source])
+    @current_ability ||= Ability.new(current_user, guest_pass_key)
   end
 
   def store_location

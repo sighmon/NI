@@ -108,7 +108,7 @@ class ArticlesController < ApplicationController
     	#@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
         @issue = Issue.find(@article.issue_id)
-        @article.is_valid_guest_pass(params[:utm_source])
+        #@article.is_valid_guest_pass(params[:utm_source])
         @newimage = Image.new
         @letters = @article.categories.select{|c| c.name.include?("/letters/")}
         # Push the single top image to the right for these categories
