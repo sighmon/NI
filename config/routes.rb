@@ -14,7 +14,7 @@ NI::Application.routes.draw do
   # created by the admin/users controller creation
   # get "users/index"
 
-  devise_for :users #, :path_names => { :sign_up => "subscribe" }
+  devise_for :users, :controllers => { :registrations => "registrations" } #, :path_names => { :sign_up => "subscribe" }
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]

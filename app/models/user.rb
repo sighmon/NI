@@ -82,6 +82,14 @@ class User < ActiveRecord::Base
     "#{username}"
   end
 
+  def subscriptions
+    if self.parent
+      return parent.subscriptions
+    else
+      return super
+    end
+  end
+
   def subscription_valid?
     if self.parent
       host = self.parent
@@ -110,7 +118,12 @@ class User < ActiveRecord::Base
 
   def expiry_date
     # FIXME: check for cancelled subscriptions
-    return self.subscriptions.collect{|s| s.expiry_date}.sort.last
+    if self.parent
+      host = self.parent
+    else
+      host = self
+    end
+    return host.subscriptions.collect{|s| s.expiry_date}.sort.last
   end
 
   def recurring_subscription
@@ -157,6 +170,8 @@ class User < ActiveRecord::Base
     t = "Guest"
     if admin?
       t = "Admin"
+    elsif parent
+      t = "Institutional"
     elsif subscriber?
       t = "Subscriber"
     end

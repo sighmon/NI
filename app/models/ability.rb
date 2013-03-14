@@ -24,6 +24,7 @@ class Ability
         can :manage, Favourite
         can :manage, GuestPass
         can :read, User
+        can :manage, User, :id => user.id
     end   
 
     if user.subscriber?
@@ -32,6 +33,11 @@ class Ability
 
     if user.admin?
         can :manage, :all
+    end
+
+    # Checks to see if a user has a parent, to stop institutional students from managing anything.
+    if user.parent
+        cannot :update, :all
     end
 
     #

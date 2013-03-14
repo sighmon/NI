@@ -33,7 +33,7 @@ describe User do
         user.subscriber?.should be_true
       end
       it "can't update itself" do
-        ability.should_not be_able_to(:manage, user)
+        ability.should_not be_able_to(:update, user)
       end
     end
 
