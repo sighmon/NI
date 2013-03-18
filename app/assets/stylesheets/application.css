@@ -12,4 +12,5 @@
  *= require_tree .
  *= require formtastic
  *= require bootstrap_and_overrides
+ *= stub email
 */
