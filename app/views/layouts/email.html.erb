@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= display_meta_tags :site => ENV['APP_NAME'], :reverse => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= favicon_link_tag %>
+</head>
+<body>
+	<div class="container">
+		
+		<%= yield %>
+
+		<div class="footer">
+			<p>&copy; Copyright <b>New Internationalist</b> 1973-2013. Except where otherwise noted, content on this site is <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">licensed</a> under <a href="http://creativecommons.org">Creative Commons</a>.</p>
+			<p>Except where otherwise noted, images on this site are &copy; the attributed photographer/illustrator or representative agency.</p>
+		</div>
+
+	</div>
+
+</body>
+</html>

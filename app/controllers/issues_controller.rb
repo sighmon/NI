@@ -63,8 +63,8 @@ class IssuesController < ApplicationController
 
   def email
     @issue = Issue.find(params[:issue_id])
-    @all_articles = @issue.articles
     @keynote = @issue.articles.find_by_keynote(true)
+    @all_articles = @issue.articles - [@keynote]
     # Set meta tags
     set_meta_tags :title => @issue.title,
                   :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
@@ -78,7 +78,7 @@ class IssuesController < ApplicationController
                     :site_name => "New Internationalist Magazine Digital Edition"
                   }
 
-    render :layout => false
+    render :layout => 'email'
   end
 
   # GET /issues/1

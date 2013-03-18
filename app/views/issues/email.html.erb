@@ -4,8 +4,13 @@
 <%= link_to retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200"), issue_path(@issue) %>
 
 <% if @keynote %>
-  <h5>The big story</h5>
+  <h3>This month's keynote</h3>
   <%= render :partial => "article_email", :object => @keynote %>
+<% end %>
+
+<h3>Other articles in this issue</h3>
+<% @all_articles.each do |a| %>
+  <p><%= link_to a.title, issue_article_path(@issue,a) %></p>
 <% end %>
 
 <% if @issue.editors_letter != "" %>
