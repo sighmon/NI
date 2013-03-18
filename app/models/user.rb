@@ -170,8 +170,10 @@ class User < ActiveRecord::Base
     t = "Guest"
     if admin?
       t = "Admin"
+    elsif institution
+      t = "Institution"
     elsif parent
-      t = "Institutional"
+      t = "Student"
     elsif subscriber?
       t = "Subscriber"
     end
