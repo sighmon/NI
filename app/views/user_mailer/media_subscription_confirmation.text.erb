@@ -1,0 +1,41 @@
+New Internationalist Magazine - digital subscription
+====================================================
+
+<%= @greeting %> <%= @user.username %>,
+You've been given a complimentary 10 year media 
+subscription to New Internationalist magazine.
+
+Start reading now!
+<%= issues_url %>
+
+Your username is: <%= @user.username %>
+Your user profile is: <%= user_url(@user) %>
+
+<% if @user.subscriber? and @user.is_recurring? %>
+Your next auto-debit will be on:
+<% else %>
+Your subscription is due for renewal:
+<% end %>
+<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
+
+If you come across any problems, simply hit 'reply' to this
+email and we'll reply as soon as we can.
+
+Cheers, the NI team.
+
+==============================
+New Internationalist Australia
+28 Austin Street
+Adelaide, SA 5000
+Phone: +61 8 8232 1563
+Web: http://www.newint.com.au
+
+Digital magazine reader:
+http://digital.newint.com.au
+
+Shop:
+http://www.newint.com.au/shop
+
+Social:
+http://twitter.com/ni_australia
+http://facebook.com/newint.au

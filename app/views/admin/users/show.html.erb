@@ -4,7 +4,8 @@
 
 <% if can? :update, @user %>
 	<div class="edit-issue-buttons">
-		<%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?")) %>
+		<%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?")) %> | 
+		<%= link_to '10yr Media Subscription', admin_user_media_subscription_path(@user), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 10 year media subscription to: '#{@user.username}'?")) %>
 	</div>
 <% end %>
 

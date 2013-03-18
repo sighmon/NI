@@ -56,6 +56,7 @@ NI::Application.routes.draw do
     root :to => "base#index"
     resources :users do
       get :free_subscription
+      get :media_subscription
     end
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }

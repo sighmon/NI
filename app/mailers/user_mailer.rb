@@ -45,4 +45,10 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Complimentary New Internationalist Digital Subscription")
   end
 
+  def media_subscription_confirmation(user)
+    @user = user
+    @greeting = "Hi"
+    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Complimentary New Internationalist Digital Subscription - Media")
+  end
+
 end
