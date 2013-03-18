@@ -61,6 +61,26 @@ class IssuesController < ApplicationController
     end
   end
 
+  def email
+    @issue = Issue.find(params[:issue_id])
+    @all_articles = @issue.articles
+    @keynote = @issue.articles.find_by_keynote(true)
+    # Set meta tags
+    set_meta_tags :title => @issue.title,
+                  :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                  :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
+                  :open_graph => {
+                    :title => @issue.title,
+                    :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                    #:type  => :magazine,
+                    :url   => issue_url(@issue),
+                    :image => @issue.cover_url(:thumb2x).to_s,
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  }
+
+    render :layout => false
+  end
+
   # GET /issues/1
   # GET /issues/1.json
   def show
