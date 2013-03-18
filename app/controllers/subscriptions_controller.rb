@@ -6,7 +6,11 @@ class SubscriptionsController < ApplicationController
 
     rescue_from CanCan::AccessDenied do |exception|
         session[:user_return_to] = request.referer
-        redirect_to new_user_session_path, :alert => "You need to be logged in to buy a subscription."
+        if not current_user
+            redirect_to new_user_session_path, :alert => "You need to be logged in to buy a subscription."
+        else
+            redirect_to (session[:user_return_to] or issues_path), :alert => exception.message
+        end
     end
 
     def express

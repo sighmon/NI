@@ -33,19 +33,23 @@
   <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover shadow', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
   <h2><%= simple_format @article.teaser %></h2>
   <p><span class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></span>
-    <% if current_article_favourited? %>
-      <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourite_path(@issue.id, @article.id, favourite_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
-    <% else %>
-      <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourites_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Add to favourites', :title => 'Add to favourites' %>
+    <% if can? :create, Favourite %>
+      <!-- Favourite -->
+      <% if current_article_favourited? %>
+        <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourite_path(@issue.id, @article.id, favourite_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
+      <% else %>
+        <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourites_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Add to favourites', :title => 'Add to favourites' %>
+      <% end %>
+      <!-- END Favourite -->
+      <!-- Sharing options -->
+      <% if current_article_has_a_guest_pass? %>
+        <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
+        <div class="article-guest-pass">Guest pass URL to share is: <%= generate_guest_pass_link_string(current_user.guest_passes.select{|s| (s.article.id == @article.id)}.last) %></div>
+      <% else %>
+        <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_passes_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Share this article with a friend.', :title => 'Share this article with a friend.' %>
+      <% end %>
+      <!-- END Sharing options -->
     <% end %>
-    <!-- Sharing options -->
-    <% if current_article_has_a_guest_pass? %>
-      <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
-      <div class="article-guest-pass">Guest pass URL to share is: <%= generate_guest_pass_link_string(current_user.guest_passes.select{|s| (s.article.id == @article.id)}.last) %></div>
-    <% else %>
-      <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_passes_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Share this article with a friend.', :title => 'Share this article with a friend.' %>
-    <% end %>
-    <!-- END Sharing options -->
   </p>
   <% if can? :manage, Article %>
     <ul class="unstyled">

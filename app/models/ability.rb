@@ -40,6 +40,7 @@ class Ability
     # Checks to see if a user has a parent, to stop institutional students from managing anything.
     if user.parent
         cannot :update, :all
+        cannot :create, :all
     end
 
     # Institution ability
