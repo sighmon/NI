@@ -63,8 +63,8 @@ class IssuesController < ApplicationController
 
   def email
     @issue = Issue.find(params[:issue_id])
-    @keynote = @issue.articles.find_by_keynote(true)
-    @all_articles = @issue.articles - [@keynote]
+    sections_of_articles_definitions
+    
     # Set meta tags
     set_meta_tags :title => @issue.title,
                   :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
@@ -86,24 +86,10 @@ class IssuesController < ApplicationController
   def show
     # @issue = Issue.find(params[:id])
     # TOFIX: Sort articles by :position using jquery
-    @all_articles = @issue.articles
-    @keynote = @issue.articles.find_by_keynote(true)
-    @features = @issue.articles_of_category("/features/").sort_by(&:publication)
-    @agendas = @issue.articles_of_category("/sections/agenda/").sort_by(&:publication)
-    @opinion = (@issue.articles_of_category("/argument/") +
-      @issue.articles_of_category("/columns/viewfrom/") +
-      @issue.articles_of_category("/columns/mark-engler/")
-      ).sort_by(&:publication)
-    @alternatives = @issue.articles_of_category("/alternatives/").sort_by(&:publication)
-    @regulars = (@issue.articles_of_category("/columns/") - 
-      @issue.articles_of_category("/columns/media/") - 
-      @issue.articles_of_category("/columns/viewfrom/") - 
-      @issue.articles_of_category("/columns/mark-engler/")
-      ).sort_by(&:publication)
-    @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
-    @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
-    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @opinion - @regulars - @blogs - @alternatives - @mixedmedia
 
+    # Load section definitions
+    sections_of_articles_definitions
+    
     # Set meta tags
     set_meta_tags :title => @issue.title,
                   :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
@@ -188,4 +174,26 @@ class IssuesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def sections_of_articles_definitions
+    @all_articles = @issue.articles
+    @keynote = @issue.articles.find_by_keynote(true)
+    @features = @issue.articles_of_category("/features/").sort_by(&:publication)
+    @agendas = @issue.articles_of_category("/sections/agenda/").sort_by(&:publication)
+    @opinion = (@issue.articles_of_category("/argument/") +
+      @issue.articles_of_category("/columns/viewfrom/") +
+      @issue.articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
+    @alternatives = @issue.articles_of_category("/alternatives/").sort_by(&:publication)
+    @regulars = (@issue.articles_of_category("/columns/") - 
+      @issue.articles_of_category("/columns/media/") - 
+      @issue.articles_of_category("/columns/viewfrom/") - 
+      @issue.articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
+    @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
+    @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
+    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @opinion - @regulars - @blogs - @alternatives - @mixedmedia
+    @categorised_articles = @all_articles - @uncategorised
+  end
+
 end

@@ -1,22 +1,192 @@
-<h1><%= @issue.title %></h1>
-<h2>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h2>
+<!-- START TEMPLATE -->
 
-<%= link_to retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200"), issue_path(@issue) %>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" id="background-table">
+  <tbody><tr>
+    <td align="center" bgcolor="#ececec">
+          <table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
+              <tbody><tr><td class="w640" width="640" height="20"></td></tr>
+                
+              <tr>
+                  <td class="w640" width="640">
+                        <table id="top-bar" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#B5B5B5">
+    <tbody><tr>
+        <td class="w15" width="15"></td>
+        <td class="w325" width="350" valign="middle" align="left">
+            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
+            </tbody></table>
+            <div class="header-content"><webversion>Web Version</webversion><span class="hide">&nbsp;&nbsp;|&nbsp; <preferences lang="en">Update preferences</preferences>&nbsp;&nbsp;|&nbsp; <unsubscribe>Unsubscribe</unsubscribe></span></div>
+            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
+            </tbody></table>
+        </td>
+        <td class="w30" width="30"></td>
+        <td class="w255" width="255" valign="middle" align="right">
+            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
+            </tbody></table>
+            <table cellpadding="0" cellspacing="0" border="0">
+    <tbody><tr>
+        
+        <td valign="middle"><fblike><img src="https://img.createsend1.com/img/templatebuilder/like-glyph.png" border="0" width="8" height="14" alt="Facebook icon"=""></fblike></td>
+        <td width="3"></td>
+        <td valign="middle"><div class="header-content"><fblike>Like</fblike></div></td>
+        
+        
+        <td class="w10" width="10"></td>
+        <td valign="middle"><tweet><img src="https://img.createsend1.com/img/templatebuilder/tweet-glyph.png" border="0" width="17" height="13" alt="Twitter icon"=""></tweet></td>
+        <td width="3"></td>
+        <td valign="middle"><div class="header-content"><tweet>Tweet</tweet></div></td>
+        
+        
+        <td class="w10" width="10"></td>
+        <td valign="middle"><forwardtoafriend lang="en"><img src="https://img.createsend1.com/img/templatebuilder/forward-glyph.png" border="0" width="19" height="14" alt="Forward icon"=""></forwardtoafriend></td>
+        <td width="3"></td>
+        <td valign="middle"><div class="header-content"><forwardtoafriend lang="en">Forward</forwardtoafriend></div></td>
+        
+    </tr>
+</tbody></table>
+            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
+            </tbody></table>
+        </td>
+        <td class="w15" width="15"></td>
+    </tr>
+</tbody></table>
+                        
+                    </td>
+                </tr>
+                <tr>
+                <td id="header" class="w640" width="640" align="center" bgcolor="#D71A21">
+    
+    <div align="center" style="text-align: center">
+        
+        <img id="customHeaderImage" label="Header Image" editable="true" width="640" src="/assets/email-header@2x.gif" class="w640" border="0" align="top" style="display: inline">
+        
+    </div>
+    
+    
+</td>
+                </tr>
+                
+                <tr><td class="w640" width="640" height="30" bgcolor="#ffffff"></td></tr>
+                <tr id="simple-content-row"><td class="w640" width="640" bgcolor="#ffffff">
+    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
+        <tbody><tr>
+            <td class="w30" width="30"></td>
+            <td class="w580" width="580">
+                <repeater>
+                    
+                    <layout label="Text only">
+                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p align="center"><%= link_to retina_image_tag(@issue.cover_url(:thumb2x).to_s, :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200", :class => 'magazine-cover'), issue_path(@issue) %></p>
+                                    <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_path(@issue) %></singleline></p>
+                                    <div align="left" class="article-content">
+                                        <multiline label="Description">The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_path(@issue) %> of New Internationalist magazine is available now for you to read.</multiline>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" width="580" height="10"></td></tr>
+                        </tbody></table>
+                    </layout>
 
-<% if @keynote %>
-  <h3>This month's keynote</h3>
-  <%= render :partial => "article_email", :object => @keynote %>
-<% end %>
+                    <layout label="Text with right-aligned image">
+                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p align="left" class="section-title">Keynote article</p>
+                                    <% if not @keynote.featured_image.blank? %>
+                                      <table cellpadding="0" cellspacing="0" border="0" align="right">
+                                          <tbody><tr>
+                                              <td class="w30" width="15"></td>
+                                              <td><img src="<%= @keynote.featured_image_url(:thumb2x).to_s %>" editable="true" label="Image" class="w100" width="100" border="0"></td>
+                                          </tr>
+                                          <tr><td class="w30" width="15" height="5"></td><td></td></tr>
+                                      </tbody></table>
+                                    <% end %>
+                                    <p align="left" class="article-title"><singleline label="Title"><%= link_to "#{@keynote.title}", issue_article_path(@issue,@keynote) %></singleline></p>
+                                    <div align="left" class="article-content">
+                                        <multiline label="Description"><%= simple_format @keynote.teaser %> <%= link_to "Read it now", issue_article_path(@issue,@keynote) %></multiline>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" width="580" height="10"></td></tr>
+                        </tbody></table>
+                    </layout>
 
-<h3>Other articles in this issue</h3>
-<% @all_articles.each do |a| %>
-  <p><%= link_to a.title, issue_article_path(@issue,a) %></p>
-<% end %>
+                    <layout label="Text with right-aligned image">
+                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p align="left" class="section-title">A note from the editor</p>
+                                    <table cellpadding="0" cellspacing="0" border="0" align="right">
+                                        <tbody><tr>
+                                            <td class="w30" width="15"></td>
+                                            <td><img src="<%= @issue.editors_photo_url(:thumb2x).to_s %>" editable="true" label="Image" class="w100" width="100" border="0"></td>
+                                        </tr>
+                                        <tr><td class="w30" width="15" height="5"></td><td></td></tr>
+                                    </tbody></table>
+                                    <div align="left" class="article-content">
+                                        <multiline label="Description"><%= simple_format @issue.editors_letter %>
+                                          <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p></multiline>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" width="580" height="10"></td></tr>
+                        </tbody></table>
+                    </layout>
 
-<% if @issue.editors_letter != "" %>
-  <h3>A note from the editor</h3>
-  <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo img-polaroid', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
-  <%= simple_format @issue.editors_letter %>
-  <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
-  <hr />
-<% end %>
+                    <layout label="Text only">
+                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p align="left" class="section-title">Other articles in this issue</p>
+                                    <% @categorised_articles.each do |a| %>
+                                      <p align="left" class="article-content"><%= link_to a.title, issue_article_path(@issue,a) %></p>
+                                      <!-- <div align="left" class="article-content">
+                                        <multiline label="Description"><%= simple_format a.teaser %> <%= link_to "Read it now", issue_article_path(@issue,a) %></multiline>
+                                      </div> -->
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" width="580" height="10"></td></tr>
+                        </tbody></table>
+                    </layout>
+
+                </repeater>
+            </td>
+            <td class="w30" width="30"></td>
+        </tr>
+    </tbody></table>
+</td></tr>
+                <tr><td class="w640" width="640" height="15" bgcolor="#ffffff"></td></tr>
+                
+                <tr>
+                <td class="w640" width="640">
+    <table id="footer" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#f0b133">
+        <tbody><tr><td class="w30" width="30"></td><td class="w580 h0" width="360" height="30"></td><td class="w0" width="60"></td><td class="w0" width="160"></td><td class="w30" width="30"></td></tr>
+        <tr>
+            <td class="w30" width="30"></td>
+            <td class="w580" width="360" valign="top">
+            <span class="hide"><p id="permission-reminder" align="left" class="footer-content-left"><span>You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.</span></p></span>
+            <p align="left" class="footer-content-left"><preferences lang="en">Edit your subscription</preferences> | <unsubscribe>Unsubscribe</unsubscribe></p>
+            </td>
+            <td class="hide w0" width="60"></td>
+            <td class="hide w0" width="160" valign="top">
+            <p id="street-address" align="right" class="footer-content-right"><span>28 Austin Street,</span><br>
+<span>Adelaide, SA, 5000</span><br>
+<span>AUSTRALIA</span></p>
+            </td>
+            <td class="w30" width="30"></td>
+        </tr>
+        <tr><td class="w30" width="30"></td><td class="w580 h0" width="360" height="15"></td><td class="w0" width="60"></td><td class="w0" width="160"></td><td class="w30" width="30"></td></tr>
+    </tbody></table>
+</td>
+                </tr>
+                <tr><td class="w640" width="640" height="60"></td></tr>
+            </tbody></table>
+        </td>
+  </tr>
+</tbody></table>
