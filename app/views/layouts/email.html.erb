@@ -1,25 +1,24 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
   <%= display_meta_tags :site => ENV['APP_NAME'], :reverse => true %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= favicon_link_tag %>
-  <style>
-  <%= Rails.application.assets.find_asset('email').to_s %>
+  <style type="text/css">
+  <%= raw Rails.application.assets.find_asset('email') %>
   </style>
+  <!--[if gte mso 9]>
+	<style _tmplitem="579" >
+	.article-content ol, .article-content ul {
+	   margin: 0 0 0 24px;
+	   padding: 0;
+	   list-style-position: inside;
+	}
+	</style>
+  <![endif]-->
 </head>
 <body>
-	<div class="container">
-
-		<%= yield %>
-
-		<div class="footer">
-			<p>&copy; Copyright <b>New Internationalist</b> 1973-2013. Except where otherwise noted, content on this site is <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">licensed</a> under <a href="http://creativecommons.org">Creative Commons</a>.</p>
-			<p>Except where otherwise noted, images on this site are &copy; the attributed photographer/illustrator or representative agency.</p>
-		</div>
-
-	</div>
-
+	<%= yield %>
 </body>
 </html>
