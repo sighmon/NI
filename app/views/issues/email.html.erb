@@ -61,7 +61,7 @@
     
     <div align="center" style="text-align: center">
         
-        <img id="customHeaderImage" label="Header Image" editable="true" width="640" src="/assets/email-header@2x.gif" class="w640" border="0" align="top" style="display: inline">
+        <a href="<%= root_url %>"><img id="customHeaderImage" label="Header Image" editable="true" width="640" src="/assets/email-header@2x.gif" class="w640" border="0" align="top" style="display: inline"></a>
         
     </div>
     
@@ -69,7 +69,6 @@
 </td>
                 </tr>
                 
-                <tr><td class="w640" width="640" height="30" bgcolor="#ffffff"></td></tr>
                 <tr id="simple-content-row"><td class="w640" width="640" bgcolor="#ffffff">
     <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
         <tbody><tr>
@@ -84,13 +83,15 @@
                                     <p align="center"><%= link_to retina_image_tag(@issue.cover_url(:thumb2x).to_s, :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200", :class => 'magazine-cover'), issue_path(@issue) %></p>
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_path(@issue) %></singleline></p>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_path(@issue) %> of New Internationalist magazine is available now for you to read.</multiline>
+                                        <multiline label="Description">The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_path(@issue) %> of New Internationalist magazine is available now for you to read by <a href="<%= new_user_session_url %>?user[login]=<%= current_user.username %>">logging in</a> with your username: <b><%= current_user.username %></b>.</multiline>
                                     </div>
                                 </td>
                             </tr>
                             <tr><td class="w580" width="580" height="10"></td></tr>
                         </tbody></table>
                     </layout>
+
+                    <hr />
 
                     <layout label="Text with right-aligned image">
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
@@ -116,6 +117,8 @@
                         </tbody></table>
                     </layout>
 
+                    <hr />
+
                     <layout label="Text with right-aligned image">
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
@@ -137,6 +140,8 @@
                             <tr><td class="w580" width="580" height="10"></td></tr>
                         </tbody></table>
                     </layout>
+
+                    <hr />
 
                     <layout label="Text only">
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
