@@ -27,6 +27,16 @@ describe RegistrationsController do
           }.to change(User, :count).by(0)
         end
       end
+
+      context "with a blank email" do
+        it "doesn't create a new user" do
+          user = FactoryGirl.build(:user)
+          attributes = { username: user.username, email: "", password: "password", password_confirmation: "password" }
+          expect {
+            post :create, {:user => attributes}
+          }.to change(User, :count).by(0)
+        end
+      end
     end
   end
  

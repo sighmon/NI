@@ -25,6 +25,12 @@ describe User do
       end
     end
 
+    it "can create a child without an email" do
+      newuser = FactoryGirl.build(:user)
+      child = user.children.create(username: newuser.username, password: newuser.password)
+      child.email.should be_blank
+    end
+
   end
 
   context "normal user" do
