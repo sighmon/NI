@@ -64,6 +64,11 @@ NI::Application.routes.draw do
     resources :guest_passes, :only => [:index]
   end
 
+  namespace :institution do
+    root :to => "base#index"
+    resources :users
+  end
+
   get "home/index"
 
   # Change the page logged in users are directed to

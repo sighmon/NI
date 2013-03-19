@@ -1,0 +1,25 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1>Student account</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:username) %>:</strong></dt>
+  <dd><%= @user.username %></dd>
+  <dt><strong>Managed by:</strong></dt>
+  <dd><%= @user.parent.try(:username) %> (<%= @user.parent_id %>)</dd>
+  <dt><strong>Created at:</strong></dt>
+  <dd><%=l @user.created_at %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              institution_users_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_institution_user_path(@user), :class => 'btn btn-primary' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              institution_user_path(@user),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
