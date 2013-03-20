@@ -1,0 +1,56 @@
+New Internationalist Magazine - digital subscription
+====================================================
+
+<%= @greeting %> <%= @user.username %>,
+You've now been made an Institutional user.
+This means you have the power to create 'student' user
+accounts which will share your subscription.
+
+Feel free to create a couple of them, perhaps one for
+staff and one for students.
+
+To do this, head over to your user profile and click
+the big button that says 'Create a new student account':
+<%= user_url(@user) %>
+
+Now you can share the username and password of the
+student account you created with the school.
+
+NOTE: please don't share your main account with
+anyone, as they can then edit your details.
+
+Great, now you can start reading!
+<%= issues_url %>
+
+For future reference, your username is: <%= @user.username %>
+
+<% if @user.subscriber? and @user.is_recurring? %>
+Your next auto-debit will be on:
+<% elsif @user.subscriber? %>
+Your subscription is due for renewal:
+<% end %>
+<% if @user.subscriber? %>
+<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
+
+<% end %>
+If you come across any problems, simply hit 'reply' to this
+email and we'll reply as soon as we can.
+
+Cheers, the NI team.
+
+==============================
+New Internationalist Australia
+28 Austin Street
+Adelaide, SA 5000
+Phone: +61 8 8232 1563
+Web: http://www.newint.com.au
+
+Digital magazine reader:
+http://digital.newint.com.au
+
+Shop:
+http://www.newint.com.au/shop
+
+Social:
+http://twitter.com/ni_australia
+http://facebook.com/newint.au

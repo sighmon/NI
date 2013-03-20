@@ -44,7 +44,7 @@
   <% end %>
 </dl>
 
-<% if not @user.children.empty? %>
+<% if @user.institution %>
 	<h3>Student accounts: </h3>
 	<p><%= link_to 'Create a new student account', new_institution_user_path, :class => 'btn btn-success' %></p>
 	<%= children_as_table(@user.children) %>

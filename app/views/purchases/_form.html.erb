@@ -11,7 +11,7 @@
 	<div class="marketing-subscribe">
 		<h3>Or you could subscribe!</h3>
 		<h4>And read our entire archive...</h4>
-		<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to over 20 years of New Internationalist magazines.</p>
+		<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to our archive of New Internationalist magazines.</p>
 		<%= link_to "Subscription information...", new_subscription_path, :class => 'btn btn-info' %>
 	</div>
 <% end %>
