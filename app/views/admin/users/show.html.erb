@@ -44,6 +44,11 @@
 	<% end %>
 </dl>
 
+<% if not @user.children.empty? %>
+	<h3>Student accounts</h3>
+	<%= children_as_table(@user.children) %>
+<% end %>
+
 <h3>Purchases</h3>
 <%= purchases_as_table(@user.purchases) %>
 

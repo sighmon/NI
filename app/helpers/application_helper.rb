@@ -89,6 +89,24 @@ module ApplicationHelper
         end
     end
 
+    def children_as_table(children)
+        if children.try(:empty?)
+            return "You don't have any student accounts yet."
+        else
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Username</th><th>Date created</th>#{if current_user.institution?; '<th>Edit</th>'; end;}</tr></thead><tbody>"
+            for child in children.sort_by {|x| x.created_at}.reverse do
+                table += "<td>#{link_to child.username, institution_user_path(child)}</td>"
+                table += "<td>#{child.created_at.try(:strftime,"%d %B, %Y")}</td>"
+                if current_user.institution
+                    table += "<td>#{link_to "Edit", edit_institution_user_path(child), :class => 'btn btn-mini'} #{link_to "Delete", institution_user_path(child), :method => 'delete', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'}</td>"
+                end
+                table += "</tr>"
+            end
+            table += "</tbody></table>"
+            return raw table
+        end
+    end
+
     def user_expiry_as_string(user)
         return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end

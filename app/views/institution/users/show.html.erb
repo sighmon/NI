@@ -14,7 +14,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              institution_users_path, :class => 'btn'  %>
+              user_path(current_user), :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_institution_user_path(@user), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
