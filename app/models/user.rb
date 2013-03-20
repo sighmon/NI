@@ -33,10 +33,11 @@ class User < ActiveRecord::Base
   # Send a welcome email after a user is created
   after_create :send_welcome_mail
 
-  def email_required?
-    # if it DOESN'T have a parent, it DOES need an email
-    return self.parent.nil?
-  end
+  # This only allowed 1 user to have a blank email address, so we now give out fake emails for student users
+  # def email_required?
+  #   # if it DOESN'T have a parent, it DOES need an email
+  #   return self.parent.nil?
+  # end
 
   def send_welcome_mail
     UserMailer.user_signup_confirmation(self).deliver
