@@ -51,7 +51,7 @@ class Institution::UsersController < Institution::BaseController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to [:institution, @user], notice: 'User was successfully created.' }
+        format.html { redirect_to user_path(current_user), notice: 'User was successfully created.' }
         format.json { render json: [:institution, @user], status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -87,7 +87,7 @@ class Institution::UsersController < Institution::BaseController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to institution_users_url }
+      format.html { redirect_to user_path(current_user), notice: 'Student user account was successfully deleted.' }
       format.json { head :no_content }
     end
   end
