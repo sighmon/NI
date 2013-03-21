@@ -124,7 +124,8 @@ class ArticlesController < ApplicationController
         # Display the :sixhundred version for these cartoons
         @cartoon = @article.categories.select{|c| 
             c.name.include?("/columns/polyp/") or 
-            c.name.include?("/columns/only-planet/")
+            c.name.include?("/columns/only-planet/") or
+            c.name.include?("/columns/exposure/")
         }
         if not @cartoon.empty?
             @image_url_string = :sixhundred
