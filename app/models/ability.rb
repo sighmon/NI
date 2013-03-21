@@ -7,7 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     # can :read, Issue, :trialissue => true
     # can :index, Issue
-    can :read, Issue, :published => true
+    can [:read, :email], Issue, :published => true
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :users => { :id => user.id } }
     # can :read, Article, :guest_passes => { :key => key } 
