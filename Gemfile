@@ -63,7 +63,9 @@ group :test, :development do
 end
 
 group :test do
-  gem 'cucumber-rails', :require => false
+  # i don't THINK we use cucumber anymore
+  #gem 'cucumber-rails', :require => false
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'simplecov', :require => false
   gem 'timecop'

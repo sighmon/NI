@@ -17,7 +17,7 @@
   	<%= bugherd_tag %>
   <% end %>
   <!-- Google Analytics tracking code -->
-  <%= analytics_init :local => Rails.env.development? %>
+  <%= analytics_init :local => ( Rails.env.development? or Rails.env.test? ) %>
 </head>
 <body>
 	
