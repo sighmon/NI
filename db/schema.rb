@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313052328) do
+ActiveRecord::Schema.define(:version => 20130325233848) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130313052328) do
     t.text     "source"
     t.string   "featured_image"
     t.string   "featured_image_caption"
+    t.boolean  "hide_author_name"
   end
 
   add_index "articles", ["issue_id"], :name => "index_articles_on_issue_id"

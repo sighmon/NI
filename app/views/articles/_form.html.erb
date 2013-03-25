@@ -17,6 +17,12 @@
       <%= f.text_field :author, :class => 'text_field' %>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label :hide_author_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :hide_author_name, :class => 'check_box' %>
+    </div>
+  </div>
 
   <div class="control-group autocomplete-data" data-autocomplete-source="<%= Category.order(:name).map(&:name) %>">
     <b>Categories</b>
