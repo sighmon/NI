@@ -194,8 +194,8 @@ class IssuesController < ApplicationController
       ).sort_by(&:publication)
     @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
     @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
-    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @opinion - @regulars - @blogs - @alternatives - @mixedmedia
-    @categorised_articles = @all_articles - @uncategorised
+    @categorised_articles = @features + @agendas + @opinion + @regulars + @blogs + @alternatives + @mixedmedia
+    @uncategorised = @all_articles - @categorised_articles - [@keynote]
   end
 
 end
