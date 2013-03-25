@@ -13,12 +13,23 @@ describe "ImageUploads" do
     end
 
     context "given an article" do
+
       let(:article) { FactoryGirl.create(:article) }
+
       describe "GET /issue/:id/article/:id/images/new" do
         it "works! (now write some real specs)" do
           # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
           get new_issue_article_image_path(article.issue.id,article.id)
           response.status.should be(200)
+        end
+      end
+
+
+      describe "uploading an image" do
+        it "works" do
+          pending "where should we store test image data?"
+          visit issue_article_image(article.issue.id,article.id)
+          #attach_file('image_data',  
         end
       end
     end
