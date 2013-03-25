@@ -112,6 +112,11 @@ module ArticlesHelper
         end 
       end
 
+      if doc.xpath('//container[@element_type="author_note"]').empty? and doc.xpath('//container[@element_type="author"]').empty? and doc.xpath('//container[@element_type="postscript"]').empty?
+        next_order = doc.xpath('//story/elements/*').collect{|e| e["order"].to_i }.max + 1
+        doc.at_xpath('//story/elements') << '<container order="'+next_order.to_s+'" element_type="author_note"><field type="an_author_note">'+article.author+'</field></container>'
+      end
+
       return process_children(doc.xpath("//story/elements"),debug).html_safe
 
     end
