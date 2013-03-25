@@ -66,7 +66,7 @@ class ArticlesController < ApplicationController
          v.delete("id")  
         end 
         # Added this check to be able to create an article without a category
-        if not extracted_categories_attributes[:categories_attributes].nil?
+        if not extracted_categories_attributes.try(:fetch,:categories_attributes).nil?
             @article.update_attributes(extracted_categories_attributes)
         end
         
