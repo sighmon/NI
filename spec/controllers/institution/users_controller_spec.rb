@@ -35,8 +35,9 @@ describe Institution::UsersController do
   end
 
   describe "GET index" do
-    it "assigns all institution_users as @institution_users" do
-      user = Institution::User.create! valid_attributes
+    it "assigns all children as @institution_users" do
+      pending
+      user = FactoryGirl.create(:user)
       get :index, {}, valid_session
       assigns(:institution_users).should eq([user])
     end
