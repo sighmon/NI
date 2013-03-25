@@ -77,8 +77,10 @@ class IssuesController < ApplicationController
                     :image => @issue.cover_url(:thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   }
-
-    render :layout => 'email'
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+    end
   end
 
   # GET /issues/1
