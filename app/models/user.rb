@@ -65,6 +65,7 @@ class User < ActiveRecord::Base
   comma do
 
     id
+    username
     email
     expiry_date 'expiry_date'
     is_recurring? 'is_recurring'
