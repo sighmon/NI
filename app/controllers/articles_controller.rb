@@ -125,7 +125,9 @@ class ArticlesController < ApplicationController
         @cartoon = @article.categories.select{|c| 
             c.name.include?("/columns/polyp/") or 
             c.name.include?("/columns/only-planet/") or
-            c.name.include?("/columns/exposure/")
+            c.name.include?("/columns/exposure/") or
+            c.name.include?("/columns/scratchy-lines/") or
+            c.name.include?("/columns/cartoon/")
         }
         if not @cartoon.empty?
             @image_url_string = :sixhundred
