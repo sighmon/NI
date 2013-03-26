@@ -9,7 +9,6 @@ describe Image do
     it "can create a new image with article.image.create" do
       expect {
         image = article.images.create(data: "notanimage")
-        pp image
       }.to change(Image, :count).by(1)
     end
 
