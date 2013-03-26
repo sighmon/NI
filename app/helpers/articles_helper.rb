@@ -105,7 +105,7 @@ module ArticlesHelper
           elsif e["type"] == "box_title"
             "<h4>#{e.text}</h4>"
           elsif ["wb_name", "wp_job", "wb_reputation", "wb_humour", "wb_cunning", "wb_sources"].include? e["type"]
-            "<dt>#{e['type'].gsub(e['type'].first(3), '').titlecase}</dt><dd>#{e.text}</dd>"
+            "<dt>#{e['type'].gsub(/^w._/, '').titlecase}</dt><dd>#{e.text}</dd>"
           elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
             #ignore 
           else
