@@ -32,6 +32,8 @@ module ArticlesHelper
             "<div class='product-profile'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "author_note" or e["element_type"] == "author" or e["element_type"] == "postscript"
             "<div class='author-note'>"+process_children(e,debug)+"</div>"
+          elsif e["element_type"] == "worldbeater"
+            "<div class='worldbeater'><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           elsif e["element_type"] == "related_media" or e["element_type"] == "related_media_graphic"
             media_id = e["related_media_id"]
             image = Image.find_by_media_id(media_id)
@@ -102,6 +104,8 @@ module ArticlesHelper
             "<li>#{e.text.gsub(/\n/, " ")}</li>"
           elsif e["type"] == "box_title"
             "<h4>#{e.text}</h4>"
+          elsif ["wb_name", "wp_job", "wb_reputation", "wb_humour", "wb_cunning", "wb_sources"].include? e["type"]
+            "<dt>#{e['type'].gsub(e['type'].first(3), '').titlecase}</dt><dd>#{e.text}</dd>"
           elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
             #ignore 
           else
