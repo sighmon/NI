@@ -21,10 +21,14 @@ class Issue < ActiveRecord::Base
   #   end
   # end
 
-  def self.search(params, unpublished = false)
-    tire.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
+  def self.search(params, admin = false)
+    pagination = Settings.issue_pagination
+    if admin
+      pagination = 200
+    end
+    tire.search(load: true, :page => params[:page], :per_page => pagination) do
       query {string params[:query]} if params[:query].present?
-      filter :term, :published => true unless unpublished
+      filter :term, :published => true unless admin
       sort { by :release, 'desc' }
     end
   end
