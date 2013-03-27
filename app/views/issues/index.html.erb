@@ -58,7 +58,9 @@
 </table>
 
 <% if can? :create, Issue %>
-	<%= link_to t('.new', :default => t("helpers.links.new")),
+  <div class="form-actions">
+  	<%= link_to t('.new', :default => t("helpers.links.new")),
 	            new_issue_path,
 	            :class => 'btn btn-primary' %>
+  </div>
 <% end %>

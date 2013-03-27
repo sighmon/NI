@@ -1,0 +1,76 @@
+<% linkbody = "NI #{@issue.number} - #{@issue.title}" -%>
+<%= linkbody %>
+<%= "=" * linkbody.length %>
+<%= "[#{issue_url(@issue)}]" %>
+
+Hi [salutation],
+The <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine is available now for you to read by logging in with your username: [username,fallback=].
+
+[http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]
+
+
+===============
+Keynote article
+===============
+
+<%= @keynote.title %>
+<%= "[#{issue_article_url(@issue,@keynote)}]" %>
+
+<%= strip_tags @keynote.teaser %>
+
+
+======================
+A note from the editor
+======================
+
+<%= strip_tags @issue.editors_letter %>
+
+<%= @issue.editors_name %>
+for the New Internationalist co-operative.
+
+
+============================
+Other articles in this issue
+============================
+
+<% @categorised_articles.each do |a| %>
+<%= a.title %>
+<%= "[#{issue_article_url(@issue,a)}]" %>
+
+<% end %>
+
+============================
+
+You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.
+
+Forward to a friend
+[forwardtoafriend]
+
+Unsubscribe
+[unsubscribe]
+
+Tweet about this email:
+[tweet]
+
+Like this email on Facebook:
+[fblike]
+
+
+==============================
+New Internationalist Australia
+==============================
+
+28 Austin Street
+Adelaide, SA 5000
+Phone: +61 8 8232 1563
+Web: [http://www.newint.com.au]
+
+Digital magazine reader:
+[http://digital.newint.com.au]
+
+Shop:
+[http://www.newint.com.au/shop]
+
+Find us on social media:
+[http://facebook.com/newint.au]
+[http://twitter.com/ni_australia]

@@ -77,8 +77,10 @@ class IssuesController < ApplicationController
                     :image => @issue.cover_url(:thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   }
-
-    render :layout => 'email'
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+    end
   end
 
   # GET /issues/1
@@ -192,8 +194,8 @@ class IssuesController < ApplicationController
       ).sort_by(&:publication)
     @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
     @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
-    @uncategorised = @all_articles - [@keynote] - @features - @agendas - @opinion - @regulars - @blogs - @alternatives - @mixedmedia
-    @categorised_articles = @all_articles - @uncategorised
+    @categorised_articles = @features + @agendas + @opinion + @regulars + @blogs + @alternatives + @mixedmedia
+    @uncategorised = @all_articles - @categorised_articles - [@keynote]
   end
 
 end
