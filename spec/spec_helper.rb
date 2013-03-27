@@ -38,6 +38,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
   end
 
   config.before(:each) do
@@ -49,3 +50,8 @@ RSpec.configure do |config|
   end
 
 end
+
+def valid_attributes_for(model, extra=[])
+  return model.attributes.slice(*(Array(model.class.accessible_attributes)+extra))
+end
+

@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "institution/users/show" do
   before(:each) do
-    @institution_user = assign(:institution_user, stub_model(Institution::User))
+    @user = assign(:user, FactoryGirl.create(:child_user))
+    view.stub(:current_user).and_return(@user.parent)
   end
 
   it "renders attributes in <p>" do

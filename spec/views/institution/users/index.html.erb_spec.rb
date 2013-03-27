@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "institution/users/index" do
   before(:each) do
-    assign(:institution_users, [
-      stub_model(Institution::User),
-      stub_model(Institution::User)
+    assign(:users, [
+      @child = FactoryGirl.create(:child_user),
     ])
+    assign(:user, @child.parent)
   end
 
   it "renders a list of institution/users" do

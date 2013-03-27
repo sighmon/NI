@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-def valid_attributes_for(model)
-  return model.attributes.slice(*Array(model.class.accessible_attributes))
-end
 
 describe ArticlesController do
 

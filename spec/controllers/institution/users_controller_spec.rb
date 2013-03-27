@@ -27,139 +27,148 @@ describe Institution::UsersController do
     {  }
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # Institution::UsersController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
 
-  describe "GET index" do
-    it "assigns all children as @institution_users" do
-      pending
-      user = FactoryGirl.create(:user)
-      get :index, {}, valid_session
-      assigns(:institution_users).should eq([user])
+  context "as a parent" do
+    let(:child) { FactoryGirl.create(:child_user) }
+    let(:parent) { child.parent }
+
+    before(:each) do
+      sign_in parent
     end
-  end
+      
+    describe "GET index" do
 
-  describe "GET show" do
-    it "assigns the requested institution_user as @institution_user" do
-      user = Institution::User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
-      assigns(:institution_user).should eq(user)
+      it "works" do
+        get :index
+        response.status.should eq(200)
+      end
+
+      it "assigns all children as @users" do
+        get :index
+        assigns(:users).should eq(parent.children)
+      end
     end
-  end
 
-  describe "GET new" do
-    it "assigns a new institution_user as @institution_user" do
-      get :new, {}, valid_session
-      assigns(:institution_user).should be_a_new(Institution::User)
+    describe "GET show" do
+
+      it "assigns the requested user as @user" do
+        get :show, {:id => child.to_param}
+        assigns(:user).should eq(child)
+      end
     end
-  end
 
-  describe "GET edit" do
-    it "assigns the requested institution_user as @institution_user" do
-      user = Institution::User.create! valid_attributes
-      get :edit, {:id => user.to_param}, valid_session
-      assigns(:institution_user).should eq(user)
+    describe "GET new" do
+      it "assigns a new user as @user" do
+        get :new, {}
+        assigns(:user).should be_a_new(User)
+      end
     end
-  end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Institution::User" do
+    describe "GET edit" do
+
+      it "assigns the requested user as @user" do
+        get :edit, {:id => child.to_param}
+        assigns(:user).should eq(child)
+      end
+    end
+
+    describe "POST create" do
+      describe "with valid params" do
+        let(:attributes) { valid_attributes_for(FactoryGirl.build(:user)).merge({password: "password", password_confirmation: "password"}) }
+        it "creates a new User" do
+          expect {
+            post :create, {:user => attributes}
+          }.to change{parent.children.count}.by(1)
+        end
+
+        it "assigns a newly created user as @user" do
+          post :create, {:user => attributes}
+          assigns(:user).should be_a(User)
+          assigns(:user).should be_persisted
+        end
+
+        it "redirects to the parent user page" do
+          post :create, {:user => attributes}
+          response.should redirect_to(parent)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved user as @user" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          User.any_instance.stub(:save).and_return(false)
+          post :create, {:user => {  }}
+          assigns(:user).should be_a_new(User)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          User.any_instance.stub(:save).and_return(false)
+          post :create, {:user => {  }}
+          response.should render_template("new")
+        end
+      end
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested user" do
+          user = child
+          # Assuming there are no other institution_users in the database, this
+          # specifies that the Institution::User created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+          put :update, {:id => user.to_param, :user => { "these" => "params" }}
+        end
+
+        it "assigns the requested user as @user" do
+          user = FactoryGirl.create(:user)
+          put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
+          assigns(:user).should eq(user)
+        end
+
+        it "redirects to the parent" do
+          user = child
+          put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
+          response.should redirect_to(parent)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the user as @user" do
+          user = FactoryGirl.create(:user)
+          # Trigger the behavior that occurs when invalid params are submitted
+          User.any_instance.stub(:save).and_return(false)
+          put :update, {:id => user.to_param, :user => {  }}
+          assigns(:user).should eq(user)
+        end
+
+        it "re-renders the 'edit' template" do
+          user = child
+          # Trigger the behavior that occurs when invalid params are submitted
+          User.any_instance.stub(:save).and_return(false)
+          put :update, {:id => user.to_param, :user => {  }}
+          response.should render_template("edit")
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "destroys the requested institution_user" do
+        user = child
         expect {
-          post :create, {:institution_user => valid_attributes}, valid_session
-        }.to change(Institution::User, :count).by(1)
+          delete :destroy, {:id => user.to_param}
+        }.to change(User, :count).by(-1)
       end
 
-      it "assigns a newly created institution_user as @institution_user" do
-        post :create, {:institution_user => valid_attributes}, valid_session
-        assigns(:institution_user).should be_a(Institution::User)
-        assigns(:institution_user).should be_persisted
-      end
-
-      it "redirects to the created institution_user" do
-        post :create, {:institution_user => valid_attributes}, valid_session
-        response.should redirect_to(Institution::User.last)
+      it "redirects to the parent" do
+        user = child
+        delete :destroy, {:id => user.to_param}
+        response.should redirect_to(parent)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved institution_user as @institution_user" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Institution::User.any_instance.stub(:save).and_return(false)
-        post :create, {:institution_user => {  }}, valid_session
-        assigns(:institution_user).should be_a_new(Institution::User)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Institution::User.any_instance.stub(:save).and_return(false)
-        post :create, {:institution_user => {  }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested institution_user" do
-        user = Institution::User.create! valid_attributes
-        # Assuming there are no other institution_users in the database, this
-        # specifies that the Institution::User created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Institution::User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => user.to_param, :institution_user => { "these" => "params" }}, valid_session
-      end
-
-      it "assigns the requested institution_user as @institution_user" do
-        user = Institution::User.create! valid_attributes
-        put :update, {:id => user.to_param, :institution_user => valid_attributes}, valid_session
-        assigns(:institution_user).should eq(user)
-      end
-
-      it "redirects to the institution_user" do
-        user = Institution::User.create! valid_attributes
-        put :update, {:id => user.to_param, :institution_user => valid_attributes}, valid_session
-        response.should redirect_to(user)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the institution_user as @institution_user" do
-        user = Institution::User.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Institution::User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :institution_user => {  }}, valid_session
-        assigns(:institution_user).should eq(user)
-      end
-
-      it "re-renders the 'edit' template" do
-        user = Institution::User.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Institution::User.any_instance.stub(:save).and_return(false)
-        put :update, {:id => user.to_param, :institution_user => {  }}, valid_session
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested institution_user" do
-      user = Institution::User.create! valid_attributes
-      expect {
-        delete :destroy, {:id => user.to_param}, valid_session
-      }.to change(Institution::User, :count).by(-1)
-    end
-
-    it "redirects to the institution_users list" do
-      user = Institution::User.create! valid_attributes
-      delete :destroy, {:id => user.to_param}, valid_session
-      response.should redirect_to(institution_users_url)
-    end
   end
 
 end
