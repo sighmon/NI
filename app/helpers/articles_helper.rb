@@ -43,7 +43,7 @@ module ArticlesHelper
             media_url = image.try(:data_url, :halfwidth)
             if media_url
 	            media_caption = e.at_xpath('./field[@type = "rel_media_caption"]').try(:text)
-	            alignment = e.at_xpath("field[@type='alignment']").text
+	            alignment = e.at_xpath("field[@type='alignment']").try(:text)
 	            "<div class='article-image' style='float: #{alignment}'>"+retina_image_tag(media_url, :alt => "#{media_caption}", :title => "#{media_caption}", :size => "#{image.width}x#{image.height}")+process_children(e,debug)+"</div>"
         	end
           elsif e["element_type"] == "footnotes"
