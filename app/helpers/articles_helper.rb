@@ -138,9 +138,13 @@ module ArticlesHelper
         image = Image.find(id)
         version = :threehundred
         css_class = "article-image"
+        image_width = 300
+        credit_div = ""
+        caption_div = ""
         if klass == "cartoon"
           version = :sixhundred
           css_class = "all-article-images article-image-cartoon"
+          image_width = 600
         end
         version = (klass == "cartoon" ? :sixhundred : :threehundred)
         media_url = image.try(:data_url, version)
@@ -151,7 +155,7 @@ module ArticlesHelper
           caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
         end
         if media_url
-          "<div class='#{css_class}'>"+retina_image_tag(media_url, :alt => "#{image.caption}", :title => "#{image.caption}", :size => "#{image.width}x#{image.height}")+caption_div+credit_div+"</div>"
+          "<div class='#{css_class}'>"+retina_image_tag(media_url, :alt => "#{image.caption}", :title => "#{image.caption}", :size => "#{image_width}x#{image_width * image.height / image.width}")+caption_div+credit_div+"</div>"
         else
           ""
         end
