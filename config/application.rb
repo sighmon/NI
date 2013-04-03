@@ -65,5 +65,9 @@ module NI
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     # add app/assets/html to the asset path
     config.assets.paths << "#{Rails.root}/app/assets/html"
+
+    config.generators do |g|
+      g.fixture_replacement :factory_girl
+    end
   end
 end

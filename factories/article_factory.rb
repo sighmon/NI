@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :article do
-    title "title"
+    sequence(:title) { |n| "article#{n}" }
     publication DateTime.now
     issue
   end

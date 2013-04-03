@@ -11,6 +11,19 @@ describe ArticlesController do
       @issue = FactoryGirl.create(:issue)
     end
 
+    describe "GET show" do
+      context "with an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        it "assigns the article" do
+          get :show, {id: article.id, issue_id: article.issue.id}
+          assigns(:article).should eq(article)
+        end
+
+      end
+    end
+
     describe "POST create" do
       context "with valid params" do
 

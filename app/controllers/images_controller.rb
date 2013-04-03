@@ -54,6 +54,13 @@ class ImagesController < ApplicationController
   def create
   	@issue = Issue.find(params[:issue_id])
   	@article = Article.find(params[:article_id])
+
+    # HACK to fix jquery file upload
+    data = params[:image].try(:[],:data)
+    if data.kind_of?(Array)
+      params[:image][:data] = data.first
+    end
+
     @newimage = @article.images.create(params[:image])
 
     respond_to do |format|
