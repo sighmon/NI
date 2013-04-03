@@ -311,6 +311,7 @@ DEPENDENCIES
   acts_as_list
   bugherd
   cancan
+  capybara
   capybara-webkit
   carrierwave
   coffee-rails
