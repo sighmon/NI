@@ -128,4 +128,41 @@ module ArticlesHelper
     end
   end
 
+  def expand_image_tags(body, debug = false)
+    # print "foo [file:67|cartoon] bar"
+    body.gsub(/\[File:(?<id>\d+)(?:\|(?<class>[^\]]*))?\]/i) do 
+      "<img class=\"#{$~[:class]}\" src=\"#{$~[:id]}\"/>"
+      id = $~[:id]
+      klass = $~[:class]
+      begin
+        image = Image.find(id)
+        version = :threehundred
+        css_class = "article-image"
+        if klass == "cartoon"
+          version = :sixhundred
+          css_class = "all-article-images article-image-cartoon"
+        end
+        version = (klass == "cartoon" ? :sixhundred : :threehundred)
+        media_url = image.try(:data_url, version)
+        if image.credit
+          credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
+        end
+        if image.caption
+          caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
+        end
+        if media_url
+          "<div class='#{css_class}'>"+retina_image_tag(media_url, :alt => "#{image.caption}", :title => "#{image.caption}", :size => "#{image.width}x#{image.height}")+caption_div+credit_div+"</div>"
+        else
+          ""
+        end
+      rescue ActiveRecord::RecordNotFound
+        if debug
+          "=== IMAGE #{id} NOT FOUND! ==="
+        else
+          ""
+        end
+      end
+    end
+  end
+
 end
