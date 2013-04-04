@@ -10,6 +10,14 @@ Learning Rails. :-)
 * Buy a single issue.
 * Read it in HTML, or a specific app.
 
+= Writing articles
+
+You can write articled directly in this app or import them from the Bricolage CMS via SOAP.
+
+When writing directly, <p> and <br /> tags are added automatically (thanks simple_format), and it also lets you use basic <html> tags too.
+
+To upload images, simply drag the images (yes multiple uploads) into the article page, and then use the tag format [File:xx] where xx is the image :id number of the image you just uploaded. If you'd like wide images, use [File:xx|cartoon]. Cartoon meaning wide images.
+
 = Installation instructions
 
 * Setup an admin user

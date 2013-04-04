@@ -129,7 +129,7 @@ module ArticlesHelper
   end
 
   def expand_image_tags(body, debug = false)
-    # print "foo [file:67|cartoon] bar"
+    # Finds [File:xx] and [File:xx|cartoon] in body and converts it to nice div/img code
     body.gsub(/\[File:(?<id>\d+)(?:\|(?<class>[^\]]*))?\]/i) do 
       "<img class=\"#{$~[:class]}\" src=\"#{$~[:id]}\"/>"
       id = $~[:id]
