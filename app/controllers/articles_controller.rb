@@ -127,6 +127,7 @@ class ArticlesController < ApplicationController
             c.name.include?("/columns/only-planet/") or
             c.name.include?("/columns/exposure/") or
             c.name.include?("/columns/scratchy-lines/") or
+            c.name.include?("/columns/open-window/") or
             c.name.include?("/columns/cartoon/")
         }
         if not @cartoon.empty?
