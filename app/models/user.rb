@@ -70,6 +70,7 @@ class User < ActiveRecord::Base
     expiry_date 'expiry_date'
     is_recurring? 'is_recurring'
     has_paper_copy? 'has_paper_copy'
+    institution?
 
     last_subscription_including_cancelled :paypal_first_name => 'paypal_first_name'
     last_subscription_including_cancelled :paypal_last_name => 'paypal_last_name'
