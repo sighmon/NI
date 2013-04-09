@@ -21,6 +21,7 @@ class PagesController < ApplicationController
     # @page = Page.find(params[:id])
     # Now finding by permalink
     @page = Page.find_by_permalink!(params[:id])
+    @current_issue = Issue.all.sort_by(&:release).last
 
     set_meta_tags :title => @page.title,
                   #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
