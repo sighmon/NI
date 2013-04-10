@@ -57,7 +57,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @issues }
+      format.json { render json: @issues, callback: params[:callback] }
     end
   end
 
