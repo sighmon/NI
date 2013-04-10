@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
   belongs_to :issue
-  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :categories_attributes, :hide_author_name
+  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :categories_attributes, :hide_author_name, :story_id
   mount_uploader :featured_image, FeaturedImageUploader
 
   # join-model for favourites
