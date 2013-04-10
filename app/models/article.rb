@@ -197,4 +197,8 @@ class Article < ActiveRecord::Base
     # string as data
   end
 
+  def get_story_id
+    return Nokogiri.XML(source).at_xpath("/story").try(:[],:id).try(:to_i)
+  end
+
 end
