@@ -94,6 +94,7 @@ class Article < ActiveRecord::Base
   def self.create_from_element(issue,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     a = issue.articles.create(
+      :story_id => element[:id].to_i,
       :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
       :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
