@@ -122,6 +122,9 @@ module ArticlesHelper
       return process_children(doc.xpath("//story/elements"),debug)
 
     end
+
+    return ""
+
   end
 
   def expand_image_tags(body, debug = false)
