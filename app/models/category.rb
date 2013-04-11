@@ -8,7 +8,7 @@ class Category < ActiveRecord::Base
   def self.create_from_element(article,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     c = Category.find_or_create_by_name(:name => element.try(:text))
-    article.categories << c
+    article.categories << c unless article.categories.include?(c)
     return c
   end
 

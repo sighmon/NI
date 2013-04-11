@@ -46,7 +46,7 @@ class Issue < ActiveRecord::Base
   end
 
   # Setting up SOAP to import articles from Bricolage using Savon
-  def import_articles_from_bricolage()
+  def self.bricolage_wrapper()
     #HTTPI.log_level = :debug
     HTTPI.adapter = :curb
     Savon.configure do |config|
@@ -71,75 +71,108 @@ class Issue < ActiveRecord::Base
         }
       }
     end
+    client.http.set_cookies(response.http)
+    yield client
+  end
+  
+  def import_articles_from_bricolage()
 
-    # print response.http.cookies
-    # Create primary_uri to search for based on Issue.release date
-    primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
-    response = client.request "story", "story_ids" do
-      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#list_ids\""
-      http.set_cookies(response.http)
-      soap.element_form_default = :qualified
-      # TODO: implement article import
-      soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <list_ids xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
-      <primary_uri xsi:type="xsd:string">%s</primary_uri>
-    </list_ids>
-  </soap:Body>
-</soap:Envelope>' % primary_uri
-    end
+    Issue.bricolage_wrapper do |client|
+      # print response.http.cookies
+      # Create primary_uri to search for based on Issue.release date
+      primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
+      response = client.request "story", "story_ids" do
+        http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#list_ids\""
+        #http.set_cookies(response.http)
+        soap.element_form_default = :qualified
+        # TODO: implement article import
+        soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
+  <soap:Envelope 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+      soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+      <list_ids xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
+        <primary_uri xsi:type="xsd:string">%s</primary_uri>
+      </list_ids>
+    </soap:Body>
+  </soap:Envelope>' % primary_uri
+      end
 
-    # print response.to_json
-    # Pull the story_ids from the search results element passed from SOAP
-    story_ids = response[:list_ids_response][:story_ids][:story_id]
-    # Handle a blank response or one result
-    if story_ids.blank? or story_ids.nil?
-      story_ids = []
-    elsif story_ids.is_a? Array
-      # do nothing
-    else
-      story_ids = Array.new << story_ids
-    end
- 
-    # filter story_ids with articles in the database
-    story_ids.select!{|id|Article.find_by_story_id(id.to_s).nil?}
+      # print response.to_json
+      # Pull the story_ids from the search results element passed from SOAP
+      story_ids = response[:list_ids_response][:story_ids][:story_id]
+      # Handle a blank response or one result
+      if story_ids.blank? or story_ids.nil?
+        story_ids = []
+      elsif story_ids.is_a? Array
+        # do nothing
+      else
+        story_ids = Array.new << story_ids
+      end
+   
+      # filter story_ids with articles in the database
+      story_ids.select!{|id|Article.find_by_story_id(id.to_s).nil?}
 
-    story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
+      self.import_stories_from_bricolage(story_ids)
+    end
+  end
 
-    response = client.request "story", "story_ids" do
-      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
-      http.set_cookies(response.http)
-      soap.element_form_default = :qualified
-      # TODO: implement article import
-      soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
-    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
-      <story_ids soapenc:arrayType="xsd:int[%d]" xsi:type="soapenc:Array">
-        %s
-      </story_ids>
-    </export>
-  </soap:Body>
-</soap:Envelope>' % [story_ids.length, story_id_block]
+  def create_article_from_element(element)
+    assets = 'http://bricolage.sourceforge.net/assets.xsd'
+    story_id = element[:id].to_i
+    # TODO: Allow for posibility that issue is nil.
+    a = self.articles.find_or_create_by_story_id(story_id)
+    a.update_attributes(
+      :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
+      :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
+      :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
+      :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
+      :source => element.to_xml
+    )
+    category_list = element.xpath(".//assets:category",'assets' => assets)
+    category_list.collect do |cat|
+      c = Category.create_from_element(a,cat)
     end
-    doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).force_encoding("UTF-8"))
-    stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
-    #return stories
-    stories.collect do |element|
-      a = Article.create_from_element(self,element)
+    return a
+  end
+
+  def import_stories_from_bricolage(story_ids)
+
+    Issue.bricolage_wrapper do |client|
+      story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
+
+      response = client.request "story", "story_ids" do
+        http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#export\""
+        #http.set_cookies(response.http)
+        soap.element_form_default = :qualified
+        # TODO: implement article import
+        soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
+  <soap:Envelope 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+      soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+      <export xmlns="http://bricolage.sourceforge.net/Bric/SOAP/Story">
+        <story_ids soapenc:arrayType="xsd:int[%d]" xsi:type="soapenc:Array">
+          %s
+        </story_ids>
+      </export>
+    </soap:Body>
+  </soap:Envelope>' % [story_ids.length, story_id_block]
+      end
+      doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).force_encoding("UTF-8"))
+      stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
+      #return stories
+      stories.collect do |element|
+        a = self.create_article_from_element(element)
+      end
+      stories
     end
-    stories
   end
 
   def articles_of_category(category_name)
