@@ -129,7 +129,7 @@
 
 <div class="article-body <% if not @letters.empty? %>article-body-letters<% end %>">
   <% if @article.body.blank? %>
-    <%= simple_format source_to_body(@article, :debug => current_user.try(:admin?)) %>
+    <%= simple_format expand_image_tags(source_to_body(@article, :debug => current_user.try(:admin?)), :debug => current_user.try(:admin?)) %>
   <% else %>
     <%= simple_format expand_image_tags(@article.body, :debug => current_user.try(:admin?)) %>
   <% end %>

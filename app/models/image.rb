@@ -19,8 +19,8 @@ class Image < ActiveRecord::Base
     sio.content_type = file_element.at_xpath("./assets:media_type",'assets' => assets ).try(:text)
 
     image = article.images.find_or_create_by_media_id(:media_id => media_id)
-    image.caption = extract_caption_from_article
-    image.credit = extract_credit_from_article
+    image.caption = image.extract_caption_from_article
+    image.credit = image.extract_credit_from_article
     image.data = sio
     image.save
   end

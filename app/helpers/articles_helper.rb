@@ -41,11 +41,7 @@ module ArticlesHelper
               return nil
             end
             media_url = image.try(:data_url, :halfwidth)
-            if media_url
-	            media_caption = e.at_xpath('./field[@type = "rel_media_caption"]').try(:text)
-	            alignment = e.at_xpath("field[@type='alignment']").try(:text)
-	            "<div class='article-image' style='float: #{alignment}'>"+retina_image_tag(media_url, :alt => "#{media_caption}", :title => "#{media_caption}", :size => "#{image.width}x#{image.height}")+process_children(e,debug)+"</div>"
-        	end
+            "[File:#{image.id}]"
           elsif e["element_type"] == "footnotes"
             "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
           elsif ["page_no"].include? e["element_type"]
@@ -123,7 +119,7 @@ module ArticlesHelper
         end
       end
 
-      return process_children(doc.xpath("//story/elements"),debug).html_safe
+      return process_children(doc.xpath("//story/elements"),debug)
 
     end
   end
