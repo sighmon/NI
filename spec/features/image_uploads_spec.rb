@@ -25,7 +25,10 @@ describe "ImageUploads" do
         it "works! (now write some real specs)" do
           # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
           visit new_issue_article_image_path(article.issue.id,article.id)
-          #response.status.should be(200)
+          #click_button("New")
+          attach_file('image_data', Rails.root.join('factories','test-image.jpg'))
+          click_button("Create Image")
+          page.status_code.should eq(200)
         end
       end
 
@@ -38,6 +41,15 @@ describe "ImageUploads" do
         end
 
         it "can add upload files", :js => true do
+
+          #def wait_until
+          #  require "timeout"
+          #  Timeout.timeout(Capybara.default_wait_time) do
+          #    sleep(0.1) until value = yield
+          #    value
+          #  end
+          #end
+
           pending "can't seem to trigger jquery-image-upload"
           ##pp "running can upload"
           Rails.logger.info("### trying to upload")
@@ -47,7 +59,9 @@ describe "ImageUploads" do
           # form has no button so submit it with javascript... hrmmm
           Rails.logger.info("### force submit")
           page.execute_script("$('form#new_image').submit()")
+          ## ... nothing seems to happen
           #pp article.images
+          #wait_until { !page.driver.alert_messages.empty? }
           Rails.logger.info("### done")
         end
       end
