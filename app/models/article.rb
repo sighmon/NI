@@ -65,7 +65,7 @@ class Article < ActiveRecord::Base
         doc = Nokogiri::XML(self.source)
         category_list = doc.xpath(".//category",'assets' => assets)
         category_list.collect do |cat|
-          c = Category.create_from_element(self,cat)
+          c = Category.create_article_from_element(self,cat)
         end
       end
     else
@@ -89,24 +89,6 @@ class Article < ActiveRecord::Base
     else
       return false
     end
-  end
-
-  def self.create_from_element(issue,element)
-    assets = 'http://bricolage.sourceforge.net/assets.xsd'
-    a = issue.articles.create(
-      :story_id => element[:id].to_i,
-      :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
-      :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
-      :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
-      :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
-      # :body => Hash.from_xml(element.to_xml).to_json
-      :source => element.to_xml
-    )
-    category_list = element.xpath(".//assets:category",'assets' => assets)
-    category_list.collect do |cat|
-      c = Category.create_from_element(a,cat)
-    end
-    return a
   end
 
   def extract_media_ids_from_source

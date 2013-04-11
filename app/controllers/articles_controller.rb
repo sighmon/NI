@@ -34,11 +34,16 @@ class ArticlesController < ApplicationController
                       }
     end
 
+    def import
+        @article = Article.find(params[:article_id])
+        @article.issue.import_stories_from_bricolage([@article.story_id])
+        redirect_to issue_article_path(@article.issue,@article)
+    end
+
     def import_images
-        @issue = Issue.find(params[:issue_id])
         @article = Article.find(params[:article_id])
         @article.import_media_from_bricolage(force: true)
-        redirect_to issue_article_path(@issue,@article)
+        redirect_to issue_article_path(@article.issue,@article)
     end
 
   	def index
