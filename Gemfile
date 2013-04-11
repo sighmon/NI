@@ -50,6 +50,9 @@ gem 'google-analytics-rails'
 # Heroku gem
 # gem 'heroku'
 
+# Unicorn gem for adding Concurrency to Rails Apps on heroku
+gem 'unicorn'
+
 # For development
 group :development do
   gem 'taps', :require => false

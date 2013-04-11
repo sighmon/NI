@@ -61,7 +61,7 @@ class ImagesController < ApplicationController
       params[:image][:data] = data.first
     end
 
-    @newimage = @article.images.create(params[:image])
+    @newimage = @article.images.create(params[:image].merge({ :position => (@article.images.collect{|i|i.position}.max or 0)+1 }))
 
     respond_to do |format|
       if @newimage.save
