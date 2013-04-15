@@ -13,12 +13,12 @@
 	<% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
 		<p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, click the 'send feedback' tab on the bottom right of any page. Enjoy reading the magazine.</p>
 	<% else %>
-		<p>Welcome to the New Internationalist digital edition, a paperless subscription to NI magazine. To get started, browse the <%= link_to "magazine archive", issues_path %>, purchase a single issue, or <%= link_to "subscribe", new_subscription_path %> for 3, 6 or 12 months.</p>
+		<p>Welcome to the New Internationalist digital edition, a paperless subscription to NI magazine. To get started, browse the <%= link_to "magazine archive", issues_path %>, purchase a single issue, or <% if current_user.nil? %><%= link_to "subscribe", page_path("subscribe") %><% else %><%= link_to "subscribe", new_subscription_path %><% end %> for 3, 6 or 12 months.</p>
 	<% end %>
 
 	<div class="hero-buttons">
 		<% if not current_user.try(:subscriber?) %>
-			<%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %> 
+			<% if current_user.nil? %><%= link_to "Subscribe", page_path("subscribe"), :class => 'btn btn-success' %><% else %><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %><% end %>
 		<% end %>
 		<%= link_to "Magazine archive", issues_path, :class => 'btn' %>
 	</div>
