@@ -41,7 +41,7 @@ module ArticlesHelper
               return nil
             end
             media_url = image.try(:data_url, :halfwidth)
-            "[File:#{image.id}]"
+            "[File:#{image.try(:id)}]"
           elsif e["element_type"] == "footnotes"
             "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
           elsif ["page_no"].include? e["element_type"]
