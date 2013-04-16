@@ -11,6 +11,11 @@ NI::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
+
+  # Set logger level so Unicorn on Heroku is more verbose
+  # http://help.papertrailapp.com/kb/configuration/unicorn
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
   
   # GMAIL SETTINGS
   # config.action_mailer.smtp_settings = {
