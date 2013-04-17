@@ -25,6 +25,7 @@ class ArticlesController < ApplicationController
         set_meta_tags :title => "Search for an article",
                       :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
                       :keywords => "new, internationalist, magazine, digital, edition, search",
+                      :canonical => search_url,
                       :open_graph => {
                         :title => "Search for an article",
                         :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
@@ -152,6 +153,7 @@ class ArticlesController < ApplicationController
         set_meta_tags :title => @article.title,
                       :description => @article.teaser,
                       :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
+                      :canonical => issue_article_url(@issue, @article),
                       :open_graph => {
                         :title => @article.title,
                         :description => strip_tags(@article.teaser),

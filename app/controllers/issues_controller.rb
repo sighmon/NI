@@ -46,6 +46,7 @@ class IssuesController < ApplicationController
     set_meta_tags :title => "Magazine archive",
                   :description => "An archive of all the New Internationalist magazines available as digital editions.",
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
+                  :canonical => issues_url,
                   :open_graph => {
                     :title => "Magazine archive",
                     :description => "An archive of all the New Internationalist magazines available as digital editions.",
@@ -96,6 +97,7 @@ class IssuesController < ApplicationController
     set_meta_tags :title => @issue.title,
                   :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
+                  :canonical => issue_url(@issue),
                   :open_graph => {
                     :title => @issue.title,
                     :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
