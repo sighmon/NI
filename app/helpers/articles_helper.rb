@@ -92,6 +92,12 @@ module ArticlesHelper
             end
           elsif e["type"] == "year"
             "<dt class='star-ratings-previous-year'>#{e.text}</dt>"
+          elsif e["type"] == "product_link"
+            product_link = e.text.gsub(/\n/, "")
+            if not product_link.include?("http://")
+              product_link = "http://" + product_link
+            end
+            "<p><a href='#{product_link}'>#{product_link.gsub(/http:\/\//, " ")}</a></p>"
           elsif e["type"] == "html" or e["type"] == "text"
             e.text.gsub(/\n/, " ")
           elsif ["rel_media_caption", "alt_text"].include? e["type"]
