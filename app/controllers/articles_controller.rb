@@ -149,6 +149,15 @@ class ArticlesController < ApplicationController
         #@images = @article.images.all
         # @article.source_to_body(:debug => current_user.try(:admin?))
 
+        article_category_themes = @article.categories.each.select{|c| c.name.include?("/themes/")}
+        # logger.info article_category_themes
+        @related_articles = []
+        article_category_themes.each do |category| 
+            @related_articles += category.articles
+        end
+        @related_articles -= [@article]
+        @related_articles = @related_articles.uniq
+
         # Set meta tags
         set_meta_tags :title => @article.title,
                       :description => @article.teaser,

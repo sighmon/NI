@@ -34,10 +34,10 @@
 </div>
 
 <% if can? :update, @issue %>
-  <% if not @uncategorised.empty? %>
+  <% if not @issue.uncategorised.empty? %>
     <div class="articles-not-categorised-for-display">
       <h3>Articles not displayed.</h3>
-      <% @uncategorised.each do |article| %>
+      <% @issue.uncategorised.each do |article| %>
         <div class="issue-article">
           <%= render :partial => "article", :object => article %>
         </div>
@@ -51,15 +51,15 @@
       <div class="issue-article keynote">
         <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
         <h5>The big story</h5>
-        <% if @keynote %>
-          <%= render :partial => "article", :object => @keynote %>
+        <% if @issue.keynote %>
+          <%= render :partial => "article", :object => @issue.keynote %>
         <% end %>
       </div>
 
-      <% if not @features.empty? %>
+      <% if not @issue.features.empty? %>
         <div class="issue-sections">
           <h3>Features.</h3>
-          <% @features.each do |article| %>
+          <% @issue.features.each do |article| %>
             <div class="issue-article">
               <%= render :partial => "article", :object => article %>
             </div>
@@ -67,10 +67,10 @@
         </div>
       <% end %>
 
-      <% if not @agendas.empty? %>
+      <% if not @issue.agendas.empty? %>
         <div class="issue-sections">
           <h3>Agenda.</h3>
-          <% @agendas.each do |article| %>
+          <% @issue.agendas.each do |article| %>
             <div class="issue-article">
               <%= render :partial => "article", :object => article %>
             </div>
@@ -78,10 +78,10 @@
         </div>
       <% end %>
 
-      <% if not @alternatives.empty? %>
+      <% if not @issue.alternatives.empty? %>
         <div class="issue-sections">
           <h3>Alternatives.</h3>
-          <% @alternatives.each do |article| %>
+          <% @issue.alternatives.each do |article| %>
             <div class="issue-article">
               <%= render :partial => "article", :object => article %>
             </div>
@@ -101,10 +101,10 @@
   </div>
   <div class="span6 issue-articles-container">
 
-    <% if not @opinion.empty? %>
+    <% if not @issue.opinion.empty? %>
       <div class="issue-sections">
         <h3>Opinion.</h3>
-        <% @opinion.each do |article| %>
+        <% @issue.opinion.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
@@ -112,10 +112,10 @@
       </div>
     <% end %>
 
-    <% if not @regulars.empty? %>
+    <% if not @issue.regulars.empty? %>
       <div class="issue-sections">
         <h3>Regulars.</h3>
-        <% @regulars.each do |article| %>
+        <% @issue.regulars.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
@@ -123,10 +123,10 @@
       </div>
     <% end %>
 
-    <% if not @mixedmedia.empty? %>
+    <% if not @issue.mixedmedia.empty? %>
       <div class="issue-sections">
         <h3>Film, Book &amp; Music Reviews.</h3>
-        <% @mixedmedia.each do |article| %>
+        <% @issue.mixedmedia.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
@@ -134,10 +134,10 @@
       </div>
     <% end %>
 
-    <% if not @blogs.empty? %>
+    <% if not @issue.blogs.empty? %>
       <div class="issue-sections">
         <h3>Blog.</h3>
-        <% @blogs.each do |article| %>
+        <% @issue.blogs.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
