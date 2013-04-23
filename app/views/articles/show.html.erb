@@ -153,7 +153,7 @@
 
 <div class="related-articles">
   <div class="article-next-previous">
-    <% if not @article.previous.nil? %><div class="article-previous"><i class='icon-arrow-left'></i> <%= link_to @article.previous.title, issue_article_path(@article.previous.issue, @article.previous) %></div><% end %> <% if not @article.next.nil? %><div class="article-next"><%= link_to @article.next.title, issue_article_path(@article.next.issue, @article.next) %> <i class='icon-arrow-right'></i></div><% end %>
+    <% if not @article.previous.nil? %><div class="article-previous"><i class='icon-arrow-left'></i> <%= link_to @article.previous.title, issue_article_path(@article.previous.issue, @article.previous) %></div><% end %> <% if not @article.next.nil? %><div class="article-next"><i class='icon-arrow-right'></i><%= link_to @article.next.title, issue_article_path(@article.next.issue, @article.next) %></div><% end %>
   </div>
 
   <div class="clearfix"></div>
