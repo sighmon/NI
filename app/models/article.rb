@@ -31,6 +31,21 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def previous
+    my_index = self.issue.ordered_articles.find_index(self)
+    previous_index = my_index-1
+    if previous_index < 0
+      return nil
+    else
+      return self.issue.ordered_articles[previous_index]
+    end
+  end
+
+  def next
+    my_index = self.issue.ordered_articles.find_index(self)
+    return self.issue.ordered_articles[my_index+1]
+  end
+
   mapping do
     indexes :id, type: 'integer'
     indexes :title

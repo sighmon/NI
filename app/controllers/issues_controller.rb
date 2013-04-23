@@ -91,7 +91,8 @@ class IssuesController < ApplicationController
     # TOFIX: Sort articles by :position using jquery
 
     # Load section definitions
-    sections_of_articles_definitions
+    #sections_of_articles_definitions
+    #moved to the model
     
     # Set meta tags
     set_meta_tags :title => @issue.title,
@@ -177,27 +178,6 @@ class IssuesController < ApplicationController
       format.html { redirect_to issues_url }
       format.json { head :no_content }
     end
-  end
-
-  def sections_of_articles_definitions
-    @all_articles = @issue.articles
-    @keynote = @issue.articles.find_by_keynote(true)
-    @features = @issue.articles_of_category("/features/").sort_by(&:publication)
-    @agendas = @issue.articles_of_category("/sections/agenda/").sort_by(&:publication)
-    @opinion = (@issue.articles_of_category("/argument/") +
-      @issue.articles_of_category("/columns/viewfrom/") +
-      @issue.articles_of_category("/columns/mark-engler/")
-      ).sort_by(&:publication)
-    @alternatives = @issue.articles_of_category("/alternatives/").sort_by(&:publication)
-    @regulars = (@issue.articles_of_category("/columns/") - 
-      @issue.articles_of_category("/columns/media/") - 
-      @issue.articles_of_category("/columns/viewfrom/") - 
-      @issue.articles_of_category("/columns/mark-engler/")
-      ).sort_by(&:publication)
-    @mixedmedia = @issue.articles_of_category("/columns/media/").sort_by(&:publication)
-    @blogs = @issue.articles_of_category("/blog/").sort_by(&:publication)
-    @categorised_articles = @features + @agendas + @opinion + @regulars + @blogs + @alternatives + @mixedmedia
-    @uncategorised = @all_articles - @categorised_articles - [@keynote]
   end
 
 end

@@ -33,6 +33,57 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def keynote
+    articles.find_by_keynote(true)
+  end
+
+  def features
+    articles_of_category("/features/").sort_by(&:publication)
+  end
+
+  def agendas
+    articles_of_category("/sections/agenda/").sort_by(&:publication)
+  end
+
+  def opinion
+    (articles_of_category("/argument/") +
+      articles_of_category("/columns/viewfrom/") +
+      articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
+  end
+
+  def alternatives
+    articles_of_category("/alternatives/").sort_by(&:publication)
+  end
+
+  def regulars
+    (articles_of_category("/columns/") - 
+      articles_of_category("/columns/media/") - 
+      articles_of_category("/columns/viewfrom/") - 
+      articles_of_category("/columns/mark-engler/")
+      ).sort_by(&:publication)
+  end
+
+  def mixedmedia
+    articles_of_category("/columns/media/").sort_by(&:publication)
+  end
+
+  def blogs
+    articles_of_category("/blog/").sort_by(&:publication)
+  end
+
+  def categorised_articles
+    features + agendas + opinion + regulars + alternatives + mixedmedia + blogs
+  end
+
+  def uncategorised
+    articles - categorised_articles - [keynote]
+  end
+
+  def ordered_articles
+    [self.keynote] + self.categorised_articles
+  end
+
   # if params[:query].present?
     #     @issues = Issue.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
     #       query { string(params[:query]) }
