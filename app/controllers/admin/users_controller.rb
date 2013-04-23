@@ -5,7 +5,10 @@ class Admin::UsersController < Admin::BaseController
 
 	def index
 		@users = User.all(:order => "username")
-		@subscribers = @users.select{|s| s.subscriber?}
+		@subscribers_total = @users.select{|s| s.subscriber?}
+		@institutions = @users.select{|i| i.institution}
+		@students = @users.select{|s| s.parent}
+		@subscribers = @subscribers_total - @students - @institutions
 		@guest_passes = GuestPass.all
 
 		respond_to do |format|
