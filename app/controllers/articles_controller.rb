@@ -156,7 +156,7 @@ class ArticlesController < ApplicationController
             @related_articles += category.articles
         end
         @related_articles -= [@article]
-        @related_articles = @related_articles.uniq
+        @related_articles = @related_articles.uniq.sort_by(&:publication).reverse
 
         # Set meta tags
         set_meta_tags :title => @article.title,
