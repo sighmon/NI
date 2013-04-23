@@ -53,13 +53,13 @@ describe ImagesController do
         it "does not create a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(0)
         end
 
         it "redirects to the issues" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           response.should redirect_to(issues_path)
         end
       end
@@ -158,20 +158,20 @@ describe ImagesController do
         it "creates a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(1)
         end
 
         it "assigns a newly created image as @image" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           assigns(:newimage).should be_a(Image)
           assigns(:newimage).should be_persisted
         end
 
         it "redirects to the article" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => image, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           response.should redirect_to(issue_article_path(image.article.issue,image.article))
         end
       end
