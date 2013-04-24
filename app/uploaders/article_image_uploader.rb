@@ -59,7 +59,7 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
   end
 
   version :threehundred do
-    process :resize_to_limit => [300, 400]
+    process :resize_to_limit => [300, nil] # was 400
   end
 
   version :sixhundred do
