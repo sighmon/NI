@@ -47,6 +47,9 @@ gem 'bugherd'
 # Google Analytics https://github.com/bgarret/google-analytics-rails
 gem 'google-analytics-rails'
 
+# Google Sitemap generator https://github.com/kjvarga/sitemap_generator
+gem 'sitemap_generator'
+
 # Heroku gem
 # gem 'heroku'
 

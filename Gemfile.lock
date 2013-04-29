@@ -269,6 +269,8 @@ GEM
     simplecov-html (0.7.1)
     sinatra (1.0)
       rack (>= 1.0)
+    sitemap_generator (3.4)
+      builder
     slop (3.3.3)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -359,6 +361,7 @@ DEPENDENCIES
   savon
   simple_form
   simplecov
+  sitemap_generator
   taps
   therubyracer
   timecop
