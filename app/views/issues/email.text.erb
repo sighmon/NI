@@ -13,10 +13,10 @@ The <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine 
 Keynote article
 ===============
 
-<%= @keynote.title %>
-<%= "[#{issue_article_url(@issue,@keynote)}]" %>
+<%= @issue.keynote.title %>
+<%= "[#{issue_article_url(@issue,@issue.keynote)}]" %>
 
-<%= strip_tags @keynote.teaser %>
+<%= strip_tags @issue.keynote.teaser %>
 
 
 ======================
@@ -33,7 +33,7 @@ for the New Internationalist co-operative.
 Other articles in this issue
 ============================
 
-<% @categorised_articles.each do |a| %>
+<% @issue.categorised_articles.each do |a| %>
 <%= a.title %>
 <%= "[#{issue_article_url(@issue,a)}]" %>
 
