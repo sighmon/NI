@@ -33,7 +33,12 @@ class Article < ActiveRecord::Base
 
   def previous
     my_index = self.issue.ordered_articles.find_index(self)
+   
+    # the decrement fails  if we don't find ourselves in the ordered list (eg, we are uncategorized)
+    return nil if my_index.nil?
+
     previous_index = my_index-1
+    
     if previous_index < 0
       return nil
     else
@@ -43,6 +48,7 @@ class Article < ActiveRecord::Base
 
   def next
     my_index = self.issue.ordered_articles.find_index(self)
+    return nil if my_index.nil?
     return self.issue.ordered_articles[my_index+1]
   end
 
