@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/thatpixguy/retina_image_tag.git
-  revision: 8fc81461184e2ed29d9aedc5b27f70c5c1d8a8ef
-  specs:
-    retina_image_tag (1.0.1)
-      railties (~> 3.1)
-      rmagick (~> 2.13.1)
-      rspec (~> 2.12.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -223,6 +214,10 @@ GEM
     ref (1.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    retina_image_tag (1.0.2)
+      railties (~> 3.1)
+      rmagick (~> 2.13.1)
+      rspec (~> 2.12.0)
     rmagick (2.13.1)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -354,7 +349,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rb-fsevent (~> 0.9.1)
   rb-inotify (~> 0.8.8)
-  retina_image_tag!
+  retina_image_tag (>= 1.0.2)
   rmagick
   rspec-rails
   sass-rails
