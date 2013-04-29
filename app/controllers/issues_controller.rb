@@ -64,7 +64,7 @@ class IssuesController < ApplicationController
 
   def email
     @issue = Issue.find(params[:issue_id])
-    sections_of_articles_definitions
+    # sections_of_articles_definitions
     
     # Set meta tags
     set_meta_tags :title => @issue.title,
