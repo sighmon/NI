@@ -88,8 +88,13 @@ class ArticlesController < ApplicationController
     end
 
     def update
+
     	@issue = Issue.find(params[:issue_id])
     	@article = Article.find(params[:id])
+
+        if params[:article][:body] == source_to_body(@article)
+          params[:article][:body] = ""
+        end
 
     	respond_to do |format|
 	      if @article.update_attributes(params[:article])
