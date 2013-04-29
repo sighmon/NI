@@ -183,4 +183,13 @@ class ArticlesController < ApplicationController
         # end
     end
 
+    def generate_from_source
+      @article = Article.find(params[:article_id])
+      @issue = @article.issue
+      
+      respond_to do |format|
+        format.js {}
+      end
+    end
+
 end

@@ -34,6 +34,7 @@ NI::Application.routes.draw do
       resources :guest_passes, :only => [:create, :destroy]
       get :import
       get :import_images
+      get :generate_from_source
       resources :images do
         collection { post :sort }
       end

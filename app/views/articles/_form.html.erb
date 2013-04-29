@@ -58,9 +58,7 @@
     <%= f.label :body, :class => 'control-label' %>
     <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|cartoon]</p>
     <div class="controls">
-      <% if @article.body.blank? %>
-        <% @article.body = source_to_body(@article, :debug => current_user.try(:admin?)) %>
-      <% end %>
+      <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn' %>
       <%= f.text_area :body, :class => 'text_area' %>
     </div>
   </div>
