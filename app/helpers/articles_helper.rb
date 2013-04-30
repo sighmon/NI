@@ -158,6 +158,10 @@ module ArticlesHelper
           version = :sixhundred
           css_class = "all-article-images article-image-cartoon"
           image_width = 600
+        elsif klass == "small"
+          version = :threehundred
+          css_class = "article-image article-image-small"
+          image_width = 150
         end
         version = (klass == "cartoon" ? :sixhundred : :threehundred)
         media_url = image.try(:data_url, version)
