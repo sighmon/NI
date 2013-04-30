@@ -56,7 +56,7 @@
   </div>
   <div class="control-group">
     <%= f.label :body, :class => 'control-label' %>
-    <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|cartoon]</p>
+    <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|cartoon] or [File:xx|small]</p>
     <div class="controls">
       <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn' %>
       <%= f.text_area :body, :class => 'text_area' %>
