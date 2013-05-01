@@ -33,6 +33,21 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def self.latest
+    Issue.all.sort_by{|i| i.release}.last
+  end
+    
+ 
+  def gift_to_subscribers
+    User.all.select{|u| u.subscriber?}.each{|u| self.gift_to_user(u)}
+  end
+ 
+  def gift_to_user(user)
+    if user.purchases.where(issue_id:self.id).blank?
+      purchase = Purchase.create(user_id: user.id, issue_id: self.id)
+    end
+  end
+
   def keynote
     articles.find_by_keynote(true)
   end
