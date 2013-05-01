@@ -56,7 +56,7 @@ class PurchasesController < ApplicationController
         response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
         if response.success?
             # FIXME: Work out how to simplify this call.
-            @purchase = Purchase.create(:user_id => @user.id, :issue_id => @issue.id)
+            @purchase = Purchase.new(:user_id => @user.id, :issue_id => @issue.id)
             # Write purchase date & price to purchase object
             @purchase.price_paid = session[:express_purchase_price]
             @purchase.purchase_date = DateTime.now

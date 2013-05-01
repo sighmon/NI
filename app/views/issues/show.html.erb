@@ -89,6 +89,17 @@
         </div>
       <% end %>
 
+      <% if not @issue.blogs.empty? %>
+        <div class="issue-sections">
+          <h3>Blog.</h3>
+          <% @issue.blogs.each do |article| %>
+            <div class="issue-article">
+              <%= render :partial => "article", :object => article %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
   </div>
   <div class="span6 editors-letter">
     <% if @issue.editors_letter != "" %>
@@ -127,17 +138,6 @@
       <div class="issue-sections">
         <h3>Film, Book &amp; Music Reviews.</h3>
         <% @issue.mixedmedia.each do |article| %>
-          <div class="issue-article">
-            <%= render :partial => "article", :object => article %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if not @issue.blogs.empty? %>
-      <div class="issue-sections">
-        <h3>Blog.</h3>
-        <% @issue.blogs.each do |article| %>
           <div class="issue-article">
             <%= render :partial => "article", :object => article %>
           </div>
