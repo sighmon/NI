@@ -158,6 +158,10 @@ module ArticlesHelper
           version = :sixhundred
           css_class = "all-article-images article-image-cartoon"
           image_width = 600
+        elsif klass == "centre"
+          version = :threehundred
+          css_class = "all-article-images article-image-cartoon article-image-centre"
+          image_width = 300
         elsif klass == "small"
           version = :threehundred
           css_class = "article-image article-image-small"
