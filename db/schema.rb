@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410061440) do
+ActiveRecord::Schema.define(:version => 20130508031246) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20130410061440) do
     t.boolean  "keynote"
     t.text     "source"
     t.string   "featured_image"
-    t.string   "featured_image_caption"
+    t.text     "featured_image_caption"
     t.boolean  "hide_author_name"
     t.integer  "story_id"
   end
