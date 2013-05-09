@@ -143,31 +143,32 @@ module ArticlesHelper
 
   def expand_image_tags(body, debug = false)
     # Finds [File:xx] and [File:xx|cartoon] in body and converts it to nice div/img code
-    body.gsub(/\[File:(?<id>\d+)(?:\|(?<class>[^\]]*))?\]/i) do 
-      "<img class=\"#{$~[:class]}\" src=\"#{$~[:id]}\"/>"
+    body.gsub(/\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i) do 
       id = $~[:id]
-      klass = $~[:class]
+      options = $~[:all_options].try(:split,"|") || []
       begin
         image = Image.find(id)
+
         version = :threehundred
         css_class = "article-image"
         image_width = 300
         credit_div = ""
         caption_div = ""
-        if klass == "cartoon"
+
+        if options.include?("cartoon")
           version = :sixhundred
           css_class = "all-article-images article-image-cartoon"
           image_width = 600
-        elsif klass == "centre"
+        elsif options.include?("centre")
           version = :threehundred
           css_class = "all-article-images article-image-cartoon article-image-centre"
           image_width = 300
-        elsif klass == "small"
+        elsif options.include?("small")
           version = :threehundred
           css_class = "article-image article-image-small"
           image_width = 150
         end
-        version = (klass == "cartoon" ? :sixhundred : :threehundred)
+
         media_url = image.try(:data_url, version)
         if image.credit
           credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
