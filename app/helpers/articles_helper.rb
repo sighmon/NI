@@ -168,6 +168,10 @@ module ArticlesHelper
           css_class = "article-image article-image-small"
           image_width = 150
         end
+        
+        if options.include?("ns")
+          css_class += " no-shadow"
+        end
 
         media_url = image.try(:data_url, version)
         if image.credit
