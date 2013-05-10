@@ -145,6 +145,7 @@ module ArticlesHelper
     # Finds [File:xx] and [File:xx|cartoon] in body and converts it to nice div/img code
     body.gsub(/\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i) do 
       id = $~[:id]
+      # weird "or" doesnt work here but || does...
       options = $~[:all_options].try(:split,"|") || []
       begin
         image = Image.find(id)
