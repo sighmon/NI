@@ -75,9 +75,9 @@
 								<li><%= link_to "Help!", page_path("help") %></li>
 								<li>
 									<% if request.ssl? %>
-										<%= link_to retina_image_tag("icon-lock.png", :alt => "Change to a non-SSL connection (http).", :title => "Change to a non-SSL connection (http).", :size => "11x14"), url_for(:only_path => false, :protocol => "http"), :class => "ssl-changer" %>
+										<%= link_to retina_image_tag("icon-lock.png", :alt => "Change to a non-https connection", :title => "Change to a non-https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "http"), :class => "ssl-changer" %>
 									<% else %>
-										<%= link_to retina_image_tag("icon-unlock.png", :alt => "Change to an SSL connection (https).", :title => "Change to an SSL connection (https).", :size => "11x14"), url_for(:only_path => false, :protocol => "https"), :class => "ssl-changer" %>
+										<%= link_to retina_image_tag("icon-unlock.png", :alt => "Change to a https connection", :title => "Change to a https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "https"), :class => "ssl-changer" %>
 									<% end %>
 								</li>
 							</ul>
