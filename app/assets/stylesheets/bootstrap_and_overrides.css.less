@@ -147,6 +147,17 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	padding-bottom: 0px; 
 }
 
+.ssl-changer {
+	margin-top: -2px;
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+}
+
+.ssl-changer:hover {
+	opacity:0.8;
+	filter:alpha(opacity=80); /* For IE8 and earlier */
+}
+
 // Home page styling
 
 .hero-unit {
@@ -716,13 +727,15 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	text-align: left;
 	max-width: 280px;
 	font-size: 0.9em;
+	line-height: 1.6em;
 	color: @gray;
 }
 
 .new-image-credit {
 	text-align: left;
 	font-size: 0.9em;
-	margin-top: -3px;
+	line-height: 1.6em;
+	margin-top: -1px;
 	color: @grayLight;
 	max-width: 280px;
 }
@@ -744,6 +757,12 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .article-image-cartoon img {
 	.shadow;
 	margin-bottom: 0.5em;
+}
+
+.no-shadow img {
+	-moz-box-shadow: 0px 0px 0px #FFFFFF;
+	-webkit-box-shadow: 0px 0px 0px #FFFFFF;
+	box-shadow: 0px 0px 0px #FFFFFF;
 }
 
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
