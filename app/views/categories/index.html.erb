@@ -1,0 +1,27 @@
+<%- model_class = Category -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h3>A list of categories covered by articles in New Internationalist magazine</h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th>Latest article published</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <% if category.latest_published_article %>
+      <tr>
+        <!-- <td><%= link_to category.id, category_path(category) %></td> -->
+        <td><%= link_to category.display_name, category_path(category) %></td>
+        <td><%= link_to category.latest_published_article.title, issue_article_path(category.latest_published_article.issue, category.latest_published_article) %></td>
+        <td><%= category.latest_published_article.publication.strftime("%B, %Y") %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

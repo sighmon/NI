@@ -53,13 +53,14 @@
       <!-- END Sharing options -->
     <% end %>
   </p>
-  <% if can? :manage, Article %>
-    <ul class="unstyled">
+  <nav>
+    <ul class="breadcrumb">
     <% @article.categories.each do |category| %>
-      <li><%= category.name %></li>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'btn btn-mini' %></li>
+      <% if can? :manage, Article %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
-  <% end %>
+  </nav>
 </div>
 
 <% if not @article.featured_image.blank? %>

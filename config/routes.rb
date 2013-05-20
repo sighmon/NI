@@ -1,5 +1,8 @@
 NI::Application.routes.draw do
 
+  # Routes for the categories breadcrumbs
+  resources :categories, :only => [:index, :show]
+
   get "guest_passes/index"
 
   # routes for static pages - help, about etc..

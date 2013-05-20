@@ -17,6 +17,7 @@ class Ability
     can :read, Article, :trialarticle => true
     can :search, Article
     can :read, Page
+    can :read, Category
 
     if !user.guest?
         can :manage, Purchase

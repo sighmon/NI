@@ -1,0 +1,30 @@
+<%- model_class = Category -%>
+<div class="page-header">
+  <h1><%= @category.display_name %></h1>
+  <h3>Articles in this category, ordered by date.</h3>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Article</th>
+      <th>Issue</th>
+      <th>Publication date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @articles.each do |article| %>
+      <tr>
+        <td><%= link_to article.title, issue_article_path(article.issue,article) %></td>
+        <td><%= link_to article.issue.title, issue_path(article.issue) %></td>
+        <td><%= article.publication.strftime("%B, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="form-actions">
+
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              categories_path, :class => 'btn'  %>
+</div>
