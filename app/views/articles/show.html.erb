@@ -56,7 +56,7 @@
   <nav>
     <ul class="breadcrumb">
     <% @article.categories.each do |category| %>
-      <li><%= link_to category.short_display_name, category_path(category), :class => 'btn btn-mini' %></li>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
       <% if can? :manage, Article %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
