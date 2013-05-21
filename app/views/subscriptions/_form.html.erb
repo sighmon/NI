@@ -59,7 +59,7 @@
 		var google_conversion_format = "1";
 		var google_conversion_color = "ffffff";
 		var google_conversion_label = "<%= ENV['GOOGLE_CONVERSION_LABEL'] %>"; 
-		var google_conversion_value = <%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>;
+		var google_conversion_value = <%= session[:express_purchase_price] / 100 %>;
 		/* ]]> */
 	  </script>
 	  <script type="text/javascript"
@@ -68,7 +68,7 @@
 	  <noscript>
 		<div style="display:inline;">
 		<img height="1" width="1" style="border-style:none;" alt=""
-		src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=%3C%25=%20number_with_precision((session%5B:express_purchase_price%5D%20/%20100)%2C%20:precision%20=%3E%202)%20%25%3E&amp;label=<%= ENV['GOOGLE_CONVERSION_LABEL'] %>&amp;guid=ON&amp;script=0"/>
+		src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=<%= session[:express_purchase_price] / 100 %>&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
 		</div>
 	  </noscript>
 	  <% end %>
