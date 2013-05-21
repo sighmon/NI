@@ -1,7 +1,7 @@
 <%- model_class = Category -%>
 <div class="page-header">
-  <h1><%= @category.display_name %></h1>
-  <h3>Articles in this category, ordered by date.</h3>
+  <h1><%= @category.display_name.gsub('>', '/') %></h1>
+  <h3>Articles about <%= @category.short_display_name %>, ordered by date.</h3>
 </div>
 
 <table class="table table-striped">
@@ -24,6 +24,14 @@
 </table>
 
 <div class="form-actions">
+
+  <nav>
+    <ul class="breadcrumb">
+      <li><%= link_to "Home", root_path %> <span class="divider">></span></li>
+      <li><%= link_to "Categories", categories_path %> <span class="divider">></span></li>
+      <li><%= @category.short_display_name %></li>
+    </ul>
+  </nav>
 
   <%= link_to t('.back', :default => t("helpers.links.back")),
               categories_path, :class => 'btn'  %>

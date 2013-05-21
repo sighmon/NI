@@ -1,7 +1,7 @@
 <%- model_class = Category -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
-  <h3>A list of categories covered by articles in New Internationalist magazine</h3>
+  <h3>A list of categories and themes covered by articles in New Internationalist magazine.</h3>
 </div>
 <table class="table table-striped">
   <thead>
@@ -9,7 +9,7 @@
       <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th>Latest article published</th>
-      <th>Date</th>
+      <th>Date published</th>
     </tr>
   </thead>
   <tbody>

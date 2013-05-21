@@ -5,9 +5,11 @@
 </div>
 
 <div class="issue-search">
-  <%= form_tag issues_path, method: :get do %>
-      <%= text_field_tag :query, params[:query], :placeholder => 'Magazine search' %>
-      <%= submit_tag "Search", name: nil, :class => 'btn' %>
+  <%= form_tag issues_path, :class => 'form-search', method: :get do %>
+      <div class="input-append">
+        <%= text_field_tag :query, params[:query], :placeholder => 'Magazine theme', :class => "span2 search-query" %>
+        <%= submit_tag "Search", name: nil, :class => 'btn' %>
+      </div>
   <% end %>
 </div>
 

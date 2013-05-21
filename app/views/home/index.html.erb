@@ -10,7 +10,7 @@
 		<% if not current_user.try(:subscriber?) %>
 			<% if current_user.nil? %><%= link_to "Subscribe", page_path("subscribe"), :class => 'btn btn-success' %><% else %><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %><% end %>
 		<% end %>
-		<%= link_to "Magazine archive", issues_path, :class => 'btn' %>
+		<%= link_to "Magazine archive", issues_path, :class => 'btn' %> <%= link_to "Article categories/themes", categories_path, :class => 'btn' %>
 	</div>
 </div>
 
