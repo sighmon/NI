@@ -197,4 +197,17 @@ class ArticlesController < ApplicationController
       end
     end
 
+    def tweet
+        @user = User.find(current_user)
+        @article = Article.find(params[:article_id])
+        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        twitter_params = {
+            :url => view_context.generate_guest_pass_link_string(@guest_pass),
+            :text => params[:text],
+            :via => "ni_australia"
+            #:related => "ni_australia"
+        }
+        redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
+    end
+
 end

@@ -303,6 +303,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uri-js-rails (1.10.2)
     warden (1.2.1)
       rack (>= 1.0)
     wasabi (2.5.1)
@@ -364,3 +365,4 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   unicorn
+  uri-js-rails

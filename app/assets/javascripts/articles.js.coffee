@@ -51,7 +51,12 @@ jQuery ->
     updateModalHeight()
 
   # highlighter.js stuff
-  $('.article-body').highlighter({"selector": ".holder"})
+  $('.article-body').highlighter
+    selector: ".holder"
+    complete: (data) ->
+      #console.log(data)
+      tb = $(".tweet-button a")[0]
+      tb.href = URI(tb.href).setQuery("text", data)
 
   $('.holder').mousedown ->
     false

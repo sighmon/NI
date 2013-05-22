@@ -145,6 +145,19 @@
   </div>
 <% end %>
 
+<!-- Facebook Like Button -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=141386675929001";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="200" data-show-faces="false"></div>
+<div class="clearfix"></div>
+<!-- END Facebook Like Button -->
+
 <% if can? :update, @article %>
   <button class="flip-button btn">Show/Hide source</button>
   <div class="article-source well well-small div-to-flip">
@@ -197,11 +210,19 @@
   <% end %>
 </div>
 
+<!-- Highlighter.js -->
 <span class='holder'>
   <div class='share-highlight-btn'>
     <div class='btn-caret'>
     </div>
-    <div class='btn-left'>Hey there!</div>
-    <div class='btn-right'>&times;</div>
+    <div class='btn'>
+      <div class="tweet-button">
+        <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
+      </div>
+      <div class="facebook-button">
+        Like
+      </div>
+    </div>
+    <!-- <div class='btn-right'>&times;</div> -->
   </div>
 </span>
