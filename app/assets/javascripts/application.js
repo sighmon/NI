@@ -18,6 +18,7 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require retina_image_tag
+//= require highlighter/jQuery.highlighter
 
 var flip = 0;
 

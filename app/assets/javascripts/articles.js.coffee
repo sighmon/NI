@@ -49,3 +49,13 @@ jQuery ->
     else
       removeModalMargin()
     updateModalHeight()
+
+  # highlighter.js stuff
+  $('.article-body').highlighter({"selector": ".holder"})
+
+  $('.holder').mousedown ->
+    false
+
+  $('.btn-right').click ->
+    $('.holder').hide()
+    false
