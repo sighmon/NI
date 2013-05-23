@@ -35,13 +35,15 @@ NI::Application.routes.draw do
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
-      get :tweet
       get :import
       get :import_images
       get :generate_from_source
       resources :images do
         collection { post :sort }
       end
+      # Customise Twitter & Facebook posts using selected text
+      get :tweet
+      get :wall_post
     end
     resources :purchases, :only => [:new, :create] do
       new do

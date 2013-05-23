@@ -57,6 +57,8 @@ jQuery ->
       #console.log(data)
       tb = $(".tweet-button a")[0]
       tb.href = URI(tb.href).setQuery("text", data)
+      tb = $(".facebook-button a")[0]
+      tb.href = URI(tb.href).setQuery("text", data)
 
   $('.holder').mousedown ->
     false
