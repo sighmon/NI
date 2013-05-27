@@ -217,18 +217,20 @@
 </div>
 
 <!-- Highlighter.js -->
-<span class='holder'>
-  <div class='share-highlight-btn'>
-    <div class='btn-caret'>
-    </div>
-    <div class='btn'>
-      <div class="tweet-button">
-        <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
+<% if current_user %>
+  <span class='holder'>
+    <div class='share-highlight-btn'>
+      <div class='btn-caret'>
       </div>
-      <div class="facebook-button">
-        <%= link_to "Facebook", issue_article_wall_post_path(@article.issue, @article), :target => "_blank" %>
+      <div class='btn'>
+        <div class="tweet-button">
+          <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
+        </div>
+        <div class="facebook-button">
+          <%= link_to "Facebook", issue_article_wall_post_path(@article.issue, @article), :target => "_blank" %>
+        </div>
       </div>
+      <!-- <div class='btn-right'>&times;</div> -->
     </div>
-    <!-- <div class='btn-right'>&times;</div> -->
-  </div>
-</span>
+  </span>
+<% end %>

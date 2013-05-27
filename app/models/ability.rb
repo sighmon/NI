@@ -28,6 +28,9 @@ class Ability
         can :manage, User, :id => user.id
         # Ability for parents to manage children
         can :manage, User, :parent => user
+        # Ability to tweet & post to facebook
+        can :tweet, Article
+        can :wall_post, Article
     end   
 
     if user.subscriber?
