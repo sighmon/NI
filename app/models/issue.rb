@@ -27,7 +27,7 @@ class Issue < ActiveRecord::Base
       pagination = 200
     end
     tire.search(load: true, :page => params[:page], :per_page => pagination) do
-      query {string params[:query]} if params[:query].present?
+      query {string params[:query], default_operator: "AND"} if params[:query].present?
       filter :term, :published => true unless admin
       sort { by :release, 'desc' }
     end
