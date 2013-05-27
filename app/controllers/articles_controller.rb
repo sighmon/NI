@@ -222,7 +222,7 @@ class ArticlesController < ApplicationController
         facebook_params = {
             :app_id => 194389730710694,
             :link => view_context.generate_guest_pass_link_string(@guest_pass),
-            :picture => request.protocol + request.host_with_port + preview_picture,
+            :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
             :name => @article.title,
             :caption => @article.teaser,
             :description => params[:text],
