@@ -78,6 +78,17 @@
         </div>
       <% end %>
 
+      <% if not @issue.currents.empty? %>
+        <div class="issue-sections">
+          <h3>Currents.</h3>
+          <% @issue.currents.each do |article| %>
+            <div class="issue-article">
+              <%= render :partial => "article", :object => article %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
       <% if not @issue.alternatives.empty? %>
         <div class="issue-sections">
           <h3>Alternatives.</h3>
