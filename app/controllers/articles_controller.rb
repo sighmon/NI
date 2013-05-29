@@ -135,6 +135,8 @@ class ArticlesController < ApplicationController
         # Display the :sixhundred version for these cartoons
         @cartoon = @article.categories.select{|c| 
             c.name.include?("/columns/polyp/") or 
+            c.name.include?("/columns/bbw/") or 
+            c.name.include?("/blog/cantankerousfrank/") or 
             c.name.include?("/columns/only-planet/") or
             c.name.include?("/columns/exposure/") or
             c.name.include?("/columns/scratchy-lines/") or
