@@ -156,7 +156,11 @@ module ArticlesHelper
         credit_div = ""
         caption_div = ""
 
-        if options.include?("cartoon")
+        if options.include?("full")
+          version = nil
+          css_class = "all-article-images article-image-cartoon article-image-full"
+          image_width = 945
+        elsif options.include?("cartoon")
           version = :sixhundred
           css_class = "all-article-images article-image-cartoon"
           image_width = 600
