@@ -16,7 +16,9 @@ module ArticlesHelper
           elsif e["element_type"] == "cross_head_2"
             "<h4>"+process_children(e, debug)+"</h4>"
           elsif e["element_type"] == "html"
-            process_children(e, debug)            
+            process_children(e, debug)
+          elsif e["element_type"] == "attribution"
+            "<div class='attribution'>"+process_children(e, debug)+"</div>"
           elsif e["element_type"] == "pull_quote"
             alignment = e.at_xpath("field[@type='alignment']").text 
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
@@ -65,6 +67,13 @@ module ArticlesHelper
           elsif e["type"].start_with?("aag_")
             # make a nice list of 'at a glance' items
             "<dt>#{e['type'].gsub(/aag_/, '').titlecase}</dt><dd>#{e.text.gsub(/\n/, " ")}</dd>"
+          elsif ["attribution_link", "attribution_org"].include? e["type"]
+            # attribution
+            attribution_link = e.text.gsub(/\n/, "")
+            if not attribution_link.include?("http://")
+              attribution_link = "http://" + attribution_link
+            end
+            "<p><a href='#{attribution_link}'>#{attribution_link.gsub(/http:\/\//, " ")}</a></p>"
           elsif e["type"] == "last_profiled"
             @last_profiled_link = e.text
             return
