@@ -56,6 +56,9 @@ gem 'sitemap_generator'
 # Unicorn gem for adding Concurrency to Rails Apps on heroku
 gem 'unicorn'
 
+# New Relic for server information https://devcenter.heroku.com/articles/newrelic
+gem 'newrelic_rpm'
+
 # For development
 group :development do
   gem 'taps', :require => false
