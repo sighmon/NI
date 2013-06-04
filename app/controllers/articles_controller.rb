@@ -138,14 +138,20 @@ class ArticlesController < ApplicationController
             c.name.include?("/columns/bbw/") or 
             c.name.include?("/blog/cantankerousfrank/") or 
             c.name.include?("/columns/only-planet/") or
-            c.name.include?("/columns/exposure/") or
             c.name.include?("/columns/scratchy-lines/") or
             c.name.include?("/columns/open-window/") or
             c.name.include?("/columns/cartoon/")
         }
+        # Make southern exposure images large
+        @exposure = @article.categories.select{|c| 
+            c.name.include?("/columns/exposure/")
+        }
         if not @cartoon.empty?
             @image_url_string = :sixhundred
             @image_css_string = " article-image-cartoon no-shadow"
+        elsif not @exposure.empty?
+            @image_url_string = :sixhundred
+            @image_css_string = " article-image-cartoon"
         elsif not @image_top_right.empty?
             @image_url_string = :threehundred
             @image_css_string = " article-image-top-right article-image"
