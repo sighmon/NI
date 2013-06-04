@@ -145,7 +145,7 @@ class ArticlesController < ApplicationController
         }
         if not @cartoon.empty?
             @image_url_string = :sixhundred
-            @image_css_string = " article-image-cartoon"
+            @image_css_string = " article-image-cartoon no-shadow"
         elsif not @image_top_right.empty?
             @image_url_string = :threehundred
             @image_css_string = " article-image-top-right article-image"
