@@ -25,7 +25,7 @@ namespace :assets do
       compiler = Sprockets::StaticCompiler.new(
         env,
         target,
-        ['404.html', '500.html'],
+        ['404.html', '500.html', '503.html'],
         :manifest_path => config.assets.manifest,
         :digest => false,
         :manifest => false
