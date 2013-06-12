@@ -3,6 +3,9 @@
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
+    <% if not @user.parent_id.nil? %>
+    	<%= f.input :ip_whitelist %>
+    <% end %>
   
   <div class="form-actions">
     	<%= f.button :submit, :class => 'btn btn-success' %>

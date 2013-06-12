@@ -14,6 +14,8 @@ class SubscriptionsController < ApplicationController
     end
 
     def express
+
+        authorize! :update, Subscription
         
         if params[:autodebit] == "1"
             @autodebit = true

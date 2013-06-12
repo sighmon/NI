@@ -57,7 +57,11 @@
 								<% if not current_user.parent %>
 									<li class="divider"></li>
 								<% end %>
-								<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+								<% if session[:auto_signin] %>
+									<li><%= link_to "Sign out", users_re_sign_in_path %></li>
+								<% else %>
+									<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+								<% end %>
 							</ul>
 							<% else %>
 								<%= link_to "Sign in", new_user_session_path, :class => 'btn' %><%= link_to "Sign up", new_user_registration_path, :class => 'btn' %>

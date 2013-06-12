@@ -19,6 +19,10 @@
 	<dd><%= @user.email %></dd>
 	<dt><strong>User type:</strong></dt>
 	<dd><%= @user.user_type %></dd>
+	<% if not @user.ip_whitelist.blank? %>
+		<dt>IP whitelist:</dt>
+		<dd><%= @user.ip_whitelist %></dd>
+	<% end %>
 	<dt><strong>Expiry date:</strong></dt>
 	<dd><%= user_expiry_as_string(@user) %><br />
 		<% if @user.is_recurring? and @user.has_paper_copy? %>

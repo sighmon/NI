@@ -45,6 +45,11 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:password)
 			params[:user].delete(:password_confirmation)
 		end
+		# Hacky way to save the ip_whitelist without having it in attribute_accessible
+		if params[:user].has_key?(:ip_whitelist)
+			@user.update_attribute(:ip_whitelist, params[:user][:ip_whitelist])
+			params[:user].delete(:ip_whitelist)
+		end
 		if @user.update_attributes(params[:user])
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
