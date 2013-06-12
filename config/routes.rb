@@ -72,6 +72,7 @@ NI::Application.routes.draw do
       get :media_subscription
       get :make_institutional
       get :free_institutional_subscription
+      get :become
     end
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
