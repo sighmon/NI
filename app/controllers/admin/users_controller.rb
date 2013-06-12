@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::BaseController
   	load_and_authorize_resource
 
 	def index
-		@users = User.all(:order => "username")
+		@users = User.all(:order => "email")
 		@subscribers_total = @users.select{|s| s.subscriber?}
 		@institutions = @users.select{|i| i.institution}
 		@students = @users.select{|s| s.parent}
