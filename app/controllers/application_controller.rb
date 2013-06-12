@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
           # CIDR or plain IP Address
           (IPAddr.new(entry) === IPAddr.new(ip))
         end
-      rescue ArgumentError => a
+      rescue ArgumentError
+        logger.warn "Bad IP in whitelist_entry: #{whitelist_entry}"
         false
       end
     end.include?(true)

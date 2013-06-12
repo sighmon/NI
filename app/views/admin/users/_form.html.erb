@@ -5,6 +5,12 @@
     <%= f.input :password_confirmation %>
     <% if not @user.parent_id.nil? %>
     	<%= f.input :ip_whitelist %>
+    	<div class="control-group"><div class="controls"><p><b>The format for the IP range can be</b>:<br />
+    	    		192.168.1.1-192.168.1.8<br />
+    	    		192.168.1.0/24<br />
+    	    		192.168.1.1<br />
+    	    		Or a comma seperated list of any of the above.
+    	    	</p></div></div>
     <% end %>
   
   <div class="form-actions">
