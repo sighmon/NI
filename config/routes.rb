@@ -17,10 +17,14 @@ NI::Application.routes.draw do
   # created by the admin/users controller creation
   # get "users/index"
 
+  # hack to sign in when on a pre-authenticated ip
+  get "users/re_sign_in"
+
   devise_for :users, :controllers => { :registrations => "registrations" } #, :path_names => { :sign_up => "subscribe" }
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
+
 
   resources :subscriptions do
     new do

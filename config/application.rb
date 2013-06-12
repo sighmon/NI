@@ -69,5 +69,9 @@ module NI
     config.generators do |g|
       g.fixture_replacement :factory_girl
     end
+
+    config.to_prepare do
+      Devise::SessionsController.skip_before_filter :auto_signin_ip
+    end
   end
 end

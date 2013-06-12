@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+  before_filter :auto_signin_ip
+
   protect_from_forgery
   # Send the access denied pages to root with a nice message
   rescue_from CanCan::AccessDenied do |exception|
@@ -9,6 +12,18 @@ class ApplicationController < ActionController::Base
   after_filter :store_location
 
   private
+
+  def auto_signin_ip
+    #TODO
+    return true
+ 
+    if !user_signed_in? and request.remote_ip=="127.0.0.1"
+      
+      logger.info "*** DOING REALLY EPENSIVE DATABSE STUFFS!!! ************************"
+      sign_in(:user, User.find(1))
+    end
+
+  end
 
   def current_ability
     guest_pass_key = (params[:guest_pass] or params[:utm_source])

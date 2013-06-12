@@ -10,4 +10,9 @@ class UsersController < ApplicationController
     def show
 
     end
+
+    def re_sign_in
+      sign_out :user
+      redirect_to new_user_session_path
+    end
 end
