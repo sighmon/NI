@@ -135,13 +135,21 @@ class ArticlesController < ApplicationController
         # Display the :sixhundred version for these cartoons
         @cartoon = @article.categories.select{|c| 
             c.name.include?("/columns/polyp/") or 
+            c.name.include?("/columns/bbw/") or 
+            c.name.include?("/blog/cantankerousfrank/") or 
             c.name.include?("/columns/only-planet/") or
-            c.name.include?("/columns/exposure/") or
             c.name.include?("/columns/scratchy-lines/") or
             c.name.include?("/columns/open-window/") or
             c.name.include?("/columns/cartoon/")
         }
+        # Make southern exposure images large
+        @exposure = @article.categories.select{|c| 
+            c.name.include?("/columns/exposure/")
+        }
         if not @cartoon.empty?
+            @image_url_string = :sixhundred
+            @image_css_string = " article-image-cartoon no-shadow"
+        elsif not @exposure.empty?
             @image_url_string = :sixhundred
             @image_css_string = " article-image-cartoon"
         elsif not @image_top_right.empty?
@@ -195,6 +203,41 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         format.js {}
       end
+    end
+
+    def tweet
+        @user = User.find(current_user)
+        @article = Article.find(params[:article_id])
+        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        twitter_params = {
+            :url => view_context.generate_guest_pass_link_string(@guest_pass),
+            :text => params[:text],
+            :via => "ni_australia"
+            #:related => "ni_australia"
+        }
+        redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
+    end
+
+    def wall_post
+        @user = User.find(current_user)
+        @article = Article.find(params[:article_id])
+        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        if not @article.featured_image.blank?
+            preview_picture = @article.featured_image_url(:fullwidth).to_s
+        else
+            preview_picture = @article.try(:images).try(:first).try(:data).to_s
+        end
+        facebook_params = {
+            :app_id => 194389730710694,
+            :link => view_context.generate_guest_pass_link_string(@guest_pass),
+            :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
+            :name => @article.title,
+            :caption => @article.teaser,
+            :description => params[:text],
+            :redirect_uri => view_context.generate_guest_pass_link_string(@guest_pass)
+            #:redirect_uri => "http://digital.newint.com.au"
+        }
+        redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
     end
 
 end

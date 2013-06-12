@@ -19,6 +19,7 @@
 //= require_tree .
 //= require retina_image_tag
 //= require highlighter/jQuery.highlighter
+//= require URI
 
 var flip = 0;
 

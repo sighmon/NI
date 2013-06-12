@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= ENV['APP_NAME'] %> - 503</title>
+    <!-- <%= javascript_include_tag 'modernizr' %> -->
+    <%= stylesheet_link_tag 'application', :media => 'all', :digest => false %>
+  </head>
+  <body class="fourohfour">
+    <section id="error">
+      <p><a href="/"><img alt="Uh oh!" src="/assets/error.png" title="Uh oh!"></a></p>
+      <p><a class="brand" href="/">New Internationalist</a></p>
+      <h1>503 Application busy/error!</h1>
+      <p><a href="/" class="return">&larr; Return to the homepage</a></p>
+      <p>Uh oh, the server is quite busy.. or perhaps b0rked.</p>
+      <p>Terribly sorry!</p>
+      <p>If you think it's just busy, you could try loading the page again by clicking in the URL bar and pressing enter.</p>
+      <p>If you'd like to help out and <a href="mailto:design@newint.com.au?Subject=503">let us know how you got here</a>, that'd be lovely.</p>
+    </section>
+    <!-- <script>
+      Modernizr.load("#{javascript_path 'application'}");
+    </script> -->
+  </body>
+</html>

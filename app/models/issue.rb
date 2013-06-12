@@ -27,7 +27,7 @@ class Issue < ActiveRecord::Base
       pagination = 200
     end
     tire.search(load: true, :page => params[:page], :per_page => pagination) do
-      query {string params[:query]} if params[:query].present?
+      query {string params[:query], default_operator: "AND"} if params[:query].present?
       filter :term, :published => true unless admin
       sort { by :release, 'desc' }
     end
@@ -60,6 +60,10 @@ class Issue < ActiveRecord::Base
     articles_of_category("/sections/agenda/").sort_by(&:publication)
   end
 
+  def currents
+    articles_of_category("/columns/currents/").sort_by(&:publication)
+  end
+
   def opinion
     (articles_of_category("/argument/") +
       articles_of_category("/columns/viewfrom/") +
@@ -73,6 +77,7 @@ class Issue < ActiveRecord::Base
 
   def regulars
     (articles_of_category("/columns/") - 
+      articles_of_category("/columns/currents/") - 
       articles_of_category("/columns/media/") - 
       articles_of_category("/columns/viewfrom/") - 
       articles_of_category("/columns/mark-engler/")
@@ -88,7 +93,7 @@ class Issue < ActiveRecord::Base
   end
 
   def categorised_articles
-    features + agendas + opinion + regulars + alternatives + mixedmedia + blogs
+    features + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
   end
 
   def uncategorised

@@ -45,6 +45,9 @@ NI::Application.routes.draw do
       resources :images do
         collection { post :sort }
       end
+      # Customise Twitter & Facebook posts using selected text
+      get :tweet
+      get :wall_post
     end
     resources :purchases, :only => [:new, :create] do
       new do

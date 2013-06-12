@@ -56,6 +56,9 @@ gem 'sitemap_generator'
 # Unicorn gem for adding Concurrency to Rails Apps on heroku
 gem 'unicorn'
 
+# New Relic for server information https://devcenter.heroku.com/articles/newrelic
+gem 'newrelic_rpm'
+
 # For development
 group :development do
   gem 'taps', :require => false
@@ -104,6 +107,9 @@ group :assets do
   # http://twitter.github.com/bootstrap/
   gem 'twitter-bootstrap-rails'#, '2.1.6'
   gem 'jquery-fileupload-rails'
+
+  # URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
+  gem 'uri-js-rails'
 end
 
 gem 'jquery-rails'
