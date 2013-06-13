@@ -22,10 +22,10 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def become
-          return unless current_user.admin?
-          sign_in(:user, User.find(params[:user_id]))
-          redirect_to user_url(params[:user_id])
-        end
+		return unless current_user.admin?
+		sign_in(:user, User.find(params[:user_id]))
+		redirect_to user_url(params[:user_id])
+    end
 
 	def new
 		@user = User.new
