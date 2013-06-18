@@ -86,7 +86,7 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <!-- Manually uploaded image slideshow -->
-<% if not @article.images.select{|i| i.media_id.nil?}.empty? %>
+<% if not @article.images.select{|i| i.media_id.nil?}.select{|i| not i.hidden?}.empty? %>
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag_for :div, i do %>
