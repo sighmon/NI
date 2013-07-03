@@ -3,6 +3,8 @@ class IssuesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
+  newrelic_ignore :only => [:email, :email_non_subscribers]
+
   # Devise authorisation
   # before_filter :authenticate_user!, :except => [:show, :index]
 
