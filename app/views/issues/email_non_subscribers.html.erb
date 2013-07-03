@@ -84,7 +84,7 @@
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_url(@issue) %></singleline></p>
                                     <div align="left" class="article-content">
                                         <multiline label="Description">Hi [salutation],<br /><br />
-                                        The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue) %> of New Internationalist magazine is available now for you to read by <a href="<%= new_user_session_url %>?user[login]=[username,fallback=oops]">logging in</a> with your username: <b>[username,fallback=oops]</b>.</multiline>
+                                        Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue) %> of New Internationalist magazine. If you <a href="<%= new_user_session_url %>?user[login]=[username,fallback=oops]">log in</a> with your username: <b>[username,fallback=oops]</b> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.</multiline>
                                         <% if not @issue.email_text.blank? %><br /><multiline><%= simple_format @issue.email_text %></multiline><% end %>
                                     </div>
                                 </td>
