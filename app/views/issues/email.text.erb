@@ -6,7 +6,9 @@
 Hi [salutation],
 The <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine is available now for you to read by logging in with your username: [username,fallback=].
 
-[http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]
+[http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
+
+<%= strip_tags @issue.email_text %><% end %>
 
 
 ===============

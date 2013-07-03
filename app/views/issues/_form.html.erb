@@ -34,6 +34,10 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :email_text, :class => 'control-label' %>
+    <%= f.text_area :email_text, :class => 'text_area' %>
+  </div>
+  <div class="control-group">
     <%= f.label :trialissue, :class => 'control-label' %>
     <div class="controls">
       <%= f.check_box :trialissue, :class => 'check_box' %>

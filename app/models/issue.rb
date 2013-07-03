@@ -1,5 +1,5 @@
 class Issue < ActiveRecord::Base
-  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published
+  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published, :email_text
   has_many :articles, :dependent => :destroy
   has_many :purchases
   has_many :users, :through => :purchases
