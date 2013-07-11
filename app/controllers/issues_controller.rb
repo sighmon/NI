@@ -121,7 +121,18 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @issue }
+      
+      format.json { render json: @issue.to_json(
+        :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release],
+        :include => { 
+          :articles => { 
+            :only => [:title, :teaser],
+            :include => {
+              :categories => { :only => [:name, :id] }
+            }
+          } 
+        } 
+      ) }
     end
   end
 
