@@ -47,15 +47,18 @@ class ArticlesController < ApplicationController
         redirect_to issue_article_path(@article.issue,@article)
     end
 
-  	def index
-  		@issue = Issue.find(params[:issue_id])
-  		@article = Article.find(:all)
-        # @article = Article.order("created_at").page(params[:page]).per(2).search(params)
-  	end
+    def index
+	@issue = Issue.find(params[:issue_id])
+	@article = Article.find(:all)
+	# @article = Article.order("created_at").page(params[:page]).per(2).search(params)
+        respond_to do |format|
+	        format.html
+        end
+    end
 
-  	def new
-        @issue = Issue.find(params[:issue_id])
-        @article = @issue.articles.build
+    def new
+	@issue = Issue.find(params[:issue_id])
+	@article = @issue.articles.build
     end
 
     def create
