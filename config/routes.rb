@@ -57,6 +57,7 @@ NI::Application.routes.draw do
     get :import
     get :import_images
     get :email
+    get :email_non_subscribers
   end
 
   get 'search' => 'articles#search'

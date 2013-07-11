@@ -5,7 +5,7 @@
 
 Hi [salutation],
 
-The <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine is available now for you to read by logging in with your username: [username,fallback=].
+Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you log in with your username: [username,fallback=] and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 
 [http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
 

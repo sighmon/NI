@@ -3,6 +3,8 @@ class IssuesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
+  newrelic_ignore :only => [:email, :email_non_subscribers]
+
   # Devise authorisation
   # before_filter :authenticate_user!, :except => [:show, :index]
 
@@ -78,6 +80,15 @@ class IssuesController < ApplicationController
                     :image => @issue.cover_url(:thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   }
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+    end
+  end
+
+  def email_non_subscribers
+    @issue = Issue.find(params[:issue_id])
+
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
