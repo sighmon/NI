@@ -60,7 +60,10 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @issues, callback: params[:callback] }
+      #format.json { render json: @issues, callback: params[:callback] }
+      format.json { render callback: params[:callback], json: @issues.to_json(
+        :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release, :cover],
+      ) }
     end
   end
 
@@ -123,7 +126,9 @@ class IssuesController < ApplicationController
       format.html # show.html.erb
       
       format.json { render json: @issue.to_json(
-        :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release],
+        #not super dry, see format block in #show
+        # this is everything you should see about an issue without purchasing/subscribing
+        :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release, :cover],
         :include => { 
           :articles => { 
             :only => [:title, :teaser],
