@@ -128,10 +128,11 @@ class IssuesController < ApplicationController
       format.json { render json: @issue.to_json(
         #not super dry, see format block in #show
         # this is everything you should see about an issue without purchasing/subscribing
+        # hoping that the only pay-walled content is :body
         :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release, :cover],
         :include => { 
           :articles => { 
-            :only => [:title, :teaser],
+            :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
             :include => {
               :categories => { :only => [:name, :id] }
             }

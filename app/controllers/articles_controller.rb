@@ -187,6 +187,16 @@ class ArticlesController < ApplicationController
                         :image => @article.try(:images).try(:first).try(:data).to_s,
                         :site_name => "New Internationalist Magazine Digital Edition"
                       }
+	respond_to do |format|
+	  format.html # show.html.erb
+	end
+    end
+
+    def body
+        @article = Article.find(params[:article_id])
+  	authorize! :read, @article
+
+	render layout:false
     end
 
     def edit
