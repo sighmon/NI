@@ -43,11 +43,11 @@ private
 				# It's a recurring subscription debit
 				# Find out how many months & update expiry_date
 				# PayPal doesn't send us back the subscription :frequency, so we need to calculate that from initial recurring subscription
-				months = @user.first_recurring_subscription(params["recurring_payment_id"]).duration
+				first_recurring_subscription = @user.first_recurring_subscription(params["recurring_payment_id"])
 				# old hack method
 				# months = params[:mc_gross].to_i / ( Settings.subscription_price / 100 )
-				renew_subscription(months)
-				logger.info "Subscription renewed for another #{months} months."
+				renew_subscription(first_recurring_subscription)
+				logger.info "Subscription renewed for another #{first_recurring_subscription.duration} months."
 
 			elsif params["profile_status"] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
@@ -75,7 +75,7 @@ private
 		end
 	end
 
-	def renew_subscription(months)
+	def renew_subscription(first_recurring_subscription)
         @subscription = Subscription.create(
         	:paypal_profile_id => params["recurring_payment_id"],
         	:paypal_payer_id => params["payer_id"],
@@ -85,7 +85,8 @@ private
         	:price_paid => (params["mc_gross"].to_i * 100), 
         	:user_id => @user.id, 
         	:valid_from => (@user.last_subscription.try("expiry_date") or DateTime.now), 
-        	:duration => months, 
+        	:duration => first_recurring_subscription.duration,
+        	:paper_copy => first_recurring_subscription.paper_copy,
         	:purchase_date => DateTime.now
         )
         @subscription.save
