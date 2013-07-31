@@ -35,9 +35,9 @@ private
 		elsif transaction_type == "recurring_payment_profile_created"
 			# PayPal letting us know that the profile was created successfully
 			if User.find(self.user_id).try(:first_recurring_subscription,params["recurring_payment_id"])
-			  logger.info "Recurring payment profile created: #{params["recurring_payment_id"]}"
-                        else
-                          logger.warn "Did not find matching subscription for 'recurring_payment_profile_created' IPN: #{params["recurring_payment_id"]}"
+				logger.info "Recurring payment profile created: #{params["recurring_payment_id"]}"
+			else
+				logger.warn "Did not find matching subscription for 'recurring_payment_profile_created' IPN: #{params["recurring_payment_id"]}"
 			end
 		else
 			@user = User.find(self.user_id)
@@ -80,24 +80,24 @@ private
 	end
 
 	def renew_subscription(first_recurring_subscription)
-        @subscription = Subscription.create(
-        	:paypal_profile_id => params["recurring_payment_id"],
-        	:paypal_payer_id => params["payer_id"],
-        	:paypal_email => params["payer_email"],
-        	:paypal_first_name => params["first_name"],
-        	:paypal_last_name => params["last_name"],
-        	:price_paid => (params["mc_gross"].to_i * 100), 
-        	:user_id => @user.id, 
-        	:valid_from => (@user.last_subscription.try("expiry_date") or DateTime.now), 
-        	:duration => first_recurring_subscription.duration,
-        	:paper_copy => first_recurring_subscription.paper_copy,
-        	:purchase_date => DateTime.now
-        )
-        if @subscription.save
-          logger.info "subscription save successful"
-        else
-          logger.error "subscription save unsuccessful"
-        end
-    end
+		@subscription = Subscription.create(
+			:paypal_profile_id => params["recurring_payment_id"],
+			:paypal_payer_id => params["payer_id"],
+			:paypal_email => params["payer_email"],
+			:paypal_first_name => params["first_name"],
+			:paypal_last_name => params["last_name"],
+			:price_paid => (params["mc_gross"].to_i * 100), 
+			:user_id => @user.id, 
+			:valid_from => (@user.last_subscription.try("expiry_date") or DateTime.now), 
+			:duration => first_recurring_subscription.duration,
+			:paper_copy => first_recurring_subscription.paper_copy,
+			:purchase_date => DateTime.now
+		)
+		if @subscription.save
+			logger.info "subscription save successful"
+		else
+			logger.error "subscription save unsuccessful"
+		end
+	end
 
 end

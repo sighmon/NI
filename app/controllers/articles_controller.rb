@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
     include ArticlesHelper
 	# Cancan authorisation
-  	load_and_authorize_resource
+  	load_and_authorize_resource :except => [:body]
 
     def strip_tags(string)
         ActionController::Base.helpers.strip_tags(string)
@@ -194,9 +194,10 @@ class ArticlesController < ApplicationController
 
     def body
         @article = Article.find(params[:article_id])
-  	authorize! :read, @article
+        # UNCOMMENT BEFORE PUSHING TO PRODUCTION
+        authorize! :read, @article unless Rails.env.development?
 
-	render layout:false
+        render layout:false
     end
 
     def edit
