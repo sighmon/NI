@@ -139,7 +139,14 @@ class User < ActiveRecord::Base
   end
 
   def first_recurring_subscription(profile)
-    return self.subscriptions.select{|s| (s.paypal_profile_id == profile)}.sort!{|a,b| a.purchase_date <=> b.purchase_date}.first
+    logger.info("looking for subscription with profile: #{profile}")
+    sub = self.subscriptions.select{|s| (s.paypal_profile_id == profile)}.sort!{|a,b| a.purchase_date <=> b.purchase_date}.first
+    if sub
+      logger.info("found #{sub.id}")
+    else
+      logger.info("not found")
+    end
+    sub
   end
 
   def recurring_subscriptions(recurring_payment_id)

@@ -34,7 +34,11 @@ private
 			logger.info "Refund IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
 			# PayPal letting us know that the profile was created successfully
-			logger.info "Recurring payment profile created: #{params[:recurring_payment_id]}"
+			if User.find(self.user_id).try(:first_recurring_subscription,params["recurring_payment_id"])
+			  logger.info "Recurring payment profile created: #{params["recurring_payment_id"]}"
+                        else
+                          logger.warn "Did not find matching subscription for 'recurring_payment_profile_created' IPN: #{params["recurring_payment_id"]}"
+			end
 		else
 			@user = User.find(self.user_id)
 
@@ -88,7 +92,11 @@ private
         	:duration => months, 
         	:purchase_date => DateTime.now
         )
-        @subscription.save
+        if @subscription.save
+          logger.info "subscription save successful"
+        else
+          logger.error "subscription save unsuccessful"
+        end
     end
 
 end
