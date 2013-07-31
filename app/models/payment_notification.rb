@@ -14,7 +14,7 @@ private
 		if transaction_type == "express_checkout"
 			# Ignore this. It's an instant payment that's been handled.
 			logger.info "Express checkout IPN ping received. TXN_ID: #{transaction_id}"
-		elsif params[:test_ipn] == "1"
+		elsif params["test_ipn"] == "1"
 			# Ignore test IPNs.
 			logger.info "Test IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "cart"
@@ -26,7 +26,7 @@ private
 		elsif transaction_type == "send_money"
 			# This is someone manually sending us money.
 			logger.info "Send Money IPN ping received. TXN_ID: #{transaction_id}"
-		elsif params[:payment_type] == "echeck"
+		elsif params["payment_type"] == "echeck"
 			# This is a PayPal echeck refund or payment
 			logger.info "echeck IPN ping received. TXN_ID: #{transaction_id}"
 		elsif status == "Refunded"
