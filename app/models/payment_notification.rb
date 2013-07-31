@@ -34,7 +34,7 @@ private
 			logger.info "Refund IPN ping received. TXN_ID: #{transaction_id}"
 		elsif transaction_type == "recurring_payment_profile_created"
 			# PayPal letting us know that the profile was created successfully
-			logger.info "Recurring payment profile created: #{params[:recurring_payment_id]}"
+			logger.info "Recurring payment profile created: #{params["recurring_payment_id"]}"
 		else
 			@user = User.find(self.user_id)
 
@@ -66,7 +66,7 @@ private
 	end
 
 	def expire_recurring_subscriptions(user)
-		all_subscriptions = user.recurring_subscriptions(params[:recurring_payment_id])
+		all_subscriptions = user.recurring_subscriptions(params["recurring_payment_id"])
 		all_subscriptions.each do |s|
 			s.expire_subscription
 			s.save
@@ -77,14 +77,14 @@ private
 
 	def renew_subscription(months)
         @subscription = Subscription.create(
-        	:paypal_profile_id => params[:recurring_payment_id],
-        	:paypal_payer_id => params[:payer_id],
-        	:paypal_email => params[:payer_email],
-        	:paypal_first_name => params[:first_name],
-        	:paypal_last_name => params[:last_name],
-        	:price_paid => (params[:mc_gross].to_i * 100), 
+        	:paypal_profile_id => params["recurring_payment_id"],
+        	:paypal_payer_id => params["payer_id"],
+        	:paypal_email => params["payer_email"],
+        	:paypal_first_name => params["first_name"],
+        	:paypal_last_name => params["last_name"],
+        	:price_paid => (params["mc_gross"].to_i * 100), 
         	:user_id => @user.id, 
-        	:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), 
+        	:valid_from => (@user.last_subscription.try("expiry_date") or DateTime.now), 
         	:duration => months, 
         	:purchase_date => DateTime.now
         )
