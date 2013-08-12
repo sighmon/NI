@@ -14,6 +14,8 @@ NI::Application.routes.draw do
 
   get "settings/update"
 
+  match "/sitemap.xml", :controller => "sitemap", :action => "index"
+
   # created by the admin/users controller creation
   # get "users/index"
 
