@@ -6,8 +6,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
 
   # Validate username
-  validates_presence_of :username
-  validates_uniqueness_of :username
+  validates :username, :presence => true
+  validates :username,
+    :uniqueness => {
+      :case_sensitive => false
+    }
 
   # How to validate the format of username (not used)
   # validates_format_of :username, :with => /^[-_a-z0-9]+$/, :message => "Your username can only include lower case letters and numbers."
