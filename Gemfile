@@ -115,8 +115,11 @@ group :assets do
   gem 'uri-js-rails'
 end
 
-# Specifying 2.3.0 so that //= require jquery-ui is okay in application.js
-gem 'jquery-rails', '~> 2.3.0'
+gem 'jquery-rails'
+
+# Adding jquery-ui-rails because of an update that removed ui
+# http://stackoverflow.com/questions/17830313/couldnt-find-file-jquery-ui
+gem 'jquery-ui-rails'
 
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
