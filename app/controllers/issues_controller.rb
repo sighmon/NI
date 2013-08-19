@@ -63,7 +63,7 @@ class IssuesController < ApplicationController
                   :twitter => {
                     :card => "summary",
                     :site => "@ni_australia",
-                    :creator => "@sighmon",
+                    :creator => "@ni_australia",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -102,7 +102,7 @@ class IssuesController < ApplicationController
                   :twitter => {
                     :card => "summary",
                     :site => "@ni_australia",
-                    :creator => "@sighmon",
+                    :creator => "@ni_australia",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -153,7 +153,7 @@ class IssuesController < ApplicationController
                   :twitter => {
                     :card => "summary",
                     :site => "@ni_australia",
-                    :creator => "@sighmon",
+                    :creator => "@ni_australia",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {

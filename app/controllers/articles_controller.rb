@@ -190,7 +190,7 @@ class ArticlesController < ApplicationController
                       :twitter => {
                       :card => "summary",
                       :site => "@ni_australia",
-                      :creator => "@sighmon",
+                      :creator => "@ni_australia",
                       :title => @article.title,
                       :description => strip_tags(@article.teaser),
                       :image => {
