@@ -176,7 +176,7 @@ class ArticlesController < ApplicationController
 
         # Set meta tags
         set_meta_tags :title => @article.title,
-                      :description => @article.teaser,
+                      :description => strip_tags(@article.teaser),
                       :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
                       :canonical => issue_article_url(@issue, @article),
                       :open_graph => {
@@ -186,7 +186,17 @@ class ArticlesController < ApplicationController
                         :url   => issue_article_url(@issue, @article),
                         :image => @article.try(:images).try(:first).try(:data).to_s,
                         :site_name => "New Internationalist Magazine Digital Edition"
+                      },
+                      :twitter => {
+                      :card => "summary",
+                      :site => "@ni_australia",
+                      :creator => "@sighmon",
+                      :title => @article.title,
+                      :description => strip_tags(@article.teaser),
+                      :image => {
+                        :src => @article.try(:images).try(:first).try(:data).to_s
                       }
+                  }
 	respond_to do |format|
 	  format.html # show.html.erb
 	end

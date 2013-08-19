@@ -45,17 +45,30 @@ class IssuesController < ApplicationController
     @issues = Issue.search(params, current_user.try(:admin?))
 
     # Set meta tags
-    set_meta_tags :title => "Magazine archive",
-                  :description => "An archive of all the New Internationalist magazines available as digital editions.",
+    @page_title = "Magazine archive"
+    @page_description = "An archive of all the New Internationalist magazines available as digital editions."
+
+    set_meta_tags :title => @page_title,
+                  :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
                   :canonical => issues_url,
                   :open_graph => {
-                    :title => "Magazine archive",
-                    :description => "An archive of all the New Internationalist magazines available as digital editions.",
+                    :title => @page_title,
+                    :description => @page_description,
                     #:type  => :magazine,
                     :url   => issues_url,
                     :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@sighmon",
+                    :title => @page_title,
+                    :description => @page_description,
+                    :image => {
+                      :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                    }
                   }
 
     respond_to do |format|
@@ -72,16 +85,29 @@ class IssuesController < ApplicationController
     # sections_of_articles_definitions
     
     # Set meta tags
-    set_meta_tags :title => @issue.title,
-                  :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+    @page_title = @issue.title
+    @page_description = "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}"
+
+    set_meta_tags :title => @page_title,
+                  :description => @page_description,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :open_graph => {
-                    :title => @issue.title,
-                    :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                    :title => @page_title,
+                    :description => @page_description,
                     #:type  => :magazine,
                     :url   => issue_url(@issue),
                     :image => @issue.cover_url(:thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@sighmon",
+                    :title => @page_title,
+                    :description => @page_description,
+                    :image => {
+                      :src => @issue.cover_url(:thumb2x).to_s
+                    }
                   }
     respond_to do |format|
       format.html { render :layout => 'email' }
@@ -109,17 +135,30 @@ class IssuesController < ApplicationController
     #moved to the model
     
     # Set meta tags
-    set_meta_tags :title => @issue.title,
-                  :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+    @page_title = @issue.title
+    @page_description = "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}"
+
+    set_meta_tags :title => @page_title,
+                  :description => @page_description,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :canonical => issue_url(@issue),
                   :open_graph => {
-                    :title => @issue.title,
-                    :description => "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}",
+                    :title => @page_title,
+                    :description => @page_description,
                     #:type  => :magazine,
                     :url   => issue_url(@issue),
                     :image => @issue.cover_url.to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@sighmon",
+                    :title => @page_title,
+                    :description => @page_description,
+                    :image => {
+                      :src => @issue.cover_url.to_s
+                    }
                   }
 
     respond_to do |format|
