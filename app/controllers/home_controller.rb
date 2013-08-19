@@ -7,14 +7,13 @@ class HomeController < ApplicationController
   	end
 
   	# Set meta tags
-    @page_title = "New Internationalist Magazine Digital Edition"
+    @page_title_home = "New Internationalist Magazine Digital Edition"
     @page_description = "Welcome to the digital edition of the New Internationalist magazine, available for all digital devices with a browser."
 
-    set_meta_tags :title => @page_title,
-                  :description => @page_description,
+    set_meta_tags :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
                   :open_graph => {
-                    :title => @page_title,
+                    :title => @page_title_home,
                     :description => @page_description,
                     :url   => root_url,
                     :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
@@ -24,7 +23,7 @@ class HomeController < ApplicationController
                     :card => "summary",
                     :site => "@ni_australia",
                     :creator => "@sighmon",
-                    :title => @page_title,
+                    :title => @page_title_home,
                     :description => @page_description,
                     :image => {
                       :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
