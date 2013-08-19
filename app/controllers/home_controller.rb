@@ -22,7 +22,7 @@ class HomeController < ApplicationController
                   :twitter => {
                     :card => "summary",
                     :site => "@ni_australia",
-                    :creator => "@sighmon",
+                    :creator => "@ni_australia",
                     :title => @page_title_home,
                     :description => @page_description,
                     :image => {
