@@ -29,7 +29,8 @@ gem 'activemerchant', :require => 'active_merchant'
 gem 'paypal-recurring'
 
 # Rails settings file for prices & general settings
-gem 'ledermann-rails-settings', :require => 'rails-settings'
+# Specifying 1.x as version 2 works very differently
+gem 'ledermann-rails-settings', '~> 1.x', :require => 'rails-settings'
 
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
@@ -114,7 +115,8 @@ group :assets do
   gem 'uri-js-rails'
 end
 
-gem 'jquery-rails'
+# Specifying 2.3.0 so that //= require jquery-ui is okay in application.js
+gem 'jquery-rails', '~> 2.3.0'
 
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
