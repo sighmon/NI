@@ -195,9 +195,12 @@ class ArticlesController < ApplicationController
     def body
         @article = Article.find(params[:article_id])
         # UNCOMMENT BEFORE PUSHING TO PRODUCTION
-        authorize! :read, @article unless Rails.env.development?
-
-        render layout:false
+        begin
+          authorize! :read, @article unless Rails.env.development?
+          render layout:false
+        rescue CanCan::AccessDenied do |exception|
+          render :status => :forbidden
+        end
     end
 
     def edit
