@@ -36,7 +36,7 @@ gem 'ledermann-rails-settings', '~> 1.x', :require => 'rails-settings'
 gem 'figaro'
 
 # SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
-gem 'savon'
+gem 'savon', '~>1.2.0'
 
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
