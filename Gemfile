@@ -155,7 +155,8 @@ gem 'acts_as_list'
 
 # CSV exporting gem
 # https://github.com/crafterm/comma
-gem 'comma', '~> 3.0'
+# gem 'comma', '~> 3.0'
+gem 'comma',  :git => "git://github.com/crafterm/comma.git"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
