@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/crafterm/comma.git
+  revision: a03949da109c650363d210b99e83b2519e1e164e
+  specs:
+    comma (3.0.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,8 +79,6 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
-    comma (3.1.0)
-      activesupport (>= 3.0.0)
     commonjs (0.2.6)
     curb (0.8.4)
     database_cleaner (1.1.1)
@@ -327,7 +331,7 @@ DEPENDENCIES
   capybara-webkit
   carrierwave
   coffee-rails
-  comma (~> 3.0)
+  comma!
   curb
   database_cleaner
   debugger
