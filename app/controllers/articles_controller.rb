@@ -198,8 +198,8 @@ class ArticlesController < ApplicationController
         begin
           authorize! :read, @article unless Rails.env.development?
           render layout:false
-        rescue CanCan::AccessDenied do |exception|
-          render :status => :forbidden
+        rescue CanCan::AccessDenied
+          render :nothing => true, :status => :forbidden
         end
     end
 
