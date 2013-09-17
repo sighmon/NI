@@ -41,7 +41,11 @@ class Category < ActiveRecord::Base
   end
 
   def colour_as_hex
-    return "#%06x" % colour
+    if colour
+      return "#%06x" % colour
+    else
+      return "#FFFFFF"
+    end
   end
 
 end
