@@ -13,7 +13,8 @@ class CategoriesController < ApplicationController
 
   def edit
     if @category.colour
-      @category.colour = "##{@category.colour.to_s(16)}"
+      # @category.colour = "##{@category.colour.to_s(16)}"
+      @category.colour = @category.colour_as_hex
     end
   end
 

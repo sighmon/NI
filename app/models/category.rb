@@ -40,4 +40,8 @@ class Category < ActiveRecord::Base
     pretty_name
   end
 
+  def colour_as_hex
+    return "#%06x" % colour
+  end
+
 end

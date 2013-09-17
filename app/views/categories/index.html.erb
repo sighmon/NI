@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
+      <th>&nbsp;</th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th>Latest article published</th>
       <th>Date published</th>
@@ -17,6 +18,7 @@
       <% if category.latest_published_article %>
       <tr>
         <!-- <td><%= link_to category.id, category_path(category) %></td> -->
+        <td style="background-color: <%= category.colour_as_hex %>">&nbsp;</td>
         <td><%= link_to category.display_name, category_path(category) %></td>
         <td><%= link_to category.latest_published_article.title, issue_article_path(category.latest_published_article.issue, category.latest_published_article) %></td>
         <td><%= category.latest_published_article.publication.strftime("%B, %Y") %></td>
