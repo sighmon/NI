@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703015052) do
+ActiveRecord::Schema.define(:version => 20130917055316) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20130703015052) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "display_name"
+    t.integer  "colour"
   end
 
   create_table "favourites", :force => true do |t|

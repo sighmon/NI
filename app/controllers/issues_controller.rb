@@ -174,7 +174,7 @@ class IssuesController < ApplicationController
             :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
             :include => {
               :images => {},
-              :categories => { :only => [:name, :id] }
+              :categories => { :only => [:name, :colour, :id] }
             }
           },
         } 
