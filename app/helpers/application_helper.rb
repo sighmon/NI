@@ -69,15 +69,21 @@ module ApplicationHelper
         end
     end
 
-    def guest_passess_as_table(guest_passes)
+    def guest_passess_as_table(guest_passes, with_links)
         if guest_passes.try(:empty?)
             return "You haven't shared any articles yet."
         else
-            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Guest pass URL <br /><span style='font-weight:normal'>(right click + copy link)</span></th><th>Date shared</th></tr></thead><tbody>"
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th>"
+            if with_links
+                table += "<th>Guest pass URL <br /><span style='font-weight:normal'>(right click + copy link)</span></th>"
+            end
+            table += "<th>Date shared</th></tr></thead><tbody>"
             for guest_pass in guest_passes.sort_by {|x| x.created_at}.reverse do
                 table += "<tr><td>#{link_to guest_pass.article.title, issue_article_path(guest_pass.article.issue, guest_pass.article)}</td>"
                 # table += "<td>#{guest_pass.article.publication.strftime("%B, %Y")}</td>"
-                table += "<td>#{generate_guest_pass_link_to(guest_pass)}</td>"
+                if with_links
+                    table += "<td>#{generate_guest_pass_link_to(guest_pass)}</td>"
+                end
                 table += "<td>#{guest_pass.created_at.try(:strftime,"%d %B, %Y")}</td>"
                 if current_user.try(:admin?)
                     table += "<td>#{link_to 'Delete', issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"

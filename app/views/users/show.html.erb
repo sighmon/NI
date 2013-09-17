@@ -44,7 +44,7 @@
   <% end %>
 </dl>
 
-<% if @user.institution %>
+<% if (@user == current_user) and current_user.institution %>
 	<h3>Student accounts: </h3>
 	<p><%= link_to 'Create a new student account', new_institution_user_path, :class => 'btn btn-success' %></p>
 	<%= children_as_table(@user.children) %>
@@ -55,7 +55,7 @@
 	<%= favourites_as_table(@user.favourites) %>
 
 	<h3>Shared articles:</h3>
-	<%= guest_passess_as_table(@user.guest_passes) %>
+	<%= guest_passess_as_table(@user.guest_passes, current_user == @user) %>
 
 	<% if current_user == @user %>
 		<h3>Issues purchased:</h3>
