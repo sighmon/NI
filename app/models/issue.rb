@@ -11,6 +11,8 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  include ActionView::Helpers::TextHelper
+
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
@@ -102,6 +104,10 @@ class Issue < ActiveRecord::Base
 
   def ordered_articles
     [self.keynote] + self.categorised_articles
+  end
+
+  def editors_letter_html
+    return simple_format(self.editors_letter)
   end
 
   # if params[:query].present?
