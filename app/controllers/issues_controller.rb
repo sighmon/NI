@@ -76,7 +76,8 @@ class IssuesController < ApplicationController
       #format.json { render json: @issues, callback: params[:callback] }
       format.json { render callback: params[:callback], json: @issues.to_json(
         # Q: do we need :editors_letter here? it can be quite large.
-        :only => [:title, :id, :number, :editors_name, :editors_photo, :editors_letter, :release, :cover],
+        :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+        :methods => [:editors_letter_html]
       ) }
     end
   end
@@ -169,8 +170,10 @@ class IssuesController < ApplicationController
         #not super dry, see format block in #show
         # this is everything you should see about an issue without purchasing/subscribing
         # hoping that the only pay-walled content is :body
-        :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-        :methods => [:editors_letter_html],
+        # this isn't used by the app - we get it from the issues.json
+        #:only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+        #:methods => [:editors_letter_html],
+        :only => [],
         :include => { 
           :articles => { 
             :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
