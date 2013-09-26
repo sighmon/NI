@@ -75,6 +75,7 @@ NI::Application.routes.draw do
     root :to => "base#index"
     resources :users do
       get :free_subscription
+      get :crowdfunding_subscription
       get :media_subscription
       get :make_institutional
       get :free_institutional_subscription

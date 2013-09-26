@@ -98,6 +98,25 @@ class Admin::UsersController < Admin::BaseController
 		end
 	end
 
+	def crowdfunding_subscription
+		# Give a user a free subscription for donating to our crowdfunding campaign
+		@user = User.find(params[:user_id])
+		@number_of_months = params[:number_of_months]
+		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => @number_of_months, :purchase_date => DateTime.now, :price_paid => 0)
+
+		respond_to do |format|
+			if @free_subscription.save
+			    # Send the user an email
+				UserMailer.crowdfunding_subscription_confirmation(User.find(params[:user_id]), params[:number_of_months]).deliver
+				format.html { redirect_to admin_user_path(@user), notice: "Free #{params[:number_of_months]} month crowdfunding subscription was successfully created." }
+				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
+			else
+				format.html { redirect_to admin_user_path(@user), notice: "Couldn't add the crowdfunding free subscription, sorry." }
+				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+			end
+		end
+	end
+
 	def media_subscription
 		# Give a user a free 10 year subscription
 		@user = User.find(params[:user_id])

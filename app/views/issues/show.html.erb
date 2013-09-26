@@ -20,11 +20,11 @@
      |
     <%= link_to 'Import Images', issue_import_images_path(@issue), :class => 'btn btn-mini btn-warning',
                 :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will try and import all the images for each article listed here.')) %>
-    <br /><br />
+    <hr />
     <%= link_to 'Email current subscriber', issue_email_path(@issue), :class => 'btn btn-mini' %>
      |
     <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), :class => 'btn btn-mini' %>
-    <br /><br />
+    <hr />
     <%= link_to 'Email non-subscriber', issue_email_non_subscribers_path(@issue), :class => 'btn btn-mini' %>
      |
     <%= link_to 'Text non-subscriber', issue_email_non_subscribers_path(@issue, :text), :class => 'btn btn-mini' %>
