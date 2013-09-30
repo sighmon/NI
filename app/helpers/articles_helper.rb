@@ -181,6 +181,9 @@ module ArticlesHelper
           version = :threehundred
           css_class = "article-image article-image-small"
           image_width = 150
+        elsif options.include?("left")
+          version = :threehundred
+          css_class = "article-image article-image-float-none"
         end
         
         if options.include?("ns")
