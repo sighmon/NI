@@ -198,7 +198,11 @@ module ArticlesHelper
           caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
         end
         if media_url
-          "<div class='#{css_class}'>"+retina_image_tag(media_url, :alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}")+caption_div+credit_div+"</div>"
+          if options.include?("full")
+            "<div class='#{css_class}'>"+image_tag(media_url, :alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}")+caption_div+credit_div+"</div>"
+          else
+            "<div class='#{css_class}'>"+retina_image_tag(media_url, :alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}")+caption_div+credit_div+"</div>"
+          end
         else
           ""
         end
