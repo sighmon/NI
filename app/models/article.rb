@@ -95,6 +95,15 @@ class Article < ActiveRecord::Base
     return self.categories
   end
 
+  def first_image
+    image = article.images.order("position").first
+    if not image.blank?
+      return image
+    else
+      return nil
+    end
+  end
+
   def published
     issue.published
   end
