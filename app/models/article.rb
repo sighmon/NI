@@ -96,7 +96,7 @@ class Article < ActiveRecord::Base
   end
 
   def first_image
-    image = article.images.order("position").first
+    image = self.images.order("position").first
     if not image.blank?
       return image
     else
