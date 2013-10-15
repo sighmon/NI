@@ -109,6 +109,7 @@ class Issue < ActiveRecord::Base
   def editors_letter_html
     ed = simple_format(self.editors_letter)
     ed = ed.gsub(/\n/, "")
+    ed = ed.gsub(/(\")/, "'")
     ed = ed.gsub(/<p><h(\d)>/,"<h\\1>")
     ed = ed.gsub(/<\/h(\d)><\/p>/,"</h\\1>")
     return ed
