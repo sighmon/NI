@@ -107,7 +107,11 @@ class Issue < ActiveRecord::Base
   end
 
   def editors_letter_html
-    return simple_format(self.editors_letter)
+    ed = simple_format(self.editors_letter)
+    ed = ed.gsub(/\n/, "")
+    ed = ed.gsub(/<p><h(\d)>/,"<h\\1>")
+    ed = ed.gsub(/<\/h(\d)><\/p>/,"</h\\1>")
+    return ed
   end
 
   # if params[:query].present?
