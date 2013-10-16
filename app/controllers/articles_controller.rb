@@ -33,6 +33,18 @@ class ArticlesController < ApplicationController
                         :url   => search_url,
                         :site_name => "New Internationalist Magazine Digital Edition"
                       }
+        respond_to do |format|
+          format.html # show.html.erb
+          
+          format.json { render json: @articles.to_json(
+            # Don't show :body here
+            :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+                :include => {
+                  :images => {},
+                  :categories => { :only => [:name, :colour, :id] }
+                }
+          ) }
+        end
     end
 
     def import
