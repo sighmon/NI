@@ -44,6 +44,8 @@ NI::Application.routes.draw do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
       get :body
+      # the post version is for the iTunes appStore receipt
+      post :body
       get :import
       get :import_images
       get :generate_from_source

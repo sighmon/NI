@@ -217,9 +217,28 @@ class ArticlesController < ApplicationController
 
     def body
         @article = Article.find(params[:article_id])
-        # UNCOMMENT BEFORE PUSHING TO PRODUCTION
         begin
-          authorize! :read, @article unless Rails.env.development?
+
+
+          if request.post?
+            # send the request to itunes connect
+            require 'net/http'
+            require 'debugger'
+
+            uri = URI.parse("https://sandbox.itunes.apple.com/verifyReceipt")
+            http = Net::HTTP.new(uri.host, uri.port)
+
+            json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
+            http.use_ssl = true
+            api_response, data = http.post(uri.path,json)
+            logger.info JSON.pretty_generate(JSON.parse(api_response.body)) 
+            if JSON.parse(api_response.body)["status"] != 0
+                logger.warn "receipt-data: #{request.raw_post}"
+                raise CanCan::AccessDenied
+            end
+          else
+            authorize! :read, @article unless Rails.env.development?
+          end
           render layout:false
         rescue CanCan::AccessDenied
           render :nothing => true, :status => :forbidden
