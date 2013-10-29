@@ -1,14 +1,23 @@
 class ArticlesController < ApplicationController
+    
+    require 'net/http'
+
     include ArticlesHelper
-	# Cancan authorisation
-  	load_and_authorize_resource :except => [:body]
+    
+    # Cancan authorisation
+    #load_and_authorize_resource :except => [:body]
+    load_and_authorize_resource
 
     def strip_tags(string)
         ActionController::Base.helpers.strip_tags(string)
     end
 
     rescue_from CanCan::AccessDenied do |exception|
-        redirect_to new_issue_purchase_path(@article.issue), :alert => "You need to purchase this issue or subscribe to read this article."
+        if @article
+            redirect_to new_issue_purchase_path(@article.issue), :alert => "You need to purchase this issue or subscribe to read this article."
+        else
+            redirect_to root_path
+        end
     end
 
     def search
@@ -217,13 +226,14 @@ class ArticlesController < ApplicationController
 
     def body
         @article = Article.find(params[:article_id])
+        logger.info "article is #{@article}"
+        logger.info "session is #{session}"
         begin
+
 
 
           if request.post?
             # send the request to itunes connect
-            require 'net/http'
-            require 'debugger'
 
             uri = URI.parse("https://sandbox.itunes.apple.com/verifyReceipt")
             http = Net::HTTP.new(uri.host, uri.port)
@@ -237,12 +247,15 @@ class ArticlesController < ApplicationController
                 raise CanCan::AccessDenied
             end
           else
+            logger.info "authorize.. #{current_user}"
             authorize! :read, @article unless Rails.env.development?
           end
           render layout:false
         rescue CanCan::AccessDenied
+          logger.info "cancan access denied"
           render :nothing => true, :status => :forbidden
         end
+        logger.info "after rescue"
     end
 
     def edit
