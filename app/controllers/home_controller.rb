@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  
   def index
   	if current_user.try(:admin?)
   		@issues = Issue.all
@@ -30,4 +31,45 @@ class HomeController < ApplicationController
                     }
                   }
   end
+
+  def newsstand
+
+    @issues = []
+    @feed = {}
+
+    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+      xml.feed('xmlns' => 'http://www.w3.org/2005/Atom', 'xmlns:news' => 'http://itunes.apple.com/2011/Newsstand') do
+        xml.updated DateTime.now.rfc3339
+        Issue.all.each do |i|
+          xml.entry do
+            xml.id i.number
+            xml.updated i.updated_at.to_datetime.rfc3339
+            xml.published i.release.to_datetime.rfc3339
+            xml.summary "#{i.title} - the #{i.release.strftime("%B %Y")} issue of New Internationalist magazine."
+            xml['news'].cover_art_icons('size' => 'SOURCE', 'src' => i.cover_url(:png).to_s)
+          end
+        end
+    end
+    }
+
+    Issue.all.each do |i|
+      issue = {}
+      issue = "#{i.number}singleissue"
+      @issues << issue
+    end
+
+    @feed = { "subscriptions" => [
+      "12month",
+      "12monthauto",
+      "3monthauto"],
+      "issues" => @issues
+    }
+
+    respond_to do |format|
+      format.json { render json: @feed.to_json }
+      format.xml { render xml: builder.to_xml }
+    end
+
+  end
+  
 end

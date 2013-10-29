@@ -47,6 +47,14 @@ class CoverUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [200, 200]
   end
 
+  # Make a PNG version for NewsStand
+  version :png do
+    process :convert => 'png'
+    def full_filename (for_file = model.cover.file)
+      "#{for_file.chomp(File.extname(for_file))}.png"
+    end
+  end
+
   # Retina display :thumb @2x version
   version :thumb2x do
     process :resize_to_limit => [400,400]
