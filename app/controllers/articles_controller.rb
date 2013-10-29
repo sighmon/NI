@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-    
     require 'net/http'
 
     include ArticlesHelper
@@ -230,8 +229,6 @@ class ArticlesController < ApplicationController
         logger.info "session is #{session}"
         begin
 
-
-
           if request.post?
             # send the request to itunes connect
 
@@ -241,11 +238,33 @@ class ArticlesController < ApplicationController
             json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
             http.use_ssl = true
             api_response, data = http.post(uri.path,json)
-            logger.info JSON.pretty_generate(JSON.parse(api_response.body)) 
+
+            # Do a first check to see if the receipt is valid from iTunes
             if JSON.parse(api_response.body)["status"] != 0
                 logger.warn "receipt-data: #{request.raw_post}"
                 raise CanCan::AccessDenied
+            else
+                # Check purchased issues from receipts
+                purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
+
+                # Check purchased subscriptions from receipts
+                subscription_receipt_valid = false
+
+                if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
+                    subscription_receipt_valid = true
+                end
+
+                # Check to see if those receipts allow the person to read this article
+                if subscription_receipt_valid
+                    logger.info "This receipt has a valid subscription."
+                elsif purchased_issue_numbers.include?(@article.issue_id.to_s)
+                    logger.info "This receipt includes issue: #{@article.issue.number}"
+                else
+                    logger.warn "This receipt doesn't include access to this article."
+                    raise CanCan::AccessDenied
+                end
             end
+
           else
             logger.info "authorize.. #{current_user}"
             authorize! :read, @article unless Rails.env.development?
@@ -275,6 +294,54 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         format.js {}
       end
+    end
+
+    def purchased_issues_from_receipts(response)
+        purchases = JSON.parse(response)['receipt']['in_app']
+
+        issues_purchased = []
+
+        purchases.each do |item|
+            if item['product_id'].include?('singleissue')
+                issues_purchased << item['product_id'][0..2]
+                # TODO: check if purchase already exists and if not, create a new one
+            end
+        end
+
+        logger.info "Issues purchased: "
+        logger.info issues_purchased
+
+        return issues_purchased
+    end
+
+    def latest_subscription_expiry_from_recepits(response)
+        purchases = JSON.parse(response)['receipt']['in_app']
+
+        subscriptions = []
+        latest_expiry = "0"
+
+        purchases.each do |item|
+            if item['product_id'].include?('month')
+                subscriptions << item
+                # TODO: check if they already have a subscription in Rails, if not, purchase one
+            end
+        end
+
+        logger.info "Susbcriptions purchased: "
+        logger.info subscriptions
+
+        if not subscriptions.empty?
+            latest_expiry = subscriptions.sort_by{ |x| x["expires_date_ms"]}.last["expires_date_ms"]
+        end
+
+        sec = (latest_expiry.to_f / 1000).to_s
+
+        latest_sub_date = DateTime.strptime(sec, '%s')
+
+        logger.info "Latest subscription expiry date: "
+        logger.info latest_sub_date
+
+        return latest_sub_date
     end
 
     def tweet
