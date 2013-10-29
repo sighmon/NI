@@ -40,7 +40,7 @@ class HomeController < ApplicationController
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.feed('xmlns' => 'http://www.w3.org/2005/Atom', 'xmlns:news' => 'http://itunes.apple.com/2011/Newsstand') do
         xml.updated DateTime.now.rfc3339
-        Issue.all.each do |i|
+        Issue.all.sort_by(&:number).reverse.each do |i|
           xml.entry do
             xml.id i.number
             xml.updated i.updated_at.to_datetime.rfc3339
@@ -52,7 +52,7 @@ class HomeController < ApplicationController
     end
     }
 
-    Issue.all.each do |i|
+    Issue.all.sort_by(&:number).reverse.each do |i|
       issue = {}
       issue = "#{i.number}singleissue"
       @issues << issue
