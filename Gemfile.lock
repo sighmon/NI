@@ -258,6 +258,8 @@ GEM
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
     sequel (3.20.0)
+    show_me_the_cookies (2.1.0)
+      capybara (~> 2.0)
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -363,6 +365,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   savon (~> 1.2.0)
+  show_me_the_cookies
   simple_form
   simplecov
   sitemap_generator
