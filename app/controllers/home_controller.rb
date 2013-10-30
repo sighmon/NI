@@ -203,7 +203,11 @@ class HomeController < ApplicationController
     }
 
     respond_to do |format|
-      format.xml { render xml: builder.to_xml }
+      if current_user.try(:admin?)
+        format.xml { render xml: builder.to_xml }
+      else
+        format.xml { redirect_to root_url }
+      end
     end
 
   end
