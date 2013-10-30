@@ -46,7 +46,9 @@ class HomeController < ApplicationController
             xml.updated i.updated_at.to_datetime.rfc3339
             xml.published i.release.to_datetime.rfc3339
             xml.summary "#{i.title} - the #{i.release.strftime("%B %Y")} issue of New Internationalist magazine."
-            xml['news'].cover_art_icons('size' => 'SOURCE', 'src' => i.cover_url(:png).to_s)
+            xml['news'].cover_art_icons do
+              xml['news'].cover_art_icon('size' => 'SOURCE', 'src' => i.cover_url(:png).to_s)
+            end
           end
         end
     end
