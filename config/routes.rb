@@ -95,6 +95,7 @@ NI::Application.routes.draw do
 
   get "home/index"
   get "newsstand" => "home#newsstand"
+  get "inapp" => "home#inapp"
 
   # Change the page logged in users are directed to
   # authenticated :user do

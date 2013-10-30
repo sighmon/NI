@@ -302,7 +302,7 @@ class ArticlesController < ApplicationController
         issues_purchased = []
 
         purchases.each do |item|
-            if item['product_id'].include?('singleissue')
+            if item['product_id'].include?('single')
                 issues_purchased << item['product_id'][0..2]
                 # TODO: check if purchase already exists and if not, create a new one
             end
