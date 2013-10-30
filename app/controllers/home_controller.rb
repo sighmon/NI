@@ -30,6 +30,7 @@ class HomeController < ApplicationController
                       :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
                     }
                   }
+
   end
 
   def newsstand

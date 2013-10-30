@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
 
   before_filter :auto_signin_ip
 
+
   protect_from_forgery
+
   # Send the access denied pages to root with a nice message
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to issues_path, :alert => exception.message
@@ -12,6 +14,7 @@ class ApplicationController < ActionController::Base
   after_filter :store_location
 
   private
+
 
   def id_from_ip_whitelist(ip)
     get_whitelist.each do |user|
