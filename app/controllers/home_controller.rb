@@ -37,10 +37,12 @@ class HomeController < ApplicationController
     @issues = []
     @feed = {}
 
+    @published_issues = Issue.find_all_by_published(:true)
+
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.feed('xmlns' => 'http://www.w3.org/2005/Atom', 'xmlns:news' => 'http://itunes.apple.com/2011/Newsstand') do
         xml.updated DateTime.now.rfc3339
-        Issue.all.sort_by(&:number).reverse.each do |i|
+        @published_issues.sort_by(&:number).reverse.each do |i|
           xml.entry do
             xml.id i.number
             xml.updated i.updated_at.to_datetime.rfc3339
@@ -54,7 +56,7 @@ class HomeController < ApplicationController
     end
     }
 
-    Issue.all.sort_by(&:number).reverse.each do |i|
+    @published_issues.sort_by(&:number).reverse.each do |i|
       issue = {}
       issue = "#{i.number}singleissue"
       @issues << issue
@@ -169,7 +171,7 @@ class HomeController < ApplicationController
               end
               # End of subscriptions
               # Loop through single issues
-              Issue.all.sort_by(&:number).reverse.each do |i|
+              Issue.find_all_by_published(:true).sort_by(&:number).reverse.each do |i|
                 xml.in_app_purchase do
                   xml.locales do
                     xml.locale('name' => 'en-AU') do
