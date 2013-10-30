@@ -58,7 +58,7 @@ class HomeController < ApplicationController
 
     @published_issues.sort_by(&:number).reverse.each do |i|
       issue = {}
-      issue = "#{i.number}singleissue"
+      issue = "#{i.number}single"
       @issues << issue
     end
 
@@ -182,7 +182,7 @@ class HomeController < ApplicationController
                   xml.read_only_info do
                     xml.read_only_value('Waiting for Screenshot', 'key' => 'iap-status')
                   end
-                  xml.product_id "#{i.number}singleissue"
+                  xml.product_id "#{i.number}single"
                   xml.reference_name "#{i.number} - #{i.title} - single issue purchase"
                   xml.type 'non-consumable'
                   xml.products do
