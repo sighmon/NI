@@ -108,7 +108,7 @@ class HomeController < ApplicationController
                       xml.cleared_for_sale 'true'
                       xml.intervals do
                         xml.interval do
-                          xml.start_date "#{(DateTime.now + 1).strftime('%Y-%m-%d')}"
+                          xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
                           xml.wholesale_price_tier '17'
                         end
                       end
@@ -137,7 +137,7 @@ class HomeController < ApplicationController
                       xml.cleared_for_sale 'true'
                       xml.intervals do
                         xml.interval do
-                          xml.start_date "#{(DateTime.now + 1).strftime('%Y-%m-%d')}"
+                          xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
                           xml.wholesale_price_tier '48'
                         end
                       end
@@ -163,7 +163,7 @@ class HomeController < ApplicationController
                     xml.cleared_for_sale 'true'
                     xml.intervals do
                       xml.interval do
-                        xml.start_date "#{(DateTime.now + 1).strftime('%Y-%m-%d')}"
+                        xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
                         xml.wholesale_price_tier '48'
                       end
                     end
@@ -191,7 +191,7 @@ class HomeController < ApplicationController
                       xml.cleared_for_sale 'true'
                       xml.intervals do
                         xml.interval do
-                          xml.start_date "#{(DateTime.now + 1).strftime('%Y-%m-%d')}"
+                          xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
                           xml.wholesale_price_tier '7'
                         end
                       end
