@@ -84,7 +84,7 @@
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_url(@issue) %></singleline></p>
                                     <div align="left" class="article-content">
                                         <multiline label="Description">Hi [salutation],<br /><br />
-                                        The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue) %> of New Internationalist magazine is available now for you to read by <a href="<%= new_user_session_url %>?user[login]=[username,fallback=oops]">logging in</a> with your username: <b>[username,fallback=oops]</b>.</multiline>
+                                        Thanks very much for your interest in the New Internationalist. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue) %> of New Internationalist magazine. If you <a href="https://digital.newint.com.au/users/sign_up">sign up</a> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.</multiline>
                                         <% if not @issue.email_text.blank? %><br /><multiline><%= simple_format @issue.email_text %></multiline><% end %>
                                     </div>
                                 </td>
@@ -177,7 +177,7 @@
         <tr>
             <td class="w30" width="30"></td>
             <td class="w580" width="360" valign="top">
-            <span class="hide"><p id="permission-reminder" align="left" class="footer-content-left"><span>You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.</span></p></span>
+            <span class="hide"><p id="permission-reminder" align="left" class="footer-content-left"><span>You're receiving this because you have previously been in contact with the New Internationalist.</span></p></span>
             <p align="left" class="footer-content-left"><unsubscribe>Unsubscribe</unsubscribe></p>
             </td>
             <td class="hide w0" width="60"></td>

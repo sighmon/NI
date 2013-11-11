@@ -126,6 +126,15 @@ class IssuesController < ApplicationController
     end
   end
 
+  def email_others
+    @issue = Issue.find(params[:issue_id])
+
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+    end
+  end
+
   # GET /issues/1
   # GET /issues/1.json
   def show

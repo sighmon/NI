@@ -28,6 +28,10 @@
     <%= link_to 'Email non-subscriber', issue_email_non_subscribers_path(@issue), :class => 'btn btn-mini' %>
      |
     <%= link_to 'Text non-subscriber', issue_email_non_subscribers_path(@issue, :text), :class => 'btn btn-mini' %>
+    <hr />
+    <%= link_to 'Email others', issue_email_others_path(@issue), :class => 'btn btn-mini' %>
+     |
+    <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-mini' %>
   <% end %>
 </div>
 <% end %>
