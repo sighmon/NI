@@ -4,8 +4,9 @@ class ArticlesController < ApplicationController
     include ArticlesHelper
     
     # Cancan authorisation
-    #load_and_authorize_resource :except => [:body]
-    load_and_authorize_resource
+    # Except :body to allow for iTunes authentication.
+    load_and_authorize_resource :except => [:body]
+    # load_and_authorize_resource
 
     def strip_tags(string)
         ActionController::Base.helpers.strip_tags(string)
@@ -274,7 +275,7 @@ class ArticlesController < ApplicationController
           logger.info "cancan access denied"
           render :nothing => true, :status => :forbidden
         end
-        logger.info "after rescue"
+        # logger.info "after rescue"
     end
 
     def edit
@@ -322,6 +323,12 @@ class ArticlesController < ApplicationController
 
         purchases.each do |item|
             if item['product_id'].include?('month')
+                if item['expires_date_ms'].nil?
+                    # The subscription is non-renewing, generate :expires_date_ms for it.
+                    subscription_duration = item['product_id'][0..1].to_i
+                    item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
+                    logger.info "Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
+                end
                 subscriptions << item
                 # TODO: check if they already have a subscription in Rails, if not, purchase one
             end

@@ -43,7 +43,8 @@ NI::Application.routes.draw do
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
-      get :body
+      # Do we need the 'get' :body for the website??? or is this just for testing?
+      # get :body
       # the post version is for the iTunes appStore receipt
       post :body
       get :import
