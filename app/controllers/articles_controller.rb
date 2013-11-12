@@ -268,7 +268,7 @@ class ArticlesController < ApplicationController
 
           else
             logger.info "authorize.. #{current_user}"
-            authorize! :read, @article unless Rails.env.development?
+            authorize! :read, @article #unless Rails.env.development?
           end
           render layout:false
         rescue CanCan::AccessDenied
