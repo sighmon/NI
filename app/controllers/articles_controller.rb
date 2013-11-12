@@ -2,7 +2,9 @@ class ArticlesController < ApplicationController
     require 'net/http'
 
     include ArticlesHelper
-    
+   
+    skip_before_filter :verify_authenticity_token, :only => [:body]
+
     # Cancan authorisation
     # Except :body to allow for iTunes authentication.
     load_and_authorize_resource :except => [:body]
@@ -225,57 +227,19 @@ class ArticlesController < ApplicationController
     end
 
     def body
-        @article = Article.find(params[:article_id])
-        logger.info "article is #{@article}"
-        logger.info "session is #{session}"
-        begin
+      @article = Article.find(params[:article_id])
+      logger.info "article is #{@article}"
+      logger.info "session_id is #{request.session_options[:id]}"
+      logger.info "session is #{session}"
 
-          if request.post?
-            # send the request to itunes connect
+      logger.info "current_user is #{current_user}"
 
-            uri = URI.parse("https://sandbox.itunes.apple.com/verifyReceipt")
-            http = Net::HTTP.new(uri.host, uri.port)
-
-            json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
-            http.use_ssl = true
-            api_response, data = http.post(uri.path,json)
-
-            # Do a first check to see if the receipt is valid from iTunes
-            if JSON.parse(api_response.body)["status"] != 0
-                logger.warn "receipt-data: #{request.raw_post}"
-                raise CanCan::AccessDenied
-            else
-                # Check purchased issues from receipts
-                purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
-
-                # Check purchased subscriptions from receipts
-                subscription_receipt_valid = false
-
-                if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
-                    subscription_receipt_valid = true
-                end
-
-                # Check to see if those receipts allow the person to read this article
-                if subscription_receipt_valid
-                    logger.info "This receipt has a valid subscription."
-                elsif purchased_issue_numbers.include?(@article.issue.number.to_s)
-                    logger.info "This receipt includes issue: #{@article.issue.number}"
-                else
-                    logger.warn "This receipt doesn't include access to this article."
-                    raise CanCan::AccessDenied
-                end
-            end
-
-          else
-            logger.info "authorize.. #{current_user}"
-            authorize! :read, @article #unless Rails.env.development?
-          end
-          render layout:false
-        rescue CanCan::AccessDenied
-          logger.info "cancan access denied"
-          render :nothing => true, :status => :forbidden
-        end
-        # logger.info "after rescue"
+      if can? :read, @article or request_has_valid_itunes_receipt
+        render layout: false
+      else
+        render nothing: true, status: :forbidden
+      end
+  
     end
 
     def edit
@@ -385,5 +349,53 @@ class ArticlesController < ApplicationController
         }
         redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
     end
+
+    private
+
+
+    def request_has_valid_itunes_receipt
+      if !request.post?
+        return false
+      end
+
+      # send the request to itunes connect
+
+      uri = URI.parse("https://sandbox.itunes.apple.com/verifyReceipt")
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
+      http.use_ssl = true
+      api_response, data = http.post(uri.path,json)
+
+      # Do a first check to see if the receipt is valid from iTunes
+      if JSON.parse(api_response.body)["status"] != 0
+        logger.warn "receipt-data: #{request.raw_post}"
+        return false
+      end
+
+      # Check purchased issues from receipts
+      purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
+
+      # Check purchased subscriptions from receipts
+      subscription_receipt_valid = false
+
+      if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
+        subscription_receipt_valid = true
+      end
+
+      # Check to see if those receipts allow the person to read this article
+      if subscription_receipt_valid
+        logger.info "This receipt has a valid subscription."
+      elsif purchased_issue_numbers.include?(@article.issue.number.to_s)
+        logger.info "This receipt includes issue: #{@article.issue.number}"
+      else
+        logger.warn "This receipt doesn't include access to this article."
+        return false
+      end
+
+      logger.info "post itunes"
+      return true
+    end
+
 
 end
