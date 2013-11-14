@@ -24,7 +24,7 @@ NI::Application.routes.draw do
   # hack to sign in when on a pre-authenticated ip
   get "users/re_sign_in"
 
-  devise_for :users, :controllers => { :registrations => "registrations" } #, :path_names => { :sign_up => "subscribe" }
+  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
@@ -43,7 +43,10 @@ NI::Application.routes.draw do
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
+      # get version is used for logged in sessions
       get :body
+      # the post version is for the iTunes appStore receipt
+      post :body
       get :import
       get :import_images
       get :generate_from_source

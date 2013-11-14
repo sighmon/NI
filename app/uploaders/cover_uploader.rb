@@ -63,6 +63,13 @@ class CoverUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :png do
+    process :convert => 'png'
+    def full_filename (for_file = model.cover.file)
+      "#{for_file.chomp(File.extname(for_file))}.png"
+    end
+  end
+
   version :tiny do
     process :resize_to_limit => [75, 75]
   end

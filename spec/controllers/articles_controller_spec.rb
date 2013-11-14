@@ -3,6 +3,80 @@ require 'spec_helper'
 
 describe ArticlesController do
 
+  context "as a subscriber" do
+
+    before(:each) do
+      @user = FactoryGirl.create(:subscription).user
+      sign_in @user
+    end
+
+    describe "GET body" do
+
+      context "given an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { article.issue }
+
+        it "can view the body" do
+          get :body, {article_id: article.id, issue_id: article.issue.id}
+          response.status.should eq(200)
+        end 
+
+      end
+
+    end
+
+  end
+
+  context "as a non-subscriber" do
+
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
+
+    describe "GET body" do
+
+      context "given an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { article.issue }
+
+        it "can't view the body" do
+          get :body, {article_id: article.id, issue_id: article.issue.id}
+          response.status.should eq(403)
+        end 
+
+      end
+
+    end
+
+  end
+
+  context "as a guest" do
+
+    describe "GET body" do
+
+      context "given an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { article.issue }
+
+        it "can't view the body" do
+          get :body, {article_id: article.id, issue_id: article.issue.id}
+          response.status.should eq(403)
+        end 
+
+      end
+
+    end
+
+  end
+
+
   context "as an admin" do
 
     before(:each) do

@@ -71,6 +71,7 @@ module NI
     end
 
     config.to_prepare do
+      DeviseController.respond_to :html, :json
       Devise::SessionsController.skip_before_filter :auto_signin_ip
     end
   end
