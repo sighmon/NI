@@ -228,11 +228,10 @@ class ArticlesController < ApplicationController
 
     def body
       @article = Article.find(params[:article_id])
-      logger.info "article is #{@article}"
-      logger.info "session_id is #{request.session_options[:id]}"
-      logger.info "session is #{session}"
-
-      logger.info "current_user is #{current_user}"
+      # logger.info "article is #{@article}"
+      # logger.info "session_id is #{request.session_options[:id]}"
+      # logger.info "session is #{session}"
+      # logger.info "current_user is #{current_user}"
 
       if can? :read, @article or request_has_valid_itunes_receipt
         render layout: false
