@@ -1,5 +1,8 @@
 <div class="hero-unit">
 	<h1>Digital edition</h1>
+	<div class="home-image">
+		<%= link_to retina_image_tag('utne-winner.png', :alt => 'Awards New Internationalist magazine has won', :title => 'Awards New Internationalist magazine has won', :size => "75x96"), page_path("awards") %>
+	</div>
 	<% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
 		<p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, click the 'send feedback' tab on the bottom right of any page. Enjoy reading the magazine.</p>
 	<% else %>
