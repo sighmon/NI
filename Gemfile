@@ -62,6 +62,9 @@ gem 'unicorn'
 # New Relic for server information https://devcenter.heroku.com/articles/newrelic
 gem 'newrelic_rpm'
 
+# rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
+gem 'rubyzip'
+
 # For development
 group :development do
   gem 'taps', :require => false

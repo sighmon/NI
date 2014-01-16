@@ -67,6 +67,7 @@ NI::Application.routes.draw do
     get :email
     get :email_non_subscribers
     get :email_others
+    get :zip
   end
 
   get 'search' => 'articles#search'

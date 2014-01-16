@@ -1,5 +1,8 @@
 class IssuesController < ApplicationController
 
+  # require 'rubygems'
+  require 'zip'
+
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
@@ -133,6 +136,19 @@ class IssuesController < ApplicationController
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
     end
+  end
+
+  def zip
+    @issue = Issue.find(params[:issue_id])
+    
+    Zip::File.open("#{Rails.root}/tmp/#{@issue.id}.zip", Zip::File::CREATE) do |zipfile|
+        zipfile.add(File.open("#{Rails.root}/tmp/#{@issue.id}.json", "w"){ |f| f << @issue.to_json}, "#{Rails.root}/tmp/#{@issue.id}.json")
+        logger.info zipfile
+      end
+
+      send_file "#{Rails.root}/tmp/#{@issue.id}.zip", :type => 'application/zip', :filename => "#{@issue.id}.zip", :x_sendfile => true
+      # File.delete("#{Rails.root}/tmp/#{@issue.id}.zip")
+      # File.delete("#{Rails.root}/tmp/#{@issue.id}.json")
   end
 
   # GET /issues/1
