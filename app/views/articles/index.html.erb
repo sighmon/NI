@@ -1,34 +1,43 @@
 <%- model_class = Article -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1>All <%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h3>From the issue <%= link_to @issue.title, issue_path(@issue) %></h3>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      <% if can? :update, @issue %>
+        <th><%= model_class.human_attribute_name(:id) %></th>
+      <% end %>
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:teaser) %></th>
       <th><%= model_class.human_attribute_name(:author) %></th>
       <th><%= model_class.human_attribute_name(:publication) %></th>
       <!-- <th><%= model_class.human_attribute_name(:body) %></th> -->
-      <th><%= model_class.human_attribute_name(:issue_id) %></th>
-      <th><%= model_class.human_attribute_name(:trialarticle) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <% if can? :update, @issue %>
+        <th><%= model_class.human_attribute_name(:issue_id) %></th>
+        <th><%= model_class.human_attribute_name(:trialarticle) %></th>
+        <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <% end %>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @issue.articles.each do |article| %>
       <tr>
-        <td><%= link_to article.id, issue_article_path(@issue,article) %></td>
-        <td><%= article.title %></td>
+        <% if can? :update, article %>
+          <td><%= link_to article.id, issue_article_path(@issue,article) %></td>
+        <% end %>
+        <td><%= link_to article.title, issue_article_path(@issue,article) %></td>
         <td><%= article.teaser %></td>
         <td><%= article.author %></td>
-        <td><%= article.publication %></td>
+        <td><%= link_to article.publication.strftime("%B, %Y"), issue_path(@issue) %></td>
         <!-- <td><%= article.body %></td> -->
-        <td><%= article.issue_id %></td>
-        <td><%= article.trialarticle %></td>
-        <td><%=l article.created_at %></td>
+        <% if can? :update, @issue %>
+          <td><%= link_to article.issue_id, issue_path(@issue) %></td>
+          <td><%= article.trialarticle %></td>
+          <td><%= article.created_at.strftime("%d %B, %Y") %></td>
+        <% end %>
         <td>
           <% if can? :read, article %>
             <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' %>
