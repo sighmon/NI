@@ -18,12 +18,19 @@
 
 <% if @has_token %>
 
+	<%= javascript_tag do %>
+		window.issueNumber = '<%= @issue.number %>';
+		window.issueTitle = '<%= @issue.title %>';
+		window.purchaseID = 'user<%= try(:current_user).try(:id) %>issue<%= @issue.id %>';
+		window.issuePrice = <%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>;
+	<% end %>
+
 	<%= simple_form_for([@issue, @purchase]) do |f| %>
 	  
 	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
 	  Purchase amount: $<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>
 	  <div class="form-actions">
-		<%= f.button :submit, "Complete your purchase", :onclick => "trackConv(1072702417,'luYUCKztvAQQ0cfA_wM','#{number_with_precision((session[:express_purchase_price] / 100), :precision => 2)}','issue');", :class => 'btn btn-success' %>
+		<%= f.button :submit, "Complete your purchase", :onclick => "sendPurchase();", :class => 'btn btn-success' %>
 	  </div>
 	<% end %>
 
