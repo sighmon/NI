@@ -1,10 +1,13 @@
 // Place all the behaviors and hooks related to the matching controller here.
 
-jQuery(document).ready(function() {
-	ga('require', 'ecommerce', 'ecommerce.js');
-});
+// jQuery(document).ready(function() {
+// 	ga('require', 'ecommerce', 'ecommerce.js');
+// });
 
 function sendPurchase() {
+	// Send google the event for conversions
+	ga('send', 'event', 'purchase', 'buy', issueNumber, issuePrice);
+	
 	// Send google the ecommerce
 	ga('ecommerce:addTransaction', {
 		'id': purchaseID,
@@ -25,7 +28,5 @@ function sendPurchase() {
 	});
 	ga('ecommerce:send');
 	ga('ecommerce:clear');
-	// Send google the event for conversions
-	ga('send', 'event', 'purchase', 'buy', issueNumber, issuePrice);
 	console.log('Purchase finished.');
 };
