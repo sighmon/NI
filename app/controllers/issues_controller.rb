@@ -141,9 +141,6 @@ class IssuesController < ApplicationController
   def zip
     @issue = Issue.find(params[:issue_id])
 
-    zip_file_path = "#{Rails.root}/tmp/#{@issue.id}.zip"
-    tmp_json_file_location = "#{Rails.root}/tmp/#{@issue.id}.json"
-
     # Zip file structure
     # issueID
     # {
@@ -160,13 +157,27 @@ class IssuesController < ApplicationController
     #   }
     # }
 
+    zip_file_path = "#{Rails.root}/tmp/#{@issue.id}.zip"
+    issue_json_file_location = "#{Rails.root}/tmp/#{@issue.id}.json"
+
     # Create temporary file for issue_id.json
-    File.open(tmp_json_file_location, "w"){ |f| f << @issue.to_json}
+    # TODO: Create the right type of issue.json file.
+    File.open(issue_json_file_location, "w"){ |f| f << issue_show_to_json(@issue)}
     
     # Make zip file
     Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
-      zipfile.add("#{@issue.id}.json", "#{Rails.root}/tmp/#{@issue.id}.json")
-      logger.info zipfile
+      zipfile.add("issue.json", issue_json_file_location)
+      zipfile.add(File.basename(@issue.cover_url), @issue.cover.path)
+      zipfile.add(File.basename(@issue.editors_photo_url), @issue.editors_photo.path)
+      # Loop through articles
+      @issue.articles.each do |a|        
+        # Create temporary file for issue_id.json
+        # TODO: Create the right type of article.json file.
+        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json}
+
+        # Add article directory
+        zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
+      end
     end
 
     # Send zip file
@@ -177,7 +188,14 @@ class IssuesController < ApplicationController
 
     # Delete the zip & tmp files.
     File.delete(zip_file_path)
-    File.delete(tmp_json_file_location)
+    File.delete(issue_json_file_location)
+    @issue.articles.each do |a|
+      File.delete(article_json_file_location(a.id))
+    end
+  end
+
+  def article_json_file_location(article_id)
+    "#{Rails.root}/tmp/article#{article_id}.json"
   end
 
   # GET /issues/1
@@ -220,25 +238,29 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       
-      format.json { render json: @issue.to_json(
-        #not super dry, see format block in #show
-        # this is everything you should see about an issue without purchasing/subscribing
-        # hoping that the only pay-walled content is :body
-        # this isn't used by the app - we get it from the issues.json
-        #:only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-        #:methods => [:editors_letter_html],
-        :only => [],
-        :include => { 
-          :articles => { 
-            :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
-            :include => {
-              :images => {},
-              :categories => { :only => [:name, :colour, :id] }
-            }
-          },
-        } 
-      ) }
+      format.json { render json: issue_show_to_json(@issue) }
     end
+  end
+
+  def issue_show_to_json(issue)
+    issue.to_json(
+      #not super dry, see format block in #show
+      # this is everything you should see about an issue without purchasing/subscribing
+      # hoping that the only pay-walled content is :body
+      # this isn't used by the app - we get it from the issues.json
+      #:only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+      #:methods => [:editors_letter_html],
+      :only => [],
+      :include => { 
+        :articles => { 
+          :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+          :include => {
+            :images => {},
+            :categories => { :only => [:name, :colour, :id] }
+          }
+        },
+      } 
+    )
   end
 
   # GET /issues/new
