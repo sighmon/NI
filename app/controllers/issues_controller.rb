@@ -140,15 +140,44 @@ class IssuesController < ApplicationController
 
   def zip
     @issue = Issue.find(params[:issue_id])
-    
-    Zip::File.open("#{Rails.root}/tmp/#{@issue.id}.zip", Zip::File::CREATE) do |zipfile|
-        zipfile.add(File.open("#{Rails.root}/tmp/#{@issue.id}.json", "w"){ |f| f << @issue.to_json}, "#{Rails.root}/tmp/#{@issue.id}.json")
-        logger.info zipfile
-      end
 
-      send_file "#{Rails.root}/tmp/#{@issue.id}.zip", :type => 'application/zip', :filename => "#{@issue.id}.zip", :x_sendfile => true
-      # File.delete("#{Rails.root}/tmp/#{@issue.id}.zip")
-      # File.delete("#{Rails.root}/tmp/#{@issue.id}.json")
+    zip_file_path = "#{Rails.root}/tmp/#{@issue.id}.zip"
+    tmp_json_file_location = "#{Rails.root}/tmp/#{@issue.id}.json"
+
+    # Zip file structure
+    # issueID
+    # {
+    #   issue.json
+    #   number_cover.jpg
+    #   editor_name.jpg
+    #   {
+    #     articleID 
+    #     {
+    #       article.json
+    #       body.html
+    #       imageID.png
+    #     }
+    #   }
+    # }
+
+    # Create temporary file for issue_id.json
+    File.open(tmp_json_file_location, "w"){ |f| f << @issue.to_json}
+    
+    # Make zip file
+    Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
+      zipfile.add("#{@issue.id}.json", "#{Rails.root}/tmp/#{@issue.id}.json")
+      logger.info zipfile
+    end
+
+    # Send zip file
+    # TODO: upload zip file to S3 and save the URL to it in the issue model (Create zip url migration).
+    File.open(zip_file_path, 'r') do |f|
+      send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
+    end
+
+    # Delete the zip & tmp files.
+    File.delete(zip_file_path)
+    File.delete(tmp_json_file_location)
   end
 
   # GET /issues/1
