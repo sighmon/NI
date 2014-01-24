@@ -77,11 +77,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: @issues.to_json(
-        # Q: do we need :editors_letter here? it can be quite large.
-        :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-        :methods => [:editors_letter_html]
-      ) }
+      format.json { render callback: params[:callback], json: issues_index_to_json(@issues) }
     end
   end
 
@@ -162,26 +158,44 @@ class IssuesController < ApplicationController
 
     # Create temporary file for issue_id.json
     # TODO: Create the right type of issue.json file.
-    File.open(issue_json_file_location, "w"){ |f| f << issue_show_to_json(@issue)}
+    File.open(issue_json_file_location, "w"){ |f| f << issues_index_to_json(@issue)}
     
     # Make zip file
     Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
       zipfile.add("issue.json", issue_json_file_location)
       zipfile.add(File.basename(@issue.cover_url), @issue.cover.path)
       zipfile.add(File.basename(@issue.editors_photo_url), @issue.editors_photo.path)
+
       # Loop through articles
       @issue.articles.each do |a|        
         # Create temporary file for issue_id.json
-        # TODO: Create the right type of article.json file.
-        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json}
+        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(article_information_to_include_in_json_hash) }
 
-        # Add article directory
+        # TODO: Sort out getting body (which is currently in the view) when body is blank
+        File.open(article_body_file_location(a.id), "w"){ |f| f << a.body }
+
+        # Add article.json to article_id directory
         zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
+
+        # Add body.html
+        zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
+
+        # Add featured image
+        if a.featured_image.to_s != ""
+          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", a.featured_image.path)
+        end
+
+        # Loop through the images
+        a.images.each do |i|
+          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", i.data.path)
+        end
       end
     end
 
     # Send zip file
     # TODO: upload zip file to S3 and save the URL to it in the issue model (Create zip url migration).
+    # Don't forget to set fog_public = false so that no-one else can download the zip.
+    # http://stackoverflow.com/questions/6735019/granular-public-settings-on-uploaded-files-with-fog-and-carrierwave
     File.open(zip_file_path, 'r') do |f|
       send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
     end
@@ -191,11 +205,16 @@ class IssuesController < ApplicationController
     File.delete(issue_json_file_location)
     @issue.articles.each do |a|
       File.delete(article_json_file_location(a.id))
+      File.delete(article_body_file_location(a.id))
     end
   end
 
   def article_json_file_location(article_id)
     "#{Rails.root}/tmp/article#{article_id}.json"
+  end
+
+  def article_body_file_location(article_id)
+    "#{Rails.root}/tmp/article#{article_id}.html"
   end
 
   # GET /issues/1
@@ -252,14 +271,26 @@ class IssuesController < ApplicationController
       #:methods => [:editors_letter_html],
       :only => [],
       :include => { 
-        :articles => { 
-          :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
-          :include => {
-            :images => {},
-            :categories => { :only => [:name, :colour, :id] }
-          }
-        },
+        :articles => article_information_to_include_in_json_hash,
       } 
+    )
+  end
+
+  def article_information_to_include_in_json_hash
+    { 
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+      :include => {
+        :images => {},
+        :categories => { :only => [:name, :colour, :id] }
+      }
+    }
+  end
+
+  def issues_index_to_json(issues)
+    issues.to_json(
+      # Q: do we need :editors_letter here? it can be quite large.
+      :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+      :methods => [:editors_letter_html]
     )
   end
 
