@@ -152,7 +152,7 @@
                                     <p align="left" class="section-title">Other articles in this issue</p>
                                     <% @issue.categorised_articles.each do |a| %>
                                       <p align="left" class="article-content feature-title"><%= link_to a.title, issue_article_url(@issue,a) %></p>
-                                      <% if (a.categories.select {|c| c.name == '/features/'}.count > 0) and not a.teaser.blank? %>
+                                      <% if a.is_a_feature and not a.teaser.blank? %>
                                           <div align="left" class="article-content feature-teaser">
                                             <multiline label="Description"><%= simple_format a.teaser %> <% link_to "Read it now", issue_article_url(@issue,a) %></multiline>
                                           </div>

@@ -104,6 +104,14 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def is_a_feature
+    if self.categories.select {|c| c.name == '/features/'}.count > 0
+      return true
+    else
+      return false
+    end
+  end
+
   def published
     issue.published
   end

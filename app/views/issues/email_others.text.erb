@@ -37,7 +37,7 @@ Other articles in this issue
 ============================
 
 <% @issue.categorised_articles.each do |a| %>
-<%= a.title %><% if (a.categories.select {|c| c.name == '/features/'}.count > 0) and not a.teaser.blank? %><%= "\n"+ strip_tags(a.teaser) %><% end %>
+<%= a.title %><% if a.is_a_feature and not a.teaser.blank? %><%= "\n"+ strip_tags(a.teaser) %><% end %>
 <%= "[#{issue_article_url(@issue,a)}]" %>
 
 <% end %>
