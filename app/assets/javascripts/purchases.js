@@ -16,11 +16,11 @@ function sendPurchase() {
 		'tax': '0',
 		'currency': 'AUD'  // local currency code.
 	});
-	console.log(purchaseID,issueTitle, issueNumber, issuePrice);
+	// console.log('PurchaseID: ', purchaseID, 'Issue title: ', issueTitle, 'Issue number: ', 'issue' + issueNumber, 'Price: ', issuePrice);
 	ga('ecommerce:addItem', {
 		'id': purchaseID,				// Transaction ID. Required.
 		'name': issueTitle,				// Product name. Required.
-		'sku': issueNumber,				// SKU/code.
+		'sku': 'issue' + issueNumber,	// SKU/code.
 		'category': 'Single issue',		// Category or variation.
 		'price': issuePrice,			// Unit price.
 		'currency': 'AUD',
@@ -28,5 +28,5 @@ function sendPurchase() {
 	});
 	ga('ecommerce:send');
 	ga('ecommerce:clear');
-	console.log('Purchase finished.');
+	// console.log('Purchase finished.');
 };

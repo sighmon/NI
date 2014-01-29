@@ -1,5 +1,5 @@
 function sendSubscription() {
-	console.log('Subscription price:', subscriptionPrice, ' Type:', subscriptionType, ' PurchaseID:', purchaseID, ' Number:', subscriptionNumber);
+	// console.log('Subscription price:', subscriptionPrice, ' Type:', subscriptionType, ' PurchaseID:', purchaseID, ' Number:', 'sub' + subscriptionNumber);
 
 	// Send google the event for conversions
 	ga('send', 'event', 'subscription', 'buy', subscriptionType, subscriptionPrice);
@@ -10,18 +10,18 @@ function sendSubscription() {
 		'revenue': subscriptionPrice,
 		'shipping': '0',
 		'tax': '0',
-		'currency': 'AUD'  				// local currency code.
+		'currency': 'AUD'  					// local currency code.
 	});
 	ga('ecommerce:addItem', {
-		'id': purchaseID,				// Transaction ID. Required.
-		'name': subscriptionType,		// Product name. Required.
-		'sku': subscriptionNumber,		// SKU/code.
-		'category': 'Subscription',		// Category or variation.
-		'price': subscriptionPrice,		// Unit price.
+		'id': purchaseID,					// Transaction ID. Required.
+		'name': subscriptionType,			// Product name. Required.
+		'sku': 'sub' + subscriptionNumber,	// SKU/code.
+		'category': 'Subscription',			// Category or variation.
+		'price': subscriptionPrice,			// Unit price.
 		'currency': 'AUD',
-		'quantity': '1'					// Quantity.
+		'quantity': '1'						// Quantity.
 	});
 	ga('ecommerce:send');
 	ga('ecommerce:clear');
-	console.log('Subscription finished.');
+	// console.log('Subscription finished.');
 };
