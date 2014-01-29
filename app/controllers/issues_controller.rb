@@ -46,6 +46,7 @@ class IssuesController < ApplicationController
     # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
 
     @issues = Issue.search(params, current_user.try(:admin?))
+    @json_issues = Issue.select {|i| i.published?}
 
     # Set meta tags
     @page_title = "Magazine archive"
@@ -77,7 +78,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: issues_index_to_json(@issues) }
+      format.json { render callback: params[:callback], json: issues_index_to_json(@json_issues) }
     end
   end
 
