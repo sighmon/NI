@@ -3,11 +3,11 @@ class ArticlesController < ApplicationController
 
     include ArticlesHelper
    
-    skip_before_filter :verify_authenticity_token, :only => [:body]
+    skip_before_filter :verify_authenticity_token, :only => [:body, :ios_share]
 
     # Cancan authorisation
     # Except :body to allow for iTunes authentication.
-    load_and_authorize_resource :except => [:body]
+    load_and_authorize_resource :except => [:body, :ios_share]
     # load_and_authorize_resource
 
     def strip_tags(string)
@@ -347,6 +347,21 @@ class ArticlesController < ApplicationController
             #:redirect_uri => "http://digital.newint.com.au"
         }
         redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
+    end
+
+    def ios_share
+        @article = Article.find(params[:article_id])
+
+        if can? :read, @article or request_has_valid_itunes_receipt
+            @user = User.find(current_user)
+            @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+
+            respond_to do |format|
+              format.json { render json: @guest_pass }
+            end
+        else
+            render nothing: true, status: :forbidden
+        end
     end
 
     private

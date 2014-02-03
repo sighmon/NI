@@ -56,6 +56,8 @@ NI::Application.routes.draw do
       # Customise Twitter & Facebook posts using selected text
       get :tweet
       get :wall_post
+      get :ios_share
+      post :ios_share
     end
     resources :purchases, :only => [:new, :create] do
       new do
