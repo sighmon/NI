@@ -46,7 +46,7 @@ class IssuesController < ApplicationController
     # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
 
     @issues = Issue.search(params, current_user.try(:admin?))
-    @json_issues = Issue.select {|i| i.published?}
+    @json_issues = Issue.select {|i| i.published?}.sort_by { |i| i.release }.reverse
 
     # Set meta tags
     @page_title = "Magazine archive"
