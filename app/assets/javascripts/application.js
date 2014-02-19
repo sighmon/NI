@@ -10,12 +10,12 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require twitter/bootstrap
 //= require jquery
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
-//= require twitter/bootstrap
 //= require_tree .
 //= require retina_image_tag
 //= require highlighter/jQuery.highlighter
