@@ -217,4 +217,15 @@ module ArticlesHelper
     end
   end
 
+  def expand_video_tags(body, debug = false)
+    # Lets look for Youtube tags
+    body.gsub(/\[Youtube:(?<embed_code>[^\]]*)?\]/i) do 
+      # id = $~[:id]
+      id = $~[:embed_code]
+      # logger.info("******#{id}")
+      "<iframe width='560' height='315' src='//www.youtube-nocookie.com/embed/#{id}?rel=0' frameborder='0' allowfullscreen></iframe>"
+      # "<video width='320' height='240' controls><source src='https://youtube.googleapis.com/v/#{id}' type='video/mp4'>Your browser does not support the video tag.</video>"
+    end
+  end
+
 end
