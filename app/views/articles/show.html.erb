@@ -115,7 +115,7 @@
             <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
               <div class="<% if first %>active <% first = false %><% end %>item">
                 <div class="modal-body">
-                  <%= retina_image_tag i.data_url.to_s, :alt => "", :title => "", :size => "#{i.width}x#{i.height}" %>
+                  <%= image_tag i.data_url.to_s, :alt => "", :title => "", :size => "#{i.width}x#{i.height}" %>
                 </div>
               </div>
             <% end %>
