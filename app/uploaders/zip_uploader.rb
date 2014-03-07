@@ -7,7 +7,7 @@ class ZipUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
 
   # Only use S3 storage via fog.
-  storage :fog
+  # storage :fog
 
   def initialize(*)
     super
