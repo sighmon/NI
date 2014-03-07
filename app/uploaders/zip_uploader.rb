@@ -21,6 +21,12 @@ class ZipUploader < CarrierWave::Uploader::Base
 
     self.fog_directory = ENV['S3_ZIP_BUCKET']
     self.fog_public = false
+
+    if Rails.env.production?
+      self.storage = :fog
+    else
+      self.storage = :file
+    end
   end
 
   # Use the zip bucket
