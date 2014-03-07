@@ -205,8 +205,12 @@ class IssuesController < ApplicationController
     # TODO: upload zip file to S3 and save the URL to it in the issue model (Create zip url migration).
     # Don't forget to set fog_public = false so that no-one else can download the zip.
     # http://stackoverflow.com/questions/6735019/granular-public-settings-on-uploaded-files-with-fog-and-carrierwave
+
+    # Download the zip file for checking locally
     File.open(zip_file_path, 'r') do |f|
       send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
+      @issue.zip = f
+      @issue.save
     end
 
     # Delete the zip & tmp files.

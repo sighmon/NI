@@ -1,10 +1,11 @@
 class Issue < ActiveRecord::Base
-  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published, :email_text
+  attr_accessible :number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published, :email_text, :zip
   has_many :articles, :dependent => :destroy
   has_many :purchases
   has_many :users, :through => :purchases
   mount_uploader :cover, CoverUploader
   mount_uploader :editors_photo, EditorsPhotoUploader
+  mount_uploader :zip, ZipUploader
   # If versions need reprocssing
   # after_update :reprocess_image
 
