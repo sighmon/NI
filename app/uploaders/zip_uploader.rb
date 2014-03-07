@@ -6,8 +6,12 @@ class ZipUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::RailsHelper
   include Sprockets::Helpers::IsolatedHelper
 
-  # Only use S3 storage via fog.
-  # storage :fog
+  # Storage
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
   def initialize(*)
     super
@@ -21,12 +25,6 @@ class ZipUploader < CarrierWave::Uploader::Base
 
     self.fog_directory = ENV['S3_ZIP_BUCKET']
     self.fog_public = false
-
-    if Rails.env.production?
-      self.storage = :fog
-    else
-      self.storage = :file
-    end
   end
 
   # Use the zip bucket
