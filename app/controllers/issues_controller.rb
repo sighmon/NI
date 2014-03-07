@@ -166,9 +166,18 @@ class IssuesController < ApplicationController
     
     # Make zip file
     Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
+
+      if Rails.env.production?
+        cover_path_to_add = @issue.cover_url
+        editors_photo_path_to_add = @issue.editors_photo_url
+      else
+        cover_path_to_add = @issue.cover.path
+        editors_photo_path_to_add = @issue.editors_photo.path
+      end
+
       zipfile.add("issue.json", issue_json_file_location)
-      zipfile.add(File.basename(@issue.cover_url), @issue.cover.path)
-      zipfile.add(File.basename(@issue.editors_photo_url), @issue.editors_photo.path)
+      zipfile.add(File.basename(@issue.cover_url), cover_path_to_add)
+      zipfile.add(File.basename(@issue.editors_photo_url), editors_photo_path_to_add)
 
       # Loop through articles
       @issue.articles.each do |a|        
@@ -190,13 +199,23 @@ class IssuesController < ApplicationController
         zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
 
         # Add featured image
+        if Rails.env.production?
+          featured_image_to_add = a.featured_image_url
+        else
+          featured_image_to_add = a.featured_image.path
+        end
         if a.featured_image.to_s != ""
-          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", a.featured_image.path)
+          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
         end
 
         # Loop through the images
         a.images.each do |i|
-          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", i.data.path)
+          if Rails.env.production?
+            image_to_add = i.data_url
+          else
+            image_to_add = i.data.path
+          end
+          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
         end
       end
     end
