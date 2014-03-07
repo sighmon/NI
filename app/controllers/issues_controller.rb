@@ -3,6 +3,9 @@ class IssuesController < ApplicationController
   # require 'rubygems'
   require 'zip'
 
+  # Need to include the helper so we can call source_to_body for the zip file
+  include ArticlesHelper
+
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
@@ -172,8 +175,13 @@ class IssuesController < ApplicationController
         # Create temporary file for issue_id.json
         File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(article_information_to_include_in_json_hash) }
 
-        # TODO: Sort out getting body (which is currently in the view) when body is blank
-        File.open(article_body_file_location(a.id), "w"){ |f| f << a.body }
+        # Add the article body
+        if a.body
+          body_to_zip = a.body
+        else
+          body_to_zip = source_to_body(a, :debug => current_user.try(:admin?))
+        end
+        File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
 
         # Add article.json to article_id directory
         zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
