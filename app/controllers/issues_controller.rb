@@ -168,6 +168,7 @@ class IssuesController < ApplicationController
     Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
 
       if Rails.env.production?
+        # TODO: Fix this for heroku.. need to download the file first I guess?
         cover_path_to_add = @issue.cover_url
         editors_photo_path_to_add = @issue.editors_photo_url
       else
@@ -200,6 +201,7 @@ class IssuesController < ApplicationController
 
         # Add featured image
         if Rails.env.production?
+          # TODO: Fix this for heroku.. need to download the file first I guess?
           featured_image_to_add = a.featured_image_url
         else
           featured_image_to_add = a.featured_image.path
@@ -211,6 +213,7 @@ class IssuesController < ApplicationController
         # Loop through the images
         a.images.each do |i|
           if Rails.env.production?
+            # TODO: Fix this for heroku.. need to download the file first I guess?
             image_to_add = i.data_url
           else
             image_to_add = i.data.path
@@ -221,13 +224,10 @@ class IssuesController < ApplicationController
     end
 
     # Send zip file
-    # TODO: upload zip file to S3 and save the URL to it in the issue model (Create zip url migration).
-    # Don't forget to set fog_public = false so that no-one else can download the zip.
-    # http://stackoverflow.com/questions/6735019/granular-public-settings-on-uploaded-files-with-fog-and-carrierwave
-
     File.open(zip_file_path, 'r') do |f|
       # Uncomment to download the zip file for checking locally also
       # send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
+      # Upload to S3 with ZipUploader
       @issue.zip = f
       @issue.save
     end
