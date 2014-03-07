@@ -169,6 +169,8 @@ class IssuesController < ApplicationController
 
       if Rails.env.production?
         # TODO: Fix this for heroku.. need to download the file first I guess?
+        # Possible solution:
+        # http://stackoverflow.com/questions/9908571/downloading-and-zipping-files-that-were-uploaded-to-s3-with-carrierwave
         cover_path_to_add = @issue.cover_url
         editors_photo_path_to_add = @issue.editors_photo_url
       else
