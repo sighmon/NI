@@ -167,9 +167,6 @@ class IssuesController < ApplicationController
     Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
 
       if Rails.env.production?
-        # TODO: Fix this for heroku.. need to download the file first I guess?
-        # Possible solution:
-        # http://stackoverflow.com/questions/9908571/downloading-and-zipping-files-that-were-uploaded-to-s3-with-carrierwave
         cover_path_to_add = open(@issue.cover.png.to_s)
         editors_photo_path_to_add = open(@issue.editors_photo_url)
       else
@@ -201,20 +198,18 @@ class IssuesController < ApplicationController
         zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
 
         # Add featured image
-        if Rails.env.production?
-          # TODO: Fix this for heroku.. need to download the file first I guess?
-          featured_image_to_add = open(a.featured_image_url)
-        else
-          featured_image_to_add = a.featured_image.path
-        end
         if a.featured_image.to_s != ""
+          if Rails.env.production?
+            featured_image_to_add = open(a.featured_image_url)
+          else
+            featured_image_to_add = a.featured_image.path
+          end
           zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
         end
 
         # Loop through the images
         a.images.each do |i|
           if Rails.env.production?
-            # TODO: Fix this for heroku.. need to download the file first I guess?
             # TODO: Do article images need to be pngs?
             image_to_add = open(i.data_url)
           else
