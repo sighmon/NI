@@ -170,8 +170,8 @@ class IssuesController < ApplicationController
         # TODO: Fix this for heroku.. need to download the file first I guess?
         # Possible solution:
         # http://stackoverflow.com/questions/9908571/downloading-and-zipping-files-that-were-uploaded-to-s3-with-carrierwave
-        cover_path_to_add = URI.parse(@issue.cover.png.to_s).read
-        editors_photo_path_to_add = URI.parse(@issue.editors_photo_url).read
+        cover_path_to_add = open(@issue.cover.png.to_s)
+        editors_photo_path_to_add = open(@issue.editors_photo_url)
       else
         cover_path_to_add = @issue.cover.png.path
         editors_photo_path_to_add = @issue.editors_photo.path
@@ -203,7 +203,7 @@ class IssuesController < ApplicationController
         # Add featured image
         if Rails.env.production?
           # TODO: Fix this for heroku.. need to download the file first I guess?
-          featured_image_to_add = URI.parse(a.featured_image_url).read
+          featured_image_to_add = open(a.featured_image_url)
         else
           featured_image_to_add = a.featured_image.path
         end
@@ -216,7 +216,7 @@ class IssuesController < ApplicationController
           if Rails.env.production?
             # TODO: Fix this for heroku.. need to download the file first I guess?
             # TODO: Do article images need to be pngs?
-            image_to_add = URI.parse(i.data_url).read
+            image_to_add = open(i.data_url)
           else
             image_to_add = i.data.path
           end
@@ -229,7 +229,7 @@ class IssuesController < ApplicationController
     File.open(zip_file_path, 'r') do |f|
       # Uncomment to download the zip file for checking locally also
       # send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
-      # Upload to S3 with ZipUploader
+      # Upload with carrierwave ZipUploader
       @issue.zip = f
       @issue.save
     end
