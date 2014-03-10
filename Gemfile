@@ -63,7 +63,10 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 
 # rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
-gem 'rubyzip'
+# gem 'rubyzip'
+
+# zipline for streaming S3 images to the zip https://github.com/fringd/zipline
+gem 'zipline'
 
 # For development
 group :development do

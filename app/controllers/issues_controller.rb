@@ -2,6 +2,10 @@ class IssuesController < ApplicationController
 
   # require 'rubygems'
   require 'zip'
+  # enable streaming responses
+  include ActionController::Streaming
+  # enable zipline
+  include Zipline
 
   # Need to include the helper so we can call source_to_body for the zip file
   include ArticlesHelper
@@ -157,92 +161,61 @@ class IssuesController < ApplicationController
     #   }
     # }
 
-    zip_file_path = "#{Rails.root}/tmp/#{@issue.id}.zip"
+    zip_file_path = "#{@issue.id}.zip"
+    Zip::File.open(zip_file_path, Zip::File::CREATE)
     issue_json_file_location = "#{Rails.root}/tmp/#{@issue.id}.json"
 
-    # Create temporary file for issue_id.json
-    # TODO: Create the right type of issue.json file.
+    # Create temporary file for issue.json
     File.open(issue_json_file_location, "w"){ |f| f << issues_index_to_json(@issue)}
-    
-    # Make zip file
-    Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
+    zip_files = [[issue_json_file_location, "issue.json"]]
 
-      if Rails.env.production?
-        # TODO: Fix this for heroku.. need to download the file first I guess?
-        # Possible solution:
-        # http://stackoverflow.com/questions/9908571/downloading-and-zipping-files-that-were-uploaded-to-s3-with-carrierwave
-        cover_path_to_add = @issue.cover_url
-        editors_photo_path_to_add = @issue.editors_photo_url
+    zip_files << [@issue.cover.png, @issue.cover.png.path.split('/').last]
+    zip_files << [@issue.editors_photo, @issue.editors_photo.path.split('/').last]
+
+    # Loop through articles
+    @issue.articles.each do |a|        
+      # Create temporary file for issue_id.json
+      File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(article_information_to_include_in_json_hash) }
+
+      # Add the article body
+      if a.body
+        body_to_zip = a.body
       else
-        cover_path_to_add = @issue.cover.path
-        editors_photo_path_to_add = @issue.editors_photo.path
+        body_to_zip = source_to_body(a, :debug => current_user.try(:admin?))
+      end
+      File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
+
+      # Add article.json to article_id directory
+      zip_files << [article_json_file_location(a.id), "#{a.id}/article.json"]
+
+      # Add body.html
+      zip_files << [article_body_file_location(a.id), "#{a.id}/body.html"]
+
+      if a.featured_image.to_s != ""
+        zip_files << [a.featured_image, a.featured_image.path.split('/').last]
       end
 
-      zipfile.add("issue.json", issue_json_file_location)
-      zipfile.add(File.basename(@issue.cover_url), cover_path_to_add)
-      zipfile.add(File.basename(@issue.editors_photo_url), editors_photo_path_to_add)
-
-      # Loop through articles
-      @issue.articles.each do |a|        
-        # Create temporary file for issue_id.json
-        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(article_information_to_include_in_json_hash) }
-
-        # Add the article body
-        if a.body
-          body_to_zip = a.body
-        else
-          body_to_zip = source_to_body(a, :debug => current_user.try(:admin?))
-        end
-        File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
-
-        # Add article.json to article_id directory
-        zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
-
-        # Add body.html
-        zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
-
-        # Add featured image
-        if Rails.env.production?
-          # TODO: Fix this for heroku.. need to download the file first I guess?
-          featured_image_to_add = a.featured_image_url
-        else
-          featured_image_to_add = a.featured_image.path
-        end
-        if a.featured_image.to_s != ""
-          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
-        end
-
-        # Loop through the images
-        a.images.each do |i|
-          if Rails.env.production?
-            # TODO: Fix this for heroku.. need to download the file first I guess?
-            image_to_add = i.data_url
-          else
-            image_to_add = i.data.path
-          end
-          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
-        end
+      # Loop through the images
+      a.images.each do |i|
+        zip_files << [i.data_url, i.data_url.split('/').last]
       end
     end
 
-    # Send zip file
-    File.open(zip_file_path, 'r') do |f|
-      # Uncomment to download the zip file for checking locally also
-      # send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
-      # Upload to S3 with ZipUploader
-      @issue.zip = f
-      @issue.save
-    end
+    zipline(zip_files, "#{@issue.id}.zip")
+
+    # zip_file_path
+    # @issue.zip = zipline(zip_files, "#{@issue.id}.zip")
+    # @issue.save
 
     # Delete the zip & tmp files.
-    File.delete(zip_file_path)
+    # File.delete(zip_file_path)
     File.delete(issue_json_file_location)
     @issue.articles.each do |a|
       File.delete(article_json_file_location(a.id))
       File.delete(article_body_file_location(a.id))
     end
 
-    redirect_to @issue, notice: "Zip created."
+    # redirect_to @issue, notice: "Zip created."
   end
 
   def article_json_file_location(article_id)
