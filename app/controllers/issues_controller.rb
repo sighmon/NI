@@ -145,7 +145,7 @@ class IssuesController < ApplicationController
     # issueID
     # {
     #   issue.json
-    #   number_cover.jpg
+    #   number_cover.png
     #   editor_name.jpg
     #   {
     #     articleID 
@@ -197,26 +197,28 @@ class IssuesController < ApplicationController
         # Add body.html
         zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
 
+        # TODO: Make this run from console so there aren't any heroku time-outs.
+
         # Add featured image
-        if a.featured_image.to_s != ""
-          if Rails.env.production?
-            featured_image_to_add = open(a.featured_image_url)
-          else
-            featured_image_to_add = a.featured_image.path
-          end
-          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
-        end
+        # if a.featured_image.to_s != ""
+        #   if Rails.env.production?
+        #     featured_image_to_add = open(a.featured_image_url)
+        #   else
+        #     featured_image_to_add = a.featured_image.path
+        #   end
+        #   zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
+        # end
 
         # Loop through the images
-        a.images.each do |i|
-          if Rails.env.production?
-            # TODO: Do article images need to be pngs?
-            image_to_add = open(i.data_url)
-          else
-            image_to_add = i.data.path
-          end
-          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
-        end
+        # a.images.each do |i|
+        #   if Rails.env.production?
+        #     # TODO: Do article images need to be pngs?
+        #     image_to_add = open(i.data_url)
+        #   else
+        #     image_to_add = i.data.path
+        #   end
+        #   zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
+        # end
       end
     end
 
