@@ -1,11 +1,5 @@
 class IssuesController < ApplicationController
 
-  # require 'rubygems'
-  require 'zip'
-
-  # Need to include the helper so we can call source_to_body for the zip file
-  include ArticlesHelper
-
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
@@ -81,7 +75,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: issues_index_to_json(@json_issues) }
+      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(@json_issues) }
     end
   end
 
@@ -140,114 +134,8 @@ class IssuesController < ApplicationController
 
   def zip
     @issue = Issue.find(params[:issue_id])
-
-    # Zip file structure
-    # issueID
-    # {
-    #   issue.json
-    #   number_cover.png
-    #   editor_name.jpg
-    #   {
-    #     articleID 
-    #     {
-    #       article.json
-    #       body.html
-    #       imageID.png
-    #     }
-    #   }
-    # }
-
-    zip_file_path = "#{Rails.root}/tmp/#{@issue.id}.zip"
-    issue_json_file_location = "#{Rails.root}/tmp/#{@issue.id}.json"
-
-    # Create temporary file for issue.json
-    File.open(issue_json_file_location, "w"){ |f| f << issues_index_to_json(@issue)}
-    
-    # Make zip file
-    Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
-
-      if Rails.env.production?
-        cover_path_to_add = open(@issue.cover.png.to_s)
-        editors_photo_path_to_add = open(@issue.editors_photo_url)
-      else
-        cover_path_to_add = @issue.cover.png.path
-        editors_photo_path_to_add = @issue.editors_photo.path
-      end
-
-      zipfile.add("issue.json", issue_json_file_location)
-      zipfile.add(File.basename(@issue.cover.png.to_s), cover_path_to_add)
-      zipfile.add(File.basename(@issue.editors_photo_url), editors_photo_path_to_add)
-
-      # Loop through articles
-      @issue.articles.each do |a|        
-        # Create temporary file for issue_id.json
-        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(article_information_to_include_in_json_hash) }
-
-        # Add the article body
-        if a.body
-          body_to_zip = a.body
-        else
-          body_to_zip = source_to_body(a, :debug => current_user.try(:admin?))
-        end
-        File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
-
-        # Add article.json to article_id directory
-        zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
-
-        # Add body.html
-        zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
-
-        # TODO: Make this run from console so there aren't any heroku time-outs.
-
-        # Add featured image
-        # if a.featured_image.to_s != ""
-        #   if Rails.env.production?
-        #     featured_image_to_add = open(a.featured_image_url)
-        #   else
-        #     featured_image_to_add = a.featured_image.path
-        #   end
-        #   zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
-        # end
-
-        # Loop through the images
-        # a.images.each do |i|
-        #   if Rails.env.production?
-        #     # TODO: Do article images need to be pngs?
-        #     image_to_add = open(i.data_url)
-        #   else
-        #     image_to_add = i.data.path
-        #   end
-        #   zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
-        # end
-      end
-    end
-
-    # Send zip file
-    File.open(zip_file_path, 'r') do |f|
-      # Uncomment to download the zip file for checking locally also
-      # send_data f.read, :type => "application/zip", :filename => "#{@issue.id}.zip", :x_sendfile => true
-      # Upload with carrierwave ZipUploader
-      @issue.zip = f
-      @issue.save
-    end
-
-    # Delete the zip & tmp files.
-    File.delete(zip_file_path)
-    File.delete(issue_json_file_location)
-    @issue.articles.each do |a|
-      File.delete(article_json_file_location(a.id))
-      File.delete(article_body_file_location(a.id))
-    end
-
+    @issue.zip_for_ios
     redirect_to @issue, notice: "Zip created."
-  end
-
-  def article_json_file_location(article_id)
-    "#{Rails.root}/tmp/article#{article_id}.json"
-  end
-
-  def article_body_file_location(article_id)
-    "#{Rails.root}/tmp/article#{article_id}.html"
   end
 
   # GET /issues/1
@@ -304,26 +192,8 @@ class IssuesController < ApplicationController
       #:methods => [:editors_letter_html],
       :only => [],
       :include => { 
-        :articles => article_information_to_include_in_json_hash,
+        :articles => Issue.article_information_to_include_in_json_hash,
       } 
-    )
-  end
-
-  def article_information_to_include_in_json_hash
-    { 
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
-      :include => {
-        :images => {},
-        :categories => { :only => [:name, :colour, :id] }
-      }
-    }
-  end
-
-  def issues_index_to_json(issues)
-    issues.to_json(
-      # Q: do we need :editors_letter here? it can be quite large.
-      :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-      :methods => [:editors_letter_html]
     )
   end
 

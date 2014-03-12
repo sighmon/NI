@@ -14,6 +14,12 @@ class Issue < ActiveRecord::Base
 
   include ActionView::Helpers::TextHelper
 
+  # For rubyzip
+  require 'zip'
+
+  # Need to include the helper so we can call source_to_body for the zip file
+  include ArticlesHelper
+
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
@@ -279,6 +285,130 @@ class Issue < ActiveRecord::Base
       end
     end
     return n
+  end
+
+  def zip_for_ios
+    # Zip file structure
+    # issueID
+    # {
+    #   issue.json
+    #   number_cover.png
+    #   editor_name.jpg
+    #   {
+    #     articleID 
+    #     {
+    #       article.json
+    #       body.html
+    #       imageID.png
+    #     }
+    #   }
+    # }
+
+    zip_file_path = "#{Rails.root}/tmp/#{self.id}.zip"
+    issue_json_file_location = "#{Rails.root}/tmp/#{self.id}.json"
+
+    # Create temporary file for issue.json
+    File.open(issue_json_file_location, "w"){ |f| f << Issue.issues_index_to_json(self)}
+    
+    # Make zip file
+    Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
+
+      if Rails.env.production?
+        cover_path_to_add = open(self.cover.png.to_s)
+        editors_photo_path_to_add = open(self.editors_photo_url)
+      else
+        cover_path_to_add = self.cover.png.path
+        editors_photo_path_to_add = self.editors_photo.path
+      end
+
+      zipfile.add("issue.json", issue_json_file_location)
+      zipfile.add(File.basename(self.cover.png.to_s), cover_path_to_add)
+      zipfile.add(File.basename(self.editors_photo_url), editors_photo_path_to_add)
+
+      # Loop through articles
+      self.articles.each do |a|        
+        # Create temporary file for issue_id.json
+        File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(Issue.article_information_to_include_in_json_hash) }
+
+        # Add the article body
+        if a.body
+          body_to_zip = a.body
+        else
+          body_to_zip = source_to_body(a, :debug => false)
+        end
+        File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
+
+        # Add article.json to article_id directory
+        zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
+
+        # Add body.html
+        zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
+
+        # Add featured image
+        if a.featured_image.to_s != ""
+          if Rails.env.production?
+            featured_image_to_add = open(a.featured_image_url)
+          else
+            featured_image_to_add = a.featured_image.path
+          end
+          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
+        end
+
+        # Loop through the images
+        a.images.each do |i|
+          if Rails.env.production?
+            # TODO: Do article images need to be pngs?
+            image_to_add = open(i.data_url)
+          else
+            image_to_add = i.data.path
+          end
+          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
+        end
+      end
+    end
+
+    # Send zip file
+    File.open(zip_file_path, 'r') do |f|
+      # Uncomment to download the zip file for checking locally also
+      # send_data f.read, :type => "application/zip", :filename => "#{self.id}.zip", :x_sendfile => true
+      # Upload with carrierwave ZipUploader
+      self.zip = f
+      self.save
+    end
+
+    # Delete the zip & tmp files.
+    File.delete(zip_file_path)
+    File.delete(issue_json_file_location)
+    self.articles.each do |a|
+      File.delete(article_json_file_location(a.id))
+      File.delete(article_body_file_location(a.id))
+    end
+  end
+
+  def article_json_file_location(article_id)
+    "#{Rails.root}/tmp/article#{article_id}.json"
+  end
+
+  def article_body_file_location(article_id)
+    "#{Rails.root}/tmp/article#{article_id}.html"
+  end
+
+  def self.issues_index_to_json(issues)
+    issues.to_json(
+      # Q: do we need :editors_letter here? it can be quite large.
+      :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+      :methods => [:editors_letter_html]
+    )
+  end
+
+  def self.article_information_to_include_in_json_hash
+    { 
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+      :include => {
+        :images => {},
+        :categories => { :only => [:name, :colour, :id] }
+      }
+    }
   end
 
   private
