@@ -366,7 +366,6 @@ class ArticlesController < ApplicationController
 
     private
 
-
     def request_has_valid_itunes_receipt
       if !request.post?
         return false
@@ -374,7 +373,16 @@ class ArticlesController < ApplicationController
 
       # send the request to itunes connect
 
-      uri = URI.parse("https://sandbox.itunes.apple.com/verifyReceipt")
+      if Rails.env.production?
+        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_PRODUCTION"]
+      else
+        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+      end
+
+      # TODO: Remove this line before launch.. forcing dev itunes receipt validation
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+
+      uri = URI.parse(itunes_url)
       http = Net::HTTP.new(uri.host, uri.port)
 
       json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
