@@ -137,6 +137,16 @@ class User < ActiveRecord::Base
     return host.subscriptions.collect{|s| s.expiry_date}.sort.last
   end
 
+  def expiry_date_including_ios(request)
+    ios_expiry = request_has_valid_itunes_receipt(request)
+    logger.info "iOS expiry: #{ios_expiry}"
+    if ios_expiry != nil
+      return [ios_expiry,expiry_date].max
+    else
+      return expiry_date
+    end
+  end
+
   def recurring_subscription
     return self.subscriptions.select{|s| s.is_recurring?}.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
@@ -200,6 +210,92 @@ class User < ActiveRecord::Base
 
   def guest?
     return id.nil?
+  end
+
+  private
+
+  def request_has_valid_itunes_receipt(request)
+    if !request.post?
+      return nil
+    end
+
+    # send the request to itunes connect
+
+    if Rails.env.production?
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_PRODUCTION"]
+    else
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+    end
+
+    # TODO: Remove this line before launch.. forcing dev itunes receipt validation
+    itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+
+    uri = URI.parse(itunes_url)
+    http = Net::HTTP.new(uri.host, uri.port)
+
+    json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
+    http.use_ssl = true
+    api_response, data = http.post(uri.path,json)
+
+    # Do a first check to see if the receipt is valid from iTunes
+    if JSON.parse(api_response.body)["status"] != 0
+      logger.warn "receipt-data: #{request.raw_post}"
+      return nil
+    end
+
+    # Check purchased subscriptions from receipts
+    subscription_receipt_valid = false
+
+    expiry_date_from_itunes = latest_subscription_expiry_from_recepits(api_response.body)
+
+    if expiry_date_from_itunes > DateTime.now
+      subscription_receipt_valid = true
+    end
+
+    # Pass on the expiry date or nil
+    if subscription_receipt_valid
+      logger.info "This receipt has a valid subscription."
+      return expiry_date_from_itunes
+    else
+      logger.warn "This receipt doesn't include access to this article."
+      return nil
+    end
+  end
+
+  def latest_subscription_expiry_from_recepits(response)
+    purchases = JSON.parse(response)['receipt']['in_app']
+
+    subscriptions = []
+    latest_expiry = "0"
+
+    purchases.each do |item|
+      if item['product_id'].include?('month')
+        if item['expires_date_ms'].nil?
+          # The subscription is non-renewing, generate :expires_date_ms for it.
+          subscription_duration = item['product_id'][0..1].to_i
+          item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
+          logger.info "Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
+        end
+        subscriptions << item
+        # TODO: check if they already have a subscription in Rails, if not, purchase one
+      end
+    end
+
+    logger.info "Susbcriptions purchased: "
+    logger.info subscriptions
+
+    if not subscriptions.empty?
+      latest_expiry = subscriptions.sort_by{ |x| x["expires_date_ms"]}.last["expires_date_ms"]
+    end
+
+    sec = (latest_expiry.to_f / 1000).to_s
+
+    latest_sub_date = DateTime.strptime(sec, '%s')
+
+    logger.info "Latest subscription expiry date: "
+    logger.info latest_sub_date
+
+    return latest_sub_date
   end
 
 end

@@ -28,7 +28,7 @@ NI::Application.routes.draw do
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]
-
+  post "users/:id(.:format)", :to => 'users#show', :as => :user
 
   resources :subscriptions do
     new do
