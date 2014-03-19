@@ -139,13 +139,26 @@ class User < ActiveRecord::Base
 
   def expiry_date_including_ios(request)
     ios_expiry = request_has_valid_itunes_receipt(request)
-    logger.info "iOS expiry: #{ios_expiry.to_date}"
-    logger.info "Rails expiry: #{expiry_date.to_date}"
-    if (ios_expiry != nil) and (ios_expiry.to_date > expiry_date.to_date)
-      logger.info "Returning iOS"
-      return ios_expiry
-    else
+    logger.info "iOS expiry: #{ios_expiry}"
+    logger.info "Rails expiry: #{expiry_date}"
+    if ios_expiry
+      if expiry_date
+        if ios_expiry.to_date > expiry_date.to_date
+          logger.info "Returning iOS"
+          return ios_expiry
+        else
+          logger.info "Returning Rails"
+          return expiry_date
+        end
+      else
+        logger.info "Returning iOS"
+        return ios_expiry
+      end
+    elsif expiry_date
+      logger.info "Returning Rails"
       return expiry_date
+    else
+      return nil
     end
   end
 
