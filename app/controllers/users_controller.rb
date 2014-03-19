@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     end
 
     def user_show_to_json(user)
-        # TODO: Fix this deprecation warning
+        # TODO: Fix this deprecation warning & why it's not sending back iOS dates when they're clearly bigger
         user["expiry_date"] = user.expiry_date_including_ios(request)
         user.to_json(
             :only => [:username, :id, :expiry_date]
