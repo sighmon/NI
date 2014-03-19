@@ -15,17 +15,14 @@ class UsersController < ApplicationController
             format.json {
                 # Ignore user request and just use current_user
                 @user = current_user
-                render json: user_show_to_json(@user) 
+                render json: user_with_expiry(@user) 
             }
         end
     end
 
-    def user_show_to_json(user)
-        # TODO: Fix this deprecation warning & why it's not sending back iOS dates when they're clearly bigger
-        user["expiry_date"] = user.expiry_date_including_ios(request)
-        user.to_json(
-            :only => [:username, :id, :expiry_date]
-        )
+    def user_with_expiry(user)
+        expiry = user.expiry_date_including_ios(request)
+        hash = {:username => user.username, :id => user.id, :expiry => expiry}
     end
 
     def re_sign_in
