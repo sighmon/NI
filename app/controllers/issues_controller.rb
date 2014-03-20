@@ -273,8 +273,7 @@ class IssuesController < ApplicationController
 
   def secret_matches(request)
     # Check secret from iOS matches
-    secret = request.raw_post
-
+    secret = Base64.decode64(request.raw_post)
     if secret == ENV["RAILS_ISSUE_SECRET"]
       return TRUE
     else
