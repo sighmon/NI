@@ -40,6 +40,12 @@ NI::Application.routes.draw do
 
   resources :issues do
     # Route for importing articles from bricolage to an issue
+    get :import
+    get :import_images
+    get :email
+    get :email_non_subscribers
+    get :email_others
+    get :zip
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]
@@ -64,13 +70,10 @@ NI::Application.routes.draw do
         get :express
       end
     end
-    get :import
-    get :import_images
-    get :email
-    get :email_non_subscribers
-    get :email_others
-    get :zip
   end
+
+  # For iOS to post
+  post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
 
   get 'search' => 'articles#search'
 

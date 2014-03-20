@@ -5,6 +5,9 @@ class IssuesController < ApplicationController
 
   newrelic_ignore :only => [:email, :email_non_subscribers, :email_others]
 
+  # So that iOS can post
+  # skip_before_filter :verify_authenticity_token, :only => [:show]
+
   # Devise authorisation
   # before_filter :authenticate_user!, :except => [:show, :index]
 
@@ -177,8 +180,11 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      
-      format.json { render json: issue_show_to_json(@issue) }
+      if request.post? and secret_matches(request)
+        format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => @issue.zip.url } }
+      else
+        format.json { render json: issue_show_to_json(@issue) }
+      end
     end
   end
 
@@ -260,6 +266,19 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to issues_url }
       format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def secret_matches(request)
+    # Check secret from iOS matches
+    secret = request.raw_post
+
+    if secret == ENV["RAILS_ISSUE_SECRET"]
+      return TRUE
+    else
+      return FALSE
     end
   end
 

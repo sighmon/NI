@@ -221,9 +221,9 @@ class ArticlesController < ApplicationController
                         :src => @article.try(:images).try(:first).try(:data).to_s
                       }
                   }
-	respond_to do |format|
-	  format.html # show.html.erb
-	end
+    	respond_to do |format|
+    	  format.html # show.html.erb
+    	end
     end
 
     def body
