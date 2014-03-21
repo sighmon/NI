@@ -22,6 +22,8 @@
   <dd><%= @showimage.credit? ? @showimage.credit : '-' %></dd>
   <dt><strong><%= model_class.human_attribute_name(:hidden) %>:</strong></dt>
   <dd><%= @showimage.hidden ? 'hidden' : 'no' %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:position) %>:</strong></dt>
+  <dd><%= @showimage.position %></dd>
 </dl>
 
 <div class="form-actions">
