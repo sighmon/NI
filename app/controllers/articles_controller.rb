@@ -198,6 +198,8 @@ class ArticlesController < ApplicationController
         @related_articles -= [@article]
         @related_articles = @related_articles.uniq.sort_by(&:publication).reverse
 
+        first_image_for_meta_data = @article.try(:images).sort_by! {|u| u.position}.try(:first).try(:data).to_s
+
         # Set meta tags
         set_meta_tags :title => @article.title,
                       :description => strip_tags(@article.teaser),
@@ -208,7 +210,7 @@ class ArticlesController < ApplicationController
                         :description => strip_tags(@article.teaser),
                         #:type  => :magazine,
                         :url   => issue_article_url(@issue, @article),
-                        :image => @article.try(:images).try(:first).try(:data).to_s,
+                        :image => first_image_for_meta_data,
                         :site_name => "New Internationalist Magazine Digital Edition"
                       },
                       :twitter => {
@@ -218,7 +220,7 @@ class ArticlesController < ApplicationController
                       :title => @article.title,
                       :description => strip_tags(@article.teaser),
                       :image => {
-                        :src => @article.try(:images).try(:first).try(:data).to_s
+                        :src => first_image_for_meta_data
                       }
                   }
     	respond_to do |format|
