@@ -37,7 +37,8 @@ NI::Application.configure do
   config.assets.debug = true
 
   # Default URL for Devise
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => 'localhost:3000', :protocol => 'http' }
+  config.action_mailer.asset_host = 'http://localhost:3000'
 
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")

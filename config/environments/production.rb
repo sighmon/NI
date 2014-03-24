@@ -2,7 +2,8 @@ NI::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Default URL for Devise
-  config.action_mailer.default_url_options = { :host => 'digital.newint.com.au' }
+  config.action_mailer.default_url_options = { :host => 'digital.newint.com.au', :protocol => 'http' }
+  config.action_mailer.asset_host = 'https://digital.newint.com.au'
 
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
