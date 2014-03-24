@@ -76,7 +76,8 @@ class Issue < ActiveRecord::Base
   def opinion
     (articles_of_category("/argument/") +
       articles_of_category("/columns/viewfrom/") +
-      articles_of_category("/columns/mark-engler/")
+      articles_of_category("/columns/mark-engler/") +
+      articles_of_category("/columns/steve-parry/")
       ).sort_by(&:publication)
   end
 
@@ -89,7 +90,8 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/currents/") - 
       articles_of_category("/columns/media/") - 
       articles_of_category("/columns/viewfrom/") - 
-      articles_of_category("/columns/mark-engler/")
+      articles_of_category("/columns/mark-engler/") -
+      articles_of_category("/columns/steve-parry/")
       ).sort_by(&:publication)
   end
 
