@@ -403,7 +403,7 @@ class Issue < ActiveRecord::Base
 
   def self.article_information_to_include_in_json_hash
     { 
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :publication],
       :include => {
         :images => {},
         :categories => { :only => [:name, :colour, :id] }
