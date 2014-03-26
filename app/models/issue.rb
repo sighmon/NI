@@ -316,16 +316,16 @@ class Issue < ActiveRecord::Base
     Zip::Archive.open(zip_file_path, Zip::CREATE) do |zipfile|
 
       if Rails.env.production?
-        cover_path_to_add = open(self.cover.png.to_s)
-        editors_photo_path_to_add = open(self.editors_photo_url)
+        cover_to_add = open(self.cover.png.to_s)
+        editors_photo_to_add = open(self.editors_photo_url)
       else
-        cover_path_to_add = self.cover.png.path
-        editors_photo_path_to_add = self.editors_photo.path
+        cover_to_add = open(self.cover.png.path)
+        editors_photo_to_add = open(self.editors_photo.path)
       end
+      zipfile.add_io(File.basename(self.cover.png.to_s), cover_to_add)
+      zipfile.add_io(File.basename(self.editors_photo.to_s), editors_photo_to_add)
 
       zipfile.add_file("issue.json", issue_json_file_location)
-      zipfile.add_file(File.basename(self.cover.png.to_s), cover_path_to_add)
-      zipfile.add_file(File.basename(self.editors_photo_url), editors_photo_path_to_add)
 
       # Loop through articles
       self.articles.find_each do |a|        
@@ -352,9 +352,9 @@ class Issue < ActiveRecord::Base
           if Rails.env.production?
             featured_image_to_add = open(a.featured_image_url)
           else
-            featured_image_to_add = a.featured_image.path
+            featured_image_to_add = open(a.featured_image.path)
           end
-          zipfile.add_file("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
+          zipfile.add_io("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
         end
 
         # Loop through the images
@@ -364,9 +364,9 @@ class Issue < ActiveRecord::Base
             # No, we want to transfer smallest files possible - make PNGs on the iOS side.
             image_to_add = open(i.data_url)
           else
-            image_to_add = i.data.path
+            image_to_add = open(i.data.path)
           end
-          zipfile.add_file("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
+          zipfile.add_io("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
         end
       end
     end
