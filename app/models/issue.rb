@@ -359,7 +359,8 @@ class Issue < ActiveRecord::Base
         # Loop through the images
         a.images.find_each do |i|
           if Rails.env.production?
-            # TODO: Do article images need to be pngs?
+            # Do article images need to be pngs?
+            # No, we want to transfer smallest files possible - make PNGs on the iOS side.
             image_to_add = open(i.data_url)
           else
             image_to_add = i.data.path
