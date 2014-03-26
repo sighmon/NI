@@ -328,7 +328,7 @@ class Issue < ActiveRecord::Base
       zipfile.add(File.basename(self.editors_photo_url), editors_photo_path_to_add)
 
       # Loop through articles
-      self.articles.each do |a|        
+      self.articles.find_each do |a|        
         # Create temporary file for issue_id.json
         File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(Issue.article_information_to_include_in_json_hash) }
 
@@ -357,7 +357,7 @@ class Issue < ActiveRecord::Base
         end
 
         # Loop through the images
-        a.images.each do |i|
+        a.images.find_each do |i|
           if Rails.env.production?
             # TODO: Do article images need to be pngs?
             image_to_add = open(i.data_url)
