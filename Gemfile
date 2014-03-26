@@ -63,7 +63,11 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 
 # rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
-gem 'rubyzip'
+# gem 'rubyzip'
+
+# trying zipruby instead to see if it has less memory problems on heroku
+# https://rubygems.org/gems/zipruby
+gem 'zipruby'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'

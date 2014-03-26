@@ -14,8 +14,8 @@ class Issue < ActiveRecord::Base
 
   include ActionView::Helpers::TextHelper
 
-  # For rubyzip
-  require 'zip'
+  # For zipruby
+  require 'zipruby'
 
   # Need to include the helper so we can call source_to_body for the zip file
   include ArticlesHelper
@@ -313,7 +313,7 @@ class Issue < ActiveRecord::Base
     File.open(issue_json_file_location, "w"){ |f| f << Issue.issues_index_to_json(self)}
     
     # Make zip file
-    Zip::File.open(zip_file_path, Zip::File::CREATE) do |zipfile|
+    Zip::Archive.open(zip_file_path, Zip::CREATE) do |zipfile|
 
       if Rails.env.production?
         cover_path_to_add = open(self.cover.png.to_s)
@@ -323,9 +323,9 @@ class Issue < ActiveRecord::Base
         editors_photo_path_to_add = self.editors_photo.path
       end
 
-      zipfile.add("issue.json", issue_json_file_location)
-      zipfile.add(File.basename(self.cover.png.to_s), cover_path_to_add)
-      zipfile.add(File.basename(self.editors_photo_url), editors_photo_path_to_add)
+      zipfile.add_file("issue.json", issue_json_file_location)
+      zipfile.add_file(File.basename(self.cover.png.to_s), cover_path_to_add)
+      zipfile.add_file(File.basename(self.editors_photo_url), editors_photo_path_to_add)
 
       # Loop through articles
       self.articles.find_each do |a|        
@@ -341,10 +341,11 @@ class Issue < ActiveRecord::Base
         File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
 
         # Add article.json to article_id directory
-        zipfile.add("#{a.id}/article.json", article_json_file_location(a.id))
+        zipfile.add_dir(a.id.to_s)
+        zipfile.add_file("#{a.id}/article.json", article_json_file_location(a.id))
 
         # Add body.html
-        zipfile.add("#{a.id}/body.html", article_body_file_location(a.id))
+        zipfile.add_file("#{a.id}/body.html", article_body_file_location(a.id))
 
         # Add featured image
         if a.featured_image.to_s != ""
@@ -353,7 +354,7 @@ class Issue < ActiveRecord::Base
           else
             featured_image_to_add = a.featured_image.path
           end
-          zipfile.add("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
+          zipfile.add_file("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add)
         end
 
         # Loop through the images
@@ -365,7 +366,7 @@ class Issue < ActiveRecord::Base
           else
             image_to_add = i.data.path
           end
-          zipfile.add("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
+          zipfile.add_file("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add)
         end
       end
     end
