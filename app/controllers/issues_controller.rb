@@ -180,8 +180,12 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      if request.post? and secret_matches(request)
-        format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => @issue.zip.url } }
+      if request.post?
+        if request_has_valid_itunes_receipt
+          format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => @issue.zip.url } }
+        else
+          render nothing: true, status: :forbidden
+        end
       else
         format.json { render json: issue_show_to_json(@issue) }
       end
@@ -271,14 +275,71 @@ class IssuesController < ApplicationController
 
   private
 
-  def secret_matches(request)
-    # Check secret from iOS matches
-    secret = Base64.decode64(request.raw_post)
-    if secret == ENV["RAILS_ISSUE_SECRET"]
-      return TRUE
-    else
-      return FALSE
+    # TOFIX: iTunes receipt validation is also in articles_controller.rb and user.rb
+    # Ask Pix how to dry up private methods.
+
+    def request_has_valid_itunes_receipt
+      if !request.post?
+        return false
+      end
+
+      # send the request to itunes connect
+
+      if Rails.env.production?
+        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_PRODUCTION"]
+      else
+        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+      end
+
+      # TODO: Remove this line before launch.. forcing dev itunes receipt validation
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+
+      uri = URI.parse(itunes_url)
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
+      http.use_ssl = true
+      api_response, data = http.post(uri.path,json)
+
+      # Do a first check to see if the receipt is valid from iTunes
+      if JSON.parse(api_response.body)["status"] != 0
+        logger.warn "receipt-data: #{request.raw_post}"
+        return false
+      end
+
+      # Check purchased issues from receipts
+      purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
+
+      # Check purchased subscriptions from receipts
+      subscription_receipt_valid = false
+
+      if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
+        subscription_receipt_valid = true
+      end
+
+      # Check to see if those receipts allow the person to read this article
+      if subscription_receipt_valid
+        logger.info "This receipt has a valid subscription."
+      elsif purchased_issue_numbers.include?(@article.issue.number.to_s)
+        logger.info "This receipt includes issue: #{@article.issue.number}"
+      else
+        logger.warn "This receipt doesn't include access to this article."
+        return false
+      end
+
+      logger.info "post itunes"
+      return true
     end
-  end
+
+    def secret_matches(request)
+      # Check secret from iOS matches
+      # Now checking iOS receipt........
+      secret = Base64.decode64(request.raw_post)
+      if secret == ENV["RAILS_ISSUE_SECRET"]
+        return TRUE
+      else
+        return FALSE
+      end
+    end
 
 end
