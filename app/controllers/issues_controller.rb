@@ -331,6 +331,60 @@ class IssuesController < ApplicationController
       return true
     end
 
+    def purchased_issues_from_receipts(response)
+      purchases = JSON.parse(response)['receipt']['in_app']
+
+      issues_purchased = []
+
+      purchases.each do |item|
+          if item['product_id'].include?('single')
+              issues_purchased << item['product_id'][0..2]
+              # TODO: check if purchase already exists and if not, create a new one
+          end
+      end
+
+      logger.info "Issues purchased: "
+      logger.info issues_purchased
+
+      return issues_purchased
+    end
+
+    def latest_subscription_expiry_from_recepits(response)
+      purchases = JSON.parse(response)['receipt']['in_app']
+
+      subscriptions = []
+      latest_expiry = "0"
+
+      purchases.each do |item|
+          if item['product_id'].include?('month')
+              if item['expires_date_ms'].nil?
+                  # The subscription is non-renewing, generate :expires_date_ms for it.
+                  subscription_duration = item['product_id'][0..1].to_i
+                  item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
+                  logger.info "Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
+              end
+              subscriptions << item
+              # TODO: check if they already have a subscription in Rails, if not, purchase one
+          end
+      end
+
+      logger.info "Susbcriptions purchased: "
+      logger.info subscriptions
+
+      if not subscriptions.empty?
+          latest_expiry = subscriptions.sort_by{ |x| x["expires_date_ms"]}.last["expires_date_ms"]
+      end
+
+      sec = (latest_expiry.to_f / 1000).to_s
+
+      latest_sub_date = DateTime.strptime(sec, '%s')
+
+      logger.info "Latest subscription expiry date: "
+      logger.info latest_sub_date
+
+      return latest_sub_date
+    end
+
     def secret_matches(request)
       # Check secret from iOS matches
       # Now checking iOS receipt........
