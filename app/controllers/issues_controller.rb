@@ -320,8 +320,8 @@ class IssuesController < ApplicationController
       # Check to see if those receipts allow the person to read this article
       if subscription_receipt_valid
         logger.info "This receipt has a valid subscription."
-      elsif purchased_issue_numbers.include?(@article.issue.number.to_s)
-        logger.info "This receipt includes issue: #{@article.issue.number}"
+      elsif purchased_issue_numbers.include?(@issue.number.to_s)
+        logger.info "This receipt includes issue: #{@issue.number}"
       else
         logger.warn "This receipt doesn't include access to this article."
         return false
