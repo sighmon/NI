@@ -6,7 +6,7 @@ class IssuesController < ApplicationController
   newrelic_ignore :only => [:email, :email_non_subscribers, :email_others]
 
   # So that iOS can post
-  # skip_before_filter :verify_authenticity_token, :only => [:show]
+  skip_before_filter :verify_authenticity_token, :only => [:show]
 
   # Devise authorisation
   # before_filter :authenticate_user!, :except => [:show, :index]
@@ -181,8 +181,12 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       if request.post?
-        if request_has_valid_itunes_receipt
-          format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => @issue.zip.url } }
+        if request_has_valid_itunes_or_rails_subscription
+          zip_url_for_json = @issue.zip.url
+          if Rails.env.development?
+            zip_url_for_json = "#{request.protocol}#{request.host_with_port}#{@issue.zip.url}"
+          end
+          format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => zip_url_for_json } }
         else
           render nothing: true, status: :forbidden
         end
@@ -278,7 +282,7 @@ class IssuesController < ApplicationController
     # TOFIX: iTunes receipt validation is also in articles_controller.rb and user.rb
     # Ask Pix how to dry up private methods.
 
-    def request_has_valid_itunes_receipt
+    def request_has_valid_itunes_or_rails_subscription
       if !request.post?
         return false
       end
@@ -301,34 +305,43 @@ class IssuesController < ApplicationController
       http.use_ssl = true
       api_response, data = http.post(uri.path,json)
 
+      subscription_receipt_valid = false
+
       # Do a first check to see if the receipt is valid from iTunes
       if JSON.parse(api_response.body)["status"] != 0
         logger.warn "receipt-data: #{request.raw_post}"
-        return false
+        subscription_receipt_valid = false
+      else
+        # Check purchased issues from receipts
+        purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
+
+        # Check purchased subscriptions from receipts
+        ios_expiry = latest_subscription_expiry_from_recepits(api_response.body)
       end
 
-      # Check purchased issues from receipts
-      purchased_issue_numbers = purchased_issues_from_receipts(api_response.body)
+      if current_user
+        rails_expiry = current_user.expiry_date
+      end
 
-      # Check purchased subscriptions from receipts
-      subscription_receipt_valid = false
-
-      if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
+      if ios_expiry and (ios_expiry > DateTime.now)
+        logger.info "iOS sub valid till: #{ios_expiry}"
+        subscription_receipt_valid = true
+      elsif rails_expiry and (rails_expiry > DateTime.now)
+        logger.info "Rails sub valid till: #{rails_expiry}"
         subscription_receipt_valid = true
       end
 
       # Check to see if those receipts allow the person to read this article
       if subscription_receipt_valid
-        logger.info "This receipt has a valid subscription."
-      elsif purchased_issue_numbers.include?(@issue.number.to_s)
-        logger.info "This receipt includes issue: #{@issue.number}"
+        logger.info "This user has a valid subscription."
+        return true
+      elsif purchased_issue_numbers and purchased_issue_numbers.include?(@issue.number.to_s)
+        logger.info "This user purchased issue: #{@issue.number}"
+        return true
       else
-        logger.warn "This receipt doesn't include access to this article."
+        logger.warn "This user doesn't have access to download this article."
         return false
       end
-
-      logger.info "post itunes"
-      return true
     end
 
     def purchased_issues_from_receipts(response)
