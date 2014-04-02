@@ -152,19 +152,24 @@ class Admin::UsersController < Admin::BaseController
 		end
 	end
 
-	def free_institutional_subscription
-		# Give an institution a free 1 year subscription, DOESN'T SEND EMAIL CONFIRMATION
+	def free_silent_subscription
+		# Give a free x month subscription, DOESN'T SEND EMAIL CONFIRMATION
 		@user = User.find(params[:user_id])
-		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => 12, :purchase_date => DateTime.now, :price_paid => 0)
+		if request.post?
+			@number_of_months = params["/admin/users/45/free_silent_subscription"][:number_of_months]
+		else
+			@number_of_months = params[:number_of_months]
+		end
+
+		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => @number_of_months, :purchase_date => DateTime.now, :price_paid => 0)
 
 		respond_to do |format|
 			if @free_subscription.save
-			    # Don't send the institution a confirmation email.
-				# UserMailer.free_institutional_subscription_confirmation(User.find(params[:user_id])).deliver
-				format.html { redirect_to admin_user_path(@user), notice: 'Free institutional subscription was successfully created.' }
+			    # Don't send a confirmation email.
+				format.html { redirect_to admin_user_path(@user), notice: "Free #{@number_of_months} month subscription was successfully created." }
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
-				format.html { redirect_to admin_user_path(@user), notice: "Couldn't add an institutional subscription, sorry." }
+				format.html { redirect_to admin_user_path(@user), notice: "Couldn't create the free subscription, sorry." }
 				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
 			end
 		end

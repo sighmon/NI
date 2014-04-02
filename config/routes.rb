@@ -88,7 +88,8 @@ NI::Application.routes.draw do
       get :crowdfunding_subscription
       get :media_subscription
       get :make_institutional
-      get :free_institutional_subscription
+      get :free_silent_subscription
+      post :free_silent_subscription
       get :become
     end
     resources :subscriptions, :only => [:update]
