@@ -156,7 +156,7 @@ class Admin::UsersController < Admin::BaseController
 		# Give a free x month subscription, DOESN'T SEND EMAIL CONFIRMATION
 		@user = User.find(params[:user_id])
 		if request.post?
-			@number_of_months = params["/admin/users/45/free_silent_subscription"][:number_of_months]
+			@number_of_months = params["/admin/users/#{@user.id}/free_silent_subscription"][:number_of_months]
 		else
 			@number_of_months = params[:number_of_months]
 		end
