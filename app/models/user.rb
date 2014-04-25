@@ -241,6 +241,7 @@ class User < ActiveRecord::Base
     else
       itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
     end
+    logger.info "iTunes URL: #{itunes_url}"
 
     uri = URI.parse(itunes_url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -252,6 +253,8 @@ class User < ActiveRecord::Base
     # Do a first check to see if the receipt is valid from iTunes
     if JSON.parse(api_response.body)["status"] != 0
       logger.warn "receipt-data: #{request.raw_post}"
+      logger.warn "ITUNES RECEIPT ERROR"
+      logger.warn "api_response.body"
       return nil
     end
 
