@@ -242,9 +242,6 @@ class User < ActiveRecord::Base
       itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
     end
 
-    # TODO: Remove this line before launch.. forcing dev itunes receipt validation
-    itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
-
     uri = URI.parse(itunes_url)
     http = Net::HTTP.new(uri.host, uri.port)
 
