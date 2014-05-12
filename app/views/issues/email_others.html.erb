@@ -80,7 +80,11 @@
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="center"><%= link_to image_tag(@issue.cover_url(:thumb2x).to_s, :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200", :class => 'magazine-cover'), issue_url(@issue) %></p>
+                                    <p align="center"><%= link_to image_tag(@issue.cover_url(:thumb2x).to_s, :alt => "Read New Internationalist magazine '#{@issue.title}' on-line.", :title => "Read New Internationalist magazine '#{@issue.title}' on-line.", :size => "141x200", :class => 'magazine-cover'), issue_url(@issue) %></p>
+                                    <p align="center">
+                                        <%= link_to image_tag("iphone@2x.png", :alt => "Read New Internationalist magazine '#{@issue.title}' on your iPad or iPhone.", :title => "Read New Internationalist magazine '#{@issue.title}' on your iPad or iPhone.", :size => "14x24", :class => 'ios-icon-cover'), app_link(issue_url(@issue)) %>
+                                        <%= link_to image_tag("ipad@2x.png", :alt => "Read New Internationalist magazine '#{@issue.title}' on your iPad or iPhone.", :title => "Read New Internationalist magazine '#{@issue.title}' on your iPad or iPhone.", :size => "22x27", :class => 'ios-icon-cover'), app_link(issue_url(@issue)) %>
+                                    </p>
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_url(@issue) %></singleline></p>
                                     <div align="left" class="article-content">
                                         <multiline label="Description">Hi [salutation],<br /><br />
@@ -104,14 +108,22 @@
                                       <table cellpadding="0" cellspacing="0" border="0" align="right">
                                           <tbody><tr>
                                               <td class="w30" width="15"></td>
-                                              <td><img src="<%= @issue.keynote.featured_image_url(:thumb2x).to_s %>" editable="true" label="Image" class="w100" width="100" border="0"></td>
+                                              <td><%= link_to image_tag(@issue.keynote.featured_image_url(:thumb2x).to_s, :alt => "Read '#{@issue.keynote.title}' on-line.", :title => "Read '#{@issue.keynote.title}' on-line.", :width => "100", :class => 'w100', :border => '0', :label => 'Image'), issue_article_url(@issue,@issue.keynote) %></td>
+                                          </tr>
+                                          <tr><td class="w30" width="15" height="5"></td><td></td></tr>
+                                      </tbody></table>
+                                    <% elsif not @issue.keynote.first_image.nil? %>
+                                      <table cellpadding="0" cellspacing="0" border="0" align="right">
+                                          <tbody><tr>
+                                              <td class="w30" width="15"></td>
+                                              <td><%= link_to image_tag(@issue.keynote.first_image.data_url(:thumb2x).to_s, :alt => "Read '#{@issue.keynote.title}' on-line.", :title => "Read '#{@issue.keynote.title}' on-line.", :width => "100", :class => 'w100', :border => '0', :label => 'Image'), issue_article_url(@issue,@issue.keynote) %></td>
                                           </tr>
                                           <tr><td class="w30" width="15" height="5"></td><td></td></tr>
                                       </tbody></table>
                                     <% end %>
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "#{@issue.keynote.title}", issue_article_url(@issue,@issue.keynote) %></singleline></p>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description"><%= simple_format @issue.keynote.teaser %> <%= link_to "Read it now", issue_article_url(@issue,@issue.keynote) %></multiline>
+                                        <multiline label="Description"><%= simple_format @issue.keynote.teaser %> <%= link_to image_tag("iphone@2x.png", :alt => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :title => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :size => "14x24", :class => 'ios-icon'), app_link(issue_article_url(@issue,@issue.keynote)) %> <%= link_to "Open in the iOS app", app_link(issue_article_url(@issue,@issue.keynote)) %> | <%= link_to "Read it on-line", issue_article_url(@issue,@issue.keynote) %></multiline>
                                     </div>
                                 </td>
                             </tr>
@@ -129,7 +141,7 @@
                                     <table cellpadding="0" cellspacing="0" border="0" align="right">
                                         <tbody><tr>
                                             <td class="w30" width="15"></td>
-                                            <td><img src="<%= @issue.editors_photo_url(:thumb2x).to_s %>" editable="true" label="Image" class="w100" width="100" border="0"></td>
+                                            <td><%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, :alt => "#{@issue.title} - edited by #{@issue.editors_name}.", :title => "#{@issue.title} - edited by #{@issue.editors_name}.", :width => "100", :class => 'w100', :border => '0', :label => 'Image'), issue_url(@issue) %></td>
                                         </tr>
                                         <tr><td class="w30" width="15" height="5"></td><td></td></tr>
                                     </tbody></table>
@@ -151,12 +163,24 @@
                                 <td class="w580" width="580">
                                     <p align="left" class="section-title">Other articles in this issue</p>
                                     <% @issue.categorised_articles.each do |a| %>
-                                      <p align="left" class="article-content feature-title"><%= link_to a.title, issue_article_url(@issue,a) %></p>
+                                      <% if not a.first_image.nil? and a.is_a_feature and not a.teaser.blank? %>
+                                      <table cellpadding="0" cellspacing="0" border="0" align="right">
+                                          <tbody><tr>
+                                              <td class="w30" width="15"></td>
+                                              <td><%= link_to image_tag(a.first_image.data_url(:thumb2x).to_s, :alt => "Read '#{a.title}' on-line.", :title => "Read '#{a.title}' on-line.", :width => "50", :class => 'w50', :border => '0', :label => 'Image'), issue_article_url(@issue,a) %></td>
+                                          </tr>
+                                          <tr><td class="w30" width="15" height="5"></td><td></td></tr>
+                                      </tbody></table>
+                                      <% end %>
+                                      <p align="left" class="article-content feature-title">
+                                        <%= link_to image_tag("iphone@2x.png", :alt => "Read '#{a.title}' on your iPad or iPhone.", :title => "Read '#{a.title}' on your iPad or iPhone.", :size => "14x24", :class => 'ios-icon'), app_link(issue_article_url(@issue,a)) %><%= link_to a.title, issue_article_url(@issue,a) %>
+                                      </p>
                                       <% if a.is_a_feature and not a.teaser.blank? %>
                                           <div align="left" class="article-content feature-teaser">
                                             <multiline label="Description"><%= simple_format a.teaser %> <% link_to "Read it now", issue_article_url(@issue,a) %></multiline>
                                           </div>
                                       <% end %>
+                                      <hr class="dashed-line" />
                                     <% end %>
                                 </td>
                             </tr>

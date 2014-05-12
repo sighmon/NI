@@ -17,9 +17,11 @@ Keynote article
 ===============
 
 <%= @issue.keynote.title %>
-<%= "[#{issue_article_url(@issue,@issue.keynote)}]" %>
 
 <%= strip_tags @issue.keynote.teaser %>
+
+Read it on-line: <%= "[#{issue_article_url(@issue,@issue.keynote)}]" %>
+Read in the iOS app: <%= "[#{app_link(issue_article_url(@issue,@issue.keynote))}]" %>
 
 
 ======================
@@ -37,8 +39,12 @@ Other articles in this issue
 ============================
 
 <% @issue.categorised_articles.each do |a| %>
-<%= a.title %><% if a.is_a_feature and not a.teaser.blank? %><%= "\n"+ strip_tags(a.teaser) %><% end %>
-<%= "[#{issue_article_url(@issue,a)}]" %>
+<%= a.title %><% if a.is_a_feature and not a.teaser.blank? %><%= "\n\n"+ strip_tags(a.teaser) %><% end %>
+
+Web: <%= "[#{issue_article_url(@issue,a)}]" %>
+iOS: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
+
+<% if not (@issue.categorised_articles.last == a) %>----------------------------<% end %>
 
 <% end %>
 

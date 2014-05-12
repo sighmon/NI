@@ -175,4 +175,9 @@ module ApplicationHelper
         @devise_mapping ||= Devise.mappings[:user]
     end
 
+    # Create a newint:// app link from the path handed in
+    def app_link(from_link)
+        "newint:/#{URI.parse(from_link).path}"
+    end
+
 end
