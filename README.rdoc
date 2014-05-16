@@ -2,7 +2,7 @@
 
 A digital subscription backend for a magazine reader web app, iPhone app & Android app.
 
-rdoc-image:https://digital.newint.com.au/assets/2014-screenshot.png
+{rdoc-image:https://digital.newint.com.au/assets/2014-screenshot.png}
 
 A screenshot of the live site at https://digital.newint.com.au
 
