@@ -1,28 +1,32 @@
-= New Internationalist magazine digital subscription app
+== New Internationalist magazine digital subscription app
 
 A digital subscription backend for a magazine reader web app, iPhone app & Android app.
 
-![New Internationalist Magazine Digital Subscription](https://digital.newint.com.au/assets/2014-screenshot.png)
+<img src="https://digital.newint.com.au/assets/2014-screenshot.png">
 
-https://digital.newint.com.au
+A screenshot of the live site at https://digital.newint.com.au
 
-== Features
+=== Features
 
 * Subscribe for 3 or 12 months.
 * Buy a single issue.
 * Read it in HTML, or a specific app.
 
-== iOS app
+=== iOS app
 
 The Apple Newsstand app for iPad, iPhone and iPod Touch GitHub project is available here: 
-{Link github.com/sighmon/NI-ipad}[https://github.com/sighmon/NI-ipad]
+https://github.com/sighmon/NI-ipad
 
 Download the NI app on the Apple App Store:
-{Link itunes.apple.com}[https://itunes.apple.com/au/app/new-internationalist-magazine/id711254931]
+https://itunes.apple.com/au/app/new-internationalist-magazine/id711254931
 
-== Writing articles
+=== Android app
 
-You can write articled directly or import them from the Bricolage CMS via SOAP.
+Coming in 2015.
+
+=== CMS
+
+You can write articled directly into this Rails site with the basic built article writing tools or import them from the Bricolage CMS via SOAP.
 
 When writing directly, <p> and <br /> tags are added automatically (thanks simple_format), and it also lets you use basic <html> tags too.
 
