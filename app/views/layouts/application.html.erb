@@ -69,7 +69,7 @@
 						</div>
 						<div class="nav-collapse">
 							<ul class="nav">
-								<li><%= link_to "Browse Magazines", issues_path %></li>
+								<li><%= link_to "Archive", issues_path %></li>
 								<% if current_user.nil? %>
 									<li><%= link_to "Subscribe", page_path("subscribe") %></li>
 								<% elsif not current_user.try(:subscriber?) %>
@@ -77,6 +77,8 @@
 								<% end %>
 								<li><%= link_to "Search", search_path %></li>
 								<li><%= link_to "Help!", page_path("help") %></li>
+								<li><%= link_to "App", page_path("ios") %></li>
+								<!-- <li><%= link_to retina_image_tag("iphone-dark.png", :alt => "Download the New Internationalist magazine app for iPad and iPhone.", :title => "Download the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-menu-bar'), page_path("ios") %></li> -->
 								<li>
 									<% if request.ssl? %>
 										<%= link_to retina_image_tag("icon-lock.png", :alt => "Change to a non-https connection", :title => "Change to a non-https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "http"), :class => "ssl-changer" %>

@@ -51,6 +51,9 @@
         <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_passes_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Share this article with a friend.', :title => 'Share this article with a friend.' %>
       <% end %>
       <!-- END Sharing options -->
+      <!-- iOS app link -->
+      <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@article.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@article.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_article_path(@issue, @article)) %>
+      <!-- END iOS app link -->
     <% end %>
   </p>
   <nav>
