@@ -333,11 +333,15 @@ class Issue < ActiveRecord::Base
         File.open(article_json_file_location(a.id), "w"){ |f| f << a.to_json(Issue.article_information_to_include_in_json_hash) }
 
         # Add the article body
-        if a.body
+        if a.body and not a.body.empty?
           body_to_zip = a.body
         else
           body_to_zip = source_to_body(a, :debug => false)
         end
+
+        # Add the css for iOS
+        body_to_zip = "<div class='article-body'><p>" + body_to_zip + "</p></div>"
+
         File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
 
         # Add article.json to article_id directory
