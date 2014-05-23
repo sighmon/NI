@@ -340,7 +340,7 @@ class Issue < ActiveRecord::Base
         end
 
         # Add the css for iOS
-        body_to_zip = "<div class='article-body'><p>" + body_to_zip + "</p></div>"
+        body_to_zip = '<div class="article-body"><p>' + body_to_zip + "</p></div>"
 
         File.open(article_body_file_location(a.id), "w"){ |f| f << body_to_zip }
 
