@@ -334,9 +334,9 @@ class Issue < ActiveRecord::Base
 
         # Add the article body
         if a.body and not a.body.empty?
-          body_to_zip = a.body
+          body_to_zip = simple_format(a.body)
         else
-          body_to_zip = source_to_body(a, :debug => false)
+          body_to_zip = simple_format(source_to_body(a, :debug => false))
         end
 
         # Add the css for iOS
