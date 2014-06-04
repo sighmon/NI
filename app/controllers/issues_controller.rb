@@ -153,7 +153,7 @@ class IssuesController < ApplicationController
     
     # Set meta tags
     @page_title = @issue.title
-    @page_description = "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}"
+    @page_description = "#{@issue.release.strftime("%B, %Y")} - #{ActionView::Base.full_sanitizer.sanitize(@issue.keynote.try(:teaser))}"
 
     set_meta_tags :title => @page_title,
                   :description => @page_description,
