@@ -214,15 +214,29 @@ class ArticlesController < ApplicationController
                         :site_name => "New Internationalist Magazine Digital Edition"
                       },
                       :twitter => {
-                      :card => "summary",
-                      :site => "@ni_australia",
-                      :creator => "@ni_australia",
-                      :title => @article.title,
-                      :description => strip_tags(@article.teaser),
-                      :image => {
-                        :src => first_image_for_meta_data
+                        :card => "summary",
+                        :site => "@ni_australia",
+                        :creator => "@ni_australia",
+                        :title => @article.title,
+                        :description => strip_tags(@article.teaser),
+                        :image => {
+                          :src => first_image_for_meta_data
+                        },
+                        :app => {
+                          :name => {
+                            :iphone => ENV["ITUNES_APP_NAME"],
+                            :ipad => ENV["ITUNES_APP_NAME"]
+                          },
+                          :id => {
+                            :iphone => ENV["ITUNES_APP_ID"],
+                            :ipad => ENV["ITUNES_APP_ID"]
+                          },
+                          :url => {
+                            :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
+                            :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+                          }
+                        }
                       }
-                  }
     	respond_to do |format|
     	  format.html # show.html.erb
     	end

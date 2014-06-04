@@ -175,6 +175,20 @@ class IssuesController < ApplicationController
                     :description => @page_description,
                     :image => {
                       :src => @issue.cover_url.to_s
+                    },
+                    :app => {
+                      :name => {
+                        :iphone => ENV["ITUNES_APP_NAME"],
+                        :ipad => ENV["ITUNES_APP_NAME"]
+                      },
+                      :id => {
+                        :iphone => ENV["ITUNES_APP_ID"],
+                        :ipad => ENV["ITUNES_APP_ID"]
+                      },
+                      :url => {
+                        :iphone => "newint://issues/#{@issue.id}",
+                        :ipad => "newint://issues/#{@issue.id}"
+                      }
                     }
                   }
 
