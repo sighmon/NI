@@ -16,6 +16,7 @@ class Ability
     end
     can :read, Article, :trialarticle => true
     can :search, Article
+    can :popular, Article
     can :read, Page
     can :read, Category
 

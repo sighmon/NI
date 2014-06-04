@@ -58,6 +58,57 @@ class ArticlesController < ApplicationController
         end
     end
 
+    def popular
+        @guest_passes = GuestPass.all(:order => "use_count").reverse.first(10)
+
+        # Set meta tags
+        set_meta_tags :title => "Poplar New Internationalist articles",
+                      :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+                      :keywords => "new, internationalist, magazine, digital, edition, popular, readers, ordered",
+                      :canonical => popular_url,
+                      :open_graph => {
+                        :title => "Poplar New Internationalist articles",
+                        :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+                        :url   => popular_url,
+                        :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
+                        :site_name => "New Internationalist Magazine Digital Edition"
+                      },
+                      :twitter => {
+                        :card => "summary",
+                        :site => "@ni_australia",
+                        :creator => "@ni_australia",
+                        :title => @page_title_home,
+                        :description => @page_description,
+                        :image => {
+                          :src => @guest_passes.first.article.first_image.try(:data_url).to_s
+                        },
+                        :app => {
+                          :name => {
+                            :iphone => ENV["ITUNES_APP_NAME"],
+                            :ipad => ENV["ITUNES_APP_NAME"]
+                          },
+                          :id => {
+                            :iphone => ENV["ITUNES_APP_ID"],
+                            :ipad => ENV["ITUNES_APP_ID"]
+                          },
+                          :url => {
+                            :iphone => "newint://",
+                            :ipad => "newint://"
+                          }
+                        }
+                      }
+        respond_to do |format|
+          format.html # show.html.erb
+          
+          format.json { render json: @guest_passes.to_json(
+            :include => {
+              # Don't show article :body here
+              :article => { :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id] }
+            }
+          ) }
+        end
+    end
+
     def import
         @article = Article.find(params[:article_id])
         @article.issue.import_stories_from_bricolage([@article.story_id])

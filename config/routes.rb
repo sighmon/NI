@@ -76,6 +76,7 @@ NI::Application.routes.draw do
   post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
 
   get 'search' => 'articles#search'
+  get 'popular' => 'articles#popular'
 
   # PayPal payment notification IPN
   # get "payment_notifications/create"
