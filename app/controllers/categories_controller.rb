@@ -5,10 +5,80 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = @categories.sort_by(&:display_name)
+    @issues = Issue.all
+
+    # Set meta tags
+    @page_title = "Article categories"
+    @page_description = "A list of categories and themes covered by articles in New Internationalist magazine."
+
+    set_meta_tags :title => @page_title,
+                  :description => @page_description,
+                  :keywords => "themes, categories, category, new, internationalist, magazine, digital, edition",
+                  :canonical => categories_url,
+                  :open_graph => {
+                    :title => @page_title,
+                    :description => @page_description,
+                    #:type  => :magazine,
+                    :url   => categories_url,
+                    :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@ni_australia",
+                    :title => @page_title,
+                    :description => @page_description,
+                    :image => {
+                      :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                    }
+                  }
   end
 
   def show
     @articles = @category.articles.sort_by(&:publication).reverse
+
+    # Set meta tags
+    @page_title = "#{@category.short_display_name} category"
+    @page_description = "Articles about #{@category.short_display_name}, ordered by date."
+    @category_image = @category.latest_published_article.try(:images).sort_by! {|u| u.position}.try(:first).try(:data).to_s
+
+    set_meta_tags :title => @page_title,
+                  :description => @page_description,
+                  :keywords => "#{@category.short_display_name}, new, internationalist, magazine, digital, edition",
+                  :canonical => category_url(@category),
+                  :open_graph => {
+                    :title => @page_title,
+                    :description => @page_description,
+                    #:type  => :magazine,
+                    :url   => category_url(@category),
+                    :image => @category_image,
+                    :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@ni_australia",
+                    :title => @page_title,
+                    :description => @page_description,
+                    :image => {
+                      :src => @category_image
+                    },
+                    :app => {
+                      :name => {
+                        :iphone => ENV["ITUNES_APP_NAME"],
+                        :ipad => ENV["ITUNES_APP_NAME"]
+                      },
+                      :id => {
+                        :iphone => ENV["ITUNES_APP_ID"],
+                        :ipad => ENV["ITUNES_APP_ID"]
+                      },
+                      :url => {
+                        :iphone => "newint://categories/#{@category.id}",
+                        :ipad => "newint://categories/#{@category.id}"
+                      }
+                    }
+                  }
   end
 
   def edit
