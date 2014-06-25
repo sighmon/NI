@@ -29,7 +29,12 @@
 			<div class="home-cover-list">
 				<% if @issues %>
 					<% @issues.sort_by(&:release).reverse.first(6).each do |issue| %>
-					<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
+					<span itemscope itemtype="http://schema.org/CreativeWork">
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue), :itemprop => "url" %>
+						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
+						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
+						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
+					</span>
 					<% end %>
 				<% end %>
 			</div>
@@ -43,7 +48,12 @@
 			<div class="home-cover-list">
 				<% if @issues %>
 					<% @issues.sort_by(&:release).reverse.first(4).each do |issue| %>
-					<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
+					<span itemscope itemtype="http://schema.org/CreativeWork">
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
+						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
+						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
+						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
+					</span>
 					<% end %>
 				<% end %>
 			</div>
@@ -57,7 +67,12 @@
 				<% if @issues %>
 					<% @issues.sort_by{|x|x.release}.each do |issue| %>
 					<% if issue.trialissue %>
-						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
+						<span itemscope itemtype="http://schema.org/CreativeWork">
+							<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
+							<span class="hide-meta" itemprop="name"><%= issue.title %></span>
+							<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
+							<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
+						</span>
 					<% end %>
 					<% end %>
 				<% end %>

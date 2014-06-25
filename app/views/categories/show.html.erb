@@ -29,10 +29,10 @@
   </thead>
   <tbody>
     <% @articles.each do |article| %>
-      <tr>
-        <td><%= link_to article.title, issue_article_path(article.issue,article) %></td>
+      <tr itemscope itemtype="http://schema.org/Article">
+        <td itemprop="name"><%= link_to article.title, issue_article_path(article.issue,article), :itemprop => "url" %></td>
         <td><%= link_to article.issue.title, issue_path(article.issue) %></td>
-        <td><%= article.publication.strftime("%B, %Y") %></td>
+        <td itemprop="dateCreated"><%= article.publication.strftime("%B, %Y") %></td>
       </tr>
     <% end %>
   </tbody>

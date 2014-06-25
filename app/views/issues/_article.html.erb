@@ -1,15 +1,22 @@
 <% if can? :read, article %>
   <% if not article.featured_image.blank? %>
-    <%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %>
+    <%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80", :itemprop => "image"), issue_article_path(@issue,article) %>
   <% elsif article.first_image %>
-    <%= link_to retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80"), issue_article_path(@issue,article) %>
+    <%= link_to retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80", :itemprop => "image"), issue_article_path(@issue,article) %>
   <% end %>
-  <h4><%= link_to article.title, issue_article_path(@issue,article) %></h4>
+  <h4 itemprop="name"><%= link_to article.title, issue_article_path(@issue,article) %></h4>
 <% else %>
-  <% if not article.featured_image.blank? %><%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80") %><% end %>
-  <h4><%= article.title %></h4>
+  <% if not article.featured_image.blank? %>
+    <%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80", :itemprop => "image") %>
+  <% elsif article.first_image %>
+    <%= retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80", :itemprop => "image") %>
+  <% end %>
+  <h4 itemprop="name"><%= article.title %></h4>
 <% end %>
-<p><%= simple_format article.teaser %></p>
+<p><%= simple_format article.teaser, :itemprop => "description" %></p>
+<p class="hide-meta" itemprop="url"><%= issue_article_url(@issue,article) %></p>
+<p class="hide-meta" itemprop="author"><%= article.author %></p>
+<p class="hide-meta" itemprop="dateCreated"><%= article.issue.release.strftime("%e %B %Y") %></p>
 <% if can? :manage, Article %>
   <ul class="unstyled">
   <% article.categories.each do |category| %>

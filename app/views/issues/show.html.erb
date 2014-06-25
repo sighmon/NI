@@ -48,7 +48,7 @@
     <div class="articles-not-categorised-for-display">
       <h3>Articles not displayed.</h3>
       <% @issue.uncategorised.each do |article| %>
-        <div class="issue-article">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
           <%= render :partial => "article", :object => article %>
         </div>
       <% end %>
@@ -58,7 +58,7 @@
 
 <div class="row-fluid">
   <div class="span6 issue-articles-container">
-      <div class="issue-article keynote">
+      <div class="issue-article keynote" itemscope itemtype="http://schema.org/Article">
         <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
         <h5>The big story</h5>
         <% if @issue.keynote %>
@@ -70,7 +70,7 @@
         <div class="issue-sections">
           <h3>Features.</h3>
           <% @issue.features.each do |article| %>
-            <div class="issue-article">
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :object => article %>
             </div>
           <% end %>
@@ -81,7 +81,7 @@
         <div class="issue-sections">
           <h3>Agenda.</h3>
           <% @issue.agendas.each do |article| %>
-            <div class="issue-article">
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :object => article %>
             </div>
           <% end %>
@@ -92,7 +92,7 @@
         <div class="issue-sections">
           <h3>Currents.</h3>
           <% @issue.currents.each do |article| %>
-            <div class="issue-article">
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :object => article %>
             </div>
           <% end %>
@@ -103,7 +103,7 @@
         <div class="issue-sections">
           <h3>Alternatives.</h3>
           <% @issue.alternatives.each do |article| %>
-            <div class="issue-article">
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :object => article %>
             </div>
           <% end %>
@@ -114,7 +114,7 @@
         <div class="issue-sections">
           <h3>Blog.</h3>
           <% @issue.blogs.each do |article| %>
-            <div class="issue-article">
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :object => article %>
             </div>
           <% end %>
@@ -137,7 +137,7 @@
       <div class="issue-sections">
         <h3>Opinion.</h3>
         <% @issue.opinion.each do |article| %>
-          <div class="issue-article">
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :object => article %>
           </div>
         <% end %>
@@ -148,7 +148,7 @@
       <div class="issue-sections">
         <h3>Regulars.</h3>
         <% @issue.regulars.each do |article| %>
-          <div class="issue-article">
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :object => article %>
           </div>
         <% end %>
@@ -159,7 +159,7 @@
       <div class="issue-sections">
         <h3>Film, Book &amp; Music Reviews.</h3>
         <% @issue.mixedmedia.each do |article| %>
-          <div class="issue-article">
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :object => article %>
           </div>
         <% end %>
