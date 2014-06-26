@@ -106,6 +106,7 @@ NI::Application.routes.draw do
   get "home/index"
   get "newsstand" => "home#newsstand"
   get "inapp" => "home#inapp"
+  get "google_merchant_feed" => "home#google_merchant_feed"
 
   # Change the page logged in users are directed to
   # authenticated :user do

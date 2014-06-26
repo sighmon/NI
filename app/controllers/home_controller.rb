@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+
+  include ActionView::Helpers::NumberHelper
   
   def index
   	if current_user.try(:admin?)
@@ -216,6 +218,61 @@ class HomeController < ApplicationController
       else
         format.xml { redirect_to root_url }
       end
+    end
+
+  end
+
+  def google_merchant_feed
+
+    @issues = []
+    @feed = {}
+
+    @published_issues = Issue.find_all_by_published(:true)
+
+    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+      xml.rss('xmlns:g' => 'http://base.google.com/ns/1.0', 'version' => '2.0') do
+        xml.channel do
+          xml.title "New Internationalist magazine digital edition"
+          xml.link root_url
+          xml.description "Buy a digital copy of New Internationalist magazine for your web browser or iOS device."
+          @published_issues.sort_by(&:number).reverse.each do |i|
+            xml.item do
+              xml.title { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.title) }
+              xml.link { xml.cdata issue_url(i) }
+              xml.mobile_link { xml.cdata issue_url(i) }
+              xml.description { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser)) }
+              xml['g'].id i.number
+              xml['g'].condition "new"
+              xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), :precision => 2)} AUD"
+              xml['g'].availability "in stock"
+              xml['g'].image_link { xml.cdata i.cover_url.to_s }
+              xml['g'].google_product_category "Media &gt; Magazines &amp; Newspapers"
+              xml['g'].product_type "Magazine &gt; Digital edition"
+              # xml['g'].gtin i.number
+              xml['g'].identifier_exists "FALSE"
+              xml['g'].brand "New Internationalist"
+            end
+          end
+        end
+      end
+    }
+
+    @published_issues.sort_by(&:number).reverse.each do |i|
+      issue = {}
+      issue = "#{i.number}single"
+      @issues << issue
+    end
+
+    @feed = { "subscriptions" => [
+      "12month",
+      "12monthauto",
+      "3monthautomatic"],
+      "issues" => @issues
+    }
+
+    respond_to do |format|
+      format.json { render json: @feed.to_json }
+      format.xml { render xml: builder.to_xml }
     end
 
   end
