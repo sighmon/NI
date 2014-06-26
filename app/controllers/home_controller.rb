@@ -258,20 +258,11 @@ class HomeController < ApplicationController
     }
 
     @published_issues.sort_by(&:number).reverse.each do |i|
-      issue = {}
-      issue = "#{i.number}single"
-      @issues << issue
+      @issues << i
     end
 
-    @feed = { "subscriptions" => [
-      "12month",
-      "12monthauto",
-      "3monthautomatic"],
-      "issues" => @issues
-    }
-
     respond_to do |format|
-      format.json { render json: @feed.to_json }
+      format.json { render json: @issues.to_json }
       format.xml { render xml: builder.to_xml }
     end
 
