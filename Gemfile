@@ -69,6 +69,12 @@ gem 'newrelic_rpm'
 # https://rubygems.org/gems/zipruby
 gem 'zipruby'
 
+# Rack Cache and memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
+gem 'rack-cache'
+gem 'dalli'
+gem 'kgio'
+gem 'memcachier'
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 

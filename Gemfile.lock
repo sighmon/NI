@@ -83,6 +83,7 @@ GEM
     columnize (0.3.6)
     commonjs (0.2.7)
     curb (0.8.5)
+    dalli (2.7.2)
     database_cleaner (1.2.0)
     debugger (1.6.6)
       columnize (>= 0.3.1)
@@ -172,6 +173,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     meta-tags (1.5.0)
       actionpack
     method_source (0.8.2)
@@ -341,6 +343,7 @@ DEPENDENCIES
   coffee-rails
   comma!
   curb
+  dalli
   database_cleaner
   debugger
   devise
@@ -356,13 +359,16 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari (~> 0.13.0)
   kaminari-bootstrap (= 0.1.2)
+  kgio
   ledermann-rails-settings (~> 1.x)
   less-rails
   libv8 (~> 3.11.8)
+  memcachier
   meta-tags
   newrelic_rpm
   paypal-recurring
   pg
+  rack-cache
   rails (= 3.2.18)
   rb-fsevent (~> 0.9.1)
   rb-inotify (~> 0.8.8)

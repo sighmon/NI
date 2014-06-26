@@ -75,7 +75,8 @@ NI::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  # config.serve_static_assets = false
+  config.serve_static_assets = true # for memcached
 
   # Compress JavaScripts and CSS
   #config.assets.compress = true
@@ -88,6 +89,20 @@ NI::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+  # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
+  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
+                             :username => ENV["MEMCACHIER_USERNAME"],
+                             :password => ENV["MEMCACHIER_PASSWORD"],
+                             :failover => true,
+                             :socket_timeout => 1.5,
+                             :socket_failure_delay => 0.2,
+                             :value_max_bytes => 10485760)
+  config.action_dispatch.rack_cache = {
+    :metastore    => client,
+    :entitystore  => client
+  }
+  config.static_cache_control = "public, max-age=2592000"
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
