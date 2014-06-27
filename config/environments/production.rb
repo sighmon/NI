@@ -81,7 +81,9 @@ NI::Application.configure do
   # Compress JavaScripts and CSS
   # config.assets.compress = true
   # Setting false to try and fix bootstrap compile issues
-  config.assets.compress = false
+  # config.assets.compress = false
+  # Trying to get assets to compress again 27 June 2014.
+  config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
