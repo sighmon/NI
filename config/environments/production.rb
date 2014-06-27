@@ -79,7 +79,7 @@ NI::Application.configure do
   config.serve_static_assets = true # for memcached
 
   # Compress JavaScripts and CSS
-  #config.assets.compress = true
+  # config.assets.compress = true
   # Setting false to try and fix bootstrap compile issues
   config.assets.compress = false
 

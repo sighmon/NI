@@ -75,6 +75,9 @@ gem 'dalli'
 gem 'kgio'
 gem 'memcachier'
 
+# Rack deflate https://github.com/romanbsd/heroku-deflater
+gem 'heroku-deflater', :group => :production
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
@@ -125,7 +128,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
   # http://twitter.github.com/bootstrap/
-  gem 'twitter-bootstrap-rails'#, '2.1.6'
+  # gem 'twitter-bootstrap-rails'#, '2.1.6'
   gem 'jquery-fileupload-rails'
 
   # URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
