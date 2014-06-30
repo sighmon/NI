@@ -78,6 +78,9 @@ gem 'memcachier'
 # Rack deflate https://github.com/romanbsd/heroku-deflater
 gem 'heroku-deflater', :group => :production
 
+# Get rid of heroku plugin warnings
+gem 'rails_12factor', :group => :production
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
