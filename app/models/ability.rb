@@ -32,6 +32,7 @@ class Ability
         # Ability to tweet & post to facebook
         can :tweet, Article
         can :wall_post, Article
+        can :email_article, Article
     end   
 
     if user.subscriber?

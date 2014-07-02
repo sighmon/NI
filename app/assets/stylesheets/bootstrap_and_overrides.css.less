@@ -259,6 +259,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -40px;
 }
 
+.page-header .share-links {
+	line-height: 2em;
+}
+
 .footer {
 	color: @grayDark;
 	background-color: rgba(250,176,59,0.38);
@@ -485,7 +489,7 @@ a:active .shadow {
 	color: @grayLight;
 }
 
-.page-header .ios-issue-page {
+.page-header .ios-issue-page, .ios-issue-page {
 	float: none;
 	margin: -5px 0 0 10px;
 	opacity: 0.3;
@@ -1017,6 +1021,8 @@ blockquote.pull-left {
 
 .article-favourite {
 	margin: -5px 0 0 10px;
+	font-size: 1.0em;
+	min-width: 12px;
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
@@ -1046,6 +1052,12 @@ ul.ui-autocomplete {
 		background-color: #0081C2;
 	}
 	}
+}
+
+.end-of-article-social-sharing {
+	border-top: 1px dashed #e5e5e5;
+	padding-top: 1em;
+	margin-top: 2em;
 }
 
 .related-articles {
@@ -1218,6 +1230,11 @@ ul.ui-autocomplete {
 		float: none;
 		margin-left: 0px;
 		clear: right;
+	}
+	.page-header .ios-issue-page, 
+	.ios-issue-page, 
+	.article-favourite {
+		margin-left: 5px;
 	}
 }
 

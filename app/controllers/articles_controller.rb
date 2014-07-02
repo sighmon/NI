@@ -416,6 +416,17 @@ class ArticlesController < ApplicationController
         redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
     end
 
+    def email_article
+        @user = User.find(current_user)
+        @article = Article.find(params[:article_id])
+        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        email_params = {
+            :body => view_context.generate_guest_pass_link_string(@guest_pass),
+            :subject => "#{@article.title} - New Internationalist Magazine"
+        }
+        redirect_to "mailto:?#{email_params.to_query}"
+    end
+
     def ios_share
         @article = Article.find(params[:article_id])
 

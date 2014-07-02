@@ -38,28 +38,7 @@
   <p class="hide-meta" itemprop="author"><%= @article.author %></p>
   <p class="hide-meta" itemprop="dateCreated"><%= @article.issue.release.strftime("%e %B %Y") %></p>
   <% if @article.first_image %><p class="hide-meta" itemprop="image"><%= @article.first_image.data_url(:thumb).to_s %></p><% end %>
-  <p><span class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></span>
-    <% if can? :create, Favourite %>
-      <!-- Favourite -->
-      <% if current_article_favourited? %>
-        <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourite_path(@issue.id, @article.id, favourite_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
-      <% else %>
-        <%= link_to raw('<i class="icon-heart"></i>'), issue_article_favourites_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Add to favourites', :title => 'Add to favourites' %>
-      <% end %>
-      <!-- END Favourite -->
-      <!-- Sharing options -->
-      <% if current_article_has_a_guest_pass? %>
-        <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn btn-mini btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
-        <div class="article-guest-pass">Guest pass URL to share is: <%= generate_guest_pass_link_string(current_user.guest_passes.select{|s| (s.article.id == @article.id)}.last) %></div>
-      <% else %>
-        <%= link_to raw('<i class="icon-share"></i>'), issue_article_guest_passes_path(@issue, @article), :method => 'create', :class => 'btn btn-mini article-favourite', :alt => 'Share this article with a friend.', :title => 'Share this article with a friend.' %>
-      <% end %>
-      <!-- END Sharing options -->
-      <!-- iOS app link -->
-      <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@article.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@article.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_article_path(@issue, @article)) %>
-      <!-- END iOS app link -->
-    <% end %>
-  </p>
+  <%= render :partial => "share_links", :object => @article %>
   <nav>
     <ul class="breadcrumb">
     <% @article.categories.each do |category| %>
@@ -152,31 +131,16 @@
   </div>
 <% end %>
 
-<div class="end-of-article-social-sharing">
-  <!-- Twitter Button -->
-  <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @article.teaser %>" data-url="<%= request.url %>" data-via="ni_australia" data-lang="en">Tweet</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> -->
-  <!-- END Twitter Button -->
-  <!-- Facebook Like Button -->
-  <!-- <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=141386675929001";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-  <div class="fb-like" data-send="false" data-layout="button_count" data-width="200" data-show-faces="false"></div>
-  <div class="clearfix"></div> -->
-  <!-- END Facebook Like Button -->
-</div>
-
 <% if can? :update, @article %>
   <button class="flip-button btn">Show/Hide source</button>
   <div class="article-source well well-small div-to-flip">
     <%= @article.source %>
   </div>
 <% end %>
+
+<div class="end-of-article-social-sharing">
+  <%= render :partial => "share_links", :object => @article %>
+</div>
 
 <div class="related-articles">
   <div class="article-next-previous">
