@@ -40,7 +40,7 @@
 
 <div class="page-header issue-title">
   <h1><%= @issue.title %></h1>
-  <h2>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %> <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %></h2>
+  <h2><%= render :partial => "share_links", :object => @issue %></h2>
 </div>
 
 <% if can? :update, @issue %>

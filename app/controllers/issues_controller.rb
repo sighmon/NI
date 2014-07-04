@@ -291,6 +291,40 @@ class IssuesController < ApplicationController
     end
   end
 
+  def tweet_issue
+    @issue = Issue.find(params[:issue_id])
+    twitter_params = {
+        :url => issue_url(@issue),
+        :text => "I'm reading '#{@issue.title}'",
+        :via => "ni_australia"
+        #:related => "ni_australia"
+    }
+    redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
+    end
+
+    def wall_post_issue
+      @issue = Issue.find(params[:issue_id])
+      facebook_params = {
+          :app_id => 194389730710694,
+          :link => issue_url(@issue),
+          :picture => @issue.cover_url.to_s,
+          :name => @issue.title,
+          :caption => ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
+          :description => "I'm reading '#{@issue.title}'",
+          :redirect_uri => issue_url(@issue)
+      }
+      redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
+    end
+
+    def email_issue
+      @issue = Issue.find(params[:issue_id])
+      email_params = {
+          :body => issue_url(@issue),
+          :subject => "#{@issue.title} - New Internationalist Magazine"
+      }
+      redirect_to "mailto:?#{email_params.to_query}"
+    end
+
   private
 
     # TOFIX: iTunes receipt validation is also in articles_controller.rb and user.rb

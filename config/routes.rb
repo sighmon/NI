@@ -46,6 +46,9 @@ NI::Application.routes.draw do
     get :email_non_subscribers
     get :email_others
     get :zip
+    get :tweet_issue
+    get :wall_post_issue
+    get :email_issue
     resources :articles do
       resources :favourites, :only => [:create, :destroy]
       resources :guest_passes, :only => [:create, :destroy]

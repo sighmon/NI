@@ -1,0 +1,8 @@
+NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %>
+ <!-- Email button -->
+ <%= link_to raw('<i class="icon-envelope"></i>'), issue_email_issue_path(@issue), :class => 'btn btn-mini article-favourite', :alt => 'Email a link to this issue', :title => 'Email a link to this issue' %>
+ <!-- Tweet button -->
+ <%= link_to raw('<i class="icon-twitter"></i>'), issue_tweet_issue_path(@issue), :class => 'btn btn-mini article-favourite', :alt => 'Tweet about this issue', :title => 'Tweet about this issue', :target => "_blank" %>
+ <!-- Facebook button -->
+ <%= link_to raw('<i class="icon-facebook"></i>'), issue_wall_post_issue_path(@issue), :class => 'btn btn-mini article-favourite', :alt => 'Share this issue on Facebook', :title => 'Share this issue on Facebook', :target => "_blank" %>
+ <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %>
