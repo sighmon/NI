@@ -48,6 +48,8 @@ class Ability
     if user.parent
         cannot :update, :all
         cannot :create, :all
+        cannot :destroy, :all
+        can :create, GuestPass
     end
 
     # Institution ability
