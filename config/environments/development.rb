@@ -57,6 +57,10 @@ NI::Application.configure do
   # Google Analytics setup
   GA.tracker = ENV["GOOGLE_ANALYTICS_DEVELOPMENT"]
 
+  # Google Tag Manager
+  # Set the tag here if you want it to show in development
+  GoogleTagManager.gtm_id = "GTM-XXXX"
+
   # Active Merchant Gateway
 
   config.after_initialize do

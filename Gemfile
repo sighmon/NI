@@ -50,6 +50,9 @@ gem 'bugherd'
 # Google Analytics https://github.com/bgarret/google-analytics-rails
 gem 'google-analytics-rails'
 
+# Google Tag Manager https://github.com/rcs/google-tag-manager-rails
+gem 'google-tag-manager-rails'
+
 # Google Sitemap generator https://github.com/kjvarga/sitemap_generator
 gem 'sitemap_generator'
 
