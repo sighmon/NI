@@ -175,3 +175,6 @@
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %>
   <% end %>
 </div>
+
+<%= render :partial => "disqus", :object => @issue %>
+

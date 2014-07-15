@@ -21,7 +21,6 @@
 </head>
 <body>
 
-	<!-- Google Tag Manager -->
 	<%= google_tag_manager %>
 	
 	<div class="container">
@@ -113,6 +112,8 @@
 			<p>&copy; Copyright <b>New Internationalist</b> 1973-<%= DateTime.now.year %>. Except where otherwise noted, content on this site is <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">licensed</a> under <a href="http://creativecommons.org">Creative Commons</a>.</p>
 			<p>Except where otherwise noted, images on this site are &copy; the attributed photographer/illustrator or representative agency.</p>
 		</div>
+
+		<%= render :partial => "shared/disqus" %>
 
 	</div>
 
