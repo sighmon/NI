@@ -5,3 +5,5 @@
 # Disallow: /
 
 Sitemap: http://nirailsapp.s3.amazonaws.com/sitemaps/sitemap_index.xml.gz
+
+Disallow: /*email_issue
