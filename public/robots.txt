@@ -4,7 +4,9 @@
 # User-Agent: *
 # Disallow: /
 
+# Sitemap: https://nirailsapp.s3.amazonaws.com/sitemaps/sitemap_index.xml.gz
+
 User-Agent: *
 Disallow: /*email_issue
 
-Sitemap: /sitemap_index.xml
+Sitemap: https://digital.newint.com.au/sitemap_index.xml
