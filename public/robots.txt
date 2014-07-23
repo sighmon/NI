@@ -4,7 +4,7 @@
 # User-Agent: *
 # Disallow: /
 
-Sitemap: http://nirailsapp.s3.amazonaws.com/sitemaps/sitemap_index.xml.gz
-
 User-Agent: *
 Disallow: /*email_issue
+
+Sitemap: /sitemap_index.xml
