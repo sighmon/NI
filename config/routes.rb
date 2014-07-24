@@ -15,8 +15,8 @@ NI::Application.routes.draw do
   get "settings/update"
 
   # Sitemap redirects to S3
-  match "/sitemap_index.xml", :controller => "sitemap", :action => "index"
-  match "/sitemap.xml", :controller => "sitemap", :action => "sitemap"
+  # match "/sitemap_index.xml", :controller => "sitemap", :action => "index"
+  match "/sitemap.xml", :controller => "sitemap", :action => "index"
 
   # created by the admin/users controller creation
   # get "users/index"

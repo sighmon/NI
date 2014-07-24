@@ -38,7 +38,25 @@ SitemapGenerator::Sitemap.create do
 
   # Add all issues:
   Issue.find_each do |issue|
-    add issue_path(issue), :lastmod => issue.updated_at
+    if issue.published?
+      add issue_path(issue), :lastmod => issue.updated_at
+      issue.articles.each do |article|
+        categories_list = "newint"
+        article.categories.each do |category|
+          categories_list = categories_list + ", " + category.short_display_name
+        end
+        add(issue_article_path(issue,article), :news => {
+            :publication_name => "New Internationalist",
+            :publication_language => "en",
+            :title => article.title,
+            :keywords => categories_list,
+            # :stock_tickers => "SAO:PETR3",
+            :publication_date => article.created_at,
+            :access => "Subscription"
+            # :genres => "PressRelease"
+        })
+      end
+    end
   end
 
 end

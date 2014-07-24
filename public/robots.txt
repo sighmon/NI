@@ -9,4 +9,4 @@
 User-Agent: *
 Disallow: /*email_issue
 
-Sitemap: https://digital.newint.com.au/sitemap_index.xml
+Sitemap: https://digital.newint.com.au/sitemap.xml
