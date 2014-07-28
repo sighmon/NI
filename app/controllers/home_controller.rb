@@ -241,7 +241,7 @@ class HomeController < ApplicationController
               xml.link { xml.cdata issue_url(i) }
               xml.mobile_link { xml.cdata issue_url(i) }
               xml.description { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser)) }
-              xml['g'].id i.number
+              xml['g'].id "digitalapp#{i.number}"
               xml['g'].condition "new"
               xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), :precision => 2)} AUD"
               xml['g'].availability "in stock"
