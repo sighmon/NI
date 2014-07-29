@@ -13,5 +13,5 @@
  *= require formtastic
  *= require bootstrap_and_overrides
  *= stub email
- *= require jquery.ui.all
+ *= require jquery-ui
 */
