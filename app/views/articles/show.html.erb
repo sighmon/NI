@@ -32,7 +32,7 @@
 
 <div class="page-header article-title" itemscope itemtype="http://schema.org/Article">
   <h1 itemprop="name"><%= @article.title %></h1>
-  <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover shadow', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
+  <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
   <h2 itemprop="description"><%= simple_format @article.teaser %></h2>
   <p class="hide-meta" itemprop="url"><%= issue_article_url(@issue,@article) %></p>
   <p class="hide-meta" itemprop="author"><%= @article.author %></p>
@@ -54,7 +54,7 @@
     <!-- Carousel items -->
     <div class="carousel-inner">
       <div class="item active">
-        <%= retina_image_tag @article.featured_image_url(:fullwidth).to_s, :alt => "#{strip_tags(@article.featured_image_caption)}", :title => "#{strip_tags(@article.featured_image_caption)}", :size => "945x400" %>
+        <%= retina_image_tag @article.featured_image_url(:fullwidth).to_s, :alt => "#{strip_tags(@article.featured_image_caption)}", :title => "#{strip_tags(@article.featured_image_caption)}", :size => "1050x444" %>
         <% if not @article.featured_image_caption.blank? %>
           <div class="carousel-caption">
             <p><%= simple_format @article.featured_image_caption %></p>

@@ -102,8 +102,11 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
 @niBrown: #f1edd9;
 @niRed: #f00d16; /* or #da2128; */
+@niGreen: rgba(134,197,67,0.1);
 @boxBackgroundColour: #E4E1DF;
 @boxGrayLightest: #F5F5F5;
+@footerColour: rgba(250,176,59,0.58);
+// @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
 // Link colours
 
@@ -200,6 +203,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-left: @homeCoverListMargin;
 	margin-right: @homeCoverListMargin;
 	margin-bottom: (@homeCoverListMargin * 2) + 3;
+	.border-radius(2px);
 }
 
 .hide-meta {
@@ -231,7 +235,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .breadcrumb a {
-	color: @gray;	
+	color: @gray;
 }
 
 .breadcrumb .label {
@@ -241,6 +245,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .breadcrumb .label:hover {
 	color: #000;
+	background-color: @footerColour;
+	text-shadow:none;
 }
 
 .page-header {
@@ -265,11 +271,11 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .footer {
 	color: @grayDark;
-	background-color: rgba(250,176,59,0.38);
-	margin: 0 -4em -4em -4em;
+	background-color: @footerColour;
+	margin: 0 -53px -53px -53px;
 	padding: 2em;
 	text-align: center;
-	.border-radius(0 0 5px 5px);
+	.border-radius(0 0 3px 3px);
 }
 
 .footer p {
@@ -277,7 +283,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .footer a {
-	color: @grayLight;
+	color: @gray;
 }
 
 // Issues listed as a tables
@@ -361,6 +367,7 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 
 @shadowColour: #999999;
 @shadowSizeNormal: 0px 2px 5px;
+@shadowSizeSmall: 0px 1px 2px;
 @shadowSizeHover: 0px 4px 7px;
 @shadowSizeActive: 0px 0px 7px;
 
@@ -390,6 +397,12 @@ a:active .shadow {
 	@shadowColour: #333333;
 	@shadowSizeNormal: 0px 1px 3px;
 	.shadow;
+}
+
+.shadow-small {
+	-moz-box-shadow: @shadowSizeSmall @shadowColour;
+	-webkit-box-shadow: @shadowSizeSmall @shadowColour;
+	box-shadow: @shadowSizeSmall @shadowColour;
 }
 
 // Edit buttons
@@ -449,6 +462,7 @@ a:active .shadow {
 	margin-left: @issueCoverListMargin;
 	margin-right: @issueCoverListMargin;
 	margin-bottom: (@issueCoverListMargin * 2) + 3;
+	.border-radius(2px);
 }
 
 .issue-list-title {
@@ -502,6 +516,7 @@ a:active .shadow {
 .issue-cover {
 	float: left;
 	margin: 0px 20px 20px 0px;
+	.border-radius(2px);
 }
 
 .articles-not-categorised-for-display {
@@ -538,7 +553,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	.border-radius(5px);
 	min-height: 200px;
 	padding: 1em;
-	background-color: @niBrown;
+	background-color: @niGreen;
 }
 
 .keynote h5 {
@@ -595,6 +610,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .editors-photo {
 	float: right;
 	margin: 0px 0px 10px 10px;
+	.border-radius(5px);
 }
 
 // Article styling
@@ -630,6 +646,12 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	float: right;
 	margin: 0px 0px 20px 20px;
 	margin-top: -40px;
+}
+
+.article-title .issue-cover:hover {
+	.shadow-small;
+	position: relative;
+	top: -1px;
 }
 
 .most-shared h3 {
@@ -764,7 +786,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 //- end highlighter.js stuff
 
 #myCarousel {
-	.shadow;
+	// .shadow;
+	margin: 0 -4em 2em -4em;
 }
 
 .carousel-control {
@@ -816,7 +839,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .article-thumb {
-	.shadow-light;
+	// .shadow-light;
 	.border-radius(2px);
 	float: right;
 	margin-left: 20px;
@@ -1365,8 +1388,9 @@ ul.ui-autocomplete {
 /* Large desktop */
 @media (min-width: 980px) {
 	.container {
-		.shadow;
-		.border-radius(5px);
+		// .shadow;
+		.border-radius(3px);
+		border: 1px solid @grayLighter;
 		margin: -60px auto 4em auto;
 		padding: 60px 4em 4em 4em;
 		max-width: 945px;
@@ -1378,6 +1402,7 @@ ul.ui-autocomplete {
 		-moz-box-shadow: none;
 		-webkit-box-shadow: none;
 		box-shadow: none;
+		border: none;
 	}
 	.home-image {
 		margin: -20px 0px 0px 1em;
