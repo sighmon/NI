@@ -40,23 +40,29 @@ SitemapGenerator::Sitemap.create do
   Issue.find_each do |issue|
     if issue.published?
       add issue_path(issue), :lastmod => issue.updated_at
-      issue.articles.each do |article|
-        categories_list = "newint"
-        article.categories.each do |category|
-          categories_list = categories_list + ", " + category.short_display_name
-        end
-        add(issue_article_path(issue,article), :news => {
-            :publication_name => "New Internationalist",
-            :publication_language => "en",
-            :title => article.title,
-            :keywords => categories_list,
-            # :stock_tickers => "SAO:PETR3",
-            :publication_date => article.created_at,
-            :access => "Subscription"
-            # :genres => "PressRelease"
-        })
-      end
+      # News sitemap wasn't accepted by Google. :-(
+      # issue.articles.each do |article|
+      #   categories_list = "newint"
+      #   article.categories.each do |category|
+      #     categories_list = categories_list + ", " + category.short_display_name
+      #   end
+      #   add(issue_article_path(issue,article), :news => {
+      #       :publication_name => "New Internationalist",
+      #       :publication_language => "en",
+      #       :title => article.title,
+      #       :keywords => categories_list,
+      #       # :stock_tickers => "SAO:PETR3",
+      #       :publication_date => article.created_at,
+      #       :access => "Subscription"
+      #       # :genres => "PressRelease"
+      #   })
+      # end
     end
+  end
+
+  # Add categories:
+  Category.find_each do |category|
+    add category_path(category), :priority => 0.4, :lastmod => category.updated_at
   end
 
 end
