@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
   end
 
   def expiry_date
-    # FIXME: check for cancelled subscriptions
+    # cancelled subscriptions taken into account by s.expiry_date
     if self.parent
       host = self.parent
     else
