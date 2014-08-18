@@ -41,7 +41,7 @@ class CategoriesController < ApplicationController
     # Set meta tags
     @page_title = "Articles about #{@category.short_display_name}"
     @page_description = "All New Internationalist articles about #{@category.short_display_name}, ordered by date."
-    @category_image = @category.latest_published_article.try(:images).sort_by! {|u| u.position}.try(:first).try(:data).to_s
+    @category_image = @category.latest_published_article.first_image.try(:data).to_s
 
     set_meta_tags :title => @page_title,
                   :description => @page_description,

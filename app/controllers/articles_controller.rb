@@ -249,7 +249,7 @@ class ArticlesController < ApplicationController
         @related_articles -= [@article]
         @related_articles = @related_articles.uniq.sort_by(&:publication).reverse
 
-        first_image_for_meta_data = @article.try(:images).sort_by! {|u| u.position}.try(:first).try(:data).to_s
+        first_image_for_meta_data = @article.first_image.try(:data).to_s
 
         # Set meta tags
         set_meta_tags :title => @article.title,
