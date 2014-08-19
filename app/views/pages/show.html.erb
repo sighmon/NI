@@ -52,3 +52,6 @@
               :class => 'btn btn-danger' %>
   <% end %>
 </div>
+<% if @page.permalink == "subscribe" or @page.permalink == "seven-good-reasons-to-subscribe" %>
+  <%= render :partial => "shared/privacy" %>
+<% end %>
