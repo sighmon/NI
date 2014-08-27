@@ -38,6 +38,9 @@ class Ability
 
     if user.subscriber?
         can :read, :all
+        # Let subscribers who stumble upon unpublished issues/articles read them? Uncomment to dissallow
+        # cannot :read, Issue, :published => false
+        # cannot :read, Article, :published => false
     end
 
     if user.admin?
