@@ -9,6 +9,8 @@ class HomeController < ApplicationController
   		@issues = Issue.find_all_by_published(:true)
   	end
 
+    @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}
+
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
     @page_description = "Welcome to the digital edition of the New Internationalist magazine, available for all digital devices with a browser."
