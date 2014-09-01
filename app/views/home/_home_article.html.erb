@@ -18,5 +18,5 @@
 					<h3><%= link_to article.title, new_issue_purchase_path(article.issue) %></h3>
 					<h4><%= simple_format article.teaser %></h4>
 					<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %></h5>
-					<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-primary btn-mini' %></p>
+					<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-mini' %></p>
 				<% end %>
