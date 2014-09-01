@@ -9,7 +9,24 @@ class HomeController < ApplicationController
   		@issues = Issue.find_all_by_published(:true)
   	end
 
+    @features_category = Category.find_by_name("/features/")
+
     @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}
+
+    facts_category = Category.find_by_name("/sections/facts/")
+    if facts_category
+      @facts = facts_category.articles.last(10).sample
+    end
+
+    country_profile_category = Category.find_by_name("/columns/country/")
+    if country_profile_category
+      @country_profile = country_profile_category.articles.last(10).sample
+    end
+
+    cartoon_category = Category.find_by_name("/columns/cartoon/")
+    if cartoon_category
+      @cartoon = cartoon_category.articles.last(10).sample
+    end
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"

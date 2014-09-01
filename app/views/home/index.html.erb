@@ -83,8 +83,8 @@
 
 <div class="row-fluid">
 	<div class="span12">
-		<h2>Latest articles</h2>
-		<p>The feature article from each of the latest New Internationalist magazines.</p>
+		<h2>Latest feature articles</h2>
+		<p>The <% if @features_category %><%= link_to 'feature articles', category_path(@features_category) %><% else %>feature articles<% end %> from each of the latest New Internationalist magazines.</p>
 	</div>
 </div>
 
@@ -96,29 +96,36 @@
 <div class="row-fluid">
 			<% end %>
 			<div class="span4 home-keynote">
-				<% if can? :read, keynote %>
-					<!-- Can read this article, so link to it -->
-					<% if not keynote.featured_image.blank? %>
-				    <%= link_to retina_image_tag(keynote.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(keynote.featured_image_caption)}", :title => "#{strip_tags(keynote.featured_image_caption)}", :size => "80x80", :itemprop => "image"), issue_article_path(keynote.issue,keynote) %>
-				  <% elsif keynote.first_image %>
-				    <%= link_to retina_image_tag(keynote.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(keynote.first_image.caption)}", :title => "#{strip_tags(keynote.first_image.caption)}", :size => "80x80", :itemprop => "image"), issue_article_path(keynote.issue,keynote) %>
-				  <% end %>
-					<h3><%= link_to keynote.title, issue_article_path(keynote.issue,keynote) %></h3>
-					<h4><%= simple_format keynote.teaser %></h4>
-					<h5 class="breadcrumb"><%= link_to "#{keynote.issue.number} - #{keynote.issue.release.strftime("%B, %Y")}", issue_path(keynote.issue) %></h5>
-				<% else %>
-					<!-- Can't read this article, so link to buy it -->
-					<% if not keynote.featured_image.blank? %>
-				    <%= link_to retina_image_tag(keynote.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(keynote.featured_image_caption)}", :title => "#{strip_tags(keynote.featured_image_caption)}", :size => "80x80", :itemprop => "image"), new_issue_purchase_path(keynote.issue) %>
-				  <% elsif keynote.first_image %>
-				    <%= link_to retina_image_tag(keynote.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(keynote.first_image.caption)}", :title => "#{strip_tags(keynote.first_image.caption)}", :size => "80x80", :itemprop => "image"), new_issue_purchase_path(keynote.issue) %>
-				  <% end %>
-					<h3><%= link_to keynote.title, new_issue_purchase_path(keynote.issue) %></h3>
-					<h4><%= simple_format keynote.teaser %></h4>
-					<h5 class="breadcrumb"><%= link_to "#{keynote.issue.number} - #{keynote.issue.release.strftime("%B, %Y")}", issue_path(keynote.issue) %></h5>
-					<p><%= link_to 'Buy this magazine', new_issue_purchase_path(keynote.issue), :class => 'btn btn-primary btn-mini' %></p>
-				<% end %>
+				<%= render :partial => "home_article", :locals => { :article => keynote } %>
 			</div>
 		<% end %>
+	<% end %>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<h2>From the archives</h2>
+		<p>A selection of articles from the New Internationalist magazine archives.</p>
+	</div>
+</div>
+<div class="row-fluid">
+	<!-- Sample facts spread -->
+	<% if @facts %>
+		<div class="span6 home-keynote">
+			<%= render :partial => "home_article", :locals => { :article => @facts } %>
+		</div>
+	<% end %>
+	<!-- Sample country profile -->
+	<% if @country_profile %>
+		<div class="span6 home-keynote">
+			<%= render :partial => "home_article", :locals => { :article => @country_profile } %>
+		</div>
+	<% end %>
+</div>
+<div class="row-fluid">
+	<!-- Sample cartoon -->
+	<% if @cartoon %>
+		<div class="span12 home-keynote">
+			<%= render :partial => "home_article", :locals => { :article => @cartoon } %>
+		</div>
 	<% end %>
 </div>

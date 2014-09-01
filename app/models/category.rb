@@ -16,6 +16,10 @@ class Category < ActiveRecord::Base
     self.articles.select(&:published).max_by(&:publication)
   end
 
+  def first_ten_articles
+    self.articles.select(&:published).sort_by(&:publication).reverse.first(10)
+  end
+
   def display_name
     read_attribute(:display_name) or generate_display_name
   end
