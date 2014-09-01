@@ -15,17 +15,17 @@ class HomeController < ApplicationController
 
     facts_category = Category.find_by_name("/sections/facts/")
     if facts_category
-      @facts = facts_category.articles.last(10).sample
+      @facts = facts_category.first_ten_articles.sample
     end
 
     country_profile_category = Category.find_by_name("/columns/country/")
     if country_profile_category
-      @country_profile = country_profile_category.articles.last(10).sample
+      @country_profile = country_profile_category.first_ten_articles.sample
     end
 
     cartoon_category = Category.find_by_name("/columns/cartoon/")
     if cartoon_category
-      @cartoon = cartoon_category.articles.last(10).sample
+      @cartoon = cartoon_category.first_ten_articles.sample
     end
 
   	# Set meta tags
