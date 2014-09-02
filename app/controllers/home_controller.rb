@@ -287,4 +287,16 @@ class HomeController < ApplicationController
 
   end
 
+  def latest_cover
+    # To get the latest cover from URL https://digital.newint.com.au/latest_cover.jpg
+    # To get the full size cover, add ?full=true
+    full_cover = params[:full]
+    published_issues = Issue.find_all_by_published(:true)
+    if full_cover
+      redirect_to published_issues.sort_by(&:release).last.try(:cover_url).to_s
+    else
+      redirect_to published_issues.sort_by(&:release).last.try(:cover_url, :thumb2x).to_s
+    end
+  end
+
 end

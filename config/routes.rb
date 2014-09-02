@@ -111,6 +111,7 @@ NI::Application.routes.draw do
   get "newsstand" => "home#newsstand"
   get "inapp" => "home#inapp"
   get "google_merchant_feed" => "home#google_merchant_feed"
+  get "latest_cover" => "home#latest_cover"
 
   # Change the page logged in users are directed to
   # authenticated :user do
