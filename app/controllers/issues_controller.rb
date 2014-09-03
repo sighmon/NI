@@ -75,10 +75,15 @@ class IssuesController < ApplicationController
                     }
                   }
 
+    render_issues = @json_issues
+    if not params[:query].blank?
+      render_issues = @issues
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(@json_issues) }
+      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(render_issues) }
     end
   end
 
