@@ -78,9 +78,17 @@
 									<li><%= link_to "Subscribe", new_subscription_path %></li>
 								<% end %>
 								<li><%= link_to "Search", search_path %></li>
-								<li><%= link_to "Help!", page_path("help") %></li>
 								<li><%= link_to "App", page_path("ios") %></li>
-								<!-- <li><%= link_to retina_image_tag("iphone-dark.png", :alt => "Download the New Internationalist magazine app for iPad and iPhone.", :title => "Download the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-menu-bar'), page_path("ios") %></li> -->
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										More <b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li><%= link_to "Help!", page_path("help") %></li>
+										<li><a href="http://www.newint.com.au/shop">Shop - Fair Trade on-line shop</a></li>
+										<li><a href="http://www.newint.com.au/blog">Blog - Social Justice news</a></li>
+									</ul>
+								</li>
 								<li>
 									<% if request.ssl? %>
 										<%= link_to retina_image_tag("icon-lock.png", :alt => "Change to a non-https connection", :title => "Change to a non-https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "http"), :class => "ssl-changer" %>
