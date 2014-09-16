@@ -9,6 +9,8 @@ class Issue < ActiveRecord::Base
   # If versions need reprocssing
   # after_update :reprocess_image
 
+  after_commit :flush_cache
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -58,7 +60,15 @@ class Issue < ActiveRecord::Base
   end
 
   def keynote
-    articles.find_by_keynote(true)
+    Issue.cached_keynote_for_issue(self)
+  end
+
+  def self.cached_keynote_for_issue(id)
+    Rails.cache.fetch([name, id]) { find(id).articles.find_by_keynote(true) }
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
   end
 
   def features
