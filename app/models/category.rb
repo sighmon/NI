@@ -5,6 +5,8 @@ class Category < ActiveRecord::Base
   has_many :article_categorisations
   has_many :articles, :through => :article_categorisations
 
+  after_commit :flush_cache
+
   def self.create_from_element(article,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     c = Category.find_or_create_by_name(:name => element.try(:text))
@@ -13,11 +15,19 @@ class Category < ActiveRecord::Base
   end
 
   def latest_published_article
-    self.articles.select(&:published).max_by(&:publication)
+    Category.cached_category_articles(self).last
   end
 
   def first_ten_articles
-    self.articles.select(&:published).sort_by(&:publication).reverse.first(10)
+    Category.cached_category_articles(self).reverse.first(10)
+  end
+
+  def self.cached_category_articles(id)
+    Rails.cache.fetch([name, id]) { find(id).articles.select(&:published).sort_by(&:publication) }
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
   end
 
   def display_name

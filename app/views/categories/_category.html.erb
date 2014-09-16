@@ -1,0 +1,11 @@
+<% cache(category, :expires_in => 1.day) do %>
+  <% if category.latest_published_article %>
+  <tr>
+    <!-- <td><%= link_to category.id, category_path(category) %></td> -->
+    <td style="background-color: <%= category.colour_as_hex %>">&nbsp;</td>
+    <td><%= link_to category.display_name, category_path(category) %></td>
+    <td><%= link_to category.latest_published_article.title, issue_article_path(category.latest_published_article.issue, category.latest_published_article) %></td>
+    <td><%= category.latest_published_article.publication.strftime("%B, %Y") %></td>
+  </tr>
+  <% end %>
+<% end %>

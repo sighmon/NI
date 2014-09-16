@@ -3,6 +3,9 @@ class CategoriesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource
 
+  # Cache index as it takes a long time to compute
+  caches_action :index
+
   def index
     @categories = @categories.sort_by(&:display_name)
     @issues = Issue.all
@@ -88,7 +91,15 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def create
+    # Expire the cache
+    expire_action :action => :index
+  end
+
   def update
+    # Expire the cache
+    expire_action :action => :index
+
     if params[:category][:colour]
       params[:category][:colour] = params[:category][:colour].match("[0-9a-f]+")[0].hex
     end
