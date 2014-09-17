@@ -35,6 +35,8 @@
 		<dt>IP whitelist:</dt>
 		<dd><%= @user.ip_whitelist %></dd>
 	<% end %>
+	<dt>Login count:</dt>
+	<dd><%= @user.sign_in_count %> <span class="author-note">(<%= @user.current_sign_in_at.try(:strftime,"%d %b, %Y") %> - <%= @user.current_sign_in_ip %>)</span></dd>
 	<dt><strong>Expiry date:</strong></dt>
 	<dd><%= user_expiry_as_string(@user) %><br />
 		<% if @user.is_recurring? and @user.has_paper_copy? %>
