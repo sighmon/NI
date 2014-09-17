@@ -3,11 +3,7 @@ class HomeController < ApplicationController
   include ActionView::Helpers::NumberHelper
   
   def index
-  	if current_user.try(:admin?)
-  		@issues = Issue.all
-  	else
-  		@issues = Issue.find_all_by_published(:true)
-  	end
+  	@issues = Issue.find_all_by_published(:true)
 
     @features_category = Category.find_by_name("/features/")
 
