@@ -1,10 +1,13 @@
 # class Admin::UsersController < ApplicationController
 class Admin::UsersController < Admin::BaseController
 	# Cancan authorisation
-  	load_and_authorize_resource
+	load_and_authorize_resource
+
+	# For User sorting
+	helper_method :sort_column, :sort_direction
 
 	def index
-		@users = User.all(:order => "email")
+		@users = User.order(sort_column + " " + sort_direction)
 		@subscribers_total = @users.select{|s| s.subscriber?}
 		@institutions = @users.select{|i| i.institution}
 		@students = @users.select{|s| s.parent}
@@ -174,5 +177,15 @@ class Admin::UsersController < Admin::BaseController
 			end
 		end
 	end
+
+	private
+  
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "email"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
 end

@@ -14,9 +14,10 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th>Email</th>
-			<th>Username</th>
+			<th><%= sortable "email" %></th>
+			<th><%= sortable "username" %></th>
 			<th>Type</th>
+			<th><%= sortable "created_at", "Joined" %></th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -26,6 +27,7 @@
 			<td><%= link_to user.email, [:admin, user] %><% if user.subscriber? %> (<%= user.subscriptions.last.paypal_email %>)<% end %></td>
 			<td><%= user.username %></td>
 			<td><%= user.user_type %></td>
+			<td><%= user.created_at.strftime("%B, %Y") %></td>
 			<td><%= link_to "Show", [:admin, user], :class => 'btn btn-mini' %>
                 <%= link_to "Become", [:admin, user, :become], :class => 'btn btn-mini btn-success' %>
 				<%= link_to "Edit", edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
