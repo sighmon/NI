@@ -144,6 +144,27 @@ module ApplicationHelper
         end
     end
 
+    def payment_notifications_as_table(notifications)
+        if notifications.try(:empty?)
+            return "You don't have any notifications."
+        else
+            table = "<table class='table table-bordered purchases_as_table'><thead><tr>"
+            table += "<th>Status</th>"
+            table += "<th>Transaction ID</th>"
+            table += "<th>Transaction_type</th>"
+            table += "<th>Date</th>"
+            table += "</tr></thead><tbody>"
+            for notification in notifications.sort_by {|x| x.created_at} do
+                table += "<tr><td>#{notification.status}</td>"
+                table += "<td>#{notification.transaction_id}</td>"
+                table += "<td>#{notification.transaction_type}</td>"
+                table += "<td>#{notification.created_at.try(:strftime,"%d %B, %Y")}</td></tr>"
+            end
+            table += "</tbody></table>"
+            return raw table
+        end
+    end
+
     def user_expiry_as_string(user)
         return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end

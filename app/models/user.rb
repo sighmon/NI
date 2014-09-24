@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   # association for subscriptions
   has_many :subscriptions
+  has_many :payment_notifications
 
   # parent-child relationships for institutional accounts
   belongs_to :parent, :class_name => 'User', :foreign_key => 'parent_id'

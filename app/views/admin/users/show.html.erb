@@ -45,6 +45,10 @@
 			(Automatic debit)
 		<% end %>
 	</dd>
+	<% if @payment_notifications.last %>
+		<dt>Last transaction:</dt>
+		<dd><%= @payment_notifications.last.transaction_type %> <span class="author-note">(<%= @payment_notifications.last.created_at.try(:strftime,"%d %b, %Y") %>)</span></dd>
+	<% end %>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>
 	<% if @user.subscription_lapsed? and (@user.refunds_due > 0) %>
@@ -77,6 +81,9 @@
 
 <h3>Subscriptions</h3>
 <%= subscriptions_as_table(@user.subscriptions) %>
+
+<h3>Payment Notifications (PayPal)</h3>
+<%= payment_notifications_as_table(@payment_notifications) %>
 
 <h3>Favourite articles</h3>
 <%= favourites_as_table(@user.favourites) %>

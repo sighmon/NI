@@ -63,6 +63,14 @@ private
 				else
 					logger.info "Subscription already cancelled."
 				end
+			elsif transaction_type == "recurring_payment_skipped"
+				# TODO: handle skipped payment - make a note displayable to Admins?
+				logger.info "PAYMENT SKIPPED"
+				# logger.info params
+			elsif transaction_type == "recurring_payment_suspended" || transaction_type == "recurring_payment_suspended_due_to_max_failed_payment"
+				# TODO: handle suspended payment - make a note displayable to Admins?
+				logger.info "PAYMENT SUSPENDED"
+				# logger.info params
 			else
 				logger.info "Unknown transaction."
 			end

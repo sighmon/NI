@@ -21,7 +21,7 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def show
-
+		@payment_notifications = @user.payment_notifications
 	end
 
 	def become
