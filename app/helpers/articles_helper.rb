@@ -20,10 +20,13 @@ module ArticlesHelper
           elsif e["element_type"] == "attribution"
             "<div class='attribution'>"+process_children(e, debug)+"</div>"
           elsif e["element_type"] == "pull_quote"
-            alignment = e.at_xpath("field[@type='alignment']").text 
+            alignment = e.at_xpath("field[@type='alignment']").text
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
           elsif e["element_type"] == "box"
             "<div class='box'>"+process_children(e,debug)+"</div>"
+          elsif e["element_type"] == "factbox_third_width"
+            alignment = e.at_xpath("field[@type='factbox_float']").text.downcase
+            "<div class='factbox pull-#{alignment}'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "list"
             "<ul>"+process_children(e,debug)+"</ul>"
           elsif e["element_type"] == "at_a_glance"
@@ -58,7 +61,7 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck", "product_information"].include? e["type"]
+          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck", "product_information", "factbox_content"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
           elsif ["list_item"].include? e["type"]
@@ -125,7 +128,7 @@ module ArticlesHelper
             "<dt>#{e['type'].gsub(/^w._/, '').titlecase}</dt><dd>#{e.text}</dd>"
           elsif ["interview_with", "talked_to"].include? e["type"]
             "<dt>#{e['type'].gsub(/^w._/, '').titlecase}</dt><dd>#{e.text}</dd>"
-          elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class"].include? e["type"]
+          elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class", "factbox_float"].include? e["type"]
             #ignore 
           else
             "[unknown field type "+e["type"]+"]" if debug
