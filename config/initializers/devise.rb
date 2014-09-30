@@ -219,4 +219,15 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+
+  # Warden configuration for UK users
+  require "devise/strategies/remote_authenticatable"
+  require "devise/models/remote_authenticatable"
+
+  Devise.add_module :remote_authenticatable, :controller => :sessions, :route => { :session => :routes }
+
+  config.warden do |manager|
+    manager.strategies.add(:remote, Devise::Strategies::RemoteAuthenticatable)
+    manager.default_strategies(:scope => :user).unshift :remote
+  end
 end

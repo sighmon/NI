@@ -1,67 +1,71 @@
 class UserMailer < ActionMailer::Base
   # set this to subscribe@newint.com.au for production
-  default :from => "subscribe@newint.com.au"
+  default :from => ENV["DEVISE_EMAIL_ADDRESS"]
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.user_mailer.subscription_confirmation.subject
   #
+  @bcc_email_addresses = ENV["DEVISE_BCC_EMAIL_ADDRESSES"]
+  if Rails.env.development?
+    @bcc_email_addresses = ENV["DEVISE_BCC_EMAIL_ADDRESSES_DEV"]
+  end
 
   def user_signup_confirmation(user)
     @user = user
     @greeting = "Hello"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "New Internationalist - Welcome!")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist - Welcome!")
   end
 
   def subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "New Internationalist Digital Subscription")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist Digital Subscription")
   end
 
   def subscription_cancellation(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Cancelled New Internationalist Digital Subscription")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
   def subscription_cancelled_via_paypal(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Cancelled New Internationalist Digital Subscription")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
   def issue_purchase(user, issue)
     @user = user
     @issue = issue
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "New Internationalist Purchase - #{issue.number} - #{issue.title}")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist Purchase - #{issue.number} - #{issue.title}")
   end
 
   def free_subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Complimentary New Internationalist Digital Subscription")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "Complimentary New Internationalist Digital Subscription")
   end
 
   def crowdfunding_subscription_confirmation(user,number_of_months)
     @user = user
     @number_of_months = number_of_months
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Crowdfunding reward - New Internationalist Digital Subscription")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "Crowdfunding reward - New Internationalist Digital Subscription")
   end
 
   def media_subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "Complimentary New Internationalist Digital Subscription - Media")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "Complimentary New Internationalist Digital Subscription - Media")
   end
 
   def make_institutional_confirmation(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => user.email, :bcc => "design@newint.com.au, marketing@newint.com.au", :subject => "New Internationalist Digital Subscription - Institution confirmation")
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist Digital Subscription - Institution confirmation")
   end
 
 end

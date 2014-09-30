@@ -1,9 +1,15 @@
 class User < ActiveRecord::Base
+
+  # For UK subscriber access
+  include ActiveModel::Validations #required because some before_validations are defined in devise
+  extend ActiveModel::Callbacks #required to define callbacks
+  extend Devise::Models
+  define_model_callbacks :validation #required by Devise
+  devise :remote_authenticatable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
 
   # Validate username
   validates :username, :presence => true

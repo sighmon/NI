@@ -84,6 +84,9 @@ gem 'heroku-deflater', :group => :production
 # Get rid of heroku plugin warnings
 gem 'rails_12factor', :group => :production
 
+# HTTParty for talking to the UK server
+gem 'httparty'
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
