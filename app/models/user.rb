@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   extend ActiveModel::Callbacks #required to define callbacks
   extend Devise::Models
   define_model_callbacks :validation #required by Devise
-  devise :remote_authenticatable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :remote_authenticatable, :authentication_keys => [:login]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -50,7 +50,11 @@ class User < ActiveRecord::Base
   # end
 
   def send_welcome_mail
-    UserMailer.user_signup_confirmation(self).deliver
+    if Rails.env.production?
+      UserMailer.user_signup_confirmation(self).deliver
+    else
+      logger.info "SEND_WELCOME_MAIL would happen on production."
+    end
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

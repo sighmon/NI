@@ -8,6 +8,13 @@ class SessionsController < Devise::SessionsController
 
   before_filter :set_csrf_token_header, only: [:create]
 
+  def create
+    # Login attempts now try the database strategy, then the remote UK authentication strategy.
+    warden.config[:default_strategies][:user].push(warden.config[:default_strategies][:user].shift)
+    self.resource = warden.authenticate!(auth_options)
+    super
+  end
+
   private
 
   def set_csrf_token_header 
