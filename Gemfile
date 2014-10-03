@@ -93,6 +93,8 @@ gem 'httparty'
 # For development
 group :development do
   gem 'taps', :require => false
+  gem 'better_errors', '1.1.0'
+  gem 'binding_of_caller'
   # gem 'sqlite3'
 end
 

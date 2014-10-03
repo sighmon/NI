@@ -224,10 +224,8 @@ Devise.setup do |config|
   require "devise/strategies/remote_authenticatable"
   require "devise/models/remote_authenticatable"
 
-  Devise.add_module :remote_authenticatable, :controller => :sessions, :route => { :session => :routes }
-
   config.warden do |manager|
-    manager.strategies.add(:remote, Devise::Strategies::RemoteAuthenticatable)
-    manager.default_strategies(:scope => :user).unshift :remote
+    manager.strategies.add(:remote_authenticatable, Devise::Strategies::RemoteAuthenticatable)
+    manager.default_strategies(:scope => :user).unshift :remote_authenticatable
   end
 end

@@ -14,30 +14,31 @@ module Devise
       #
       # If the authentication fails you should return false
       #
-      def remote_authentication(authentication_hash)
-        # Your logic to authenticate with the external webservice
+      # def remote_authentication(authentication_hash)
+      #   # Your logic to authenticate with the external webservice
 
-        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + authentication_hash[:login] + "/" + authentication_hash[:password] + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
-        response = HTTParty.get(
-          api_endpoint, 
-          headers: {}
-        )
+      #   api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + authentication_hash[:login] + "/" + authentication_hash[:password] + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+      #   response = HTTParty.get(
+      #     api_endpoint, 
+      #     headers: {}
+      #   )
         
-        if response.code == 200
-          # Success!
-          body = JSON.parse(response.body)
-          logger.info "SUCCESS! Found UK user: #{body["data"]["lname"]}, expiry: #{body["data"]["expiry"]}"
-          # resource = self.new
-          session[:current_user_id] = body["data"]["id"].to_i
-          session[:email] = body["data"]["email"]
-          session[:username] = body["data"]["fname"] + body["data"]["lname"]
-          session[:uk_expiry] = body["data"]["expiry"]
-          # logger.info resource
-          return true
-        else
-          return false
-        end
-      end
+      #   if response.code == 200
+      #     # Success!
+      #     body = JSON.parse(response.body)
+      #     logger.info "SUCCESS! Found UK user: #{body["data"]["lname"]}, expiry: #{body["data"]["expiry"]}"
+      #     # resource = self.new
+      #     # session[:current_user_id] = body["data"]["id"].to_i
+      #     # session[:email] = body["data"]["email"]
+      #     # session[:username] = body["data"]["fname"] + body["data"]["lname"]
+      #     # session[:uk_expiry] = body["data"]["expiry"]
+      #     # logger.info resource
+      #     return true
+      #   else
+      #     logger.info "FAIL! UK Response code: #{response.code}"
+      #     return false
+      #   end
+      # end
  
       module ClassMethods
         ####################################
@@ -58,6 +59,9 @@ module Devise
           logger.info id
           resource = self.new
           resource.id = id
+          resource.email = email
+          resource.username = username
+          resource.uk_expiry = uk_expiry
           resource
         end
  
@@ -69,10 +73,13 @@ module Devise
         #
         def serialize_into_session(record)
           logger.info "XXXXXX SERIALIZE_INTO_SESSION"
-          [record.id]
-          [record.email]
-          [record.username]
-          # [record.uk_expiry]
+          if record["data"]
+            logger.info "ID: #{record["data"]["id"]}"
+          [record["data"]["id"]]
+          [record["data"]["email"]]
+          [record["data"]["username"]]
+          [record["data"]["uk_expiry"]]
+          end
         end
  
       end

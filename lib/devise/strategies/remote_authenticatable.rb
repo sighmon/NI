@@ -1,3 +1,6 @@
+require 'httparty'
+require 'json'
+
 module Devise
   module Strategies
     class RemoteAuthenticatable < Authenticatable
@@ -16,7 +19,8 @@ module Devise
         #
         # mapping.to is a wrapper over the resource model
         #
-        resource = mapping.to.new
+        resource = remote_authentication_uk_user(auth_params)
+        Rails.logger.debug "Resource: #{resource.to_json}"
 
         return fail! unless resource
 
@@ -28,10 +32,51 @@ module Devise
         # If the block returns true the resource will be loged in
         # If the block returns false the authentication will fail!
         #
-        if validate(resource){ resource.remote_authentication(auth_params) }
+        if validate_resource(resource)
           success!(resource)
+        else
+          fail!
         end
       end
+
+      private
+
+      def remote_authentication_uk_user(authentication_hash)
+        # Returns a hash with the result
+
+        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + authentication_hash[:login] + "/" + authentication_hash[:password] + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+        response = HTTParty.get(
+          api_endpoint, 
+          headers: {}
+        )
+        
+        if response.code == 200
+          # Success!
+          body = JSON.parse(response.body)
+          Rails.logger.debug "SUCCESS! Found UK user: #{body["data"]["lname"]}, expiry: #{body["data"]["expiry"]}"
+          return body
+        # elsif response.code == 404
+        #   body = JSON.parse(response.body)
+        #   Rails.logger.debug "NOT FOUND! Can't find UK user with ID: #{authentication_hash[:login]}, lname: #{authentication_hash[:password]}"
+        #   return body
+        else
+          Rails.logger.debug "FAIL! UK Response code: #{response.code}"
+          return nil
+        end
+      end
+
+      def build_user_from_resource(resource)
+        if resource
+          {:email => resource["data"]["email"], :id => resource["data"]["id"], :username => resource["data"]["fname"] + resource["data"]["lname"], :uk_expiry => resource["data"]["expiry"]}
+        end
+      end
+
+      def validate_resource(resource)
+        resource["status"] == "success"
+      end
+
     end
   end
 end
+
+# Warden::Strategies.add(:remote_authenticatable, Devise::Strategies::RemoteAuthenticatable)
