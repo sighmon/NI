@@ -33,8 +33,11 @@ module Devise
           # If they don't have a rails account, make one
           resource = mapping.to.new
           build_user_from_uk_info(resource, uk_user_details)
-          
+
           # Rails.logger.debug "Resource built: #{resource.to_json}"
+        else
+          # TODO: They do have an account, so lets sync it with the UK data.
+          Rails.logger.debug "Resource already here: #{resource.to_json}"
         end
 
         return fail! unless resource
