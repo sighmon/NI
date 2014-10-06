@@ -44,7 +44,7 @@ module Devise
           # TODO: They do have an account, so lets sync it with the UK data.
           Rails.logger.debug "Resource already here: #{resource.to_json}"
           resource.email = uk_user_details["data"]["email"]
-          resource.uk_expiry = uk_user_details["data"]["expiry"]
+          resource.uk_expiry = parse_expiry_from_uk_details(uk_user_details["data"]["expiry"])
         end
 
         return fail! unless resource
@@ -97,7 +97,7 @@ module Devise
           user.password = uk_info["data"]["lname"]
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
           # TODO: Not in db yet...
-          user.uk_expiry = uk_info["data"]["expiry"]
+          user.uk_expiry = parse_expiry_from_uk_details(uk_info["data"]["expiry"])
           user.uk_id = uk_info["data"]["id"]
         end
       end
@@ -108,6 +108,10 @@ module Devise
         else
           return false
         end
+      end
+
+      def parse_expiry_from_uk_details(uk_info)
+        DateTime.strptime(uk_info, "%Y-%m-%d")
       end
 
     end

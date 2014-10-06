@@ -127,7 +127,23 @@ class User < ActiveRecord::Base
   end
 
   def subscriber?
-    return subscription_valid?
+    if uk_user?
+      # UK subscriber
+      return uk_subscription_valid?
+    else
+      # Local subscriber
+      return subscription_valid?
+    end
+  end
+
+  def uk_user?
+    not uk_id.nil?
+  end
+
+  def uk_subscription_valid?
+    if uk_expiry > DateTime.now or subscription_valid?
+      return true
+    end
   end
 
   def is_recurring?
@@ -140,13 +156,29 @@ class User < ActiveRecord::Base
   end
 
   def expiry_date
-    # cancelled subscriptions taken into account by s.expiry_date
-    if self.parent
-      host = self.parent
+    if uk_user?
+      # Check for local subscriptions
+      rails_expiry = self.subscriptions.collect{|s| s.expiry_date}.sort.last
+
+      if rails_expiry and uk_expiry
+        # Return the latest UK or Aus subscription
+        return [uk_expiry, rails_expiry].max
+      elsif rails_expiry
+        return rails_expiry
+      elsif uk_expiry
+        return uk_expiry
+      else
+        return nil
+      end
     else
-      host = self
+      # cancelled subscriptions taken into account by s.expiry_date
+      if self.parent
+        host = self.parent
+      else
+        host = self
+      end
+      return host.subscriptions.collect{|s| s.expiry_date}.sort.last
     end
-    return host.subscriptions.collect{|s| s.expiry_date}.sort.last
   end
 
   def expiry_date_including_ios(request)

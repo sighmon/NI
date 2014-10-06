@@ -32,7 +32,7 @@
 			<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
 		<% elsif @user.subscriber? %>
 		<dt></dt>
-		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' %></dd>
+		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
 		<% elsif @user.subscription_lapsed? %>
 		<dt></dt>
 		<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
