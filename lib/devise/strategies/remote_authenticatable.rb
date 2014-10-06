@@ -25,7 +25,7 @@ module Devise
         #
         
         # A UK user exists, so first try and find if they already have a local rails account
-        resource = mapping.to.find_for_database_authentication(:email => uk_user_details["data"]["email"])
+        resource = mapping.to.find_for_database_authentication(:uk_id => uk_user_details["data"]["id"])
         
         # Rails.logger.debug "Resource pre-build: #{resource.to_json}"
 
@@ -43,6 +43,8 @@ module Devise
         else
           # TODO: They do have an account, so lets sync it with the UK data.
           Rails.logger.debug "Resource already here: #{resource.to_json}"
+          resource.email = uk_user_details["data"]["email"]
+          resource.uk_expiry = uk_user_details["data"]["expiry"]
         end
 
         return fail! unless resource
@@ -95,8 +97,8 @@ module Devise
           user.password = uk_info["data"]["lname"]
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
           # TODO: Not in db yet...
-          # user.uk_expiry = uk_info["data"]["uk_expiry"]
-          # user.uk_id = uk_info["data"]["id"]
+          user.uk_expiry = uk_info["data"]["expiry"]
+          user.uk_id = uk_info["data"]["id"]
         end
       end
 

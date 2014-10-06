@@ -26,8 +26,11 @@ class Ability
         can :manage, Subscription
         can :manage, Favourite
         can :manage, GuestPass
-        can :read, User
         can :manage, User, :id => user.id
+        cannot :manage, User do |user|
+            not user.uk_id.nil?
+        end
+        can :read, User
         # Ability for parents to manage children
         can :manage, User, :parent => user
         # Ability to tweet & post to facebook
