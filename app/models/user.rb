@@ -98,6 +98,9 @@ class User < ActiveRecord::Base
     last_subscription_including_cancelled :paypal_country_code => 'paypal_country_code'
     last_subscription_including_cancelled :paypal_country_name => 'paypal_country_name'
 
+    uk_id 'uk_id'
+    uk_expiry 'uk_expiry'
+
   end
 
   #Override to_s to show user details instead of #string
@@ -263,6 +266,9 @@ class User < ActiveRecord::Base
       t = "Student"
     elsif subscriber?
       t = "Subscriber"
+    end
+    if uk_id
+      t += " (UK)"
     end
     "#{t}"
   end

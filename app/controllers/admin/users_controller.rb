@@ -8,6 +8,7 @@ class Admin::UsersController < Admin::BaseController
 
 	def index
 		@users = User.order(sort_column + " " + sort_direction)
+		@uk_users = @users.select{|uk| uk.uk_user?}
 		@subscribers_total = @users.select{|s| s.subscriber?}
 		@institutions = @users.select{|i| i.institution}
 		@students = @users.select{|s| s.parent}
