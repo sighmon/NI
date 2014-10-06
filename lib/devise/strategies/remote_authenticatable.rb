@@ -34,6 +34,11 @@ module Devise
           resource = mapping.to.new
           build_user_from_uk_info(resource, uk_user_details)
 
+          unless resource.save
+            fail!(resource.unauthenticated_message)
+            Rails.logger.debug "FAILED: #{resource.unauthenticated_message}"
+          end
+
           # Rails.logger.debug "Resource built: #{resource.to_json}"
         else
           # TODO: They do have an account, so lets sync it with the UK data.
@@ -87,6 +92,8 @@ module Devise
         if user and uk_info
           user.email = uk_info["data"]["email"]
           user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"]
+          user.password = uk_info["data"]["lname"]
+          user.password_confirmation = nil # So that Devise automatically encrypts the new password
           # TODO: Not in db yet...
           # user.uk_expiry = uk_info["data"]["uk_expiry"]
           # user.uk_id = uk_info["data"]["id"]
