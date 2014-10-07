@@ -50,10 +50,19 @@ class User < ActiveRecord::Base
   # end
 
   def send_welcome_mail
-    if Rails.env.production?
-      UserMailer.user_signup_confirmation(self).deliver
+    if uk_user?
+      # TODO: Pete to provide text.
+      if Rails.env.production?
+        UserMailer.user_signup_confirmation_uk(self).deliver
+      else
+        logger.info "SEND_WELCOME_MAIL UK user would happen on production."
+      end
     else
-      logger.info "SEND_WELCOME_MAIL would happen on production."
+      if Rails.env.production?
+        UserMailer.user_signup_confirmation(self).deliver
+      else
+        logger.info "SEND_WELCOME_MAIL would happen on production."
+      end
     end
   end
 

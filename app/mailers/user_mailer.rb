@@ -18,6 +18,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist - Welcome!")
   end
 
+  def user_signup_confirmation_uk(user)
+    @user = user
+    @greeting = "Hello"
+    mail(:to => user.email, :bcc => @bcc_email_addresses, :subject => "New Internationalist - Welcome!")
+  end
+
   def subscription_confirmation(user)
     @user = user
     @greeting = "Hi"

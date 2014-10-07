@@ -30,6 +30,13 @@ module Devise
         # Rails.logger.debug "Resource pre-build: #{resource.to_json}"
 
         if not resource
+          Rails.logger.debug "NOT FOUND: No rails account for uk_id: #{uk_user_details["data"]["id"]}"
+          # Try by email address to catch any UK users that already had a digital.newint.com.au account
+          resource = mapping.to.find_for_database_authentication(:email => uk_user_details["data"]["email"])
+        end
+
+        if not resource
+          Rails.logger.debug "NOT FOUND: No rails account for email: #{uk_user_details["data"]["email"]}"
           # If they don't have a rails account, make one
           resource = mapping.to.new
           build_user_from_uk_info(resource, uk_user_details)
@@ -41,10 +48,11 @@ module Devise
 
           # Rails.logger.debug "Resource built: #{resource.to_json}"
         else
-          # TODO: They do have an account, so lets sync it with the UK data.
           Rails.logger.debug "Resource already here: #{resource.to_json}"
+          # They do have an account, so lets sync it with the UK data.
           resource.email = uk_user_details["data"]["email"]
           resource.uk_expiry = parse_expiry_from_uk_details(uk_user_details["data"]["expiry"])
+          resource.uk_id = uk_user_details["data"]["id"]
         end
 
         return fail! unless resource
@@ -94,9 +102,8 @@ module Devise
         if user and uk_info
           user.email = uk_info["data"]["email"]
           user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"]
-          user.password = uk_info["data"]["lname"]
+          user.password = Devise.friendly_token
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
-          # TODO: Not in db yet...
           user.uk_expiry = parse_expiry_from_uk_details(uk_info["data"]["expiry"])
           user.uk_id = uk_info["data"]["id"]
         end
