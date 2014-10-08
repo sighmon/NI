@@ -25,6 +25,9 @@
 			<dd>(Automatic renewal, Digital + Paper copy)</dd>
 			<dt></dt>
 			<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+		<% elsif @user.subscriber? and @user.was_recurring? and @user.has_cancelled_recurring? %>
+			<dt></dt>
+			<dd>(Automatic renewal cancelled)</dd>
 		<% elsif @user.subscriber? and @user.is_recurring? %>
 			<dt></dt>
 			<dd>(Automatic renewal)</dd>

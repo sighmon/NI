@@ -93,6 +93,7 @@ class User < ActiveRecord::Base
     email
     expiry_date 'expiry_date'
     is_recurring? 'is_recurring'
+    was_recurring? 'was_recurring'
     has_paper_copy? 'has_paper_copy'
     institution?
 
@@ -104,6 +105,7 @@ class User < ActiveRecord::Base
     last_subscription_including_cancelled :valid_from => 'valid_from'
     last_subscription_including_cancelled :duration
     last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
+    last_subscription_including_cancelled :refunded_on => 'refunded_on'
     last_subscription_including_cancelled :paypal_country_code => 'paypal_country_code'
     last_subscription_including_cancelled :paypal_country_name => 'paypal_country_name'
 
@@ -161,6 +163,18 @@ class User < ActiveRecord::Base
   def is_recurring?
     # TODO: need to differentiate between the first recurring subscription and the paypal IPN recurrances.
     return self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
+  end
+
+  def was_recurring?
+    return self.subscriptions.collect{|s| s.was_recurring?}.include?(true)
+  end
+
+  def has_cancelled_recurring?
+    return self.subscriptions.collect{|s| s.cancellation_date.nil?}.include?(false)
+  end
+
+  def has_refunded_recurring?
+    return self.subscriptions.collect{|s| s.refunded_on.nil?}.include?(false)
   end
 
   def has_paper_copy?

@@ -16,11 +16,19 @@ class Subscription < ActiveRecord::Base
   # end
 
   def is_current?
-    return (expiry_date > DateTime.now and (not is_cancelled?))
+    if is_cancelled? and was_recurring? and refunded_on.nil?
+      return (expiry_date > DateTime.now)
+    else
+      return (expiry_date > DateTime.now and (not is_cancelled?))
+    end
   end
 
   def expiry_date
-    return (cancellation_date or (valid_from + duration.months))
+    if was_recurring? and refunded_on.nil?
+      return (valid_from + duration.months)
+    else
+      return (cancellation_date or (valid_from + duration.months))
+    end
   end
 
   def expiry_date_excluding_cancelled
@@ -36,7 +44,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def is_cancelled?
-  	return ( not ( cancellation_date.nil? or cancellation_date > DateTime.now ))
+    return ( not ( cancellation_date.nil? or cancellation_date > DateTime.now ))
   end
 
   # From controller

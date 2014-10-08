@@ -41,6 +41,8 @@
 	<dd><%= user_expiry_as_string(@user) %><br />
 		<% if @user.is_recurring? and @user.has_paper_copy? %>
 			(Automatic debit, Digital + Paper edition)
+		<% elsif @user.was_recurring? and @user.has_cancelled_recurring? %>
+			(Automatic debit - CANCELLED)
 		<% elsif @user.is_recurring? %>
 			(Automatic debit)
 		<% end %>
@@ -57,7 +59,7 @@
 	<% end %>
 	<dt>&nbsp;</dt>
 	<dd>&nbsp;</dd>
-	<% if @user.subscriber? and @user.is_recurring? %>
+	<% if @user.subscriber? and @user.is_recurring? and not @user.has_refunded_recurring? %>
 		<dt><strong>PayPal Name:</strong></dt>
 		<dd><%= @user.recurring_subscription.paypal_first_name %> <%= @user.recurring_subscription.paypal_last_name %>&nbsp;</dd>
 		<dt><strong>PayPal Payer ID:</strong></dt>

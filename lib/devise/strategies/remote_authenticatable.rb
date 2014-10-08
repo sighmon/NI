@@ -48,7 +48,7 @@ module Devise
 
           # Rails.logger.debug "Resource built: #{resource.to_json}"
         else
-          Rails.logger.debug "Resource already here: #{resource.to_json}"
+          Rails.logger.debug "User found: #{resource.username}"
           # They do have an account, so lets sync it with the UK data.
           resource.email = uk_user_details["data"]["email"]
           resource.uk_expiry = parse_expiry_from_uk_details(uk_user_details["data"]["expiry"])
