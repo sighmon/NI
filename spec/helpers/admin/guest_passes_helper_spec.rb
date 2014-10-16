@@ -10,6 +10,6 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe Admin::GuestPassesHelper do
+describe Admin::GuestPassesHelper, :type => :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

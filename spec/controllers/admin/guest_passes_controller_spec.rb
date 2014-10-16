@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Admin::GuestPassesController do
+describe Admin::GuestPassesController, :type => :controller do
 
   describe "GET 'index'" do
     context "as a unauthorized user" do
       it "redirects" do
         get 'index'
-        response.should redirect_to(issues_url)
+        expect(response).to redirect_to(issues_url)
       end
     end
 
@@ -14,7 +14,7 @@ describe Admin::GuestPassesController do
       it "returns http success" do
         sign_in FactoryGirl.create(:admin_user)
         get 'index'
-        response.should be_success
+        expect(response).to be_success
       end
     end
   end

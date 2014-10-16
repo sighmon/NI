@@ -103,6 +103,8 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
+  gem 'rspec-activemodel-mocks'
+  gem 'rspec-legacy_formatters'
 end
 
 group :test do

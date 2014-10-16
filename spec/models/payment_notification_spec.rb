@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe PaymentNotification do
+describe PaymentNotification, :type => :model do
 end

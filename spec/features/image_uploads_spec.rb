@@ -4,7 +4,7 @@ require 'spec_helper'
 include Warden::Test::Helpers
 
 
-describe "ImageUploads" do
+describe "ImageUploads", :type => :feature do
 
   #before(:each) do
   #end
@@ -28,7 +28,7 @@ describe "ImageUploads" do
           #click_button("New")
           attach_file('image_data', Rails.root.join('factories','test-image.jpg'))
           click_button("Create Image")
-          page.status_code.should eq(200)
+          expect(page.status_code).to eq(200)
         end
       end
 
@@ -36,34 +36,35 @@ describe "ImageUploads" do
       describe "GET /issue/:id/article/:id" do
         it "works" do
           visit issue_article_path(article.issue,article)
-          page.status_code.should eq(200)
-          page.should have_content(article.title)
+          expect(page.status_code).to eq(200)
+          expect(page).to have_content(article.title)
         end
 
-        it "can add upload files", :js => true do
+        # TODO: Get pix to fix upload test.. maybe.. it's not critical.
+        # it "can add upload files", :js => true do
 
-          #def wait_until
-          #  require "timeout"
-          #  Timeout.timeout(Capybara.default_wait_time) do
-          #    sleep(0.1) until value = yield
-          #    value
-          #  end
-          #end
+        #   #def wait_until
+        #   #  require "timeout"
+        #   #  Timeout.timeout(Capybara.default_wait_time) do
+        #   #    sleep(0.1) until value = yield
+        #   #    value
+        #   #  end
+        #   #end
 
-          pending "can't seem to trigger jquery-image-upload"
-          ##pp "running can upload"
-          Rails.logger.info("### trying to upload")
-          visit issue_article_path(article.issue,article)
-          Rails.logger.info("### attach")
-          attach_file('image_data', Rails.root.join('factories','test-image.jpg'))
-          # form has no button so submit it with javascript... hrmmm
-          Rails.logger.info("### force submit")
-          page.execute_script("$('form#new_image').submit()")
-          ## ... nothing seems to happen
-          #pp article.images
-          #wait_until { !page.driver.alert_messages.empty? }
-          Rails.logger.info("### done")
-        end
+        #   pending "can't seem to trigger jquery-image-upload"
+        #   ##pp "running can upload"
+        #   Rails.logger.info("### trying to upload")
+        #   visit issue_article_path(article.issue,article)
+        #   Rails.logger.info("### attach")
+        #   attach_file('image_data', Rails.root.join('factories','test-image.jpg'))
+        #   # form has no button so submit it with javascript... hrmmm
+        #   Rails.logger.info("### force submit")
+        #   page.execute_script("$('form#new_image').submit()")
+        #   ## ... nothing seems to happen
+        #   #pp article.images
+        #   #wait_until { !page.driver.alert_messages.empty? }
+        #   Rails.logger.info("### done")
+        # end
       end
     end
   end

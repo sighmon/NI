@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "pages/index" do
+describe "pages/index", :type => :view do
   before(:each) do
     assign(:pages, [
       stub_model(Page,

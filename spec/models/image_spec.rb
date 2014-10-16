@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Image do
+describe Image, :type => :model do
 
   context "article" do 
 

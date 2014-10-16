@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'cancan/matchers'
 
-describe User do
+describe User, :type => :model do
 
   context "institution" do
     let(:user) do
@@ -16,7 +16,7 @@ describe User do
         user.children << child
       end
       it "can manage child" do
-        ability.should be_able_to(:manage, user.children.first)
+        expect(ability).to be_able_to(:manage, user.children.first)
       end
       it "destroys child when destroyed" do
         child_id = user.children.first.id
@@ -28,7 +28,7 @@ describe User do
     it "can create a child without an email" do
       newuser = FactoryGirl.build(:user)
       child = user.children.create(username: newuser.username, password: newuser.password)
-      child.email.should be_blank
+      expect(child.email).to be_blank
     end
 
   end
@@ -41,24 +41,24 @@ describe User do
     let(:ability) { Ability.new(user) }
 
     it "should have a username" do
-      user.username.should_not == ""
+      expect(user.username).not_to eq("")
     end
 
     it "should not have a uk_id" do
-      user.uk_id.should be_nil
+      expect(user.uk_id).to be_nil
     end
 
     it "should not have a uk_expiry" do
-      user.uk_expiry.should be_nil
+      expect(user.uk_expiry).to be_nil
     end
 
     it "should not be a subscriber" do
-      user.subscriber?.should be_false
+      expect(user.subscriber?).to be_falsey
     end
 
     context "without a parent" do
       it "can update itself" do
-        ability.should be_able_to(:manage, user)
+        expect(ability).to be_able_to(:manage, user)
       end
     end
 
@@ -68,15 +68,15 @@ describe User do
         sub.user.children << user
       end
       it "has a subscription" do
-        user.subscriber?.should be_true
+        expect(user.subscriber?).to be_truthy
       end
       it "can't update itself" do
-        ability.should_not be_able_to(:update, user)
+        expect(ability).not_to be_able_to(:update, user)
       end
       it "doesn't destroy parent when destroyed" do
         parent_id = user.parent.id
         user.destroy
-        User.find(parent_id).should_not be_nil
+        expect(User.find(parent_id)).not_to be_nil
       end
     end
 
@@ -86,11 +86,11 @@ describe User do
         user.children << child
       end
       it "can manage child" do
-        ability.should be_able_to(:manage, user.children.first)
+        expect(ability).to be_able_to(:manage, user.children.first)
       end
       it "cannot manage a non-child user" do
         sibling = FactoryGirl.create(:user)
-        ability.should_not be_able_to(:manage, sibling)
+        expect(ability).not_to be_able_to(:manage, sibling)
       end
     end
 
@@ -111,7 +111,7 @@ describe User do
     let(:user) { subscription.user }
 
     it "has a valid subscription" do
-      user.subscriber?.should be_true
+      expect(user.subscriber?).to be_truthy
     end
 
     it "receives a partial refund" do
@@ -121,7 +121,7 @@ describe User do
       subscription.price_paid = 91 
       Timecop.freeze(2012,1,22,0,0,0) do
         subscription.expire_subscription
-        subscription.refund.should == 91-21
+        expect(subscription.refund).to eq(91-21)
       end
     end
 
@@ -129,7 +129,7 @@ describe User do
       subscription.price_paid = 91
       Timecop.freeze(2011,1,1,0,0,0) do
         subscription.expire_subscription
-        subscription.refund.should == 91
+        expect(subscription.refund).to eq(91)
       end
     end
   end

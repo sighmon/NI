@@ -18,7 +18,7 @@ class FakeGateway
   end
 end
 
-describe PurchasesController do
+describe PurchasesController, :type => :controller do
 
   context "as a user and with an issue" do
 

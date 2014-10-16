@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CategoriesController do
+describe CategoriesController, :type => :controller do
 
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -16,7 +16,7 @@ describe CategoriesController do
     describe "GET 'show'" do
       it "returns http success" do
         get 'show', :id => category.id
-        response.should be_success
+        expect(response).to be_success
       end
     end
 

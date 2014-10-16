@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PaymentNotificationsController do
+describe PaymentNotificationsController, :type => :controller do
   context "with a recurring subscribed user" do
     let(:user) do
       FactoryGirl.create(:subscription, paypal_profile_id: "RECURRING_PAYMENT_ID").user

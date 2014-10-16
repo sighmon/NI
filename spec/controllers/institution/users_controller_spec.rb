@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe Institution::UsersController do
+describe Institution::UsersController, :type => :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Institution::User. As you add validations to Institution::User, be sure to
@@ -40,12 +40,12 @@ describe Institution::UsersController do
 
       it "works" do
         get :index
-        response.status.should eq(200)
+        expect(response.status).to eq(200)
       end
 
       it "assigns all children as @users" do
         get :index
-        assigns(:users).should eq(parent.children)
+        expect(assigns(:users)).to eq(parent.children)
       end
     end
 
@@ -53,14 +53,14 @@ describe Institution::UsersController do
 
       it "assigns the requested user as @user" do
         get :show, {:id => child.to_param}
-        assigns(:user).should eq(child)
+        expect(assigns(:user)).to eq(child)
       end
     end
 
     describe "GET new" do
       it "assigns a new user as @user" do
         get :new, {}
-        assigns(:user).should be_a_new(User)
+        expect(assigns(:user)).to be_a_new(User)
       end
     end
 
@@ -68,7 +68,7 @@ describe Institution::UsersController do
 
       it "assigns the requested user as @user" do
         get :edit, {:id => child.to_param}
-        assigns(:user).should eq(child)
+        expect(assigns(:user)).to eq(child)
       end
     end
 
@@ -83,29 +83,29 @@ describe Institution::UsersController do
 
         it "assigns a newly created user as @user" do
           post :create, {:user => attributes}
-          assigns(:user).should be_a(User)
-          assigns(:user).should be_persisted
+          expect(assigns(:user)).to be_a(User)
+          expect(assigns(:user)).to be_persisted
         end
 
         it "redirects to the parent user page" do
           post :create, {:user => attributes}
-          response.should redirect_to(parent)
+          expect(response).to redirect_to(parent)
         end
       end
 
       describe "with invalid params" do
         it "assigns a newly created but unsaved user as @user" do
           # Trigger the behavior that occurs when invalid params are submitted
-          User.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(User).to receive(:save).and_return(false)
           post :create, {:user => {  }}
-          assigns(:user).should be_a_new(User)
+          expect(assigns(:user)).to be_a_new(User)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
-          User.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(User).to receive(:save).and_return(false)
           post :create, {:user => {  }}
-          response.should render_template("new")
+          expect(response).to render_template("new")
         end
       end
     end
@@ -118,20 +118,20 @@ describe Institution::UsersController do
           # specifies that the Institution::User created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          User.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+          expect_any_instance_of(User).to receive(:update_attributes).with({ "these" => "params" })
           put :update, {:id => user.to_param, :user => { "these" => "params" }}
         end
 
         it "assigns the requested user as @user" do
           user = FactoryGirl.create(:user)
           put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
-          assigns(:user).should eq(user)
+          expect(assigns(:user)).to eq(user)
         end
 
         it "redirects to the parent" do
           user = child
           put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
-          response.should redirect_to(parent)
+          expect(response).to redirect_to(parent)
         end
       end
 
@@ -139,17 +139,17 @@ describe Institution::UsersController do
         it "assigns the user as @user" do
           user = FactoryGirl.create(:user)
           # Trigger the behavior that occurs when invalid params are submitted
-          User.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(User).to receive(:save).and_return(false)
           put :update, {:id => user.to_param, :user => {  }}
-          assigns(:user).should eq(user)
+          expect(assigns(:user)).to eq(user)
         end
 
         it "re-renders the 'edit' template" do
           user = child
           # Trigger the behavior that occurs when invalid params are submitted
-          User.any_instance.stub(:save).and_return(false)
+          allow_any_instance_of(User).to receive(:save).and_return(false)
           put :update, {:id => user.to_param, :user => {  }}
-          response.should render_template("edit")
+          expect(response).to render_template("edit")
         end
       end
     end
@@ -165,7 +165,7 @@ describe Institution::UsersController do
       it "redirects to the parent" do
         user = child
         delete :destroy, {:id => user.to_param}
-        response.should redirect_to(parent)
+        expect(response).to redirect_to(parent)
       end
     end
 

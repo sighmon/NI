@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "institution/users/index" do
+describe "institution/users/index", :type => :view do
   before(:each) do
     assign(:users, [
       @child = FactoryGirl.create(:child_user),

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::SubscriptionsController do
+describe Admin::SubscriptionsController, :type => :controller do
 
 
 end

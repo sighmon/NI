@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "images/new" do
+describe "images/new", :type => :view do
   before(:each) do
     @showimage = FactoryGirl.create(:image)
     @article = @showimage.article

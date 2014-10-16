@@ -249,11 +249,18 @@ GEM
       railties (~> 3.1)
       rmagick (~> 2.13.1)
     rmagick (2.13.2)
+    rspec-activemodel-mocks (1.0.1)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
     rspec-core (3.0.3)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.0.0)
+    rspec-legacy_formatters (1.0.0)
+      rspec-core (>= 3.0.0.beta2)
+      rspec-support (>= 3.0.0.beta2)
     rspec-mocks (3.0.3)
       rspec-support (~> 3.0.0)
     rspec-rails (3.0.2)
@@ -397,6 +404,8 @@ DEPENDENCIES
   rb-inotify (~> 0.8.8)
   retina_image_tag (>= 1.0.2)
   rmagick
+  rspec-activemodel-mocks
+  rspec-legacy_formatters
   rspec-rails
   sass-rails
   savon (~> 1.2.0)

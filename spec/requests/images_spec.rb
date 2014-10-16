@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe "Images" do
+describe "Images", :type => :request do
 end

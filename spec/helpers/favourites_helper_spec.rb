@@ -10,6 +10,6 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe FavouritesHelper do
+describe FavouritesHelper, :type => :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

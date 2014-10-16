@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe GuestPassesController do
+describe GuestPassesController, :type => :controller do
 
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "articles/show" do
+describe "articles/show", :type => :view do
   let(:article) { FactoryGirl.create(:article) }
 
   it "shows the article" do
@@ -13,7 +13,7 @@ describe "articles/show" do
     render 
  
     #response.status.should eq(200)
-    rendered.should match(/#{article.title}/)
+    expect(rendered).to match(/#{article.title}/)
   end
 
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe IssuesController do
+describe IssuesController, :type => :controller do
 
   context "as a guest" do
    
@@ -12,7 +12,7 @@ describe IssuesController do
 
         it "works" do
           get :email, :issue_id => issue.id
-          response.status.should eq(200)
+          expect(response.status).to eq(200)
         end
 
       end

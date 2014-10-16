@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe ArticlesController do
+describe ArticlesController, :type => :controller do
 
   context "as a subscriber" do
 
@@ -20,7 +20,7 @@ describe ArticlesController do
 
         it "can view the body" do
           get :body, {article_id: article.id, issue_id: article.issue.id}
-          response.status.should eq(200)
+          expect(response.status).to eq(200)
         end 
 
       end
@@ -46,7 +46,7 @@ describe ArticlesController do
 
         it "can't view the body" do
           get :body, {article_id: article.id, issue_id: article.issue.id}
-          response.status.should eq(403)
+          expect(response.status).to eq(403)
         end 
 
       end
@@ -67,7 +67,7 @@ describe ArticlesController do
 
         it "can't view the body" do
           get :body, {article_id: article.id, issue_id: article.issue.id}
-          response.status.should eq(403)
+          expect(response.status).to eq(403)
         end 
 
       end
@@ -92,7 +92,7 @@ describe ArticlesController do
 
         it "assigns the article" do
           get :show, {id: article.id, issue_id: article.issue.id}
-          assigns(:article).should eq(article)
+          expect(assigns(:article)).to eq(article)
         end
 
       end
@@ -122,7 +122,7 @@ describe ArticlesController do
             ##ArticlesController.any_instance.stub(:create) {|*args| ArticlesController.create(*args)}
             #ArticlesController.any_instance.should_receive(:create)
             post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@new_category) }}), :issue_id => @article.issue.id}
-            @issue.articles.last.categories.first.name.should eq(@new_category.name)
+            expect(@issue.articles.last.categories.first.name).to eq(@new_category.name)
           end
 
         end
@@ -139,7 +139,7 @@ describe ArticlesController do
               post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@category) }}), :issue_id => @article.issue.id}
               #pp response 
             }.to change(Article, :count).by(1)
-            @issue.articles.last.categories.should eq([@category])
+            expect(@issue.articles.last.categories).to eq([@category])
           end
 
         end
@@ -170,7 +170,7 @@ describe ArticlesController do
             # familiar ID error
             #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
-            @article.categories.should eq([@category])
+            expect(@article.categories).to eq([@category])
           end
  
         end

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe SubscriptionsController do
+describe SubscriptionsController, :type => :controller do
 
 end

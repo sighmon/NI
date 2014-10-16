@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RegistrationsController do
+describe RegistrationsController, :type => :controller do
 
   before(:each) do
     request.env["devise.mapping"] = Devise.mappings[:user]
@@ -61,7 +61,7 @@ describe RegistrationsController do
         it "updates the email" do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
-          User.any_instance.should_receive(:update_attributes).with(attributes.except(:current_password).stringify_keys)
+          expect_any_instance_of(User).to receive(:update_attributes).with(attributes.except(:current_password).stringify_keys)
           put :update, { user: attributes }
         end
       end
@@ -80,7 +80,7 @@ describe RegistrationsController do
         it "does not update the email" do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
-          User.any_instance.should_not_receive(:update_attributes)
+          expect_any_instance_of(User).not_to receive(:update_attributes)
           put :update, { user: attributes }
         end
       end
