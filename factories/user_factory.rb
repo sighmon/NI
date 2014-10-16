@@ -8,6 +8,8 @@ FactoryGirl.define do
 
     sequence(:username) { |n| "#{prefix}#{n}" }
     sequence(:email) { |n| "#{prefix}#{n}@example.com" }
+    uk_id nil
+    uk_expiry nil
     password "password"
     password_confirmation "password"
 
@@ -27,6 +29,11 @@ FactoryGirl.define do
     factory :child_user do
       sequence(:username) { |n| "child#{n}" }
       association :parent, factory: :institution_user, prefix: "parent"
+    end
+
+    factory :uk_user do
+      uk_id "123456789"
+      uk_expiry (DateTime.now + 1.month)
     end
       
   end

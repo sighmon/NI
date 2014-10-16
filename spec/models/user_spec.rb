@@ -44,6 +44,14 @@ describe User do
       user.username.should_not == ""
     end
 
+    it "should not have a uk_id" do
+      user.uk_id.should be_nil
+    end
+
+    it "should not have a uk_expiry" do
+      user.uk_expiry.should be_nil
+    end
+
     it "should not be a subscriber" do
       user.subscriber?.should be_false
     end
