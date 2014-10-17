@@ -32,8 +32,9 @@ FactoryGirl.define do
     end
 
     factory :uk_user do
+      # prefix "uk"
       uk_id "123456789"
-      uk_expiry (DateTime.now + 1.month)
+      uk_expiry (DateTime.now - 1.month)
     end
       
   end

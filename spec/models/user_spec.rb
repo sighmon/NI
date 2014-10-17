@@ -96,6 +96,30 @@ describe User, :type => :model do
 
   end
 
+  context "uk user" do
+    let(:user) do
+      FactoryGirl.create(:uk_user)
+    end
+  
+    let(:ability) { Ability.new(user) }
+
+    it "should have a username" do
+      expect(user.username).not_to eq("")
+    end
+
+    it "should have a uk_id" do
+      expect(user.uk_id).to be_truthy
+    end
+
+    it "should have a uk_expiry" do
+      expect(user.uk_expiry).to be_truthy
+    end
+
+    it "should not be a subscriber" do
+      expect(user.subscriber?).to be_falsey
+    end
+  end
+
   context "subscriber" do
 
 
