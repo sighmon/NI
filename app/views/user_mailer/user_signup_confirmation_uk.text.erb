@@ -7,28 +7,10 @@ Thank you for registering an account with your UK subscription details.
 Your username is: <%= @user.username %>
 Your user profile is: <%= user_url(@user) %>
 
-If you'd like to buy a digital subscription, please visit:
-<%= new_subscription_url %>
-
 If you come across any problems, simply hit 'reply' to this
 email and we'll reply as soon as we can.
 
 Thanks again for registering.
 Cheers, the NI team.
 
-==============================
-New Internationalist Australia
-15 Austin Street
-Adelaide, SA 5000
-Phone: +61 8 8232 1563
-Web: http://www.newint.com.au
-
-Digital magazine reader:
-http://digital.newint.com.au
-
-Shop:
-http://www.newint.com.au/shop
-
-Social:
-http://twitter.com/ni_australia
-http://facebook.com/newint.au
+<%= render :partial => "footer" %>

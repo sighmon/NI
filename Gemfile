@@ -103,8 +103,6 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
-  gem 'rspec-activemodel-mocks'
-  gem 'rspec-legacy_formatters'
 end
 
 group :test do
@@ -117,6 +115,8 @@ group :test do
   gem 'timecop'
   gem 'guard-rspec'
   gem 'debugger'
+  gem 'rspec-activemodel-mocks'
+  gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
   gem 'rb-inotify', '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
