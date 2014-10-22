@@ -25,6 +25,11 @@ NI::Application.routes.draw do
   get "users/re_sign_in"
 
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
+
+  devise_scope :user do
+    get "/uk_login" => "devise/sessions#new_uk"
+  end
+
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
   resources :users, :only => [:show]

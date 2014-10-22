@@ -15,6 +15,15 @@ class SessionsController < Devise::SessionsController
     super
   end
 
+  def new_uk
+    # Custom sign-in path /uk_login for UK subscribers
+  end
+
+  def after_sign_in_path_for(new_uk)
+    # After successfully logging in, redirect UK users here
+    root_path
+  end
+
   private
 
   def set_csrf_token_header 
