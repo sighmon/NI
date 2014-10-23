@@ -13,13 +13,13 @@ To do this, click the green button in the right hand
 corner of the screen that displays your username, and 
 then on your user-page click the button that says 
 'Create a new student account':
-<%= user_url(@user) %>
+<%= user_url(@user, :protocol => "https") %>
 
 Now you can share the username and password of the
 student account you created with the school.
 
 Great, now you can start reading!
-<%= issues_url %>
+<%= issues_url(:protocol => "https") %>
 
 For future reference, your username is: <%= @user.username %>
 

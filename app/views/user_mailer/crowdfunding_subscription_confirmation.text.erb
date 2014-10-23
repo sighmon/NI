@@ -9,10 +9,10 @@ the future on iPads and iPhones.
 For the reward you chose, here's your <%= @number_of_months %> month subscription.
 
 Start reading now!
-<%= issues_url %>
+<%= issues_url(:protocol => "https") %>
 
 Your username is: <%= @user.username %>
-Your user profile is: <%= user_url(@user) %>
+Your user profile is: <%= user_url(@user, :protocol => "https") %>
 
 <% if @user.subscriber? and @user.is_recurring? %>
 Your next auto-debit will be on:
