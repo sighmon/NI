@@ -75,25 +75,36 @@ module Devise
       def remote_authentication_uk_user(authentication_hash)
         # Returns a hash with the result
 
-        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + authentication_hash[:login] + "/" + authentication_hash[:password] + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
-        response = HTTParty.get(
-          api_endpoint,
-          headers: {}
-        )
+        cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z]/, '')
+        cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z]/, '')
+
+        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + cleaned_login + "/" + cleaned_password + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+
+        begin
+          response = HTTParty.get(
+            api_endpoint,
+            headers: {}
+          )
+        rescue => e
+          # Send admin email
+          # UserMailer.uk_server_error(e).deliver
+          Rails.logger.debug "HTTParty FAILED! Error: " + e.to_s
+          fail!
+        end
         
-        if response.code == 200
+        if response and response.code == 200
           # Success!
           body = JSON.parse(response.body)
           Rails.logger.debug "SUCCESS! Found UK user: #{body["data"]["lname"]}, expiry: #{body["data"]["expiry"]}"
           return body
-        elsif response.code == 404
+        elsif response and response.code == 404
           # User not found!
           body = JSON.parse(response.body)
           Rails.logger.debug "NOT FOUND! Can't find UK user with ID: #{authentication_hash[:login]}, lname: #{authentication_hash[:password]}"
           return body
         else
           # FAIL! server error.
-          Rails.logger.debug "FAIL! UK Response code: #{response.code}"
+          Rails.logger.debug "FAIL! UK Response code: #{response.code unless !response}"
           return nil
         end
       end
