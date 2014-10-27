@@ -1,6 +1,10 @@
  
 class SessionsController < Devise::SessionsController
 
+  rescue_from OpenSSL::SSL::SSLError do |exception|
+    redirect_to uk_login_path, :alert => "Sorry, the UK server isn't currently available."
+  end
+
   # this is to allow the ios app to log in (and get the csrf token) even if it is already logged in
   skip_before_filter :require_no_authentication, only: [:create]
   # this stops the warning about no csrf token on /users/sign_in
