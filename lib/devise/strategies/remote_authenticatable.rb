@@ -87,7 +87,7 @@ module Devise
           )
         rescue => e
           # Send admin email
-          # UserMailer.uk_server_error(e).deliver
+          UserMailer.uk_server_error(e).deliver
           Rails.logger.debug "HTTParty FAILED! Error: " + e.to_s
           fail!
         end
