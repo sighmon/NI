@@ -178,7 +178,7 @@ GEM
     less-rails (2.5.0)
       actionpack (>= 3.1)
       less (~> 2.5.0)
-    libv8 (3.11.8.17)
+    libv8 (3.16.14.7)
     listen (0.7.3)
     lumberjack (1.0.9)
     mail (2.5.4)
@@ -312,8 +312,8 @@ GEM
       rest-client (>= 1.4.0, < 1.7.0)
       sequel (~> 3.20.0)
       sinatra (~> 1.0.0)
-    therubyracer (0.11.4)
-      libv8 (~> 3.11.8.12)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
     thread_safe (0.3.4)
@@ -391,7 +391,7 @@ DEPENDENCIES
   kgio
   ledermann-rails-settings (~> 1.x)
   less-rails
-  libv8 (~> 3.11.8)
+  libv8
   memcachier
   meta-tags
   newrelic_rpm
