@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "articles/show", :type => :view do
   let(:article) { FactoryGirl.create(:article) }

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe UserMailer, :type => :mailer do
   describe "subscription_confirmation" do

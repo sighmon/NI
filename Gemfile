@@ -100,7 +100,7 @@ end
 
 # Cucumber and Rspec install for testing
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
 end

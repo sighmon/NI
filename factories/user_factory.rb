@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :user do
 
-    ignore do
+    transient do
       prefix "user"
     end
 

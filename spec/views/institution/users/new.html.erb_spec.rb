@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "institution/users/new", :type => :view do
   before(:each) do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # gives us login_as which devise uses internally
 include Warden::Test::Helpers

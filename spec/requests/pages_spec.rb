@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Pages", :type => :request do
   describe "GET /pages" do

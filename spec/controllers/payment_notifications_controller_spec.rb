@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PaymentNotificationsController, :type => :controller do
   context "with a recurring subscribed user" do
