@@ -166,7 +166,7 @@ module ApplicationHelper
     end
 
     def user_expiry_as_string(user)
-        return (user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
+        return (user.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end
 
     def cents_to_dollars(value)
