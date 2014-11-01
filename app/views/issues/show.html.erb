@@ -33,7 +33,18 @@
      |
     <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-mini' %>
     <hr />
-    <%= link_to 'Zip', issue_zip_path(@issue), :class => 'btn btn-mini' %>
+    <p>Create a zip file for the iOS app</p>
+    <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-mini' %>
+    <hr />
+
+    <p>iOS app Push Notification</p>
+
+    <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue), :html => {:class => 'form-horizontal' } do |f| %>
+        <%= f.text_field :alert_text, :placeholder => 'Message' %>
+        <%= button_tag(type: 'submit', class: "btn btn-warning btn-mini", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices.\n\nIt automatically includes: The XXX edition of New Internationalist magazine is ready for download."}) do %>
+        Send Push Notification
+      <% end %>
+    <% end %>
   <% end %>
 </div>
 <% end %>

@@ -146,6 +146,58 @@ class IssuesController < ApplicationController
     redirect_to @issue, notice: "Zip created."
   end
 
+  def send_push_notification
+    # Send a parse push notification
+    @issue = Issue.find(params[:issue_id])
+    @alert_text = params["/issues/#{@issue.id}/send_push_notification"][:alert_text]
+
+    api_endpoint = ENV["PARSE_API_ENDPOINT"]
+    api_headers = {
+      "X-Parse-Application-Id" => ENV["PARSE_APPLICATION_ID"],
+      "X-Parse-REST-API-Key" => ENV["PARSE_REST_API_KEY"],
+      "Content-Type" => "application/json"
+    }
+    api_body = {
+      "where" => {
+        # "objectId" => "A41CGquk6T", #Just push to Simon first!
+        "deviceType" => "ios"
+      },
+      # "push_time" => "2014-10-25T01:30:00Z",
+      "data" => {
+        "alert" => "#{@alert_text} The #{@issue.release.strftime("%B")} edition of New Internationalist magazine is ready for download.",
+        "badge" => "Increment",
+        "sound" => "new-issue.caf",
+        "name" => @issue.number.to_s,
+        "publication" => @issue.release.to_time.iso8601.to_s,
+        "railsID" => @issue.id.to_s
+      }
+    }.to_json
+
+    # logger.info "PARSE to post to api - body: #{api_body.to_s}"
+
+    # TODO: UNCOMMENT BELOW TO GO LIVE.
+
+    # begin
+    #   response = HTTParty.post(
+    #     api_endpoint,
+    #     headers: api_headers,
+    #     body: api_body
+    #   )
+    # rescue => e
+    #   # Uh oh, Parse not available?
+    #   @httparty_error = e
+    # end
+    
+    if not @httparty_error and response and response.code == 200
+      # Success!
+      body = JSON.parse(response.body)
+      redirect_to @issue, notice: "Push pressed!"
+    else
+      # FAIL! server error.
+      redirect_to @issue, notice: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}"
+    end
+  end
+
   # GET /issues/1
   # GET /issues/1.json
   def show
