@@ -77,7 +77,30 @@
 								<% elsif not current_user.try(:subscriber?) %>
 									<li><%= link_to "Subscribe", new_subscription_path %></li>
 								<% end %>
-								<li><%= link_to "Search", search_path %></li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><%= link_to "Search results", search_path %></li>
+										<li><%= link_to "Categories/themes", categories_path %></li>
+										<li>
+											<form accept-charset="UTF-8" action="/issues" class="form-search" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+                        <input type="text" class="form-control search" id="query" name="query" placeholder="Issue search">
+                      </form>
+										</li>
+										<li>
+											<form accept-charset="UTF-8" action="/search" class="form-search" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+                        <input type="text" class="form-control search" id="query" name="query" placeholder="Article search">
+                      </form>
+										</li>
+										<li>
+											<form accept-charset="UTF-8" class="form-search" role="search" action="http://ss946.fusionbot.com/cgi-bin/ss_query" method="get" name="fbsearch" id="fbsearch" type="search" results="5" placeholder="Search the shop">
+                        <input type="hidden" name="rgn" value="main">
+                        <input type="hidden" name="sn" value="157281474">
+                        <input type="text" class="form-control search" title="Search for a product" name="keys" size="20" placeholder="Shop search">
+                      </form>
+										</li>
+									</ul>
+								</li>
 								<li><%= link_to "App", page_path("ios") %></li>
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -175,7 +175,7 @@ class IssuesController < ApplicationController
 
     # logger.info "PARSE to post to api - body: #{api_body.to_s}"
 
-    # TODO: UNCOMMENT BELOW TO GO LIVE.
+    # TODO: UNCOMMENT BELOW TO GO LIVE. BUT WRITE TESTS FIRST
 
     # begin
     #   response = HTTParty.post(
