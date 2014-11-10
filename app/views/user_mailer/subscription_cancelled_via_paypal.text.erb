@@ -6,8 +6,13 @@ Your automatic-renewal has now been cancelled via PayPal.
 Sorry to see you go! Please let us know if it's something
 we did or how we could improve this service.
 
-If you didn't cancel or didn't mean to, please
-reply to this email immediately.
+In the meantime your subscription will continue until your most recent subscription payment runs out, so you can still read magazines at:
+<%= issues_url(:protocol => "https") %>
+
+<% if @user.expiry_date %>
+Your subscription expiry date is:
+<%= @user.expiry_date.strftime("%e %B, %Y") %>
+<% end %>
 
 Cheers, the NI team.
 
