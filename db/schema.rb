@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141006180946) do
+ActiveRecord::Schema.define(:version => 20141111195950) do
 
   create_table "article_categorisations", :force => true do |t|
     t.integer  "article_id"
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20141006180946) do
     t.string   "title"
     t.integer  "number"
     t.datetime "release"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.boolean  "trialissue"
     t.string   "cover"
     t.text     "editors_letter"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20141006180946) do
     t.boolean  "published"
     t.text     "email_text"
     t.string   "zip"
+    t.datetime "notification_sent"
   end
 
   create_table "pages", :force => true do |t|

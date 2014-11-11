@@ -149,7 +149,10 @@ class IssuesController < ApplicationController
   def send_push_notification
     # Send a parse push notification
     @issue = Issue.find(params[:issue_id])
-    @alert_text = params["/issues/#{@issue.id}/send_push_notification"][:alert_text]
+    input_params = params["/issues/#{@issue.id}/send_push_notification"]
+    @alert_text = input_params[:alert_text]
+    # Scheduled datetime is in UTC(GMT)
+    @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
     api_endpoint = ENV["PARSE_API_ENDPOINT"]
     api_headers = {
@@ -159,10 +162,10 @@ class IssuesController < ApplicationController
     }
     api_body = {
       "where" => {
-        # "objectId" => "A41CGquk6T", #Just push to Simon first!
+        "objectId" => "A41CGquk6T", #Just push to Simon first!
         "deviceType" => "ios"
       },
-      # "push_time" => "2014-10-25T01:30:00Z",
+      "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
       "data" => {
         "alert" => "#{@alert_text} The #{@issue.release.strftime("%B")} edition of New Internationalist magazine is ready for download.",
         "badge" => "Increment",
@@ -190,11 +193,16 @@ class IssuesController < ApplicationController
     
     if not @httparty_error and response and response.code == 200
       # Success!
-      body = JSON.parse(response.body)
-      redirect_to @issue, notice: "Push pressed!"
+      # body = JSON.parse(response.body)
+      @issue.notification_sent = @scheduled_datetime
+      if @issue.save
+        redirect_to @issue, notice: "Push succeeded!"
+      else
+        redirect_to @issue, flash: { error: "Couldn't update issue after push successfully sent." }
+      end
     else
       # FAIL! server error.
-      redirect_to @issue, notice: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}"
+      redirect_to @issue, flash: { error: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}" }
     end
   end
 

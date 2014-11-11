@@ -33,18 +33,24 @@
      |
     <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-mini' %>
     <hr />
-    <p>Create a zip file for the iOS app</p>
+    <p><b>Create a zip file for the iOS app</b></p>
     <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-mini' %>
     <hr />
 
-    <p>iOS app Push Notification</p>
+    <p><b>iOS app Push Notification</b></p>
 
-    <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue), :html => {:class => 'form-horizontal' } do |f| %>
+    <% if @issue.notification_sent %>
+      <p><b>Sent</b>: <%= @issue.notification_sent.in_time_zone("Australia/Adelaide").strftime("%d/%m/%Y at %I:%M%p") %><br />(<%= @issue.notification_sent.strftime("%d/%m/%Y at %I:%M%p GMT") %>)</p>
+    <% else %>
+      <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue) do |f| %>
+        <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
         <%= f.text_field :alert_text, :placeholder => 'Message' %>
-        <%= button_tag(type: 'submit', class: "btn btn-warning btn-mini", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices.\n\nIt automatically includes: The XXX edition of New Internationalist magazine is ready for download."}) do %>
-        Send Push Notification
+        <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices.\n\nIt automatically includes: The XXX edition of New Internationalist magazine is ready for download."}) do %>
+          Send Push
+        <% end %>
       <% end %>
     <% end %>
+
   <% end %>
 </div>
 <% end %>

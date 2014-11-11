@@ -16,6 +16,15 @@ describe IssuesController, :type => :controller do
         end
 
       end
+
+      describe "POST push notification" do
+
+        it "should not be able to send a push notification" do
+          post :send_push_notification, :issue_id => issue.id, :alert_text => "Test."
+          expect(response.status).to eq(302)
+        end
+
+      end
     end
   end
 end
