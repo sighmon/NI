@@ -1,4 +1,4 @@
-NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %>
+<span class="breadcrumb">NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></span><div class="clear-hack"></div>
  <!-- Email button -->
  <%= link_to raw('<i class="icon-envelope"></i>'), issue_email_issue_path(@issue), :class => 'btn btn-mini article-favourite', :alt => 'Email a link to this issue', :title => 'Email a link to this issue' %>
  <!-- Tweet button -->

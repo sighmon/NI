@@ -268,6 +268,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	background-image: none;
 	background-color: transparent;
 	padding: 0px;
+	margin-right: 5px;
 	border: none;
 	box-shadow: none;
 	color: @grayLight;
@@ -553,7 +554,6 @@ a:active .shadow {
 
 .page-header .ios-issue-page, .ios-issue-page {
 	float: none;
-	margin: -5px 0 0 10px;
 	opacity: 0.3;
 }
 
@@ -1115,13 +1115,20 @@ blockquote.pull-left {
 }
 
 .article-favourite {
-	margin: -5px 0 0 10px;
 	font-size: 1.0em;
 	min-width: 12px;
 }
 
+.article-favourite, .ios-issue-page, .page-header .ios-issue-page {
+	margin: 2px 10px 5px 0;
+}
+
 .issue-title .article-favourite {
 	font-size: 0.8em;
+}
+
+.clear-hack {
+	display: none;
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
@@ -1334,10 +1341,9 @@ ul.ui-autocomplete {
 		margin-left: 0px;
 		clear: right;
 	}
-	.page-header .ios-issue-page, 
-	.ios-issue-page, 
-	.article-favourite {
-		margin-left: 5px;
+	.clear-hack {
+		display: block;
+		margin-top: 10px;
 	}
 	.factbox {
 		width: inherit;
