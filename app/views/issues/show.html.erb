@@ -39,11 +39,14 @@
 
     <p><b>iOS app Push Notification</b></p>
 
-    <% if @issue.notification_sent %>
+    <% if not @issue.published? %>
+      <p>This issue has to be published to send a push notification.</p>
+    <% elsif @issue.notification_sent %>
       <p><b>Sent</b>: <%= @issue.notification_sent.in_time_zone("Australia/Adelaide").strftime("%d/%m/%Y at %I:%M%p") %><br />(<%= @issue.notification_sent.strftime("%d/%m/%Y at %I:%M%p GMT") %>)</p>
     <% else %>
       <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue) do |f| %>
         <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
+        <%= f.text_field :device_id, :placeholder => 'Push to single user device_id' %><br />
         <%= f.text_field :alert_text, :placeholder => 'Message' %>
         <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices.\n\nIt automatically includes: The XXX edition of New Internationalist magazine is ready for download."}) do %>
           Send Push

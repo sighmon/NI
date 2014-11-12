@@ -151,6 +151,7 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
     input_params = params["/issues/#{@issue.id}/send_push_notification"]
     @alert_text = input_params[:alert_text]
+    @device_id = input_params[:device_id]
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
@@ -162,7 +163,7 @@ class IssuesController < ApplicationController
     }
     api_body = {
       "where" => {
-        "objectId" => "A41CGquk6T", #Just push to Simon first!
+        "objectId" => @device_id, #Just push to a single user
         "deviceType" => "ios"
       },
       "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
@@ -174,22 +175,24 @@ class IssuesController < ApplicationController
         "publication" => @issue.release.to_time.iso8601.to_s,
         "railsID" => @issue.id.to_s
       }
-    }.to_json
+    }
+
+    # Remove "objectId" if no @device_id is present
+    api_body["where"].reject!{|k,v| v.empty?}
+    api_body = api_body.to_json
 
     # logger.info "PARSE to post to api - body: #{api_body.to_s}"
 
-    # TODO: UNCOMMENT BELOW TO GO LIVE. BUT WRITE TESTS FIRST
-
-    # begin
-    #   response = HTTParty.post(
-    #     api_endpoint,
-    #     headers: api_headers,
-    #     body: api_body
-    #   )
-    # rescue => e
-    #   # Uh oh, Parse not available?
-    #   @httparty_error = e
-    # end
+    begin
+      response = HTTParty.post(
+        api_endpoint,
+        headers: api_headers,
+        body: api_body
+      )
+    rescue => e
+      # Uh oh, Parse not available?
+      @httparty_error = e
+    end
     
     if not @httparty_error and response and response.code == 200
       # Success!
