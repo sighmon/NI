@@ -152,6 +152,12 @@ class IssuesController < ApplicationController
     input_params = params["/issues/#{@issue.id}/send_push_notification"]
     @alert_text = input_params[:alert_text]
     @device_id = input_params[:device_id]
+
+    if not Rails.env.production?
+      # If development environment, always push to dev device
+      @device_id = ENV["PARSE_DEV_DEVICE_ID"]
+    end
+
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
