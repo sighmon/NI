@@ -68,6 +68,7 @@ NI::Application.routes.draw do
       resources :images do
         collection { post :sort }
       end
+      post :send_push_notification
       # Customise Twitter & Facebook posts using selected text
       get :tweet
       get :wall_post

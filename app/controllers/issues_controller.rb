@@ -203,9 +203,12 @@ class IssuesController < ApplicationController
     if not @httparty_error and response and response.code == 200
       # Success!
       # body = JSON.parse(response.body)
-      @issue.notification_sent = @scheduled_datetime
+
+      # Mark the scheduled to send date, unless a single device push was sent.
+      @issue.notification_sent = @scheduled_datetime unless not @device_id.blank?
+      
       if @issue.save
-        redirect_to @issue, notice: "Push succeeded!"
+        redirect_to @issue, notice: "Push sent!"
       else
         redirect_to @issue, flash: { error: "Couldn't update issue after push successfully sent." }
       end

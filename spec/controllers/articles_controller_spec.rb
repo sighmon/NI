@@ -27,6 +27,18 @@ describe ArticlesController, :type => :controller do
 
     end
 
+    describe "POST push notification" do
+
+      let(:article) { FactoryGirl.create(:article) }
+      let(:issue) { article.issue }
+
+      it "should not be able to send a push notification" do
+        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        expect(response).to redirect_to root_url
+      end
+
+    end
+
   end
 
   context "as a non-subscriber" do
@@ -53,6 +65,18 @@ describe ArticlesController, :type => :controller do
 
     end
 
+    describe "POST push notification" do
+
+      let(:article) { FactoryGirl.create(:article) }
+      let(:issue) { article.issue }
+
+      it "should not be able to send a push notification" do
+        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        expect(response).to redirect_to root_url
+      end
+
+    end
+
   end
 
   context "as a guest" do
@@ -70,6 +94,18 @@ describe ArticlesController, :type => :controller do
           expect(response.status).to eq(403)
         end 
 
+      end
+
+    end
+
+    describe "POST push notification" do
+
+      let(:article) { FactoryGirl.create(:article) }
+      let(:issue) { article.issue }
+
+      it "should not be able to send a push notification" do
+        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        expect(response).to redirect_to root_url
       end
 
     end
@@ -176,6 +212,32 @@ describe ArticlesController, :type => :controller do
         end
 
       end
+    end
+
+    describe "POST push notification" do
+
+      context "with an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        it "should be able to send a push notification" do
+          scheduled_test_time = DateTime.now
+          input_params = {
+            "scheduled_datetime(1i)" => scheduled_test_time.year, 
+            "scheduled_datetime(2i)" => scheduled_test_time.month, 
+            "scheduled_datetime(3i)" => scheduled_test_time.day, 
+            "scheduled_datetime(4i)" => scheduled_test_time.hour, 
+            "scheduled_datetime(5i)" => scheduled_test_time.minute,
+            "device_id" => "abc123", 
+            "alert_text" => "Test message."
+          }
+          
+          post :send_push_notification, :issue_id => article.issue.id, :article_id => article.id, "/issues/#{article.issue.id}/articles/#{article.id}/send_push_notification" => input_params
+          expect(response).to redirect_to issue_article_url(article.issue, article)
+        end
+
+      end
+
     end
 
   end 

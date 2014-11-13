@@ -442,6 +442,78 @@ class ArticlesController < ApplicationController
         end
     end
 
+    def send_push_notification
+        # Send a parse push notification
+        @issue = Issue.find(params[:issue_id])
+        @article = Article.find(params[:article_id])
+        input_params = params["/issues/#{@issue.id}/articles/#{@article.id}/send_push_notification"]
+        @alert_text = input_params[:alert_text]
+        @device_id = input_params[:device_id]
+
+        if not Rails.env.production?
+          # If development environment, always push to dev device
+          @device_id = ENV["PARSE_DEV_DEVICE_ID"]
+        end
+
+        # Scheduled datetime is in UTC(GMT)
+        @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
+
+        api_endpoint = ENV["PARSE_API_ENDPOINT"]
+        api_headers = {
+          "X-Parse-Application-Id" => ENV["PARSE_APPLICATION_ID"],
+          "X-Parse-REST-API-Key" => ENV["PARSE_REST_API_KEY"],
+          "Content-Type" => "application/json"
+        }
+        api_body = {
+          "where" => {
+            "objectId" => @device_id, #Just push to a single user
+            "deviceType" => "ios"
+          },
+          "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
+          "data" => {
+            "alert" => "#{@alert_text}",
+            "badge" => "Increment",
+            "sound" => "new-issue.caf",
+            "articleID" => @article.id.to_s,
+            "issueID" => @issue.id.to_s
+          }
+        }
+
+        # Remove "objectId" if no @device_id is present
+        api_body["where"].reject!{|k,v| v.empty?}
+        api_body = api_body.to_json
+
+        # logger.info "PARSE to post to api - body: #{api_body.to_s}"
+
+        begin
+          response = HTTParty.post(
+            api_endpoint,
+            headers: api_headers,
+            body: api_body
+          )
+        rescue => e
+          # Uh oh, Parse not available?
+          @httparty_error = e
+        end
+        
+        if not @httparty_error and response and response.code == 200
+          # Success!
+          # body = JSON.parse(response.body)
+
+          # Mark the scheduled to send date, unless a single device push was sent.
+          @article.notification_sent = @scheduled_datetime unless not @device_id.blank?
+          
+          if @article.save
+            redirect_to issue_article_path(@issue, @article), notice: "Push sent!"
+          else
+            redirect_to issue_article_path(@issue, @article), flash: { error: "Couldn't update article after push successfully sent." }
+          end
+        else
+          # FAIL! server error.
+          redirect_to issue_article_path(@issue, @article), flash: { error: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}" }
+        end
+    end
+
     private
 
     def request_has_valid_itunes_receipt
