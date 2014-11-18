@@ -100,7 +100,7 @@ end
 
 # Cucumber and Rspec install for testing
 group :test, :development do
-  gem 'rspec-rails'#, '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
 end
@@ -115,6 +115,7 @@ group :test do
   gem 'timecop'
   gem 'guard-rspec'
   gem 'debugger'
+  # NOTE: to update rspec and fix the bundle update, comment out two gems below
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
