@@ -155,7 +155,7 @@ module ArticlesHelper
 
   def expand_image_tags(body, debug = false)
     # Finds [File:xx] and [File:xx|cartoon] in body and converts it to nice div/img code
-    body.gsub(/\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i) do 
+    body = body.gsub(/\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i) do 
       id = $~[:id]
       # weird "or" doesnt work here but || does...
       options = $~[:all_options].try(:split,"|") || []
