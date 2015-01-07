@@ -219,6 +219,54 @@ module ArticlesHelper
         end
       end
     end
+
+    # Now check for [Cover:00] tags which display a magazine cover and link to it
+    body.gsub(/\[Cover:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i) do 
+      id = $~[:id]
+      options = $~[:all_options].try(:split,"|") || []
+      begin
+        issue = Issue.find(id)
+
+        version = :thumb
+        css_class = "article-image article-image-small"
+        image_width = 200
+        credit_div = ""
+        caption_div = ""
+
+        if options.include?("small")
+          version = :tiny
+          css_class = "article-image article-image-small"
+          image_width = 75
+        end
+        
+        if options.include?("ns")
+          css_class += " no-shadow"
+        end
+
+        if options.include?("left")
+          css_class += " article-image-float-none"
+        end
+
+        cover_url = issue.try(:cover_url, version)
+
+        if cover_url
+          tag_method = method(:retina_image_tag)
+          image_options = {:alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :size => "#{image_width}x#{image_width * 1000 / 1414}"}
+          if options.include?("full")
+            tag_method = method(:image_tag)
+          end
+          "<div class='#{css_class}'>"+link_to(tag_method.call(cover_url, image_options), issue_path(issue))+caption_div+credit_div+"</div>"
+        else
+          ""
+        end
+      rescue ActiveRecord::RecordNotFound
+        if debug
+          "=== COVER #{id} NOT FOUND! ==="
+        else
+          ""
+        end
+      end
+    end
   end
 
   def expand_video_tags(body, debug = false)
