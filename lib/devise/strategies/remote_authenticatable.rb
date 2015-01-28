@@ -75,10 +75,10 @@ module Devise
       def remote_authentication_uk_user(authentication_hash)
         # Returns a hash with the result
 
-        cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z]/, '')
-        cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z]/, '')
+        cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z ]/, '')
+        cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z ]/, '')
 
-        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + cleaned_login + "/" + cleaned_password + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + URI::escape(cleaned_login) + "/" + URI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
 
         begin
           response = HTTParty.get(
