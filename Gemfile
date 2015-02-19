@@ -113,9 +113,9 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', :require => false
   gem 'timecop'
+  # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
   gem 'guard-rspec'
   gem 'debugger'
-  # NOTE: to update rspec and fix the bundle update, comment out two gems below
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications

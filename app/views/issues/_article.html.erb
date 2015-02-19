@@ -23,6 +23,7 @@
     <li><%= category.name %></li>
   <% end %>
   </ul>
+  <p><%= article.publication %></p>
 <% end %>
 <p><% if can? :read, article %>
 <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
