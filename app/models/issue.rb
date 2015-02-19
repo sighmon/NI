@@ -87,7 +87,8 @@ class Issue < ActiveRecord::Base
     (articles_of_category("/argument/") +
       articles_of_category("/columns/viewfrom/") +
       articles_of_category("/columns/mark-engler/") +
-      articles_of_category("/columns/steve-parry/")
+      articles_of_category("/columns/steve-parry/") + 
+      articles_of_category("/columns/kate-smurthwaite/")
       ).sort_by(&:publication)
   end
 
@@ -101,7 +102,8 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/media/") - 
       articles_of_category("/columns/viewfrom/") - 
       articles_of_category("/columns/mark-engler/") -
-      articles_of_category("/columns/steve-parry/")
+      articles_of_category("/columns/steve-parry/") - 
+      articles_of_category("/columns/kate-smurthwaite/")
       ).sort_by(&:publication)
   end
 
