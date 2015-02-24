@@ -15,14 +15,20 @@ class UsersController < ApplicationController
             format.json {
                 # Ignore user request and just use current_user
                 @user = current_user
-                render json: user_with_expiry(@user) 
+                render json: user_with_expiry_and_purchases(@user) 
             }
         end
     end
 
-    def user_with_expiry(user)
+    def user_with_expiry_and_purchases(user)
         expiry = user.expiry_date_including_ios(request)
-        hash = {:username => user.username, :id => user.id, :expiry => expiry}
+        # Build up an array of (int) issue numbers that have been purchased for the iOS & Android apps
+        purchases = []
+        user.purchases.each do |purchase|
+            # purchases << {:purchase_date => purchase.purchase_date, :issue_id => purchase.issue_id, :issue_number => purchase.issue.number}
+            purchases << purchase.issue.number
+        end
+        hash = {:username => user.username, :id => user.id, :expiry => expiry, :purchases => purchases}
     end
 
     def re_sign_in
