@@ -199,7 +199,7 @@ class HomeController < ApplicationController
                   xml.locales do
                     xml.locale('name' => 'en-AU') do
                       xml.title "#{i.number} - #{i.title} - single issue purchase"
-                      xml.description "Purchase a single issue of the New Internationalist magazine, #{i.number} - #{i.title}."
+                      xml.description "#{ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser))}"
                     end
                   end
                   xml.read_only_info do
