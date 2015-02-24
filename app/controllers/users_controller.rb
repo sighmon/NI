@@ -15,7 +15,7 @@ class UsersController < ApplicationController
             format.json {
                 # Ignore user request and just use current_user
                 @user = current_user
-                render json: user_with_expiry_and_purchases(@user) 
+                render json: user_with_expiry_and_purchases(@user)
             }
         end
     end
