@@ -24,6 +24,13 @@ class SessionsController < Devise::SessionsController
     root_path
   end
 
+  def users_url
+    # Failed iOS & Android login attempts hit this on fail.
+    # TODO: Work out why that is. But for now..
+    logger.info "iOS/Android login incorrect."
+    respond_with(nil, :status => 401, :location => nil)
+  end
+
   private
 
   def set_csrf_token_header 
