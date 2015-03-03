@@ -523,20 +523,12 @@ class ArticlesController < ApplicationController
 
       # send the request to itunes connect
 
-      if Rails.env.production?
-        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_PRODUCTION"]
-      else
-        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
-      end
-
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_PRODUCTION"]
       uri = URI.parse(itunes_url)
-      http = Net::HTTP.new(uri.host, uri.port)
-
       json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
-      http.use_ssl = true
-      api_response, data = http.post(uri.path,json)
 
-      # Do a first check to see if the receipt is valid from iTunes
+      api_response, data = send_receipt_to_itunes(uri,json)
+
       if JSON.parse(api_response.body)["status"] != 0
         logger.warn "receipt-data: #{request.raw_post}"
         return false
@@ -564,6 +556,26 @@ class ArticlesController < ApplicationController
 
       logger.info "post itunes"
       return true
+    end
+
+    def send_receipt_to_itunes(uri,json)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      api_response, data = http.post(uri.path,json)
+
+      # Do a first check to see if the receipt is valid from iTunes
+      itunes_response = JSON.parse(api_response.body)["status"]
+      logger.info "iTunes response: #{itunes_response}"
+      if itunes_response == 21007
+        # It's a sandbox receipt, try again with DEV itunes URL
+        logger.info "Receipt is a sandbox receipt, trying again..."
+        itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+        uri = URI.parse(itunes_url)
+        send_receipt_to_itunes(uri,json)
+      else
+        return api_response, data
+      end
+      
     end
 
 
