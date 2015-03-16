@@ -53,13 +53,21 @@ class User < ActiveRecord::Base
     if uk_user?
       # TODO: Pete to provide text.
       if Rails.env.production?
-        UserMailer.user_signup_confirmation_uk(self).deliver
+        begin
+          UserMailer.user_signup_confirmation_uk(self).deliver
+        rescue Exception
+          logger.error "500 - Email server is down..."
+        end
       else
         logger.info "SEND_WELCOME_MAIL UK user would happen on production."
       end
     else
-      if Rails.env.production?
-        UserMailer.user_signup_confirmation(self).deliver
+      if !Rails.env.production?
+        begin
+          UserMailer.user_signup_confirmation(self).deliver
+        rescue Exception
+          logger.error "Email server is down..."
+        end
       else
         logger.info "SEND_WELCOME_MAIL would happen on production."
       end

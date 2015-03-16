@@ -184,7 +184,11 @@ class SubscriptionsController < ApplicationController
     	respond_to do |format|
             if payment_complete and @subscription.save
                 # Send the user an email
-                UserMailer.subscription_confirmation(@subscription.user).deliver
+                begin
+                    UserMailer.subscription_confirmation(@subscription.user).deliver
+                rescue Exception
+                    logger.error "500 - Email server is down..."
+                end
                 format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
                 format.json { render json: @subscription, status: :created, location: @subscription }
             else
@@ -231,7 +235,11 @@ class SubscriptionsController < ApplicationController
 
         if cancel_complete and @subscription.save
             # Send the user an email to confirm the cancellation.
-            UserMailer.subscription_cancellation(@user).deliver
+            begin
+                UserMailer.subscription_cancellation(@user).deliver
+            rescue Exception
+                logger.error "500 - Email server is down..."
+            end
             redirect_to user_path(@user), notice: "Subscription was successfully cancelled."
         else
             redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry."

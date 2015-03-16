@@ -69,7 +69,11 @@ class PurchasesController < ApplicationController
         respond_to do |format|
             if response.success? and @purchase.save
                 # Email the user a confirmation
-                UserMailer.issue_purchase(@user, @issue).deliver
+                begin
+                    UserMailer.issue_purchase(@user, @issue).deliver
+                rescue Exception
+                    logger.error "500 - Email server is down..."
+                end
                 format.html { redirect_to issue_path(@issue), notice: 'Issue was successfully purchased.' }
                 format.json { render json: @purchase, status: :created, location: @purchase }
             else

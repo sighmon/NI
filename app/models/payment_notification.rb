@@ -59,7 +59,11 @@ private
 					expire_recurring_subscriptions(@user)
 					logger.info "Recurring subscriptions expired successfully."
 					# send a special email saying cancelled through paypal.
-					UserMailer.subscription_cancelled_via_paypal(user).deliver
+					begin
+            UserMailer.subscription_cancelled_via_paypal(user).deliver
+          rescue Exception
+            logger.error "500 - Email server is down..."
+          end
 				else
 					logger.info "Subscription already cancelled."
 				end
