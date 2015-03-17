@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
         logger.info "SEND_WELCOME_MAIL UK user would happen on production."
       end
     else
-      if !Rails.env.production?
+      if Rails.env.production?
         begin
           UserMailer.user_signup_confirmation(self).deliver
         rescue Exception
