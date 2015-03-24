@@ -140,7 +140,7 @@ class HomeController < ApplicationController
                       xml.intervals do
                         xml.interval do
                           xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
-                          xml.wholesale_price_tier '48'
+                          xml.wholesale_price_tier '30'
                         end
                       end
                     end
@@ -160,7 +160,7 @@ class HomeController < ApplicationController
                       xml.intervals do
                         xml.interval do
                           xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
-                          xml.wholesale_price_tier '17'
+                          xml.wholesale_price_tier '10'
                         end
                       end
                     end
@@ -186,7 +186,7 @@ class HomeController < ApplicationController
                     xml.intervals do
                       xml.interval do
                         xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
-                        xml.wholesale_price_tier '48'
+                        xml.wholesale_price_tier '37'
                       end
                     end
                   end
@@ -214,7 +214,7 @@ class HomeController < ApplicationController
                       xml.intervals do
                         xml.interval do
                           xml.start_date "#{(DateTime.now - 1).strftime('%Y-%m-%d')}"
-                          xml.wholesale_price_tier '7'
+                          xml.wholesale_price_tier '5'
                         end
                       end
                     end
