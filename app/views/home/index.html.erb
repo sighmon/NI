@@ -64,17 +64,13 @@
 			<p>Read a full sample magazine to see if you like it first.</p>
 
 			<div class="home-cover-list">
-				<% if @issues %>
-					<% @issues.sort_by{|x|x.release}.each do |issue| %>
-					<% if issue.trialissue %>
-						<span itemscope itemtype="http://schema.org/CreativeWork">
-							<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(issue) %>
-							<span class="hide-meta" itemprop="name"><%= issue.title %></span>
-							<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
-							<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
-						</span>
-					<% end %>
-					<% end %>
+				<% if @latest_free_issue %>
+					<span itemscope itemtype="http://schema.org/CreativeWork">
+						<%= link_to retina_image_tag(@latest_free_issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :title => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200"), issue_path(@latest_free_issue) %>
+						<span class="hide-meta" itemprop="name"><%= @latest_free_issue.title %></span>
+						<span class="hide-meta" itemprop="editor"><%= @latest_free_issue.editors_name %></span>
+						<span class="hide-meta" itemprop="dateCreated"><%= @latest_free_issue.release.strftime("%e %B %Y") %></span>
+					</span>
 				<% end %>
 			</div>
 		</div>

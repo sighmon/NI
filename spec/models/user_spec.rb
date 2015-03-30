@@ -56,6 +56,22 @@ describe User, :type => :model do
       expect(user.subscriber?).to be_falsey
     end
 
+    it "should not be able to read an article" do
+      article = FactoryGirl.create(:article)
+      expect(ability).not_to be_able_to(:read, article)
+    end
+
+    it "should be able to read a trial article" do
+      article = FactoryGirl.create(:article, :trialarticle => true)
+      expect(ability).to be_able_to(:read, article)
+    end
+
+    it "should be able to read a trial issue's article" do
+      article = FactoryGirl.create(:article)
+      article.issue.trialissue = true
+      expect(ability).to be_able_to(:read, article)
+    end
+
     context "without a parent" do
       it "can update itself" do
         expect(ability).to be_able_to(:manage, user)

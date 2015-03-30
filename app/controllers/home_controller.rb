@@ -1,9 +1,20 @@
 class HomeController < ApplicationController
 
   include ActionView::Helpers::NumberHelper
+
+  def free
+    latest_free_issue = Issue.find_all_by_trialissue(:true).sort_by(&:release).reverse.first
+    if latest_free_issue
+      redirect_to issue_path(latest_free_issue)
+    else
+      redirect_to root_url
+    end
+  end
   
   def index
   	@issues = Issue.find_all_by_published(:true)
+
+    @latest_free_issue = @issues.select{|issue| issue.trialissue}.reverse.first
 
     @features_category = Category.find_by_name("/features/")
 

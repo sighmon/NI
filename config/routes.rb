@@ -116,6 +116,7 @@ NI::Application.routes.draw do
 
   get "home/index"
   get "newsstand" => "home#newsstand"
+  get "free" => "home#free"
   get "inapp" => "home#inapp"
   get "google_merchant_feed" => "home#google_merchant_feed"
   get "latest_cover" => "home#latest_cover"

@@ -16,6 +16,7 @@ class Ability
         article.is_valid_guest_pass(key)
     end
     can :read, Article, :trialarticle => true
+    can :read, Article, :issue => { :trialissue => true }
     can :search, Article
     can :popular, Article
     can :read, Page
