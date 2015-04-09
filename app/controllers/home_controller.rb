@@ -250,10 +250,12 @@ class HomeController < ApplicationController
 
   def google_merchant_feed
 
-    @issues = []
-    @feed = {}
+    @published_issues = Issue.find_all_by_published(:true).sort_by(&:number).reverse
 
-    @published_issues = Issue.find_all_by_published(:true)
+    # Remove the last issue - (more issues coming soon)
+    if @published_issues.last.title == "More issues coming soon"
+      @published_issues.pop
+    end
 
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.rss('xmlns:g' => 'http://base.google.com/ns/1.0', 'version' => '2.0') do
@@ -261,7 +263,7 @@ class HomeController < ApplicationController
           xml.title "New Internationalist magazine digital edition"
           xml.link root_url
           xml.description "Buy a digital copy of New Internationalist magazine for your web browser or iOS device."
-          @published_issues.sort_by(&:number).reverse.each do |i|
+          @published_issues.each do |i|
             xml.item do
               xml.title { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.title) }
               xml.link { xml.cdata issue_url(i) }
@@ -277,18 +279,18 @@ class HomeController < ApplicationController
               # xml['g'].gtin i.number
               xml['g'].identifier_exists "FALSE"
               xml['g'].brand "New Internationalist"
+              xml['g'].shipping do
+                xml['g'].service "Digital"
+                xml['g'].price "0.00 AUD"
+              end
             end
           end
         end
       end
     }
 
-    @published_issues.sort_by(&:number).reverse.each do |i|
-      @issues << i
-    end
-
     respond_to do |format|
-      format.json { render json: @issues.to_json }
+      format.json { render json: @published_issues.to_json }
       format.xml { render xml: builder.to_xml }
     end
 
