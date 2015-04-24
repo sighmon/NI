@@ -21,7 +21,7 @@ module ApplicationHelper
                 table += "<tr><td>#{link_to purchase.issue.title, issue_path(purchase.issue)}</td>"
                 table += "<td>#{purchase.issue.release.strftime("%B, %Y")}</td>"
                 table += "<td>#{purchase.purchase_date.try(:strftime,"%d %B, %Y")}</td>"
-                table += "<td>#{purchase.price_paid ? "$#{number_with_precision((purchase.price_paid / 100), :precision => 2)}" : "Free"}</td></tr>"
+                table += "<td>#{purchase.price_paid ? "$#{number_with_precision((purchase.price_paid / 100.0), :precision => 2)}" : "Free"}</td></tr>"
             end
             table += "</tbody></table>"
             return raw table
