@@ -241,8 +241,11 @@ class HomeController < ApplicationController
     respond_to do |format|
       if current_user.try(:admin?)
         format.xml { render xml: builder.to_xml }
+        # CSV information that's included is in the Issue model under comma
+        format.csv { render :csv => Issue.all.sort_by(&:number).reverse, :filename => DateTime.now.strftime("google-play-%Y-%m-%d-%H:%M:%S") }
       else
         format.xml { redirect_to root_url }
+        format.csv { redirect_to root_url }
       end
     end
 

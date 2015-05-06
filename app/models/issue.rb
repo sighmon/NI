@@ -431,6 +431,63 @@ class Issue < ActiveRecord::Base
     }
   end
 
+  def google_play_inapp_id
+    number.to_s + 'single'
+  end
+
+  def google_play_published
+    if published
+      'published'
+    else
+      'unpublished'
+    end
+  end
+
+  def google_play_purchase_type
+    'managed_by_android'
+  end
+
+  def google_play_autotranslate
+    true
+  end
+
+  def google_play_locale
+    'en_US'
+  end
+
+  def google_play_description
+    strip_tags(editors_letter)
+  end
+
+  def google_play_autofill
+    true
+  end
+
+  def google_play_country
+    'AU'
+  end
+
+  def google_play_price
+    price * 10000
+  end
+
+  # CSV exporting for Google Play in-app purchases
+  # "product_id","publish_state","purchase_type","autotranslate ","locale; title; description","autofill","country; price"
+  comma do
+
+    google_play_inapp_id 'product_id'
+    google_play_published 'publish_state'
+    google_play_purchase_type 'purchase_type'
+    google_play_autotranslate 'autotranslate'
+    google_play_locale 'locale'
+    title 'title'
+    google_play_description 'description'
+    google_play_autofill 'autofill'
+    google_play_country 'country'
+    google_play_price 'price'
+
+  end
+
   private
 
   def reprocess_image
