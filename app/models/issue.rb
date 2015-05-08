@@ -451,24 +451,16 @@ class Issue < ActiveRecord::Base
     true
   end
 
-  def google_play_locale
-    'en_US'
-  end
-
-  def google_play_description
-    strip_tags(editors_letter)
+  def google_play_locale_title_description
+    'en_US' + ';' + title + ';' + strip_tags(editors_letter)
   end
 
   def google_play_autofill
     true
   end
 
-  def google_play_country
-    'AU'
-  end
-
-  def google_play_price
-    price * 10000
+  def google_play_country_price
+    'AU' + ';' + (price * 1000).to_s
   end
 
   # CSV exporting for Google Play in-app purchases
@@ -479,12 +471,9 @@ class Issue < ActiveRecord::Base
     google_play_published 'publish_state'
     google_play_purchase_type 'purchase_type'
     google_play_autotranslate 'autotranslate'
-    google_play_locale 'locale'
-    title 'title'
-    google_play_description 'description'
+    google_play_locale_title_description 'locale; title; description'
     google_play_autofill 'autofill'
-    google_play_country 'country'
-    google_play_price 'price'
+    google_play_country_price 'country; price'
 
   end
 
