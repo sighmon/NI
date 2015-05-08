@@ -448,7 +448,9 @@ class Issue < ActiveRecord::Base
   end
 
   def google_play_autotranslate
-    true
+    # Apparently this feature isn't supported by Google Play anymore
+    # true
+    false
   end
 
   def google_play_locale_title_description
