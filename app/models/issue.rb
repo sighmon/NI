@@ -454,7 +454,7 @@ class Issue < ActiveRecord::Base
   end
 
   def google_play_locale_title_description
-    'en_US' + ';' + title + ';' + strip_tags(editors_letter)
+    'en_US' + ';' + title + ';' + (keynote ? strip_tags(keynote.teaser) : "The #{release.strftime("%B %Y")} issue of New Internationalist magazine.")
   end
 
   def google_play_autofill
@@ -462,7 +462,8 @@ class Issue < ActiveRecord::Base
   end
 
   def google_play_country_price
-    'AU' + ';' + (price * 1000).to_s
+    # 'AU' + ';' + (price * 1000).to_s
+    price * 1000
   end
 
   # CSV exporting for Google Play in-app purchases
