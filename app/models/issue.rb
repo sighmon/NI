@@ -15,16 +15,12 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Callbacks
 
   include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::NumberHelper
 
   # For zipruby
   require 'zipruby'
 
   # Need to include the helper so we can call source_to_body for the zip file
   include ArticlesHelper
-
-  # Including ApplicationHelper for cents_to_dollars
-  include ApplicationHelper
 
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
@@ -466,8 +462,8 @@ class Issue < ActiveRecord::Base
   end
 
   def google_play_country_price
-    # 'AU' + ';' + (price * 1000).to_s
-    cents_to_dollars(price)
+    # Note: Not sure this actually works, might have to export the test magazine in-app purchase and copy/paste the country/price matrix. Dammit.
+    'AU' + '; ' + (price * 10000).to_s
   end
 
   # CSV exporting for Google Play in-app purchases
