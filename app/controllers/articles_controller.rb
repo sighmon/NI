@@ -3,11 +3,11 @@ class ArticlesController < ApplicationController
 
     include ArticlesHelper
    
-    skip_before_filter :verify_authenticity_token, :only => [:body, :ios_share]
+    skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share]
 
     # Cancan authorisation
     # Except :body to allow for iTunes authentication.
-    load_and_authorize_resource :except => [:body, :ios_share]
+    load_and_authorize_resource :except => [:body, :body_android, :ios_share]
     # load_and_authorize_resource
 
     def strip_tags(string)
@@ -308,6 +308,17 @@ class ArticlesController < ApplicationController
   
     end
 
+    def body_android
+      @article = Article.find(params[:article_id])
+
+      if can? :read, @article or request_has_valid_google_play_receipt
+        render layout: false
+      else
+        render nothing: true, status: :forbidden
+      end
+
+    end
+
     def edit
         
     	@issue = Issue.find(params[:issue_id])
@@ -578,5 +589,24 @@ class ArticlesController < ApplicationController
       
     end
 
+    def request_has_valid_google_play_receipt
+      if !request.post?
+        return false
+      end
+
+      # TODO: Check receipt and post to Google Play for validation
+      logger.info "Android raw_post: #{request.raw_post}"
+      if !request.raw_post.empty?
+        purchase_json = JSON.parse(request.raw_post)
+        logger.info "Google Play purchase receipt: #{purchase_json}"
+      end
+      return false
+
+      # TODO: Example GET for magazine purchases
+      # GET https://www.googleapis.com/androidpublisher/v1.1/applications/#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/inapp/#{GOOGLE_PLAY_SKU}/purchases/#{GOOGLE_PLAY_PURCHASE_TOKEN}?key=#{ENV['GOOGLE_PLAY_API_KEY']}
+
+      # TODO: Example GET for subscription purchases
+      #
+    end
 
 end

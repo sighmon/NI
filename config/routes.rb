@@ -62,6 +62,8 @@ NI::Application.routes.draw do
       get :body
       # the post version is for the iTunes appStore receipt
       post :body
+      # the post version for Android Google Play store receipt
+      post :body_android
       get :import
       get :import_images
       get :generate_from_source
