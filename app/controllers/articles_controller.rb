@@ -594,19 +594,37 @@ class ArticlesController < ApplicationController
         return false
       end
 
-      # TODO: Check receipt and post to Google Play for validation
       logger.info "Android raw_post: #{request.raw_post}"
       if !request.raw_post.empty?
-        purchase_json = JSON.parse(request.raw_post)
-        logger.info "Google Play purchase receipt: #{purchase_json}"
+        purchases_json = JSON.parse(request.raw_post)
+
+        # Check purchase with Google Play
+        purchases_json.each do |p|
+          if p["productId"].include?("single")
+            # It's a magazine product
+            # TODO: Work out how to get a working Google Play access_key
+            uri = URI.parse("https://www.googleapis.com/androidpublisher/v1.1/applications/#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/inapp/#{p["productId"]}/purchases/#{p["purchaseToken"]}?key=#{ENV['GOOGLE_PLAY_API_KEY']}")
+            http = Net::HTTP.new(uri.host, uri.port)
+            http.use_ssl = true
+            api_response, data = http.get(uri.path)
+            logger.info "Google Play Data: #{data}"
+            if api_response.code == 200
+              logger.info "Google Play Success: #{api_response.body}"
+              return true
+            else
+              logger.info "Google Play FAILED: #{api_response.body}"
+              return false
+            end
+
+          elsif p["productId"].include?("month")
+            # TODO: It's a subscription, finish this...
+            return false
+          end
+        end
+      else
+        # No post data to send..
+        return false
       end
-      return false
-
-      # TODO: Example GET for magazine purchases
-      # GET https://www.googleapis.com/androidpublisher/v1.1/applications/#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/inapp/#{GOOGLE_PLAY_SKU}/purchases/#{GOOGLE_PLAY_PURCHASE_TOKEN}?key=#{ENV['GOOGLE_PLAY_API_KEY']}
-
-      # TODO: Example GET for subscription purchases
-      #
     end
 
 end
