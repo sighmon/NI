@@ -311,8 +311,11 @@ class ArticlesController < ApplicationController
     def body_android
       @article = Article.find(params[:article_id])
 
+      # logger.info "REQUEST: #{request.raw_post}"
+
       if can? :read, @article or request_has_valid_google_play_receipt
-        render layout: false
+        # Render the body template so we don't repeat code
+        render :template => 'articles/body', layout: false
       else
         render nothing: true, status: :forbidden
       end
@@ -594,30 +597,71 @@ class ArticlesController < ApplicationController
         return false
       end
 
-      logger.info "Android raw_post: #{request.raw_post}"
+      require 'google/api_client'
+      require 'google/api_client/client_secrets'
+      require 'google/api_client/auth/installed_app'
+      require 'google/api_client/auth/file_storage'
+
+      # Initialize the Google Play client.
+      client = Google::APIClient.new(
+        :application_name => ENV["APP_NAME"],
+        :application_version => '1.0.0'
+      )
+
+      # Get Client Authorization
+      # http://stackoverflow.com/questions/25828491/android-verify-iap-subscription-server-side-with-ruby
+      # NOTE: To setup permissions to use the API, you need to setup a Service Account in the Developer Console
+      # APIs & Auth > Credentials > Create new ClientID > Service Account
+      # Then in Google Play > Settings > API Access > Link & then give permission: View financial reports
+      # key = Google::APIClient::KeyUtils.load_from_pkcs12(IO.read(Rails.root + "config/google_play.p12"), ENV["GOOGLE_PLAY_P12_SECRET"])
+      # Downloaded the .p12 from Google Play, and then openssl it into a .pem
+      # Base64 that into an environment variable to keep it out of version control and Heroku happy.
+      key = Google::APIClient::KeyUtils.load_from_pem(Base64.decode64(ENV["GOOGLE_PLAY_PEM_BASE64"]), nil)
+      client.authorization = Signet::OAuth2::Client.new(
+        :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
+        :audience => 'https://accounts.google.com/o/oauth2/token',
+        :scope => 'https://www.googleapis.com/auth/androidpublisher',
+        :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
+        :signing_key => key,
+        :access_type => 'offline'
+        )
+      client.authorization.fetch_access_token!
+
+      # Discover the API
+      publisher = client.discovered_api('androidpublisher', 'v2')
+
+      # logger.info "Android raw_post: #{request.raw_post}"
       if !request.raw_post.empty?
         purchases_json = JSON.parse(request.raw_post)
 
         # Check purchase with Google Play
         purchases_json.each do |p|
           if p["productId"].include?("single")
-            # It's a magazine product
-            # TODO: Work out how to get a working Google Play access_key
-            uri = URI.parse("https://www.googleapis.com/androidpublisher/v1.1/applications/#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/inapp/#{p["productId"]}/purchases/#{p["purchaseToken"]}?key=#{ENV['GOOGLE_PLAY_API_KEY']}")
-            http = Net::HTTP.new(uri.host, uri.port)
-            http.use_ssl = true
-            api_response, data = http.get(uri.path)
-            logger.info "Google Play Data: #{data}"
-            if api_response.code == 200
-              logger.info "Google Play Success: #{api_response.body}"
+
+            # Make request
+            result = client.execute(
+              :api_method => publisher.purchases.products.get,
+              :parameters => {
+                'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+                'productId' => p["productId"], 
+                'token' => p["purchaseToken"]
+              }
+            )
+
+            result_json = JSON.parse(result.body)
+
+            if result_json["purchaseState"] == 0
+              logger.info "Google Play: Purchase valid. #{result.body}"
               return true
             else
-              logger.info "Google Play FAILED: #{api_response.body}"
+              logger.info "Google Play: INVALID purchase: #{result.body}"
               return false
             end
 
           elsif p["productId"].include?("month")
             # TODO: It's a subscription, finish this...
+            return false
+          else
             return false
           end
         end

@@ -32,6 +32,11 @@
 # Ignore application configuration
 /config/application.yml
 
+# Ignore Google Play secrets
+client_secret.json
+google_play.p12
+client.p12
+
 # Ignore certificates
 /config/*.pem
 

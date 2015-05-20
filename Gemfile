@@ -87,6 +87,9 @@ gem 'rails_12factor', :group => :production
 # HTTParty for talking to the UK server
 gem 'httparty'
 
+# To talk to the Google Play API
+gem 'google-api-client'
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
