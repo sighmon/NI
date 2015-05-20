@@ -638,6 +638,11 @@ class ArticlesController < ApplicationController
         purchases_json.each do |p|
           if p["productId"].include?("single")
 
+            if not p["productId"].include?("#{@article.issue.number}single")
+              logger.info "Google Play receipt: #{p["productId"]}, but this issue is: #{@article.issue.number}single."
+              return false
+            end
+
             # Make request
             result = client.execute(
               :api_method => publisher.purchases.products.get,
@@ -662,6 +667,7 @@ class ArticlesController < ApplicationController
             # TODO: It's a subscription, finish this...
             return false
           else
+            logger.info "Google Play ERROR: No receipt matches NI products."
             return false
           end
         end
