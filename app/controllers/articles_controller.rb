@@ -634,43 +634,74 @@ class ArticlesController < ApplicationController
       if !request.raw_post.empty?
         purchases_json = JSON.parse(request.raw_post)
 
+        has_valid_receipt = false
+
         # Check purchase with Google Play
         purchases_json.each do |p|
           if p["productId"].include?("single")
 
-            if not p["productId"].include?("#{@article.issue.number}single")
+            if p["productId"].include?("#{@article.issue.number}single")
+              # Receipt appears to be for this issue, so validate it
+              result = client.execute(
+                :api_method => publisher.purchases.products.get,
+                :parameters => {
+                  'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+                  'productId' => p["productId"], 
+                  'token' => p["purchaseToken"]
+                }
+              )
+
+              result_json = JSON.parse(result.body)
+
+              if result_json["purchaseState"] == 0
+                logger.info "Google Play: Purchase valid. #{result.body}"
+                has_valid_receipt = true
+              else
+                logger.info "Google Play: INVALID purchase: #{result.body}"
+              end
+            else
+              # Receipt isn't for this issue..
               logger.info "Google Play receipt: #{p["productId"]}, but this issue is: #{@article.issue.number}single."
-              return false
             end
 
-            # Make request
+          elsif p["productId"].include?("month")
+            # It's a subscription, validate it
             result = client.execute(
-              :api_method => publisher.purchases.products.get,
+              :api_method => publisher.purchases.subscriptions.get,
               :parameters => {
                 'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
-                'productId' => p["productId"], 
+                'subscriptionId' => p["productId"], 
                 'token' => p["purchaseToken"]
               }
             )
 
             result_json = JSON.parse(result.body)
+            # logger.info "TODO: Google Play: It's a subscription - #{result.body}"
 
-            if result_json["purchaseState"] == 0
-              logger.info "Google Play: Purchase valid. #{result.body}"
-              return true
-            else
-              logger.info "Google Play: INVALID purchase: #{result.body}"
-              return false
+            if result_json["kind"] == "androidpublisher#subscriptionPurchase"
+              # It's a subscription purchase, so test its expiryTimeMillis
+              google_play_subscription_expiry_date = DateTime.strptime((result_json["expiryTimeMillis"].to_i/1000).to_s, '%s').in_time_zone('Adelaide')
+              time_now_in_adelaide = DateTime.now.in_time_zone('Adelaide')
+              if google_play_subscription_expiry_date > time_now_in_adelaide
+                # Subscription is valid
+                logger.info "Subscription VALID: #{google_play_subscription_expiry_date}"
+                has_valid_receipt = true
+              else
+                # Subscription has expired
+                logger.info "Subscription EXPIRED: #{google_play_subscription_expiry_date}"
+              end
             end
-
-          elsif p["productId"].include?("month")
-            # TODO: It's a subscription, finish this...
-            return false
           else
             logger.info "Google Play ERROR: No receipt matches NI products."
-            return false
           end
         end
+
+        if has_valid_receipt
+          return true
+        else
+          return false
+        end
+
       else
         # No post data to send..
         return false
