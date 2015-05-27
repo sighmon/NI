@@ -272,7 +272,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       if request.post?
-        if request_has_valid_itunes_or_rails_subscription
+        if request_has_valid_rails_subscription or request_has_valid_itunes_subscription or request_has_valid_google_play_receipt
           zip_url_for_json = @issue.zip.url
           if Rails.env.development?
             zip_url_for_json = "#{request.protocol}#{request.host_with_port}#{@issue.zip.url}"
@@ -407,8 +407,33 @@ class IssuesController < ApplicationController
     # TOFIX: iTunes receipt validation is also in articles_controller.rb and user.rb
     # Ask Pix how to dry up private methods.
 
-    def request_has_valid_itunes_or_rails_subscription
+    def request_has_valid_rails_subscription
       if !request.post?
+        return false
+      end
+
+      if current_user
+        rails_expiry = current_user.expiry_date
+        logger.info "Rails user: #{current_user.expiry_date}"
+      end
+
+      if rails_expiry and (rails_expiry > DateTime.now)
+        logger.info "Rails subscription VALID: #{rails_expiry}"
+        return true
+      elsif rails_expiry and (rails_expiry < DateTime.now)
+        logger.info "Rails subscription EXPIRED: #{rails_expiry}"
+        return false
+      else
+        logger.warn "Rails INVALID: This user doesn't have access to download this issue."
+        return false
+      end
+
+    end
+
+    def request_has_valid_itunes_subscription
+      if !request.post?
+        return false
+      elsif request.headers["CONTENT_TYPE"].include?("json")
         return false
       end
 
@@ -439,29 +464,22 @@ class IssuesController < ApplicationController
 
         # Check purchased subscriptions from receipts
         ios_expiry = latest_subscription_expiry_from_recepits(api_response.body)
-      end
-
-      if current_user
-        rails_expiry = current_user.expiry_date
-      end
+      end      
 
       if ios_expiry and (ios_expiry > DateTime.now)
         logger.info "iOS sub valid till: #{ios_expiry}"
         subscription_receipt_valid = true
-      elsif rails_expiry and (rails_expiry > DateTime.now)
-        logger.info "Rails sub valid till: #{rails_expiry}"
-        subscription_receipt_valid = true
       end
 
-      # Check to see if those receipts allow the person to read this article
+      # Check to see if those receipts allow the person to read this issue
       if subscription_receipt_valid
-        logger.info "This user has a valid subscription."
+        logger.info "iTunes: This user has a valid subscription."
         return true
       elsif purchased_issue_numbers and purchased_issue_numbers.include?(@issue.number.to_s)
-        logger.info "This user purchased issue: #{@issue.number}"
+        logger.info "iTunes: This user purchased issue: #{@issue.number}"
         return true
       else
-        logger.warn "This user doesn't have access to download this article."
+        logger.warn "iTunes: This user doesn't have access to download this issue."
         return false
       end
     end
@@ -478,7 +496,7 @@ class IssuesController < ApplicationController
           end
       end
 
-      logger.info "Issues purchased: "
+      logger.info "iTunes Issues purchased: "
       logger.info issues_purchased
 
       return issues_purchased
@@ -496,7 +514,7 @@ class IssuesController < ApplicationController
                   # The subscription is non-renewing, generate :expires_date_ms for it.
                   subscription_duration = item['product_id'][0..1].to_i
                   item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
-                  logger.info "Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
+                  logger.info "iTunes Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
               end
               subscriptions << item
               # TODO: check if they already have a subscription in Rails, if not, purchase one
@@ -520,14 +538,121 @@ class IssuesController < ApplicationController
       return latest_sub_date
     end
 
-    def secret_matches(request)
-      # Check secret from iOS matches
-      # Now checking iOS receipt........
-      secret = Base64.decode64(request.raw_post)
-      if secret == ENV["RAILS_ISSUE_SECRET"]
-        return TRUE
+    def request_has_valid_google_play_receipt
+      if !request.post?
+        return false
+      elsif not request.headers["CONTENT_TYPE"].include?("json")
+        return false
+      end
+
+      require 'google/api_client'
+      require 'google/api_client/client_secrets'
+      require 'google/api_client/auth/installed_app'
+      require 'google/api_client/auth/file_storage'
+
+      # Initialize the Google Play client.
+      client = Google::APIClient.new(
+        :application_name => ENV["APP_NAME"],
+        :application_version => '1.0.0'
+      )
+
+      # Get Client Authorization
+      # http://stackoverflow.com/questions/25828491/android-verify-iap-subscription-server-side-with-ruby
+      # NOTE: To setup permissions to use the API, you need to setup a Service Account in the Developer Console
+      # APIs & Auth > Credentials > Create new ClientID > Service Account
+      # Then in Google Play > Settings > API Access > Link & then give permission: View financial reports
+      # key = Google::APIClient::KeyUtils.load_from_pkcs12(IO.read(Rails.root + "config/google_play.p12"), ENV["GOOGLE_PLAY_P12_SECRET"])
+      # Downloaded the .p12 from Google Play, and then openssl it into a .pem
+      # Base64 that into an environment variable to keep it out of version control and Heroku happy.
+      key = Google::APIClient::KeyUtils.load_from_pem(Base64.decode64(ENV["GOOGLE_PLAY_PEM_BASE64"]), nil)
+      client.authorization = Signet::OAuth2::Client.new(
+        :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
+        :audience => 'https://accounts.google.com/o/oauth2/token',
+        :scope => 'https://www.googleapis.com/auth/androidpublisher',
+        :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
+        :signing_key => key,
+        :access_type => 'offline'
+        )
+      client.authorization.fetch_access_token!
+
+      # Discover the API
+      publisher = client.discovered_api('androidpublisher', 'v2')
+
+      # logger.info "Android raw_post: #{request.raw_post}"
+      if !request.raw_post.empty?
+        purchases_json = JSON.parse(request.raw_post)
+
+        has_valid_receipt = false
+
+        # Check purchase with Google Play
+        purchases_json.each do |p|
+          if p["productId"].include?("single")
+
+            if p["productId"].include?("#{@issue.number}single")
+              # Receipt appears to be for this issue, so validate it
+              result = client.execute(
+                :api_method => publisher.purchases.products.get,
+                :parameters => {
+                  'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+                  'productId' => p["productId"], 
+                  'token' => p["purchaseToken"]
+                }
+              )
+
+              result_json = JSON.parse(result.body)
+
+              if result_json["purchaseState"] == 0
+                logger.info "Google Play: VALID purchase: #{result.body}"
+                has_valid_receipt = true
+              else
+                logger.info "Google Play: INVALID purchase: #{result.body}"
+              end
+            else
+              # Receipt isn't for this issue..
+              logger.info "Google Play: INVALID: #{p["productId"]}, but this issue is: #{@issue.number}single."
+            end
+
+          elsif p["productId"].include?("month")
+            # It's a subscription, validate it
+            result = client.execute(
+              :api_method => publisher.purchases.subscriptions.get,
+              :parameters => {
+                'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+                'subscriptionId' => p["productId"], 
+                'token' => p["purchaseToken"]
+              }
+            )
+
+            result_json = JSON.parse(result.body)
+            # logger.info "TODO: Google Play: It's a subscription - #{result.body}"
+
+            if result_json["kind"] == "androidpublisher#subscriptionPurchase"
+              # It's a subscription purchase, so test its expiryTimeMillis
+              google_play_subscription_expiry_date = DateTime.strptime((result_json["expiryTimeMillis"].to_i/1000).to_s, '%s').in_time_zone('Adelaide')
+              time_now_in_adelaide = DateTime.now.in_time_zone('Adelaide')
+              if google_play_subscription_expiry_date > time_now_in_adelaide
+                # Subscription is valid
+                logger.info "Google Play Subscription VALID: #{google_play_subscription_expiry_date}"
+                has_valid_receipt = true
+              else
+                # Subscription has expired
+                logger.info "Google Play Subscription EXPIRED: #{google_play_subscription_expiry_date}"
+              end
+            end
+          else
+            logger.info "Google Play ERROR: No receipt matches NI products."
+          end
+        end
+
+        if has_valid_receipt
+          return true
+        else
+          return false
+        end
+
       else
-        return FALSE
+        # No post data to send..
+        return false
       end
     end
 
