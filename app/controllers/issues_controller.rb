@@ -169,8 +169,8 @@ class IssuesController < ApplicationController
     }
     api_body = {
       "where" => {
-        "objectId" => @device_id, #Just push to a single user
-        "deviceType" => "ios"
+        "objectId" => @device_id #Just push to a single user
+        # "deviceType" => "ios" # Now sending to Android too!
       },
       "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
       "data" => {
