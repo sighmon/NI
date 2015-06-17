@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
-gem 'rails', '3.2.21'
+gem 'rails', '3.2.22'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -117,7 +117,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
-  gem 'guard-rspec'
+  # gem 'guard-rspec'
   gem 'debugger'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
