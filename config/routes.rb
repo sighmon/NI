@@ -77,6 +77,8 @@ NI::Application.routes.draw do
       get :email_article
       get :ios_share
       post :ios_share
+      get :android_share
+      post :android_share
     end
     resources :purchases, :only => [:new, :create] do
       new do
