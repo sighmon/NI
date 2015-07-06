@@ -16,7 +16,7 @@ NI::Application.routes.draw do
 
   # Sitemap redirects to S3
   # match "/sitemap_index.xml", :controller => "sitemap", :action => "index"
-  match "/sitemap.xml", :controller => "sitemap", :action => "index"
+  get "/sitemap.xml", :controller => "sitemap", :action => "index"
 
   # created by the admin/users controller creation
   # get "users/index"
@@ -140,7 +140,7 @@ NI::Application.routes.draw do
   delete ':id', to: 'pages#destroy', as: :page
 
   # Pretty SEO permalink match for articles
-  match '/perma_article/:id' => 'articles#show'
+  get '/perma_article/:id' => 'articles#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

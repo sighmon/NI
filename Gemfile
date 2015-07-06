@@ -1,8 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.2.2'
 
-gem 'rails', '3.2.22'
+gem 'rails', '4.2.3'
+
+#### Rails 4 upgrade
+gem 'protected_attributes' # https://github.com/rails/protected_attributes
+# gem 'active_resource' # https://github.com/rails/activeresource
+gem 'actionpack-action_caching' # https://github.com/rails/actionpack-action_caching
+gem 'activerecord-session_store' # https://github.com/rails/activerecord-session_store
+gem 'rails-observers' # https://github.com/rails/rails-observers
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -103,7 +110,7 @@ end
 
 # Cucumber and Rspec install for testing
 group :test, :development do
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'#, '~> 3.0'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
 end
@@ -118,7 +125,7 @@ group :test do
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
   # gem 'guard-rspec'
-  gem 'debugger'
+  gem 'byebug'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
@@ -137,22 +144,22 @@ gem 'therubyracer'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails'#,   '~> 3.2.3'
-  gem 'coffee-rails'#, '~> 3.2.1'
+# group :assets do
+gem 'sass-rails'#,   '~> 3.2.3'
+gem 'coffee-rails'#, '~> 3.2.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-  # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
-  # http://twitter.github.com/bootstrap/
-  # gem 'twitter-bootstrap-rails'#, '2.1.6'
-  gem 'jquery-fileupload-rails'
+gem 'uglifier', '>= 1.0.3'
+# Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
+# http://twitter.github.com/bootstrap/
+# gem 'twitter-bootstrap-rails'#, '2.1.6'
+gem 'jquery-fileupload-rails'
 
-  # URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
-  gem 'uri-js-rails'
-end
+# URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
+gem 'uri-js-rails'
+# end
 
 gem 'jquery-rails'
 
@@ -173,16 +180,17 @@ gem 'carrierwave'
 
 # Using Fog for Amazon S3 image storage so it works with Heroku
 # https://github.com/jnicklas/carrierwave (see S3 section)
-gem 'fog', '~> 1.3.1'
+gem 'fog'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-gem 'retina_image_tag', '>= 1.0.2'
+#### gem 'retina_image_tag'#, '>= 1.0.2'
+# Maybe use: https://github.com/davydotcom/retina_tag ???
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
-gem 'kaminari', '~> 0.13.0'
-gem 'kaminari-bootstrap', '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
+gem 'kaminari'#, '~> 0.13.0'
+gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
 
 # Tire for elasticsearch
 # http://railscasts.com/episodes/306-elasticsearch-part-1
