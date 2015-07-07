@@ -4,6 +4,14 @@ GIT
   specs:
     comma (3.0.4)
 
+GIT
+  remote: git://github.com/sighmon/retina_image_tag.git
+  revision: a4e30b72d89b2a122517b11e155ec39f45b68236
+  specs:
+    retina_image_tag (1.0.3)
+      railties
+      rmagick
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -23,6 +31,8 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     actionpack-action_caching (1.1.1)
       actionpack (>= 4.0.0, < 5.0)
+    actionpack-page_caching (1.0.2)
+      actionpack (>= 4.0.0, < 5)
     actionview (4.2.3)
       activesupport (= 4.2.3)
       builder (~> 3.1)
@@ -44,6 +54,7 @@ GEM
       activemodel (= 4.2.3)
       activesupport (= 4.2.3)
       arel (~> 6.0)
+    activerecord-deprecated_finders (1.0.4)
     activerecord-session_store (0.1.1)
       actionpack (>= 4.0.0, < 5)
       activerecord (>= 4.0.0, < 5)
@@ -77,7 +88,7 @@ GEM
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
-    cancan (1.6.10)
+    cancancan (1.12.0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -489,14 +500,16 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-action_caching
+  actionpack-page_caching
   activemerchant
+  activerecord-deprecated_finders
   activerecord-session_store
   acts_as_list
   better_errors (= 1.1.0)
   binding_of_caller
   bugherd
   byebug
-  cancan
+  cancancan
   capybara
   capybara-webkit
   carrierwave
@@ -537,6 +550,7 @@ DEPENDENCIES
   rails_12factor
   rb-fsevent (~> 0.9.1)
   rb-inotify (~> 0.8.8)
+  retina_image_tag!
   rmagick
   rspec-activemodel-mocks
   rspec-legacy_formatters

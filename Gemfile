@@ -5,11 +5,12 @@ ruby '2.2.2'
 gem 'rails', '4.2.3'
 
 #### Rails 4 upgrade
-gem 'protected_attributes' # https://github.com/rails/protected_attributes
-# gem 'active_resource' # https://github.com/rails/activeresource
-gem 'actionpack-action_caching' # https://github.com/rails/actionpack-action_caching
-gem 'activerecord-session_store' # https://github.com/rails/activerecord-session_store
-gem 'rails-observers' # https://github.com/rails/rails-observers
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
+gem 'activerecord-session_store'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -24,7 +25,7 @@ gem 'pg'
 gem 'devise'
 
 # User role management via Cancan https://github.com/ryanb/cancan
-gem 'cancan'
+gem 'cancancan'
 
 # Form rendering via Formtastic https://github.com/justinfrench/formtastic
 gem 'formtastic'
@@ -184,8 +185,9 @@ gem 'fog'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-#### gem 'retina_image_tag'#, '>= 1.0.2'
+gem 'retina_image_tag', :git => 'git://github.com/sighmon/retina_image_tag.git'
 # Maybe use: https://github.com/davydotcom/retina_tag ???
+# gem 'retina_tag'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
