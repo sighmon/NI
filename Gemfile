@@ -186,8 +186,6 @@ gem 'fog'#, '~> 1.3.1'
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
 gem 'retina_image_tag', :git => 'git://github.com/sighmon/retina_image_tag.git'
-# Maybe use: https://github.com/davydotcom/retina_tag ???
-# gem 'retina_tag'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
