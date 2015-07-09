@@ -23,7 +23,7 @@
 <div class="row">
 	<!-- For subscribers -->
 	<% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
-		<div class="col-sm-8">
+		<div class="col-sm-12">
 			<h2>Latest magazines</h2>
 			<p>These are the most recent magazines we've published. See the <%= link_to "Magazine archive", issues_path %> for a full list of issues.</p>
 			<div class="home-cover-list">
