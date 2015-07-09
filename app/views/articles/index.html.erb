@@ -40,15 +40,15 @@
         <% end %>
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-mini' %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-xs' %>
           <% else %>
-            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-mini btn-primary' %>
+            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' %>
           <% end %>
           <% if can? :update, article %>
-            <%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-mini' %>
+            <%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-xs' %>
           <% end %>
           <% if can? :destroy, article %>
-            <%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %>
+            <%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' %>
           <% end %>
         </td>
       </tr>

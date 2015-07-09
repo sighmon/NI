@@ -4,22 +4,22 @@
 
 <% if can? :update, @user %>
 	<div class="edit-issue-buttons">
-		<%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?")) %> | 
-		<%= link_to '10yr Media Subscription', admin_user_media_subscription_path(@user), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 10 year media subscription to: '#{@user.username}'?")) %>
+		<%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-xs btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?")) %> | 
+		<%= link_to '10yr Media Subscription', admin_user_media_subscription_path(@user), :class => 'btn btn-xs btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 10 year media subscription to: '#{@user.username}'?")) %>
 		<hr />
-		<%= link_to 'Give a SILENT 1yr Subscription', admin_user_free_silent_subscription_path(@user, :number_of_months => 12), :class => 'btn btn-mini btn-success', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'? Also worth noting, they won't get an email confirming it.")) %>
+		<%= link_to 'Give a SILENT 1yr Subscription', admin_user_free_silent_subscription_path(@user, :number_of_months => 12), :class => 'btn btn-xs btn-success', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'? Also worth noting, they won't get an email confirming it.")) %>
 		<% if not @user.institution %>
-			 | <%= link_to 'Make this user an Institutional user', admin_user_make_institutional_path(@user), :class => 'btn btn-mini btn-success', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give Institutional powers to: '#{@user.username}'?")) %>
+			 | <%= link_to 'Make this user an Institutional user', admin_user_make_institutional_path(@user), :class => 'btn btn-xs btn-success', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give Institutional powers to: '#{@user.username}'?")) %>
 		<% end %>
 		<hr />
 		Crowdfunding free subscriptions (with email):<br />
-		<%= link_to 'CF 12month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 12), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 12 month subscription to: '#{@user.username}'?")) %> | 
-		<%= link_to 'CF 3month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 3), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 3 month subscription to: '#{@user.username}'?")) %> | 
-		<%= link_to 'CF 1month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 1), :class => 'btn btn-mini btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 month subscription to: '#{@user.username}'?")) %>
+		<%= link_to 'CF 12month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 12), :class => 'btn btn-xs btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 12 month subscription to: '#{@user.username}'?")) %> | 
+		<%= link_to 'CF 3month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 3), :class => 'btn btn-xs btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 3 month subscription to: '#{@user.username}'?")) %> | 
+		<%= link_to 'CF 1month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 1), :class => 'btn btn-xs btn-warning', :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 month subscription to: '#{@user.username}'?")) %>
 		<hr />
 		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-horizontal' } do |f| %>
 		    <%= f.number_field :number_of_months, :placeholder => 'Months' %>
-		    <%= button_tag(type: 'submit', class: "btn btn-success btn-mini") do %>
+		    <%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
 				Give free SILENT sub
 			<% end %>
     <% end %>
