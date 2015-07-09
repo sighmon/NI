@@ -40,7 +40,7 @@
         <% end %>
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-xs' %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %>
           <% else %>
             <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' %>
           <% end %>

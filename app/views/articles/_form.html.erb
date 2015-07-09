@@ -60,7 +60,7 @@
     <p>To add a cover linked back to that issue, use [Cover:xx] where xx is the rails issue_id. [Cover:xx|small|left|ns] also work.</p>
     <div class="controls">
       <% if not @article.id.nil? %>
-        <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn' %>
+        <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn btn-default' %>
       <% end %>
       <%= f.text_area :body, :class => 'text_area' %>
     </div>
@@ -88,6 +88,6 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                :back, :class => 'btn' %>
+                :back, :class => 'btn btn-default' %>
   </div>
 <% end %>

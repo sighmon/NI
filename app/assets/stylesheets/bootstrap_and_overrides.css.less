@@ -136,6 +136,11 @@ a.btn:visited { color: #333; }
 
 a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
 
+.no-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 // Top Nav Bar
 
 .navbar, .navbar-search .search-query {
@@ -329,6 +334,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -40px;
 }
 
+.page-header.issue-title img {
+	float: none !important;
+}
+
 .page-header .share-links {
 	line-height: 2em;
 }
@@ -410,6 +419,15 @@ input, textarea, .uneditable-input {
 
 textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text {
 	width: 100%;
+}
+
+.form-horizontal .form-group {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.form-horizontal {
+	margin-bottom: 1em;
 }
 
 // Give the dl dd a little more breathing space between entries
@@ -644,7 +662,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-articles-container {
-	
+	padding-right: 2em;
 }
 
 .issue-articles-container h3 {
@@ -1485,6 +1503,9 @@ ul.ui-autocomplete {
 	.span6.editors-letter {
 		background-color: #fdfdfd;
 		float: none;
+	}
+	.issue-articles-container {
+		padding-right: 0;
 	}
 }
  

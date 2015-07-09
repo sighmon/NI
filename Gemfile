@@ -137,8 +137,6 @@ group :test do
 end
 
 gem 'twitter-bootstrap-rails'#, '2.1.6'
-# Bootstrap 3
-# gem 'twitter-bootstrap-rails', :github => 'seyhunak/twitter-bootstrap-rails', :branch => 'bootstrap3'
 gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'therubyracer'

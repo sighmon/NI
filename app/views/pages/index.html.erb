@@ -22,7 +22,7 @@
         <!-- <td><%= page.body %></td> -->
         <td><%=l page.created_at %></td>
         <td>
-          <%= link_to 'Read', page_path(page), :class => 'btn btn-xs' %>
+          <%= link_to 'Read', page_path(page), :class => 'btn btn-default btn-xs' %>
           <% if can? :update, page %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_page_path(page), :class => 'btn btn-xs btn-primary' %>

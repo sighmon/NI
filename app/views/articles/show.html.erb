@@ -98,7 +98,7 @@
       <div class="new-image-credit"><%= i.credit %></div>
       <% if can? :manage, Image %>
         <%= link_to t('.show', :default => t("helpers.links.show")),
-                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-xs' %>
+                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-default btn-xs' %>
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
                     edit_issue_article_image_path(@issue, @article, i), :class => 'btn btn-xs btn-primary' %>
         <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
@@ -190,7 +190,7 @@
   </nav>
 
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issue_path(@issue), :class => 'btn'  %>
+              issue_path(@issue), :class => 'btn btn-default'  %>
   <% if can? :update, @article %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
 	              edit_issue_article_path(@issue,@article), :class => 'btn btn-primary' %>
@@ -210,7 +210,7 @@
     <div class='share-highlight-btn'>
       <div class='btn-caret'>
       </div>
-      <div class='btn'>
+      <div class='btn btn-default'>
         <div class="tweet-button">
           <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
         </div>

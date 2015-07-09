@@ -34,25 +34,25 @@
 	        <div class="navbar-header pull-right">
 	        	<div class="btn-group user_nav">
 							<% if user_signed_in? %>
-							<%= link_to raw("<i class='icon-user icon-white'></i> #{current_user.username}"), current_user, :class => 'btn btn-success navbar-btn' %>
+							<%= link_to raw("<i class='fa fa-user'></i> #{current_user.username}"), current_user, :class => 'btn btn-success navbar-btn' %>
 							<a class="btn btn-success dropdown-toggle navbar-btn" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user.try(:subscriber?) %>
 									<li><%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user %></li>
 									<li class="divider"></li>
 								<% else %>
-									<li><%= link_to raw("<i class='icon-star'></i> Subscribe"), new_subscription_path %></li>
+									<li><%= link_to raw("<i class='fa fa-star'></i> Subscribe"), new_subscription_path %></li>
 									<li class="divider"></li>
 								<% end %>
 								<% if current_user.try(:admin?) %>
-									<li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_admin_user_path(current_user) %></li>
+									<li><%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_admin_user_path(current_user) %></li>
 								<% else %>
 								<% if not current_user.parent and can? :manage, @user %>
-									<li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_user_registration_path(current_user) %></li>
+									<li><%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_user_registration_path(current_user) %></li>
 								<% end %>
 								<% end %>
 								<% if current_user.try(:admin?) %>
-									<li><%= link_to raw("<i class='icon-heart'></i> Admin"), admin_root_path %></li>
+									<li><%= link_to raw("<i class='fa fa-heart'></i> Admin"), admin_root_path %></li>
 								<% end %>
 								<% if not current_user.parent and can? :manage, @user %>
 									<li class="divider"></li>

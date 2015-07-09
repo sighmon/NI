@@ -18,7 +18,7 @@
 <p class="hide-meta" itemprop="author"><%= article.author %></p>
 <p class="hide-meta" itemprop="dateCreated"><%= article.issue.release.strftime("%e %B %Y") %></p>
 <% if can? :manage, Article %>
-  <ul class="unstyled">
+  <ul class="list-unstyled">
   <% article.categories.each do |category| %>
     <li><%= category.name %></li>
   <% end %>
@@ -26,7 +26,7 @@
   <p><%= article.publication %></p>
 <% end %>
 <p><% if can? :read, article %>
-<%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-xs' %>
+<%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-default btn-xs' %>
 <% else %>
   <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-xs btn-primary' %>
 <% end %>
