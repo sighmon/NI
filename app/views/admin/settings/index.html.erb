@@ -4,11 +4,12 @@
 <p>Edit the settings one at a time and click save afterwards.</p>
 <p><strong>Note</strong>: The Issue price is in cents. The Subscription price is per month (in cents).</p>
 <div class="admin-settings">
-<% @settings.each_pair do |name, value| %>
-
-	<%= form_tag("#{admin_setting_path(name)}", :method => "put") do %>
+<% @settings.each do |setting| %>
+	<% name = setting.var %>
+	<% value = setting.value %>
+	<%= form_tag("#{admin_setting_path(name)}", :method => "put", :class => "form-inline") do %>
 	  <%= label_tag(:value, "#{name}") %>
-	  <%= number_field_tag(:value, "#{value}") %>
+	  <%= number_field_tag(:value, "#{value}", :class => "form-control") %>
 	  <%= submit_tag("Save", :class => 'btn btn-primary') %>
 	<% end %>
 
