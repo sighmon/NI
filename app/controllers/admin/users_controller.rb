@@ -18,7 +18,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			format.html
 			# CSV information that's included is in the User model under comma
-			format.csv { render :csv => User.all(:order => :email), :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
+			format.csv { render :csv => User.order(:email).all, :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
 		end
 	end
 

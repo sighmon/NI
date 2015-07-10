@@ -85,8 +85,8 @@ body {
 */
 
 // @headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; }
-h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
+h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
+h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; margin-top: 0; }
 
 // ABC news base body font Verdana 12px 18px line-height
 
@@ -339,7 +339,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -40px;
 }
 
-.page-header.issue-title img {
+.page-header .share-links img {
 	float: none !important;
 }
 
@@ -691,8 +691,12 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .article-search .btn {
 	// margin-top: -10px;
+	// margin-bottom: 1em;
+	// height: 30px;
+}
+
+.article-search .input-append {
 	margin-bottom: 1em;
-	height: 30px;
 }
 
 // Issue.editors_letter styling

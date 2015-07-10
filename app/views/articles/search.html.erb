@@ -5,9 +5,9 @@
 </div>
 
 <div class="article-search">
-  <%= form_tag search_path, :class => 'form-search', method: :get do %>
+  <%= form_tag search_path, :class => 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Article search', :class => "span2 search-query" %>
+        <%= text_field_tag :query, params[:query], :placeholder => 'Article search', :class => "span2 search-query form-control" %>
         <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
       </div>
       <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />

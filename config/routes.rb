@@ -1,14 +1,9 @@
 NI::Application.routes.draw do
 
-  # TODO: Removed all as: and :as for Rails4, need to check they still work as expected.
-
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
 
   get "guest_passes/index"
-
-  # routes for static pages - help, about etc..
-  resources :pages, except: :show
 
   get "subscriptions/update"
 
@@ -34,8 +29,8 @@ NI::Application.routes.draw do
 
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
+  post "users/:id(.:format)", :to => 'users#show', :as => :user
   resources :users, :only => [:show]
-  post "users/:id(.:format)", :to => 'users#show'#, :as => :user
 
   resources :subscriptions do
     new do
@@ -44,6 +39,9 @@ NI::Application.routes.draw do
   end
   # hack to create /subscriptions route
   # resources :subscriptions, :only => [:create]
+
+  # For iOS to post
+  post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
 
   resources :issues do
     # Route for importing articles from bricolage to an issue
@@ -89,9 +87,6 @@ NI::Application.routes.draw do
     end
   end
 
-  # For iOS to post
-  post "issues/:id(.:format)", :to => 'issues#show'#, :as => :issue
-
   get 'search' => 'articles#search'
   get 'popular' => 'articles#popular'
 
@@ -136,13 +131,17 @@ NI::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'home#index'
 
-  # Routes for all Pages - About, help etc..
-  get ':id', to: 'pages#show'#, as: :page
-  put ':id', to: 'pages#update'#, as: :page
-  delete ':id', to: 'pages#destroy'#, as: :page
-
   # Pretty SEO permalink match for articles
   get '/perma_article/:id' => 'articles#show'
+
+  # Routes for all Pages - About, help etc..
+  get 'pages', to: 'pages#index'
+  get ':id', to: 'pages#show', as: :page
+  patch ':id', to: 'pages#update'#, as: :page
+  delete ':id', to: 'pages#destroy'#, as: :page
+
+  # routes for static pages - help, about etc..
+  resources :pages, except: :show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
