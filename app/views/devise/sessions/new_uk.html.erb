@@ -2,7 +2,7 @@
 	<h2>Sign in for UK subscribers</h2>
 </div>
 
-<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-horizontal' }) do |f| %>
+<%= simple_form_for(resource_name, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-horizontal' }) do |f| %>
   <div class="inputs">
     <%= f.input :login, :required => false, :autofocus => true, :label => 'Your subscription number' %>
     <%= f.input :password, :required => false, :label => 'Your surname' %>
