@@ -38,7 +38,10 @@ gem 'paypal-recurring'
 
 # Rails settings file for prices & general settings
 # Specifying 1.x as version 2 works very differently
-gem 'ledermann-rails-settings', '~> 1.x', :require => 'rails-settings'
+# gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+# Now using a fork for Rails 4
+gem 'rails-settings-cached', '0.4.1'
 
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
