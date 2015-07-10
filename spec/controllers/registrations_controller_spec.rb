@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-describe RegistrationsController, :type => :controller do
+# we removed our overloaded registrations controller but these tests are still comforting to have around
+describe Devise::RegistrationsController, :type => :controller do
 
   before(:each) do
     request.env["devise.mapping"] = Devise.mappings[:user]
@@ -61,7 +62,6 @@ describe RegistrationsController, :type => :controller do
         it "updates the email" do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
-          #expect_any_instance_of(User).to receive(:update_attributes).with(attributes.except(:current_password).stringify_keys)
           expect {
             put :update, { user: attributes }
             user.reload
@@ -71,6 +71,7 @@ describe RegistrationsController, :type => :controller do
     end
   end
 
+  # this is really testing cancan more than Devise....
   context "as a child" do
     let(:user) do
       parent = FactoryGirl.create(:user)
