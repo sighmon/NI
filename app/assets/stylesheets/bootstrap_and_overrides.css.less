@@ -310,12 +310,17 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .breadcrumb .label {
 	color: #FFF;
 	font-weight: normal;
+	background-color: #999;
 }
 
 .breadcrumb .label:hover {
 	color: #000;
 	background-color: @footerColour;
 	text-shadow:none;
+}
+
+.breadcrumb > li + li::before {
+	content: none;
 }
 
 .page-header {
@@ -728,7 +733,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .article-title h2 {
-	font-weight: 600;
+	// font-weight: 600;
 	font-size: 1.2em;
 	line-height: 1.3em;
 	color: @gray-light;
