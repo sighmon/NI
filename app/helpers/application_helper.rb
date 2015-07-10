@@ -116,7 +116,7 @@ module ApplicationHelper
 
     def articles_as_table(type)
         if type == "most_shared"
-            guest_passes = GuestPass.all(:order => "use_count").reverse.first(10)
+            guest_passes = GuestPass.order(:use_count).first(10).reverse
             table = "<table class='table articles_as_table'><thead><tr>"
             table += "<th> </th>"
             table += "<th>Article</th>"

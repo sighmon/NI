@@ -59,7 +59,7 @@ class ArticlesController < ApplicationController
     end
 
     def popular
-        @guest_passes = GuestPass.all(:order => "use_count").reverse.first(10)
+        @guest_passes = GuestPass.order(:use_count).first(10).reverse
 
         # Set meta tags
         set_meta_tags :title => "Poplar New Internationalist articles",
@@ -398,7 +398,7 @@ class ArticlesController < ApplicationController
     def tweet
         @user = User.find(current_user)
         @article = Article.find(params[:article_id])
-        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
         twitter_params = {
             :url => view_context.generate_guest_pass_link_string(@guest_pass),
             :text => params[:text],
@@ -411,7 +411,7 @@ class ArticlesController < ApplicationController
     def wall_post
         @user = User.find(current_user)
         @article = Article.find(params[:article_id])
-        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
         if not @article.featured_image.blank?
             preview_picture = @article.featured_image_url(:fullwidth).to_s
         else
@@ -433,7 +433,7 @@ class ArticlesController < ApplicationController
     def email_article
         @user = User.find(current_user)
         @article = Article.find(params[:article_id])
-        @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+        @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
         email_params = {
             :body => view_context.generate_guest_pass_link_string(@guest_pass),
             :subject => "#{@article.title} - New Internationalist Magazine"
@@ -447,7 +447,7 @@ class ArticlesController < ApplicationController
         if can? :read, @article or request_has_valid_itunes_receipt
             # TODO: If a user has an iTunes subscription, attach the guest pass to a new app tmp user???
             @user = User.find(current_user)
-            @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+            @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
 
             respond_to do |format|
               format.json { render json: @guest_pass }
@@ -463,7 +463,7 @@ class ArticlesController < ApplicationController
         if can? :read, @article or request_has_valid_google_play_receipt
             # TODO: If a user has a Google Play subscription, attach the guest pass to a new app tmp user???
             @user = User.find(current_user)
-            @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
+            @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
 
             respond_to do |format|
               format.json { render json: @guest_pass }

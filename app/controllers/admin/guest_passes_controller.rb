@@ -4,7 +4,7 @@ class Admin::GuestPassesController < ApplicationController
   load_and_authorize_resource
 
   def index
-  	@guest_passes = GuestPass.all(:order => "use_count").reverse
+  	@guest_passes = GuestPass.order(:use_count).all.reverse
   end
 
   # Cancan not working? so we use verify_admin
