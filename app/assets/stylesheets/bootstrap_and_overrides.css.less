@@ -86,7 +86,11 @@ body {
 
 // @headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
-h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; margin-top: 0; }
+h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
+
+h1 + h2 {
+	margin-top: 0;
+}
 
 // ABC news base body font Verdana 12px 18px line-height
 
@@ -292,6 +296,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	background-image: none;
 }
 
+.label {
+	background-color: #999;
+}
+
 .breadcrumb {
 	font-family: @headings-font-family;
 	background-image: none;
@@ -310,7 +318,6 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .breadcrumb .label {
 	color: #FFF;
 	font-weight: normal;
-	background-color: #999;
 }
 
 .breadcrumb .label:hover {
