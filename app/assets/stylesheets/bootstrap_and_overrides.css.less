@@ -20,6 +20,22 @@ body {
 // Font Awesome
 @import "fontawesome/font-awesome";
 
+// Fixes from Glyphicon code
+// http://astronautweb.co/snippet/font-awesome/
+
+.font-awesome-family {
+	font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+.icon-star:after {
+	.font-awesome-family;
+	content: "\f005";
+}
+
 // Glyphicons
 //@import "twitter/bootstrap/sprites.less";
 //@import "twitter/bootstrap/glyphicons.less";
@@ -435,6 +451,10 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 	width: 100%;
 }
 
+.file-upload {
+	margin: 1em 0 1em 0;
+}
+
 .form-horizontal .form-group {
 	margin-left: 0;
 	margin-right: 0;
@@ -536,11 +556,11 @@ a:active .shadow {
 }
 
 .edit-issue-buttons .simple_form, .edit-article-buttons .simple_form {
-	margin-bottom: 0;
+	// margin-bottom: 0;
 }
 
 .edit-issue-buttons .simple_form .btn, .edit-article-buttons .simple_form .btn {
-	margin-top: -9px;
+	// margin-top: -9px;
 }
 
 .edit-issue-buttons .control-group, .edit-article-buttons .control-group {
@@ -729,10 +749,6 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 // Article styling
-
-.image-uploader form {
-	margin-bottom: 0px;
-}
 
 .article-title {
 	padding-bottom: 0px;
