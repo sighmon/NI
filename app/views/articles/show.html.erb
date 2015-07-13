@@ -110,10 +110,10 @@
     <% end %>
   <% end %>
   <!-- Modal -->
-  <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div id="imageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel">
     <!-- Carousel -->
-    <div id="imageCarousel" class="carousel slide">
-        <div class="carousel-inner">
+    <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
             <% first = true %>
             <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
               <div class="<% if first %>active <% first = false %><% end %>item">
