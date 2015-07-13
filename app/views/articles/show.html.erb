@@ -89,11 +89,12 @@
 <!-- <div class="article-image-top" style="background-image: url('');"></div> -->
 
 <!-- Manually uploaded image slideshow -->
+
 <% if not @article.images.select{|i| i.media_id.nil?}.select{|i| not i.hidden?}.empty? %>
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag_for :div, i do %>
-      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
+      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}", :"data-toggle" => 'modal', :"data-target" => '.imageModal'), '#' %>
       <div class="new-image-caption"><%= simple_format i.caption %></div>
       <div class="new-image-credit"><%= i.credit %></div>
       <% if can? :manage, Image %>
@@ -109,23 +110,21 @@
       <% end %>
     <% end %>
   <% end %>
+
   <!-- Modal -->
-  <div id="imageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel">
+  <div class="modal fade imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel">
     <!-- Carousel -->
-    <div id="imageCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <% first = true %>
-            <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
-              <div class="<% if first %>active <% first = false %><% end %>item">
-                <div class="modal-body">
-                  <%= image_tag i.data_url.to_s, :alt => "", :title => "", :size => "#{i.width}x#{i.height}" %>
+    <div class="modal-dialog modal-lg">
+      <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner" role="listbox">
+              <% first = true %>
+              <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
+                <div class="<% if first %>active <% first = false %><% end %>item">
+                  <%= image_tag i.data_url.to_s, :alt => "", :title => "" %>
                 </div>
-              </div>
-            <% end %>
-        </div>
-        <!-- Carousel nav -->
-        <a class="carousel-control left hide" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right hide" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+              <% end %>
+          </div>
+      </div>
     </div>
   </div>
 </div>
