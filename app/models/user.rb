@@ -86,13 +86,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me
-  # removed :admin so that public can't make themselves an admin
-  # attr_accessible :title, :body
-  # UK details :uk_id, :uk_expiry
-
+  
   # CSV exporting
   comma do
 

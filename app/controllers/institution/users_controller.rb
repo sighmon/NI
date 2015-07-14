@@ -91,4 +91,11 @@ class Institution::UsersController < Institution::BaseController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
+  end
+
 end

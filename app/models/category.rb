@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  attr_accessible :name, :display_name, :colour
+
   validates_uniqueness_of :name
 
   has_many :article_categorisations

@@ -44,4 +44,7 @@ NI::Application.configure do
   # Default URL for Devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+  # Raise an exception on unpermitted params
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
 end

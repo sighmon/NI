@@ -99,4 +99,11 @@ class PagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def page_params
+    params.require(:page).permit(:body, :permalink, :title, :teaser)
+  end
+  
 end

@@ -112,4 +112,10 @@ class ImagesController < ApplicationController
     render nothing: true
   end
 
+  private
+
+  def image_params
+    params.require(:image).permit(:data, :media_id, :height, :width, :caption, :credit, :hidden)
+  end
+
 end

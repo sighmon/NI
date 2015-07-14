@@ -190,4 +190,8 @@ class Admin::UsersController < Admin::BaseController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
+  def user_params
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
+  end
+
 end
