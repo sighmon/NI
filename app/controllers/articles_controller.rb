@@ -445,8 +445,12 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:article_id])
 
         if can? :read, @article or request_has_valid_itunes_receipt
-            # TODO: If a user has an iTunes subscription, attach the guest pass to a new app tmp user???
+            
             @user = User.find(current_user)
+            if not @user
+              # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
+              @user = User.find_by_username("subscriber")
+            end
             @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
 
             respond_to do |format|
@@ -461,8 +465,12 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:article_id])
 
         if can? :read, @article or request_has_valid_google_play_receipt
-            # TODO: If a user has a Google Play subscription, attach the guest pass to a new app tmp user???
+            
             @user = User.find(current_user)
+            if not @user
+              # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
+              @user = User.find_by_username("subscriber")
+            end
             @guest_pass = GuestPass.find_or_create_by_user_id_and_article_id(:user_id => @user.id, :article_id => @article.id)
 
             respond_to do |format|
