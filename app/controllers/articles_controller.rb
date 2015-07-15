@@ -446,8 +446,9 @@ class ArticlesController < ApplicationController
 
         if can? :read, @article or request_has_valid_itunes_receipt
             
-            @user = User.find(current_user)
-            if not @user
+            if current_user
+              @user = User.find(current_user)
+            else
               # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
               @user = User.find_by_username("subscriber")
             end
@@ -466,8 +467,9 @@ class ArticlesController < ApplicationController
 
         if can? :read, @article or request_has_valid_google_play_receipt
             
-            @user = User.find(current_user)
-            if not @user
+            if current_user
+              @user = User.find(current_user)
+            else
               # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
               @user = User.find_by_username("subscriber")
             end
