@@ -78,7 +78,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_permalink!(params[:id])
 
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      if @page.update_attributes(page_params)
         format.html { redirect_to @page, notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else

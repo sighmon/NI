@@ -174,7 +174,7 @@ class ArticlesController < ApplicationController
     end
 
     respond_to do |format|
-      if @article.update_attributes(params[:article])
+      if @article.update_attributes(article_params)
       format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
       format.json { head :no_content }
       else
@@ -726,13 +726,8 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :categories_attributes, :hide_author_name, :story_id)
-  end
-
-  #### TODO: Is this where article_categorisation_params should go now????
-
-  def article_categorisation_params
-    params.require(:article_categorisation).permit(:position, :article_id, :category_id)
+    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id)#, categories_attributes: [:position, :article_id, :category_id])
+    #### TODO: Is this where article_categorisation_params should go now????
   end
 
 end

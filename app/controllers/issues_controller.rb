@@ -75,15 +75,14 @@ class IssuesController < ApplicationController
                     }
                   }
 
-    render_issues = @json_issues
     if not params[:query].blank?
-      render_issues = @issues
+      @json_issues = @issues
     end
 
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(render_issues) }
+      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(@json_issues) }
     end
   end
 
@@ -344,7 +343,7 @@ class IssuesController < ApplicationController
     # @issue = Issue.find(params[:id])
 
     respond_to do |format|
-      if @issue.update_attributes(params[:issue])
+      if @issue.update_attributes(issue_params)
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
         format.json { head :no_content }
       else

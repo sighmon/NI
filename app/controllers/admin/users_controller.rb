@@ -61,7 +61,7 @@ class Admin::UsersController < Admin::BaseController
 			@user.update_attribute(:ip_whitelist, params[:user][:ip_whitelist])
 			params[:user].delete(:ip_whitelist)
 		end
-		if @user.update_attributes(params[:user])
+		if @user.update_attributes(user_params)
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
 			# @user.build_subscription(params[:subscription])
