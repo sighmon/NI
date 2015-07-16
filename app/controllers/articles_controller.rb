@@ -5,6 +5,9 @@ class ArticlesController < ApplicationController
    
   skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
 
+  # TOFIX: Can't find an existing Category...
+  before_action :lookup_categories, only: [:update, :create]
+
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
   load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share]
@@ -123,7 +126,7 @@ class ArticlesController < ApplicationController
 
   def index
   @issue = Issue.find(params[:issue_id])
-  @article = Article.find(:all)
+  # @article = Article.find(:all)
   # @article = Article.order("created_at").page(params[:page]).per(2).search(params)
     respond_to do |format|
       format.html
@@ -138,20 +141,20 @@ class ArticlesController < ApplicationController
   def create
     @issue = Issue.find(params[:issue_id])
 
-    # HACK: assign_nested_attributes_for chokes accepting categories_attributes for a yet-to-be-created article
-    saved_article_params = params[:article]
-    extracted_categories_attributes = params[:article].try(:extract!,:categories_attributes)
-    @article = @issue.articles.create(params[:article])
+    # # HACK: assign_nested_attributes_for chokes accepting categories_attributes for a yet-to-be-created article
+    # saved_article_params = params[:article]
+    # extracted_categories_attributes = params[:article].try(:extract!,:categories_attributes)
+    @article = @issue.articles.create(article_params)
     # HACK: strip out id's so that categories_attributes= pre-emptively associates these categories with the article before
     # handing it to assign_nested_attributes_for
-    extracted_categories_attributes.try(:fetch,:categories_attributes).try(:values).try(:each) do |v|
-     v.delete(:id)
-     v.delete("id")  
-    end 
+    # extracted_categories_attributes.try(:fetch,:categories_attributes).try(:values).try(:each) do |v|
+    #  v.delete(:id)
+    #  v.delete("id")  
+    # end 
     # Added this check to be able to create an article without a category
-    if not extracted_categories_attributes.try(:fetch,:categories_attributes).nil?
-      @article.update_attributes(extracted_categories_attributes)
-    end
+    # if not extracted_categories_attributes.try(:fetch,:categories_attributes).nil?
+    #   @article.update_attributes(extracted_categories_attributes)
+    # end
     
     respond_to do |format|
       if @article.save
@@ -174,12 +177,13 @@ class ArticlesController < ApplicationController
     end
 
     respond_to do |format|
+      # byebug
       if @article.update_attributes(article_params)
-      format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
-      format.json { head :no_content }
+        format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
+        format.json { head :no_content }
       else
-      format.html { render action: "edit" }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -725,8 +729,25 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # Fix so that nested Categories can be found and saved for Articles if they exist
+  def lookup_categories
+    categories_attributes = params[:article][:categories_attributes]
+    categories_attributes.values.each do |category_attributes|
+      if category_attributes[:id].nil? and category_attributes[:name].present?
+        category = Category.find_by_name(category_attributes[:name])
+        if category.present?
+          category_attributes[:id] = category.id
+          ## FIXME? check if we are adding twice?
+          # self.categories << category
+        end
+      end
+    end
+    # assign_nested_attributes_for_collection_association(:categories, categories_attributes.values, mass_assignment_options)
+    # self[:categories_attributes] = categories_attributes
+  end
+
   def article_params
-    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id)#, categories_attributes: [:position, :article_id, :category_id])
+    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id, categories_attributes: [:name, :_destroy, :id])
     #### TODO: Is this where article_categorisation_params should go now????
   end
 

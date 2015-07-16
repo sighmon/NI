@@ -117,6 +117,7 @@ group :test, :development do
   gem 'rspec-rails'#, '~> 3.0'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
+  gem 'byebug'
 end
 
 group :test do
@@ -129,7 +130,6 @@ group :test do
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
   # gem 'guard-rspec'
-  gem 'byebug'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications

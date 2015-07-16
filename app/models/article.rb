@@ -65,21 +65,6 @@ class Article < ActiveRecord::Base
     indexes :published, type: 'boolean', as: 'published'
   end
 
-  # Fix so that nested Categories can be found and saved for Articles if they exist
-  def categories_attributes=(categories_attributes)
-    categories_attributes.values.each do |category_attributes|
-      if category_attributes[:id].nil? and category_attributes[:name].present?
-        category = Category.find_by_name(category_attributes[:name])
-        if category.present?
-          category_attributes[:id] = category.id
-          ## FIXME? check if we are adding twice?
-          self.categories << category
-        end
-      end
-    end
-    assign_nested_attributes_for_collection_association(:categories, categories_attributes.values, mass_assignment_options)
-  end
-
   def create_categories_from_article_source
     if self.categories.blank?
       assets = 'http://bricolage.sourceforge.net/assets.xsd'
