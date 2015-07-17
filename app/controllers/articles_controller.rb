@@ -5,8 +5,8 @@ class ArticlesController < ApplicationController
    
   skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
 
-  # TOFIX: Can't find an existing Category...
-  before_action :lookup_categories, only: [:update, :create]
+  # Process adding, removing or creating new categories on article update or create
+  before_action :process_existing_categories, only: [:update, :create]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
@@ -182,7 +182,7 @@ class ArticlesController < ApplicationController
         format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "edit", notice: @article.errors }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
@@ -729,26 +729,28 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # Fix so that nested Categories can be found and saved for Articles if they exist
-  def lookup_categories
+  def process_existing_categories
+    # Before action to process existing categories so they can be added, created or removed.
+    @article = Article.find(params[:id])
+    categories_for_removal_from_params = []
+    authorize! :update, @article
     categories_attributes = params[:article][:categories_attributes]
     categories_attributes.values.each do |category_attributes|
       if category_attributes[:id].nil? and category_attributes[:name].present?
         category = Category.find_by_name(category_attributes[:name])
         if category.present?
-          category_attributes[:id] = category.id
-          ## FIXME? check if we are adding twice?
-          # self.categories << category
+          if not @article.categories.include?(category)
+            @article.categories << category
+            categories_for_removal_from_params << category.name
+          end
         end
       end
     end
-    # assign_nested_attributes_for_collection_association(:categories, categories_attributes.values, mass_assignment_options)
-    # self[:categories_attributes] = categories_attributes
+    params[:article][:categories_attributes].delete_if{|k,v| categories_for_removal_from_params.include?(v[:name])}
   end
 
   def article_params
     params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id, categories_attributes: [:name, :_destroy, :id])
-    #### TODO: Is this where article_categorisation_params should go now????
   end
 
 end
