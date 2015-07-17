@@ -150,7 +150,7 @@ describe ArticlesController, :type => :controller do
 
         context "with a new category" do
           before(:each) do
-            @new_category = FactoryGirl.build(:category)
+            @new_category_attributes = FactoryGirl.attributes_for(:category)
           end
 
           it "creates an article with a new category" do
@@ -158,23 +158,20 @@ describe ArticlesController, :type => :controller do
             ##ArticlesController.should_receive(:create)
             ##ArticlesController.any_instance.stub(:create) {|*args| ArticlesController.create(*args)}
             #ArticlesController.any_instance.should_receive(:create)
-            post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@new_category) }}), :issue_id => @article.issue.id}
-            expect(@issue.articles.last.categories.first.name).to eq(@new_category.name)
+            post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @new_category_attributes }}), :issue_id => @issue.id}
+            expect(@issue.articles.last.categories.first.name).to eq(@new_category_attributes[:name])
           end
 
         end
 
         context "with an existing category" do
           before(:each) do
-            @category = FactoryGirl.create(:category)
+            @category = Category.create(@category_attributes = FactoryGirl.attributes_for(:category))
           end
 
           it "creates an new article with the category" do
-            #Article.any_instance.should_receive(:categories_attributes=)
             expect {
-              #debugger
-              post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@category) }}), :issue_id => @article.issue.id}
-              #pp response 
+              post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @category_attributes }}), :issue_id => @issue.id}
             }.to change(Article, :count).by(1)
             expect(@issue.articles.last.categories).to eq([@category])
           end
