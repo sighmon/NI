@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
 
   # Process adding, removing or creating new categories on article update or create
-  before_action :process_existing_categories, only: [:update, :create]
+  before_action :process_existing_categories, only: [:update]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.

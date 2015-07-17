@@ -138,12 +138,13 @@ describe ArticlesController, :type => :controller do
       context "with valid params" do
 
         before(:each) do
-          @article = FactoryGirl.build(:article,issue: @issue)
+          @article_attributes = FactoryGirl.attributes_for(:article,issue: @issue)
         end
 
         it "creates a new article" do
+          # byebug
           expect {
-            post :create, {:article => @article, :issue_id => @article.issue.id}
+            post :create, {:article => @article_attributes, :issue_id => @issue.id}
           }.to change(Article, :count).by(1)
         end
 
