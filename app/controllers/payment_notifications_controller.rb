@@ -7,7 +7,7 @@ class PaymentNotificationsController < ApplicationController
 		
 		# TOFIX: Hack to handle 'cart' instant payment notifications.
 		if params[:txn_type] == "cart"
-			params[:rp_invoice_id] == "1"
+			params[:rp_invoice_id] = "1"
 		end
 
 		# TODO: using activemerchant to validate the IPN: https://go.developer.ebay.com/developers/community/blogs/saranyan/paypal-ipn-using-rails-3.1-and-active-merchant
