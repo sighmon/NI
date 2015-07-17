@@ -9,7 +9,7 @@ describe UserMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("New Internationalist Digital Subscription")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(["subscribe@newint.com.au"])
+      expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
     end
 
     it "renders the body" do
