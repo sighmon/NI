@@ -22,16 +22,35 @@ class PagesController < ApplicationController
     # Now finding by permalink
     @page = Page.find_by_permalink!(params[:id])
     @current_issue = Issue.all.sort_by(&:release).last
+    @first_image = ""
+
+    if not @page.body.empty?
+      require 'nokogiri'
+      doc = Nokogiri::HTML( @page.body )
+      img_srcs = doc.css('img').map{ |i| i['src'] }
+      @first_image = img_srcs[0]
+    end
 
     set_meta_tags :title => @page.title,
-                  #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                  :description => @page.teaser,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",
                   :open_graph => {
                     :title => @page.title,
-                    #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                    :description => @page.teaser,
                     #:type  => :magazine,
                     :url   => page_url(@page.permalink),
+                    :image => @first_image,
                     :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@ni_australia",
+                    :title => @page.title,
+                    :description => @page.teaser,
+                    :image => {
+                      :src => @first_image
+                    }
                   }
 
     respond_to do |format|
