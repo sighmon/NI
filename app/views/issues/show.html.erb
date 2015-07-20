@@ -77,7 +77,7 @@
 <% end %>
 
 <div class="row-fluid">
-  <div class="col-sm-6 no-padding issue-articles-container">
+  <div class="col-sm-6 issue-articles-container">
       <div class="issue-article keynote" itemscope itemtype="http://schema.org/Article">
         <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
         <h5>The big story</h5>
@@ -142,7 +142,7 @@
       <% end %>
 
   </div>
-  <div class="col-sm-6 no-padding editors-letter">
+  <div class="col-sm-6 editors-letter">
     <% if @issue.editors_letter != "" %>
       <h3>A note from the editor</h3>
       <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
@@ -151,7 +151,7 @@
       <hr />
     <% end %>
   </div>
-  <div class="col-sm-6 no-padding issue-articles-container">
+  <div class="col-sm-6 issue-articles-container">
 
     <% if not @issue.opinion.empty? %>
       <div class="issue-sections">

@@ -104,7 +104,7 @@ body {
 h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
 h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
-h1 + h2, h2 + h3, .page-header > h2 {
+h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 	margin-top: 0;
 }
 
@@ -145,6 +145,17 @@ h1 + h2, h2 + h3, .page-header > h2 {
 @boxGrayLightest: #F5F5F5;
 @footerColour: rgba(250,176,59,0.58);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
+
+// Column fixes
+
+@grid-gutter-width: 2em;
+
+// Negative margin nested rows out to align the content of columns
+.row-fluid {
+  margin-left:  (@grid-gutter-width / -2);
+  margin-right: (@grid-gutter-width / -2);
+}
+
 
 // Link colours
 
@@ -245,6 +256,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .ios-home-ad {
 	margin: 1em 0 0 0;
+}
+
+.ios-home-ad img {
+	max-height: 40px;
 }
 
 @homeCoverListMargin: 7px;
@@ -708,10 +723,6 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	padding: 1em;
 	margin-bottom: 2em;
 	background-color: @boxGrayLightest;
-}
-
-.issue-articles-container {
-	padding-right: 2em;
 }
 
 .issue-articles-container h3 {
@@ -1324,7 +1335,7 @@ ul.ui-autocomplete {
 .subscription-offer {
 	border-radius: 5px;
 	padding: 1em;
-	margin-bottom: 24px;
+	margin-bottom: @grid-gutter-width;
 	background-color: @gray-lighter;
 }
 
@@ -1372,6 +1383,15 @@ ul.ui-autocomplete {
 
 .privacy-policy {
 	margin: 1em 0 1em 0;
+}
+
+.mobile-apps-page {
+	text-align: center;
+}
+
+.mobile-apps-page > img {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 // 404 error page styling
