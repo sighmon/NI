@@ -56,12 +56,12 @@ class ImagesController < ApplicationController
   	@article = Article.find(params[:article_id])
 
     # HACK to fix jquery file upload
-    data = params[:image].try(:[],:data)
+    data = image_params.try(:[],:data)
     if data.kind_of?(Array)
-      params[:image][:data] = data.first
+      image_params[:data] = data.first
     end
 
-    @newimage = @article.images.create(params[:image].try(:merge,{ :position => (@article.images.collect{|i|i.position or 0}.max or 0)+1 }))
+    @newimage = @article.images.create(image_params.try(:merge,{ :position => (@article.images.collect{|i|i.position or 0}.max or 0)+1 }))
 
     respond_to do |format|
       if @newimage.save
