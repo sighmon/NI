@@ -30,7 +30,7 @@
 
 	<%= javascript_tag do %>
 		window.purchaseID = 'user<%= try(:current_user).try(:id) %>sub<%= session[:express_purchase_subscription_duration] %><%= session[:express_autodebit] ? 'auto' : '' %>';
-		window.subscriptionPrice = <%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %>;
+		window.subscriptionPrice = <%= cents_to_dollars(session[:express_purchase_price]) %>;
 		window.subscriptionType = "<%= session[:express_purchase_subscription_duration] %> month <%= session[:express_autodebit] ? 'autodebit' : 'subscription' %>"
 		window.subscriptionNumber = "<%= session[:express_purchase_subscription_duration] %><%= session[:express_autodebit] ? 'auto' : '' %>"
 	<% end %>
@@ -44,12 +44,12 @@
 			<dt><strong>Debit every:</strong></dt>
 			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
 			<dt><strong>Debit amount:</strong></dt>
-			<dd>$<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %></dd>
+			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
 		<% else %>
 			<dt><strong>Subscription:</strong></dt>
 			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
 			<dt><strong>Amount:</strong></dt>
-			<dd>$<%= number_with_precision((session[:express_purchase_price] / 100), :precision => 2) %></dd>
+			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
 		<% end %>
 	  </dl>
 	  
@@ -67,7 +67,7 @@
 	var google_conversion_format = "3";
 	var google_conversion_color = "ffffff";
 	var google_conversion_label = "<%= ENV['GOOGLE_CONVERSION_LABEL'] %>";
-	var google_conversion_value = <%= session[:express_purchase_price] / 100 %>;
+	var google_conversion_value = <%= cents_to_dollars(session[:express_purchase_price]) %>;
 	var google_remarketing_only = false;
 	/* ]]> */
 	</script>
@@ -75,7 +75,7 @@
 	</script>
 	<noscript>
 	<div style="display:inline;">
-	<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=<%= session[:express_purchase_price] / 100 %>&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
+	<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=<%= cents_to_dollars(session[:express_purchase_price]) %>&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
 	</div>
 	</noscript>
 	<!-- END Google Code for Digital Subscription App Conversion Page -->
