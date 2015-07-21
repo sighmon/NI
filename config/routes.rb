@@ -21,8 +21,8 @@ NI::Application.routes.draw do
   # hack to sign in when on a pre-authenticated ip
   get "users/re_sign_in"
 
-  #devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
-  devise_for :users, :controllers => { :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
+  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
+  # devise_for :users, :controllers => { :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
 
   devise_scope :user do
     get "/uk_login" => "devise/sessions#new_uk"
