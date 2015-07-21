@@ -96,7 +96,7 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:user_id, :issue_id, :created_at)
+    params.fetch(:purchase, {}).permit(:user_id, :issue_id, :created_at)
   end
 
 end
