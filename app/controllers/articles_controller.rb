@@ -515,7 +515,7 @@ class ArticlesController < ApplicationController
     }
 
     # Remove "objectId" if no @device_id is present
-    api_body["where"].reject!{|k,v| v.empty?}
+    api_body["where"].reject!{|k,v| v.nil? || v.empty? }
     api_body = api_body.to_json
 
     # logger.info "PARSE to post to api - body: #{api_body.to_s}"
