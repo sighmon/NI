@@ -192,11 +192,11 @@ describe ArticlesController, :type => :controller do
         context "and an existing category" do
            
           before(:each) do
-            @category = FactoryGirl.create(:category)
+            @category_attributes = FactoryGirl.attributes_for(:category)
           end
 
           it "adds the category to the article" do
-            put :update, {:article => {:categories_attributes => { "0" => valid_attributes_for(@category) }}, :issue_id => @article.issue.id, :id => @article.id}
+            put :update, {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
 
             # why is this different from above?
             #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("name") }}, :issue_id => @article.issue.id, :id => @article.id}
@@ -204,7 +204,7 @@ describe ArticlesController, :type => :controller do
             # familiar ID error
             #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
-            expect(@article.categories).to eq([@category])
+            expect(@article.categories.collect(&:name)).to eq([Category.new(@category_attributes).name])
           end
  
         end
