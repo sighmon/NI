@@ -40,7 +40,7 @@
 								<% if current_user.try(:subscriber?) %>
 									<li><%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user %></li>
 									<li class="divider"></li>
-								<% else %>
+								<% elsif not current_user.parent %>
 									<li><%= link_to raw("<i class='fa fa-star'></i> Subscribe"), new_subscription_path %></li>
 									<li class="divider"></li>
 								<% end %>
@@ -79,7 +79,7 @@
 							<li><%= link_to "Archive", issues_path %></li>
 							<% if current_user.nil? %>
 								<li><%= link_to "Subscribe", page_path("subscribe") %></li>
-							<% elsif not current_user.try(:subscriber?) %>
+							<% elsif not current_user.try(:subscriber?) and not current_user.parent %>
 								<li><%= link_to "Subscribe", new_subscription_path %></li>
 							<% end %>
 							<li class="dropdown">
