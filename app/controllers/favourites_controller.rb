@@ -49,7 +49,8 @@ class FavouritesController < ApplicationController
   private
 
   def favourite_params
-    params.require(:favourite).permit(:article_id, :created_at, :issue_id, :user_id)
+    # params.require(:favourite).permit(:article_id, :created_at, :issue_id, :user_id)
+    params.fetch(:favourite, {}).permit(:article_id, :created_at, :issue_id, :user_id)
   end
 
 end

@@ -50,7 +50,8 @@ class GuestPassesController < ApplicationController
   private
 
   def guest_pass_params
-    params.require(:guest_pass).permit(:article_id, :user_id)
+    # params.require(:guest_pass).permit(:article_id, :user_id)
+    params.fetch(:guest_pass, {}).permit(:article_id, :user_id)
   end
 
 end
