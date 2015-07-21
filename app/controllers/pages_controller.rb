@@ -24,7 +24,7 @@ class PagesController < ApplicationController
     @current_issue = Issue.all.sort_by(&:release).last
     @first_image = ""
 
-    if not @page.body.empty?
+    if not @page.body.try(:empty?)
       require 'nokogiri'
       doc = Nokogiri::HTML( @page.body )
       img_srcs = doc.css('img').map{ |i| i['src'] }
