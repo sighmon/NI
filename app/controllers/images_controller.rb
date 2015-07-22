@@ -115,7 +115,7 @@ class ImagesController < ApplicationController
   private
 
   def image_params
-    params.require(:image).permit(:data, :media_id, :height, :width, :caption, :credit, :hidden, :position)
+    params.fetch(:image, {}).permit(:data, :media_id, :height, :width, :caption, :credit, :hidden, :position)
   end
 
 end
