@@ -18,7 +18,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			format.html
 			# CSV information that's included is in the User model under comma
-			format.csv { render :csv => User.all(:order => :email), :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
+			format.csv { render :csv => User.order(:email).all, :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
 		end
 	end
 
@@ -61,7 +61,7 @@ class Admin::UsersController < Admin::BaseController
 			@user.update_attribute(:ip_whitelist, params[:user][:ip_whitelist])
 			params[:user].delete(:ip_whitelist)
 		end
-		if @user.update_attributes(params[:user])
+		if @user.update_attributes(user_params)
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
 			# @user.build_subscription(params[:subscription])
@@ -188,6 +188,10 @@ class Admin::UsersController < Admin::BaseController
   
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
+  def user_params
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
   end
 
 end

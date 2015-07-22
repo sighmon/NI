@@ -47,7 +47,7 @@ class Institution::UsersController < Institution::BaseController
   # POST /institution/users
   # POST /institution/users.json
   def create
-    @user = current_user.children.create(params[:user].merge :email => "design+parent_id#{current_user.id}_child_count#{current_user.children.count + 1}@newint.com.au")
+    @user = current_user.children.create(user_params.merge :email => "design+parent_id#{current_user.id}_child_count#{current_user.children.count + 1}@newint.com.au")
 
     respond_to do |format|
       if @user.save
@@ -70,7 +70,7 @@ class Institution::UsersController < Institution::BaseController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to user_path(current_user), notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
@@ -91,4 +91,11 @@ class Institution::UsersController < Institution::BaseController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def user_params
+    params.fetch(:user, {}).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :uk_id, :uk_expiry, :institution)
+  end
+
 end

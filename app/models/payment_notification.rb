@@ -1,10 +1,11 @@
 class PaymentNotification < ActiveRecord::Base
-	attr_accessible :params, :status, :transaction_id, :transaction_type, :user_id
+	
 	belongs_to :user
 	serialize :params
 	after_create :update_subscription
 
-private
+	private
+
 	def update_subscription
 		# Log for testing.
 		# logger.info params

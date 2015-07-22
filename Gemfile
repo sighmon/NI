@@ -1,8 +1,16 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.2.2'
 
-gem 'rails', '3.2.22'
+gem 'rails', '4.2.3'
+
+#### Rails 4 upgrade
+# gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
+gem 'activerecord-session_store'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -17,7 +25,7 @@ gem 'pg'
 gem 'devise'
 
 # User role management via Cancan https://github.com/ryanb/cancan
-gem 'cancan'
+gem 'cancancan'
 
 # Form rendering via Formtastic https://github.com/justinfrench/formtastic
 gem 'formtastic'
@@ -30,7 +38,10 @@ gem 'paypal-recurring'
 
 # Rails settings file for prices & general settings
 # Specifying 1.x as version 2 works very differently
-gem 'ledermann-rails-settings', '~> 1.x', :require => 'rails-settings'
+# gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+# Now using a fork for Rails 4
+gem 'rails-settings-cached', '0.4.1'
 
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
@@ -103,9 +114,10 @@ end
 
 # Cucumber and Rspec install for testing
 group :test, :development do
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'#, '~> 3.0'
   gem 'factory_girl_rails'
   gem 'show_me_the_cookies'
+  gem 'byebug'
 end
 
 group :test do
@@ -118,7 +130,6 @@ group :test do
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
   # gem 'guard-rspec'
-  gem 'debugger'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
@@ -129,30 +140,28 @@ group :test do
 end
 
 gem 'twitter-bootstrap-rails'#, '2.1.6'
-# Bootstrap 3
-# gem 'twitter-bootstrap-rails', :github => 'seyhunak/twitter-bootstrap-rails', :branch => 'bootstrap3'
 gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'therubyracer'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails'#,   '~> 3.2.3'
-  gem 'coffee-rails'#, '~> 3.2.1'
+# group :assets do
+gem 'sass-rails'#,   '~> 3.2.3'
+gem 'coffee-rails'#, '~> 3.2.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-  # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
-  # http://twitter.github.com/bootstrap/
-  # gem 'twitter-bootstrap-rails'#, '2.1.6'
-  gem 'jquery-fileupload-rails'
+gem 'uglifier', '>= 1.0.3'
+# Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
+# http://twitter.github.com/bootstrap/
+# gem 'twitter-bootstrap-rails'#, '2.1.6'
+gem 'jquery-fileupload-rails'
 
-  # URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
-  gem 'uri-js-rails'
-end
+# URI.js for highligher URL mutation https://github.com/rweng/uri-js-rails
+gem 'uri-js-rails'
+# end
 
 gem 'jquery-rails'
 
@@ -173,16 +182,16 @@ gem 'carrierwave'
 
 # Using Fog for Amazon S3 image storage so it works with Heroku
 # https://github.com/jnicklas/carrierwave (see S3 section)
-gem 'fog', '~> 1.3.1'
+gem 'fog'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-gem 'retina_image_tag', '>= 1.0.2'
+gem 'retina_image_tag', :git => 'git://github.com/sighmon/retina_image_tag.git'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
-gem 'kaminari', '~> 0.13.0'
-gem 'kaminari-bootstrap', '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
+gem 'kaminari'#, '~> 0.13.0'
+gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
 
 # Tire for elasticsearch
 # http://railscasts.com/episodes/306-elasticsearch-part-1

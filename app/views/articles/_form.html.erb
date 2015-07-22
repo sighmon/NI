@@ -1,93 +1,43 @@
 <%= simple_form_for ([@issue, @article]), :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
-  <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :teaser, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :teaser, :class => 'text_area' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :author, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :author, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :hide_author_name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :hide_author_name, :class => 'check_box' %>
-    </div>
-  </div>
+
+  <%= f.input :title %>
+  <%= f.input :teaser %>
+  <%= f.input :author %>
+  <%= f.input :hide_author_name %>
 
   <div class="control-group autocomplete-data" data-autocomplete-source="<%= Category.order(:name).map(&:name) %>">
-    <b>Categories</b>
+    <p><b>Categories</b></p>
     <%= f.fields_for :categories do |builder| %>
       <%= render 'category_fields', f: builder %>
     <% end %>
     <%= link_to_add_fields "Add Category", f, :categories %>
   </div>
 
-  <div class="control-group">
-    <%= f.label :publication, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.datetime_select :publication, :class => 'datetime_select' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :featured_image, :class => 'control-label' %>
-    <%= f.hidden_field :featured_image_cache %>
-    <%= f.file_field :featured_image %>
-    <% if @article.featured_image? %>
-      <%= f.label :remove_featured_image %>
-      <%= retina_image_tag(@article.featured_image_url(:thumb).to_s) %>
-      <%= f.check_box :remove_featured_image %>
-    <% end %>
-  </div>
-  <div class="control-group">
-    <%= f.label :featured_image_caption, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :featured_image_caption, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :body, :class => 'control-label' %>
-    <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|full] or [File:xx|left] to remove the float or [File:xx|cartoon] or [File:xx|small] or [File:xx|centre] you can also add |ns to remove the shadow. [File:xx|ns] or [File:xx|cartoon|ns]</p>
-    <p>To add a cover linked back to that issue, use [Cover:xx] where xx is the rails issue_id. [Cover:xx|small|left|ns] also work.</p>
-    <div class="controls">
-      <% if not @article.id.nil? %>
-        <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn' %>
-      <% end %>
-      <%= f.text_area :body, :class => 'text_area' %>
-    </div>
-  </div>
-<!--   <div class="control-group">
-    <%= f.label :issue_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :issue_id, :class => 'number_field' %>
-    </div>
-  </div> -->
-  <div class="control-group">
-    <%= f.label :trialarticle, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :trialarticle, :class => 'check_box' %>
-    </div>
-  </div>
+  <%= f.input :publication, as: :datetime %>
 
-  <div class="control-group">
-    <%= f.label :keynote, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :keynote, :class => 'check_box' %>
-    </div>
-  </div>
+  <%= f.hidden_field :featured_image_cache %>
+  <%= f.input :featured_image %>
+  <% if @article.featured_image? %>
+    <%= retina_image_tag(@article.featured_image_url(:thumb).to_s) %>
+    <%= f.input :remove_featured_image, as: :boolean %>
+  <% end %>
+
+  <%= f.input :featured_image_caption %>
+
+  <%= f.label :body %>
+  <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|full] or [File:xx|left] to remove the float or [File:xx|cartoon] or [File:xx|small] or [File:xx|centre] you can also add |ns to remove the shadow. [File:xx|ns] or [File:xx|cartoon|ns]</p>
+  <p>To add a cover linked back to that issue, use [Cover:xx] where xx is the rails issue_id. [Cover:xx|small|left|ns] also work.</p>
+  <% if not @article.id.nil? %>
+    <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :confirm => "Are you sure? You will lose any changes you have made to the body.", :class => 'btn btn-default' %>
+  <% end %>
+  <%= f.input :body, label: false %>
+
+  <%= f.input :trialarticle, as: :boolean %>
+  <%= f.input :keynote, as: :boolean %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                :back, :class => 'btn' %>
+                :back, :class => 'btn btn-default' %>
   </div>
 <% end %>

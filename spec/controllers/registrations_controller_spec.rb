@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe RegistrationsController, :type => :controller do
+describe RegistrationsController do
 
   before(:each) do
     request.env["devise.mapping"] = Devise.mappings[:user]
@@ -13,7 +13,7 @@ describe RegistrationsController, :type => :controller do
           user = FactoryGirl.build(:user)
           attributes = { username: user.username, email: user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, {:user => attributes}
+            post :create, :user => attributes
           }.to change(User, :count).by(1)
         end
       end
@@ -61,13 +61,16 @@ describe RegistrationsController, :type => :controller do
         it "updates the email" do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
-          expect_any_instance_of(User).to receive(:update_attributes).with(attributes.except(:current_password).stringify_keys)
-          put :update, { user: attributes }
+          expect {
+            put :update, { user: attributes }
+            user.reload
+          }.to change(user, :email).to(newemail)
         end
       end
     end
   end
 
+  # this is really testing cancan more than Devise....
   context "as a child" do
     let(:user) do
       parent = FactoryGirl.create(:user)

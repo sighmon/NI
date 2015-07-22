@@ -5,10 +5,10 @@
 </div>
 
 <div class="issue-search">
-  <%= form_tag issues_path, :class => 'form-search', method: :get do %>
+  <%= form_tag issues_path, :class => 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Magazine theme', :class => "span2 search-query" %>
-        <%= submit_tag "Search", name: nil, :class => 'btn' %>
+        <%= text_field_tag :query, params[:query], :placeholder => 'Magazine theme', :class => "search-query form-control" %>
+        <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
       </div>
   <% end %>
 </div>
@@ -49,13 +49,13 @@
         <% if can? :update, @issue %>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_path(issue), :class => 'btn btn-mini' %>
+                      edit_issue_path(issue), :class => 'btn btn-default btn-xs' %>
           <% if can? :destroy, @issue %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       issue_path(issue),
                       :method => :delete,
                       :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-                      :class => 'btn btn-mini btn-danger' %>
+                      :class => 'btn btn-xs btn-danger' %>
           <% end %>
         </td>
         <% end %>

@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def free
-    latest_free_issue = Issue.find_all_by_trialissue(:true).sort_by(&:release).reverse.first
+    latest_free_issue = Issue.where(trialissue: true).sort_by(&:release).reverse.first
     if latest_free_issue
       redirect_to issue_path(latest_free_issue)
     else
@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   end
   
   def index
-  	@issues = Issue.find_all_by_published(:true)
+  	@issues = Issue.where(published: true)
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue}.reverse.first
 
@@ -80,7 +80,7 @@ class HomeController < ApplicationController
     @issues = []
     @feed = {}
 
-    @published_issues = Issue.find_all_by_published(:true)
+    @published_issues = Issue.where(published: true)
 
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.feed('xmlns' => 'http://www.w3.org/2005/Atom', 'xmlns:news' => 'http://itunes.apple.com/2011/Newsstand') do
@@ -205,7 +205,7 @@ class HomeController < ApplicationController
               end
               # End of subscriptions
               # Loop through single issues
-              Issue.find_all_by_published(:true).sort_by(&:number).reverse.each do |i|
+              Issue.where(published: true).sort_by(&:number).reverse.each do |i|
                 xml.in_app_purchase do
                   xml.locales do
                     xml.locale('name' => 'en-AU') do
@@ -253,7 +253,7 @@ class HomeController < ApplicationController
 
   def google_merchant_feed
 
-    @published_issues = Issue.find_all_by_published(:true).sort_by(&:number).reverse
+    @published_issues = Issue.where(published: true).sort_by(&:number).reverse
 
     # Remove the last issue - (more issues coming soon)
     if @published_issues.last.title == "More issues coming soon"
@@ -303,7 +303,7 @@ class HomeController < ApplicationController
     # To get the latest cover from URL https://digital.newint.com.au/latest_cover.jpg
     # To get the full size cover, add ?full=true
     full_cover = params[:full]
-    published_issues = Issue.find_all_by_published(:true)
+    published_issues = Issue.where(published: true)
     if full_cover
       redirect_to published_issues.sort_by(&:release).last.try(:cover_url).to_s
     else

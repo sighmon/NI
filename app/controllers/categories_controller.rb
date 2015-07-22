@@ -105,7 +105,7 @@ class CategoriesController < ApplicationController
     end
     logger.info params
     respond_to do |format|
-      if @category.update_attributes(params[:category])
+      if @category.update_attributes(category_params)
         format.html { redirect_to @category, notice: 'Category was successfully updated.' }
         format.json { head :no_content }
       else
@@ -113,6 +113,12 @@ class CategoriesController < ApplicationController
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:name, :display_name, :colour)
   end
 
 end

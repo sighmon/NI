@@ -28,7 +28,8 @@ describe ImagesController, :type => :controller do
   end
 
   def valid_attributes
-    valid_attributes_for_image(FactoryGirl.build(:image))
+    # valid_attributes_for_image(FactoryGirl.build(:image))
+    FactoryGirl.attributes_for(:image)
   end
 
   # This should return the minimal set of values that should be in the session
@@ -53,13 +54,13 @@ describe ImagesController, :type => :controller do
         it "does not create a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(0)
         end
 
         it "redirects to the issues" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(response).to redirect_to(issues_path)
         end
       end
@@ -158,20 +159,20 @@ describe ImagesController, :type => :controller do
         it "creates a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(1)
         end
 
         it "assigns a newly created image as @image" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(assigns(:newimage)).to be_a(Image)
           expect(assigns(:newimage)).to be_persisted
         end
 
         it "redirects to the article" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => valid_attributes_for(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(response).to redirect_to(issue_article_path(image.article.issue,image.article))
         end
       end
@@ -199,12 +200,13 @@ describe ImagesController, :type => :controller do
       describe "with valid params" do
         it "updates the requested image" do
           image = FactoryGirl.create(:image)
+          image_params = FactoryGirl.attributes_for(:image)
           # Assuming there are no other images in the database, this
           # specifies that the Image created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          expect_any_instance_of(Image).to receive(:update_attributes).with({ "these" => "params" })
-          put :update, {:id => image.to_param, :image => { :these => "params" }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          expect_any_instance_of(Image).to receive(:update_attributes).with(image_params)
+          put :update, {:id => image.to_param, :image => image_params, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 
         it "assigns the requested image as @image" do

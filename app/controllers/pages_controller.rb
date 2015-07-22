@@ -22,16 +22,35 @@ class PagesController < ApplicationController
     # Now finding by permalink
     @page = Page.find_by_permalink!(params[:id])
     @current_issue = Issue.all.sort_by(&:release).last
+    @first_image = ""
+
+    if not @page.body.try(:empty?)
+      require 'nokogiri'
+      doc = Nokogiri::HTML( @page.body )
+      img_srcs = doc.css('img').map{ |i| i['src'] }
+      @first_image = img_srcs[0]
+    end
 
     set_meta_tags :title => @page.title,
-                  #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                  :description => @page.teaser,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",
                   :open_graph => {
                     :title => @page.title,
-                    #:description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+                    :description => @page.teaser,
                     #:type  => :magazine,
                     :url   => page_url(@page.permalink),
+                    :image => @first_image,
                     :site_name => "New Internationalist Magazine Digital Edition"
+                  },
+                  :twitter => {
+                    :card => "summary",
+                    :site => "@ni_australia",
+                    :creator => "@ni_australia",
+                    :title => @page.title,
+                    :description => @page.teaser,
+                    :image => {
+                      :src => @first_image
+                    }
                   }
 
     respond_to do |format|
@@ -59,7 +78,7 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.json
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new(page_params)
 
     respond_to do |format|
       if @page.save
@@ -78,7 +97,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_permalink!(params[:id])
 
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      if @page.update_attributes(page_params)
         format.html { redirect_to @page, notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
@@ -99,4 +118,11 @@ class PagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def page_params
+    params.require(:page).permit(:body, :permalink, :title, :teaser)
+  end
+  
 end

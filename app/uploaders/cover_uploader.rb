@@ -7,8 +7,8 @@ class CoverUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
-  include Sprockets::Helpers::RailsHelper
-  include Sprockets::Helpers::IsolatedHelper
+  # include Sprockets::Helpers::RailsHelper
+  # include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
@@ -26,7 +26,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   def default_url
     # For Rails 3.1+ asset pipeline compatibility:
     # asset_path("fallback/" + [version_name, "default_cover.jpg"].compact.join('_'))
-    asset_path("fallback/" + full_filename("default_cover.jpg"))
+    ActionController::Base.helpers.asset_path("fallback/" + full_filename("default_cover.jpg"))
   
     # "/images/fallback/" + [version_name, "default_cover.png"].compact.join('_')
   end

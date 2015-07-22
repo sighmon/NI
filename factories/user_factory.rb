@@ -13,7 +13,7 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
 
-    admin false
+    # admin false
 
     factory :institution_user do
       prefix "institution"

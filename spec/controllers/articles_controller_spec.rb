@@ -138,18 +138,19 @@ describe ArticlesController, :type => :controller do
       context "with valid params" do
 
         before(:each) do
-          @article = FactoryGirl.build(:article,issue: @issue)
+          @article_attributes = FactoryGirl.attributes_for(:article,issue: @issue)
         end
 
         it "creates a new article" do
+          # byebug
           expect {
-            post :create, {:article => @article, :issue_id => @article.issue.id}
+            post :create, {:article => @article_attributes, :issue_id => @issue.id}
           }.to change(Article, :count).by(1)
         end
 
         context "with a new category" do
           before(:each) do
-            @new_category = FactoryGirl.build(:category)
+            @new_category_attributes = FactoryGirl.attributes_for(:category)
           end
 
           it "creates an article with a new category" do
@@ -157,23 +158,20 @@ describe ArticlesController, :type => :controller do
             ##ArticlesController.should_receive(:create)
             ##ArticlesController.any_instance.stub(:create) {|*args| ArticlesController.create(*args)}
             #ArticlesController.any_instance.should_receive(:create)
-            post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@new_category) }}), :issue_id => @article.issue.id}
-            expect(@issue.articles.last.categories.first.name).to eq(@new_category.name)
+            post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @new_category_attributes }}), :issue_id => @issue.id}
+            expect(@issue.articles.last.categories.first.name).to eq(@new_category_attributes[:name])
           end
 
         end
 
         context "with an existing category" do
           before(:each) do
-            @category = FactoryGirl.create(:category)
+            @category = Category.create(@category_attributes = FactoryGirl.attributes_for(:category))
           end
 
           it "creates an new article with the category" do
-            #Article.any_instance.should_receive(:categories_attributes=)
             expect {
-              #debugger
-              post :create, {:article => valid_attributes_for(@article).merge({ :categories_attributes => { "0" => valid_attributes_for(@category) }}), :issue_id => @article.issue.id}
-              #pp response 
+              post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @category_attributes }}), :issue_id => @issue.id}
             }.to change(Article, :count).by(1)
             expect(@issue.articles.last.categories).to eq([@category])
           end
@@ -194,11 +192,11 @@ describe ArticlesController, :type => :controller do
         context "and an existing category" do
            
           before(:each) do
-            @category = FactoryGirl.create(:category)
+            @category_attributes = FactoryGirl.attributes_for(:category)
           end
 
           it "adds the category to the article" do
-            put :update, {:article => {:categories_attributes => { "0" => valid_attributes_for(@category) }}, :issue_id => @article.issue.id, :id => @article.id}
+            put :update, {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
 
             # why is this different from above?
             #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("name") }}, :issue_id => @article.issue.id, :id => @article.id}
@@ -206,7 +204,7 @@ describe ArticlesController, :type => :controller do
             # familiar ID error
             #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
-            expect(@article.categories).to eq([@category])
+            expect(@article.categories.collect(&:name)).to eq([Category.new(@category_attributes).name])
           end
  
         end

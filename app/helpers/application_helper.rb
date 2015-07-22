@@ -116,7 +116,7 @@ module ApplicationHelper
 
     def articles_as_table(type)
         if type == "most_shared"
-            guest_passes = GuestPass.all(:order => "use_count").reverse.first(10)
+            guest_passes = GuestPass.order(:use_count).first(10).reverse
             table = "<table class='table articles_as_table'><thead><tr>"
             table += "<th> </th>"
             table += "<th>Article</th>"
@@ -211,7 +211,7 @@ module ApplicationHelper
         fields = f.fields_for(association, new_object, child_index: id) do |builder|
           render(association.to_s.singularize + "_fields", f: builder)
         end
-        link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+        link_to(name, '#', class: "add_fields btn btn-default", data: {id: id, fields: fields.gsub("\n", "")})
     end
 
     # http://natashatherobot.com/devise-rails-sign-in/

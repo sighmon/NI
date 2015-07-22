@@ -18,7 +18,7 @@
 <p class="hide-meta" itemprop="author"><%= article.author %></p>
 <p class="hide-meta" itemprop="dateCreated"><%= article.issue.release.strftime("%e %B %Y") %></p>
 <% if can? :manage, Article %>
-  <ul class="unstyled">
+  <ul class="list-unstyled">
   <% article.categories.each do |category| %>
     <li><%= category.name %></li>
   <% end %>
@@ -26,9 +26,9 @@
   <p><%= article.publication %></p>
 <% end %>
 <p><% if can? :read, article %>
-<%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-mini' %>
+<%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-default btn-xs' %>
 <% else %>
-  <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-mini btn-primary' %>
+  <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-xs btn-primary' %>
 <% end %>
-<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-mini' %><% end %>
-<% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %><% end %></p>
+<% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %><% end %>
+<% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' %><% end %></p>

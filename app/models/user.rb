@@ -86,13 +86,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me
-  # removed :admin so that public can't make themselves an admin
-  # attr_accessible :title, :body
-  # UK details :uk_id, :uk_expiry
-
+  
   # CSV exporting
   comma do
 
@@ -241,12 +235,12 @@ class User < ActiveRecord::Base
   end
 
   def recurring_subscription
-    return self.subscriptions.select{|s| s.is_recurring?}.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+    return self.subscriptions.select{|s| s.is_recurring?}.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 
   def first_recurring_subscription(profile)
     logger.info("looking for subscription with profile: #{profile}")
-    sub = self.subscriptions.select{|s| (s.paypal_profile_id == profile)}.sort!{|a,b| a.purchase_date <=> b.purchase_date}.first
+    sub = self.subscriptions.select{|s| (s.paypal_profile_id == profile)}.sort{|a,b| a.purchase_date <=> b.purchase_date}.first
     if sub
       logger.info("found #{sub.id}")
     else
@@ -257,19 +251,19 @@ class User < ActiveRecord::Base
 
   def recurring_subscriptions(recurring_payment_id)
     # Return all the subscriptions that have this paypal profile id
-    return self.subscriptions.select{|s| (s.paypal_profile_id == recurring_payment_id)}.sort!{|a,b| a.purchase_date <=> b.purchase_date}
+    return self.subscriptions.select{|s| (s.paypal_profile_id == recurring_payment_id)}.sort{|a,b| a.purchase_date <=> b.purchase_date}
   end
 
   def last_subscription
-    return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+    return self.current_subscriptions.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 
   def last_subscription_including_cancelled
-    return self.subscriptions.sort!{|a,b| a.expiry_date_excluding_cancelled <=> b.expiry_date_excluding_cancelled}.last
+    return self.subscriptions.sort{|a,b| a.expiry_date_excluding_cancelled <=> b.expiry_date_excluding_cancelled}.last
   end
 
   def current_subscription
-    return self.current_subscriptions.sort!{|a,b| a.expiry_date <=> b.expiry_date}.last
+    return self.current_subscriptions.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 
   def current_subscriptions

@@ -5,3 +5,4 @@
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
 NI::Application.config.secret_token = ENV["NI_APP_SECRET_TOKEN"]
+NI::Application.config.secret_key_base = ENV["NI_APP_SECRET_KEY_BASE"]

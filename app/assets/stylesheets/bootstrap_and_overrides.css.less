@@ -3,24 +3,42 @@ body {
 	padding-top: 60px;
 	background-color: #fdfdfd;
 }
-@import "twitter/bootstrap/responsive";
+// @import "twitter/bootstrap/responsive";
+// @import "twitter/bootstrap/variables.less";
 
 // Set the correct sprite paths
 @iconSpritePath: image-url("twitter/bootstrap/glyphicons-halflings.png");
 @iconWhiteSpritePath: image-url("twitter/bootstrap/glyphicons-halflings-white.png");
 
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
-@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
-@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot?#iefix");
-@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
-@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
-@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+@fontAwesomeEotPath: font-url("fontawesome-webfont.eot");
+@fontAwesomeEotPath_iefix: font-url("fontawesome-webfont.eot?#iefix");
+@fontAwesomeWoffPath: font-url("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: font-url("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: font-url("fontawesome-webfont.svg#fontawesomeregular");
 
 // Font Awesome
 @import "fontawesome/font-awesome";
 
+// Fixes from Glyphicon code
+// http://astronautweb.co/snippet/font-awesome/
+
+.font-awesome-family {
+	font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+.icon-star:after {
+	.font-awesome-family;
+	content: "\f005";
+}
+
 // Glyphicons
 //@import "twitter/bootstrap/sprites.less";
+//@import "twitter/bootstrap/glyphicons.less";
 
 // Your custom LESS stylesheets goes here
 //
@@ -31,7 +49,7 @@ body {
 // See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
 //
 // Example:
-// @linkColor: #ff0000;
+// @link-color: #ff0000;
 
 // Fix the mobile submenu problem
 .dropdown-backdrop {
@@ -45,7 +63,7 @@ body {
 
 // Scaffolding
 // -------------------------
-@textColor:             #111;
+@text-color:            @gray-dark;
 
 // Typography
 // -------------------------
@@ -54,12 +72,23 @@ body {
 @sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
 // @serifFontFamily:       "iABCRegular", serif;
 
-@baseFontFamily:        @sansFontFamily;
+@font-family-base:        @sansFontFamily;
 // @baseFontSize:          12px;
 // @baseLineHeight:        18px;
 // Open Sans
-@baseFontSize:          13px;
-@baseLineHeight:        20px;
+@font-size-base:          13px;
+// @line-height-base:        20px;
+
+//** Unit-less `line-height` for use in components like buttons.
+@line-height-base:        1.6; // 20/14
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
+
+//** By default, this inherits from the `<body>`.
+@headings-font-family:    inherit;
+@headings-font-weight:    600;
+@headings-line-height:    @line-height-computed;
+@headings-color:          inherit;
 
 @articleFontSize:		14px;
 @articleLineHeight:		23px;
@@ -71,24 +100,28 @@ body {
 @baseLineHeight:        32px;
 */
 
-// @headingsFontFamily:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; }
+// @headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
 h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
+
+h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
+	margin-top: 0;
+}
 
 // ABC news base body font Verdana 12px 18px line-height
 
 // Navbar
 // -------------------------
-@navbarCollapseWidth:             767px;
+@navbar-collapse-width:             767px;
 
-@navbarHeight:                    40px;
+@navbar-height:                    40px;
 @navbarBackgroundHighlight:       #ffffff;
 @navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);
 
 @navbarText:                      #777;
 @navbarLinkColor:                 #777;
-@navbarLinkColorHover:            @grayDark;
+@navbarLinkColorHover:            @gray-dark;
 @navbarLinkColorActive:           @gray;
 @navbarLinkBackgroundHover:       transparent;
 @navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
@@ -113,6 +146,17 @@ h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 @footerColour: rgba(250,176,59,0.58);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
+// Column fixes
+
+@grid-gutter-width: 2em;
+
+// Negative margin nested rows out to align the content of columns
+.row-fluid {
+  margin-left:  (@grid-gutter-width / -2);
+  margin-right: (@grid-gutter-width / -2);
+}
+
+
 // Link colours
 
 a:visited {
@@ -123,10 +167,15 @@ a.btn:visited { color: #333; }
 
 a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
 
+.no-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 // Top Nav Bar
 
 .navbar, .navbar-search .search-query {
-	font-family: @headingsFontFamily;
+	font-family: @headings-font-family;
 	font-size: 14px;
 	line-height: 20px;
 }
@@ -144,12 +193,16 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	font-family: "Bodega";
 	color: @niRed;
 	font-size: 26px;
-	padding: 8px 20px 6px;
+	padding-left: 0px;
 }
 
 .navbar .container {
 	margin-bottom: 0px;
 	padding-bottom: 0px; 
+}
+
+.navbar-right {
+	margin-right: 0;
 }
 
 .dropdown-menu > li > form {
@@ -180,27 +233,33 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 // Home page styling
 
 .hero-unit {
-	background-color: @grayLighter;
-	margin: 10px 0px 20px 0px;
-	padding: 20px 40px 30px 40px;
+	background-color: @gray-lighter;
+	padding: 1.5em 2em;
+	border-radius: 3px;
 }
 
 .hero-unit h1 {
-	font-size: 1.9em;
+	font-size: 2em;
+	font-weight: bold;
+	margin-top: 0px;
 	margin-bottom: 0.25em;
 }
 
 .hero-unit p {
-	font-size: 0.8em;
-	line-height: 1.5em;
+	// font-size: 0.8em;
+	// line-height: 1.5em;
 }
 
 .hero-buttons {
-	// margin: 1.5em 0em 0em 0em;
+	margin: 1.5em inherit;
 }
 
 .ios-home-ad {
 	margin: 1em 0 0 0;
+}
+
+.ios-home-ad img {
+	max-height: 40px;
 }
 
 @homeCoverListMargin: 7px;
@@ -213,7 +272,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-left: @homeCoverListMargin;
 	margin-right: @homeCoverListMargin;
 	margin-bottom: (@homeCoverListMargin * 2) + 3;
-	.border-radius(2px);
+	border-radius: 2px;
 }
 
 .hide-meta {
@@ -222,8 +281,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote {
 	margin-top: 1em;
-	margin-bottom: 2em;
-	border-bottom: 1px solid @grayLighter;
+	// margin-bottom: 2em;
+	// border-bottom: 1px solid @gray-lighter;
 }
 
 .home-keynote img {
@@ -238,7 +297,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-keynote h3 {
-	color: @grayLight;
+	color: @gray-light;
 	font-size: 1.3em;
 	line-height: inherit;
 	margin-bottom: 0;
@@ -250,16 +309,16 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-keynote h5 {
-	color: @grayLight;
+	color: @gray-light;
 	font-weight: normal;
 }
 
 // User login links & profile link
 
 .user_nav {
-	float: right;
-	position: relative;
-	top: -1px;
+	// float: right;
+	// position: relative;
+	// top: 2px;
 }
 
 // Weird icon bug fix
@@ -268,15 +327,19 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	background-image: none;
 }
 
+.label {
+	background-color: #999;
+}
+
 .breadcrumb {
-	font-family: @headingsFontFamily;
+	font-family: @headings-font-family;
 	background-image: none;
 	background-color: transparent;
 	padding: 0px;
 	margin-right: 5px;
 	border: none;
 	box-shadow: none;
-	color: @grayLight;
+	color: @gray-light;
 }
 
 .breadcrumb a {
@@ -292,6 +355,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	color: #000;
 	background-color: @footerColour;
 	text-shadow:none;
+}
+
+.breadcrumb > li + li::before {
+	content: none;
 }
 
 .page-header {
@@ -310,17 +377,21 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -40px;
 }
 
+.page-header .share-links img, .issue-title img {
+	float: none !important;
+}
+
 .page-header .share-links {
 	line-height: 2em;
 }
 
 .footer {
-	color: @grayDark;
+	color: @gray-dark;
 	background-color: @footerColour;
 	margin: 0 -53px -53px -53px;
 	padding: 2em;
 	text-align: center;
-	.border-radius(0 0 3px 3px);
+	border-radius: 0 0 3px 3px;
 }
 
 .footer p {
@@ -345,13 +416,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .purchase-issue h3 {
 	font-size: 1.2em;
-	margin: 0px;
+	// margin: 0px;
 }
 
 .purchase-issue h4 {
 	font-size: 1em;
 	font-weight: normal;
-	color: @grayLight;
+	color: @gray-light;
 	margin-top: -10px;
 }
 
@@ -372,10 +443,12 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .marketing-subscribe h3 {
 	margin: 0px;
+	font-size: 1.5em;
+	line-height: 1.2em;
 }
 
 .marketing-subscribe h4 {
-	margin-top: 0px;
+	margin-top: 8px;
 	color: @gray;
 }
 
@@ -391,6 +464,34 @@ input, textarea, .uneditable-input {
 
 textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text {
 	width: 100%;
+	height: 30em;
+}
+
+#new_user * .control-label {
+	margin-bottom: 0.5em;
+}
+
+.category_autocomplete {
+	max-width: 50%;
+	float: left;
+	margin-bottom: 1em;
+	margin-right: 1em;
+}
+
+.file-upload {
+	margin: 1em 0 1em 0;
+}
+
+.form-horizontal .form-group {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.form-horizontal {
+	margin-bottom: 1em;
+	max-width: 50%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 // Give the dl dd a little more breathing space between entries
@@ -454,9 +555,9 @@ a:active .shadow {
 
 .edit-issue-buttons {
 	float: right;
-	.border-radius(5px);
-	border: 1px dashed @grayLight;
-	background-color: @grayLighter;
+	border-radius: 5px;
+	border: 1px dashed @gray-light;
+	background-color: @gray-lighter;
 	padding: 10px;
 	width: intrinsic;
 	position: relative;
@@ -475,18 +576,18 @@ a:active .shadow {
 }
 
 .form-actions {
-	padding: 18px 0px 0px 0px;
-	// margin-bottom: 0px;
+	padding: 18px 0px 1em 0px;
+	margin-top: 1em;
 	background-color: transparent;
 	border-top: 1px dashed #e5e5e5;
 }
 
 .edit-issue-buttons .simple_form, .edit-article-buttons .simple_form {
-	margin-bottom: 0;
+	// margin-bottom: 0;
 }
 
 .edit-issue-buttons .simple_form .btn, .edit-article-buttons .simple_form .btn {
-	margin-top: -9px;
+	// margin-top: -9px;
 }
 
 .edit-issue-buttons .control-group, .edit-article-buttons .control-group {
@@ -507,7 +608,7 @@ a:active .shadow {
 
 .issue-search .btn {
 	// margin-top: -10px;
-	height: 30px;
+	// height: 30px;
 }
 
 @issueCoverListMargin: 7px;
@@ -520,7 +621,7 @@ a:active .shadow {
 	margin-left: @issueCoverListMargin;
 	margin-right: @issueCoverListMargin;
 	margin-bottom: (@issueCoverListMargin * 2) + 3;
-	.border-radius(2px);
+	border-radius: 2px;
 }
 
 .issue-list-title {
@@ -538,7 +639,7 @@ a:active .shadow {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
 	font-weight: normal;
-	color: @grayLight;
+	color: @gray-light;
 }
 
 .issue-title {
@@ -558,7 +659,7 @@ a:active .shadow {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
 	font-weight: normal;
-	color: @grayLight;
+	color: @gray-light;
 }
 
 .page-header .ios-issue-page, .ios-issue-page {
@@ -573,11 +674,11 @@ a:active .shadow {
 .issue-cover {
 	float: left;
 	margin: 0px 20px 20px 0px;
-	.border-radius(2px);
+	border-radius: 2px;
 }
 
 .articles-not-categorised-for-display {
-	.border-radius(5px);
+	border-radius: 5px;
 	background-color: #f6e2e2;
 	padding: 10px;
 	margin-bottom: 20px;
@@ -607,7 +708,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 // Issue.articles styling
 
 .keynote {
-	.border-radius(5px);
+	border-radius: 5px;
 	min-height: 200px;
 	padding: 1em;
 	background-color: @niGreen;
@@ -618,14 +719,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-sections {
-	.border-radius(5px);
+	border-radius: 5px;
 	padding: 1em;
 	margin-bottom: 2em;
 	background-color: @boxGrayLightest;
-}
-
-.issue-articles-container {
-	
 }
 
 .issue-articles-container h3 {
@@ -633,7 +730,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-article {
-	border-bottom: 1px solid @grayLighter;
+	border-bottom: 1px solid @gray-lighter;
 	padding-bottom: 15px;
 	margin-bottom: 2em;
 }
@@ -646,8 +743,12 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .article-search .btn {
 	// margin-top: -10px;
+	// margin-bottom: 1em;
+	// height: 30px;
+}
+
+.article-search .input-append {
 	margin-bottom: 1em;
-	height: 30px;
 }
 
 // Issue.editors_letter styling
@@ -660,21 +761,17 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .editors-letter h3, .issue-articles-container h3 {
 	margin-top: 0px;
 	padding-top: 0px;
-	color: @grayLight;
+	color: @gray-light;
 	line-height: 1em;
 }
 
 .editors-photo {
 	float: right;
 	margin: 0px 0px 10px 10px;
-	.border-radius(5px);
+	border-radius: 5px;
 }
 
 // Article styling
-
-.image-uploader form {
-	margin-bottom: 0px;
-}
 
 .article-title {
 	padding-bottom: 0px;
@@ -688,15 +785,15 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .article-title h2 {
-	font-weight: 600;
+	// font-weight: 600;
 	font-size: 1.2em;
 	line-height: 1.3em;
-	color: @grayLight;
+	color: @gray-light;
 	/* padding-bottom: 0.75em; */
 }
 
 .article-title p {
-	color: @grayLight;
+	color: @gray-light;
 }
 
 .article-title .issue-cover {
@@ -713,7 +810,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .most-shared h3 {
 	margin-bottom: 0;
-	color: @grayDark;
+	color: @gray-dark;
 }
 
 .most-shared h4 {
@@ -855,19 +952,9 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	padding: 10px 15px;
 }
 
-.modal {
-	width: auto;
-	max-width: 1000px;
-}
-
-.modal.fade.in {
-	top: 2.5%;
-}
-
-.modal-body {
-	//max-height: intrinsic;
-	overflow-y: auto;
-	padding-bottom: 0px;
+.carousel-inner > .item > img {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .carousel-control {
@@ -885,6 +972,11 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .article-image-carousel {
 	margin: 0px 13px 15px 0px;
 	padding: 0px;
+	max-width: 100%;
+}
+
+.autocomplete-data {
+	margin-bottom: 1em;
 }
 
 .all-article-images {
@@ -897,7 +989,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .article-thumb {
 	// .shadow-light;
-	.border-radius(2px);
+	border-radius: 2px;
 	float: right;
 	margin-left: 20px;
 }
@@ -986,7 +1078,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .home-image {
 	.article-image;
-	margin: 0px 0px 0px 1em;
+	margin: 0px 0px 0px 2em;
 }
 
 .home-image img {
@@ -1019,7 +1111,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	font-size: 0.9em;
 	line-height: 1.6em;
 	margin-top: -1px;
-	color: @grayLight;
+	color: @gray-light;
 	max-width: 280px;
 }
 
@@ -1091,7 +1183,7 @@ blockquote.pull-left {
 	background-color: @boxBackgroundColour;
 	padding: 1.5em 2em;
 	margin: 2em 0 2em 0;
-	.border-radius(5px);
+	border-radius: 5px;
 }
 
 .factbox {
@@ -1141,7 +1233,7 @@ blockquote.pull-left {
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
-	color: @grayLight;
+	color: @gray-light;
 	margin-top: -7px;
 	margin-bottom: 20px;
 }
@@ -1179,7 +1271,7 @@ ul.ui-autocomplete {
 	border-top: 1px dashed #e5e5e5;
 	padding: 1em;
 	margin: 1em 0 -1.5em 0;
-	.border-radius(5px);
+	border-radius: 5px;
 }
 
 .article-previous {
@@ -1241,10 +1333,10 @@ ul.ui-autocomplete {
 }
 
 .subscription-offer {
-	.border-radius(5px);
+	border-radius: 5px;
 	padding: 1em;
-	margin-bottom: 24px;
-	background-color: @grayLighter;
+	margin-bottom: @grid-gutter-width;
+	background-color: @gray-lighter;
 }
 
 .subscription-offer h4 {
@@ -1255,6 +1347,7 @@ ul.ui-autocomplete {
 
 .subscription-offer img {
 	margin-bottom: 1em;
+	width: 100%;
 }
 
 .subscription-buy-button {
@@ -1293,6 +1386,15 @@ ul.ui-autocomplete {
 	margin: 1em 0 1em 0;
 }
 
+.mobile-apps-page {
+	text-align: center;
+}
+
+.mobile-apps-page > img {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 // 404 error page styling
 
 .fourohfour {
@@ -1323,11 +1425,8 @@ ul.ui-autocomplete {
 	font-size: 1.3em;
 	font-weight: bold;
 	color: @gray;
-	padding-bottom: 5px;
-}
-
-.admin-settings .btn {
-	margin-top: -9px;
+	padding-bottom: 1em;
+	padding-right: 1em;
 }
 
 
@@ -1378,8 +1477,8 @@ ul.ui-autocomplete {
 /* Landscape phones */
 @media (max-width: 480px) {
 	.user_nav {
-		position: relative;
-		top: 0px;
+		// position: relative;
+		// top: 0px;
 	}
 	.article-image {
 		width: 100%;
@@ -1421,8 +1520,12 @@ ul.ui-autocomplete {
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 	.user_nav {
-		position: relative;
-		top: 0px;
+		// position: relative;
+		// top: 0px;
+		margin-right: 0.5em;
+	}
+	.navbar .brand {
+		margin-left: 15px;
 	}
 	.article-title .issue-cover {
 		margin-top: 0px;
@@ -1457,19 +1560,25 @@ ul.ui-autocomplete {
 	}
 	.footer {
 		margin: 0 -20px 0 -20px;
-		.border-radius(0px);
+		border-radius: 0px;
 	}
 	.span6.editors-letter {
 		background-color: #fdfdfd;
 		float: none;
+	}
+	.issue-articles-container {
+		padding-right: 0;
+	}
+	.form-horizontal {
+		max-width: 100%;
 	}
 }
  
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
 	.user_nav {
-		position: relative;
-		top: 0px;
+		// position: relative;
+		// top: 0px;
 	}
 	.article-title .issue-cover {
 		margin-top: 0px;
@@ -1491,19 +1600,19 @@ ul.ui-autocomplete {
 		margin-top: -7px;
 	}
 	.home-image {
-		margin: -20px 0px 0px 1em;
+		margin: -20px 0px 0px 2em;
 	}
 }
  
 /* Large desktop */
-@media (min-width: 980px) {
+@media (min-width: 992px) {
 	.container {
 		// .shadow;
-		.border-radius(3px);
-		border: 1px solid @grayLighter;
+		border-radius: 3px;
+		border: 1px solid @gray-lighter;
 		margin: -60px auto 4em auto;
 		padding: 60px 4em 4em 4em;
-		max-width: 945px;
+		max-width: 1050px;
 	}
 	.navbar-inner {
 		// height: 100px;
@@ -1515,6 +1624,6 @@ ul.ui-autocomplete {
 		border: none;
 	}
 	.home-image {
-		margin: -20px 0px 0px 1em;
+		margin: -20px 0px 0px 2em;
 	}
 }

@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :auto_signin_ip
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
 
   protect_from_forgery
 
@@ -12,6 +14,13 @@ class ApplicationController < ActionController::Base
 
   # Save this page location to session
   after_filter :store_location
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up).push(:username, :email)
+    devise_parameter_sanitizer.for(:account_update).push(:username, :email)
+  end    
 
   private
 

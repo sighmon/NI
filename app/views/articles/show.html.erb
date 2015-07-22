@@ -3,18 +3,18 @@
 <% if can? :update, @article %>
 <div class="edit-article-buttons">
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_issue_article_path(@issue,@article), :class => 'btn btn-primary btn-mini' %>
+                edit_issue_article_path(@issue,@article), :class => 'btn btn-primary btn-xs' %>
   <% if can? :destroy, @article %>
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 issue_article_path(@issue,@article),
               :method => 'delete',
               :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-                :class => 'btn btn-mini btn-danger' %> | 
-    <%= link_to 'Import article', issue_article_import_path(@issue,@article), :class => 'btn btn-mini btn-warning',
+                :class => 'btn btn-xs btn-danger' %> | 
+    <%= link_to 'Import article', issue_article_import_path(@issue,@article), :class => 'btn btn-xs btn-warning',
                 :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and re-import this article again from Bricolage.')) %> | 
-    <%= link_to 'Import images', issue_article_import_images_path(@issue,@article), :class => 'btn btn-mini btn-warning',
+    <%= link_to 'Import images', issue_article_import_images_path(@issue,@article), :class => 'btn btn-xs btn-warning',
                 :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the images from Bricolage.')) %> | 
-    <%= link_to 'All images', issue_article_images_path(@issue,@article), :class => 'btn btn-mini btn-success' %>
+    <%= link_to 'All images', issue_article_images_path(@issue,@article), :class => 'btn btn-xs btn-success' %>
     <div class="image-uploader">
       <%= simple_form_for ([@issue, @article, @newimage]), :html => { :class => 'file-upload', :multipart => true } do |f| %>
         <%= f.file_field :data, multiple: true, name: "image[data]" %>
@@ -35,9 +35,9 @@
       <p><b>Sent</b>: <%= @article.notification_sent.in_time_zone("Australia/Adelaide").strftime("%d/%m/%Y at %I:%M %p") %><br />(<%= @article.notification_sent.strftime("%d/%m/%Y at %I:%M %p GMT") %>)</p>
     <% else %>
       <%= simple_form_for issue_article_send_push_notification_path(@issue, @article), :url => issue_article_send_push_notification_path(@issue, @article) do |f| %>
-        <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
-        <%= f.text_field :device_id, :placeholder => 'Push to single user device_id' %><br />
-        <%= f.text_field :alert_text, :placeholder => 'Message' %>
+        <%= f.input :scheduled_datetime, as: :datetime, required: false, label: "Scheduled for: (UTC, GMT timezone)" %>
+        <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
+        <%= f.input :alert_text, :placeholder => 'Message', required: false %>
         <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices."}) do %>
           Send Push
         <% end %>
@@ -78,54 +78,47 @@
           </div>
         <% end %>
       </div>
-      <!-- Add class="item" here for another item -->
     </div>
-    <!-- Carousel nav -->
-    <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
   </div>
 <% end %>
 
-<!-- <div class="article-image-top" style="background-image: url('');"></div> -->
-
 <!-- Manually uploaded image slideshow -->
+
 <% if not @article.images.select{|i| i.media_id.nil?}.select{|i| not i.hidden?}.empty? %>
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag_for :div, i do %>
-      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}"), "#imageModal", :"data-toggle" => 'modal' %>
+      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}", :"data-toggle" => 'modal', :"data-target" => '.imageModal'), '#' %>
       <div class="new-image-caption"><%= simple_format i.caption %></div>
       <div class="new-image-credit"><%= i.credit %></div>
       <% if can? :manage, Image %>
         <%= link_to t('.show', :default => t("helpers.links.show")),
-                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-mini' %>
+                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-default btn-xs' %>
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_issue_article_image_path(@issue, @article, i), :class => 'btn btn-mini btn-primary' %>
+                    edit_issue_article_image_path(@issue, @article, i), :class => 'btn btn-xs btn-primary' %>
         <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     issue_article_image_path(@issue, @article, i),
                     :method => :delete,
                     :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                    :class => 'btn btn-mini btn-danger' %>
+                    :class => 'btn btn-xs btn-danger' %>
       <% end %>
     <% end %>
   <% end %>
+
   <!-- Modal -->
-  <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal fade imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel">
     <!-- Carousel -->
-    <div id="imageCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            <% first = true %>
-            <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
-              <div class="<% if first %>active <% first = false %><% end %>item">
-                <div class="modal-body">
-                  <%= image_tag i.data_url.to_s, :alt => "", :title => "", :size => "#{i.width}x#{i.height}" %>
+    <div class="modal-dialog modal-lg">
+      <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner" role="listbox">
+              <% first = true %>
+              <% @article.images.order("position").select{|i| i.media_id.nil?}.each do |i| %>
+                <div class="<% if first %>active <% first = false %><% end %>item">
+                  <%= image_tag i.data_url.to_s, :alt => "", :title => "" %>
                 </div>
-              </div>
-            <% end %>
-        </div>
-        <!-- Carousel nav -->
-        <a class="carousel-control left hide" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right hide" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+              <% end %>
+          </div>
+      </div>
     </div>
   </div>
 </div>
@@ -161,7 +154,7 @@
 
 <div class="related-articles">
   <div class="article-next-previous">
-    <% if not @article.previous.nil? %><div class="article-previous"><i class='icon-arrow-left'></i> <%= link_to @article.previous.title, issue_article_path(@article.previous.issue, @article.previous) %></div><% end %> <% if not @article.next.nil? %><div class="article-next"><i class='icon-arrow-right'></i><%= link_to @article.next.title, issue_article_path(@article.next.issue, @article.next) %></div><% end %>
+    <% if not @article.previous.nil? %><div class="article-previous"><i class='fa fa-arrow-left'></i> <%= link_to @article.previous.title, issue_article_path(@article.previous.issue, @article.previous) %></div><% end %> <% if not @article.next.nil? %><div class="article-next"><i class='fa fa-arrow-right'></i><%= link_to @article.next.title, issue_article_path(@article.next.issue, @article.next) %></div><% end %>
   </div>
 
   <div class="clearfix"></div>
@@ -190,7 +183,7 @@
   </nav>
 
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issue_path(@issue), :class => 'btn'  %>
+              issue_path(@issue), :class => 'btn btn-default'  %>
   <% if can? :update, @article %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
 	              edit_issue_article_path(@issue,@article), :class => 'btn btn-primary' %>
@@ -210,7 +203,7 @@
     <div class='share-highlight-btn'>
       <div class='btn-caret'>
       </div>
-      <div class='btn'>
+      <div class='btn btn-default'>
         <div class="tweet-button">
           <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
         </div>

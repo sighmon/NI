@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
+
   belongs_to :issue
-  attr_accessible :author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :categories_attributes, :hide_author_name, :story_id
+  
   mount_uploader :featured_image, FeaturedImageUploader
 
   # join-model for favourites
@@ -62,21 +63,6 @@ class Article < ActiveRecord::Base
     indexes :featured_image_caption
     indexes :publication, type: 'date'
     indexes :published, type: 'boolean', as: 'published'
-  end
-
-  # Fix so that nested Categories can be found and saved for Articles if they exist
-  def categories_attributes=(categories_attributes)
-    categories_attributes.values.each do |category_attributes|
-      if category_attributes[:id].nil? and category_attributes[:name].present?
-        category = Category.find_by_name(category_attributes[:name])
-        if category.present?
-          category_attributes[:id] = category.id
-          ## FIXME? check if we are adding twice?
-          self.categories << category
-        end
-      end
-    end
-    assign_nested_attributes_for_collection_association(:categories, categories_attributes.values, mass_assignment_options)
   end
 
   def create_categories_from_article_source

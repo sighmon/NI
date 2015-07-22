@@ -5,9 +5,6 @@ NI::Application.routes.draw do
 
   get "guest_passes/index"
 
-  # routes for static pages - help, about etc..
-  resources :pages, except: :show
-
   get "subscriptions/update"
 
   get "settings/index"
@@ -16,7 +13,7 @@ NI::Application.routes.draw do
 
   # Sitemap redirects to S3
   # match "/sitemap_index.xml", :controller => "sitemap", :action => "index"
-  match "/sitemap.xml", :controller => "sitemap", :action => "index"
+  get "/sitemap.xml", :controller => "sitemap", :action => "index"
 
   # created by the admin/users controller creation
   # get "users/index"
@@ -25,6 +22,7 @@ NI::Application.routes.draw do
   get "users/re_sign_in"
 
   devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
+  # devise_for :users, :controllers => { :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
 
   devise_scope :user do
     get "/uk_login" => "devise/sessions#new_uk"
@@ -32,8 +30,8 @@ NI::Application.routes.draw do
 
   # Create a route for users profile page
   # match 'users/:id' => 'users#show', :as => @user
-  resources :users, :only => [:show]
   post "users/:id(.:format)", :to => 'users#show', :as => :user
+  resources :users, :only => [:show]
 
   resources :subscriptions do
     new do
@@ -42,6 +40,9 @@ NI::Application.routes.draw do
   end
   # hack to create /subscriptions route
   # resources :subscriptions, :only => [:create]
+
+  # For iOS to post
+  post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
 
   resources :issues do
     # Route for importing articles from bricolage to an issue
@@ -87,9 +88,6 @@ NI::Application.routes.draw do
     end
   end
 
-  # For iOS to post
-  post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
-
   get 'search' => 'articles#search'
   get 'popular' => 'articles#popular'
 
@@ -134,13 +132,17 @@ NI::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'home#index'
 
-  # Routes for all Pages - About, help etc..
-  get ':id', to: 'pages#show', as: :page
-  put ':id', to: 'pages#update', as: :page
-  delete ':id', to: 'pages#destroy', as: :page
-
   # Pretty SEO permalink match for articles
-  match '/perma_article/:id' => 'articles#show'
+  get '/perma_article/:id' => 'articles#show'
+
+  # Routes for all Pages - About, help etc..
+  get 'pages', to: 'pages#index'
+  get ':id', to: 'pages#show', as: :page
+  patch ':id', to: 'pages#update'#, as: :page
+  delete ':id', to: 'pages#destroy'#, as: :page
+
+  # routes for static pages - help, about etc..
+  resources :pages, except: :show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

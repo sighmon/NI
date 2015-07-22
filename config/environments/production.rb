@@ -1,5 +1,18 @@
 NI::Application.configure do
+# Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+
+  # Rails 4
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both threaded web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.assets.js_compressor = :uglifier
+  config.log_level = :debug
+  config.log_formatter = ::Logger::Formatter.new
+  config.active_record.dump_schema_after_migration = false
 
   # Default URL for Devise
   config.action_mailer.default_url_options = { :host => 'digital.newint.com.au', :protocol => 'https' }

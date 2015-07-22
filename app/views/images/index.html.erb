@@ -34,12 +34,12 @@
         <td><%= image.hidden ? 'hidden' : 'no' %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_article_image_path(@issue, @article, image), :class => 'btn btn-mini btn-primary' %>
+                      edit_issue_article_image_path(@issue, @article, image), :class => 'btn btn-xs btn-primary' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       issue_article_image_path(@issue, @article, image),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
+                      :class => 'btn btn-xs btn-danger' %>
         </td>
       </tr>
     <% end %>
@@ -48,7 +48,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-                issue_article_path(@issue,@article), :class => 'btn' %>
+                issue_article_path(@issue,@article), :class => 'btn btn-default' %>
   <%= link_to t('.new', :default => t("helpers.links.new")),
               new_issue_article_image_path(@issue,@article),
               :class => 'btn btn-success' %>

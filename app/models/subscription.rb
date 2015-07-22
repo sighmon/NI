@@ -1,6 +1,6 @@
 class Subscription < ActiveRecord::Base
+
   belongs_to :user
-  attr_accessible :valid_from, :duration, :cancellation_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund, :purchase_date, :price_paid, :paper_copy
 
   validates_presence_of :valid_from, :duration
 

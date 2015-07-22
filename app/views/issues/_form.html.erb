@@ -1,58 +1,18 @@
 <%= simple_form_for @issue, :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
-  <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :number, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.number_field :number, :class => 'number_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :editors_name, :class => 'control-label' %>
-    <%= f.text_field :editors_name, :class => 'text_field' %>
-  </div>
-  <div class="control-group">
-    <%= f.label :editors_photo, :class => 'control-label' %>
-    <%= f.file_field :editors_photo %>
-  </div>
-  <div class="control-group">
-    <%= f.label :editors_letter, :class => 'control-label' %>
-    <%= f.text_area :editors_letter, :class => 'text_area' %>
-  </div>
-  <div class="control-group">
-    <%= f.label :cover, :class => 'control-label' %>
-    <%= f.file_field :cover %>
-  </div>
-  <div class="control-group">
-    <%= f.label :release, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.datetime_select :release, :class => 'datetime_select' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :email_text, :class => 'control-label' %>
-    <%= f.text_area :email_text, :class => 'text_area' %>
-  </div>
-  <div class="control-group">
-    <%= f.label :trialissue, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :trialissue, :class => 'check_box' %>
-    </div>
-  </div>
 
-  <div class="control-group">
-    <%= f.label :published, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :published, :class => 'check_box' %>
-    </div>
-  </div>
+  <%= f.input :title %>
+  <%= f.input :number, as: :integer %>
+  <%= f.input :editors_name %>
+  <%= f.input :editors_photo %>
+  <%= f.input :editors_letter %>
+  <%= f.input :cover %>
+  <%= f.input :release, as: :datetime %>
+  <%= f.input :email_text %>
+  <%= f.input :trialissue, as: :boolean %>
+  <%= f.input :published, as: :boolean %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn btn-default' %>
   </div>
 <% end %>
