@@ -1,7 +1,8 @@
 require 'fileutils'
 
 Rake::Task['assets:precompile'].enhance do
-  Rake::Task['assets:precompile_static_html'].invoke
+  #### TOFIX: Not precompiling these for Rails4 for now..
+  # Rake::Task['assets:precompile_static_html'].invoke
 end
 
 namespace :assets do

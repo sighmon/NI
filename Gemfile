@@ -12,6 +12,9 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
 
+#### For heroku to serve static assets
+gem 'rails_serve_static_assets'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

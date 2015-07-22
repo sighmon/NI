@@ -545,6 +545,7 @@ DEPENDENCIES
   rails-observers
   rails-settings-cached (= 0.4.1)
   rails_12factor
+  rails_serve_static_assets
   rb-fsevent (~> 0.9.1)
   rb-inotify (~> 0.8.8)
   retina_image_tag!
