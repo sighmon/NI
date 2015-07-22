@@ -74,7 +74,7 @@ describe Institution::UsersController, :type => :controller do
 
     describe "POST create" do
       describe "with valid params" do
-        let(:attributes) { valid_attributes_for(FactoryGirl.build(:user)).merge({password: "password", password_confirmation: "password"}) }
+        let(:attributes) { FactoryGirl.attributes_for(:institution_user) }
         it "creates a new User" do
           expect {
             post :create, {:user => attributes}
@@ -118,19 +118,20 @@ describe Institution::UsersController, :type => :controller do
           # specifies that the Institution::User created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          expect_any_instance_of(User).to receive(:update_attributes).with({ "these" => "params" })
-          put :update, {:id => user.to_param, :user => { "these" => "params" }}
+          child_user_params = FactoryGirl.attributes_for(:child_user)
+          expect_any_instance_of(User).to receive(:update_attributes).with(child_user_params)
+          put :update, {:id => user.to_param, :user => child_user_params}
         end
 
         it "assigns the requested user as @user" do
           user = FactoryGirl.create(:user)
-          put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
+          put :update, {:id => user.to_param, :user => FactoryGirl.attributes_for(:user)}
           expect(assigns(:user)).to eq(user)
         end
 
         it "redirects to the parent" do
           user = child
-          put :update, {:id => user.to_param, :user => valid_attributes_for(user)}
+          put :update, {:id => user.to_param, :user => FactoryGirl.attributes_for(:child_user)}
           expect(response).to redirect_to(parent)
         end
       end

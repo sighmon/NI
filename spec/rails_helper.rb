@@ -6,7 +6,7 @@ SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
+# require 'rspec/autorun'
 
 require 'capybara/rspec'
 require 'capybara/rails'
@@ -66,7 +66,7 @@ RSpec.configure do |config|
 
 end
 
-def valid_attributes_for(model, extra=[])
-  return model.attributes.slice(*(Array(model.class.accessible_attributes)+extra))
-end
+# def valid_attributes_for(model, extra=[])
+#   return model.attributes.slice(*(Array(model.class.accessible_attributes)+extra))
+# end
 

@@ -95,7 +95,7 @@ class Institution::UsersController < Institution::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
+    params.fetch(:user, {}).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :uk_id, :uk_expiry, :institution)
   end
 
 end

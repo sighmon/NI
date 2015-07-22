@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# we removed our overloaded registrations controller but these tests are still comforting to have around
 describe Devise::RegistrationsController, :type => :controller do
 
   before(:each) do
