@@ -5,8 +5,8 @@ class IssuesController < ApplicationController
 
   newrelic_ignore :only => [:email, :email_non_subscribers, :email_others]
 
-  # So that iOS can post
-  skip_before_filter :verify_authenticity_token, :only => [:show]
+  # :show So that iOS can post, :index so that issues.json jquery works
+  skip_before_filter :verify_authenticity_token, :only => [:show, :index]
 
   # Devise authorisation
   # before_filter :authenticate_user!, :except => [:show, :index]
