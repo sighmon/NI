@@ -1,6 +1,8 @@
 # config/unicorn.rb
 
-worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
+# worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
+#### Trying 2 to avoid Heroku R14 memory errors
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 2)
 timeout Integer(ENV['WEB_TIMEOUT'] || 90) # Default 30
 preload_app true
 
