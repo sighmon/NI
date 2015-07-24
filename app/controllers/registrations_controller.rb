@@ -14,6 +14,15 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :current_password, :password, :password_confirmation) }
   end
 
+  # To prevent redirect loop when overriding after_sign_in_path_for(resource) in sessions_controller.rb
+  def after_sign_up_path_for(resource)
+    signed_in_root_path(resource)
+  end
+
+  def after_update_path_for(resource)
+    signed_in_root_path(resource)
+  end
+
   private
 
   def can_update

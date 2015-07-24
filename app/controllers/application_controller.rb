@@ -18,9 +18,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:username, :email)
-    devise_parameter_sanitizer.for(:account_update).push(:username, :email)
-  end    
+    # devise_parameter_sanitizer.for(:sign_up).push(:username, :email)
+    # devise_parameter_sanitizer.for(:account_update).push(:username, :email)
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+  end
 
   private
 
@@ -81,6 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    # Now overridden in sessions_controller.rb
     session[:previous_url] || root_path
   end
 

@@ -19,9 +19,15 @@ class SessionsController < Devise::SessionsController
     # Custom sign-in path /uk_login for UK subscribers
   end
 
-  def after_sign_in_path_for(new_uk)
+  def after_sign_in_path_for(resource)
     # After successfully logging in, redirect UK users here
-    root_path
+    # root_path
+    sign_in_url = new_user_session_url
+    if request.referer == sign_in_url
+      super
+    else
+      stored_location_for(resource) || request.referer || root_path
+    end
   end
 
   def users_url
