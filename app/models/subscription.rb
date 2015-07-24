@@ -70,6 +70,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.calculate_subscription_price(duration, options = {})
+    special = options[:special] or false
     autodebit = options[:autodebit] or false
     paper = options[:paper] or false
     if autodebit
@@ -99,6 +100,13 @@ class Subscription < ActiveRecord::Base
         price += 3000
       when 12
         price += 6000
+      end
+    end
+    if special
+      if paper
+        price -= 4400
+      else
+        price -= 2200
       end
     end
     return price

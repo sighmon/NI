@@ -30,7 +30,7 @@ class SubscriptionsController < ApplicationController
     end
 
     @express_purchase_subscription_duration = params[:duration].to_i
-    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper})
+    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, special: params[:special]})
     session[:express_autodebit] = @autodebit
     session[:express_paper] = @paper
     session[:express_purchase_price] = @express_purchase_price
