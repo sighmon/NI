@@ -34,7 +34,7 @@
 	        <div class="navbar-header pull-right">
 	        	<div class="btn-group user_nav">
 							<% if user_signed_in? %>
-							<%= link_to raw("<i class='fa fa-user'></i> #{current_user.username}"), current_user, :class => 'btn btn-success navbar-btn' %>
+							<%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-success navbar-btn' %>
 							<a class="btn btn-success dropdown-toggle navbar-btn" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user.try(:subscriber?) %>
