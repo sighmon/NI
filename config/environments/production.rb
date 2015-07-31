@@ -110,7 +110,6 @@ NI::Application.configure do
   # config.assets.compile = false
   #### Set for Rails4
   config.assets.compile = true
-  
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -151,7 +150,7 @@ NI::Application.configure do
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server
+  # Enable serving of images, stylesheets, and JavaScripts from Amazon Cloudfront asset server
   # config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
