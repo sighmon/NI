@@ -23,6 +23,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_permalink!(params[:id])
     @current_issue = Issue.all.sort_by(&:release).last
     @first_image = ""
+    @issues = Issue.where(published: true).sort_by(&:release).reverse.first(4)
 
     if not @page.body.try(:empty?)
       require 'nokogiri'

@@ -64,7 +64,7 @@
 								<% end %>
 							</ul>
 							<% else %>
-								<%= link_to "Sign in", new_user_session_path, :class => 'btn btn-default navbar-btn' %><%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-default navbar-btn' %>
+								<%= link_to raw("<span>Sign in</span>"), new_user_session_path, :class => 'btn btn-default navbar-btn sign-in' %><%= link_to raw("<span>Sign up</span>"), new_user_registration_path, :class => 'btn btn-default navbar-btn sign-up' %>
 							<% end %>
 						</div>
 	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false" data-target=".navbar-collapse">
@@ -74,7 +74,7 @@
 	            <span class="icon-bar"></span>
 	          </button>
 	        </div>
-					<div class=" collapse navbar-collapse">
+					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
 							<li><%= link_to "Archive", issues_path %></li>
 							<% if current_user.nil? %>

@@ -1406,6 +1406,11 @@ ul.ui-autocomplete {
 	margin-right: auto;
 }
 
+.page-body .home-cover-list {
+	text-align: center;
+}
+
+
 // 404 error page styling
 
 .fourohfour {
@@ -1485,6 +1490,20 @@ ul.ui-autocomplete {
 	}
 	a.btn.btn-success.navbar-btn .nav-username {
 		display: none;
+	}
+
+	.sign-in > span, .sign-up > span {
+		display: none;
+	}
+
+	.sign-in:after {
+		.font-awesome-family;
+		content: "\f090";
+	}
+
+	.sign-up:after {
+		.font-awesome-family;
+		content: "\f055";
 	}
 }
 
@@ -1593,7 +1612,7 @@ ul.ui-autocomplete {
 }
  
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 991px) {
 	.user_nav {
 		// position: relative;
 		// top: 0px;
@@ -1619,6 +1638,12 @@ ul.ui-autocomplete {
 	}
 	.home-image {
 		margin: -20px 0px 0px 2em;
+	}
+	.navbar-brand {
+		padding-right: 7px;
+	}
+	.navbar .nav > li > a {
+		padding: 13px 7px 7px;
 	}
 }
  
