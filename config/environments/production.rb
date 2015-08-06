@@ -151,9 +151,9 @@ NI::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from Amazon Cloudfront asset server
-  # config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
+  config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
   # Enable serving of stylesheets and javascrips from Amazon S3
-  config.action_controller.asset_host = "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com"
+  # config.action_controller.asset_host = "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com"
   config.assets.enabled = true
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
