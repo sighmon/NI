@@ -73,6 +73,10 @@ GEM
       nokogiri
     ansi (1.5.0)
     arel (6.0.2)
+    asset_sync (1.1.0)
+      activemodel
+      fog (>= 1.8.0)
+      unf
     autoparse (0.3.3)
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
@@ -479,6 +483,9 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -503,6 +510,7 @@ DEPENDENCIES
   activerecord-deprecated_finders
   activerecord-session_store
   acts_as_list
+  asset_sync
   better_errors (= 1.1.0)
   binding_of_caller
   bugherd

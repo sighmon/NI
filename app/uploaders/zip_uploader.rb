@@ -16,6 +16,7 @@ class ZipUploader < CarrierWave::Uploader::Base
   def initialize(*)
     super
 
+    # TOFIX? Are these supposed to be here? Are they set in config/initializers/carrierwave.rb already?
     self.fog_credentials = {
       :provider               => 'AWS',
       :aws_access_key_id      => ENV['S3_KEY'],
