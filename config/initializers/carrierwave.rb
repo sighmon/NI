@@ -6,6 +6,8 @@ CarrierWave.configure do |config|
     :region                 => ENV['S3_REGION']
   }
   config.fog_directory  = ENV['S3_BUCKET']
+  # Use CloudFront CDN
+  config.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
   config.fog_public = true
   config.fog_attributes = {'Cache-Control'=>'max-age=31557600'}
   # config.fog_host = 's3-ap-northeast-1.amazonaws.com'
