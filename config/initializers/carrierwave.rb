@@ -5,14 +5,14 @@ CarrierWave.configure do |config|
     :aws_secret_access_key  => ENV['S3_SECRET'],
     :region                 => ENV['S3_REGION']
   }
-  config.fog_directory  = ENV['S3_BUCKET']
-  # Use CloudFront CDN
-  config.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
-  config.fog_public = true
-  config.fog_attributes = {'Cache-Control'=>'max-age=31557600'}
-  # config.fog_host = 's3-ap-northeast-1.amazonaws.com'
   if Rails.env.production?
     config.storage = :fog
+    config.fog_directory  = ENV['S3_BUCKET']
+    # Use CloudFront CDN
+    config.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
+    config.fog_public = true
+    config.fog_attributes = {'Cache-Control'=>'max-age=31557600'}
+    # config.fog_host = 's3-ap-northeast-1.amazonaws.com'
   else
     config.storage = :file
   end
