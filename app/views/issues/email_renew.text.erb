@@ -5,7 +5,13 @@
 
 Hi [salutation],
 
-Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you log in with your username: [username,fallback=] and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+Thanks very much for supporting our New Internationalist digital subscription service. Your subscription [wording]. Being an independent not-for-profit publisher, we're entirely dependent on support such as yours to enable us to continue our work for a fairer and more sustainable planet. If you log in with your username: [username,fallback=oops] and take out a subscription, we'll be very grateful.
+
+To ensure your subscription always stays current - and to get the most economical deal - I highly recommend the 12 month auto renewal subscription that you'll find here. You'll be in full control of the automatic renewal; simply sign in to your PayPal account if you should ever wish to cancel it.
+[https://digital.newint.com.au/subscriptions/new]
+
+No PayPal account? No problem. Simply subscribe here for 3 months, 6 months or 12 months with your Visa or Mastercard:
+[https://digital.newint.com.au/subscriptions/new]
 
 [http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
 
@@ -53,8 +59,8 @@ iOS: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
 
 ============================
 
-You're receiving this because you have a guest login to the 
-digital edition of the New Internationalist Magazine.
+You're receiving this because you have previously been 
+in contact with the New Internationalist.
 
 Forward to a friend
 [forwardtoafriend]

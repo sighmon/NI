@@ -139,6 +139,15 @@ class IssuesController < ApplicationController
     end
   end
 
+  def email_renew
+    @issue = Issue.find(params[:issue_id])
+
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+    end
+  end
+
   def zip
     @issue = Issue.find(params[:issue_id])
     @issue.zip_for_ios

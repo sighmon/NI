@@ -33,6 +33,10 @@
      |
     <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
     <hr />
+    <%= link_to 'Renew please', issue_email_renew_path(@issue), :class => 'btn btn-default btn-xs' %>
+     |
+    <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <hr />
     <p><b>Create a zip file for the iOS app</b></p>
     <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-default btn-xs' %>
     <hr />

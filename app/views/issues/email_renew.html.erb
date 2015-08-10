@@ -88,7 +88,11 @@
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "NI #{@issue.number} - #{@issue.title}", issue_url(@issue) %></singleline></p>
                                     <div align="left" class="article-content">
                                         <multiline label="Description">Hi [salutation],<br /><br />
-                                        Thanks very much for your interest in the New Internationalist. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue) %> of New Internationalist magazine. If you <a href="https://digital.newint.com.au/users/sign_up">sign up</a> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.</multiline>
+                                        Thanks very much for supporting our New Internationalist digital subscription service. Your subscription [wording]. Being an independent not-for-profit publisher, we're entirely dependent on support such as yours to enable us to continue our work for a fairer and more sustainable planet. If you <a href="https://digital.newint.com.au/users/sign_in?user[login]=[username,fallback=oops]">log in</a> with your username: <b>[username,fallback=oops]</b> and take out a subscription, we'll be very grateful.
+
+                                        <br /><br />To ensure your subscription always stays current - and to get the most economical deal - I highly recommend the 12 month auto renewal subscription <a href="https://digital.newint.com.au/seven-good-reasons-to-subscribe">that you'll find here.</a> You'll be in full control of the automatic renewal; simply sign in to your PayPal account if you should ever wish to cancel it.<br /><br />
+
+No PayPal account? No problem. Simply <a href="https://digital.newint.com.au/subscriptions/new">subscribe here</a> for 3 months, 6 months or 12 months with your Visa or Mastercard.</multiline>
                                         <% if not @issue.email_text.blank? %><br /><multiline><%= simple_format @issue.email_text %></multiline><% end %>
                                     </div>
                                 </td>

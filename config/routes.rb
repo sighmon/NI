@@ -51,6 +51,7 @@ NI::Application.routes.draw do
     get :email
     get :email_non_subscribers
     get :email_others
+    get :email_renew
     get :zip
     post :send_push_notification
     get :tweet_issue
