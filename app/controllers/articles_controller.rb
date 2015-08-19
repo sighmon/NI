@@ -260,7 +260,10 @@ class ArticlesController < ApplicationController
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
-            :alternate => { "x-default" => "newint://issues/#{@issue.id}/articles/#{@article.id}" },
+            :alternate => { 
+              "x-default" => "newint://au.com.newint.newinternationalist/issues/#{@issue.id}/articles/#{@article.id}",
+              "x" => "newint://issues/#{@issue.id}/articles/#{@article.id}"
+              },
             :open_graph => {
             :title => @article.title,
             :description => strip_tags(@article.teaser),

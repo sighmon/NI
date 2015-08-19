@@ -56,7 +56,10 @@ class IssuesController < ApplicationController
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
                   :canonical => issues_url,
-                  :alternate => { "x-default" => "newint://issues" },
+                  :alternate => { 
+                    "x-default" => "newint://au.com.newint.newinternationalist/issues",
+                    "x" => "newint://issues"
+                    },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -245,7 +248,10 @@ class IssuesController < ApplicationController
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :canonical => issue_url(@issue),
-                  :alternate => { "x-default" => "newint://issues/#{@issue.id}" },
+                  :alternate => { 
+                    "x-default" => "newint://au.com.newint.newinternationalist/issues/#{@issue.id}",
+                    "x" => "newint://issues/#{@issue.id}"
+                    },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,

@@ -18,7 +18,10 @@ class CategoriesController < ApplicationController
                   :description => @page_description,
                   :keywords => "themes, categories, category, new, internationalist, magazine, digital, edition",
                   :canonical => categories_url,
-                  :alternate => { "x-default" => "newint://categories" },
+                  :alternate => { 
+                    "x-default" => "newint://au.com.newint.newinternationalist/categories",
+                    "x" => "newint://categories"
+                    },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -51,7 +54,10 @@ class CategoriesController < ApplicationController
                   :description => @page_description,
                   :keywords => "#{@category.short_display_name}, new, internationalist, magazine, digital, edition",
                   :canonical => category_url(@category),
-                  :alternate => { "x-default" => "newint://categories" },
+                  :alternate => { 
+                    "x-default" => "newint://au.com.newint.newinternationalist/categories",
+                    "x" => "newint://categories"
+                    },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
