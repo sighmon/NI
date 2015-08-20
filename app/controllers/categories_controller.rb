@@ -19,7 +19,7 @@ class CategoriesController < ApplicationController
                   :keywords => "themes, categories, category, new, internationalist, magazine, digital, edition",
                   :canonical => categories_url,
                   :alternate => { 
-                    "x-default" => "newint://au.com.newint.newinternationalist/categories",
+                    "x-default" => "android-app://au.com.newint.newinternationalist/categories",
                     "x" => "newint://categories"
                     },
                   :open_graph => {
@@ -55,7 +55,7 @@ class CategoriesController < ApplicationController
                   :keywords => "#{@category.short_display_name}, new, internationalist, magazine, digital, edition",
                   :canonical => category_url(@category),
                   :alternate => { 
-                    "x-default" => "newint://au.com.newint.newinternationalist/categories",
+                    "x-default" => "android-app://au.com.newint.newinternationalist/categories",
                     "x" => "newint://categories"
                     },
                   :open_graph => {

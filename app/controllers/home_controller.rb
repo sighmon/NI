@@ -43,7 +43,7 @@ class HomeController < ApplicationController
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
                   :canonical => root_url,
                   :alternate => { 
-                    "x-default" => "newint://au.com.newint.newinternationalist/",
+                    "x-default" => "android-app://au.com.newint.newinternationalist/",
                     "x" => "newint://"
                     },
                   :open_graph => {

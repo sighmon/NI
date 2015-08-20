@@ -57,7 +57,7 @@ class IssuesController < ApplicationController
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
                   :canonical => issues_url,
                   :alternate => { 
-                    "x-default" => "newint://au.com.newint.newinternationalist/issues",
+                    "x-default" => "android-app://au.com.newint.newinternationalist/issues",
                     "x" => "newint://issues"
                     },
                   :open_graph => {
@@ -249,7 +249,7 @@ class IssuesController < ApplicationController
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :canonical => issue_url(@issue),
                   :alternate => { 
-                    "x-default" => "newint://au.com.newint.newinternationalist/issues/#{@issue.id}",
+                    "x-default" => "android-app://au.com.newint.newinternationalist/issues/#{@issue.id}",
                     "x" => "newint://issues/#{@issue.id}"
                     },
                   :open_graph => {
