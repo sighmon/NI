@@ -261,7 +261,7 @@ class ArticlesController < ApplicationController
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
             :alternate => { 
-              "x-default" => "android-app://au.com.newint.newinternationalist/issues/#{@issue.id}/articles/#{@article.id}",
+              "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues/#{@issue.id}/articles/#{@article.id}",
               "x" => "newint://issues/#{@issue.id}/articles/#{@article.id}"
               },
             :open_graph => {
