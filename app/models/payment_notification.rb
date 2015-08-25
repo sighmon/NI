@@ -54,6 +54,19 @@ class PaymentNotification < ActiveRecord::Base
 				renew_subscription(first_recurring_subscription)
 				logger.info "Subscription renewed for another #{first_recurring_subscription.duration} months."
 
+			elsif status == "Completed" and transaction_type == "recurring_payment_outstanding_payment" and params["profile_status"] == "Suspended"
+				# It's a suspended recurring subscription that's been reactivated
+				first_recurring_subscription = @user.first_recurring_subscription(params["recurring_payment_id"])
+				# logger.info first_recurring_subscription
+				renew_subscription(first_recurring_subscription)
+				logger.info "Suspended subscription renewed for another #{first_recurring_subscription.duration} months."
+				# send the admin an email to reactivate the profile
+				begin
+          UserMailer.subscription_recurring_payment_outstanding_payment(@user).deliver
+        rescue Exception
+          logger.error "500 - Email server is down..."
+        end
+
 			elsif params["profile_status"] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
 				if @user.subscription_valid?
@@ -61,7 +74,7 @@ class PaymentNotification < ActiveRecord::Base
 					logger.info "Recurring subscriptions expired successfully."
 					# send a special email saying cancelled through paypal.
 					begin
-            UserMailer.subscription_cancelled_via_paypal(user).deliver
+            UserMailer.subscription_cancelled_via_paypal(@user).deliver
           rescue Exception
             logger.error "500 - Email server is down..."
           end

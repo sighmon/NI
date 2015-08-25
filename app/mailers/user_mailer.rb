@@ -42,6 +42,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
+  def subscription_recurring_payment_outstanding_payment(user)
+    @user = user
+    @greeting = "Hi"
+    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "recurring_payment_outstanding_payment - New Internationalist Digital Subscription")
+  end
+
   def issue_purchase(user, issue)
     @user = user
     @issue = issue

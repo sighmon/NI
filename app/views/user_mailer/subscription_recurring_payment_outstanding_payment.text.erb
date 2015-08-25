@@ -1,0 +1,18 @@
+New Internationalist Digital Subscription - Outstanding payment
+=====================================================
+
+<%= @greeting %> Helen,
+Looks like one of our recurring subscribers has paid an outstanding payment, so maybe check to see if the system updated their subscription okay here:
+
+<%= admin_user_url(@user) %>
+
+<% if @user.expiry_date %>
+Their subscription expiry date is:
+<%= @user.expiry_date.strftime("%e %B, %Y") %>
+<% end %>
+
+This is an automated email, but feel free to ask me any questions about it. :-)
+
+Cheers, Simon.
+
+<%= render :partial => "footer" %>
