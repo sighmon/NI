@@ -227,7 +227,7 @@ class Issue < ActiveRecord::Base
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     story_id = element[:id].to_i
     # TODO: Allow for posibility that issue is nil.
-    a = self.articles.where(story_id).first_or_create
+    a = self.articles.where(story_id: story_id).first_or_create
     a.update_attributes(
       :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
