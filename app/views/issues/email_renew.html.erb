@@ -127,7 +127,7 @@ No PayPal account? No problem. Simply <a href="https://digital.newint.com.au/sub
                                     <% end %>
                                     <p align="left" class="article-title"><singleline label="Title"><%= link_to "#{@issue.keynote.title}", issue_article_url(@issue,@issue.keynote) %></singleline></p>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description"><%= simple_format @issue.keynote.teaser %> <%= link_to image_tag("iphone@2x.png", :alt => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :title => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :size => "14x24", :class => 'ios-icon'), app_link(issue_article_url(@issue,@issue.keynote)) %> <%= link_to "Open in the iOS app", app_link(issue_article_url(@issue,@issue.keynote)) %> | <%= link_to "Read it on-line", issue_article_url(@issue,@issue.keynote) %></multiline>
+                                        <multiline label="Description"><%= simple_format @issue.keynote.teaser %> <%= link_to image_tag("iphone@2x.png", :alt => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :title => "Read '#{@issue.keynote.title}' on your iPad or iPhone.", :size => "14x24", :class => 'ios-icon'), app_link(issue_article_url(@issue,@issue.keynote)) %> <%= link_to "Open in our iOS or Android app", app_link(issue_article_url(@issue,@issue.keynote)) %> | <%= link_to "Read it on-line", issue_article_url(@issue,@issue.keynote) %></multiline>
                                     </div>
                                 </td>
                             </tr>
