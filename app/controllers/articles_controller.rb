@@ -748,7 +748,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     categories_for_removal_from_params = []
     authorize! :update, @article
-    categories_attributes = params[:article][:categories_attributes]
+    categories_attributes = params[:article][:categories_attributes] or []
     categories_attributes.values.each do |category_attributes|
       if category_attributes[:id].nil? and category_attributes[:name].present?
         category = Category.find_by_name(category_attributes[:name])
