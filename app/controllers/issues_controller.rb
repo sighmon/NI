@@ -295,7 +295,7 @@ class IssuesController < ApplicationController
           end
           format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => zip_url_for_json } }
         else
-          render nothing: true, status: :forbidden
+          format.json { render nothing: true, status: :forbidden }
         end
       else
         format.json { render json: issue_show_to_json(@issue) }
