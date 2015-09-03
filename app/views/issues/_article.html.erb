@@ -28,7 +28,12 @@
 <p><% if can? :read, article %>
 <%= link_to 'Read more', issue_article_path(@issue,article), :class => 'btn btn-default btn-xs' %>
 <% else %>
-  <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-xs btn-primary' %>
+  <% if article.keynote? %>
+    <%= link_to "Buy this issue for $#{cents_to_dollars(@issue.price)}", new_issue_purchase_path(@issue), :class => 'btn btn-xs btn-primary' %>
+    <%= link_to "Buy a subscription from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path('subscribe'), :class => 'btn btn-xs btn-info' %>
+  <% else %>
+    <%= link_to 'Buy this issue', new_issue_purchase_path(@issue), :class => 'btn btn-xs btn-primary' %>
+  <% end %>
 <% end %>
 <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %><% end %>
 <% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' %><% end %></p>
