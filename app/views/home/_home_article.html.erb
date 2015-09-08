@@ -8,6 +8,7 @@
 					<h3><%= link_to article.title, issue_article_path(article.issue,article) %></h3>
 					<h4><%= simple_format article.teaser %></h4>
 					<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %></h5>
+					<p><%= link_to 'Read this free article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
 				<% else %>
 					<!-- Can't read this article, so link to buy it -->
 					<% if not article.featured_image.blank? %>
