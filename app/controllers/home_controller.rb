@@ -270,7 +270,7 @@ class HomeController < ApplicationController
         xml.channel do
           xml.title "New Internationalist magazine digital edition"
           xml.link root_url
-          xml.description "Buy a digital copy of New Internationalist magazine for your web browser or iOS device."
+          xml.description "Buy a digital copy of New Internationalist magazine for your web browser, iOS or Android device."
           @published_issues.each do |i|
             xml.item do
               xml.title { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.title) }
@@ -291,6 +291,42 @@ class HomeController < ApplicationController
                 xml['g'].service "Digital"
                 xml['g'].price "0.00 AUD"
               end
+            end
+          end
+        end
+      end
+    }
+
+    respond_to do |format|
+      format.json { render json: @published_issues.to_json }
+      format.xml { render xml: builder.to_xml }
+    end
+
+  end
+
+  def apple_news
+
+    @published_issues = Issue.where(published: true).sort_by(&:number).reverse
+
+    # Remove the last issue - (more issues coming soon)
+    if @published_issues.last.title == "More issues coming soon"
+      @published_issues.pop
+    end
+
+    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+      xml.rss('version' => '2.0') do
+        xml.channel do
+          xml.title "New Internationalist magazine"
+          xml.language "en-au"
+          xml.link root_url
+          xml.description "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
+          @published_issues.each do |i|
+            xml.item do
+              xml.title ActionView::Base.full_sanitizer.sanitize(i.title)
+              xml.link issue_url(i)
+              xml.description ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser))
+              xml.pubDate i.release.to_datetime.rfc3339
+              xml.image i.cover_url.to_s
             end
           end
         end
