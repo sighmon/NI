@@ -314,20 +314,23 @@ class HomeController < ApplicationController
     end
 
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
-      xml.rss('version' => '2.0') do
+      xml.rss('version' => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom') do
         xml.channel do
           xml.title "New Internationalist magazine"
           xml.language "en-au"
           xml.link root_url
+          xml['atom'].link(href: apple_news_url(:format => 'xml'), rel: 'self', type: 'application/rss+xml')
           xml.description "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
           @published_issues.each do |i|
             xml.item do
               xml.title ActionView::Base.full_sanitizer.sanitize(i.title)
               xml.link issue_url(i)
               xml.guid issue_url(i)
-              xml.source apple_news_url(:format => 'xml')
+              xml.source( url: apple_news_url(:format => 'xml') ) do
+                xml.text "New Internationalist magazine"
+              end
               xml.description { xml.cdata (ActionController::Base.helpers.image_tag(i.cover_url.to_s, alt: i.title, title: i.title) + ActionView::Base.full_sanitizer.sanitize(i.editors_letter)) }
-              xml.pubDate i.release.to_datetime.rfc3339
+              xml.pubDate i.release.to_datetime.rfc822
             end
           end
         end
