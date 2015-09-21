@@ -36,7 +36,7 @@ class Category < ActiveRecord::Base
 
   def short_display_name
     # Beware, ugly hack. :-)
-    display_name.split(">").last.strip
+    display_name.split(">").last.try(:strip)
   end
 
   def generate_display_name
