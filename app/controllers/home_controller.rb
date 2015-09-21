@@ -324,9 +324,10 @@ class HomeController < ApplicationController
             xml.item do
               xml.title ActionView::Base.full_sanitizer.sanitize(i.title)
               xml.link issue_url(i)
-              xml.description ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser))
+              xml.guid issue_url(i)
+              xml.source apple_news_url(:format => 'xml')
+              xml.description { xml.cdata (ActionController::Base.helpers.image_tag(i.cover_url.to_s, alt: i.title, title: i.title) + ActionView::Base.full_sanitizer.sanitize(i.editors_letter)) }
               xml.pubDate i.release.to_datetime.rfc3339
-              xml.image i.cover_url.to_s
             end
           end
         end
