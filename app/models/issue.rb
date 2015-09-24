@@ -470,6 +470,11 @@ class Issue < ActiveRecord::Base
   # "product_id","publish_state","purchase_type","autotranslate ","locale; title; description","autofill","country; price"
   comma do
 
+    number
+    title
+    keynote :teaser => 'Keynote'
+    release { |release| release.strftime("%B %Y")}
+
     google_play_inapp_id 'product_id'
     google_play_published 'publish_state'
     google_play_purchase_type 'purchase_type'
