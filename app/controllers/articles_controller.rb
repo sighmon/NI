@@ -125,9 +125,9 @@ class ArticlesController < ApplicationController
   end
 
   def index
-  @issue = Issue.find(params[:issue_id])
-  # @article = Article.find(:all)
-  # @article = Article.order("created_at").page(params[:page]).per(2).search(params)
+    @issue = Issue.find(params[:issue_id])
+    # @article = Article.find(:all)
+    # @article = Article.order("created_at").page(params[:page]).per(2).search(params)
     respond_to do |format|
       format.html
     end
@@ -309,9 +309,9 @@ class ArticlesController < ApplicationController
     # logger.info "current_user is #{current_user}"
 
     if can? :read, @article or request_has_valid_itunes_receipt
-    render layout: false
+      render layout: false
     else
-    render nothing: true, status: :forbidden
+      render nothing: true, status: :forbidden
     end
   
   end
@@ -322,10 +322,10 @@ class ArticlesController < ApplicationController
     # logger.info "REQUEST: #{request.raw_post}"
 
     if can? :read, @article or request_has_valid_google_play_receipt
-    # Render the body template so we don't repeat code
-    render :template => 'articles/body', layout: false
+      # Render the body template so we don't repeat code
+      render :template => 'articles/body', layout: false
     else
-    render nothing: true, status: :forbidden
+      render nothing: true, status: :forbidden
     end
 
   end
@@ -345,7 +345,7 @@ class ArticlesController < ApplicationController
     @issue = @article.issue
     
     respond_to do |format|
-    format.js {}
+      format.js {}
     end
   end
 
@@ -553,9 +553,9 @@ class ArticlesController < ApplicationController
       @article.notification_sent = @scheduled_datetime unless not @device_id.blank?
       
       if @article.save
-      redirect_to issue_article_path(@issue, @article), notice: "Push sent!"
+        redirect_to issue_article_path(@issue, @article), notice: "Push sent!"
       else
-      redirect_to issue_article_path(@issue, @article), flash: { error: "Couldn't update article after push successfully sent." }
+        redirect_to issue_article_path(@issue, @article), flash: { error: "Couldn't update article after push successfully sent." }
       end
     else
       # FAIL! server error.
@@ -567,7 +567,7 @@ class ArticlesController < ApplicationController
 
   def request_has_valid_itunes_receipt
     if !request.post?
-    return false
+      return false
     end
 
     # send the request to itunes connect
@@ -579,8 +579,8 @@ class ArticlesController < ApplicationController
     api_response, data = send_receipt_to_itunes(uri,json)
 
     if JSON.parse(api_response.body)["status"] != 0
-    logger.warn "receipt-data: #{request.raw_post}"
-    return false
+      logger.warn "receipt-data: #{request.raw_post}"
+      return false
     end
 
     # Check purchased issues from receipts
@@ -590,17 +590,17 @@ class ArticlesController < ApplicationController
     subscription_receipt_valid = false
 
     if latest_subscription_expiry_from_recepits(api_response.body) > DateTime.now
-    subscription_receipt_valid = true
+      subscription_receipt_valid = true
     end
 
     # Check to see if those receipts allow the person to read this article
     if subscription_receipt_valid
-    logger.info "This receipt has a valid subscription."
+      logger.info "This receipt has a valid subscription."
     elsif purchased_issue_numbers.include?(@article.issue.number.to_s)
-    logger.info "This receipt includes issue: #{@article.issue.number}"
+      logger.info "This receipt includes issue: #{@article.issue.number}"
     else
-    logger.warn "This receipt doesn't include access to this article."
-    return false
+      logger.warn "This receipt doesn't include access to this article."
+      return false
     end
 
     logger.info "post itunes"
@@ -616,20 +616,20 @@ class ArticlesController < ApplicationController
     itunes_response = JSON.parse(api_response.body)["status"]
     logger.info "iTunes response: #{itunes_response}"
     if itunes_response == 21007
-    # It's a sandbox receipt, try again with DEV itunes URL
-    logger.info "Receipt is a sandbox receipt, trying again..."
-    itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
-    uri = URI.parse(itunes_url)
-    send_receipt_to_itunes(uri,json)
+      # It's a sandbox receipt, try again with DEV itunes URL
+      logger.info "Receipt is a sandbox receipt, trying again..."
+      itunes_url = ENV["ITUNES_VERIFY_RECEIPT_URL_DEV"]
+      uri = URI.parse(itunes_url)
+      send_receipt_to_itunes(uri,json)
     else
-    return api_response, data
+      return api_response, data
     end
     
   end
 
   def request_has_valid_google_play_receipt
     if !request.post?
-    return false
+      return false
     end
 
     require 'google/api_client'
@@ -639,8 +639,8 @@ class ArticlesController < ApplicationController
 
     # Initialize the Google Play client.
     client = Google::APIClient.new(
-    :application_name => ENV["APP_NAME"],
-    :application_version => '1.0.0'
+      :application_name => ENV["APP_NAME"],
+      :application_version => '1.0.0'
     )
 
     # Get Client Authorization
@@ -653,12 +653,12 @@ class ArticlesController < ApplicationController
     # Base64 that into an environment variable to keep it out of version control and Heroku happy.
     key = Google::APIClient::KeyUtils.load_from_pem(Base64.decode64(ENV["GOOGLE_PLAY_PEM_BASE64"]), nil)
     client.authorization = Signet::OAuth2::Client.new(
-    :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-    :audience => 'https://accounts.google.com/o/oauth2/token',
-    :scope => 'https://www.googleapis.com/auth/androidpublisher',
-    :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
-    :signing_key => key,
-    :access_type => 'offline'
+      :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
+      :audience => 'https://accounts.google.com/o/oauth2/token',
+      :scope => 'https://www.googleapis.com/auth/androidpublisher',
+      :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
+      :signing_key => key,
+      :access_type => 'offline'
     )
     client.authorization.fetch_access_token!
 
@@ -667,79 +667,79 @@ class ArticlesController < ApplicationController
 
     # logger.info "Android raw_post: #{request.raw_post}"
     if !request.raw_post.empty?
-    purchases_json = JSON.parse(request.raw_post)
+      purchases_json = JSON.parse(request.raw_post)
 
-    has_valid_receipt = false
+      has_valid_receipt = false
 
-    # Check purchase with Google Play
-    purchases_json.each do |p|
-      if p["productId"].include?("single")
+      # Check purchase with Google Play
+      purchases_json.each do |p|
+        if p["productId"].include?("single")
 
-      if p["productId"].include?("#{@article.issue.number}single")
-        # Receipt appears to be for this issue, so validate it
-        result = client.execute(
-        :api_method => publisher.purchases.products.get,
-        :parameters => {
-          'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
-          'productId' => p["productId"], 
-          'token' => p["purchaseToken"]
-        }
-        )
+          if p["productId"].include?("#{@article.issue.number}single")
+            # Receipt appears to be for this issue, so validate it
+            result = client.execute(
+              :api_method => publisher.purchases.products.get,
+              :parameters => {
+                'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+                'productId' => p["productId"], 
+                'token' => p["purchaseToken"]
+              }
+            )
 
-        result_json = JSON.parse(result.body)
+            result_json = JSON.parse(result.body)
 
-        if result_json["purchaseState"] == 0
-        logger.info "Google Play: Purchase valid. #{result.body}"
-        has_valid_receipt = true
+            if result_json["purchaseState"] == 0
+              logger.info "Google Play: Purchase valid. #{result.body}"
+              has_valid_receipt = true
+            else
+              logger.info "Google Play: INVALID purchase: #{result.body}"
+            end
+          else
+            # Receipt isn't for this issue..
+            logger.info "Google Play receipt: #{p["productId"]}, but this issue is: #{@article.issue.number}single."
+          end
+
+        elsif p["productId"].include?("month")
+          # It's a subscription, validate it
+          result = client.execute(
+            :api_method => publisher.purchases.subscriptions.get,
+            :parameters => {
+            'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
+            'subscriptionId' => p["productId"], 
+            'token' => p["purchaseToken"]
+            }
+          )
+
+          result_json = JSON.parse(result.body)
+          # logger.info "TODO: Google Play: It's a subscription - #{result.body}"
+
+          if result_json["kind"] == "androidpublisher#subscriptionPurchase"
+            # It's a subscription purchase, so test its expiryTimeMillis
+            google_play_subscription_expiry_date = DateTime.strptime((result_json["expiryTimeMillis"].to_i/1000).to_s, '%s').in_time_zone('Adelaide')
+            time_now_in_adelaide = DateTime.now.in_time_zone('Adelaide')
+            if google_play_subscription_expiry_date > time_now_in_adelaide
+              # Subscription is valid
+              logger.info "Subscription VALID: #{google_play_subscription_expiry_date}"
+              has_valid_receipt = true
+            else
+              # Subscription has expired
+              logger.info "Subscription EXPIRED: #{google_play_subscription_expiry_date}"
+            end
+          end
         else
-        logger.info "Google Play: INVALID purchase: #{result.body}"
-        end
-      else
-        # Receipt isn't for this issue..
-        logger.info "Google Play receipt: #{p["productId"]}, but this issue is: #{@article.issue.number}single."
-      end
-
-      elsif p["productId"].include?("month")
-      # It's a subscription, validate it
-      result = client.execute(
-        :api_method => publisher.purchases.subscriptions.get,
-        :parameters => {
-        'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
-        'subscriptionId' => p["productId"], 
-        'token' => p["purchaseToken"]
-        }
-      )
-
-      result_json = JSON.parse(result.body)
-      # logger.info "TODO: Google Play: It's a subscription - #{result.body}"
-
-      if result_json["kind"] == "androidpublisher#subscriptionPurchase"
-        # It's a subscription purchase, so test its expiryTimeMillis
-        google_play_subscription_expiry_date = DateTime.strptime((result_json["expiryTimeMillis"].to_i/1000).to_s, '%s').in_time_zone('Adelaide')
-        time_now_in_adelaide = DateTime.now.in_time_zone('Adelaide')
-        if google_play_subscription_expiry_date > time_now_in_adelaide
-        # Subscription is valid
-        logger.info "Subscription VALID: #{google_play_subscription_expiry_date}"
-        has_valid_receipt = true
-        else
-        # Subscription has expired
-        logger.info "Subscription EXPIRED: #{google_play_subscription_expiry_date}"
+          logger.info "Google Play ERROR: No receipt matches NI products."
         end
       end
-      else
-      logger.info "Google Play ERROR: No receipt matches NI products."
-      end
-    end
 
-    if has_valid_receipt
-      return true
+      if has_valid_receipt
+        return true
+      else
+        return false
+      end
+
     else
+      # No post data to send..
       return false
-    end
-
-    else
-    # No post data to send..
-    return false
     end
   end
 

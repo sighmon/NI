@@ -387,10 +387,10 @@ class IssuesController < ApplicationController
   def tweet_issue
     @issue = Issue.find(params[:issue_id])
     twitter_params = {
-        :url => issue_url(@issue),
-        :text => "I'm reading '#{@issue.title}'",
-        :via => "ni_australia"
-        #:related => "ni_australia"
+      :url => issue_url(@issue),
+      :text => "I'm reading '#{@issue.title}'",
+      :via => "ni_australia"
+      #:related => "ni_australia"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
@@ -398,13 +398,13 @@ class IssuesController < ApplicationController
   def wall_post_issue
     @issue = Issue.find(params[:issue_id])
     facebook_params = {
-        :app_id => 194389730710694,
-        :link => issue_url(@issue),
-        :picture => @issue.cover_url.to_s,
-        :name => @issue.title,
-        :caption => ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
-        :description => "I'm reading '#{@issue.title}'",
-        :redirect_uri => issue_url(@issue)
+      :app_id => 194389730710694,
+      :link => issue_url(@issue),
+      :picture => @issue.cover_url.to_s,
+      :name => @issue.title,
+      :caption => ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
+      :description => "I'm reading '#{@issue.title}'",
+      :redirect_uri => issue_url(@issue)
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
@@ -412,8 +412,8 @@ class IssuesController < ApplicationController
   def email_issue
     @issue = Issue.find(params[:issue_id])
     email_params = {
-        :body => issue_url(@issue),
-        :subject => "#{@issue.title} - New Internationalist Magazine"
+      :body => issue_url(@issue),
+      :subject => "#{@issue.title} - New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"
   end
@@ -506,10 +506,10 @@ class IssuesController < ApplicationController
     issues_purchased = []
 
     purchases.each do |item|
-        if item['product_id'].include?('single')
-            issues_purchased << item['product_id'][0..2]
-            # TODO: check if purchase already exists and if not, create a new one
-        end
+      if item['product_id'].include?('single')
+        issues_purchased << item['product_id'][0..2]
+        # TODO: check if purchase already exists and if not, create a new one
+      end
     end
 
     logger.info "iTunes Issues purchased: "
@@ -525,23 +525,23 @@ class IssuesController < ApplicationController
     latest_expiry = "0"
 
     purchases.each do |item|
-        if item['product_id'].include?('month')
-            if item['expires_date_ms'].nil?
-                # The subscription is non-renewing, generate :expires_date_ms for it.
-                subscription_duration = item['product_id'][0..1].to_i
-                item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
-                logger.info "iTunes Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
-            end
-            subscriptions << item
-            # TODO: check if they already have a subscription in Rails, if not, purchase one
+      if item['product_id'].include?('month')
+        if item['expires_date_ms'].nil?
+          # The subscription is non-renewing, generate :expires_date_ms for it.
+          subscription_duration = item['product_id'][0..1].to_i
+          item['expires_date_ms'] = ((Time.at(item['original_purchase_date_ms'].to_i / 1000).to_datetime + subscription_duration.months).to_i * 1000).to_s
+          logger.info "iTunes Non-renewing subscription, synthesized date: (#{item['expires_date_ms']})"
         end
+        subscriptions << item
+        # TODO: check if they already have a subscription in Rails, if not, purchase one
+      end
     end
 
     logger.info "Susbcriptions purchased: "
     logger.info subscriptions
 
     if not subscriptions.empty?
-        latest_expiry = subscriptions.sort_by{ |x| x["expires_date_ms"]}.last["expires_date_ms"]
+      latest_expiry = subscriptions.sort_by{ |x| x["expires_date_ms"]}.last["expires_date_ms"]
     end
 
     sec = (latest_expiry.to_f / 1000).to_s
@@ -588,7 +588,7 @@ class IssuesController < ApplicationController
       :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
       :signing_key => key,
       :access_type => 'offline'
-      )
+    )
     client.authorization.fetch_access_token!
 
     # Discover the API

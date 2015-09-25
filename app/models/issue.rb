@@ -470,10 +470,14 @@ class Issue < ActiveRecord::Base
   # "product_id","publish_state","purchase_type","autotranslate ","locale; title; description","autofill","country; price"
   comma do
 
+    # These bits for NZ office
+
     number
     title
     keynote :teaser => 'Keynote'
     release { |release| release.strftime("%B %Y")}
+
+    # These bits for google_play_store - no longer actually used.
 
     google_play_inapp_id 'product_id'
     google_play_published 'publish_state'
