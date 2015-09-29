@@ -37,7 +37,7 @@ class HomeController < ApplicationController
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
-    @page_description = "Welcome to the digital edition of the New Internationalist magazine, available for all digital devices with a browser."
+    @page_description = "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
 
     set_meta_tags :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
