@@ -16,6 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   # To prevent redirect loop when overriding after_sign_in_path_for(resource) in sessions_controller.rb
   def after_sign_up_path_for(resource)
+    send_analytics
     signed_in_root_path(resource)
   end
 
@@ -28,4 +29,10 @@ class RegistrationsController < Devise::RegistrationsController
   def can_update
     authorize! :update, current_user
   end
+
+  def send_analytics
+    log_event('signup', 'complete', 'registration')
+    log_fb_event(ENV['FACEBOOK_REGISTRATIONS_CONVERSION'], '0.00')
+  end
+
 end

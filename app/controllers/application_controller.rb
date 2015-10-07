@@ -25,6 +25,18 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
   end
 
+  def log_event(category, action, label)
+    # Log a google analytics event to limit ad spending
+    session[:events] ||= Array.new
+    session[:events] << {:category => category, :action => action, :label => label}
+  end
+
+  def log_fb_event(action, amount)
+    # Log an event with Facebook to limit ad spending
+    session[:fb_events] ||= Array.new
+    session[:fb_events] << {:action => action, :amount => amount}
+  end
+
   private
 
 

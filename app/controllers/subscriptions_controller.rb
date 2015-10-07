@@ -189,6 +189,7 @@ class SubscriptionsController < ApplicationController
         rescue Exception
           logger.error "500 - Email server is down..."
         end
+        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (session[:express_purchase_price] / 100.0))
         format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
         format.json { render json: @subscription, status: :created, location: @subscription }
       else

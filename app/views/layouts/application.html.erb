@@ -18,6 +18,8 @@
   <% end %>
   <!-- Google Analytics tracking code -->
   <%= analytics_init :local => ( Rails.env.development? or Rails.env.test? ) %>
+  <%= render :partial => "shared/ga_events" %>
+  <%= render :partial => "shared/fb_events" %>
 </head>
 <body>
 
@@ -170,6 +172,17 @@
 		<%= render :partial => "shared/disqus" %>
 
 	</div>
+
+	<!-- Share buttons
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=<%= ENV["FACEBOOK_APP_ID"] %>";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	END Share buttons -->
 
 </body>
 </html>

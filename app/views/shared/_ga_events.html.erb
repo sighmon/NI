@@ -1,0 +1,10 @@
+<% unless session[:events].nil? %>
+  <% session[:events].each do |event|%>
+  	<script type="text/javascript">
+			// Push Google Analytics event
+			ga('send', 'event', '<%= event[:category]%>', '<%= event[:action]%>', '<%= event[:label]%>');
+		</script>
+  <% end %>
+<% end %>
+
+<% session[:events] = Array.new %>

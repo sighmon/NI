@@ -74,6 +74,7 @@ class PurchasesController < ApplicationController
         rescue Exception
           logger.error "500 - Email server is down..."
         end
+        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (session[:express_purchase_price] / 100.0))
         format.html { redirect_to issue_path(@issue), notice: 'Issue was successfully purchased.' }
         format.json { render json: @purchase, status: :created, location: @purchase }
       else
