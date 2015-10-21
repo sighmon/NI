@@ -4,7 +4,8 @@ class IssuesController < ApplicationController
   load_and_authorize_resource :except => [:index]
 
   newrelic_ignore :only => [:email, :email_non_subscribers, :email_others, :email_renew]
-  newrelic_ignore_enduser :only => [:email, :email_non_subscribers, :email_others, :email_renew]
+  # newrelic_ignore_enduser :only => [:email, :email_non_subscribers, :email_others, :email_renew]
+  # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
   # :show So that iOS can post, :index so that issues.json jquery works
   skip_before_filter :verify_authenticity_token, :only => [:show, :index]
