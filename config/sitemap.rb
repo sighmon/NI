@@ -34,42 +34,42 @@ SitemapGenerator::Sitemap.create do
   #   end
 
   add('/', :alternates => [{
-    :href => 'android-app://au.com.newint.newinternationalist/newint',
-    :lang => 'x-default'
-  }, {
     :href => 'newint://',
     :lang => 'x'
+  }, {
+    :href => 'android-app://au.com.newint.newinternationalist/newint',
+    :lang => 'x-default'
   }])
 
   # Add '/issues'
   add issues_path, :priority => 0.7, :changefreq => 'daily', :alternates => [{
-    :href => 'android-app://au.com.newint.newinternationalist/newint/issues',
-    :lang => 'x-default'
-  }, {
     :href => 'newint://issues',
     :lang => 'x'
+  }, {
+    :href => 'android-app://au.com.newint.newinternationalist/newint/issues',
+    :lang => 'x-default'
   }]
 
   # Add all issues:
   Issue.find_each do |issue|
     if issue.published?
       add issue_path(issue), :lastmod => issue.updated_at, :alternates => [{
-        :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}",
-        :lang => 'x-default'
-      }, {
         :href => "newint://issues/#{issue.id}",
         :lang => 'x'
+      }, {
+        :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}",
+        :lang => 'x-default'
       }]
 
       # Add articles if it's a trial issue or trial article
       issue.articles.each do |article|
         if issue.trialissue? or article.trialarticle?
           add issue_article_path(issue,article), :lastmod => article.updated_at, :alternates => [{
-            :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}/articles/#{article.id}",
-            :lang => 'x-default'
-          }, {
             :href => "newint://issues/#{issue.id}/articles/#{article.id}",
             :lang => 'x'
+          }, {
+            :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}/articles/#{article.id}",
+            :lang => 'x-default'
           }]
         end
       end
@@ -97,11 +97,11 @@ SitemapGenerator::Sitemap.create do
   # Add categories:
   Category.find_each do |category|
     add category_path(category), :priority => 0.4, :lastmod => category.updated_at, :alternates => [{
-        :href => "android-app://au.com.newint.newinternationalist/newint/categories",
-        :lang => 'x-default'
-      }, {
         :href => "newint://issues/categories",
         :lang => 'x'
+      }, {
+        :href => "android-app://au.com.newint.newinternationalist/newint/categories",
+        :lang => 'x-default'
       }]
   end
 
