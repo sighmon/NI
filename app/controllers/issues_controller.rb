@@ -290,7 +290,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       if request.post?
-        if request_has_valid_rails_subscription or request_has_valid_itunes_subscription or request_has_valid_google_play_receipt
+        if request_has_valid_rails_subscription or request_has_purchased_rails_issue or request_has_valid_itunes_subscription or request_has_valid_google_play_receipt
           zip_url_for_json = @issue.zip.url
           if Rails.env.development?
             zip_url_for_json = "#{request.protocol}#{request.host_with_port}#{@issue.zip.url}"
@@ -442,10 +442,24 @@ class IssuesController < ApplicationController
       logger.info "Rails subscription EXPIRED: #{rails_expiry}"
       return false
     else
-      logger.warn "Rails INVALID: This user doesn't have access to download this issue."
+      logger.warn "Rails INVALID: This user doesn't have a subscription."
       return false
     end
 
+  end
+
+  def request_has_purchased_rails_issue
+    if !request.post?
+      return false
+    end
+
+    if current_user and current_user.purchases.collect{|p| p.issue_id}.include?(@issue.id)
+      logger.info "Rails PURCHASE: This user has purchased issue #{@issue.id}"
+      return true
+    else
+      logger.info "Rails purchase: issue hasn't been purchased."
+      return false
+    end
   end
 
   def request_has_valid_itunes_subscription
