@@ -48,6 +48,28 @@ describe IssuesController, :type => :controller do
 
   end
 
+  context "as a user with a purchase" do
+
+    let(:purchase) { FactoryGirl.create(:purchase) }
+    let(:user) { purchase.user }
+    let(:issue) { purchase.issue }
+
+    before(:each) do
+      sign_in user
+    end
+
+    describe "POST iOS download issue for offline reading" do
+
+      it "should be able to download issue" do
+        post :show, :id => issue.id, :format => 'json'
+        # TODO: FIX sort out why it's returning 302 redirected.
+        expect(response.status).to eq(200)
+      end
+
+    end
+
+  end
+
   context "as a subscriber with an issue" do
 
     before(:all) do

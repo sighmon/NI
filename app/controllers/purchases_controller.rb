@@ -50,7 +50,7 @@ class PurchasesController < ApplicationController
 
   def create
     @issue = Issue.find(session[:issue_id_being_purchased])
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
 
     # Make the PayPal purchase
     response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)

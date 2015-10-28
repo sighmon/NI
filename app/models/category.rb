@@ -15,11 +15,11 @@ class Category < ActiveRecord::Base
   end
 
   def latest_published_article
-    Category.cached_category_articles(self).last
+    Category.cached_category_articles(self.id).last
   end
 
   def first_ten_articles
-    Category.cached_category_articles(self).reverse.first(10)
+    Category.cached_category_articles(self.id).reverse.first(10)
   end
 
   def self.cached_category_articles(id)

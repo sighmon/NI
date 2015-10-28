@@ -60,7 +60,7 @@ class Issue < ActiveRecord::Base
   end
 
   def keynote
-    Issue.cached_keynote_for_issue(self)
+    Issue.cached_keynote_for_issue(self.id)
   end
 
   def self.cached_keynote_for_issue(id)

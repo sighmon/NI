@@ -35,6 +35,7 @@ describe PurchasesController, :type => :controller do
 
        before(:each) do
          session[:issue_id_being_purchased] = issue.id
+         session[:express_purchase_price] = 7.50
        end
 
        context "and stubbed success" do
