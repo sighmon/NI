@@ -135,7 +135,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
-  # gem 'guard-rspec'
+  gem 'guard-rspec', '1.2.1'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications

@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :purchase do
-    issue
+    association :issue, factory: :published_issue
     user
   end
 

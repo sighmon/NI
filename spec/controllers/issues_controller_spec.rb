@@ -61,8 +61,9 @@ describe IssuesController, :type => :controller do
     describe "POST iOS download issue for offline reading" do
 
       it "should be able to download issue" do
-        post :show, :id => issue.id, :format => 'json'
+        post :show, :id => issue.id, :format => :json
         # TODO: FIX sort out why it's returning 302 redirected.
+        # byebug
         expect(response.status).to eq(200)
       end
 
