@@ -213,7 +213,7 @@ class Article < ActiveRecord::Base
 
     def category_exists(category_attributes)
       if _category = Category.find_by_name(category_attributes['name'])
-        self.categories << _category
+        self.categories << _category unless self.categories.include?(_category)
         return true
       end
       return false
