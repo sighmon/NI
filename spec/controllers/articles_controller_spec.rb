@@ -206,8 +206,24 @@ describe ArticlesController, :type => :controller do
 
             expect(@article.categories.collect(&:name)).to eq([Category.new(@category_attributes).name])
           end
- 
+
+          context "which has already been added to the article" do
+            before(:each) do
+              @article.categories << Category.new(@category_attributes)
+            end
+
+            it "does not add the category to the article" do
+
+              expect {
+                put :update, {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
+              }.to change(@article.categories, :count).by(0)
+            end   
+          end
+
         end
+
+        
+
 
       end
     end
