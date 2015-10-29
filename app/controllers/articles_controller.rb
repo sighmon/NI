@@ -5,9 +5,6 @@ class ArticlesController < ApplicationController
    
   skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
 
-  # Process adding, removing or creating new categories on article update or create
-  before_action :process_existing_categories, only: [:update]
-
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
   load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share]
@@ -741,26 +738,6 @@ class ArticlesController < ApplicationController
       # No post data to send..
       return false
     end
-  end
-
-  def process_existing_categories
-    # Before action to process existing categories so they can be added, created or removed.
-    @article = Article.find(params[:id])
-    categories_for_removal_from_params = []
-    authorize! :update, @article
-    categories_attributes = params[:article][:categories_attributes] or []
-    categories_attributes.values.each do |category_attributes|
-      if category_attributes[:id].nil? and category_attributes[:name].present?
-        category = Category.find_by_name(category_attributes[:name])
-        if category.present?
-          if not @article.categories.include?(category)
-            @article.categories << category
-            categories_for_removal_from_params << category.name
-          end
-        end
-      end
-    end
-    params[:article][:categories_attributes].delete_if{|k,v| categories_for_removal_from_params.include?(v[:name])}
   end
 
   def article_params

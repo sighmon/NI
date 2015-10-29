@@ -15,7 +15,7 @@ class Article < ActiveRecord::Base
 
   has_many :article_categorisations
   has_many :categories, :through => :article_categorisations
-  accepts_nested_attributes_for :categories, allow_destroy: true
+  accepts_nested_attributes_for :categories, allow_destroy: true, reject_if: :category_exists
   accepts_nested_attributes_for :images, allow_destroy: true
 
   include Tire::Model::Search
@@ -23,6 +23,7 @@ class Article < ActiveRecord::Base
 
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
+
 
   def self.search(params, unpublished = false)
     tire.search(load: true, :page => params[:page], :per_page => Settings.article_pagination) do
@@ -207,5 +208,15 @@ class Article < ActiveRecord::Base
   def get_story_id
     return Nokogiri.XML(source).at_xpath("/story").try(:[],:id).try(:to_i)
   end
+
+  protected
+
+    def category_exists(category_attributes)
+      if _category = Category.find_by_name(category_attributes['name'])
+        self.categories << _category
+        return true
+      end
+      return false
+    end
 
 end
