@@ -1192,6 +1192,14 @@ blockquote.pull-left {
 	color: @gray;
 }
 
+.gradient {
+	background: #ffe0c2;
+	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
+	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
+}
+
 .box {
 	background-color: @boxBackgroundColour;
 	padding: 1.5em 2em;
