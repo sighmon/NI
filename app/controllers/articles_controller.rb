@@ -226,7 +226,7 @@ class ArticlesController < ApplicationController
       c.name.include?("/columns/exposure/")
     }
     if not @cartoon.empty?
-      @image_url_string = :sixhundred
+      @image_url_string = nil
       @image_css_string = " article-image-cartoon no-shadow"
     elsif not @exposure.empty?
       @image_url_string = :sixhundred

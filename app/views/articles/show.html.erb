@@ -88,7 +88,12 @@
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag_for :div, i do %>
-      <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}", :"data-toggle" => 'modal', :"data-target" => '.imageModal'), '#' %>
+      <% if @image_url_string.nil? %>
+        <!-- Full size image -->
+        <%= link_to image_tag(i.data_url.to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}", :"data-toggle" => 'modal', :"data-target" => '.imageModal'), '#' %>
+      <% else %>
+        <%= link_to retina_image_tag(i.data_url(@image_url_string).to_s, :alt => "#{strip_tags(i.caption)}", :title => "#{strip_tags(i.caption)}", :class => 'article-image-carousel', :"data-slide-index" => "#{(i.position or 1000) - 1}", :"data-toggle" => 'modal', :"data-target" => '.imageModal'), '#' %>
+      <% end %>
       <div class="new-image-caption"><%= simple_format i.caption %></div>
       <div class="new-image-credit"><%= i.credit %></div>
       <% if can? :manage, Image %>
