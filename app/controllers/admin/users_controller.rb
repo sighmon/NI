@@ -180,6 +180,26 @@ class Admin::UsersController < Admin::BaseController
 		end
 	end
 
+	def update_csv
+		begin
+      Settings.destroy('users_csv')
+    rescue
+      
+    end
+		User.delay.update_admin_users_csv
+		redirect_to admin_root_path, notice: 'Refreshing CSV...'
+	end
+
+	def download_csv
+		csv = Settings.find_by_var('users_csv')
+		respond_to do |format|
+			format.csv {
+				# response.headers['Content-Disposition'] = 'attachment; filename="' + csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + '.csv"'
+				send_data csv.value, type: Mime::CSV, disposition: 'attachment', filename: csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + ".csv"
+			}
+		end
+	end
+
 	private
   
   def sort_column

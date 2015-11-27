@@ -4,7 +4,7 @@ class Admin::SettingsController < Admin::BaseController
   # load_and_authorize_resource
 
   def index
-  	@settings = Settings.all
+  	@settings = Settings.all.select {|x| x.var != 'users_csv'}
   end
 
   def update

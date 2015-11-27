@@ -388,4 +388,8 @@ class User < ActiveRecord::Base
     return latest_sub_date
   end
 
+  def self.update_admin_users_csv
+    Settings.users_csv = User.order(:email).all.to_comma()
+  end
+
 end

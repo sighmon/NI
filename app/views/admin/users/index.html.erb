@@ -5,6 +5,7 @@
 <% if can? :update, @user %>
 	<div class="edit-issue-buttons">
 		<%= link_to 'Download a CSV file', admin_users_path(:format => :csv), :class => 'btn btn-xs btn-warning' %>
+		<br /><br />(<%= link_to "Try the new way!", admin_root_path %>)
 	</div>
 <% end %>
 

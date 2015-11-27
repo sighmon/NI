@@ -27,6 +27,11 @@ gem 'asset_sync'
 # http://stackoverflow.com/questions/7087385/pg-gem-trace-bpt-trap-5-error-on-mac-os-x-lion
 gem 'pg'
 
+# Delayed Job for background CSV generation
+# https://devcenter.heroku.com/articles/delayed-job
+# To run jobs locally $ rake jobs:work
+gem 'delayed_job_active_record'
+
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
 

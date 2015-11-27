@@ -98,6 +98,8 @@ NI::Application.routes.draw do
 
   namespace :admin do
     root :to => "base#index"
+    get "users/update_csv" => "users#update_csv"
+    get "users/download_csv" => "users#download_csv"
     resources :users do
       get :free_subscription
       get :crowdfunding_subscription
