@@ -99,7 +99,7 @@ module Devise
           return body
         elsif response and response.code == 404
           # User not found!
-          body = JSON.parse(response.body)
+          body = response.body
           Rails.logger.debug "NOT FOUND! Can't find UK user with ID: #{authentication_hash[:login]}, lname: #{authentication_hash[:password]}"
           return body
         else
