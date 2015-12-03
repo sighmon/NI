@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127032212) do
+ActiveRecord::Schema.define(version: 20151203081422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,7 +135,6 @@ ActiveRecord::Schema.define(version: 20151127032212) do
   add_index "pages", ["permalink"], name: "index_pages_on_permalink", using: :btree
 
   create_table "payment_notifications", force: :cascade do |t|
-    t.text     "params"
     t.string   "status",           limit: 255
     t.string   "transaction_id",   limit: 255
     t.string   "transaction_type", limit: 255
