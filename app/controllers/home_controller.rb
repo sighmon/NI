@@ -18,7 +18,8 @@ class HomeController < ApplicationController
 
     @features_category = Category.find_by_name("/features/")
 
-    @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}
+    # compact removes the nil elements which fool the "if @keynotes" test in the view
+    @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}.compact
 
     facts_category = Category.find_by_name("/sections/facts/")
     if facts_category
