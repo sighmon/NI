@@ -47,3 +47,4 @@ client.p12
 /public/sitemaps/**
 
 /.sass-cache
+.byebug_history
