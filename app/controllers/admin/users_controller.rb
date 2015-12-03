@@ -187,6 +187,11 @@ class Admin::UsersController < Admin::BaseController
       
     end
 		User.delay.update_admin_users_csv
+		if Rails.env.production?
+			PlatformAPI.connect_oauth(ENV["HEROKU_OAUTH"]).dyno.create(ENV["HEROKU_OAUTH_APP_NAME"],{command: 'rake jobs:workoff'})
+		else
+			Delayed::Worker.new({:exit_on_complete => true}).start
+		end
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'
 	end
 

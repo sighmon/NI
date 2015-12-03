@@ -18,6 +18,9 @@ gem 'rails_serve_static_assets'
 # So we can serve static assets via S3 and CloudFront CDN
 gem 'asset_sync'
 
+# Heroku platform-api
+gem 'platform-api'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

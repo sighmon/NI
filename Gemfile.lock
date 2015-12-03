@@ -293,6 +293,12 @@ GEM
     gyoku (0.4.6)
       builder (>= 2.1.2)
     hashr (0.0.22)
+    heroics (0.0.14)
+      erubis (~> 2.7.0)
+      excon
+      moneta
+      multi_json (>= 1.9.2)
+      netrc
     heroku-deflater (0.6.2)
       rack (>= 1.4.5)
     httparty (0.13.7)
@@ -350,9 +356,11 @@ GEM
     mime-types (1.25.1)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
+    moneta (0.8.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    netrc (0.11.0)
     newrelic_rpm (3.14.0.305)
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
@@ -360,6 +368,8 @@ GEM
     orm_adapter (0.5.0)
     paypal-recurring (1.1.0)
     pg (0.18.4)
+    platform-api (0.3.0)
+      heroics (~> 0.0.10)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -582,6 +592,7 @@ DEPENDENCIES
   newrelic_rpm
   paypal-recurring
   pg
+  platform-api
   rack-cache
   rails (= 4.2.5)
   rails-observers
