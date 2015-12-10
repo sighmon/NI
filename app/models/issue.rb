@@ -219,7 +219,6 @@ class Issue < ActiveRecord::Base
       # print response.to_json
       # Pull the story_ids from the search results element passed from SOAP
       story_ids = response[:list_ids_response][:story_ids][:story_id]
-      byebug
       # Handle a blank response or one result
       if story_ids.blank? or story_ids.nil?
         story_ids = []
@@ -231,7 +230,6 @@ class Issue < ActiveRecord::Base
    
       # filter story_ids with articles in the database
       story_ids.select!{|id|Article.find_by_story_id(id.to_s).nil?}
-      byebug
       self.import_stories_from_bricolage(story_ids)
     end
   end
