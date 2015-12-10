@@ -36,4 +36,4 @@
   <% end %>
 <% end %>
 <% if can? :update, @article %><%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %><% end %>
-<% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' %><% end %></p>
+<% if can? :destroy, @article %><%= link_to 'Destroy', issue_article_path(@issue,article), data: { confirm: 'Are you sure?'}, method: :delete, class: 'btn btn-xs btn-danger' %><% end %></p>

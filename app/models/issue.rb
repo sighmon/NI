@@ -72,7 +72,13 @@ class Issue < ActiveRecord::Base
   end
 
   def features
-    articles_of_category("/features/").sort_by(&:publication)
+    (articles_of_category("/features/") -
+      articles_of_category("/features/web-exclusive/")
+      ).sort_by(&:publication)
+  end
+
+  def web_exclusive
+    articles_of_category("/features/web-exclusive/").sort_by(&:publication)
   end
 
   def agendas
@@ -112,11 +118,13 @@ class Issue < ActiveRecord::Base
   end
 
   def blogs
-    articles_of_category("/blog/").sort_by(&:publication)
+    (articles_of_category("/blog/") -
+      articles_of_category("/features/")
+      ).sort_by(&:publication)
   end
 
   def categorised_articles
-    features + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
+    features + web_exclusive + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
   end
 
   def uncategorised
@@ -178,12 +186,16 @@ class Issue < ActiveRecord::Base
     yield client
   end
   
-  def import_articles_from_bricolage()
+  def import_articles_from_bricolage(special_type)
 
     Issue.bricolage_wrapper do |client|
       # print response.http.cookies
       # Create primary_uri to search for based on Issue.release date
-      primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
+      if special_type and not special_type.blank?
+        primary_uri = "%%/#{special_type}/%s/%%" % release.strftime("%Y/%m")
+      else
+        primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
+      end
       response = client.request "story", "story_ids" do
         http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Story#list_ids\""
         #http.set_cookies(response.http)
@@ -207,6 +219,7 @@ class Issue < ActiveRecord::Base
       # print response.to_json
       # Pull the story_ids from the search results element passed from SOAP
       story_ids = response[:list_ids_response][:story_ids][:story_id]
+      byebug
       # Handle a blank response or one result
       if story_ids.blank? or story_ids.nil?
         story_ids = []
@@ -218,7 +231,7 @@ class Issue < ActiveRecord::Base
    
       # filter story_ids with articles in the database
       story_ids.select!{|id|Article.find_by_story_id(id.to_s).nil?}
-
+      byebug
       self.import_stories_from_bricolage(story_ids)
     end
   end

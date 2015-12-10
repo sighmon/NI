@@ -18,7 +18,7 @@ class IssuesController < ApplicationController
 
   def import
     @issue = Issue.find(params[:issue_id])
-    @issue.import_articles_from_bricolage
+    @issue.import_articles_from_bricolage(nil)
     redirect_to issue_path(@issue)
   end
 

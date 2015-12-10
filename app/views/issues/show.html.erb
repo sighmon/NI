@@ -8,7 +8,7 @@
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
           issue_path(@issue),
           :method => 'delete',
-          :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?')),
+          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))},
           :class => 'btn btn-xs btn-danger' %>
   <% end %>
    | 
@@ -156,6 +156,17 @@
     <% end %>
   </div>
   <div class="col-sm-6 issue-articles-container">
+
+    <% if not @issue.web_exclusive.empty? %>
+      <div class="issue-sections">
+        <h3>Web exclusives.</h3>
+        <% @issue.web_exclusive.each do |article| %>
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
     <% if not @issue.opinion.empty? %>
       <div class="issue-sections">
