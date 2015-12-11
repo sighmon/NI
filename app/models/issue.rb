@@ -78,7 +78,13 @@ class Issue < ActiveRecord::Base
   end
 
   def web_exclusive
-    articles_of_category("/features/web-exclusive/").sort_by(&:publication)
+    (articles_of_category("/features/web-exclusive/") -
+      articles_of_category("/video/")
+      ).sort_by(&:publication)
+  end
+
+  def videos
+    articles_of_category("/video/").sort_by(&:publication)
   end
 
   def agendas
@@ -109,7 +115,8 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/viewfrom/") - 
       articles_of_category("/columns/mark-engler/") -
       articles_of_category("/columns/steve-parry/") - 
-      articles_of_category("/columns/kate-smurthwaite/")
+      articles_of_category("/columns/kate-smurthwaite/") -
+      articles_of_category("/video/")
       ).sort_by(&:publication)
   end
 
@@ -124,7 +131,7 @@ class Issue < ActiveRecord::Base
   end
 
   def categorised_articles
-    features + web_exclusive + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
+    features + web_exclusive + videos + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
   end
 
   def uncategorised

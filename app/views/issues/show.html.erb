@@ -157,6 +157,17 @@
   </div>
   <div class="col-sm-6 issue-articles-container">
 
+    <% if not @issue.videos.empty? %>
+      <div class="issue-sections">
+        <h3>Videos.</h3>
+        <% @issue.videos.each do |article| %>
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+            <%= render :partial => "article", :object => article %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
     <% if not @issue.web_exclusive.empty? %>
       <div class="issue-sections">
         <h3>Web exclusives.</h3>
