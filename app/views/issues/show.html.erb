@@ -52,7 +52,7 @@
         <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
         <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
         <%= f.input :alert_text, :placeholder => 'Message', required: false %>
-        <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all iOS devices.\n\nIt automatically includes: The XXX edition of New Internationalist magazine is ready for download."}) do %>
+        <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all devices.\n\nIt automatically includes: #{@issue.push_notification_text}"}) do %>
           Send Push
         <% end %>
       <% end %>

@@ -507,6 +507,12 @@ class Issue < ActiveRecord::Base
 
   end
 
+  def push_notification_text
+    if not digital_exclusive
+      " The #{release.strftime("%B")} edition of New Internationalist magazine is ready for download."
+    end
+  end
+
   private
 
   def reprocess_image

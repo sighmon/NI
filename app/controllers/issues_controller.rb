@@ -188,7 +188,7 @@ class IssuesController < ApplicationController
       },
       "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
       "data" => {
-        "alert" => "#{@alert_text} The #{@issue.release.strftime("%B")} edition of New Internationalist magazine is ready for download.",
+        "alert" => "#{@alert_text + @issue.push_notification_text}",
         "badge" => "Increment",
         "sound" => "new-issue.caf",
         "name" => @issue.number.to_s,
@@ -689,7 +689,7 @@ class IssuesController < ApplicationController
   end
 
   def issue_params
-    params.require(:issue).permit(:number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published, :email_text, :zip)
+    params.require(:issue).permit(:number, :release, :title, :trialissue, :cover, :editors_letter, :editors_name, :editors_photo, :published, :email_text, :zip, :digital_exclusive)
   end
 
 end
