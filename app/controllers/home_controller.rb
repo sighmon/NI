@@ -14,7 +14,7 @@ class HomeController < ApplicationController
   def index
   	@issues = Issue.where(published: true)
 
-    @latest_free_issue = @issues.select{|issue| issue.trialissue}.reverse.first
+    @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
     @features_category = Category.find_by_name("/features/")
 
