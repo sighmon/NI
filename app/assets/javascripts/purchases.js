@@ -7,6 +7,13 @@
 function sendPurchase() {
 	// Send google the event for conversions
 	ga('send', 'event', 'purchase', 'buy', issueNumber, issuePrice);
+
+	// Send the adwords conversion
+	dataLayer.push({
+    'conversionValue': issuePrice,
+    'issueNumber': issueNumber,
+    'event': 'purchase'
+  });
 	
 	// Send google the ecommerce
 	ga('ecommerce:addTransaction', {

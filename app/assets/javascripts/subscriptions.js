@@ -4,6 +4,13 @@ function sendSubscription() {
 	// Send google the event for conversions
 	ga('send', 'event', 'subscription', 'buy', subscriptionType, subscriptionPrice);
 
+	// Send the adwords conversion
+	dataLayer.push({
+    'conversionValue': subscriptionPrice,
+    'subscriptionType': subscriptionType,
+    'event': 'subscription'
+  });
+
 	// Send google the ecommerce
 	ga('ecommerce:addTransaction', {
 		'id': purchaseID,
