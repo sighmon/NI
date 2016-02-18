@@ -99,6 +99,14 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def has_category(category_name)
+    if self.categories.select {|c| c.name == category_name}.count > 0
+      return true
+    else
+      return false
+    end
+  end
+
   def published
     issue.published
   end

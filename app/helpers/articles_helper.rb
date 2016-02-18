@@ -57,6 +57,8 @@ module ArticlesHelper
             "<ol class='footnotes'>"+process_children(e,debug)+"</ol>"
           elsif ["page_no"].include? e["element_type"]
             #ignore
+          elsif e["element_type"] == "word_power"
+            "<div class='word-power'><div class='all-article-images article-image-cartoon no-shadow'><img alt='Word power by Mitchell and Richardson' title='Word power by Mitchell and Richardson' src='/assets/word-power@2x.jpg' width='300' /></div><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           else
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
@@ -130,6 +132,12 @@ module ArticlesHelper
             "<dt>#{e['type'].gsub(/^w._/, '').titlecase}</dt><dd>#{e.text}</dd>"
           elsif ["issue_number","teaser","deck","page_no","alignment","hold","rel_media_class", "factbox_float"].include? e["type"]
             #ignore 
+          elsif ["wp_language"].include? e["type"]
+            "<h4>The language of the #{e.text}</h4>"
+          elsif ["wp_definition_term"].include? e["type"]
+            "<dt>#{e.text}</dt>"
+          elsif ["wp_definition_desc"].include? e["type"]
+            "<dd>#{e.text}</dd>"
           else
             "[unknown field type "+e["type"]+"]" if debug
           end
