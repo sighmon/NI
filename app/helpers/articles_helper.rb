@@ -215,7 +215,7 @@ module ArticlesHelper
           if options.include?("full")
             tag_method = method(:image_tag)
           end
-          "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+          "<div class='#{css_class}' itemprop='image' itemscope itemtype='https://schema.org/ImageObject'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"<meta itemprop='url' content='#{image.data_url.to_s}'><meta itemprop='width' content='#{image.width}'><meta itemprop='height' content='#{image.height}'></div>"
         else
           ""
         end

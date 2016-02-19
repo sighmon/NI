@@ -48,13 +48,26 @@
 <% end %>
 
 <div class="page-header article-title" itemscope itemtype="http://schema.org/Article">
-  <h1 itemprop="name"><%= @article.title %></h1>
+  <h1 itemprop="name"><span itemprop="headline"><%= @article.title %></span></h1>
   <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
   <h2 itemprop="description"><%= simple_format @article.teaser %></h2>
-  <p class="hide-meta" itemprop="url"><%= issue_article_url(@issue,@article) %></p>
-  <p class="hide-meta" itemprop="author"><%= @article.author %></p>
-  <p class="hide-meta" itemprop="dateCreated"><%= @article.issue.release.strftime("%e %B %Y") %></p>
-  <% if @article.first_image %><p class="hide-meta" itemprop="image"><%= @article.first_image.data_url(:thumb).to_s %></p><% end %>
+  <meta itemprop="url" content="<%= issue_article_url(@issue,@article) %>">
+  <meta itemprop="dateCreated" content="<%= @article.issue.release.strftime("%e %B %Y") %>">
+  <meta itemprop="datePublished" content="<%= @article.issue.release.strftime("%e %B %Y") %>">
+  <meta itemprop="dateModified" content="<%= @article.updated_at.strftime("%e %B %Y") %>">
+  <meta itemprop="mainEntityOfPage" content="<%= issue_article_url(@issue,@article) %>">
+  <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+      <meta itemprop="url" content="<%= asset_url("favicon-196x196.png") %>">
+      <meta itemprop="width" content="196">
+      <meta itemprop="height" content="196">
+    </div>
+    <meta itemprop="name" content="New Internationalist">
+  </div>
+  <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+    <meta itemprop="name" content="<%= @article.author %>">
+  </div>
+  <% if @article.first_image %><meta itemprop="image" content="<%= @article.first_image.data_url(:thumb).to_s %>"><% end %>
   <%= render :partial => "share_links", :object => @article %>
   <nav>
     <ul class="breadcrumb">
@@ -70,13 +83,16 @@
   <div id="myCarousel" class="carousel slide">
     <!-- Carousel items -->
     <div class="carousel-inner">
-      <div class="item active">
+      <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
         <%= retina_image_tag @article.featured_image_url(:fullwidth).to_s, :alt => "#{strip_tags(@article.featured_image_caption)}", :title => "#{strip_tags(@article.featured_image_caption)}", :size => "1050x444" %>
         <% if not @article.featured_image_caption.blank? %>
           <div class="carousel-caption">
             <p><%= simple_format @article.featured_image_caption %></p>
           </div>
         <% end %>
+        <meta itemprop="url" content="<%= @article.featured_image_url(:fullwidth).to_s %>">
+        <meta itemprop="width" content="1890">
+        <meta itemprop="height" content="800">
       </div>
     </div>
   </div>
