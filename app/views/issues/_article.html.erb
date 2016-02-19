@@ -1,24 +1,54 @@
 <% if can? :read, article %>
+  <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
   <% if not article.featured_image.blank? %>
-    <%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80", :itemprop => "image"), issue_article_path(@issue,article) %>
+    <%= link_to retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article) %>
+    <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
+    <meta itemprop="width" content="1890">
+    <meta itemprop="height" content="800">
   <% elsif article.first_image %>
-    <%= link_to retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80", :itemprop => "image"), issue_article_path(@issue,article) %>
+    <%= link_to retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :size => "80x80"), issue_article_path(@issue,article) %>
+    <meta itemprop="url" content="<%= article.first_image.data_url(:sixhundred).to_s %>">
+    <meta itemprop="width" content="<%= article.first_image.width %>">
+    <meta itemprop="height" content="<%= article.first_image.height %>">
   <% elsif article.has_category('/columns/wordpower/') %>
-    <%= link_to retina_image_tag('word-power-80x80.jpg', :class => 'article-thumb', :alt => "", :title => "", :size => "80x80", :itemprop => "image"), issue_article_path(@issue,article) %>
+    <%= link_to retina_image_tag('word-power-80x80.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :size => "80x80"), issue_article_path(@issue,article) %>
   <% end %>
-  <h4 itemprop="name"><%= link_to article.title, issue_article_path(@issue,article) %></h4>
+  </div>
+  <h4 itemprop="name"><span itemprop="headline"><%= link_to article.title, issue_article_path(@issue,article) %></span></h4>
 <% else %>
+  <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
   <% if not article.featured_image.blank? %>
-    <%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80", :itemprop => "image") %>
+    <%= retina_image_tag(article.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :size => "80x80") %>
+    <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
+    <meta itemprop="width" content="1890">
+    <meta itemprop="height" content="800">
   <% elsif article.first_image %>
-    <%= retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80", :itemprop => "image") %>
+    <%= retina_image_tag(article.first_image.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :size => "80x80") %>
+    <meta itemprop="url" content="<%= article.first_image.data_url(:sixhundred).to_s %>">
+    <meta itemprop="width" content="<%= article.first_image.width %>">
+    <meta itemprop="height" content="<%= article.first_image.height %>">
   <% end %>
-  <h4 itemprop="name"><%= article.title %></h4>
+  </div>
+  <h4 itemprop="name"><span itemprop="headline"><%= article.title %></span></h4>
 <% end %>
 <p><%= simple_format article.teaser, :itemprop => "description" %></p>
-<p class="hide-meta" itemprop="url"><%= issue_article_url(@issue,article) %></p>
-<p class="hide-meta" itemprop="author"><%= article.author %></p>
-<p class="hide-meta" itemprop="dateCreated"><%= article.issue.release.strftime("%e %B %Y") %></p>
+<meta itemprop="url" content="<%= issue_article_url(@issue,article) %>">
+<meta itemprop="dateCreated" content="<%= article.issue.release.strftime("%e %B %Y") %>">
+<meta itemprop="datePublished" content="<%= article.issue.release.strftime("%e %B %Y") %>">
+<meta itemprop="dateModified" content="<%= article.updated_at.strftime("%e %B %Y") %>">
+<meta itemprop="mainEntityOfPage" content="<%= issue_article_url(@issue,article) %>">
+<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+  <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+    <meta itemprop="url" content="<%= asset_url("favicon-196x196.png") %>">
+    <meta itemprop="width" content="196">
+    <meta itemprop="height" content="196">
+  </div>
+  <meta itemprop="name" content="New Internationalist">
+</div>
+<div itemprop="author" itemscope itemtype="https://schema.org/Person">
+  <meta itemprop="name" content="<%= article.author %>">
+</div>
+
 <% if can? :manage, Article %>
   <ul class="list-unstyled">
   <% article.categories.each do |category| %>
