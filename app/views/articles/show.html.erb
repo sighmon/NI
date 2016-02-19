@@ -67,7 +67,13 @@
   <div itemprop="author" itemscope itemtype="https://schema.org/Person">
     <meta itemprop="name" content="<%= @article.author %>">
   </div>
-  <% if @article.first_image %><meta itemprop="image" content="<%= @article.first_image.data_url(:thumb).to_s %>"><% end %>
+  <% if @article.first_image %>
+    <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+      <meta itemprop="url" content="<%= @article.first_image.data_url.to_s %>">
+      <meta itemprop="width" content="<%= @article.first_image.width %>">
+      <meta itemprop="height" content="<%= @article.first_image.height %>">
+    </div>
+  <% end %>
   <%= render :partial => "share_links", :object => @article %>
   <nav>
     <ul class="breadcrumb">
