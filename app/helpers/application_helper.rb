@@ -174,7 +174,7 @@ module ApplicationHelper
     end
 
     def current_article_favourited?
-        if not current_user.nil?
+        if not current_user.nil? and not @article.nil?
             return current_user.favourites.collect{|f| f.article_id}.include?(@article.id)
         else 
             return false
@@ -186,7 +186,7 @@ module ApplicationHelper
     end
 
     def current_article_has_a_guest_pass?
-        if not current_user.nil?
+        if not current_user.nil? and not @article.nil?
             return current_user.guest_passes.collect{|f| f.article_id}.include?(@article.id)
         else 
             return false
