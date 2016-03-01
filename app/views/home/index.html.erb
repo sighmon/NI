@@ -1,3 +1,17 @@
+<% if @keynotes.first.first_image %>
+	<div id="myCarousel" class="carousel slide">
+    <!-- Keynote hero image -->
+    <div class="carousel-inner">
+      <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <%= image_tag @keynotes.first.first_image.data_url.to_s, :alt => "#{strip_tags(@keynotes.first.first_image.caption)}", :title => "#{strip_tags(@keynotes.first.first_image.caption)}", :size => "1050x444" %>
+        <meta itemprop="url" content="<%= @keynotes.first.first_image.data_url.to_s %>">
+        <meta itemprop="width" content="2100">
+        <meta itemprop="height" content="888">
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="hero-unit">
 	<h1>Digital edition</h1>
 	<div class="home-image">
