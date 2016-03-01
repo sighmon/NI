@@ -1,0 +1,13 @@
+				<% if can? :read, article %>
+					<!-- Can read this article, so link to it -->
+					<h3><%= link_to article.title, issue_article_path(article.issue,article) %></h3>
+					<h5 class="breadcrumb"><%= link_to "#{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %><%= render :partial => "home_share_links", :locals => { :article => article } %></h5>
+					<h4><%= simple_format article.teaser %></h4>
+					<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
+				<% else %>
+					<!-- Can't read this article, so link to buy it -->
+					<h3><%= link_to article.title, new_issue_purchase_path(article.issue) %></h3>
+					<h5 class="breadcrumb"><%= link_to "#{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %><%= render :partial => "home_share_links", :locals => { :article => article } %></h5>
+					<h4><%= simple_format article.teaser %></h4>
+					<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %></p>
+				<% end %>
