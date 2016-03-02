@@ -237,11 +237,50 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -20px;
 }
 
-.home-latest-cover {
+.home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
+	margin-top: 0;
+}
+
+.home-keynote h5 {
+	margin-bottom: 0;
+}
+
+.home-keynote .share-links .fa {
+	margin-left: 0.5em;
+}
+
+.home-keynote .share-links .fa:hover {
+	color: @gray-light;
+}
+
+.home-keynote .fa-twitter {
+	font-size: 1.2em;
+	position: relative;
+	top: 0.1em;
+}
+
+.home-keynote h6, .home-editor-note h4 {
+	text-transform: uppercase;
+	font-weight: normal;
+	font-size: 0.9em;
+	color: @gray-light;
+	margin-top: 0;
+}
+
+.home-editor-note h3 {
+	margin-top: 0.5em;
+}
+
+.home-latest-issue {
 	position: relative;
 	z-index: 1000;
 	margin-top: -300px;
+	margin-bottom: 2em;
 	text-align: center;
+}
+
+.home-latest-cover {
+	margin-bottom: 1em;
 }
 
 // Past home styling
@@ -316,7 +355,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .home-keynote h3 {
 	color: @gray-light;
 	font-size: 1.3em;
-	line-height: inherit;
+	line-height: 1.4em;
 	margin-bottom: 0;
 }
 
