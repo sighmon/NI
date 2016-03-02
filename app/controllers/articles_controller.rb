@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
-  load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share]
+  load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
   def strip_tags(string)
@@ -401,11 +401,15 @@ class ArticlesController < ApplicationController
   end
 
   def tweet
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_tweet"
+    end
     twitter_params = {
-      :url => view_context.generate_guest_pass_link_string(@guest_pass),
+      :url => @guest_pass,
       :text => params[:text],
       :via => "ni_australia"
       #:related => "ni_australia"
@@ -414,9 +418,13 @@ class ArticlesController < ApplicationController
   end
 
   def wall_post
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_wall_post"
+    end
     if not @article.featured_image.blank?
       preview_picture = @article.featured_image_url(:fullwidth).to_s
     else
@@ -424,23 +432,27 @@ class ArticlesController < ApplicationController
     end
     facebook_params = {
       :app_id => 194389730710694,
-      :link => view_context.generate_guest_pass_link_string(@guest_pass),
+      :link => @guest_pass,
       :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
       :name => @article.title,
       :caption => @article.teaser,
       :description => params[:text],
-      :redirect_uri => view_context.generate_guest_pass_link_string(@guest_pass)
+      :redirect_uri => @guest_pass
       #:redirect_uri => "http://digital.newint.com.au"
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
 
   def email_article
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_email"
+    end
     email_params = {
-      :body => view_context.generate_guest_pass_link_string(@guest_pass),
+      :body => @guest_pass,
       :subject => "#{@article.title} - New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"

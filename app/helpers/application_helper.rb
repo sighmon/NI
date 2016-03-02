@@ -173,9 +173,9 @@ module ApplicationHelper
         return number_with_precision((value / 100.0), :precision => 2)
     end
 
-    def current_article_favourited?
-        if not current_user.nil? and not @article.nil?
-            return current_user.favourites.collect{|f| f.article_id}.include?(@article.id)
+    def article_favourited?(article)
+        if not current_user.nil? and not article.nil?
+            return current_user.favourites.collect{|f| f.article_id}.include?(article.id)
         else 
             return false
         end
@@ -185,9 +185,9 @@ module ApplicationHelper
         return article.favourites.find_by_user_id(current_user.id).id
     end
 
-    def current_article_has_a_guest_pass?
-        if not current_user.nil? and not @article.nil?
-            return current_user.guest_passes.collect{|f| f.article_id}.include?(@article.id)
+    def article_has_a_guest_pass?(article)
+        if not current_user.nil? and not article.nil?
+            return current_user.guest_passes.collect{|f| f.article_id}.include?(article.id)
         else 
             return false
         end
