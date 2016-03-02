@@ -1,7 +1,7 @@
 <p class="share-links"><span class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></span><span class="clear-hack"></span>
   <% if can? :create, Favourite %>
     <!-- Favourite -->
-    <% if current_article_favourited? %>
+    <% if article_favourited?(@article) %>
       <%= link_to raw('<i class="fa fa-heart"></i>'), issue_article_favourite_path(@issue.id, @article.id, favourite_id_for_article(@article)), :method => 'delete', :class => 'btn btn-default btn-xs btn-danger article-favourite', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
     <% else %>
       <%= link_to raw('<i class="fa fa-heart-o"></i>'), issue_article_favourites_path(@issue, @article), :method => 'create', :class => 'btn btn-default btn-xs article-favourite', :alt => 'Add to favourites', :title => 'Add to favourites' %>
@@ -10,7 +10,7 @@
   <% end %>
   <% if can? :create, GuestPass %>
     <!-- Sharing options -->
-    <% if current_article_has_a_guest_pass? %>
+    <% if article_has_a_guest_pass?(@article) %>
       <%= link_to raw('<i class="fa fa-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn btn-default btn-xs btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
       <!-- Guest pass link -->
       <%= link_to 'Guest pass to share', generate_guest_pass_link_string(current_user.guest_passes.select{|s| (s.article.id == @article.id)}.last), :alt => 'Right-click and copy this link to share it with friends.', :title => 'Right-click and copy this link to share it with friends.' %>
