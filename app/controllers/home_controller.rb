@@ -47,6 +47,9 @@ class HomeController < ApplicationController
                     "x-default" => "android-app://au.com.newint.newinternationalist/newint/",
                     "x" => "newint://"
                     },
+                  :alternate => [
+                    { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
+                  ],
                   :open_graph => {
                     :title => @page_title_home,
                     :description => @page_description,

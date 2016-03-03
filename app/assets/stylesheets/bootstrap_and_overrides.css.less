@@ -235,6 +235,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 #myCarousel.carousel.slide.home-hero {
 	margin-top: -20px;
+	height: 500px;
+	overflow: hidden;
 }
 
 .home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
@@ -463,12 +465,40 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	border-radius: 0 0 3px 3px;
 }
 
+.footer .brand {
+	.navbar .brand;
+	color: @gray-dark;
+	margin-top: -0.5em;
+}
+
 .footer p {
 	margin: 0px;
 }
 
 .footer a {
 	color: @gray;
+	text-decoration: underline;
+}
+
+.footer a:hover {
+	color: @niRed;
+}
+
+.footer h5 {
+	margin-top: 0;
+}
+
+.footer ul {
+	padding-left: 2em;
+}
+
+.footer .col-sm-4 {
+	text-align: left;
+	padding: 1em 2em 2em 2em;
+}
+
+.footer .copyright {
+	opacity: 0.8;
 }
 
 // Issues listed as a tables
