@@ -62,6 +62,9 @@ class IssuesController < ApplicationController
                     "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues",
                     "x" => "newint://issues"
                     },
+                  :alternate => [
+                    { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
+                  ],
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -78,6 +81,20 @@ class IssuesController < ApplicationController
                     :description => @page_description,
                     :image => {
                       :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                    },
+                    :app => {
+                      :name => {
+                        :iphone => ENV["ITUNES_APP_NAME"],
+                        :ipad => ENV["ITUNES_APP_NAME"]
+                      },
+                      :id => {
+                        :iphone => ENV["ITUNES_APP_ID"],
+                        :ipad => ENV["ITUNES_APP_ID"]
+                      },
+                      :url => {
+                        :iphone => "newint://",
+                        :ipad => "newint://"
+                      }
                     }
                   }
 
