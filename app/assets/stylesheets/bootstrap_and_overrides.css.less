@@ -143,7 +143,9 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 @niGreen: rgba(134,197,67,0.1);
 @boxBackgroundColour: #E4E1DF;
 @boxGrayLightest: #F5F5F5;
+@boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 @footerColour: rgba(250,176,59,0.58);
+@boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
 // Column fixes
@@ -241,6 +243,11 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
 	margin-top: 0;
+	background-color: inherit;
+}
+
+.home-hero + .row .home-keynote h3 {
+	font-size: 1.5em;
 }
 
 .home-keynote h5 {
@@ -292,10 +299,16 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -300px;
 	margin-bottom: 2em;
 	text-align: center;
+	background-color: @boxHomeBackgroundColour;
+	padding: 1em 1.7em 2em 1.7em;
+	border-radius: 2px;
 }
 
 .home-latest-cover {
 	margin-bottom: 1em;
+	border-radius: 2px;
+	width: 100%;
+	height: auto;
 }
 
 // Past home styling
@@ -352,6 +365,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote {
 	margin-top: 1em;
+	background-color: @boxHomeBackgroundColour;
+	border-radius: 2px;
 	// margin-bottom: 2em;
 	// border-bottom: 1px solid @gray-lighter;
 }
@@ -360,6 +375,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	width: 100%;
 	margin-bottom: 1em;
 	transition: .3s ease;
+	border-radius: 2px 2px 0px 0px;
 }
 
 .home-keynote img:hover {
@@ -382,6 +398,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .home-keynote h5 {
 	color: @gray-light;
 	font-weight: normal;
+}
+
+.home-keynote-text {
+	padding: 0 1.5em 0.5em 1.5em;
 }
 
 // User login links & profile link
@@ -1725,6 +1745,15 @@ ul.ui-autocomplete {
 		// .shadow;
 		margin: 0 -1em 2em -1em;
 	}
+
+	.home-latest-issue {
+		margin-top: 0px;
+		margin-bottom: 2em;
+	}
+
+	.home-latest-cover {
+		width: 50%;
+	}
 }
  
 /* Portrait tablet to landscape and desktop */
@@ -1761,6 +1790,10 @@ ul.ui-autocomplete {
 	.navbar .nav > li > a {
 		padding: 13px 7px 7px;
 	}
+
+	.home-free-issue, .home-editor-note {
+		padding-left: 2em;
+	}
 }
  
 /* Large desktop */
@@ -1784,5 +1817,9 @@ ul.ui-autocomplete {
 	}
 	.home-image {
 		margin: -20px 0px 0px 2em;
+	}
+
+	.home-free-issue, .home-editor-note {
+		padding-left: 3em;
 	}
 }

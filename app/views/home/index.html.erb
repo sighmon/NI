@@ -14,9 +14,11 @@
 
 <!-- Latest magazine information -->
 <div class="row">
-	<div class="col-sm-4 home-keynote">
-		<h6>Keynote article from this issue</h6>
-		<%= render :partial => "home_article_no_image", :locals => { :article => @keynotes.first } %>
+	<div class="col-sm-4">
+		<div class="home-keynote">
+			<h6>Keynote article from this issue</h6>
+			<%= render :partial => "home_article_no_image", :locals => { :article => @keynotes.first } %>
+		</div>
 	</div>
 	<div class="col-sm-4 home-latest-issue">
 		<!-- Latest cover -->
@@ -63,7 +65,7 @@
 		<div class="col-sm-8">
 			<h2>Magazine archive</h2>
 
-			<p>Here are the most recent magazines we've published. Even if you haven't subscribed yet, you can still read the editor's letter for each issue and see a teaser of all the articles in that edition.</p>
+			<p>Here are the <%= link_to "most recent magazines", issues_path %> we've published.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
 					<% @issues.sort_by(&:release).reverse.first(4).each do |issue| %>
@@ -77,10 +79,10 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4 home-free-issue">
 			<h2>Try it first</h2>
 
-			<p>Read a full sample magazine to see if you like it first.</p>
+			<p>Read a full sample magazine..</p>
 
 			<div class="home-cover-list">
 				<% if @latest_free_issue %>
@@ -111,7 +113,7 @@
 <hr />
 <div class="row">
 			<% end %>
-			<div class="col-sm-4 home-keynote">
+			<div class="col-sm-4">
 				<%= render :partial => "home_article", :locals => { :article => keynote } %>
 			</div>
 		<% end %>
@@ -127,13 +129,13 @@
 <div class="row">
 	<!-- Sample facts spread -->
 	<% if @facts %>
-		<div class="col-sm-6 home-keynote">
+		<div class="col-sm-6">
 			<%= render :partial => "home_article", :locals => { :article => @facts } %>
 		</div>
 	<% end %>
 	<!-- Sample country profile -->
 	<% if @country_profile %>
-		<div class="col-sm-6 home-keynote">
+		<div class="col-sm-6">
 			<%= render :partial => "home_article", :locals => { :article => @country_profile } %>
 		</div>
 	<% end %>
@@ -142,7 +144,7 @@
 <div class="row">
 	<!-- Sample cartoon -->
 	<% if @cartoon %>
-		<div class="col-sm-12 home-keynote">
+		<div class="col-sm-12">
 			<%= render :partial => "home_article", :locals => { :article => @cartoon } %>
 		</div>
 	<% end %>
