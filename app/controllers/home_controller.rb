@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def free
-    latest_free_issue = Issue.where(trialissue: true).sort_by(&:release).reverse.first
+    latest_free_issue = Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.sort_by(&:release).reverse.first
     if latest_free_issue
       redirect_to issue_path(latest_free_issue)
     else
