@@ -365,6 +365,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote {
 	margin-top: 1em;
+	margin-bottom: 1em;
 	background-color: @boxHomeBackgroundColour;
 	border-radius: 2px;
 	// margin-bottom: 2em;
@@ -373,7 +374,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote img {
 	width: 100%;
-	margin-bottom: 1em;
+	// margin-bottom: 1em;
 	transition: .3s ease;
 	border-radius: 2px 2px 0px 0px;
 }
@@ -401,7 +402,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-keynote-text {
-	padding: 0 1.5em 0.5em 1.5em;
+	padding: 0.01em 1.5em 1em 1.5em;
 }
 
 // User login links & profile link
@@ -1125,8 +1126,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .article-thumb {
 	// .shadow-light;
 	border-radius: 2px;
-	float: right;
-	margin-left: 20px;
+	// float: right;
+	// margin-left: 20px;
 }
 
 .article-image-top-right {
@@ -1753,6 +1754,10 @@ ul.ui-autocomplete {
 		margin: 0 -1em 2em -1em;
 	}
 
+	#myCarousel.carousel.slide.home-hero {
+		height: auto;
+	}
+
 	.home-latest-issue {
 		margin-top: 0px;
 		margin-bottom: 2em;
@@ -1760,6 +1765,10 @@ ul.ui-autocomplete {
 
 	.home-latest-cover {
 		width: 50%;
+	}
+
+	.col-sm-4 + .col-sm-4 {
+		margin-top: 2em;
 	}
 }
  

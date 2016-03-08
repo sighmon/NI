@@ -23,20 +23,27 @@ class HomeController < ApplicationController
     # compact removes the nil elements which fool the "if @keynotes" test in the view
     @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
 
-    facts_category = Category.find_by_name("/sections/facts/")
-    if facts_category
-      @facts = facts_category.first_articles(10).sample
-    end
+    # TODO: List of popular categories?
 
-    country_profile_category = Category.find_by_name("/columns/country/")
-    if country_profile_category
-      @country_profile = country_profile_category.first_articles(10).sample
-    end
+    @facts = Category.find_by_name("/sections/facts/").try(:first_articles, 10).try(:sample)
 
-    cartoon_category = Category.find_by_name("/columns/cartoon/")
-    if cartoon_category
-      @cartoon = cartoon_category.first_articles(10).sample
-    end
+    @country_profile = Category.find_by_name("/columns/country/").try(:first_articles, 10).try(:sample)
+
+    @cartoon = Category.find_by_name("/columns/cartoon/").try(:first_articles, 10).try(:sample)
+
+    @agendas = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact).try(:sample, 3)
+
+    @film = Category.find_by_name("/columns/media/film/").try(:first_articles, 10).try(:sample)
+
+    @book = Category.find_by_name("/columns/media/books/").try(:first_articles, 10).try(:sample)
+
+    @music = Category.find_by_name("/columns/media/music/").try(:first_articles, 10).try(:sample)
+
+    @letters_from = Category.find_by_name("/columns/letters-from/").try(:first_articles, 10).try(:sample)
+
+    @making_waves = Category.find_by_name("/columns/makingwaves/").try(:first_articles, 10).try(:sample)
+
+    @world_beaters = Category.find_by_name("/columns/worldbeaters/").try(:first_articles, 10).try(:sample)
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"

@@ -110,7 +110,6 @@
 		<% @keynotes.sort_by(&:publication).reverse.each_with_index do |keynote, index| %>
 			<% if index == 3 %>
 </div>
-<hr />
 <div class="row">
 			<% end %>
 			<div class="col-sm-4">
@@ -125,6 +124,52 @@
 		<h2>From the archives</h2>
 		<p>A selection of articles from the New Internationalist magazine archives.</p>
 	</div>
+</div>
+<div class="row">
+	<!-- Sample agenda articles -->
+	<% if @agendas %>
+		<% @agendas.each do |article| %>
+			<div class="col-sm-4">
+				<%= render :partial => "home_article", :locals => { :article => article } %>
+			</div>
+		<% end %>
+	<% end %>
+</div>
+<div class="row">
+	<!-- Media -->
+	<% if @film %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @film } %>
+		</div>
+	<% end %>
+	<% if @book %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @book } %>
+		</div>
+	<% end %>
+	<% if @music %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @music } %>
+		</div>
+	<% end %>
+</div>
+<div class="row">
+	<!-- Media -->
+	<% if @letters_from %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @letters_from } %>
+		</div>
+	<% end %>
+	<% if @making_waves %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @making_waves } %>
+		</div>
+	<% end %>
+	<% if @world_beaters %>
+		<div class="col-sm-4">
+			<%= render :partial => "home_article", :locals => { :article => @world_beaters } %>
+		</div>
+	<% end %>
 </div>
 <div class="row">
 	<!-- Sample facts spread -->
