@@ -59,7 +59,7 @@ class ArticlesController < ApplicationController
   end
 
   def popular
-    @guest_passes = GuestPass.order(:use_count).first(10).reverse
+    @guest_passes = GuestPass.order(:use_count).reverse.first(10)
 
     # Set meta tags
     set_meta_tags :title => "Poplar New Internationalist articles",
