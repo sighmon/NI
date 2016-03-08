@@ -45,7 +45,7 @@ class Issue < ActiveRecord::Base
   end
 
   def self.latest
-    Issue.all.sort_by{|i| i.release}.last
+    Issue.where(published: true).sort_by{|i| i.release}.last
   end
     
  

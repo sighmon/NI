@@ -14,26 +14,28 @@ class HomeController < ApplicationController
   def index
   	@issues = Issue.where(published: true)
 
+    @latest_issue = Issue.latest
+
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
     @features_category = Category.find_by_name("/features/")
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
-    @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}.compact
+    @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
 
     facts_category = Category.find_by_name("/sections/facts/")
     if facts_category
-      @facts = facts_category.first_ten_articles.sample
+      @facts = facts_category.first_articles(10).sample
     end
 
     country_profile_category = Category.find_by_name("/columns/country/")
     if country_profile_category
-      @country_profile = country_profile_category.first_ten_articles.sample
+      @country_profile = country_profile_category.first_articles(10).sample
     end
 
     cartoon_category = Category.find_by_name("/columns/cartoon/")
     if cartoon_category
-      @cartoon = cartoon_category.first_ten_articles.sample
+      @cartoon = cartoon_category.first_articles(10).sample
     end
 
   	# Set meta tags
