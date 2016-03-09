@@ -15,23 +15,25 @@
 
 <div class="issue-cover-list">
   <% @issues.sort_by(&:release).reverse.each do |issue| %>
-    <span itemscope itemtype="http://schema.org/CreativeWork">
-      <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => "shadow#{unpublished(issue)}", :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200", :itemprop => "image"), issue_path(issue), :itemprop => "url" %>
-      <span class="hide-meta" itemprop="name"><%= issue.title %></span>
-      <span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
-      <span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
-    </span>
+    <div class="issue-information" itemscope itemtype="http://schema.org/CreativeWork">
+      <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :size => "141x200", :itemprop => "image"), issue_path(issue), :itemprop => "url" %>
+      <meta itemprop="name" content="<%= issue.title %>">
+      <meta itemprop="editor" content="<%= issue.editors_name %>">
+      <meta itemprop="dateCreated" content="<%= issue.release.strftime("%e %B %Y") %>">
+      <p><%= issue.number %> - <%= issue.release.strftime("%b %Y") %></p>
+    </div>
   <% end %>
 </div>
+<div class="clearfix"></div>
 <%= paginate @issues %>
 
 <table class="table table-bordered">
   <thead>
     <tr>
       <!-- <th><%= model_class.human_attribute_name(:id) %></th> -->
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:number) %></th>
-      <th><%= model_class.human_attribute_name(:release) %></th>
+      <th>Magazine title</th>
+      <th>Issue number</th>
+      <th>Date of publication</th>
       <!-- <th><%= model_class.human_attribute_name(:trialissue) %></th> -->
       <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
       <% if can? :update, @issue %><th><%=t '.actions', :default => t("helpers.actions") %></th><% end %>

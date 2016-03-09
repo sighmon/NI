@@ -145,7 +145,6 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 @boxGrayLightest: #F5F5F5;
 @boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 @footerColour: rgba(250,176,59,0.58);
-@boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
 // Column fixes
@@ -729,7 +728,7 @@ a:active .shadow {
 // Issue styling
 
 .pagination {
-	margin-top: -20px;
+	margin-top: 0px;
 }
 
 .issue-search {
@@ -742,17 +741,32 @@ a:active .shadow {
 	// height: 30px;
 }
 
-@issueCoverListMargin: 7px;
+@issueCoverListMargin: 9px;
 
 .issue-cover-list {
 	margin: 0px -@issueCoverListMargin 20px -@issueCoverListMargin;
 }
 
-.issue-cover-list img {
+.issue-cover-list .issue-information {
+	float: left;
 	margin-left: @issueCoverListMargin;
 	margin-right: @issueCoverListMargin;
 	margin-bottom: (@issueCoverListMargin * 2) + 3;
 	border-radius: 2px;
+	background-color: @boxHomeBackgroundColour;
+	color: @gray-light;
+}
+
+.issue-information:hover {
+	background-color: @gray-light;
+	color: white;
+	opacity: 0.8;
+}
+
+.issue-information p {
+	text-align: center;
+	margin: 0.3em 0 0.3em 0;
+	font-size: 0.9em;
 }
 
 .issue-list-title {
@@ -1689,9 +1703,19 @@ ul.ui-autocomplete {
 	.star-ratings-previous-year + dd {
 		margin-top: -7px;
 	}
-	.issue-cover-list img, .home-cover-list img {
+	.form-search .btn {
+		width: 100%;
+		margin-top: 1em;
+	}
+	.issue-cover-list {
+		margin-top: 2em;
+	}
+	.issue-cover-list .issue-information, .home-cover-list img {
 		width: 42%;
 		height: auto;
+	}
+	.issue-cover-list .issue-information img {
+		width: 100%;
 	}
 	.issue-article.keynote .issue-cover {
 		width: 45%;
