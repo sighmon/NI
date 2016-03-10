@@ -24,6 +24,8 @@ class ArticlesController < ApplicationController
 
   def search
     @articles = Article.search(params, current_user.try(:admin?))
+    @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
+
     # if params[:query].present?
     #     @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
     # else

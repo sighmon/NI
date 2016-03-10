@@ -14,6 +14,8 @@ class HomeController < ApplicationController
   def index
   	@issues = Issue.where(published: true)
 
+    @query_array = []
+
     @latest_issue = Issue.latest
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first

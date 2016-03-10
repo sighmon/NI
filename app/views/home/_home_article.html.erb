@@ -4,12 +4,14 @@
 						<% if not article.featured_image.blank? %>
 					    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
 					  <% elsif article.first_image %>
-					    <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  <% else %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
 					  <% end %>
 					  <div class="home-keynote-text">
-					  	<h3><%= link_to article.title, issue_article_path(article.issue,article) %></h3>
-							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home_share_links", :locals => { :article => article } %></h5>
-							<h4><%= simple_format article.teaser %></h4>
+					  	<h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
+							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
 							<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
 					  </div>
 					<% else %>
@@ -17,12 +19,14 @@
 						<% if not article.featured_image.blank? %>
 					    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
 					  <% elsif article.first_image %>
-					    <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  <% else %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
 					  <% end %>
 					  <div class="home-keynote-text">
-					  	<h3><%= link_to article.title, new_issue_purchase_path(article.issue) %></h3>
-							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home_share_links", :locals => { :article => article } %></h5>
-							<h4><%= simple_format article.teaser %></h4>
+					  	<h3><%= link_to highlight(article.title, @query_array), new_issue_purchase_path(article.issue) %></h3>
+							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
 							<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %></p>
 					  </div>
 					<% end %>
