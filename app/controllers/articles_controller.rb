@@ -257,10 +257,7 @@ class ArticlesController < ApplicationController
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
-            :alternate => { 
-              "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues/#{@issue.id}/articles/#{@article.id}",
-              "x" => "newint://issues/#{@issue.id}/articles/#{@article.id}"
-              },
+            :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}],
             :open_graph => {
             :title => @article.title,
             :description => strip_tags(@article.teaser),
@@ -423,7 +420,7 @@ class ArticlesController < ApplicationController
       preview_picture = @article.try(:images).try(:first).try(:data).to_s
     end
     facebook_params = {
-      :app_id => 194389730710694,
+      :app_id => ENV["FACEBOOK_APP_ID"],
       :link => view_context.generate_guest_pass_link_string(@guest_pass),
       :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
       :name => @article.title,

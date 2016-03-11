@@ -43,10 +43,7 @@ class HomeController < ApplicationController
     set_meta_tags :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
                   :canonical => root_url,
-                  :alternate => { 
-                    "x-default" => "android-app://au.com.newint.newinternationalist/newint/",
-                    "x" => "newint://"
-                    },
+                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"}],
                   :open_graph => {
                     :title => @page_title_home,
                     :description => @page_description,
