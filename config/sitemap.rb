@@ -1,11 +1,11 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://digital.newint.com.au"
+SitemapGenerator::Sitemap.default_host = "https://digital.newint.com.au"
 # pick a place safe to write the files
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 # store on S3 using Fog
 SitemapGenerator::Sitemap.adapter = SitemapGenerator::WaveAdapter.new
 # inform the map cross-linking where to find the other maps
-SitemapGenerator::Sitemap.sitemaps_host = "http://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/"
+SitemapGenerator::Sitemap.sitemaps_host = "https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/"
 # pick a namespace within your bucket to organize your maps
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
@@ -34,42 +34,34 @@ SitemapGenerator::Sitemap.create do
   #   end
 
   add('/', :alternates => [{
-    :href => 'newint://',
-    :lang => 'x'
+    :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
   }, {
-    :href => 'android-app://au.com.newint.newinternationalist/newint',
-    :lang => 'x-default'
+    :href => "android-app://au.com.newint.newinternationalist/newint"
   }])
 
   # Add '/issues'
   add issues_path, :priority => 0.7, :changefreq => 'daily', :alternates => [{
-    :href => 'newint://issues',
-    :lang => 'x'
+    :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"
   }, {
-    :href => 'android-app://au.com.newint.newinternationalist/newint/issues',
-    :lang => 'x-default'
+    :href => "android-app://au.com.newint.newinternationalist/newint/issues"
   }]
 
   # Add all issues:
   Issue.find_each do |issue|
     if issue.published?
       add issue_path(issue), :lastmod => issue.updated_at, :alternates => [{
-        :href => "newint://issues/#{issue.id}",
-        :lang => 'x'
+        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}"
       }, {
-        :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}",
-        :lang => 'x-default'
+        :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}"
       }]
 
       # Add articles if it's a trial issue or trial article
       issue.articles.each do |article|
         if issue.trialissue? or article.trialarticle?
           add issue_article_path(issue,article), :lastmod => article.updated_at, :alternates => [{
-            :href => "newint://issues/#{issue.id}/articles/#{article.id}",
-            :lang => 'x'
+            :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }, {
-            :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}/articles/#{article.id}",
-            :lang => 'x-default'
+            :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}/articles/#{article.id}"
           }]
         end
       end
@@ -97,11 +89,9 @@ SitemapGenerator::Sitemap.create do
   # Add categories:
   Category.find_each do |category|
     add category_path(category), :priority => 0.4, :lastmod => category.updated_at, :alternates => [{
-        :href => "newint://issues/categories",
-        :lang => 'x'
+        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/categories"
       }, {
-        :href => "android-app://au.com.newint.newinternationalist/newint/categories",
-        :lang => 'x-default'
+        :href => "android-app://au.com.newint.newinternationalist/newint/categories"
       }]
   end
 
