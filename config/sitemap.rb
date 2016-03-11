@@ -36,14 +36,14 @@ SitemapGenerator::Sitemap.create do
   add('/', :alternates => [{
     :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
   }, {
-    :href => "android-app://au.com.newint.newinternationalist/newint"
+    :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
   }])
 
   # Add '/issues'
   add issues_path, :priority => 0.7, :changefreq => 'daily', :alternates => [{
     :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"
   }, {
-    :href => "android-app://au.com.newint.newinternationalist/newint/issues"
+    :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"
   }]
 
   # Add all issues:
@@ -52,7 +52,7 @@ SitemapGenerator::Sitemap.create do
       add issue_path(issue), :lastmod => issue.updated_at, :alternates => [{
         :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}"
       }, {
-        :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}"
+        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}"
       }]
 
       # Add articles if it's a trial issue or trial article
@@ -61,7 +61,7 @@ SitemapGenerator::Sitemap.create do
           add issue_article_path(issue,article), :lastmod => article.updated_at, :alternates => [{
             :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }, {
-            :href => "android-app://au.com.newint.newinternationalist/newint/issues/#{issue.id}/articles/#{article.id}"
+            :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }]
         end
       end
@@ -91,7 +91,7 @@ SitemapGenerator::Sitemap.create do
     add category_path(category), :priority => 0.4, :lastmod => category.updated_at, :alternates => [{
         :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/categories"
       }, {
-        :href => "android-app://au.com.newint.newinternationalist/newint/categories"
+        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"
       }]
   end
 
