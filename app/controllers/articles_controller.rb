@@ -76,28 +76,28 @@ class ArticlesController < ApplicationController
             :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-            :card => "summary",
-            :site => "@ni_australia",
-            :creator => "@ni_australia",
-            :title => @page_title_home,
-            :description => @page_description,
-            :image => {
-              :src => @guest_passes.first.article.first_image.try(:data_url).to_s
-            },
-            :app => {
-              :name => {
-              :iphone => ENV["ITUNES_APP_NAME"],
-              :ipad => ENV["ITUNES_APP_NAME"]
+              :card => "summary",
+              :site => "@ni_australia",
+              :creator => "@ni_australia",
+              :title => @page_title_home,
+              :description => @page_description,
+              :image => {
+                :src => @guest_passes.first.article.first_image.try(:data_url).to_s
               },
-              :id => {
-              :iphone => ENV["ITUNES_APP_ID"],
-              :ipad => ENV["ITUNES_APP_ID"]
-              },
-              :url => {
-              :iphone => "newint://",
-              :ipad => "newint://"
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://",
+                :ipad => "newint://"
+                }
               }
-            }
             }
     respond_to do |format|
       format.html # show.html.erb
@@ -259,10 +259,7 @@ class ArticlesController < ApplicationController
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
-            :alternate => { 
-              "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues/#{@issue.id}/articles/#{@article.id}",
-              "x" => "newint://issues/#{@issue.id}/articles/#{@article.id}"
-              },
+            :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}],
             :open_graph => {
             :title => @article.title,
             :description => strip_tags(@article.teaser),
@@ -433,8 +430,8 @@ class ArticlesController < ApplicationController
       preview_picture = @article.try(:images).try(:first).try(:data).to_s
     end
     facebook_params = {
-      :app_id => 194389730710694,
       :link => @guest_pass,
+      :app_id => ENV["FACEBOOK_APP_ID"],
       :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
       :name => @article.title,
       :caption => @article.teaser,

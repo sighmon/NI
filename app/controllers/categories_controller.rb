@@ -18,10 +18,7 @@ class CategoriesController < ApplicationController
                   :description => @page_description,
                   :keywords => "themes, categories, category, new, internationalist, magazine, digital, edition",
                   :canonical => categories_url,
-                  :alternate => { 
-                    "x-default" => "android-app://au.com.newint.newinternationalist/newint/categories",
-                    "x" => "newint://categories"
-                    },
+                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"}],
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -54,10 +51,7 @@ class CategoriesController < ApplicationController
                   :description => @page_description,
                   :keywords => "#{@category.short_display_name}, new, internationalist, magazine, digital, edition",
                   :canonical => category_url(@category),
-                  :alternate => { 
-                    "x-default" => "android-app://au.com.newint.newinternationalist/newint/categories",
-                    "x" => "newint://categories"
-                    },
+                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"}],
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,

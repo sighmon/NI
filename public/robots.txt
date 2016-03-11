@@ -8,6 +8,5 @@
 
 User-Agent: *
 Disallow: /*email_issue
-Disallow: *newint://*
 
 Sitemap: https://digital.newint.com.au/sitemap.xml

@@ -58,13 +58,10 @@ class IssuesController < ApplicationController
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
                   :canonical => issues_url,
-                  :alternate => { 
-                    "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues",
-                    "x" => "newint://issues"
-                    },
                   :alternate => [
                     { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
                   ],
+                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"}],
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -267,10 +264,7 @@ class IssuesController < ApplicationController
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :canonical => issue_url(@issue),
-                  :alternate => { 
-                    "x-default" => "android-app://au.com.newint.newinternationalist/newint/issues/#{@issue.id}",
-                    "x" => "newint://issues/#{@issue.id}"
-                    },
+                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}"}],
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -417,7 +411,7 @@ class IssuesController < ApplicationController
   def wall_post_issue
     @issue = Issue.find(params[:issue_id])
     facebook_params = {
-      :app_id => 194389730710694,
+      :app_id => ENV["FACEBOOK_APP_ID"],
       :link => issue_url(@issue),
       :picture => @issue.cover_url.to_s,
       :name => @issue.title,
