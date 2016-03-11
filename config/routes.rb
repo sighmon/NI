@@ -2,6 +2,7 @@ NI::Application.routes.draw do
 
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
+  get 'update_categories_colours' => 'categories#colours'
 
   get "guest_passes/index"
 
