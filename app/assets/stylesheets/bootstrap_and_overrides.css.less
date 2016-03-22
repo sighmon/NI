@@ -255,14 +255,18 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote h5 {
 	margin-bottom: 0;
+	color: @gray;
+	opacity: 0.7;
 }
 
 .home-keynote .share-links .fa {
 	margin-left: 0.5em;
+	color: @gray;
+	opacity: 0.7;
 }
 
 .home-keynote .share-links .fa:hover {
-	color: @gray-light;
+	opacity: 1.0;
 }
 
 .home-keynote .fa-twitter {
@@ -271,7 +275,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	top: 0.1em;
 }
 
-.home-keynote h6, .home-editor-note h4 {
+.home-keynote h6, .home-editor-note h4, .issue-top-box h3 {
 	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 0.9em;
@@ -809,10 +813,18 @@ a:active .shadow {
 	color: @gray-light;
 }
 
+.issue-top-box {
+	background-color: @boxHomeBackgroundColour;
+	padding: 1em 1em 1em 0;
+	margin: 0 0 2em 0;
+	border-radius: 5px;
+}
+
 .issue-title {
 	padding-bottom: 0px;
 	margin-top: 0px;
 	border: none;
+	text-align: center;
 }
 
 .issue-title h1 {
@@ -825,6 +837,7 @@ a:active .shadow {
 .issue-title h2 {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
+	margin-top: 0.5em;
 	font-weight: normal;
 	color: @gray-light;
 }
@@ -1420,7 +1433,17 @@ blockquote.pull-left {
 }
 
 .issue-title .article-favourite {
-	font-size: 0.8em;
+	color: @gray;
+	opacity: 0.6;
+	// font-size: 0.8em;
+}
+
+.issue-title .article-favourite:hover {
+	opacity: 1.0;
+}
+
+.issue-title .share-links {
+	margin-top: 0.5em;
 }
 
 .clear-hack {
@@ -1898,5 +1921,13 @@ ul.ui-autocomplete {
 
 	.home-free-issue, .home-editor-note {
 		padding-left: 3em;
+	}
+	.table-of-contents-editors-letter {
+		-webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 2em;
+    -moz-column-gap: 2em;
+    column-gap: 2em;
 	}
 }
