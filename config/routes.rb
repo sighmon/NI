@@ -125,6 +125,7 @@ NI::Application.routes.draw do
   get "inapp" => "home#inapp"
   get "google_merchant_feed" => "home#google_merchant_feed"
   get "apple_news" => "home#apple_news"
+  get "apple-app-site-association" => "home#apple_app_site_association"
   get "latest_cover" => "home#latest_cover"
 
   # Change the page logged in users are directed to

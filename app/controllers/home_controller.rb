@@ -342,6 +342,22 @@ class HomeController < ApplicationController
 
   end
 
+  def apple_app_site_association
+
+    render json: {
+      applinks: {
+        apps: [],
+        details: [
+          {
+            appID: "#{ENV["ITUNES_APP_ID"]}.#{ENV["ITUNES_BUNDLE_ID"]}",
+            paths: ["/issues*", "/categories"]
+          }
+        ],
+      }
+    }
+
+  end
+
   def latest_cover
     # To get the latest cover from URL https://digital.newint.com.au/latest_cover.jpg
     # To get the full size cover, add ?full=true
