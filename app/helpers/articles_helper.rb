@@ -277,6 +277,10 @@ module ArticlesHelper
     end
   end
 
+  def remove_image_tags(body)
+    body.gsub(/\[File:(.*?)\]/, "")
+  end
+
   def expand_video_tags(body, debug = false)
     # Lets look for Youtube tags
     body.gsub(/\[Youtube:(?<embed_code>[^\]]*)?\]/i) do 

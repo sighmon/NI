@@ -902,11 +902,26 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	margin-top: 0.5em;
 }
 
+.issue-keynote-image-caption {
+	margin-top: 20px;
+	font-size: 0.9em;
+	text-align: right;
+	color: @gray-light;
+}
+
 .issue-sections {
-	border-radius: 5px;
-	padding: 1em;
+	// border-radius: 5px;
+	// padding: 1em;
 	margin-bottom: 2em;
-	background-color: @boxGrayLightest;
+	// background-color: @boxGrayLightest;
+}
+
+.issue-sections + .issue-sections {
+	border-top: 1px solid @gray-lighter;
+}
+
+.issue-sections h3 {
+	line-height: 1.2em;
 }
 
 .issue-articles-container h3 {
@@ -914,8 +929,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-article {
-	border-bottom: 1px solid @gray-lighter;
-	padding-bottom: 15px;
+	// border-bottom: 1px solid @gray-lighter;
+	// padding-bottom: 15px;
 	margin-bottom: 2em;
 }
 
@@ -1853,6 +1868,10 @@ ul.ui-autocomplete {
 
 	.col-sm-4 + .col-sm-4 {
 		margin-top: 2em;
+	}
+
+	.issue-keynote-image-caption {
+		display: none;
 	}
 }
  
