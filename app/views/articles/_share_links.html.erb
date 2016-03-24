@@ -11,7 +11,7 @@
   <% if can? :create, GuestPass %>
     <!-- Sharing options -->
     <% if article_has_a_guest_pass?(@article) %>
-      <%= link_to raw('<i class="fa fa-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
+      <%= link_to raw('<i class="fa fa-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
       <!-- Guest pass link -->
       <%= link_to 'Guest pass to share', generate_guest_pass_link_string(current_user.guest_passes.select{|s| (s.article.id == @article.id)}.last), :alt => 'Right-click and copy this link to share it with friends.', :title => 'Right-click and copy this link to share it with friends.' %>
       <!-- Email button -->
