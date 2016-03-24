@@ -104,7 +104,10 @@ gem 'kgio'
 gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
-gem 'heroku-deflater', :group => :production
+# gem 'heroku-deflater', :group => :production
+
+# Trying another gzip deflater https://github.com/mattolson/heroku_rails_deflate
+gem 'heroku_rails_deflate'
 
 # Get rid of heroku plugin warnings
 gem 'rails_12factor', :group => :production

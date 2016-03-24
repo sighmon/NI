@@ -300,7 +300,9 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       netrc
-    heroku-deflater (0.6.2)
+    heroku_rails_deflate (1.0.3)
+      actionpack (>= 3.2.13)
+      activesupport (>= 3.2.13)
       rack (>= 1.4.5)
     httparty (0.13.7)
       json (~> 1.8)
@@ -579,7 +581,7 @@ DEPENDENCIES
   google-tag-manager-rails
   growl
   guard-rspec (= 1.2.1)
-  heroku-deflater
+  heroku_rails_deflate
   httparty
   jquery-fileupload-rails
   jquery-rails
