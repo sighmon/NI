@@ -19,7 +19,7 @@
               <meta itemprop="height" content="1063">
             <% end %>
             </div>
-            <div class="home-keynote-text<% if article.keynote? %> col-sm-8<% end %>">
+            <div class="home-keynote-text">
               <h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
               <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
               <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
@@ -44,7 +44,7 @@
               <meta itemprop="height" content="1063">
             <% end %>
             </div>
-            <div class="home-keynote-text<% if article.keynote? %> col-sm-8<% end %>">
+            <div class="home-keynote-text">
               <h3><%= link_to highlight(article.title, @query_array), new_issue_purchase_path(article.issue) %></h3>
               <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
               <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
@@ -79,19 +79,4 @@
                 <meta itemprop="name" content="<%= article.author %>">
               </div>
             </div>
-            <% if article.keynote? and article.first_image %>
-              <div class="issue-keynote-image-caption col-sm-4">
-                <p><%= article.first_image.caption %></p>
-                <p><%= article.first_image.credit %></p>
-              </div>
-            <% end %>
-            <% if article.keynote? %>
-              <!-- Not used yet. -->
-              <% if article.body.blank? %>
-                <% truncate((simple_format remove_image_tags(source_to_body(@issue.keynote, :debug => current_user.try(:admin?)))), :escape => false, :length => 768) %>
-              <% else %>
-                <% truncate((simple_format remove_image_tags(@issue.keynote.body)), :escape => false, :length => 768) %>
-              <% end %>
-
-            <% end %>
         </div>

@@ -108,12 +108,14 @@
   <div class="col-sm-12">
     <h3>Keynote article.</h3>
   </div>
-  <div class="col-sm-12" itemscope itemtype="http://schema.org/Article">
+  <div itemscope itemtype="http://schema.org/Article">
     <% if @issue.keynote %>
-      <%= render :partial => "article", :locals => { :article => @issue.keynote } %>
+      <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
     <% end %>
   </div>
 </div>
+
+<hr />
 
 <div class="row">
   <div class="col-sm-4">
