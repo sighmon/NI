@@ -368,4 +368,35 @@ class HomeController < ApplicationController
     end
   end
 
+  def tweet_url
+    twitter_params = {
+      :url => params[:url],
+      :text => params[:text],
+      :via => "ni_australia"
+      #:related => "ni_australia"
+    }
+    redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
+  end
+
+  def wall_post_url
+    facebook_params = {
+      :app_id => ENV["FACEBOOK_APP_ID"],
+      :link => params[:url],
+      # :picture => latest_cover.to_s,
+      :name => "New Internationalist Magazine",
+      :caption => params[:text],
+      :description => params[:text],
+      :redirect_uri => params[:url]
+    }
+    redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
+  end
+
+  def email_url
+    email_params = {
+      :body => params[:url],
+      :subject => "New Internationalist Magazine"
+    }
+    redirect_to "mailto:?#{email_params.to_query}"
+  end
+
 end

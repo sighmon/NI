@@ -259,17 +259,17 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	opacity: 0.7;
 }
 
-.home-keynote .share-links .fa, .article-title .share-links .fa, .end-of-article-social-sharing .share-links .fa {
+.home-keynote .share-links .fa, .article-title .share-links .fa, .end-of-article-social-sharing .share-links .fa, .subscription-offer .share-links .fa {
 	margin-left: 0.5em;
 	color: @gray;
 	opacity: 0.7;
 }
 
-.home-keynote .share-links .fa:hover, .article-title .share-links .fa:hover, .end-of-article-social-sharing .share-links .fa:hover {
+.home-keynote .share-links .fa:hover, .article-title .share-links .fa:hover, .end-of-article-social-sharing .share-links .fa:hover, .subscription-offer .share-links .fa:hover {
 	opacity: 1.0;
 }
 
-.home-keynote .fa-twitter, .article-title .fa-twitter, .end-of-article-social-sharing .fa-twitter {
+.home-keynote .fa-twitter, .article-title .fa-twitter, .end-of-article-social-sharing .fa-twitter, .subscription-offer .fa-twitter {
 	font-size: 1.2em;
 	position: relative;
 	top: 0.1em;
@@ -1605,10 +1605,21 @@ ul.ui-autocomplete {
 	padding: 1em;
 	margin-bottom: @grid-gutter-width;
 	background-color: @gray-lighter;
+	.gradient-gray;
+}
+
+.subscription-offer .label {
+	background-color: @gray;
+	margin-left: -1.35em;
+	border-radius: 0 .25em .25em 0;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 0.1em;
+	padding-top: 0.3em;
 }
 
 .subscription-offer h4 {
-	font-size: 1.2em;
+	font-size: 1.4em;
 	margin-top: 0px;
 	line-height: 1.3em;
 }

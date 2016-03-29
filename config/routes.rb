@@ -128,6 +128,9 @@ NI::Application.routes.draw do
   get "apple_news" => "home#apple_news"
   get "rss" => "home#apple_news"
   get "latest_cover" => "home#latest_cover"
+  get "tweet_url" => "home#tweet_url"
+  get "wall_post_url" => "home#wall_post_url"
+  get "email_url" => "home#email_url"
 
   # Change the page logged in users are directed to
   # authenticated :user do
