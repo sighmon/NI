@@ -144,6 +144,7 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 @boxBackgroundColour: #E4E1DF;
 @boxGrayLightest: #F5F5F5;
 @boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
+@boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 @footerColour: rgba(250,176,59,0.58);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
@@ -306,9 +307,9 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: -300px;
 	margin-bottom: 2em;
 	text-align: center;
-	background-color: @boxHomeBackgroundColour;
-	padding: 1em 1.7em 2em 1.7em;
+	padding: 1.7em 1.7em 2em 1.7em;
 	border-radius: 2px;
+	.gradient-home-latest-issue;
 }
 
 .home-latest-cover {
@@ -1428,6 +1429,14 @@ blockquote.pull-left {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
 }
 
+.gradient-home-latest-issue {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: -webkit-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: linear-gradient(to bottom, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@boxHomeBackgroundColourLight, endColorstr=@boxHomeBackgroundColour,GradientType=0 );
+}
+
 .no-gradient {
 	background-color: transparent;
 	background: none;
@@ -1585,7 +1594,7 @@ ul.ui-autocomplete {
 
 .help-list {
 	.box;
-	background-color:rgba(228, 225, 223, 0.5);
+	.gradient-gray;
 }
 
 .help-body img {
