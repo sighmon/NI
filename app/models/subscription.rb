@@ -73,6 +73,7 @@ class Subscription < ActiveRecord::Base
     special = options[:special] or false
     autodebit = options[:autodebit] or false
     paper = options[:paper] or false
+    institution = options[:institution] or false
     if autodebit
         case duration
         when 3
@@ -107,6 +108,17 @@ class Subscription < ActiveRecord::Base
         price -= 4400
       else
         price -= 2200
+      end
+    end
+    if institution
+      if autodebit and paper
+        price += 10000
+      elsif autodebit and not paper
+        price += 14000
+      elsif not autodebit and paper
+        price += 13000
+      elsif not autodebit and not paper
+        price += 17000
       end
     end
     return price
