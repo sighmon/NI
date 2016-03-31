@@ -255,6 +255,16 @@ class IssuesController < ApplicationController
     # Load section definitions
     #sections_of_articles_definitions
     #moved to the model
+
+    @issue.articles.each do |article|
+      if not @categories
+        @categories = article.categories
+      else
+        @categories = @categories | article.categories
+      end
+    end
+
+    @categories = @categories.sort_by(&:short_display_name)
     
     # Set meta tags
     @page_title = @issue.title

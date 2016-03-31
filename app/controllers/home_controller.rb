@@ -18,6 +18,16 @@ class HomeController < ApplicationController
 
     @latest_issue = Issue.latest
 
+    @latest_issue.articles.each do |article|
+      if not @latest_issue_categories
+        @latest_issue_categories = article.categories
+      else
+        @latest_issue_categories = @latest_issue_categories | article.categories
+      end
+    end
+
+    @latest_issue_categories = @latest_issue_categories.sort_by(&:short_display_name)
+
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
     @features_category = Category.find_by_name("/features/")
@@ -32,8 +42,6 @@ class HomeController < ApplicationController
     @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
 
     @web_exclusives = @web_exclusive_category.articles.try(:last, 2)
-
-    # TODO: List of popular categories?
 
     @facts = Category.find_by_name("/sections/facts/").try(:first_articles, 10).try(:sample)
 

@@ -118,6 +118,20 @@
 <hr />
 
 <div class="row">
+  <nav class="col-sm-12 latest-issue-categories">
+    <h6>Categories in this magazine</h6>
+    <ul class="breadcrumb">
+    <% @categories.each do |category| %>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+      <% if can? :manage, Article %><li><%= category.name %></li><% end %>
+    <% end %>
+    </ul>
+  </nav>
+</div>
+
+<hr />
+
+<div class="row">
   <div class="col-sm-4">
 
       <% if not @issue.features.empty? %>
