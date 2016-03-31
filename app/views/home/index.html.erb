@@ -110,6 +110,27 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
+		<h2>Latest blog and web-exclusive articles</h2>
+		<p>New <% if @blog_category %><%= link_to 'blog posts', category_path(@blog_category) %><% else %>blog posts<% end %> and <% if @web_exclusive_category %><%= link_to 'web-exclusive articles', category_path(@web_exclusive_category) %><% else %>web-exclusive articles<% end %> from newint.org</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-4">
+		<%= render :partial => "home_article", :locals => { :article => @blog_latest } %>
+	</div>
+	<% if @web_exclusives %>
+		<% @web_exclusives.each do |article| %>
+			<div class="col-sm-4">
+				<%= render :partial => "home_article", :locals => { :article => article } %>
+			</div>
+		<% end %>
+	<% end %>
+</div>
+
+<hr />
+<div class="row">
+	<div class="col-sm-12">
 		<h2>Recent feature articles</h2>
 		<p>A selection of <% if @features_category %><%= link_to 'feature articles', category_path(@features_category) %><% else %>feature articles<% end %> from each of the latest New Internationalist magazines.</p>
 	</div>

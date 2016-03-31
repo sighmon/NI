@@ -25,6 +25,14 @@ class HomeController < ApplicationController
     # compact removes the nil elements which fool the "if @keynotes" test in the view
     @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
 
+    @blog_category = Category.find_by_name("/blog/")
+
+    @blog_latest = @blog_category.articles.try(:last)
+
+    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
+
+    @web_exclusives = @web_exclusive_category.articles.try(:last, 2)
+
     # TODO: List of popular categories?
 
     @facts = Category.find_by_name("/sections/facts/").try(:first_articles, 10).try(:sample)
