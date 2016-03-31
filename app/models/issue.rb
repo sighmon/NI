@@ -509,7 +509,7 @@ class Issue < ActiveRecord::Base
 
   def push_notification_text
     if not digital_exclusive
-      return " The #{release.strftime("%B")} edition of New Internationalist magazine is ready for download."
+      return " The #{release.strftime("%B")} edition of New Internationalist magazine is ready to read."
     else
       return ""
     end
