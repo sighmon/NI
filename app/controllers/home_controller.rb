@@ -106,6 +106,25 @@ class HomeController < ApplicationController
                     }
                   }
 
+    # Need to get an access token to complete this.. not sure it's necessary.. might just do it via JSON
+    # @instagram = Instagram.client(:access_token => session[:access_token])
+    @instagram_json = get_instagram_json
+    # byebug
+    
+  end
+
+  def get_instagram_json
+    Rails.cache.fetch("instagram_json", expires_in: 12.hours) do
+      begin
+        response = HTTParty.get("https://www.instagram.com/#{ENV['INSTAGRAM_NAME']}/media/")
+      rescue Exception => e
+        @instagram_error = e
+      end
+      
+      if not @instagram_error and response and response.code == 200
+        JSON.parse(response.body)["items"]
+      end
+    end
   end
 
   def newsstand

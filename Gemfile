@@ -118,6 +118,9 @@ gem 'google-api-client'
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
+# Instagram feed https://github.com/facebookarchive/instagram-ruby-gem
+# gem 'instagram'
+
 # For development
 group :development do
   gem 'taps', :require => false
