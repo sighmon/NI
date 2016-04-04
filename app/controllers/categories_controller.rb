@@ -29,8 +29,8 @@ class CategoriesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -62,8 +62,8 @@ class CategoriesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {

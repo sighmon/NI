@@ -45,8 +45,8 @@ class PagesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page.title,
                     :description => @page.teaser,
                     :image => {

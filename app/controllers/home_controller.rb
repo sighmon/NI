@@ -83,8 +83,8 @@ class HomeController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title_home,
                     :description => @page_description,
                     :image => {
@@ -407,8 +407,8 @@ class HomeController < ApplicationController
     twitter_params = {
       :url => params[:url],
       :text => params[:text],
-      :via => "ni_australia"
-      #:related => "ni_australia"
+      :via => "#{ENV["TWITTER_NAME"]}"
+      #:related => "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end

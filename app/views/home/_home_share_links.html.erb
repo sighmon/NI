@@ -20,7 +20,7 @@
     <!-- Tweet button -->
     <%= link_to raw('<i class="fa fa-twitter"></i>'), issue_article_tweet_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Tweet about this article', :title => 'Tweet about this article', :target => "_blank" %>
     <!-- Facebook button -->
-    <%= link_to raw('<i class="fa fa-facebook"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
+    <%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
     <!-- END Social buttons -->
     <!-- END Sharing options -->
   <% else %>
@@ -29,6 +29,6 @@
     <!-- Tweet button -->
     <%= link_to raw('<i class="fa fa-twitter"></i>'), issue_article_tweet_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Tweet about this article', :title => 'Tweet about this article', :target => "_blank" %>
     <!-- Facebook button -->
-    <%= link_to raw('<i class="fa fa-facebook"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
+    <%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
   <% end %>
 </span>

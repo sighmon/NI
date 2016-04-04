@@ -201,14 +201,17 @@
 				<div class="col-sm-4">
 					<h5>Find us:</h5>
 					<ul>
-						<li>Facebook: <a href="https://facebook.com/newint.au">@newint.au</a></li>
-						<li>Twitter: <a href="https://twitter.com/ni_australia">@ni_australia</a></li>
-						<li>Instagram: <a href="https://instagram.com/newintoz">@newintoz</a></li>
-						<li>Google+: <a href="https://plus.google.com/+NewintAu">+NewintAu</a></li>
+						<li>Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">@<%= ENV["TWITTER_NAME"] %></a></li>
+						<li>Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a></li>
+						<li>Google+: <a href="https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>">+<%= ENV["GOOGLE_PLUS_NAME"] %></a></li>
+						<li>Instagram: <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>">@<%= ENV["INSTAGRAM_NAME"] %></a></li>
+			      <li>Youtube: <a href="https://www.youtube.com/user/<%= ENV["YOUTUBE_NAME"] %>/videos"><%= ENV["YOUTUBE_NAME"] %></a></li>
+						<li>Apple: <a href="<%= ENV["ITUNES_APP_LINK"] %>">App Store</a></li>
+						<li>Android: <a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>">Play Store</a></li>
 					</ul>
 					<h5>Contact us:</h5>
 					<ul>
-						<li>Email: <a href="mailto:subscribe@newint.com.au?Subject=Question from digital.newint.com.au">subscribe@newint.com.au</a></li>
+						<li>Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a></li>
 						<li>Phone: +61 8 8232 1563</li>
 						<li>15 Austin Street,<br />Adelaide 5000<br />Australia</li>
 					</ul>

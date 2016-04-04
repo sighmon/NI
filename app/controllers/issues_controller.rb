@@ -72,8 +72,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -127,8 +127,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -285,8 +285,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -412,8 +412,8 @@ class IssuesController < ApplicationController
     twitter_params = {
       :url => issue_url(@issue),
       :text => "I'm reading '#{@issue.title}'",
-      :via => "ni_australia"
-      #:related => "ni_australia"
+      :via => "#{ENV["TWITTER_NAME"]}"
+      #:related => "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
