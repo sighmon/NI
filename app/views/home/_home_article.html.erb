@@ -8,7 +8,13 @@
 					    <meta itemprop="width" content="1890">
 					    <meta itemprop="height" content="800">
 					  <% elsif article.first_image %>
-					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% if article.has_category("/columns/cartoon/") %>
+					  		<%= link_to image_tag(article.first_image.data_url.to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 1890, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% elsif article.has_category("/columns/country/") or article.has_category("/sections/facts/") %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 600, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% else %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% end %>
 					    <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
 					    <meta itemprop="width" content="<%= article.first_image.width %>">
 					    <meta itemprop="height" content="<%= article.first_image.height %>">
@@ -32,7 +38,13 @@
 					    <meta itemprop="width" content="1890">
 					    <meta itemprop="height" content="800">
 					  <% elsif article.first_image %>
-					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% if article.has_category("/columns/cartoon/") %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url.to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 1890, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% elsif article.has_category("/columns/country/") or article.has_category("/columns/facts/") %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 600, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% else %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% end %>
 					    <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
 					    <meta itemprop="width" content="<%= article.first_image.width %>">
 					    <meta itemprop="height" content="<%= article.first_image.height %>">
