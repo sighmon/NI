@@ -26,7 +26,9 @@ class HomeController < ApplicationController
       end
     end
 
-    @latest_issue_categories = @latest_issue_categories.sort_by(&:short_display_name)
+    if @latest_issue_categories
+      @latest_issue_categories = @latest_issue_categories.sort_by(&:short_display_name)
+    end
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 

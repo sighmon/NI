@@ -264,7 +264,9 @@ class IssuesController < ApplicationController
       end
     end
 
-    @categories = @categories.sort_by(&:short_display_name)
+    if @categories
+      @categories = @categories.sort_by(&:short_display_name)
+    end
     
     # Set meta tags
     @page_title = @issue.title
