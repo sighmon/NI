@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
-  load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share]
+  load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
   def strip_tags(string)
@@ -24,6 +24,8 @@ class ArticlesController < ApplicationController
 
   def search
     @articles = Article.search(params, current_user.try(:admin?))
+    @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
+
     # if params[:query].present?
     #     @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
     # else
@@ -59,7 +61,7 @@ class ArticlesController < ApplicationController
   end
 
   def popular
-    @guest_passes = GuestPass.order(:use_count).first(10).reverse
+    @guest_passes = GuestPass.order(:use_count).reverse.first(10)
 
     # Set meta tags
     set_meta_tags :title => "Poplar New Internationalist articles",
@@ -74,28 +76,28 @@ class ArticlesController < ApplicationController
             :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-            :card => "summary",
-            :site => "@ni_australia",
-            :creator => "@ni_australia",
-            :title => @page_title_home,
-            :description => @page_description,
-            :image => {
-              :src => @guest_passes.first.article.first_image.try(:data_url).to_s
-            },
-            :app => {
-              :name => {
-              :iphone => ENV["ITUNES_APP_NAME"],
-              :ipad => ENV["ITUNES_APP_NAME"]
+              :card => "summary",
+              :site => "@#{ENV["TWITTER_NAME"]}",
+              :creator => "@#{ENV["TWITTER_NAME"]}",
+              :title => @page_title_home,
+              :description => @page_description,
+              :image => {
+                :src => @guest_passes.first.article.first_image.try(:data_url).to_s
               },
-              :id => {
-              :iphone => ENV["ITUNES_APP_ID"],
-              :ipad => ENV["ITUNES_APP_ID"]
-              },
-              :url => {
-              :iphone => "newint://",
-              :ipad => "newint://"
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://",
+                :ipad => "newint://"
+                }
               }
-            }
             }
     respond_to do |format|
       format.html # show.html.erb
@@ -268,8 +270,8 @@ class ArticlesController < ApplicationController
             },
             :twitter => {
             :card => "summary",
-            :site => "@ni_australia",
-            :creator => "@ni_australia",
+            :site => "@#{ENV["TWITTER_NAME"]}",
+            :creator => "@#{ENV["TWITTER_NAME"]}",
             :title => @article.title,
             :description => strip_tags(@article.teaser),
             :image => {
@@ -398,46 +400,58 @@ class ArticlesController < ApplicationController
   end
 
   def tweet
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_tweet"
+    end
     twitter_params = {
-      :url => view_context.generate_guest_pass_link_string(@guest_pass),
+      :url => @guest_pass,
       :text => params[:text],
-      :via => "ni_australia"
-      #:related => "ni_australia"
+      :via => "#{ENV["TWITTER_NAME"]}"
+      #:related => "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
 
   def wall_post
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_wall_post"
+    end
     if not @article.featured_image.blank?
       preview_picture = @article.featured_image_url(:fullwidth).to_s
     else
       preview_picture = @article.try(:images).try(:first).try(:data).to_s
     end
     facebook_params = {
+      :link => @guest_pass,
       :app_id => ENV["FACEBOOK_APP_ID"],
-      :link => view_context.generate_guest_pass_link_string(@guest_pass),
       :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
       :name => @article.title,
       :caption => @article.teaser,
       :description => params[:text],
-      :redirect_uri => view_context.generate_guest_pass_link_string(@guest_pass)
+      :redirect_uri => @guest_pass
       #:redirect_uri => "http://digital.newint.com.au"
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
 
   def email_article
-    @user = User.find(current_user)
     @article = Article.find(params[:article_id])
-    @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+    if current_user
+      @user = User.find(current_user)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+    else
+      @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_email"
+    end
     email_params = {
-      :body => view_context.generate_guest_pass_link_string(@guest_pass),
+      :body => @guest_pass,
       :subject => "#{@article.title} - New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"

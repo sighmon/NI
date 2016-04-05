@@ -58,6 +58,9 @@ class IssuesController < ApplicationController
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition",
                   :canonical => issues_url,
+                  :alternate => [
+                    { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
+                  ],
                   :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"}],
                   :open_graph => {
                     :title => @page_title,
@@ -69,8 +72,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -124,8 +127,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -252,6 +255,18 @@ class IssuesController < ApplicationController
     # Load section definitions
     #sections_of_articles_definitions
     #moved to the model
+
+    @issue.articles.each do |article|
+      if not @categories
+        @categories = article.categories
+      else
+        @categories = @categories | article.categories
+      end
+    end
+
+    if @categories
+      @categories = @categories.sort_by(&:short_display_name)
+    end
     
     # Set meta tags
     @page_title = @issue.title
@@ -272,8 +287,8 @@ class IssuesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -399,8 +414,8 @@ class IssuesController < ApplicationController
     twitter_params = {
       :url => issue_url(@issue),
       :text => "I'm reading '#{@issue.title}'",
-      :via => "ni_australia"
-      #:related => "ni_australia"
+      :via => "#{ENV["TWITTER_NAME"]}"
+      #:related => "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end

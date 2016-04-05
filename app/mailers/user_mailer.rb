@@ -85,4 +85,10 @@ class UserMailer < ActionMailer::Base
     mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "digital.newint.com.au UK login SSL server error")
   end
 
+  def subscription_institution_tell_admin(user)
+    @user = user
+    @greeting = "Hi"
+    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "Possible Institutional Order - New Internationalist Digital Subscription")
+  end
+
 end

@@ -28,7 +28,7 @@ var flip = 0;
 jQuery(document).ready(function() {
 
 	// Tooltips for Magazine list page
-    $(".issue-cover-list img").tooltip();
+    // $(".issue-cover-list img").tooltip();
 
     // Toggle to show/hide divs .div-to-flip using .flip-button
     $(".flip-button").click(function() {

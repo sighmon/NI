@@ -118,6 +118,15 @@
 	  	<dt><%= radio_button_tag 'paper', '0', 'true' %></dt>
 	  	<dd>No thanks, just a digital edition.</dd>
 	  </dl>
+	  <hr />
+	  <h2>Institution</h2>
+	  <p>Are you a school or institution?</p>
+	  <dl class="dl-horizontal subscribe-options">
+	  	<dt><%= radio_button_tag 'institution', '1', 'false' %></dt>
+	  	<dd>Yes, I'm ordering for a school or institution.</dd>
+	  	<dt><%= radio_button_tag 'institution', '0', 'true' %></dt>
+	  	<dd>No, this is a personal subscription.</dd>
+	  </dl>
 
 	  <div class="form-actions">
 	  	<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success' %>

@@ -29,8 +29,8 @@ class CategoriesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -62,8 +62,8 @@ class CategoriesController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
@@ -115,6 +115,14 @@ class CategoriesController < ApplicationController
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def colours
+    Category.all.sort_by(&:display_name).each_with_index{|c,i| 
+      c.colour = Category.hsv_to_rgb(i/(Category.count+1).to_f,0.5,1).collect{|n| "%02x" % n}.join.hex
+      c.save
+    }
+    redirect_to categories_path, notice: 'Colours were updated.' 
   end
 
   private

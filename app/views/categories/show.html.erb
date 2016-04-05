@@ -19,11 +19,28 @@
   <h3>Articles about <%= @category.short_display_name %>, ordered by date. <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@category.short_display_name}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@category.short_display_name}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(category_path(@category)) %></h3>
 </div>
 
+<div class="row">
+  <% if @articles %>
+    <% @articles.sort_by(&:publication).reverse.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+</div>
+<div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <%= render :partial => "category_article", :locals => { :article => article } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<hr />
+<h4>Articles in this category displayed as a table:</h4>
+
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Article</th>
-      <th>Issue</th>
+      <th>Article title</th>
+      <th>From magazine</th>
       <th>Publication date</th>
     </tr>
   </thead>

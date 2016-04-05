@@ -45,7 +45,7 @@ class Issue < ActiveRecord::Base
   end
 
   def self.latest
-    Issue.all.sort_by{|i| i.release}.last
+    Issue.where(published: true).sort_by{|i| i.release}.last
   end
     
  
@@ -509,7 +509,7 @@ class Issue < ActiveRecord::Base
 
   def push_notification_text
     if not digital_exclusive
-      return " The #{release.strftime("%B")} edition of New Internationalist magazine is ready for download."
+      return " The #{release.strftime("%B")} edition of New Internationalist magazine is ready to read."
     else
       return ""
     end

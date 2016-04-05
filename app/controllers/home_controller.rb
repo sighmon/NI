@@ -14,27 +14,56 @@ class HomeController < ApplicationController
   def index
   	@issues = Issue.where(published: true)
 
+    @query_array = []
+
+    @latest_issue = Issue.latest
+
+    @latest_issue.articles.each do |article|
+      if not @latest_issue_categories
+        @latest_issue_categories = article.categories
+      else
+        @latest_issue_categories = @latest_issue_categories | article.categories
+      end
+    end
+
+    if @latest_issue_categories
+      @latest_issue_categories = @latest_issue_categories.sort_by(&:short_display_name)
+    end
+
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
     @features_category = Category.find_by_name("/features/")
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
-    @keynotes = @issues.sort_by(&:release).reverse.first(6).each.collect{|i| i.keynote}.compact
+    @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
 
-    facts_category = Category.find_by_name("/sections/facts/")
-    if facts_category
-      @facts = facts_category.first_ten_articles.sample
-    end
+    @blog_category = Category.find_by_name("/blog/")
 
-    country_profile_category = Category.find_by_name("/columns/country/")
-    if country_profile_category
-      @country_profile = country_profile_category.first_ten_articles.sample
-    end
+    @blog_latest = @blog_category.articles.try(:last)
 
-    cartoon_category = Category.find_by_name("/columns/cartoon/")
-    if cartoon_category
-      @cartoon = cartoon_category.first_ten_articles.sample
-    end
+    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
+
+    @web_exclusives = @web_exclusive_category.articles.try(:last, 2)
+
+    @facts = Category.find_by_name("/sections/facts/").try(:first_articles, 10).try(:sample)
+
+    @country_profile = Category.find_by_name("/columns/country/").try(:first_articles, 10).try(:sample)
+
+    @cartoon = Category.find_by_name("/columns/cartoon/").try(:first_articles, 10).try(:sample)
+
+    @agendas = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact).try(:sample, 3)
+
+    @film = Category.find_by_name("/columns/media/film/").try(:first_articles, 10).try(:sample)
+
+    @book = Category.find_by_name("/columns/media/books/").try(:first_articles, 10).try(:sample)
+
+    @music = Category.find_by_name("/columns/media/music/").try(:first_articles, 10).try(:sample)
+
+    @letters_from = Category.find_by_name("/columns/letters-from/").try(:first_articles, 10).try(:sample)
+
+    @making_waves = Category.find_by_name("/columns/makingwaves/").try(:first_articles, 10).try(:sample)
+
+    @world_beaters = Category.find_by_name("/columns/worldbeaters/").try(:first_articles, 10).try(:sample)
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
@@ -43,6 +72,9 @@ class HomeController < ApplicationController
     set_meta_tags :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
                   :canonical => root_url,
+                  :alternate => [
+                    { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
+                  ],
                   :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"}],
                   :open_graph => {
                     :title => @page_title_home,
@@ -53,8 +85,8 @@ class HomeController < ApplicationController
                   },
                   :twitter => {
                     :card => "summary",
-                    :site => "@ni_australia",
-                    :creator => "@ni_australia",
+                    :site => "@#{ENV["TWITTER_NAME"]}",
+                    :creator => "@#{ENV["TWITTER_NAME"]}",
                     :title => @page_title_home,
                     :description => @page_description,
                     :image => {
@@ -76,6 +108,25 @@ class HomeController < ApplicationController
                     }
                   }
 
+    # Need to get an access token to complete this.. not sure it's necessary.. might just do it via JSON
+    # @instagram = Instagram.client(:access_token => session[:access_token])
+    @instagram_json = get_instagram_json
+    # byebug
+    
+  end
+
+  def get_instagram_json
+    Rails.cache.fetch("instagram_json", expires_in: 12.hours) do
+      begin
+        response = HTTParty.get("https://www.instagram.com/#{ENV['INSTAGRAM_NAME']}/media/")
+      rescue Exception => e
+        @instagram_error = e
+      end
+      
+      if not @instagram_error and response and response.code == 200
+        JSON.parse(response.body)["items"]
+      end
+    end
   end
 
   def newsstand
@@ -368,6 +419,37 @@ class HomeController < ApplicationController
     else
       redirect_to published_issues.sort_by(&:release).last.try(:cover_url, :thumb2x).to_s
     end
+  end
+
+  def tweet_url
+    twitter_params = {
+      :url => params[:url],
+      :text => params[:text],
+      :via => "#{ENV["TWITTER_NAME"]}"
+      #:related => "#{ENV["TWITTER_NAME"]}"
+    }
+    redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
+  end
+
+  def wall_post_url
+    facebook_params = {
+      :app_id => ENV["FACEBOOK_APP_ID"],
+      :link => params[:url],
+      # :picture => latest_cover.to_s,
+      :name => "New Internationalist Magazine",
+      :caption => params[:text],
+      :description => params[:text],
+      :redirect_uri => params[:url]
+    }
+    redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
+  end
+
+  def email_url
+    email_params = {
+      :body => params[:url],
+      :subject => "New Internationalist Magazine"
+    }
+    redirect_to "mailto:?#{email_params.to_query}"
   end
 
 end

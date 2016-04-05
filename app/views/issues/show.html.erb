@@ -62,11 +62,6 @@
 </div>
 <% end %>
 
-<div class="page-header issue-title">
-  <h1><%= @issue.title %></h1>
-  <h2><%= render :partial => "share_links", :object => @issue %></h2>
-</div>
-
 <% if can? :update, @issue %>
   <% if not @issue.uncategorised.empty? %>
     <div class="articles-not-categorised-for-display">
@@ -80,44 +75,82 @@
   <% end %>
 <% end %>
 
-<div class="row-fluid">
-  <div class="col-sm-6 issue-articles-container">
-      <div class="issue-article keynote" itemscope itemtype="http://schema.org/Article">
-        <%= retina_image_tag @issue.cover_url(:thumb).to_s, :class => 'issue-cover shadow', :alt => "New Internationalist magazine: #{@issue.title}", :title => "New Internationalist magazine: #{@issue.title}", :size => "141x200" %>
-        <h5>The big story</h5>
-        <% if @issue.keynote %>
-          <%= render :partial => "article", :object => @issue.keynote %>
-        <% end %>
+<div class="row issue-top-box">
+  <div class="col-sm-4 issue-title">
+    <!-- Magazine cover -->
+    <%= retina_image_tag(@issue.cover_url(:home).to_s, :class => 'shadow home-latest-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400) %>
+    <!-- Share links -->
+    <h2><%= render :partial => "share_links", :object => @issue %></h2>
+
+    <% if cannot? :read, @issue.keynote %>
+      <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), :class => 'btn btn-default' %></p>
+    <% end %>
+    <% if not current_user.try(:subscriber?) %>
+      <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", new_issue_purchase_path(@issue), :class => 'btn btn-success' %></p>
+    <% end %>
+  </div>
+  <div class="col-sm-8">
+    <h1><%= @issue.title %></h1>
+    <% if @issue.editors_letter != "" %>
+      <h3>A note from the editor</h3>
+      <div class="table-of-contents-editors-letter">
+        <div class="home-editors-photo-container">
+          <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'home-editors-photo', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
+        </div>
+        <%= simple_format @issue.editors_letter %>
+        <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
       </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row issue-keynote">
+  <div class="col-sm-12">
+    <h3>Keynote article.</h3>
+  </div>
+  <div itemscope itemtype="http://schema.org/Article">
+    <% if @issue.keynote %>
+      <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
+    <% end %>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <nav class="col-sm-12 latest-issue-categories">
+    <h6>Categories in this magazine</h6>
+    <ul class="breadcrumb">
+    <% @categories.each do |category| %>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+      <% if can? :manage, Article %><li><%= category.name %></li><% end %>
+    <% end %>
+    </ul>
+  </nav>
+</div>
+
+<hr />
+
+<div class="row">
+  <div class="col-sm-4">
 
       <% if not @issue.features.empty? %>
         <div class="issue-sections">
           <h3>Features.</h3>
           <% @issue.features.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :object => article %>
+              <%= render :partial => "article", :locals => { :article => article } %>
             </div>
           <% end %>
         </div>
       <% end %>
 
-      <% if not @issue.agendas.empty? %>
+      <% if not @issue.web_exclusive.empty? %>
         <div class="issue-sections">
-          <h3>Agenda.</h3>
-          <% @issue.agendas.each do |article| %>
+          <h3>Web exclusives.</h3>
+          <% @issue.web_exclusive.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :object => article %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% if not @issue.currents.empty? %>
-        <div class="issue-sections">
-          <h3>Currents.</h3>
-          <% @issue.currents.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :object => article %>
+              <%= render :partial => "article", :locals => { :article => article } %>
             </div>
           <% end %>
         </div>
@@ -128,7 +161,7 @@
           <h3>Alternatives.</h3>
           <% @issue.alternatives.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :object => article %>
+              <%= render :partial => "article", :locals => { :article => article } %>
             </div>
           <% end %>
         </div>
@@ -139,52 +172,59 @@
           <h3>Blog.</h3>
           <% @issue.blogs.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :object => article %>
+              <%= render :partial => "article", :locals => { :article => article } %>
             </div>
           <% end %>
         </div>
       <% end %>
 
   </div>
-  <div class="col-sm-6 editors-letter">
-    <% if @issue.editors_letter != "" %>
-      <h3>A note from the editor</h3>
-      <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'editors-photo', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
-      <%= simple_format @issue.editors_letter %>
-      <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
-      <hr />
-    <% end %>
-  </div>
-  <div class="col-sm-6 issue-articles-container">
 
-    <% if not @issue.videos.empty? %>
-      <div class="issue-sections">
-        <h3>Videos.</h3>
-        <% @issue.videos.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :object => article %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if not @issue.web_exclusive.empty? %>
-      <div class="issue-sections">
-        <h3>Web exclusives.</h3>
-        <% @issue.web_exclusive.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :object => article %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="col-sm-4">
 
     <% if not @issue.opinion.empty? %>
       <div class="issue-sections">
         <h3>Opinion.</h3>
         <% @issue.opinion.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :object => article %>
+            <%= render :partial => "article", :locals => { :article => article } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <% if not @issue.agendas.empty? %>
+        <div class="issue-sections">
+          <h3>Agenda.</h3>
+          <% @issue.agendas.each do |article| %>
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+              <%= render :partial => "article", :locals => { :article => article } %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if not @issue.currents.empty? %>
+        <div class="issue-sections">
+          <h3>Currents.</h3>
+          <% @issue.currents.each do |article| %>
+            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+              <%= render :partial => "article", :locals => { :article => article } %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+  </div>
+
+  <div class="col-sm-4">
+
+    <% if not @issue.videos.empty? %>
+      <div class="issue-sections">
+        <h3>Videos.</h3>
+        <% @issue.videos.each do |article| %>
+          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+            <%= render :partial => "article", :locals => { :article => article } %>
           </div>
         <% end %>
       </div>
@@ -195,7 +235,7 @@
         <h3>Regulars.</h3>
         <% @issue.regulars.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :object => article %>
+            <%= render :partial => "article", :locals => { :article => article } %>
           </div>
         <% end %>
       </div>
@@ -206,7 +246,7 @@
         <h3>Film, Book &amp; Music Reviews.</h3>
         <% @issue.mixedmedia.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :object => article %>
+            <%= render :partial => "article", :locals => { :article => article } %>
           </div>
         <% end %>
       </div>

@@ -1,0 +1,34 @@
+<span class="clear-hack"></span>
+<span class="share-links">
+  <% if can? :create, Favourite %>
+    <!-- Favourite -->
+    <% if article_favourited?(article) %>
+      <%= link_to raw('<i class="fa fa-heart red"></i>'), issue_article_favourite_path(article.issue.id, article.id, favourite_id_for_article(article)), :method => 'delete', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
+    <% else %>
+      <%= link_to raw('<i class="fa fa-heart-o"></i>'), issue_article_favourites_path(article.issue, article), :method => 'create', :alt => 'Add to favourites', :title => 'Add to favourites' %>
+    <% end %>
+    <!-- END Favourite -->
+  <% end %>
+  <% if can? :create, GuestPass %>
+    <!-- Sharing options -->
+    <% if article_has_a_guest_pass?(article) %>
+      <!-- Email button -->
+	    <%= link_to raw('<i class="fa fa-envelope"></i>'), issue_article_email_article_path(article.issue,article), :alt => 'Email this article to a friend', :title => 'Email this article to a friend' %>
+    <% else %>
+      <%= link_to raw('<i class="fa fa-share"></i>'), issue_article_guest_passes_path(article.issue, article), :method => 'create', :alt => 'Share this article with a friend.', :title => 'Share this article with a friend.' %>
+    <% end %>
+    <!-- Tweet button -->
+    <%= link_to raw('<i class="fa fa-twitter"></i>'), issue_article_tweet_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Tweet about this article', :title => 'Tweet about this article', :target => "_blank" %>
+    <!-- Facebook button -->
+    <%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
+    <!-- END Social buttons -->
+    <!-- END Sharing options -->
+  <% else %>
+    <!-- Email button -->
+    <%= link_to raw('<i class="fa fa-envelope"></i>'), issue_article_email_article_path(article.issue,article), :alt => 'Email this article to a friend', :title => 'Email this article to a friend' %>
+    <!-- Tweet button -->
+    <%= link_to raw('<i class="fa fa-twitter"></i>'), issue_article_tweet_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Tweet about this article', :title => 'Tweet about this article', :target => "_blank" %>
+    <!-- Facebook button -->
+    <%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_article_wall_post_path(article.issue,article, :text => strip_tags(article.title)), :alt => 'Share this article on Facebook', :title => 'Share this article on Facebook', :target => "_blank" %>
+  <% end %>
+</span>

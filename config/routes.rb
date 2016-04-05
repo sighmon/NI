@@ -2,6 +2,7 @@ NI::Application.routes.draw do
 
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
+  get 'update_categories_colours' => 'categories#colours'
 
   get "guest_passes/index"
 
@@ -126,7 +127,11 @@ NI::Application.routes.draw do
   get "google_merchant_feed" => "home#google_merchant_feed"
   get "apple_news" => "home#apple_news"
   get "apple-app-site-association" => "home#apple_app_site_association"
+  get "rss" => "home#apple_news"
   get "latest_cover" => "home#latest_cover"
+  get "tweet_url" => "home#tweet_url"
+  get "wall_post_url" => "home#wall_post_url"
+  get "email_url" => "home#email_url"
 
   # Change the page logged in users are directed to
   # authenticated :user do

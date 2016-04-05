@@ -49,7 +49,7 @@
 
 <div class="page-header article-title" itemscope itemtype="http://schema.org/Article">
   <h1 itemprop="name"><span itemprop="headline"><%= @article.title %></span></h1>
-  <%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, :class => 'issue-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "53x75"), issue_path(@issue) %>
+  <%= link_to retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'issue-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "75x106"), issue_path(@issue) %>
   <h2 itemprop="description"><%= simple_format @article.teaser %></h2>
   <meta itemprop="url" content="<%= issue_article_url(@issue,@article) %>">
   <meta itemprop="dateCreated" content="<%= @article.issue.release.strftime("%e %B %Y") %>">

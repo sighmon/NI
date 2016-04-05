@@ -143,6 +143,8 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 @niGreen: rgba(134,197,67,0.1);
 @boxBackgroundColour: #E4E1DF;
 @boxGrayLightest: #F5F5F5;
+@boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
+@boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 @footerColour: rgba(250,176,59,0.58);
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
@@ -233,6 +235,148 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 // Home page styling
 
+#myCarousel.carousel.slide.home-hero {
+	margin-top: -20px;
+	height: 500px;
+	overflow: hidden;
+}
+
+.alert + #myCarousel.carousel.slide.home-hero {
+	margin-top: 20px;
+}
+
+.home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
+	margin-top: 0;
+	background-color: inherit;
+}
+
+.home-hero + .row .home-keynote h3 {
+	font-size: 1.5em;
+}
+
+.home-keynote h5 {
+	margin-bottom: 0;
+	color: @gray;
+	opacity: 0.7;
+}
+
+.social-networks {
+	text-align: center;
+}
+
+.social-media {
+	text-align: center;
+	font-size: 3em;
+}
+
+.social-networks .social-media {
+	font-size: 2em;
+}
+
+.social-networks .social-media .fa-twitter {
+	margin-left: 0;
+}
+
+.instagram {
+	margin-bottom: 2em;
+	border: 1px solid @gray-lighter;
+	border-radius: 3px;
+}
+
+.instagram h4, .instagram h5 {
+	margin: auto 20px auto 20px;
+}
+
+.instagram h4 {
+	font-size: 1em;
+}
+
+.instagram h5 {
+	font-size: 0.9em;
+	font-weight: normal;
+	color: @gray-light;
+	margin-bottom: 1em;
+}
+
+.instagram img {
+	width: 100%;
+	padding-bottom: 1em;
+	border-radius: 3px 3px 0 0;
+}
+
+.home-keynote .share-links .fa, .article-title .share-links .fa, .end-of-article-social-sharing .share-links .fa, .subscription-offer .share-links .fa, .social-media .fa {
+	margin-left: 0.5em;
+	color: @gray;
+	opacity: 0.7;
+}
+
+.home-keynote .share-links .fa:hover, .article-title .share-links .fa:hover, .end-of-article-social-sharing .share-links .fa:hover, .subscription-offer .share-links .fa:hover, .social-media .fa:hover {
+	opacity: 1.0;
+}
+
+.home-keynote .fa-twitter, .home-keynote .fa-facebook-square, 
+.article-title .fa-twitter, .article-title .fa-facebook-square, 
+.end-of-article-social-sharing .fa-twitter, .end-of-article-social-sharing .fa-facebook-square, 
+.subscription-offer .fa-twitter, .subscription-offer .fa-facebook-square, 
+.social-media .fa-twitter.social-media .fa-facebook-square {
+	font-size: 1.2em;
+	// position: relative;
+	// top: 0.1em;
+}
+
+.home-keynote h6, .home-editor-note h4, .issue-top-box h3, .latest-issue-categories h6, .social-networks h4 {
+	text-transform: uppercase;
+	font-weight: normal;
+	font-size: 0.9em;
+	color: @gray-light;
+	margin-top: 0;
+}
+
+.latest-issue-categories ul {
+	text-align: justify;
+}
+
+.latest-issue-categories li {
+	margin-bottom: 0.3em;
+}
+
+.home-editor-note h3 {
+	margin-top: 0.5em;
+}
+
+.home-editors-photo-container {
+	.editors-photo;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.home-editors-photo {
+	.editors-photo;
+	margin-top: -10px;
+}
+
+.home-latest-issue {
+	position: relative;
+	z-index: 1000;
+	margin-top: -300px;
+	margin-bottom: 2em;
+	text-align: center;
+	padding: 1.7em 1.7em 2em 1.7em;
+	border-radius: 2px;
+	.gradient-home-latest-issue;
+}
+
+.home-latest-cover {
+	margin-bottom: 1em;
+	border-radius: 2px;
+	width: 100%;
+	height: auto;
+}
+
+// Past home styling
+
 .hero-unit {
 	background-color: @gray-lighter;
 	padding: 1.5em 2em;
@@ -285,14 +429,17 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote {
 	margin-top: 1em;
-	// margin-bottom: 2em;
-	// border-bottom: 1px solid @gray-lighter;
+	margin-bottom: 1em;
+	border-radius: 2px;
+	background-color: @boxHomeBackgroundColour;
+	.gradient-gray-darker;
 }
 
 .home-keynote img {
 	width: 100%;
-	margin-bottom: 1em;
+	// margin-bottom: 1em;
 	transition: .3s ease;
+	border-radius: 2px 2px 0px 0px;
 }
 
 .home-keynote img:hover {
@@ -303,7 +450,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .home-keynote h3 {
 	color: @gray-light;
 	font-size: 1.3em;
-	line-height: inherit;
+	line-height: 1.4em;
 	margin-bottom: 0;
 }
 
@@ -315,6 +462,28 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .home-keynote h5 {
 	color: @gray-light;
 	font-weight: normal;
+}
+
+.home-keynote-text {
+	padding: 0.01em 1.5em 1em 1.5em;
+}
+
+.category-article-issue {
+	min-height: 75px;
+	margin: 1.5em 0 0.5em 0;
+}
+
+.category-article-issue img {
+	width: inherit;
+	border-radius: 2px;
+}
+
+.category-article-issue h5 {
+	padding-top: 1em;
+}
+
+.category-article-issue .share-links {
+	margin-left: -0.5em;
 }
 
 // User login links & profile link
@@ -398,12 +567,47 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	border-radius: 0 0 3px 3px;
 }
 
-.footer p {
-	margin: 0px;
+.footer .brand {
+	.navbar .brand;
+	color: @gray-dark;
+	margin-top: -0.5em;
 }
 
 .footer a {
 	color: @gray;
+	text-decoration: underline;
+}
+
+.footer a:hover {
+	color: @niRed;
+}
+
+.footer h5 {
+	margin-top: 0;
+}
+
+.footer ul {
+	padding-left: 2em;
+}
+
+.footer .col-sm-4 {
+	text-align: left;
+	padding: 1em 2em 2em 2em;
+}
+
+.footer .copyright {
+	opacity: 0.8;
+}
+
+.home-donate .btn {
+	background-color: transparent;
+	border-color: inherit;
+}
+
+.home-donate .btn:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+	color: @niRed;
+	border-color: @niRed;
 }
 
 // Issues listed as a tables
@@ -602,7 +806,7 @@ a:active .shadow {
 // Issue styling
 
 .pagination {
-	margin-top: -20px;
+	margin-top: 0px;
 }
 
 .issue-search {
@@ -615,17 +819,36 @@ a:active .shadow {
 	// height: 30px;
 }
 
-@issueCoverListMargin: 7px;
+@issueCoverListMargin: 9px;
 
 .issue-cover-list {
 	margin: 0px -@issueCoverListMargin 20px -@issueCoverListMargin;
 }
 
-.issue-cover-list img {
+.issue-cover-list .issue-information {
+	float: left;
 	margin-left: @issueCoverListMargin;
 	margin-right: @issueCoverListMargin;
 	margin-bottom: (@issueCoverListMargin * 2) + 3;
 	border-radius: 2px;
+	background-color: @boxHomeBackgroundColour;
+	color: @gray-light;
+}
+
+.issue-information:hover {
+	background-color: @gray-light;
+	color: white;
+	opacity: 0.9;
+}
+
+.issue-information p {
+	text-align: center;
+	margin: 0.3em 0 0.3em 0;
+	font-size: 0.9em;
+}
+
+.issue-information img {
+	border-radius: 2px 2px 0 0;
 }
 
 .issue-list-title {
@@ -646,10 +869,20 @@ a:active .shadow {
 	color: @gray-light;
 }
 
+.issue-top-box {
+	// gradient
+	.gradient-gray;
+
+	padding: 1em 1em 1em 0;
+	margin: 0 0 2em 0;
+	border-radius: 5px;
+}
+
 .issue-title {
 	padding-bottom: 0px;
 	margin-top: 0px;
 	border: none;
+	text-align: center;
 }
 
 .issue-title h1 {
@@ -662,6 +895,7 @@ a:active .shadow {
 .issue-title h2 {
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
+	margin-top: 0.5em;
 	font-weight: normal;
 	color: @gray-light;
 }
@@ -726,11 +960,33 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	margin-top: 0.5em;
 }
 
+.issue-keynote-text h3 {
+	margin-top: 0;
+}
+
+.issue-keynote .home-keynote {
+	background-color: transparent;
+}
+
+.home-keynote .new-image-caption {
+	margin-top: 1em;
+	max-width: 90%;
+}
+
+.home-keynote .new-image-credit {
+	max-width: 90%;
+}
+
 .issue-sections {
-	border-radius: 5px;
-	padding: 1em;
 	margin-bottom: 2em;
-	background-color: @boxGrayLightest;
+}
+
+.issue-sections + .issue-sections {
+	border-top: 1px solid @gray-lighter;
+}
+
+.issue-sections h3 {
+	line-height: 1.2em;
 }
 
 .issue-articles-container h3 {
@@ -738,8 +994,6 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-article {
-	border-bottom: 1px solid @gray-lighter;
-	padding-bottom: 15px;
 	margin-bottom: 2em;
 }
 
@@ -747,6 +1001,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	border-bottom: none;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
+}
+
+.article-search {
+	margin-bottom: 2em;
 }
 
 .article-search .btn {
@@ -781,6 +1039,13 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 // Article styling
 
+mark, .mark {
+	/* Highlighted search results */
+	background-color: transparent;
+	color: @niRed;
+	padding: inherit;
+}
+
 .article-title {
 	padding-bottom: 0px;
 	margin-top: 0px;
@@ -814,6 +1079,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	.shadow-small;
 	position: relative;
 	top: -1px;
+}
+
+.article-title .article-favourite, .end-of-article-social-sharing .article-favourite {
+	margin-right: 0.2em;
 }
 
 .most-shared h3 {
@@ -1003,8 +1272,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .article-thumb {
 	// .shadow-light;
 	border-radius: 2px;
-	float: right;
-	margin-left: 20px;
+	// float: right;
+	// margin-left: 20px;
 }
 
 .article-image-top-right {
@@ -1200,6 +1469,35 @@ blockquote.pull-left {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
 }
 
+.gradient-gray {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+}
+
+.gradient-gray-darker {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
+}
+
+.gradient-home-latest-issue {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: -webkit-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: linear-gradient(to bottom, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@boxHomeBackgroundColourLight, endColorstr=@boxHomeBackgroundColour,GradientType=0 );
+}
+
+.no-gradient {
+	background-color: transparent;
+	background: none;
+}
+
 .box {
 	background-color: @boxBackgroundColour;
 	padding: 1.5em 2em;
@@ -1245,8 +1543,22 @@ blockquote.pull-left {
 	margin: 2px 10px 5px 0;
 }
 
+.article-title .ios-issue-page, .end-of-article-social-sharing .ios-issue-page {
+	margin-left: 0.5em;
+}
+
 .issue-title .article-favourite {
-	font-size: 0.8em;
+	color: @gray;
+	opacity: 0.6;
+	// font-size: 0.8em;
+}
+
+.issue-title .article-favourite:hover {
+	opacity: 1.0;
+}
+
+.issue-title .share-links {
+	margin-top: 0.5em;
 }
 
 .clear-hack {
@@ -1338,7 +1650,7 @@ ul.ui-autocomplete {
 
 .help-list {
 	.box;
-	background-color:rgba(228, 225, 223, 0.5);
+	.gradient-gray;
 }
 
 .help-body img {
@@ -1358,10 +1670,21 @@ ul.ui-autocomplete {
 	padding: 1em;
 	margin-bottom: @grid-gutter-width;
 	background-color: @gray-lighter;
+	.gradient-gray;
+}
+
+.subscription-offer .label {
+	background-color: @gray;
+	margin-left: -1.35em;
+	border-radius: 0 .25em .25em 0;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 0.1em;
+	padding-top: 0.3em;
 }
 
 .subscription-offer h4 {
-	font-size: 1.2em;
+	font-size: 1.4em;
 	margin-top: 0px;
 	line-height: 1.3em;
 }
@@ -1424,6 +1747,10 @@ ul.ui-autocomplete {
 
 .page-body .home-cover-list {
 	text-align: center;
+}
+
+.page-body .new-image-caption, .page-body .new-image-credit {
+	max-width: 100%;
 }
 
 
@@ -1562,9 +1889,19 @@ ul.ui-autocomplete {
 	.star-ratings-previous-year + dd {
 		margin-top: -7px;
 	}
-	.issue-cover-list img, .home-cover-list img {
+	.form-search .btn {
+		width: 100%;
+		margin-top: 1em;
+	}
+	.issue-cover-list {
+		margin-top: 2em;
+	}
+	.issue-cover-list .issue-information, .home-cover-list img {
 		width: 42%;
 		height: auto;
+	}
+	.issue-cover-list .issue-information img {
+		width: 100%;
 	}
 	.issue-article.keynote .issue-cover {
 		width: 45%;
@@ -1630,6 +1967,27 @@ ul.ui-autocomplete {
 		// .shadow;
 		margin: 0 -1em 2em -1em;
 	}
+
+	#myCarousel.carousel.slide.home-hero {
+		height: auto;
+	}
+
+	.home-latest-issue {
+		margin-top: 0px;
+		margin-bottom: 2em;
+	}
+
+	.home-latest-cover {
+		width: 50%;
+	}
+
+	.col-sm-4 + .col-sm-4 {
+		margin-top: 2em;
+	}
+
+	.issue-keynote-image-caption {
+		display: none;
+	}
 }
  
 /* Portrait tablet to landscape and desktop */
@@ -1666,6 +2024,10 @@ ul.ui-autocomplete {
 	.navbar .nav > li > a {
 		padding: 13px 7px 7px;
 	}
+
+	.home-free-issue, .home-editor-note {
+		padding-left: 2em;
+	}
 }
  
 /* Large desktop */
@@ -1689,5 +2051,17 @@ ul.ui-autocomplete {
 	}
 	.home-image {
 		margin: -20px 0px 0px 2em;
+	}
+
+	.home-free-issue, .home-editor-note {
+		padding-left: 3em;
+	}
+	.table-of-contents-editors-letter {
+		-webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 2em;
+    -moz-column-gap: 2em;
+    column-gap: 2em;
 	}
 }

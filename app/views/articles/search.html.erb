@@ -15,26 +15,47 @@
   <% end %>
 </div>
 
+<h4>Search results<% if params[:query] %> for: <span class="red"><%= params[:query] %></span><% else %>:<% end %></h4>
+
+<div class="row">
+  <% if @articles %>
+    <% @articles.sort_by(&:publication).reverse.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+</div>
+<div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <%= render :partial => "home/home_article", :locals => { :article => article } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= paginate @articles %>
+
+<hr />
+<h4>Search results in a table<% if params[:query] %> for: <span class="red"><%= params[:query] %></span><% else %>:<% end %></h4>
+
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:teaser) %></th>
+      <th>Article title</th>
+      <th>Description</th>
       <th><%= model_class.human_attribute_name(:author) %></th>
-      <th><%= model_class.human_attribute_name(:publication) %></th>
+      <th>Published</th>
       <!-- <th><%= model_class.human_attribute_name(:body) %></th> -->
-      <th><%= model_class.human_attribute_name(:issue_id) %></th>
+      <th>Magazine</th>
       <!-- <th><%= model_class.human_attribute_name(:trialarticle) %></th> -->
       <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Link</th>
     </tr>
   </thead>
   <tbody>
     <% @articles.sort_by(&:publication).reverse.each do |article| %>
       <tr>
-        <td><%= link_to article.title, issue_article_path(article.issue,article) unless article.issue.nil? %></td>
-        <td><%= simple_format article.teaser %></td>
-        <td><%= article.author %></td>
+        <td><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) unless article.issue.nil? %></td>
+        <td><%= simple_format highlight(article.teaser, @query_array) %></td>
+        <td><%= highlight(article.author, @query_array) %></td>
         <td><%= article.publication.strftime("%B, %Y") %></td>
         <!-- <td><%= article.body %></td> -->
         <td><%= link_to article.issue.number, issue_path(article.issue) unless article.issue.nil? %></td>

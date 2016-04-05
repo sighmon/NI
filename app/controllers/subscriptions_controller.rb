@@ -29,20 +29,36 @@ class SubscriptionsController < ApplicationController
       @paper = false
     end
 
+    if params[:institution] == "1"
+      @institution = true
+    else
+      @institution = false
+    end
+
     @express_purchase_subscription_duration = params[:duration].to_i
-    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, special: params[:special]})
+    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, institution: @institution, special: params[:special]})
     session[:express_autodebit] = @autodebit
     session[:express_paper] = @paper
+    session[:express_institution] = @institution
     session[:express_purchase_price] = @express_purchase_price
     session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
 
     if @autodebit
       # Autodebit setup
-
       if @paper == true
-        payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
+        # Paper & digital
+        if @institution == true
+          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper institution subscription to New Internationalist Magazine."
+        else
+          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
+        end
       else
-        payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to New Internationalist Digital Edition."
+        # Just digital
+        if @institution == true
+          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit institution subscription to New Internationalist Digital Edition."
+        else
+          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to New Internationalist Digital Edition."
+        end
       end
       session[:express_purchase_description] = payment_description
 
@@ -57,9 +73,17 @@ class SubscriptionsController < ApplicationController
       redirect_to response.checkout_url if response.valid?
     else
       if @paper == true
-        payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
+        if @institution == true
+          payment_description = "New Internationalist Magazine - institution subscription to both the digital edition and the paper edition."
+        else
+          payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
+        end
       else
-        payment_description = "New Internationalist Magazine - subscription to the digital edition."
+        if @institution == true
+          payment_description = "New Internationalist Magazine - institution subscription to the digital edition."
+        else
+          payment_description = "New Internationalist Magazine - subscription to the digital edition."
+        end
       end
       session[:express_purchase_description] = payment_description
 
@@ -186,6 +210,10 @@ class SubscriptionsController < ApplicationController
         # Send the user an email
         begin
           UserMailer.subscription_confirmation(@subscription.user).deliver
+          if session[:express_institution]
+            # institutional subscription, so send admin an email
+            UserMailer.subscription_institution_tell_admin(@subscription.user).deliver
+          end
         rescue Exception
           logger.error "500 - Email server is down..."
         end

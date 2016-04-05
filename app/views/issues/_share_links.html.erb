@@ -1,8 +1,10 @@
-<span class="breadcrumb">NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></span><div class="clear-hack"></div>
- <!-- Email button -->
- <%= link_to raw('<i class="fa fa-envelope"></i>'), issue_email_issue_path(@issue), :class => 'btn btn-default btn-xs article-favourite', :alt => 'Email a link to this issue', :title => 'Email a link to this issue' %>
- <!-- Tweet button -->
- <%= link_to raw('<i class="fa fa-twitter"></i>'), issue_tweet_issue_path(@issue), :class => 'btn btn-default btn-xs article-favourite', :alt => 'Tweet about this issue', :title => 'Tweet about this issue', :target => "_blank" %>
- <!-- Facebook button -->
- <%= link_to raw('<i class="fa fa-facebook"></i>'), issue_wall_post_issue_path(@issue), :class => 'btn btn-default btn-xs article-favourite', :alt => 'Share this issue on Facebook', :title => 'Share this issue on Facebook', :target => "_blank" %>
- <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %>
+<span class="breadcrumb">NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></span><br /><div class="clear-hack"></div>
+<div class="share-links">
+	<!-- Email button -->
+	<%= link_to raw('<i class="fa fa-envelope"></i>'), issue_email_issue_path(@issue), :class => 'article-favourite', :alt => 'Email a link to this issue', :title => 'Email a link to this issue' %>
+	<!-- Tweet button -->
+	<%= link_to raw('<i class="fa fa-twitter"></i>'), issue_tweet_issue_path(@issue), :class => 'article-favourite', :alt => 'Tweet about this issue', :title => 'Tweet about this issue', :target => "_blank" %>
+	<!-- Facebook button -->
+	<%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_wall_post_issue_path(@issue), :class => 'article-favourite', :alt => 'Share this issue on Facebook', :title => 'Share this issue on Facebook', :target => "_blank" %>
+	<%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for iPad and iPhone.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %>
+</div>

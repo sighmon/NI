@@ -21,6 +21,7 @@ class Ability
     can :popular, Article
     can :read, Page
     can :read, Category
+    cannot :update_categories_colours, Category
 
     if !user.guest?
         can :manage, Purchase

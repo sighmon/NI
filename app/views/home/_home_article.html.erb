@@ -1,23 +1,80 @@
-				<% if can? :read, article %>
-					<!-- Can read this article, so link to it -->
-					<% if not article.featured_image.blank? %>
-				    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
-				  <% elsif article.first_image %>
-				    <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
-				  <% end %>
-					<h3><%= link_to article.title, issue_article_path(article.issue,article) %></h3>
-					<h4><%= simple_format article.teaser %></h4>
-					<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %></h5>
-					<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
-				<% else %>
-					<!-- Can't read this article, so link to buy it -->
-					<% if not article.featured_image.blank? %>
-				    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
-				  <% elsif article.first_image %>
-				    <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
-				  <% end %>
-					<h3><%= link_to article.title, new_issue_purchase_path(article.issue) %></h3>
-					<h4><%= simple_format article.teaser %></h4>
-					<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %></h5>
-					<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %></p>
-				<% end %>
+				<div class="home-keynote">
+					<% if can? :read, article %>
+						<!-- Can read this article, so link to it -->
+						<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+						<% if not article.featured_image.blank? %>
+					    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					    <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
+					    <meta itemprop="width" content="1890">
+					    <meta itemprop="height" content="800">
+					  <% elsif article.first_image %>
+					  	<% if article.has_category("/columns/cartoon/") %>
+					  		<%= link_to image_tag(article.first_image.data_url.to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 1890, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% elsif article.has_category("/columns/country/") or article.has_category("/sections/facts/") %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 600, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% else %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<% end %>
+					    <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
+					    <meta itemprop="width" content="<%= article.first_image.width %>">
+					    <meta itemprop="height" content="<%= article.first_image.height %>">
+					  <% else %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.png').to_s %>">
+					    <meta itemprop="width" content="1890">
+					    <meta itemprop="height" content="1063">
+					  <% end %>
+					  </div>
+					  <div class="home-keynote-text">
+					  	<h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
+							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
+							<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
+					<% else %>
+						<!-- Can't read this article, so link to buy it -->
+						<% if not article.featured_image.blank? %>
+					    <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					    <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
+					    <meta itemprop="width" content="1890">
+					    <meta itemprop="height" content="800">
+					  <% elsif article.first_image %>
+					  	<% if article.has_category("/columns/cartoon/") %>
+					  		<%= link_to image_tag(article.first_image.data_url.to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 1890, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% elsif article.has_category("/columns/country/") or article.has_category("/columns/facts/") %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 600, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% else %>
+					  		<%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<% end %>
+					    <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
+					    <meta itemprop="width" content="<%= article.first_image.width %>">
+					    <meta itemprop="height" content="<%= article.first_image.height %>">
+					  <% else %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.png').to_s %>">
+					    <meta itemprop="width" content="1890">
+					    <meta itemprop="height" content="1063">
+					  <% end %>
+					  <div class="home-keynote-text">
+					  	<h3><%= link_to highlight(article.title, @query_array), new_issue_purchase_path(article.issue) %></h3>
+							<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
+							<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %></p>
+					<% end %>
+							<meta itemprop="url" content="<%= issue_article_url(article.issue,article) %>">
+							<meta itemprop="dateCreated" content="<%= article.issue.release.strftime("%e %B %Y") %>">
+							<meta itemprop="datePublished" content="<%= article.issue.release.strftime("%e %B %Y") %>">
+							<meta itemprop="dateModified" content="<%= article.updated_at.strftime("%e %B %Y") %>">
+							<meta itemprop="mainEntityOfPage" content="<%= issue_article_url(article.issue,article) %>">
+							<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+							  <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+							    <meta itemprop="url" content="<%= asset_url("favicon-196x196.png") %>">
+							    <meta itemprop="width" content="196">
+							    <meta itemprop="height" content="196">
+							  </div>
+							  <meta itemprop="name" content="New Internationalist">
+							</div>
+							<div itemprop="author" itemscope itemtype="https://schema.org/Person">
+							  <meta itemprop="name" content="<%= article.author %>">
+							</div>
+					  </div>
+				</div>
