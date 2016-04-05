@@ -73,7 +73,8 @@ class HomeController < ApplicationController
     @cartoon = @cartoon.try(:sample)
 
     @agendas = Rails.cache.fetch("home_agendas", expires_in: 12.hours) do
-      @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact)
+      # @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact)
+      Category.find_by_name("/sections/agenda/").try(:first_articles, 100)
     end
 
     @agendas = @agendas.try(:sample, 3)
@@ -113,6 +114,10 @@ class HomeController < ApplicationController
     end
 
     @world_beaters = @world_beaters.try(:sample)
+
+    # Need to get an access token to complete this.. not sure it's necessary.. might just do it via JSON
+    # @instagram = Instagram.client(:access_token => session[:access_token])
+    @instagram_json = get_instagram_json
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
@@ -156,11 +161,6 @@ class HomeController < ApplicationController
                       }
                     }
                   }
-
-    # Need to get an access token to complete this.. not sure it's necessary.. might just do it via JSON
-    # @instagram = Instagram.client(:access_token => session[:access_token])
-    @instagram_json = get_instagram_json
-    # byebug
     
   end
 
