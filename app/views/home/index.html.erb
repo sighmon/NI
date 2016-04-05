@@ -75,7 +75,7 @@
     <ul class="breadcrumb">
     <% @latest_issue_categories.each do |category| %>
       <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
-      <% if can? :manage, Article %><li><%= category.name %></li><% end %>
+      <% if can? :manage, category %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
   </nav>

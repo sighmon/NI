@@ -18,12 +18,15 @@ class HomeController < ApplicationController
 
     @latest_issue = Issue.latest
 
-    @latest_issue.articles.each do |article|
-      if not @latest_issue_categories
-        @latest_issue_categories = article.categories
-      else
-        @latest_issue_categories = @latest_issue_categories | article.categories
+    @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
+      @latest_issue.articles.each do |article|
+        if not @latest_issue_categories
+          @latest_issue_categories = article.categories
+        else
+          @latest_issue_categories = @latest_issue_categories | article.categories
+        end
       end
+      @latest_issue_categories
     end
 
     if @latest_issue_categories
@@ -32,38 +35,84 @@ class HomeController < ApplicationController
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
-    @features_category = Category.find_by_name("/features/")
+    @features_category = Rails.cache.fetch("home_features_category", expires_in: 12.hours) do
+      Category.find_by_name("/features/")
+    end
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
     @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
 
-    @blog_category = Category.find_by_name("/blog/")
+    @blog_category = Rails.cache.fetch("home_blog_category", expires_in: 12.hours) do
+      Category.find_by_name("/blog/")
+    end
 
     @blog_latest = @blog_category.articles.try(:last)
 
-    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
+    @web_exclusive_category = Rails.cache.fetch("home_web_exclusive_category", expires_in: 12.hours) do
+      Category.find_by_name("/features/web-exclusive/")
+    end
 
     @web_exclusives = @web_exclusive_category.articles.try(:last, 2)
 
-    @facts = Category.find_by_name("/sections/facts/").try(:first_articles, 10).try(:sample)
+    @facts = Rails.cache.fetch("home_facts", expires_in: 12.hours) do
+      Category.find_by_name("/sections/facts/").try(:first_articles, 10)
+    end
 
-    @country_profile = Category.find_by_name("/columns/country/").try(:first_articles, 10).try(:sample)
+    @facts = @facts.try(:sample)
 
-    @cartoon = Category.find_by_name("/columns/cartoon/").try(:first_articles, 10).try(:sample)
+    @country_profile = Rails.cache.fetch("home_country_profile", expires_in: 12.hours) do
+      Category.find_by_name("/columns/country/").try(:first_articles, 10)
+    end
 
-    @agendas = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact).try(:sample, 3)
+    @country_profile = @country_profile.try(:sample)
 
-    @film = Category.find_by_name("/columns/media/film/").try(:first_articles, 10).try(:sample)
+    @cartoon = Rails.cache.fetch("home_cartoon", expires_in: 12.hours) do
+      Category.find_by_name("/columns/cartoon/").try(:first_articles, 10)
+    end
 
-    @book = Category.find_by_name("/columns/media/books/").try(:first_articles, 10).try(:sample)
+    @cartoon = @cartoon.try(:sample)
 
-    @music = Category.find_by_name("/columns/media/music/").try(:first_articles, 10).try(:sample)
+    @agendas = Rails.cache.fetch("home_agendas", expires_in: 12.hours) do
+      @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact)
+    end
 
-    @letters_from = Category.find_by_name("/columns/letters-from/").try(:first_articles, 10).try(:sample)
+    @agendas = @agendas.try(:sample, 3)
 
-    @making_waves = Category.find_by_name("/columns/makingwaves/").try(:first_articles, 10).try(:sample)
+    @film = Rails.cache.fetch("home_film", expires_in: 12.hours) do
+      Category.find_by_name("/columns/media/film/").try(:first_articles, 10)
+    end
 
-    @world_beaters = Category.find_by_name("/columns/worldbeaters/").try(:first_articles, 10).try(:sample)
+    @film = @film.try(:sample)
+
+    @book = Rails.cache.fetch("home_book", expires_in: 12.hours) do
+      Category.find_by_name("/columns/media/books/").try(:first_articles, 10)
+    end
+
+    @book = @book.try(:sample)
+
+    @music = Rails.cache.fetch("home_music", expires_in: 12.hours) do
+      Category.find_by_name("/columns/media/music/").try(:first_articles, 10)
+    end
+
+    @music = @music.try(:sample)
+
+    @letters_from = Rails.cache.fetch("home_letters_from", expires_in: 12.hours) do
+      Category.find_by_name("/columns/letters-from/").try(:first_articles, 10)
+    end
+
+    @letters_from = @letters_from.try(:sample)
+
+    @making_waves = Rails.cache.fetch("home_making_waves", expires_in: 12.hours) do
+      Category.find_by_name("/columns/makingwaves/").try(:first_articles, 10)
+    end
+
+    @making_waves = @making_waves.try(:sample)
+
+    @world_beaters = Rails.cache.fetch("home_world_beaters", expires_in: 12.hours) do
+      Category.find_by_name("/columns/worldbeaters/").try(:first_articles, 10)
+    end
+
+    @world_beaters = @world_beaters.try(:sample)
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
