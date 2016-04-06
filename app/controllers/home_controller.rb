@@ -40,7 +40,11 @@ class HomeController < ApplicationController
     end
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
-    @keynotes = @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact.sample(6)
+    @keynotes = Rails.cache.fetch("home_keynotes", expires_in: 12.hours) do
+      @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact
+    end
+
+    @keynotes = @keynotes.sample(6)
 
     @blog_category = Rails.cache.fetch("home_blog_category", expires_in: 12.hours) do
       Category.find_by_name("/blog/")

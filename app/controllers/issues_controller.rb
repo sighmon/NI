@@ -263,17 +263,7 @@ class IssuesController < ApplicationController
     #sections_of_articles_definitions
     #moved to the model
 
-    @issue.articles.each do |article|
-      if not @categories
-        @categories = article.categories
-      else
-        @categories = @categories | article.categories
-      end
-    end
-
-    if @categories
-      @categories = @categories.sort_by(&:short_display_name)
-    end
+    @categories = @issue.all_articles_categories.sort_by(&:short_display_name)
     
     # Set meta tags
     @page_title = @issue.title

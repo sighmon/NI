@@ -307,6 +307,16 @@ class Issue < ActiveRecord::Base
     return g
   end
 
+  def all_articles_categories
+    Rails.cache.fetch("#{cache_key}/all_articles_categories", expires_in: 12.hours) do
+      categories = []
+      self.articles.each do |article|
+        categories = categories | article.categories
+      end
+      categories
+    end
+  end
+
   def all_category_names
     n = []
     self.articles.each do |article|
