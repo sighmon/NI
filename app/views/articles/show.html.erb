@@ -8,12 +8,12 @@
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 issue_article_path(@issue,@article),
               :method => 'delete',
-              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
                 :class => 'btn btn-xs btn-danger' %> | 
     <%= link_to 'Import article', issue_article_import_path(@issue,@article), :class => 'btn btn-xs btn-warning',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and re-import this article again from Bricolage.')) %> | 
+                :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and re-import this article again from Bricolage.'))} %> | 
     <%= link_to 'Import images', issue_article_import_images_path(@issue,@article), :class => 'btn btn-xs btn-warning',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the images from Bricolage.')) %> | 
+                :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the images from Bricolage.'))} %> | 
     <%= link_to 'All images', issue_article_images_path(@issue,@article), :class => 'btn btn-xs btn-success' %>
     <div class="image-uploader">
       <%= simple_form_for ([@issue, @article, @newimage]), :html => { :class => 'file-upload', :multipart => true } do |f| %>
@@ -219,7 +219,7 @@
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               issue_article_path(@issue,@article),
               :method => 'delete',
-              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
               :class => 'btn btn-danger' %>
   <% end %>
 </div>

@@ -22,6 +22,13 @@ class IssuesController < ApplicationController
     redirect_to issue_path(@issue)
   end
 
+  def import_extra
+    article_type = params[:article_type]
+    @issue = Issue.find(params[:issue_id])
+    @issue.import_articles_from_bricolage(article_type)
+    redirect_to issue_path(@issue)
+  end
+
   def import_images
     @issue = Issue.find(params[:issue_id])
     @issue.articles.each do |article|

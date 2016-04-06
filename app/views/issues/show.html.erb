@@ -16,10 +16,16 @@
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-xs btn-success' %>
      |
     <%= link_to 'Import Articles', issue_import_path(@issue), :class => 'btn btn-xs btn-warning',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the articles from Bricolage.')) %>
+      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the articles from Bricolage.'))} %>
      |
     <%= link_to 'Import Images', issue_import_images_path(@issue), :class => 'btn btn-xs btn-warning',
-                :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will try and import all the images for each article listed here.')) %>
+      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will try and import all the images for each article listed here.'))} %>
+    <hr />
+    <%= link_to 'Import Blogs', issue_import_extra_path(@issue, article_type: "blog"), :class => 'btn btn-xs btn-warning',
+      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will import the blogs from Bricolage.'))} %>
+     |
+     <%= link_to 'Import Web Exclusives', issue_import_extra_path(@issue, article_type: "web-exclusive"), :class => 'btn btn-xs btn-warning',
+      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will import the web-exclusives from Bricolage.'))} %>
     <hr />
     <%= link_to 'Email current subscriber', issue_email_path(@issue), :class => 'btn btn-default btn-xs' %>
      |

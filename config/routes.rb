@@ -48,6 +48,7 @@ NI::Application.routes.draw do
   resources :issues do
     # Route for importing articles from bricolage to an issue
     get :import
+    get :import_extra
     get :import_images
     get :email
     get :email_non_subscribers
