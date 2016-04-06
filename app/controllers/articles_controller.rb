@@ -434,8 +434,8 @@ class ArticlesController < ApplicationController
       :app_id => ENV["FACEBOOK_APP_ID"],
       :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
       :name => @article.title,
-      :caption => @article.teaser,
-      :description => params[:text],
+      :caption => strip_tags(@article.teaser),
+      :description => "New Internationalist magazine, #{@article.issue.release.strftime("%B, %Y")}",
       :redirect_uri => @guest_pass
       #:redirect_uri => "http://digital.newint.com.au"
     }

@@ -428,7 +428,7 @@ class IssuesController < ApplicationController
       :picture => @issue.cover_url.to_s,
       :name => @issue.title,
       :caption => ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
-      :description => "I'm reading '#{@issue.title}'",
+      :description => "New Internationalist magazine, #{@issue.release.strftime("%B, %Y")}",
       :redirect_uri => issue_url(@issue)
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
