@@ -56,7 +56,7 @@ class HomeController < ApplicationController
       Category.find_by_name("/features/web-exclusive/")
     end
 
-    @web_exclusives = @web_exclusive_category.articles.try(:last, 2)
+    @web_exclusives = @web_exclusive_category.try(:articles).try(:last, 2)
 
     @facts = Rails.cache.fetch("home_facts", expires_in: 12.hours) do
       Category.find_by_name("/sections/facts/").try(:first_articles, 10)
