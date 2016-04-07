@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     @latest_issue = Issue.latest
 
     @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
-      @latest_issue.articles.each do |article|
+      @latest_issue.try(:articles).try(:each) do |article|
         if not @latest_issue_categories
           @latest_issue_categories = article.categories
         else
@@ -50,7 +50,7 @@ class HomeController < ApplicationController
       Category.find_by_name("/blog/")
     end
 
-    @blog_latest = @blog_category.articles.try(:last)
+    @blog_latest = @blog_category.try(:articles).try(:last)
 
     @web_exclusive_category = Rails.cache.fetch("home_web_exclusive_category", expires_in: 12.hours) do
       Category.find_by_name("/features/web-exclusive/")
