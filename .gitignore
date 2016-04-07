@@ -30,7 +30,7 @@
 # /app/assets/fonts/**
 
 # Ignore application configuration
-/config/application.yml
+/config/application*.yml
 /config/secrets.yml
 
 # Ignore Google Play secrets
