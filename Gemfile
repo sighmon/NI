@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.0'
 
-gem 'rails', '4.2.5.2'
+gem 'rails', '4.2.6'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'

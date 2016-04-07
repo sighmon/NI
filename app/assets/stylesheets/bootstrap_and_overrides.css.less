@@ -158,6 +158,12 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
   margin-right: (@grid-gutter-width / -2);
 }
 
+// Transition image animation fix
+.transition-fix {
+	-webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+}
+
 
 // Link colours
 
@@ -440,11 +446,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	// margin-bottom: 1em;
 	transition: .3s ease;
 	border-radius: 2px 2px 0px 0px;
+	.transition-fix;
 }
 
 .home-keynote img:hover {
 	opacity: 0.8;
 	transition: .3s ease;
+	.transition-fix;
 }
 
 .home-keynote h3 {
