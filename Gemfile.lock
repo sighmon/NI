@@ -5,6 +5,12 @@ GIT
     comma (3.0.4)
 
 GIT
+  remote: git://github.com/sighmon/highlighter.js.git
+  revision: 0dae3c26c40bce3c68273f6f34a310f3e38fb2a8
+  specs:
+    highlighter-js (0.0.1)
+
+GIT
   remote: git://github.com/sighmon/retina_image_tag.git
   revision: 7fad00b8f012206d664568dee1ee4f90e2e8a5a9
   specs:
@@ -605,6 +611,7 @@ DEPENDENCIES
   growl
   guard-rspec (= 1.2.1)
   heroku_rails_deflate
+  highlighter-js!
   httparty
   jquery-fileupload-rails
   jquery-rails

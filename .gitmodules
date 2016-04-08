@@ -1,3 +1,0 @@
-[submodule "vendor/assets/javascripts/highlighter"]
-	path = vendor/assets/javascripts/highlighter
-	url = https://github.com/sighmon/highlighter.js.git
