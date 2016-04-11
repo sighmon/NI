@@ -575,6 +575,16 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def hide_images
+    # Hide all images for the current article
+    @article = Article.find(params[:article_id])
+    @article.images.each do |image|
+      image.hidden = true
+      image.save
+    end
+    redirect_to issue_article_images_path(@article.issue, @article), notice: 'Images successfully hidden.'
+  end
+
   private
 
   def request_has_valid_itunes_receipt

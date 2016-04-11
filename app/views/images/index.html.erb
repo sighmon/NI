@@ -2,6 +2,7 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
   <h2><%= link_to retina_image_tag(@issue.cover_url(:tiny).to_s, width: '50'), issue_path(@issue) %></h2>
+  <p><%= link_to 'Hide all images', issue_article_hide_images_path(@issue, @article), class: 'btn btn-warning btn-xs' %></p>
 </div>
 <table class="table table-striped">
   <thead>

@@ -83,6 +83,7 @@ NI::Application.routes.draw do
       post :ios_share
       get :android_share
       post :android_share
+      get :hide_images
     end
     resources :purchases, :only => [:new, :create] do
       new do
