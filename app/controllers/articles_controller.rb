@@ -259,7 +259,11 @@ class ArticlesController < ApplicationController
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
-            :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}],
+            :alternate => [
+              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, 
+              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"},
+              {:href => apple_news_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+            ],
             :open_graph => {
             :title => @article.title,
             :description => strip_tags(@article.teaser),

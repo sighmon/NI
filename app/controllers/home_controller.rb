@@ -131,9 +131,10 @@ class HomeController < ApplicationController
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
                   :canonical => root_url,
                   :alternate => [
-                    { href: apple_news_url(format: :xml), type: 'application/rss+xml', title: 'RSS' }
+                    {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, 
+                    {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"},
+                    {:href => apple_news_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
                   ],
-                  :alternate => [{:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"}],
                   :open_graph => {
                     :title => @page_title_home,
                     :description => @page_description,
@@ -431,7 +432,7 @@ class HomeController < ApplicationController
               xml.source( url: apple_news_url(:format => 'xml') ) do
                 xml.text "New Internationalist magazine"
               end
-              xml.description { xml.cdata (ActionController::Base.helpers.image_tag(i.cover_url.to_s, alt: i.title, title: i.title) + ActionView::Base.full_sanitizer.sanitize(i.editors_letter)) }
+              xml.description { xml.cdata (ActionController::Base.helpers.image_tag(i.cover_url(:home2x).to_s, alt: i.title, title: i.title, size: '283x400', style: 'float:right;') + ActionView::Base.full_sanitizer.sanitize(i.editors_letter)) }
               xml.pubDate i.release.to_datetime.rfc822
             end
           end
