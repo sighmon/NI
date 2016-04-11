@@ -68,7 +68,7 @@ class IssuesController < ApplicationController
                   :alternate => [
                     {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
                     {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
-                    {:href => apple_news_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+                    {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
                   ],
                   :open_graph => {
                     :title => @page_title,
@@ -277,7 +277,7 @@ class IssuesController < ApplicationController
                   :alternate => [
                     {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}"}, 
                     {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}"},
-                    {:href => apple_news_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+                    {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
                   ],
                   :open_graph => {
                     :title => @page_title,
