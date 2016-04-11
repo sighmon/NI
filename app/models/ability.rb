@@ -17,6 +17,10 @@ class Ability
     end
     can :read, Article, :trialarticle => true
     can :read, Article, :issue => { :trialissue => true }
+    # mark all letters, blogs and web-exclusives as free to read
+    can :read, Article do |article|
+        article.has_category("/columns/letters/") or article.has_category("/blog/") or article.has_category("/features/web-exclusive/")
+    end
     can :search, Article
     can :popular, Article
     can :read, Page
