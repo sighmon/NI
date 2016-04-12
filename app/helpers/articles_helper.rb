@@ -188,10 +188,6 @@ module ArticlesHelper
           version = :threehundred
           css_class = "all-article-images article-image-cartoon article-image-centre"
           image_width = 300
-        elsif options.include?("small")
-          version = :threehundred
-          css_class = "article-image article-image-small"
-          image_width = 150
         end
         
         if options.include?("ns")
@@ -200,6 +196,12 @@ module ArticlesHelper
 
         if options.include?("left")
           css_class += " article-image-float-none"
+        end
+
+        if options.include?("small")
+          version = :threehundred
+          css_class += " article-image-small"
+          image_width = 150
         end
 
         media_url = image.try(:data_url, version)
