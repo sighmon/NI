@@ -116,7 +116,7 @@ gem 'rails_12factor', :group => :production
 gem 'httparty'
 
 # To talk to the Google Play API
-gem 'google-api-client'
+gem 'google-api-client', '0.8.6'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
