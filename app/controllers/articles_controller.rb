@@ -273,7 +273,7 @@ class ArticlesController < ApplicationController
             :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-            :card => "summary",
+            :card => "summary_large_image",
             :site => "@#{ENV["TWITTER_NAME"]}",
             :creator => "@#{ENV["TWITTER_NAME"]}",
             :title => @article.title,
