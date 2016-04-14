@@ -92,18 +92,18 @@ class Article < ActiveRecord::Base
   end
 
   def is_a_feature
-    if self.categories.pluck {|c| c.name == '/features/'}.empty?
-      return false
-    else
+    if self.categories.select {|c| c.name == '/features/'}.count > 0
       return true
+    else
+      return false
     end
   end
 
   def has_category(category_name)
-    if self.categories.pluck {|c| c.name == category_name}.empty?
-      return false
-    else
+    if self.categories.select {|c| c.name == category_name}.count > 0
       return true
+    else
+      return false
     end
   end
 

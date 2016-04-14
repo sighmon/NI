@@ -104,10 +104,10 @@ gem 'kgio'
 gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
-# gem 'heroku-deflater', :group => :production
+gem 'heroku-deflater', :group => :production
 
 # Trying another gzip deflater https://github.com/mattolson/heroku_rails_deflate
-gem 'heroku_rails_deflate'
+# gem 'heroku_rails_deflate'
 
 # Get rid of heroku plugin warnings
 gem 'rails_12factor', :group => :production
@@ -130,6 +130,10 @@ group :development do
   gem 'better_errors', '1.1.0'
   gem 'binding_of_caller'
   # gem 'sqlite3'
+  # Profiling
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 # Cucumber and Rspec install for testing

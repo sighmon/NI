@@ -152,11 +152,14 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    fast_stack (0.2.0)
     ffi (1.9.10)
     figaro (1.1.1)
       thor (~> 0.14)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
+    flamegraph (0.1.0)
+      fast_stack
     fog (1.38.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
@@ -329,9 +332,7 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       netrc
-    heroku_rails_deflate (1.0.3)
-      actionpack (>= 3.2.13)
-      activesupport (>= 3.2.13)
+    heroku-deflater (0.6.2)
       rack (>= 1.4.5)
     httparty (0.13.7)
       json (~> 1.8)
@@ -410,6 +411,8 @@ GEM
     rack (1.6.4)
     rack-cache (1.6.1)
       rack (>= 0.4)
+    rack-mini-profiler (0.9.9.2)
+      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.6)
@@ -531,6 +534,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stackprof (0.2.9)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -606,6 +610,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   figaro
+  flamegraph
   fog
   formtastic
   google-analytics-rails
@@ -613,7 +618,7 @@ DEPENDENCIES
   google-tag-manager-rails
   growl
   guard-rspec (= 1.2.1)
-  heroku_rails_deflate
+  heroku-deflater
   highlighter-js!
   httparty
   jquery-fileupload-rails
@@ -631,6 +636,7 @@ DEPENDENCIES
   pg
   platform-api
   rack-cache
+  rack-mini-profiler
   rails (= 4.2.6)
   rails-observers
   rails-settings-cached (= 0.4.1)
@@ -649,6 +655,7 @@ DEPENDENCIES
   simple_form
   simplecov
   sitemap_generator
+  stackprof
   taps
   therubyracer
   timecop
