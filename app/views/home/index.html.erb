@@ -33,7 +33,7 @@
 			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-default btn-lg' %></p>
 		<% end %>
 		<% if not current_user.try(:subscriber?) %>
-	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-success btn-lg' %></p>
+	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success btn-lg' %></p>
 		<% end %>
   	<p class="ios-home-ad"><a href="<%= ENV["ITUNES_APP_LINK"] %>" target="itunes_store"><img src="/assets/app-store.svg" alt="Download the New Internationalist magazine app for iPad and iPhone." title="Download the New Internationalist magazine app for iPad and iPhone." /></a>
 		<a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>"><img alt="Get New Internationalist magazine app on Google Play" title="Get New Internationalist magazine app on Google Play" src="/assets/google-play.svg" /></a></p>
