@@ -3,7 +3,7 @@
   <% if can? :create, Favourite %>
     <!-- Favourite -->
     <% if article_favourited?(article) %>
-      <%= link_to raw('<i class="fa fa-heart red"></i>'), issue_article_favourite_path(article.issue.id, article.id, favourite_id_for_article(article)), :method => 'delete', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
+      <%= link_to raw('<i class="fa fa-heart red"></i>'), issue_article_favourite_path(article.issue, article, favourite_id_for_article(article)), :method => 'delete', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
     <% else %>
       <%= link_to raw('<i class="fa fa-heart-o"></i>'), issue_article_favourites_path(article.issue, article), :method => 'create', :alt => 'Add to favourites', :title => 'Add to favourites' %>
     <% end %>

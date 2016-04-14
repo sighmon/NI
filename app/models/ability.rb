@@ -10,7 +10,7 @@ class Ability
     can [:read, :email, :email_non_subscribers, :email_others, :email_renew], Issue, :published => true
     can [:tweet_issue, :wall_post_issue, :email_issue], Issue
     # test to see if the user has purchased an issue (to read article)
-    can :read, Article, :issue => { :users => { :id => user.id } }
+    can :read, Article, :issue => { :id => user.issue_ids }
     # can :read, Article, :guest_passes => { :key => key } 
     can :read, Article do |article| 
         article.is_valid_guest_pass(key)
