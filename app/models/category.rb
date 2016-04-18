@@ -23,7 +23,7 @@ class Category < ActiveRecord::Base
   end
 
   def self.cached_category_articles(id)
-    Rails.cache.fetch([name, id]) { find(id).articles.where("published" == true).order(:publication) }
+    Rails.cache.fetch([name, id]) { find(id).articles.where("published" == true).order(:publication).reverse_order }
   end
 
   def flush_cache
