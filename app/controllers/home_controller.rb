@@ -35,28 +35,26 @@ class HomeController < ApplicationController
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
 
-    @features_category = Rails.cache.fetch("home_features_category", expires_in: 12.hours) do
-      Category.find_by_name("/features/")
-    end
+    @features_category = Category.find_by_name("/features/")
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
     @keynotes = Rails.cache.fetch("home_keynotes", expires_in: 12.hours) do
-      @issues.order(:release).reverse_order.first(24).each.collect{|i| i.keynote}.compact
+      @issues.order(:release).reverse_order.first(24).collect{|i| i.keynote}.compact
     end
 
-    @keynotes = @keynotes.sample(6)
+    @keynotes = @keynotes.sample(6).sort_by(&:publication)
 
-    @blog_category = Rails.cache.fetch("home_blog_category", expires_in: 12.hours) do
-      Category.find_by_name("/blog/")
+    @blog_category = Category.find_by_name("/blog/")
+
+    @blog_latest = Rails.cache.fetch("home_blog_latest", expires_in: 12.hours) do
+      @blog_category.try(:articles).try(:last)
     end
 
-    @blog_latest = @blog_category.try(:articles).try(:last)
+    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
 
-    @web_exclusive_category = Rails.cache.fetch("home_web_exclusive_category", expires_in: 12.hours) do
-      Category.find_by_name("/features/web-exclusive/")
+    @web_exclusives = Rails.cache.fetch("home_web_exclusives", expires_in: 12.hours) do
+      @web_exclusive_category.try(:articles).try(:last, 2)
     end
-
-    @web_exclusives = @web_exclusive_category.try(:articles).try(:last, 2)
 
     @facts = Rails.cache.fetch("home_facts", expires_in: 12.hours) do
       Category.find_by_name("/sections/facts/").try(:first_articles, 10)
