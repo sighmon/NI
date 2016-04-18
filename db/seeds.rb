@@ -14,6 +14,7 @@ Settings.issue_price = 200
 Settings.issue_pagination = 12
 Settings.article_pagination = 10
 Settings.guest_pass_key_length = 16
+Settings.category_pagination = 24
 
 # TODO: setup the admin user
 

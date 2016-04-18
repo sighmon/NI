@@ -41,7 +41,7 @@ class HomeController < ApplicationController
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
     @keynotes = Rails.cache.fetch("home_keynotes", expires_in: 12.hours) do
-      @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.keynote}.compact
+      @issues.order(:release).reverse_order.first(24).each.collect{|i| i.keynote}.compact
     end
 
     @keynotes = @keynotes.sample(6)
@@ -467,11 +467,10 @@ class HomeController < ApplicationController
     # To get the latest cover from URL https://digital.newint.com.au/latest_cover.jpg
     # To get the full size cover, add ?full=true
     full_cover = params[:full]
-    published_issues = Issue.where(published: true)
     if full_cover
-      redirect_to published_issues.sort_by(&:release).last.try(:cover_url).to_s
+      redirect_to Issue.latest.try(:cover_url).to_s
     else
-      redirect_to published_issues.sort_by(&:release).last.try(:cover_url, :thumb2x).to_s
+      redirect_to Issue.latest.try(:cover_url, :thumb2x).to_s
     end
   end
 

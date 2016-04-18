@@ -124,6 +124,10 @@ gem 'google-api-client', '0.8.6'
 # Instagram feed https://github.com/facebookarchive/instagram-ruby-gem
 # gem 'instagram'
 
+# Location for sending subscriptions to the correct offices
+# https://github.com/alexreisner/geocoder
+# gem 'geocoder'
+
 # For development
 group :development do
   gem 'taps', :require => false

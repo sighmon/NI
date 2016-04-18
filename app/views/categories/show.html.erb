@@ -21,7 +21,7 @@
 
 <div class="row">
   <% if @articles %>
-    <% @articles.sort_by(&:publication).reverse.each_with_index do |article, index| %>
+    <% @articles.each_with_index do |article, index| %>
       <% if index % 3 == 0 %>
 </div>
 <div class="row">
@@ -30,6 +30,9 @@
         <%= render :partial => "category_article", :locals => { :article => article } %>
       </div>
     <% end %>
+    <div class="col-sm-12">
+      <%= paginate @articles %>
+    </div>
   <% end %>
 </div>
 
@@ -54,6 +57,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate @articles %>
 
 <div class="form-actions">
 

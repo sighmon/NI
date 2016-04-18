@@ -44,7 +44,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @articles = @category.articles.sort_by(&:publication).reverse
+    @articles = Category.cached_category_articles(@category.id).page(params[:page]).per(Settings.category_pagination)
 
     # Set meta tags
     @page_title = "Articles about #{@category.short_display_name}"
