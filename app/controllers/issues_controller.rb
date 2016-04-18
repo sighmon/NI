@@ -75,7 +75,7 @@ class IssuesController < ApplicationController
                     :description => @page_description,
                     #:type  => :magazine,
                     :url   => issues_url,
-                    :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
+                    :image => Issue.latest.try(:cover_url, :thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   },
                   :twitter => {
@@ -85,7 +85,7 @@ class IssuesController < ApplicationController
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
-                      :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                      :src => Issue.latest.try(:cover_url, :thumb2x).to_s
                     },
                     :app => {
                       :name => {

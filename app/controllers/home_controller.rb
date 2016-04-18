@@ -139,7 +139,7 @@ class HomeController < ApplicationController
                     :title => @page_title_home,
                     :description => @page_description,
                     :url   => root_url,
-                    :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
+                    :image => @latest_issue.try(:cover_url, :thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   },
                   :twitter => {
@@ -149,7 +149,7 @@ class HomeController < ApplicationController
                     :title => @page_title_home,
                     :description => @page_description,
                     :image => {
-                      :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                      :src => @latest_issue.try(:cover_url, :thumb2x).to_s
                     },
                     :app => {
                       :name => {

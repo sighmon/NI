@@ -28,7 +28,7 @@ class CategoriesController < ApplicationController
                     :description => @page_description,
                     #:type  => :magazine,
                     :url   => categories_url,
-                    :image => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s,
+                    :image => Issue.latest.try(:cover_url, :thumb2x).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   },
                   :twitter => {
@@ -38,13 +38,13 @@ class CategoriesController < ApplicationController
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
-                      :src => @issues.sort_by{|i| i.release}.last.try(:cover_url, :thumb2x).to_s
+                      :src => Issue.latest.try(:cover_url, :thumb2x).to_s
                     }
                   }
   end
 
   def show
-    @articles = Category.cached_category_articles(@category.id).page(params[:page]).per(Settings.category_pagination)
+    @articles = Kaminari.paginate_array(Category.cached_category_articles(@category.id).reverse).page(params[:page]).per(Settings.category_pagination)
 
     # Set meta tags
     @page_title = "Articles about #{@category.short_display_name}"

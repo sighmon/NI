@@ -15,15 +15,15 @@ class Category < ActiveRecord::Base
   end
 
   def latest_published_article
-    Category.cached_category_articles(self.id).first
+    Category.cached_category_articles(self.id).last
   end
 
   def first_articles(number)
-    Category.cached_category_articles(self.id).first(number)
+    Category.cached_category_articles(self.id).reverse.first(number)
   end
 
   def self.cached_category_articles(id)
-    Rails.cache.fetch([name, id]) { find(id).articles.where("published" == true).order(:publication).reverse_order }
+    Rails.cache.fetch([name, id]) { find(id).articles.select(&:published).sort_by(&:publication) }
   end
 
   def flush_cache
