@@ -138,7 +138,10 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'flamegraph'
   gem 'stackprof'
+  # Run brakeman to check for security problems in your code.
   gem 'brakeman', :require => false
+  # Run bundle-audit to check for Ruby/Rails vulnerabilities
+  gem 'bundler-audit'
 end
 
 # Cucumber and Rspec install for testing
