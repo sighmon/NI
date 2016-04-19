@@ -138,6 +138,7 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'flamegraph'
   gem 'stackprof'
+  gem 'brakeman', :require => false
 end
 
 # Cucumber and Rspec install for testing
