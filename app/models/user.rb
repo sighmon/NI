@@ -304,6 +304,12 @@ class User < ActiveRecord::Base
 
   private
 
+  def self.sorted_by(column, direction)
+    direction = sanitize_sql(direction) ? sanitize_sql(direction) : 'desc'
+    column = sanitize_sql(column) ? sanitize_sql(column) : 'created_at'
+    order("#{column} #{direction}")
+  end
+
   def request_has_valid_itunes_receipt(request)
     if !request.post?
       return nil

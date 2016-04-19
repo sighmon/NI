@@ -4,10 +4,11 @@ class Admin::UsersController < Admin::BaseController
 	load_and_authorize_resource
 
 	# For User sorting
+	# User sorting now in the model self.sorted_by
 	helper_method :sort_column, :sort_direction
 
 	def index
-		@users = User.order(sort_column + " " + sort_direction)
+		@users = User.sorted_by(params[:sort], params[:direction])
 		@uk_users = @users.select{|uk| uk.uk_user?}
 		@subscribers_total = @users.select{|s| s.subscriber?}
 		@institutions = @users.select{|i| i.institution}
