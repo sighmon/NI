@@ -42,7 +42,7 @@ Other articles in this issue
 <%= a.title %><% if a.is_a_feature and not a.teaser.blank? %><%= "\n\n"+ strip_tags(a.teaser) %><% end %>
 
 Web: <%= "[#{issue_article_url(@issue,a)}]" %>
-iOS: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
+App: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
 
 <% if not (@issue.categorised_articles.last == a) %>----------------------------<% end %>
 
