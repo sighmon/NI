@@ -55,7 +55,6 @@ class IssuesController < ApplicationController
     # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
 
     @issues = Issue.search(params, current_user.try(:admin?))
-    @json_issues = Issue.select {|i| i.published?}.sort_by { |i| i.release }.reverse
 
     # Set meta tags
     @page_title = "Magazine archive"
@@ -75,7 +74,7 @@ class IssuesController < ApplicationController
                     :description => @page_description,
                     #:type  => :magazine,
                     :url   => issues_url,
-                    :image => Issue.latest.try(:cover_url, :thumb2x).to_s,
+                    :image => Issue.latest.try(:cover_url).to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   },
                   :twitter => {
@@ -85,7 +84,7 @@ class IssuesController < ApplicationController
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
-                      :src => Issue.latest.try(:cover_url, :thumb2x).to_s
+                      :src => Issue.latest.try(:cover_url).to_s
                     },
                     :app => {
                       :name => {
@@ -103,14 +102,17 @@ class IssuesController < ApplicationController
                     }
                   }
 
-    if not params[:query].blank?
-      @json_issues = @issues
-    end
-
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @issues, callback: params[:callback] }
-      format.json { render callback: params[:callback], json: Issue.issues_index_to_json(@json_issues) }
+      format.json { 
+        if not params[:query].blank?
+          @json_issues = @issues
+        else
+          @json_issues = Issue.where(published: true).order(:release).reverse_order
+        end
+        render callback: params[:callback], json: Issue.issues_index_to_json(@json_issues) 
+      }
     end
   end
 
@@ -130,7 +132,7 @@ class IssuesController < ApplicationController
                     :description => @page_description,
                     #:type  => :magazine,
                     :url   => issue_url(@issue),
-                    :image => @issue.cover_url(:thumb2x).to_s,
+                    :image => @issue.cover_url.to_s,
                     :site_name => "New Internationalist Magazine Digital Edition"
                   },
                   :twitter => {
@@ -140,7 +142,7 @@ class IssuesController < ApplicationController
                     :title => @page_title,
                     :description => @page_description,
                     :image => {
-                      :src => @issue.cover_url(:thumb2x).to_s
+                      :src => @issue.cover_url.to_s
                     }
                   }
     respond_to do |format|
@@ -264,7 +266,7 @@ class IssuesController < ApplicationController
     #sections_of_articles_definitions
     #moved to the model
 
-    @categories = @issue.all_articles_categories.sort_by(&:short_display_name)
+    @categories = @issue.all_articles_categories
     
     # Set meta tags
     @page_title = @issue.title

@@ -313,7 +313,7 @@ class Issue < ActiveRecord::Base
       self.articles.each do |article|
         categories = categories | article.categories
       end
-      categories
+      categories.sort_by(&:short_display_name)
     end
   end
 
