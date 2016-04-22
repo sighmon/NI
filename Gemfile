@@ -130,7 +130,7 @@ gem 'google-api-client', '0.8.6'
 
 # For development
 group :development do
-  gem 'taps', :require => false
+  # gem 'taps', :require => false
   gem 'better_errors', '1.1.0'
   gem 'binding_of_caller'
   # gem 'sqlite3'

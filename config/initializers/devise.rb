@@ -126,6 +126,12 @@ Devise.setup do |config|
   # to give user feedback and not to assert the e-mail validity.
   # config.email_regexp = /\A[^@]+@[^@]+\z/
 
+  # DEPRECATION WARNING: [Devise] config.email_regexp will have a new default on Devise 4.1
+  # From
+  # config.email_regexp = /\A[^@\s]+@([^@\s]+\.)+[^@\W]+\z/
+  # To
+  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
+
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
