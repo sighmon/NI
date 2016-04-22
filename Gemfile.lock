@@ -507,6 +507,7 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    ruby-prof (0.15.9)
     ruby2ruby (2.3.0)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -679,6 +680,7 @@ DEPENDENCIES
   rspec-activemodel-mocks
   rspec-legacy_formatters
   rspec-rails
+  ruby-prof
   sass-rails
   savon (~> 1.2.0)
   show_me_the_cookies

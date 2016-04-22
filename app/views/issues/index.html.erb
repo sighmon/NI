@@ -14,7 +14,7 @@
 </div>
 
 <div class="issue-cover-list">
-  <% @issues.sort_by(&:release).reverse.each do |issue| %>
+  <% @issues.each do |issue| %>
     <div class="issue-information" itemscope itemtype="http://schema.org/CreativeWork">
       <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :class => "shadow#{unpublished(issue)}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :size => "141x200", :itemprop => "image"), issue_path(issue), :itemprop => "url" %>
       <meta itemprop="name" content="<%= issue.title %>">
@@ -40,7 +40,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @issues.sort_by{|x|x.release}.reverse.each do |issue| %>
+    <% @issues.each do |issue| %>
       <tr>
         <!-- <td><%= link_to issue.id, issue_path(issue) %></td> -->
         <td><%= link_to issue.title, issue_path(issue) %></td>
