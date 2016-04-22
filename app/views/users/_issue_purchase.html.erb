@@ -1,0 +1,26 @@
+				<div class="home-keynote">
+					<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			  		<%= link_to retina_image_tag(issue.cover_url(:home).to_s, :class => 'article-thumb', :alt => "#{strip_tags(issue.title)}", :title => "#{strip_tags(issue.title)}", :width => 400, :itemprop => "image"), issue_path(issue) %>
+				    <meta itemprop="url" content="<%= issue.cover_url.to_s %>">
+				    <meta itemprop="width" content="1000">
+				    <meta itemprop="height" content="1414">
+				  </div>
+				  <div class="home-keynote-text">
+						<meta itemprop="url" content="<%= issue_url(issue) %>">
+						<meta itemprop="dateCreated" content="<%= issue.release.strftime("%e %B %Y") %>">
+						<meta itemprop="datePublished" content="<%= issue.release.strftime("%e %B %Y") %>">
+						<meta itemprop="dateModified" content="<%= issue.updated_at.strftime("%e %B %Y") %>">
+						<meta itemprop="mainEntityOfPage" content="<%= issue_url(issue) %>">
+						<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+						  <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+						    <meta itemprop="url" content="<%= asset_url("favicon-196x196.png") %>">
+						    <meta itemprop="width" content="196">
+						    <meta itemprop="height" content="196">
+						  </div>
+						  <meta itemprop="name" content="New Internationalist">
+						</div>
+						<div itemprop="author" itemscope itemtype="https://schema.org/Person">
+						  <meta itemprop="name" content="<%= issue.editors_name %>">
+						</div>
+				  </div>
+				</div>
