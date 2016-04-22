@@ -461,9 +461,9 @@ class HomeController < ApplicationController
     # To get the latest cover from URL https://digital.newint.com.au/latest_cover.jpg
     # To get the full size cover, add ?full=true
     if ActionController::Base.helpers.sanitize(params[:full]) == "true"
-      redirect_to URI.parse(Issue.latest.try(:cover_url)).path
+      redirect_to Issue.latest.try(:cover_url)
     else
-      redirect_to URI.parse(Issue.latest.try(:cover_url, :thumb2x)).path
+      redirect_to Issue.latest.try(:cover_url, :thumb2x)
     end
   end
 
