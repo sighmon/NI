@@ -18,6 +18,12 @@ GIT
       railties (>= 3.1)
       rmagick (>= 2.13.1)
 
+GIT
+  remote: https://github.com/angelodlfrtr/mjml-ruby.git
+  revision: 450f20f94344f4736a1394c6b1e4e1142a219641
+  specs:
+    mjml (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -659,6 +665,7 @@ DEPENDENCIES
   libv8
   memcachier
   meta-tags
+  mjml!
   newrelic_rpm
   paypal-recurring
   pg
