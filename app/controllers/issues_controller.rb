@@ -148,11 +148,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
-      format.mjml do
-        template = File.read('app/views/issues/email.mjml.erb')
-        parser = Mjml::Parser.new(template)
-        render :inline => parser.render
-      end
+      format.mjml { render :layout => false }
     end
   end
 
@@ -162,6 +158,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
+      format.mjml { render :layout => false }
     end
   end
 
@@ -171,6 +168,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
+      format.mjml { render :layout => false }
     end
   end
 
@@ -180,6 +178,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
+      format.mjml { render :layout => false }
     end
   end
 
