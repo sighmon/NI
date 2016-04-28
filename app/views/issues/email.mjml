@@ -3,7 +3,7 @@
 		<mj-column>
 			<!-- TODO Get links working -->
 			<mj-text font-size="11px" color="#606b75">
-				<%= "#{@issue.title} - #{@issue.release.strftime("%B %Y")}" %>
+				<%= link_to "#{@issue.title} - #{@issue.release.strftime("%B %Y")}", issue_url(@issue) %>
 			</mj-text>
 		</mj-column>
 		<mj-column>
@@ -17,11 +17,11 @@
     	<!-- TODO Get helpers in -->
       <mj-image 
       	width="250" 
-      	src="<%= ActionController::Base.helpers.image_url("new-internationalist@2x.png") %>">
+      	src="<%= asset_url("assets/new-internationalist@2x.png") %>">
       </mj-image>
       <mj-image 
       	padding="0"
-      	src="<%= ActionController::Base.helpers.image_url(@issue.keynote.first_image.data_url) %>">
+      	src="<%= image_url(@issue.keynote.first_image.data_url) %>">
       </mj-image>
     </mj-column>
   </mj-section>

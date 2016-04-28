@@ -15,8 +15,8 @@ NI::Application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Default URL for Devise
-  config.action_mailer.default_url_options = { :host => 'digital.newint.com.au', :protocol => 'https' }
-  config.action_mailer.asset_host = 'https://digital.newint.com.au'
+  config.action_mailer.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
+  config.action_mailer.asset_host = ENV['NI_APP_HOST']
 
   # Force SSL for any Devise action
   config.to_prepare { Devise::SessionsController.force_ssl }

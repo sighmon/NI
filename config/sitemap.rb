@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "https://digital.newint.com.au"
+SitemapGenerator::Sitemap.default_host = ENV['NI_APP_HOST']
 # pick a place safe to write the files
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 # store on S3 using Fog

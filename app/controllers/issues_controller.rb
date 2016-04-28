@@ -118,33 +118,7 @@ class IssuesController < ApplicationController
 
   def email
     @issue = Issue.find(params[:issue_id])
-    # sections_of_articles_definitions
-    
-    # Set meta tags
-    @page_title = @issue.title
-    @page_description = "Read the #{@issue.release.strftime("%B, %Y")} digital edition of the New Internationalist magazine - #{@issue.title}"
 
-    set_meta_tags :title => @page_title,
-                  :description => @page_description,
-                  :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
-                  :open_graph => {
-                    :title => @page_title,
-                    :description => @page_description,
-                    #:type  => :magazine,
-                    :url   => issue_url(@issue),
-                    :image => @issue.cover_url.to_s,
-                    :site_name => "New Internationalist Magazine Digital Edition"
-                  },
-                  :twitter => {
-                    :card => "summary",
-                    :site => "@#{ENV["TWITTER_NAME"]}",
-                    :creator => "@#{ENV["TWITTER_NAME"]}",
-                    :title => @page_title,
-                    :description => @page_description,
-                    :image => {
-                      :src => @issue.cover_url.to_s
-                    }
-                  }
     respond_to do |format|
       format.html { render :layout => 'email' }
       format.text { render :layout => false }
