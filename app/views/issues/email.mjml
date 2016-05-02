@@ -62,41 +62,6 @@
 		</mj-column>
 	</mj-section>
 
-	<mj-section background-color="#FFFFFF">
-		<mj-column>
-
-			<mj-text
-				font-size="14px"
-				font-weight="bold"
-				align="center"
-				color="#8e8e8e">
-				<span style="text-transform: uppercase;">A note from the editor</span>
-			</mj-text>
-
-			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
-
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
-				<div style="float:right;width:100px;height:100px;border-radius:50%;overflow:hidden;">
-					<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100px", :height => "100px", :style => "margin-top:-10px;"), issue_url(@issue) %>
-				</div>
-				<%= simple_format strip_tags(@issue.editors_letter) %>
-				<strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br />
-				<%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>
-			</mj-text>
-
-		</mj-column>
-	</mj-section>
-
-	<mj-section padding="0">
-		<mj-column>
-			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
-		</mj-column>
-	</mj-section>
-
 	<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
 		<mj-column>
 			<mj-text
@@ -135,6 +100,41 @@
 				href="<%= issue_url(@issue) %>">
 				Read it now
 			</mj-button>
+
+		</mj-column>
+	</mj-section>
+
+	<mj-section padding="0">
+		<mj-column>
+			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
+		</mj-column>
+	</mj-section>
+
+	<mj-section background-color="#FFFFFF">
+		<mj-column>
+
+			<mj-text
+				font-size="14px"
+				font-weight="bold"
+				align="center"
+				color="#8e8e8e">
+				<span style="text-transform: uppercase;">A note from the editor</span>
+			</mj-text>
+
+			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+
+			<mj-text
+				font-size="14px"
+				font-weight="300"
+				color="#8e8e8e">
+				<div style="float:right;width:100px;height:100px;border-radius:50%;overflow:hidden;">
+					<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100px", :height => "100px", :style => "margin-top:-10px;"), issue_url(@issue) %>
+				</div>
+				<%= simple_format strip_tags(@issue.editors_letter) %>
+				<strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br />
+				<%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>
+			</mj-text>
 
 		</mj-column>
 	</mj-section>
