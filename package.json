@@ -1,0 +1,31 @@
+{
+  "name": "new-internationalist",
+  "version": "1.0.0",
+  "description": "New Internationalist digital edition",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "dependencies": {
+    "mjml": "2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sighmon/NI.git"
+  },
+  "keywords": [
+    "newint",
+    "magazine",
+    "new",
+    "internationalist",
+    "social",
+    "justice"
+  ],
+  "author": "Simon Loffler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sighmon/NI/issues"
+  },
+  "homepage": "https://github.com/sighmon/NI#readme"
+}
