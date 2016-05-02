@@ -13,6 +13,15 @@ See the live site at [digital.newint.com.au](https://digital.newint.com.au)
 * Buy a single issue.
 * Read it in HTML, or a specific app.
 
+### MJML email templates
+
+We use the https://mjml.io email markup framework to generate HTML email code via this [MJML Ruby Parser](https://github.com/angelodlfrtr/mjml-ruby).
+
+Install it locally to get it to render the .mjml template files:
+
+```$ npm install```
+
+
 ## iOS app
 
 The Apple Newsstand app for iPad, iPhone and iPod Touch GitHub project is available here: 
@@ -39,7 +48,7 @@ To upload images, simply drag the images into the article page. Images auto-form
 
 New Internationalist magazine digital edition.
 
-Copyright © 2015 New Internationalist Australia.
+Copyright © 2016 New Internationalist Australia.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -49,6 +58,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 ## Magazine content
 
-Copyright © 1973-2015 New Internationalist. Except where otherwise noted, content is licensed under Creative Commons. <http://creativecommons.org/licenses/by-nc-nd/3.0/>
+Copyright © 1973-2016 New Internationalist. Except where otherwise noted, content is licensed under Creative Commons. <http://creativecommons.org/licenses/by-nc-nd/3.0/>
 
 Except where otherwise noted, images are © the attributed photographer/illustrator or representative agency.

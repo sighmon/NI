@@ -419,6 +419,103 @@
 		</mj-column>
 	</mj-section>
 
+	<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+		<mj-column>
+			<mj-text
+				font-size="14px"
+				font-weight="bold"
+				align="center"
+				color="#8e8e8e">
+				<span style="text-transform: uppercase;">Mobile applications</span>
+			</mj-text>
+			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+		</mj-column>
+	</mj-section>
+
+	<mj-section background-color="#FFFFFF" padding="0">
+		<mj-column>
+			<!-- iOS -->
+			<mj-image
+				alt="Apple iOS application for iPhone, iPad and iPod Touch"
+				href="<%= page_url("ios") %>"
+				src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-ios.jpg">
+			</mj-image>
+			<mj-text
+				font-size="14px"
+				font-weight="300"
+				color="#8e8e8e">
+				If you have an Apple iPhone, iPad or iPod Touch you might like to try the <a href="<%= page_url("ios") %>" style="color:inherit;">New Internationalist magazine app</a> in the App Store.
+			</mj-text>
+		</mj-column>
+		<mj-column>
+			<!-- Android -->
+			<mj-image
+				alt="Google Play application for Android tablets and phones"
+				href="<%= page_url("android") %>"
+				src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-android.jpg">
+			</mj-image>
+			<mj-text
+				font-size="14px"
+				font-weight="300"
+				color="#8e8e8e">
+				If you have an Android tablet or phone we've also got you covered with the <a href="<%= page_url("android") %>" style="color:inherit;">New Internationalist magazine app</a> in the Google Play Store.
+			</mj-text>
+		</mj-column>
+	</mj-section>
+
+	<mj-section padding="0">
+		<mj-column>
+			<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+			<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+		</mj-column>
+	</mj-section>
+
+	<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+		<mj-column>
+			<mj-text
+				font-size="14px"
+				font-weight="bold"
+				align="center"
+				color="#8e8e8e">
+				<span style="text-transform: uppercase;">Fair Trade Shop</span>
+			</mj-text>
+			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+		</mj-column>
+	</mj-section>
+
+	<mj-section background-color="#FFFFFF" padding="0">
+		<mj-column>
+			<!-- Latest from the Fair Trade Shop -->
+			<mj-image
+				alt="Latest product in the Fair Trade Shop"
+				href="http://www.newint.com.au/shop"
+				src="http://www.newint.com.au/shop/img/3976-fullsize.jpg">
+			</mj-image>
+			<mj-text
+				font-size="18px"
+				font-weight="bold"
+				align="center"
+				color="#606b75">
+				<a href="http://www.newint.com.au/shop/fair-trade-jute-shopping-bag-black-3976.htm" style="color:inherit;">Jute Shopper
+			</mj-text>
+			<mj-text
+				font-size="14px"
+				font-weight="300"
+				color="#8e8e8e">
+				Stylish and durable, these jute hessian shopping bags have been made by women working with a fair trade project in Bangladesh.
+			</mj-text>
+		</mj-column>
+	</mj-section>
+
+	<mj-section padding="0">
+		<mj-column>
+			<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+			<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+		</mj-column>
+	</mj-section>
+
 	<mj-section background-color="#fad094">
 		<mj-column>
 			<!-- Footer left -->
@@ -455,7 +552,10 @@
 					padding-top="36px"
 					font-size="12px"
 					font-weight="300">
-					<strong>Find us</strong>:<br />
+					<strong>Don't forget our</strong>:<br />
+					Fair Trade Shop: <a href="http://www.newint.com.au/shop" style="color:inherit;">newint.com.au/shop</a><br />
+					Blog: <a href="http://www.newint.com.au/blog" style="color:inherit;">newint.com.au/blog</a><br /><br />
+					<strong>On social media</strong>:<br />
 					Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>" style="color:inherit;">@<%= ENV["TWITTER_NAME"] %></a><br />
 					Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>" style="color:inherit;">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a><br />
 					Google+: <a href="https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>" style="color:inherit;">+<%= ENV["GOOGLE_PLUS_NAME"] %></a><br />
