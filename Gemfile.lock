@@ -19,10 +19,10 @@ GIT
       rmagick (>= 2.13.1)
 
 GIT
-  remote: https://github.com/angelodlfrtr/mjml-ruby.git
-  revision: 450f20f94344f4736a1394c6b1e4e1142a219641
+  remote: https://github.com/sighmon/mjml-rails.git
+  revision: b29ff1baec6301711dd54313f46cc3358283e647
   specs:
-    mjml (0.1.0)
+    mjml-rails (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -665,7 +665,7 @@ DEPENDENCIES
   libv8
   memcachier
   meta-tags
-  mjml!
+  mjml-rails!
   newrelic_rpm
   paypal-recurring
   pg
