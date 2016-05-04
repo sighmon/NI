@@ -101,6 +101,7 @@ NI::Application.routes.draw do
 
   namespace :admin do
     root :to => "base#index"
+    get "email_signup" => "base#email_signup"
     get "users/update_csv" => "users#update_csv"
     get "users/download_csv" => "users#download_csv"
     resources :users do

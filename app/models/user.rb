@@ -51,7 +51,6 @@ class User < ActiveRecord::Base
 
   def send_welcome_mail
     if uk_user?
-      # TODO: Pete to provide text.
       if Rails.env.production?
         begin
           UserMailer.user_signup_confirmation_uk(self).deliver
