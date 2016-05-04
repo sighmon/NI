@@ -91,14 +91,24 @@
 				font-weight="300"
 				color="#8e8e8e">
 				Hi [salutation],<br /><br />
-				The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine is available now for you to read by <%= link_to "logging in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b>
+				Thanks very much for your interest in the New Internationalist. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "sign up", new_user_registration_url, style: 'color:inherit;' %> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 			</mj-text>
+
+		<% if not @issue.email_text.blank? %>
+			<mj-text
+				font-size="14px"
+				font-weight="300"
+				color="#8e8e8e"
+				padding-top="0">
+				<%= simple_format @issue.email_text %>
+			</mj-text>
+		<% end %>
 
 			<mj-button
 				align="left"
 				background-color="#ED4E59"
-				href="<%= issue_url(@issue) %>">
-				Read it now
+				href="<%= page_url('subscribe') %>">
+				Subscribe now
 			</mj-button>
 
 		</mj-column>
@@ -547,7 +557,7 @@
 				<mj-text
 					font-size="12px"
 					font-weight="300">
-					You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.
+					You're receiving this because you have previously been in contact with the New Internationalist.
 				</mj-text>
 				<mj-text
 					font-size="12px"
