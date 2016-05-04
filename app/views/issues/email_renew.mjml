@@ -48,8 +48,8 @@
 
 			<mj-button
 				background-color="#ED4E59"
-				href="<%= issue_article_url(@issue, @issue.keynote) %>">
-				Read the keynote article now
+				href="<%= page_url('subscribe') %>">
+				Renew your subscription
 			</mj-button>
 
 		</mj-column>
