@@ -49,7 +49,7 @@
 			<mj-button
 				background-color="#ED4E59"
 				href="<%= page_url('subscribe') %>">
-				Renew your subscription
+				Your subscription is now due for renewal
 			</mj-button>
 
 		</mj-column>
