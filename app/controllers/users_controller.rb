@@ -17,6 +17,28 @@ class UsersController < ApplicationController
                 @user = current_user
                 render json: user_with_expiry_and_purchases(@user)
             }
+            format.mjml {
+                @greeting = 'Hi'
+                if current_user and current_user.admin?
+                    @user = User.find(params[:id])
+                else
+                    @user = current_user
+                end
+                @issue = Issue.latest
+                @issues = Issue.where(published: true).last(8).reverse
+                render "user_mailer/user_signup_confirmation", :layout => false
+            }
+            format.text {
+                @greeting = 'Hi'
+                if current_user and current_user.admin?
+                    @user = User.find(params[:id])
+                else
+                    @user = current_user
+                end
+                @issue = Issue.latest
+                @issues = Issue.where(published: true).last(8).reverse
+                render "user_mailer/user_signup_confirmation", :layout => false
+            }
         end
     end
 

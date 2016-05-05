@@ -12,18 +12,6 @@ class Admin::BaseController < ApplicationController
 		end
 	end
 
-	def email_signup
-		@greeting = 'Hi'
-		@user = current_user
-		@issue = Issue.latest
-		@issues = Issue.where(published: true).last(8).reverse
-
-		respond_to do |format|
-      format.mjml { render "user_mailer/user_signup_confirmation", :layout => false }
-      format.text { render "user_mailer/user_signup_confirmation", :layout => false }
-    end
-	end
-
 	private
 
 	def verify_admin

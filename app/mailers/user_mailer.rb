@@ -15,12 +15,16 @@ class UserMailer < ActionMailer::Base
   def user_signup_confirmation(user)
     @user = user
     @greeting = "Hello"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
     mail(:to => user.email, :subject => "New Internationalist - Welcome!")
   end
 
   def user_signup_confirmation_uk(user)
     @user = user
     @greeting = "Hello"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
     mail(:to => user.email, :subject => "New Internationalist - Welcome!")
   end
 
