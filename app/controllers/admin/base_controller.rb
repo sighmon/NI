@@ -16,7 +16,7 @@ class Admin::BaseController < ApplicationController
 		@greeting = 'Hi'
 		@user = current_user
 		@issue = Issue.latest
-		@issues = Issue.last(8).reverse
+		@issues = Issue.where(published: true).last(8).reverse
 
 		respond_to do |format|
       format.mjml { render "user_mailer/user_signup_confirmation", :layout => false }
