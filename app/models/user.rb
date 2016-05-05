@@ -53,7 +53,8 @@ class User < ActiveRecord::Base
     if uk_user?
       if Rails.env.production?
         begin
-          UserMailer.user_signup_confirmation_uk(self).deliver
+          UserMailer.delay.user_signup_confirmation_uk(self)
+          ApplicationHelper.start_delayed_jobs
         rescue Exception
           logger.error "500 - Email server is down..."
         end
@@ -63,7 +64,8 @@ class User < ActiveRecord::Base
     else
       if Rails.env.production?
         begin
-          UserMailer.user_signup_confirmation(self).deliver
+          UserMailer.delay.user_signup_confirmation(self)
+          ApplicationHelper.start_delayed_jobs
         rescue Exception
           logger.error "Email server is down..."
         end

@@ -239,4 +239,16 @@ module ApplicationHelper
       link_to title, {:sort => column, :direction => direction}, {:class => css_class}
     end
 
+    def start_delayed_jobs
+        ApplicationHelper.start_delayed_jobs
+    end
+
+    def self.start_delayed_jobs
+        if Rails.env.production?
+            PlatformAPI.connect_oauth(ENV["HEROKU_OAUTH"]).dyno.create(ENV["HEROKU_OAUTH_APP_NAME"],{command: 'rake jobs:workoff'})
+        else
+            Delayed::Worker.new({:exit_on_complete => true}).start
+        end
+    end
+
 end
