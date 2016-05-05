@@ -7,7 +7,7 @@
 		</mj-column>
 		<mj-column>
 			<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-				No images? <webversion>Click here</webversion>
+				No images? <%= link_to "Click here", user_path(@user, format: 'mjml'), style: 'color:inherit;' %>
 			</mj-text>
 		</mj-column>
 	</mj-section>
@@ -210,13 +210,6 @@
 					<a href="http://www.newint.com.au" style="color:inherit;">www.newint.com.au</a><br />
 					Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au" style="color:inherit;"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a><br />
 					Phone: +61 8 8232 1563
-				</mj-text>
-				<mj-text
-					font-size="12px"
-					font-weight="300">
-					<forwardtoafriend>Forward to a friend</forwardtoafriend><br />
-					<preferences>Update your preferences</preferences><br />
-					<unsubscribe>Unsubscribe</unsubscribe>
 				</mj-text>
 		</mj-column>
 		<mj-column>
