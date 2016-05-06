@@ -47,11 +47,12 @@ class CategoriesController < ApplicationController
     @articles = Kaminari.paginate_array(Category.cached_category_articles(@category.id).reverse).page(params[:page]).per(Settings.category_pagination)
 
     # Set meta tags
-    @page_title = "Articles about #{@category.short_display_name}"
+    @page_title = "#{@category.short_display_name} articles"
     @page_description = "All New Internationalist articles about #{@category.short_display_name}, ordered by date."
     @category_image = @category.try(:latest_published_article).try(:first_image).try(:data).to_s
 
-    set_meta_tags :title => @page_title,
+    set_meta_tags :site => 'New Internationalist',
+                  :title => @page_title,
                   :description => @page_description,
                   :keywords => "#{@category.short_display_name}, new, internationalist, magazine, digital, edition",
                   :canonical => category_url(@category),
