@@ -145,7 +145,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: [username,fallback=oops]
+				If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: <%= @user.username %>
 			</mj-text>
 		</mj-column>
 	</mj-section>
