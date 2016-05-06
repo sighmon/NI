@@ -7,7 +7,7 @@
 		</mj-column>
 		<mj-column>
 			<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-				No images? <%= link_to "Click here", user_path(@user, format: 'mjml'), style: 'color:inherit;' %>
+				No images? <%= link_to "Click here", user_url(@user, format: 'mjml'), style: 'color:inherit;' %>
 			</mj-text>
 		</mj-column>
 	</mj-section>
