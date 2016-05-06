@@ -28,10 +28,14 @@ class Ability
     cannot :update_categories_colours, Category
 
     if !user.guest?
-        can :manage, Purchase
-        can :manage, Subscription
-        can :manage, Favourite
-        can :manage, GuestPass
+        can [:create, :new], Purchase
+        can :manage, Purchase, :id => user.purchase_ids
+        can [:create, :new], Subscription
+        can :manage, Subscription, :id => user.subscription_ids
+        can [:create, :new], Favourite
+        can :manage, Favourite, :id => user.favourite_ids
+        can [:create, :new], GuestPass
+        can :manage, GuestPass, :id => user.guest_pass_ids
         can :manage, User, :id => user.id
         cannot :manage, User do |user|
             not user.uk_id.nil?

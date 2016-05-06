@@ -35,6 +35,7 @@ NI::Application.routes.draw do
   resources :users, :only => [:show]
 
   resources :subscriptions do
+    get :show
     new do
       get :express
     end

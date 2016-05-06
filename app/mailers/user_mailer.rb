@@ -28,10 +28,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "New Internationalist - Welcome!")
   end
 
-  def subscription_confirmation(user)
-    @user = user
+  def subscription_confirmation(subscription)
+    @user = subscription.user
     @greeting = "Hi"
-    mail(:to => user.email, :subject => "New Internationalist Digital Subscription")
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    @subscription = subscription
+    mail(:to => subscription.user.email, :subject => "New Internationalist Digital Subscription")
   end
 
   def subscription_cancellation(user)

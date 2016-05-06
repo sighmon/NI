@@ -13,6 +13,25 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.mjml {
+        @greeting = 'Hi'
+        @user = current_user
+        @issue = Issue.latest
+        @issues = Issue.where(published: true).last(8).reverse
+        render "user_mailer/subscription_confirmation", :layout => false
+      }
+      format.text {
+        @greeting = 'Hi'
+        @user = current_user
+        @issue = Issue.latest
+        @issues = Issue.where(published: true).last(8).reverse
+        render "user_mailer/subscription_confirmation", :layout => false
+      }
+    end
+  end
+
   def express
 
     authorize! :update, Subscription
@@ -209,7 +228,8 @@ class SubscriptionsController < ApplicationController
       if payment_complete and @subscription.save
         # Send the user an email
         begin
-          UserMailer.subscription_confirmation(@subscription.user).deliver
+          UserMailer.delay.subscription_confirmation(@subscription)
+          ApplicationHelper.start_delayed_jobs
           if session[:express_institution]
             # institutional subscription, so send admin an email
             UserMailer.subscription_institution_tell_admin(@subscription.user).deliver

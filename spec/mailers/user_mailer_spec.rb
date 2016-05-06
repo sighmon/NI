@@ -4,7 +4,11 @@ describe UserMailer, :type => :mailer do
   describe "subscription_confirmation" do
     let(:subscription) { FactoryGirl.create(:subscription) }
     let(:user) { subscription.user }
-    let(:mail) { UserMailer.subscription_confirmation(user) }
+    let(:issue) { FactoryGirl.create(:published_issue) }
+    let(:mail) {
+      @issue = issue
+      UserMailer.subscription_confirmation(subscription)
+    }
 
     it "renders the headers" do
       expect(mail.subject).to eq("New Internationalist Digital Subscription")
