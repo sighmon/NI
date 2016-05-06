@@ -17,7 +17,7 @@
 				width="250"
 				alt="New Internationalist"
 				href="<%= root_url %>"
-				src="<%= asset_url("assets/new-internationalist@2x.png") %>">
+				src="<%= root_url + "assets/new-internationalist@2x.png" %>">
 			</mj-image>
 			<mj-image 
 				padding="0"
@@ -542,7 +542,7 @@
 					width="200px"
 					alt="New Internationalist"
 					href="<%= root_url %>"
-					src="<%= asset_url('assets/new-internationalist-footer@2x.png') %>">
+					src="<%= root_url + 'assets/new-internationalist-footer@2x.png' %>">
 				</mj-image>
 				<mj-text
 					font-size="12px"
