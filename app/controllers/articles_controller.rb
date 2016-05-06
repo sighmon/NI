@@ -25,6 +25,10 @@ class ArticlesController < ApplicationController
   def search
     @articles = Article.search(params, current_user.try(:admin?))
     @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
+    @page_title = "Search for an article"
+    if params[:query].present?
+      @page_title = "Search results for: " + params[:query]
+    end
 
     # if params[:query].present?
     #     @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
@@ -35,12 +39,13 @@ class ArticlesController < ApplicationController
     # @articles = Article.all
 
     # Set meta tags
-    set_meta_tags :title => "Search for an article",
+    set_meta_tags :site => 'New Internationalist',
+            :title => @page_title,
             :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
             :keywords => "new, internationalist, magazine, digital, edition, search",
             :canonical => search_url,
             :open_graph => {
-            :title => "Search for an article",
+            :title => @page_title,
             :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
             #:type  => :magazine,
             :url   => search_url,
@@ -255,7 +260,8 @@ class ArticlesController < ApplicationController
     first_image_for_meta_data = @article.first_image.try(:data).to_s
 
     # Set meta tags
-    set_meta_tags :title => @article.title,
+    set_meta_tags :site => 'New Internationalist',
+            :title => @article.title,
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),

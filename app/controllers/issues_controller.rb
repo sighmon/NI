@@ -250,7 +250,8 @@ class IssuesController < ApplicationController
     @page_title = @issue.title
     @page_description = "#{@issue.release.strftime("%B, %Y")} - #{ActionView::Base.full_sanitizer.sanitize(@issue.keynote.try(:teaser))}"
 
-    set_meta_tags :title => @page_title,
+    set_meta_tags :site => 'New Internationalist',
+                  :title => @page_title,
                   :description => @page_description,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
                   :canonical => issue_url(@issue),
