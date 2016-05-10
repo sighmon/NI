@@ -12,10 +12,43 @@ class Admin::BaseController < ApplicationController
 		end
 	end
 
+	def welcome_email
+		@greeting = 'Hi'
+		@issue = Issue.latest
+		@issues = Issue.where(published: true).last(8).reverse
+		@user = current_user
+
+		respond_to do |format|
+			format.mjml {
+				render "user_mailer/user_signup_confirmation", :layout => false
+			}
+			format.text {
+				render "user_mailer/user_signup_confirmation", :layout => false
+			}
+		end
+	end
+
+	def subscription_email
+		@greeting = 'Hi'
+		@issue = Issue.latest
+		@issues = Issue.where(published: true).last(8).reverse
+		@subscription = Subscription.first
+		@user = @subscription.user
+
+		respond_to do |format|
+			format.mjml {
+				render "user_mailer/subscription_confirmation", :layout => false
+			}
+			format.text {
+				render "user_mailer/subscription_confirmation", :layout => false
+			}
+		end
+	end
+
 	private
 
 	def verify_admin
-	  redirect_to root_url unless (current_user and current_user.admin?)
+		redirect_to root_url unless (current_user and current_user.admin?)
 	end
-  
+	
 end

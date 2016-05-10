@@ -7,7 +7,7 @@ Thank you for registering an account.
 Your username is: <%= @user.username %>
 Your user profile is: <%= user_url(@user, :protocol => "https") %>
 
-To read New Internationalist magazine articles on <%= link_to URI.parse(root_url).host, root_url, style: 'color:inherit;' %> you'll need to purchase a subscription:
+To read New Internationalist magazine articles on <%= URI.parse(root_url).host %> you'll need to purchase a subscription:
 <%= page_url('subscribe', :protocol => "https") %>
 
 If you come across any problems, simply hit 'reply' to this
