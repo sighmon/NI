@@ -15,7 +15,7 @@ Your next auto-debit will be on:
 <% else %>
 Your subscription is due for renewal:
 <% end %>
-<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
+<%= @user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") %>
 
 App for iPhone, iPad or iPod Touch:
 https://digital.newint.com.au/ios
