@@ -53,7 +53,7 @@
 				<% else %>
 				Your subscription is due for renewal:
 				<% end %><br />
-				<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
+				<%= @user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") %>
 			</mj-text>
 
 			<mj-button
