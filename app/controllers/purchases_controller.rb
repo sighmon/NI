@@ -8,6 +8,23 @@ class PurchasesController < ApplicationController
     redirect_to new_user_session_path, :alert => "You need to be logged in to read or purchase articles in this magazine."
   end
 
+  def show
+    @greeting = 'Hi'
+    @user = current_user
+    @issue = @purchase.issue
+    @issues = Issue.where(published: true).last(8).reverse
+    @template = "user_mailer/issue_purchase"
+
+    respond_to do |format|
+      format.mjml {
+        render @template, :layout => false
+      }
+      format.text {
+        render @template, :layout => false
+      }
+    end
+  end
+
   def express
     @issue = Issue.find(params[:issue_id])
     # Issue price moved to Settings.issue_price
@@ -70,7 +87,8 @@ class PurchasesController < ApplicationController
       if response.success? and @purchase.save
         # Email the user a confirmation
         begin
-          UserMailer.issue_purchase(@user, @issue).deliver
+          UserMailer.delay.issue_purchase(@purchase)
+          ApplicationHelper.start_delayed_jobs
         rescue Exception
           logger.error "500 - Email server is down..."
         end

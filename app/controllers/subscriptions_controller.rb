@@ -14,20 +14,23 @@ class SubscriptionsController < ApplicationController
   end
 
   def show
+    @greeting = 'Hi'
+    @user = current_user
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+
+    if params[:subscription_type] == "free"
+      @template = "user_mailer/free_subscription_confirmation"
+    else
+      @template = "user_mailer/subscription_confirmation"
+    end
+
     respond_to do |format|
       format.mjml {
-        @greeting = 'Hi'
-        @user = current_user
-        @issue = Issue.latest
-        @issues = Issue.where(published: true).last(8).reverse
-        render "user_mailer/subscription_confirmation", :layout => false
+        render @template, :layout => false
       }
       format.text {
-        @greeting = 'Hi'
-        @user = current_user
-        @issue = Issue.latest
-        @issues = Issue.where(published: true).last(8).reverse
-        render "user_mailer/subscription_confirmation", :layout => false
+        render @template, :layout => false
       }
     end
   end

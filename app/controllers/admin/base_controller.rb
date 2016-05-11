@@ -35,12 +35,36 @@ class Admin::BaseController < ApplicationController
 		@subscription = Subscription.first
 		@user = @subscription.user
 
+		if params[:subscription_type] == "free"
+			@template = "user_mailer/free_subscription_confirmation"
+		else
+			@template = "user_mailer/subscription_confirmation"
+		end
+
 		respond_to do |format|
 			format.mjml {
-				render "user_mailer/subscription_confirmation", :layout => false
+				render @template, :layout => false
 			}
 			format.text {
-				render "user_mailer/subscription_confirmation", :layout => false
+				render @template, :layout => false
+			}
+		end
+	end
+
+	def magazine_purchase_email
+		@greeting = 'Hi'
+		@issues = Issue.where(published: true).last(8).reverse
+		@purchase = Purchase.first
+		@issue = @purchase.issue
+		@user = @purchase.user
+		@template = "user_mailer/issue_purchase"
+
+		respond_to do |format|
+			format.mjml {
+				render @template, :layout => false
+			}
+			format.text {
+				render @template, :layout => false
 			}
 		end
 	end

@@ -55,11 +55,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "recurring_payment_outstanding_payment - New Internationalist Digital Subscription")
   end
 
-  def issue_purchase(user, issue)
-    @user = user
-    @issue = issue
+  def issue_purchase(purchase)
+    @user = purchase.user
+    @issue = purchase.issue
     @greeting = "Hi"
-    mail(:to => user.email, :subject => "New Internationalist Purchase - #{issue.number} - #{issue.title}")
+    @issues = Issue.where(published: true).last(8).reverse
+    @purchase = purchase
+    mail(:to => purchase.user.email, :subject => "New Internationalist Purchase - #{purchase.issue.number} - #{purchase.issue.title}")
   end
 
   def free_subscription_confirmation(user)

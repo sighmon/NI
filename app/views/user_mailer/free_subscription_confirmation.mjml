@@ -7,7 +7,7 @@
 		</mj-column>
 		<mj-column>
 			<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-				No images? <%= link_to "Click here", subscription_url(@subscription, format: 'mjml'), style: 'color:inherit;' %>
+				No images? <%= link_to "Click here", subscription_url(@subscription, format: 'mjml', subscription_type: 'free'), style: 'color:inherit;' %>
 			</mj-text>
 		</mj-column>
 	</mj-section>
@@ -21,7 +21,7 @@
 			</mj-image>
 			<mj-image 
 				padding="0"
-				alt="Thanks for your subscription!"
+				alt="Congratulations on your free subscription!"
 				href="<%= user_url(@user) %>"
 				src="<%= @issue.keynote.try(:first_image).try(:data_url) %>">
 			</mj-image>
@@ -36,7 +36,7 @@
 				font-family="helvetica"
 				font-weight="bold"
 				align="center">
-				<%= link_to "Thanks for your subscription!", user_url(@user), style: 'color:inherit;' %>
+				<%= link_to "Free subscription!", user_url(@user), style: 'color:inherit;' %>
 			</mj-text>
 
 			<mj-text
@@ -44,7 +44,7 @@
 				font-weight="300"
 				color="#8e8e8e">
 				<%= @greeting %> <%= @user.username %>,<br /><br />
-				Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.<br /><br />
+				Lucky you! You've been given a complimentary 1 year subscription to New Internationalist magazine.<br /><br />
 			
 				Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
 
@@ -69,7 +69,6 @@
 
 				If you come across any problems, simply hit 'reply' to this email and we'll reply as soon as we can.<br /><br />
 
-				Thanks again for subscribing.<br />
 				Cheers, the <b>NI</b> team.
 			</mj-text>
 
