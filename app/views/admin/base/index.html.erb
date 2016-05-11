@@ -20,6 +20,7 @@
 <h4>Preview system emails</h4>
 
 <p><%= link_to "User signup - html", admin_welcome_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "User signup - text", admin_welcome_email_path(format: 'text'), :class => 'btn btn-default' %></p>
+<p><%= link_to "Institutional account - html", admin_welcome_email_path(format: 'mjml', user_type: 'institution'), :class => 'btn btn-default' %> <%= link_to "Institutional account - text", admin_welcome_email_path(format: 'text', user_type: 'institution'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Magazine purchase - html", admin_magazine_purchase_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "Magazine purchase - text", admin_magazine_purchase_email_path(format: 'text'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Subscription purchase - html", admin_subscription_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "Subscription purchase - text", admin_subscription_email_path(format: 'text'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Free subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'free'), :class => 'btn btn-default' %> <%= link_to "Free subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'free'), :class => 'btn btn-default' %></p>

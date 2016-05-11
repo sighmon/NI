@@ -10,6 +10,13 @@ class UsersController < ApplicationController
     skip_before_filter :verify_authenticity_token, :only => [:show]
 
     def show
+
+        if @user.institution? or params[:user_type] == "institution"
+            @template = "user_mailer/make_institutional_confirmation"
+        else
+            @template = "user_mailer/user_signup_confirmation"
+        end
+
         respond_to do |format|
             format.html
             format.json {
@@ -26,7 +33,7 @@ class UsersController < ApplicationController
                 end
                 @issue = Issue.latest
                 @issues = Issue.where(published: true).last(8).reverse
-                render "user_mailer/user_signup_confirmation", :layout => false
+                render @template, :layout => false
             }
             format.text {
                 @greeting = 'Hi'
@@ -37,7 +44,7 @@ class UsersController < ApplicationController
                 end
                 @issue = Issue.latest
                 @issues = Issue.where(published: true).last(8).reverse
-                render "user_mailer/user_signup_confirmation", :layout => false
+                render @template, :layout => false
             }
         end
     end

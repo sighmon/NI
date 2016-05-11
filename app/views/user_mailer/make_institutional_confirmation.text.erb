@@ -1,5 +1,5 @@
-New Internationalist Magazine - digital subscription
-====================================================
+New Internationalist Magazine - Instutition Account
+===================================================
 
 <%= @greeting %> <%= @user.username %>,
 You've now been made an Institutional user.
@@ -9,9 +9,7 @@ accounts which will share your subscription.
 Feel free to create a couple of them, perhaps one for
 staff and one for students.
 
-To do this, click the green button in the right hand
-corner of the screen that displays your username, and 
-then on your user-page click the button that says 
+To do this, follow the link below and then on your user-page click the button that says 
 'Create a new student account':
 <%= user_url(@user, :protocol => "https") %>
 
@@ -40,4 +38,4 @@ anyone, as they can then edit your details.
 
 Cheers, the NI team.
 
-<%= render :partial => "footer" %>
+<%= render :partial => "user_mailer/footer" %>

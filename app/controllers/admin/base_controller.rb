@@ -18,12 +18,18 @@ class Admin::BaseController < ApplicationController
 		@issues = Issue.where(published: true).last(8).reverse
 		@user = current_user
 
+		if params[:user_type] == "institution"
+			@template = "user_mailer/make_institutional_confirmation"
+		else
+			@template = "user_mailer/user_signup_confirmation"
+		end
+
 		respond_to do |format|
 			format.mjml {
-				render "user_mailer/user_signup_confirmation", :layout => false
+				render @template, :layout => false
 			}
 			format.text {
-				render "user_mailer/user_signup_confirmation", :layout => false
+				render @template, :layout => false
 			}
 		end
 	end
