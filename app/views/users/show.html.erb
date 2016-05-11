@@ -125,7 +125,7 @@
 						<%= render :partial => "issue_purchase", :locals => { :issue => purchase.issue } %>
 						<div class="issue-purchase-date">
 							<p>
-								Purchased on: <%= purchase.created_at.try(:strftime,"%d %B, %Y") %><br />
+								Purchased on: <%= purchase.created_at.try(:strftime,"%d %b, %Y") %><br />
 								Price: $<%= purchase.price_paid ? cents_to_dollars(purchase.price_paid) : "Free" %>
 							</p>
 						</div>
@@ -133,11 +133,7 @@
 				<% end %>
 			<% else %>
 				<div class="col-sm-12">
-					<% if current_user == @user %>
-						<p>You haven't shared any articles yet.</p>
-					<% else %>
-						<p>They haven't shared any articles yet.</p>
-					<% end %>
+					<p>You haven't purchased any individual magazines yet.</p>
 				</div>
 			<% end %>
 		</div>
