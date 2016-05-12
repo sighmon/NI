@@ -8,7 +8,7 @@ class Admin::UsersController < Admin::BaseController
 	helper_method :sort_column, :sort_direction
 
 	def index
-		@users = User.sorted_by(params[:sort], params[:direction])
+		@users = Kaminari.paginate_array(User.sorted_by(params[:sort], params[:direction])).page(params[:page]).per(Settings.users_pagination)
 		@uk_users = @users.select{|uk| uk.uk_user?}
 		@subscribers_total = @users.select{|s| s.subscriber?}
 		@institutions = @users.select{|i| i.institution}

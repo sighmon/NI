@@ -13,6 +13,8 @@
 <p>UK users: <b><%= pluralize @uk_users.try(:size), "user" %></b></p>
 <p>They have created <b><%= pluralize @guest_passes.try(:size), "guest pass" %></b></p>
 
+<%= paginate @users %>
+
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -38,6 +40,8 @@
 	<% end %>
 	</tbody>
 </table>
+
+<%= paginate @users %>
 
 <div class="form-actions">
 	<%= link_to "New User", new_admin_user_path, :class => 'btn btn-success' %>
