@@ -7,14 +7,15 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Set the subscription and issue price
-Settings.subscription_price = 100
-Settings.issue_price = 200
+Settings.subscription_price = 600
+Settings.issue_price = 750
 
 # Pagination settings
-Settings.issue_pagination = 12
-Settings.article_pagination = 10
+Settings.issue_pagination = 18
+Settings.article_pagination = 20
 Settings.guest_pass_key_length = 16
 Settings.category_pagination = 24
+Settings.users_pagination = 100
 
 # TODO: setup the admin user
 

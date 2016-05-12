@@ -9,10 +9,10 @@ class Admin::UsersController < Admin::BaseController
 
 	def index
 		@users = Kaminari.paginate_array(User.sorted_by(params[:sort], params[:direction])).page(params[:page]).per(Settings.users_pagination)
-		@uk_users = @users.select{|uk| uk.uk_user?}
-		@subscribers_total = @users.select{|s| s.subscriber?}
-		@institutions = @users.select{|i| i.institution}
-		@students = @users.select{|s| s.parent}
+		@uk_users = User.select{|uk| uk.uk_user?}
+		@subscribers_total = User.select{|s| s.subscriber?}
+		@institutions = User.select{|i| i.institution}
+		@students = User.select{|s| s.parent}
 		@subscribers = @subscribers_total - @students - @institutions
 		@guest_passes = GuestPass.all
 
