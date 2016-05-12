@@ -43,6 +43,10 @@ class Admin::BaseController < ApplicationController
 
 		if params[:subscription_type] == "free"
 			@template = "user_mailer/free_subscription_confirmation"
+		elsif params[:subscription_type] == "media"
+			@template = "user_mailer/media_subscription_confirmation"
+		elsif params[:subscription_type] == "cancelled"
+      @template = "user_mailer/subscription_cancellation"
 		else
 			@template = "user_mailer/subscription_confirmation"
 		end
