@@ -23,7 +23,7 @@
 				padding="0"
 				alt="Thanks for making a user account!"
 				href="<%= user_url(@user) %>"
-				src="<%= @issue.keynote.first_image.data_url %>">
+				src="<%= @issue.keynote.try(:first_image).try(:data_url) %>">
 			</mj-image>
 		</mj-column>
 	</mj-section>
