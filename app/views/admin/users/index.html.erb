@@ -9,7 +9,7 @@
 	</div>
 <% end %>
 
-<p>There are currently <b><%= pluralize @users.try(:size), "user" %></b>, <b><%= pluralize @subscribers.try(:size), "subscriber" %></b>, <b><%= pluralize @institutions.try(:size), "institution" %></b> and <b><%= pluralize @students.try(:size), "student" %></b></p>
+<p>There are currently <b><%= pluralize User.try(:count), "user" %></b>, <b><%= pluralize @subscribers.try(:size), "subscriber" %></b>, <b><%= pluralize @institutions.try(:size), "institution" %></b> and <b><%= pluralize @students.try(:size), "student" %></b></p>
 <p>UK users: <b><%= pluralize @uk_users.try(:size), "user" %></b></p>
 <p>They have created <b><%= pluralize @guest_passes.try(:size), "guest pass" %></b></p>
 
