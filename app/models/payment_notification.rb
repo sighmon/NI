@@ -76,7 +76,8 @@ class PaymentNotification < ActiveRecord::Base
 					logger.info "Recurring subscriptions expired successfully."
 					# send a special email saying cancelled through paypal.
 					begin
-            UserMailer.subscription_cancelled_via_paypal(@user).deliver
+						UserMailer.delay.subscription_cancelled_via_paypal(@user.subscriptions.last)
+						ApplicationHelper.start_delayed_jobs
           rescue Exception
             logger.error "500 - Email server is down..."
           end

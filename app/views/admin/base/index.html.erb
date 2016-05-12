@@ -26,6 +26,7 @@
 <p><%= link_to "Free subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'free'), :class => 'btn btn-default' %> <%= link_to "Free subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'free'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Media subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'media'), :class => 'btn btn-default' %> <%= link_to "Media subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'media'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-default' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-default' %></p>
+<p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-default' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-default' %></p>
 
 <div class="form-actions">

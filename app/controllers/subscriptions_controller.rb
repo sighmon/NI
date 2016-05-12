@@ -25,6 +25,8 @@ class SubscriptionsController < ApplicationController
       @template = "user_mailer/media_subscription_confirmation"
     elsif params[:subscription_type] == "cancelled"
       @template = "user_mailer/subscription_cancellation"
+    elsif params[:subscription_type] == "cancelled_paypal"
+      @template = "user_mailer/subscription_cancelled_via_paypal"
     else
       @template = "user_mailer/subscription_confirmation"
     end

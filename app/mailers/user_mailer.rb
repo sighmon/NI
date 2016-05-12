@@ -46,10 +46,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
-  def subscription_cancelled_via_paypal(user)
-    @user = user
+  def subscription_cancelled_via_paypal(subscription)
+    @user = subscription.user
     @greeting = "Hi"
-    mail(:to => user.email, :subject => "Cancelled New Internationalist Digital Subscription")
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    @subscription = subscription
+    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
   def subscription_recurring_payment_outstanding_payment(user)
