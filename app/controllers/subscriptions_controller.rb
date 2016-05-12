@@ -292,7 +292,8 @@ class SubscriptionsController < ApplicationController
     if cancel_complete and @subscription.save
       # Send the user an email to confirm the cancellation.
       begin
-        UserMailer.subscription_cancellation(@user).deliver
+        UserMailer.delay.subscription_cancellation(@subscription)
+        ApplicationHelper.start_delayed_jobs
       rescue Exception
         logger.error "500 - Email server is down..."
       end

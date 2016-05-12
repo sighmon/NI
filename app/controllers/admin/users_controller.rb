@@ -94,7 +94,8 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			if @free_subscription.save
 			    # Send the user an email
-				UserMailer.free_subscription_confirmation(User.find(params[:user_id])).deliver
+				UserMailer.delay.free_subscription_confirmation(User.find(params[:user_id]))
+				ApplicationHelper.start_delayed_jobs
 				format.html { redirect_to admin_user_path(@user), notice: 'Free subscription was successfully created.' }
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
@@ -131,7 +132,8 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			if @free_subscription.save
 			    # Send the user an email
-				UserMailer.media_subscription_confirmation(User.find(params[:user_id])).deliver
+				UserMailer.delay.media_subscription_confirmation(User.find(params[:user_id]))
+				ApplicationHelper.start_delayed_jobs
 				format.html { redirect_to admin_user_path(@user), notice: 'Free media 10yr subscription was successfully created.' }
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
@@ -148,7 +150,8 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			if @user.save and @user.institution
 			    # Send the institutional user an email
-				UserMailer.make_institutional_confirmation(User.find(params[:user_id])).deliver
+		    UserMailer.delay.make_institutional_confirmation(User.find(params[:user_id]))
+        ApplicationHelper.start_delayed_jobs
 				format.html { redirect_to admin_user_path(@user), notice: "#{@user.username} is now an institutional user." }
 				format.json { render json: @user, status: :created, location: @user }
 			else

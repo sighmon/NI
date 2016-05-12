@@ -37,10 +37,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => subscription.user.email, :subject => "New Internationalist Digital Subscription")
   end
 
-  def subscription_cancellation(user)
-    @user = user
+  def subscription_cancellation(subscription)
+    @user = subscription.user
     @greeting = "Hi"
-    mail(:to => user.email, :subject => "Cancelled New Internationalist Digital Subscription")
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    @subscription = subscription
+    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription")
   end
 
   def subscription_cancelled_via_paypal(user)
@@ -67,6 +70,9 @@ class UserMailer < ActionMailer::Base
   def free_subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    @subscription = subscription
     mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription")
   end
 
@@ -80,12 +86,17 @@ class UserMailer < ActionMailer::Base
   def media_subscription_confirmation(user)
     @user = user
     @greeting = "Hi"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    @subscription = user.subscriptions.last
     mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription - Media")
   end
 
   def make_institutional_confirmation(user)
     @user = user
     @greeting = "Hi"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
     mail(:to => user.email, :subject => "New Internationalist Digital Subscription - Institution confirmation")
   end
 
