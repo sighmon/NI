@@ -18,15 +18,16 @@
 <hr />
 
 <h4>Preview system emails</h4>
+<p>The blue templates are automatically sent by our system.</p><br />
 
-<p><%= link_to "User signup - html", admin_welcome_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "User signup - text", admin_welcome_email_path(format: 'text'), :class => 'btn btn-default' %></p>
+<p><%= link_to "User signup - html", admin_welcome_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "User signup - text", admin_welcome_email_path(format: 'text'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Institutional account - html", admin_welcome_email_path(format: 'mjml', user_type: 'institution'), :class => 'btn btn-default' %> <%= link_to "Institutional account - text", admin_welcome_email_path(format: 'text', user_type: 'institution'), :class => 'btn btn-default' %></p>
-<p><%= link_to "Magazine purchase - html", admin_magazine_purchase_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "Magazine purchase - text", admin_magazine_purchase_email_path(format: 'text'), :class => 'btn btn-default' %></p>
-<p><%= link_to "Subscription purchase - html", admin_subscription_email_path(format: 'mjml'), :class => 'btn btn-default' %> <%= link_to "Subscription purchase - text", admin_subscription_email_path(format: 'text'), :class => 'btn btn-default' %></p>
+<p><%= link_to "Magazine purchase - html", admin_magazine_purchase_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "Magazine purchase - text", admin_magazine_purchase_email_path(format: 'text'), :class => 'btn btn-info' %></p>
+<p><%= link_to "Subscription purchase - html", admin_subscription_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "Subscription purchase - text", admin_subscription_email_path(format: 'text'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Free subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'free'), :class => 'btn btn-default' %> <%= link_to "Free subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'free'), :class => 'btn btn-default' %></p>
 <p><%= link_to "Media subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'media'), :class => 'btn btn-default' %> <%= link_to "Media subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'media'), :class => 'btn btn-default' %></p>
-<p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-default' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-default' %></p>
-<p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-default' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-default' %></p>
+<p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-info' %></p>
+<p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-default' %></p>
 
 <div class="form-actions">
