@@ -72,7 +72,7 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    @subscription = subscription
+    @subscription = user.subscriptions.last
     mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription")
   end
 
