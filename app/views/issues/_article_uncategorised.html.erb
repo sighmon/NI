@@ -1,0 +1,8 @@
+        <div class="uncategorised">
+          <% if can? :read, article %>
+            <!-- Can read this article, so link to it -->
+            <h5><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h5>
+            <p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %> <%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %> <%= link_to 'Destroy', issue_article_path(@issue,article), data: { confirm: 'Are you sure?'}, method: :delete, class: 'btn btn-xs btn-danger' %></p>
+            <hr />
+          <% end %>
+        </div>

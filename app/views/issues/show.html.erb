@@ -74,7 +74,7 @@
       <h3>Articles not displayed.</h3>
       <% @issue.uncategorised.each do |article| %>
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :object => article %>
+          <%= render :partial => "article_uncategorised", :locals => { :article => article } %>
         </div>
       <% end %>
     </div>
