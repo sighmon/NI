@@ -13,13 +13,12 @@ class Admin::UsersController < Admin::BaseController
 		else
 			users_per_page = Settings.users_pagination
 		end
-		all_users = User.sorted_by(params[:sort], params[:direction])
-		@users = Kaminari.paginate_array(all_users).page(params[:page]).per(users_per_page)
-		@total_users = all_users.count
-		@uk_users = all_users.select{|uk| uk.uk_user?}
-		@subscribers_total = all_users.select{|s| s.subscriber?}
-		@institutions = all_users.select{|i| i.institution}
-		@students = all_users.select{|s| s.parent}
+		@users = Kaminari.paginate_array(User.sorted_by(params[:sort], params[:direction])).page(params[:page]).per(users_per_page)
+		@total_users = User.count
+		@uk_users = User.select{|uk| uk.uk_user?}
+		@subscribers_total = User.select{|s| s.subscriber?}
+		@institutions = User.select{|i| i.institution}
+		@students = User.select{|s| s.parent}
 		@subscribers = @subscribers_total - @students - @institutions
 		@guest_passes = GuestPass.all
 
