@@ -1,6 +1,7 @@
 class Issue < ActiveRecord::Base
   
-  has_many :articles, :dependent => :destroy
+  has_many :articles, -> { where(unpublished: [false, nil]) }, :dependent => :destroy
+  has_many :all_articles, :class_name => "Article"
   has_many :purchases
   has_many :users, :through => :purchases
   mount_uploader :cover, CoverUploader
@@ -135,7 +136,7 @@ class Issue < ActiveRecord::Base
   end
 
   def uncategorised
-    articles - categorised_articles - [keynote]
+    all_articles - categorised_articles - [keynote]
   end
 
   def ordered_articles
@@ -193,7 +194,14 @@ class Issue < ActiveRecord::Base
     yield client
   end
   
-  def import_articles_from_bricolage(special_type)
+  def import_articles_from_bricolage(options = {})
+
+    # Handling the case where this is called handing in nil
+    if not options.nil?
+      special_type = options[:special_type]
+    else
+      options = {}
+    end
 
     Issue.bricolage_wrapper do |client|
       # print response.http.cookies
@@ -237,11 +245,11 @@ class Issue < ActiveRecord::Base
    
       # filter story_ids with articles in the database
       story_ids.select!{|id|Article.find_by_story_id(id.to_s).nil?}
-      self.import_stories_from_bricolage(story_ids)
+      self.import_stories_from_bricolage(story_ids, options)
     end
   end
 
-  def create_article_from_element(element)
+  def create_article_from_element(element, options)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     story_id = element[:id].to_i
     # TODO: Allow for posibility that issue is nil.
@@ -251,7 +259,8 @@ class Issue < ActiveRecord::Base
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
       :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
       :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
-      :source => element.to_xml
+      :source => element.to_xml,
+      :unpublished => options[:unpublished]
     )
     category_list = element.xpath(".//assets:category",'assets' => assets)
     category_list.collect do |cat|
@@ -260,7 +269,7 @@ class Issue < ActiveRecord::Base
     return a
   end
 
-  def import_stories_from_bricolage(story_ids)
+  def import_stories_from_bricolage(story_ids, options)
 
     Issue.bricolage_wrapper do |client|
       story_id_block = story_ids.collect{|id| '<story_id xsi:type="xsd:int">%s</story_id>' % id}.join("\n")
@@ -290,7 +299,7 @@ class Issue < ActiveRecord::Base
       stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
       #return stories
       stories.collect do |element|
-        a = self.create_article_from_element(element)
+        a = self.create_article_from_element(element, options)
       end
       stories
     end

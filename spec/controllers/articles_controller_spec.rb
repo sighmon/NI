@@ -10,19 +10,33 @@ describe ArticlesController, :type => :controller do
       sign_in @user
     end
 
-    describe "GET body" do
+    context "given an article" do
 
-      context "given an article" do
+      let(:article) { FactoryGirl.create(:article) }
 
-        let(:article) { FactoryGirl.create(:article) }
+      let(:issue) { article.issue }
 
-        let(:issue) { article.issue }
+      it "can view the body" do
+        get :body, {article_id: article.id, issue_id: article.issue.id}
+        expect(response.status).to eq(200)
+      end 
 
-        it "can view the body" do
-          get :body, {article_id: article.id, issue_id: article.issue.id}
-          expect(response.status).to eq(200)
-        end 
+    end
 
+    context "given an unpublished article" do
+
+      let(:article) { FactoryGirl.create(:article, unpublished: true) }
+
+      let(:issue) { article.issue }
+
+      it "can't view the body" do
+        get :body, {article_id: article.id, issue_id: article.issue.id}
+        expect(response.status).to eq(403)
+      end
+
+      it "can't show the article" do
+        get :show, {id: article.id, issue_id: article.issue.id}
+        expect(response.status).to eq(302)
       end
 
     end

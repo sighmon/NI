@@ -39,8 +39,8 @@ describe SubscriptionsController, :type => :controller do
       context "with valid session" do
 
         before(:each) do
-          # session[:express_purchase_subscription_duration] = 12
-          # session[:express_purchase_price] = 6000
+          session[:express_purchase_subscription_duration] = 12
+          session[:express_purchase_price] = 6000
           # session[:express_token] = "xxx"
           # session[:express_payer_id] = user.id
           # session[:express_email] = user.email
@@ -51,15 +51,9 @@ describe SubscriptionsController, :type => :controller do
         context "and stubbed success" do
 
           it "should create a subscription" do
-            # TODO: Work out how to get this test to pass.
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(true)
             expect {
-              post :create, {
-                :user_id => user.id, 
-                :valid_from => DateTime.now, 
-                :duration => 12, 
-                :purchase_date => DateTime.now
-              }
+              post :create, {:user_id => user.id}
             }.to change(Subscription, :count).by(1)
           end
         end

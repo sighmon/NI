@@ -56,10 +56,6 @@ class Ability
         # cannot :read, Article, :published => false
     end
 
-    if user.admin?
-        can :manage, :all
-    end
-
     # Checks to see if a user has a parent, to stop institutional students from managing anything.
     if user.parent
         cannot :update, :all
@@ -71,6 +67,12 @@ class Ability
     # Institution ability
     if user.institution
         can :create, User
+    end
+
+    cannot :read, Article, :unpublished => true
+
+    if user.admin?
+        can :manage, :all
     end
 
     #

@@ -23,9 +23,9 @@ class IssuesController < ApplicationController
   end
 
   def import_extra
-    article_type = params[:article_type]
+    options = { special_type: params[:article_type], unpublished: true }
     @issue = Issue.find(params[:issue_id])
-    @issue.import_articles_from_bricolage(article_type)
+    @issue.import_articles_from_bricolage(options)
     redirect_to issue_path(@issue)
   end
 

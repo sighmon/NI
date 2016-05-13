@@ -772,7 +772,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id, categories_attributes: [:name, :_destroy, :id])
+    params.require(:article).permit(:author, :body, :publication, :teaser, :title, :trialarticle, :keynote, :unpublished, :source, :featured_image, :featured_image_caption, :featured_image_cache, :remove_featured_image, :hide_author_name, :story_id, categories_attributes: [:name, :_destroy, :id])
   end
 
 end
