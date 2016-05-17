@@ -69,7 +69,7 @@ class Ability
         can :create, User
     end
 
-    cannot :read, Article, :unpublished => true
+    cannot :read, Article, :published => false
 
     if user.admin?
         can :manage, :all
