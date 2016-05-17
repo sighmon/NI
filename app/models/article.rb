@@ -109,7 +109,7 @@ class Article < ActiveRecord::Base
 
   def published
     # issue.published and not unpublished
-    (not self.unpublished) and self.issue.published
+    (not unpublished) and issue.published
   end
 
   # Guest pass checking
