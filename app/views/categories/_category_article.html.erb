@@ -6,7 +6,7 @@
 					  <% elsif article.first_image %>
 					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
 					  <% else %>
-					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
 					  <% end %>
 					  <div class="home-keynote-text">
 					  	<h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
@@ -24,7 +24,7 @@
 					  <% elsif article.first_image %>
 					    <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.first_image.caption)}", :title => "#{strip_tags(article.first_image.caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
 					  <% else %>
-					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
 					  <% end %>
 					  <div class="home-keynote-text">
 					  	<h3><%= link_to highlight(article.title, @query_array), new_issue_purchase_path(article.issue) %></h3>

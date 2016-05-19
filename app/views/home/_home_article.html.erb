@@ -19,8 +19,8 @@
 					    <meta itemprop="width" content="<%= article.first_image.width %>">
 					    <meta itemprop="height" content="<%= article.first_image.height %>">
 					  <% else %>
-					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
-					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.png').to_s %>">
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
 					    <meta itemprop="width" content="1890">
 					    <meta itemprop="height" content="1063">
 					  <% end %>
@@ -49,8 +49,8 @@
 					    <meta itemprop="width" content="<%= article.first_image.width %>">
 					    <meta itemprop="height" content="<%= article.first_image.height %>">
 					  <% else %>
-					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
-					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.png').to_s %>">
+					  	<%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+					  	<meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
 					    <meta itemprop="width" content="1890">
 					    <meta itemprop="height" content="1063">
 					  <% end %>
