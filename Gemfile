@@ -120,7 +120,10 @@ gem 'google-api-client', '0.8.6'
 
 # mjml responsive email framework https://mjml.io
 # https://github.com/angelodlfrtr/mjml-ruby
-gem 'mjml', git: 'https://github.com/angelodlfrtr/mjml-ruby.git'
+# gem 'mjml', git: 'https://github.com/angelodlfrtr/mjml-ruby.git'
+
+gem 'mjml-rails', git: 'https://github.com/sighmon/mjml-rails.git', require: 'mjml'
+# gem 'mjml-rails', path: '../mjml-rails/', require: 'mjml'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'

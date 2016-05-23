@@ -17,7 +17,10 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hello"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist - Welcome!")
+    mail(:to => user.email, :subject => "New Internationalist - Welcome!") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def user_signup_confirmation_uk(user)
@@ -25,7 +28,10 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hello"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist - Welcome!")
+    mail(:to => user.email, :subject => "New Internationalist - Welcome!") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def subscription_confirmation(subscription)
@@ -34,7 +40,10 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "New Internationalist Digital Subscription")
+    mail(:to => subscription.user.email, :subject => "New Internationalist Digital Subscription") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def subscription_cancellation(subscription)
@@ -43,7 +52,10 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription")
+    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def subscription_cancelled_via_paypal(subscription)
@@ -52,7 +64,10 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription")
+    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Digital Subscription") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def subscription_recurring_payment_outstanding_payment(user)
@@ -67,7 +82,10 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi"
     @issues = Issue.where(published: true).last(8).reverse
     @purchase = purchase
-    mail(:to => purchase.user.email, :subject => "New Internationalist Purchase - #{purchase.issue.number} - #{purchase.issue.title}")
+    mail(:to => purchase.user.email, :subject => "New Internationalist Purchase - #{purchase.issue.number} - #{purchase.issue.title}") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def free_subscription_confirmation(user)
@@ -76,7 +94,10 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = user.subscriptions.last
-    mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription")
+    mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def crowdfunding_subscription_confirmation(user,number_of_months)
@@ -92,7 +113,10 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = user.subscriptions.last
-    mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription - Media")
+    mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription - Media") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def make_institutional_confirmation(user)
@@ -100,7 +124,10 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist Digital Subscription - Institution confirmation")
+    mail(:to => user.email, :subject => "New Internationalist Digital Subscription - Institution confirmation") do |format|
+      format.text
+      format.mjml
+    end
   end
 
   def uk_server_error(error)

@@ -43,7 +43,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= @issue.keynote.teaser %>
+				<%= simple_format @issue.keynote.teaser %>
 			</mj-text>
 
 			<mj-button
@@ -541,67 +541,6 @@
 		</mj-column>
 	</mj-section>
 
-	<mj-section background-color="#fad094">
-		<mj-column>
-			<!-- Footer left -->
-				<mj-image
-					align="left"
-					padding-top="0"
-					padding-bottom="0"
-					width="200px"
-					alt="New Internationalist"
-					href="<%= root_url %>"
-					src="<%= root_url + 'assets/new-internationalist-footer@2x.png' %>">
-				</mj-image>
-				<mj-text
-					font-size="12px"
-					font-weight="300">
-					New Internationalist Publications Pty Ltd<br />
-					15 Austin Street, Adelaide 5000, Australia.<br />
-					ABN 11 005 523 124<br />
-					<a href="http://www.newint.com.au" style="color:inherit;">www.newint.com.au</a><br />
-					Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au" style="color:inherit;"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a><br />
-					Phone: +61 8 8232 1563
-				</mj-text>
-				<mj-text
-					font-size="12px"
-					font-weight="300">
-					You're receiving this because you have previously been in contact with the New Internationalist.
-				</mj-text>
-				<mj-text
-					font-size="12px"
-					font-weight="300">
-					<forwardtoafriend>Forward to a friend</forwardtoafriend><br />
-					<preferences>Update your preferences</preferences><br />
-					<unsubscribe>Unsubscribe</unsubscribe>
-				</mj-text>
-		</mj-column>
-		<mj-column>
-			<!-- Footer right -->
-				<mj-text
-					padding-top="36px"
-					font-size="12px"
-					font-weight="300">
-					<strong>Don't forget our</strong>:<br />
-					Fair Trade Shop: <a href="http://www.newint.com.au/shop" style="color:inherit;">newint.com.au/shop</a><br />
-					Blog: <a href="http://www.newint.com.au/blog" style="color:inherit;">newint.com.au/blog</a><br /><br />
-					<strong>On social media</strong>:<br />
-					Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>" style="color:inherit;">@<%= ENV["TWITTER_NAME"] %></a><br />
-					Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>" style="color:inherit;">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a><br />
-					Google+: <a href="https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>" style="color:inherit;">+<%= ENV["GOOGLE_PLUS_NAME"] %></a><br />
-					Instagram: <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>" style="color:inherit;">@<%= ENV["INSTAGRAM_NAME"] %></a><br />
-		      Youtube: <a href="https://www.youtube.com/user/<%= ENV["YOUTUBE_NAME"] %>/videos" style="color:inherit;"><%= ENV["YOUTUBE_NAME"] %></a><br />
-					Apple: <a href="<%= ENV["ITUNES_APP_LINK"] %>" style="color:inherit;">App Store</a><br />
-					Android: <a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>" style="color:inherit;">Play Store</a>
-				</mj-text>
-		</mj-column>
-	</mj-section>
-
-	<mj-section padding="0">
-		<mj-column>
-			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
-		</mj-column>
-	</mj-section>
+	<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you have previously had a subscription with the New Internationalist.", :unsubscribe_links => true } %>
 
 </mj-body>
