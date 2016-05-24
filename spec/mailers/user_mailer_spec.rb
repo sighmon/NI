@@ -21,6 +21,7 @@ describe UserMailer, :type => :mailer do
       expect(mail.body.encoded).to match(user.username)
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
+      expect(mail.body.encoded).to match("<body")
     end
 
     context "is a UK user" do
