@@ -186,7 +186,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= article.teaser %>
+				<%= simple_format article.teaser %>
 			</mj-text>
 			<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
 		</mj-column>
@@ -242,7 +242,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= article.teaser %>
+				<%= simple_format article.teaser %>
 			</mj-text>
 			<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
 		</mj-column>
@@ -298,7 +298,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= article.teaser %>
+				<%= simple_format article.teaser %>
 			</mj-text>
 			<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
 		</mj-column>
@@ -354,7 +354,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= article.teaser %>
+				<%= simple_format article.teaser %>
 			</mj-text>
 			<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
 		</mj-column>
@@ -403,7 +403,7 @@
 				font-size="14px"
 				font-weight="300"
 				color="#8e8e8e">
-				<%= article.teaser %>
+				<%= simple_format article.teaser %>
 			</mj-text>
 			<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
 		</mj-column>
