@@ -47,14 +47,14 @@ class Institution::UsersController < Institution::BaseController
   # POST /institution/users
   # POST /institution/users.json
   def create
-    @user = current_user.children.create(user_params.merge :email => "design+parent_id#{current_user.id}_child_count#{current_user.children.count + 1}@newint.com.au")
+    @user = current_user.children.create(user_params.merge :email => "design+parent_id_#{current_user.id}_child_username_#{params["user"]["username"]}@newint.com.au")
 
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_path(current_user), notice: 'User was successfully created.' }
         format.json { render json: [:institution, @user], status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", notice: "Sorry, user couldn't be created. Contact us for help." }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
