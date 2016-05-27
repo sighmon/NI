@@ -1,194 +1,198 @@
-<mj-body background-color="#E6E6E6">
-	<mj-section padding="0">
-		<mj-column>
-			<mj-text font-size="11px" color="#606b75" font-weight="300">
-				<%= link_to "Your New Internationalist subscription", user_url(@user), style: 'color:inherit;' %>
-			</mj-text>
-		</mj-column>
-		<mj-column>
-			<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-				No images? <%= link_to "Click here", subscription_url(@subscription, format: 'mjml'), style: 'color:inherit;' %>
-			</mj-text>
-		</mj-column>
-	</mj-section>
-	<mj-section padding="0">
-		<mj-column>
-			<mj-image 
-				width="250"
-				alt="New Internationalist"
-				href="<%= root_url %>"
-				src="<%= root_url + "assets/new-internationalist@2x.png" %>">
-			</mj-image>
-			<mj-image 
-				padding="0"
-				alt="Thanks for your subscription!"
-				href="<%= user_url(@user) %>"
-				src="<%= @issue.keynote.try(:first_image).try(:data_url) %>">
-			</mj-image>
-		</mj-column>
-	</mj-section>
-	<mj-section background-color="#FFFFFF">
-		<mj-column>
+<mjml>
+	<mj-body>
+		<mj-container background-color="#E6E6E6">
+			<mj-section padding="0">
+				<mj-column>
+					<mj-text font-size="11px" color="#606b75" font-weight="300">
+						<%= link_to "Your New Internationalist subscription", user_url(@user), style: 'color:inherit;' %>
+					</mj-text>
+				</mj-column>
+				<mj-column>
+					<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
+						No images? <%= link_to "Click here", subscription_url(@subscription, format: 'mjml'), style: 'color:inherit;' %>
+					</mj-text>
+				</mj-column>
+			</mj-section>
+			<mj-section padding="0">
+				<mj-column>
+					<mj-image 
+						width="250"
+						alt="New Internationalist"
+						href="<%= root_url %>"
+						src="<%= root_url + "assets/new-internationalist@2x.png" %>">
+					</mj-image>
+					<mj-image 
+						padding="0"
+						alt="Thanks for your subscription!"
+						href="<%= user_url(@user) %>"
+						src="<%= @issue.keynote.try(:first_image).try(:data_url) %>">
+					</mj-image>
+				</mj-column>
+			</mj-section>
+			<mj-section background-color="#FFFFFF">
+				<mj-column>
 
-			<mj-text
-				font-size="22px" 
-				color="#ED4E59" 
-				font-family="helvetica"
-				font-weight="bold"
-				align="center">
-				<%= link_to "Thanks for your subscription!", user_url(@user), style: 'color:inherit;' %>
-			</mj-text>
+					<mj-text
+						font-size="22px" 
+						color="#ED4E59" 
+						font-family="helvetica"
+						font-weight="bold"
+						align="center">
+						<%= link_to "Thanks for your subscription!", user_url(@user), style: 'color:inherit;' %>
+					</mj-text>
 
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
-				<%= @greeting %> <%= @user.username %>,<br /><br />
-				Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.<br /><br />
-			
-				Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						<%= @greeting %> <%= @user.username %>,<br /><br />
+						Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.<br /><br />
+					
+						Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
 
-				<% if @user.subscriber? and @user.is_recurring? %>
-				Your next auto-debit will be on:
-				<% else %>
-				Your subscription is due for renewal:
-				<% end %><br />
-				<%= @user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") %>
-			</mj-text>
+						<% if @user.subscriber? and @user.is_recurring? %>
+						Your next auto-debit will be on:
+						<% else %>
+						Your subscription is due for renewal:
+						<% end %><br />
+						<%= @user.last_subscription.try(:expiry_date).try(:strftime, "%e %B, %Y") %>
+					</mj-text>
 
-			<mj-button
-				background-color="#ED4E59"
-				href="<%= issues_url(:protocol => "https") %>">
-				Start reading now!
-			</mj-button>
+					<mj-button
+						background-color="#ED4E59"
+						href="<%= issues_url(:protocol => "https") %>">
+						Start reading now!
+					</mj-button>
 
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
 
-				If you come across any problems, simply hit 'reply' to this email and we'll reply as soon as we can.<br /><br />
+						If you come across any problems, simply hit 'reply' to this email and we'll reply as soon as we can.<br /><br />
 
-				Thanks again for subscribing.<br />
-				Cheers, the <b>NI</b> team.
-			</mj-text>
+						Thanks again for subscribing.<br />
+						Cheers, the <b>NI</b> team.
+					</mj-text>
 
-		</mj-column>
-	</mj-section>
+				</mj-column>
+			</mj-section>
 
-	<mj-section padding="0">
-		<mj-column>
-			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
-		</mj-column>
-	</mj-section>
+			<mj-section padding="0">
+				<mj-column>
+					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+					<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
+				</mj-column>
+			</mj-section>
 
-	<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
-		<mj-column>
-			<mj-text
-				font-size="14px"
-				font-weight="bold"
-				align="center"
-				color="#8e8e8e">
-				<span style="text-transform: uppercase;">Mobile applications</span>
-			</mj-text>
-			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
-				If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: <%= @user.username %>
-			</mj-text>
-		</mj-column>
-	</mj-section>
+			<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+				<mj-column>
+					<mj-text
+						font-size="14px"
+						font-weight="bold"
+						align="center"
+						color="#8e8e8e">
+						<span style="text-transform: uppercase;">Mobile applications</span>
+					</mj-text>
+					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: <%= @user.username %>
+					</mj-text>
+				</mj-column>
+			</mj-section>
 
-	<mj-section background-color="#FFFFFF" padding="0">
-		<mj-column>
-			<!-- iOS -->
-			<mj-image
-				alt="Apple iOS application for iPhone, iPad and iPod Touch"
-				href="<%= page_url("ios") %>"
-				src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-ios.jpg">
-			</mj-image>
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
-				Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
-			</mj-text>
-		</mj-column>
-		<mj-column>
-			<!-- Android -->
-			<mj-image
-				alt="Google Play application for Android tablets and phones"
-				href="<%= page_url("android") %>"
-				src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-android.jpg">
-			</mj-image>
-			<mj-text
-				font-size="14px"
-				font-weight="300"
-				color="#8e8e8e">
-				Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
-			</mj-text>
-		</mj-column>
-	</mj-section>
+			<mj-section background-color="#FFFFFF" padding="0">
+				<mj-column>
+					<!-- iOS -->
+					<mj-image
+						alt="Apple iOS application for iPhone, iPad and iPod Touch"
+						href="<%= page_url("ios") %>"
+						src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-ios.jpg">
+					</mj-image>
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
+					</mj-text>
+				</mj-column>
+				<mj-column>
+					<!-- Android -->
+					<mj-image
+						alt="Google Play application for Android tablets and phones"
+						href="<%= page_url("android") %>"
+						src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-android.jpg">
+					</mj-image>
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
+					</mj-text>
+				</mj-column>
+			</mj-section>
 
-	<mj-section padding="0">
-		<mj-column>
-			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
-		</mj-column>
-	</mj-section>
+			<mj-section padding="0">
+				<mj-column>
+					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+					<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
+				</mj-column>
+			</mj-section>
 
-	<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
-		<mj-column>
-			<mj-text
-				font-size="14px"
-				font-weight="bold"
-				align="center"
-				color="#8e8e8e">
-				<span style="text-transform: uppercase;">Recent magazines</span>
-			</mj-text>
-			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
-		</mj-column>
-	</mj-section>
+			<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+				<mj-column>
+					<mj-text
+						font-size="14px"
+						font-weight="bold"
+						align="center"
+						color="#8e8e8e">
+						<span style="text-transform: uppercase;">Recent magazines</span>
+					</mj-text>
+					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+				</mj-column>
+			</mj-section>
 
-	<mj-section background-color="#FFFFFF" padding="0 15px">
-		<!-- Latest magazines -->
-	<% @issues.each_with_index do |issue,index| %>
-		<% if index % 4 == 0 %>
-	</mj-section>
-	<mj-section background-color="#FFFFFF" padding="0 15px">
-		<% end %>
-		<mj-column>
-			<mj-image
-				alt="NI <%= issue.number %> - <%= issue.title %>"
-				href="<%= issue_url(issue) %>"
-				src="<%= issue.cover_url(:home2x) %>"
-				padding="15px">
-			</mj-image>
-		</mj-column>
-	<% end %>
-	</mj-section>
+			<mj-section background-color="#FFFFFF" padding="0 15px">
+				<!-- Latest magazines -->
+			<% @issues.each_with_index do |issue,index| %>
+				<% if index % 4 == 0 %>
+			</mj-section>
+			<mj-section background-color="#FFFFFF" padding="0 15px">
+				<% end %>
+				<mj-column>
+					<mj-image
+						alt="NI <%= issue.number %> - <%= issue.title %>"
+						href="<%= issue_url(issue) %>"
+						src="<%= issue.cover_url(:home2x) %>"
+						padding="15px">
+					</mj-image>
+				</mj-column>
+			<% end %>
+			</mj-section>
 
-	<mj-section background-color="#FFFFFF" padding-top="0">
-	    <mj-column>
-	    	<mj-button
-				background-color="#ED4E59"
-				href="<%= issues_url %>">
-				See our entire magazine archive
-			</mj-button>
-    </mj-column>
-	</mj-section>
+			<mj-section background-color="#FFFFFF" padding-top="0">
+			    <mj-column>
+			    	<mj-button
+						background-color="#ED4E59"
+						href="<%= issues_url %>">
+						See our entire magazine archive
+					</mj-button>
+		    </mj-column>
+			</mj-section>
 
-	<mj-section padding="0">
-		<mj-column>
-			<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
-			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-			<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
-		</mj-column>
-	</mj-section>
+			<mj-section padding="0">
+				<mj-column>
+					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+				</mj-column>
+			</mj-section>
 
-	<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+			<%= render :partial => 'issues/email_footer', :formats => [:html] %>
 
-</mj-body>
+		</mj-container>
+	</mj-body>
+</mjml>

@@ -20,9 +20,9 @@ GIT
 
 GIT
   remote: https://github.com/sighmon/mjml-rails.git
-  revision: 07df6ed026472864dff1bda126805aa135078732
+  revision: 547dc9422c15b175b04655d832bedb3a427395c6
   specs:
-    mjml-rails (1.0.0)
+    mjml-rails (2.1.1)
 
 GEM
   remote: https://rubygems.org/
