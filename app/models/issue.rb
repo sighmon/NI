@@ -199,6 +199,8 @@ class Issue < ActiveRecord::Base
     # Handling the case where this is called handing in nil
     if not options.nil?
       special_type = options[:special_type]
+      # custom uri format: "%/blog/2016/05/%"
+      custom_uri = options[:custom_uri]
     else
       options = {}
     end
@@ -206,7 +208,9 @@ class Issue < ActiveRecord::Base
     Issue.bricolage_wrapper do |client|
       # print response.http.cookies
       # Create primary_uri to search for based on Issue.release date
-      if special_type and not special_type.blank?
+      if custom_uri and not custom_uri.blank?
+        primary_uri = custom_uri
+      elsif special_type and not special_type.blank?
         primary_uri = "%%/#{special_type}/%s/%%" % release.strftime("%Y/%m")
       else
         primary_uri = "%%/%s/%%" % release.strftime("%Y/%m/%d")
