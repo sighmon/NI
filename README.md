@@ -15,11 +15,13 @@ See the live site at [digital.newint.com.au](https://digital.newint.com.au)
 
 ### MJML email templates
 
-We use the https://mjml.io email markup framework to generate HTML email code via this [MJML Ruby Parser](https://github.com/angelodlfrtr/mjml-ruby).
+We use the https://mjml.io email markup framework to generate HTML email code via this [MJML-Rails gem](https://github.com/sighmon/mjml-rails).
 
 Install it locally to get it to render the .mjml template files:
 
-```$ npm install```
+```$ npm install -g mjml```
+
+* Note: you might have to specify a version number to align with the gem i.e. ```$ npm install -g mjml@2.1.1```
 
 
 ## iOS app
