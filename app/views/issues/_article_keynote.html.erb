@@ -62,10 +62,10 @@
 
           <% if article.first_image %>
             <div class="new-image-caption">
-              <p><%= article.first_image.caption %></p>
+              <p><%= simple_format article.first_image.caption %></p>
             </div>
             <div class="new-image-credit">
-              <p><%= article.first_image.credit %></p>
+              <p><%= simple_format article.first_image.credit %></p>
             </div>
           <% end %>
           </div> <!-- END col-sm-8 -->
