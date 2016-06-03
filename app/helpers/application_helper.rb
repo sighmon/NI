@@ -251,4 +251,36 @@ module ApplicationHelper
         end
     end
 
+    # RPush push notifications
+
+    def self.rpush_register_ios_app
+        app = Rpush::Apns::App.new
+        if Rails.env.production?
+            app.name = ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"]
+            app.certificate = ENV["APPLE_PRODUCTION_PEM"]
+            app.environment = "production" # APNs environment.
+            app.password = ENV["APPLE_PRODUCTION_PEM_PASSSWORD"]
+        else
+            app.name = ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"]
+            app.certificate = ENV["APPLE_DEVELOPMENT_PEM"]
+            app.environment = "sandbox" # APNs environment.
+            app.password = ENV["APPLE_DEVELOPMENT_PEM_PASSSWORD"]
+        end
+        app.connections = 1
+        app.save!
+    end
+
+    def self.rpush_create_ios_push_notification(token, alert_text, data)
+        n = Rpush::Apns::Notification.new
+        if Rails.env.production?
+            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"])
+        else
+            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"])
+        end
+        n.device_token = token # 64-character hex string
+        n.alert = alert_text
+        n.data = data || {}
+        n.save!
+    end
+
 end

@@ -125,6 +125,9 @@ gem 'google-api-client', '0.8.6'
 gem 'mjml-rails', git: 'https://github.com/sighmon/mjml-rails.git', require: 'mjml'
 # gem 'mjml-rails', path: '../mjml-rails/', require: 'mjml'
 
+# RPush for push notifications migrating away from Parse
+gem 'rpush'
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 

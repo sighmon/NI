@@ -130,15 +130,29 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  def apple_pem_certificate()
+    @user = User.first
+    @greeting = "Hello"
+    @issue = Issue.latest
+    @issues = Issue.where(published: true).last(8).reverse
+    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "Apple PEM cert needs renewing") do |format|
+      format.mjml
+    end
+  end
+
   def uk_server_error(error)
     @error = error
-    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "digital.newint.com.au UK login SSL server error")
+    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "digital.newint.com.au UK login SSL server error") do |format|
+      format.text
+    end
   end
 
   def subscription_institution_tell_admin(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "Possible Institutional Order - New Internationalist Digital Subscription")
+    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "Possible Institutional Order - New Internationalist Digital Subscription") do |format|
+      format.text
+    end
   end
 
 end
