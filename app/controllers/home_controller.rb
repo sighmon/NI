@@ -19,14 +19,11 @@ class HomeController < ApplicationController
     @latest_issue = Issue.latest
 
     @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
+      latest_issue_categories = []
       @latest_issue.try(:articles).try(:each) do |article|
-        if not @latest_issue_categories
-          @latest_issue_categories = article.categories
-        else
-          @latest_issue_categories = @latest_issue_categories | article.categories
-        end
+        latest_issue_categories |= article.categories
       end
-      @latest_issue_categories.sort_by(&:short_display_name)
+      latest_issue_categories.sort_by(&:short_display_name)
     end
 
     @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first

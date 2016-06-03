@@ -21,7 +21,7 @@
 	<div class="col-sm-4">
 		<div class="home-keynote no-gradient">
 			<h6>This month's keynote article</h6>
-			<%= render :partial => "home_article_no_image", :locals => { :article => @latest_issue.keynote } unless @latest_issue.nil? %>
+			<%= render :partial => "home_article_no_image", :locals => { :article => @latest_issue.keynote } unless @latest_issue.keynote.nil? %>
 		</div>
 	</div>
 	<div class="col-sm-4 home-latest-issue">
