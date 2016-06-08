@@ -17,7 +17,7 @@
 			<mj-image
 				alt="Latest product in the Fair Trade Shop"
 				href="http://www.newint.com.au/shop"
-				src="https://www.newint.com.au/shop/img/3976-fullsize.jpg">
+				src="http://www.newint.com.au/shop/img/3976-fullsize.jpg">
 			</mj-image>
 			<mj-text
 				font-size="18px"
