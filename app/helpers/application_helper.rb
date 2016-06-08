@@ -310,10 +310,11 @@ module ApplicationHelper
             n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"])
         end
         n.registration_ids = tokens # Array of token strings
-        n.data = data # { message: "hi mom!" }
+        n.data = { message: data[:body] } # { message: "hi mom!" }
         n.priority = 'normal'        # Optional, can be either 'normal' or 'high'
         n.content_available = true # Optional
         # Optional notification payload. See the reference below for more keys you can use!
+        n.notification = data
         # n.notification = { body: 'great match!',
         #                    title: 'Portugal vs. Denmark',
         #                    icon: 'myicon'
