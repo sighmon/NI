@@ -271,8 +271,9 @@ module ApplicationHelper
         app.save!
     end
 
-    def self.rpush_create_ios_push_notification(token, alert_text, data)
+    def self.rpush_create_ios_push_notification(token, data)
         # Create an iOS push notification (doesn't send, just creates) one at a time
+        data[:sound] = "new-issue.caf"
         n = Rpush::Apns::Notification.new
         if Rails.env.production?
             n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"])
@@ -280,7 +281,8 @@ module ApplicationHelper
             n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"])
         end
         n.device_token = token # 64-character hex string
-        n.alert = alert_text
+        n.alert = data[:body]
+        n.content_available = true
         n.data = data || {}
         n.save!
     end
@@ -303,6 +305,9 @@ module ApplicationHelper
 
     def self.rpush_create_android_push_notification(tokens, data)
         # Create Android push notifications (takes an array of android device tokens)
+        # To get the NI icon, data = {icon: 'ni_notification'}
+        data[:icon] = 'ni_notification'
+
         n = Rpush::Gcm::Notification.new
         if Rails.env.production?
             n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_PRODUCTION_APP_NAME"])
@@ -310,11 +315,13 @@ module ApplicationHelper
             n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"])
         end
         n.registration_ids = tokens # Array of token strings
-        n.data = { message: data[:body] } # { message: "hi mom!" }
+        n.notification = { body: data[:body],
+                           icon: data[:icon]
+                         }
+        n.data = data # { message: "hi mom!" }
         n.priority = 'normal'        # Optional, can be either 'normal' or 'high'
         n.content_available = true # Optional
         # Optional notification payload. See the reference below for more keys you can use!
-        n.notification = data
         # n.notification = { body: 'great match!',
         #                    title: 'Portugal vs. Denmark',
         #                    icon: 'myicon'

@@ -163,7 +163,7 @@ class IssuesController < ApplicationController
   end
 
   def send_push_notification
-    # Send a parse push notification
+    # Send a push notification
     @issue = Issue.find(params[:issue_id])
     input_params = params["/issues/#{@issue.id}/send_push_notification"]
     @alert_text = input_params[:alert_text]
@@ -177,46 +177,60 @@ class IssuesController < ApplicationController
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
-    api_endpoint = ENV["PARSE_API_ENDPOINT"]
-    api_headers = {
-      "X-Parse-Application-Id" => ENV["PARSE_APPLICATION_ID"],
-      "X-Parse-REST-API-Key" => ENV["PARSE_REST_API_KEY"],
-      "Content-Type" => "application/json"
+    # data = {
+    #   "where" => {
+    #     "objectId" => @device_id #Just push to a single user
+    #     # "deviceType" => "ios" # Now sending to Android too!
+    #   },
+    #   "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
+    #   "data" => {
+    #     "body" => "#{@alert_text + @issue.push_notification_text}",
+    #     "badge" => "Increment",
+    #     "sound" => "new-issue.caf",
+    #     "name" => @issue.number.to_s,
+    #     "publication" => @issue.release.to_time.iso8601.to_s,
+    #     "railsID" => @issue.id.to_s
+    #   }
+    # }
+
+    data = {
+      body: "#{@alert_text + @issue.push_notification_text}",
+      badge: "Increment",
+      name: @issue.number.to_s,
+      publication: @issue.release.to_time.iso8601.to_s,
+      railsID: @issue.id.to_s,
+      title: "New Internationalist"
     }
-    api_body = {
-      "where" => {
-        "objectId" => @device_id #Just push to a single user
-        # "deviceType" => "ios" # Now sending to Android too!
-      },
-      "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
-      "data" => {
-        "alert" => "#{@alert_text + @issue.push_notification_text}",
-        "badge" => "Increment",
-        "sound" => "new-issue.caf",
-        "name" => @issue.number.to_s,
-        "publication" => @issue.release.to_time.iso8601.to_s,
-        "railsID" => @issue.id.to_s
-      }
-    }
 
-    # Remove "objectId" if no @device_id is present
-    api_body["where"].reject!{|k,v| v.empty?}
-    api_body = api_body.to_json
+    if @device_id.empty?
+      # TODO: Loop thorugh all Android tokens and setup one push with an array of tokens
+      android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
 
-    # logger.info "PARSE to post to api - body: #{api_body.to_s}"
-
-    begin
-      response = HTTParty.post(
-        api_endpoint,
-        headers: api_headers,
-        body: api_body
-      )
-    rescue => e
-      # Uh oh, Parse not available?
-      @httparty_error = e
+      # TODO: Loop through all iOS tokens and setup iOS messages
+      ios_response = true
+      # ios_response = ApplicationHelper.rpush_create_ios_push_notification(token, data)
+    else
+      # Test push!
+      if input_params[:test_device_android]
+        android_response = ApplicationHelper.rpush_create_android_push_notification([@device_id], data)
+        ios_response = true
+      else
+        android_response = true
+        ios_response = ApplicationHelper.rpush_create_ios_push_notification(@device_id, data)
+      end
     end
-    
-    if not @httparty_error and response and response.code == 200
+
+    if android_response and ios_response
+      if @scheduled_datetime > DateTime.now
+        # TODO: Schedule this for the future.
+      else
+        rpush_response = Rpush.push
+      end
+    end
+
+    # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin?
+
+    if android_response and ios_response and rpush_response and rpush_response.empty?
       # Success!
       # body = JSON.parse(response.body)
 
@@ -230,7 +244,7 @@ class IssuesController < ApplicationController
       end
     else
       # FAIL! server error.
-      redirect_to @issue, flash: { error: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}" }
+      redirect_to @issue, flash: { error: "Failed to push. Error: #{android_response} ... #{ios_response} ... #{rpush_response}" }
     end
   end
 
