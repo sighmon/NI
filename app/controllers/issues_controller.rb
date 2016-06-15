@@ -211,7 +211,7 @@ class IssuesController < ApplicationController
       # ios_response = ApplicationHelper.rpush_create_ios_push_notification(token, data)
     else
       # Test push!
-      if input_params[:test_device_android]
+      if input_params[:test_device_android] == "1"
         android_response = ApplicationHelper.rpush_create_android_push_notification([@device_id], data)
         ios_response = true
       else

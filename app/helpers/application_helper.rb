@@ -307,6 +307,7 @@ module ApplicationHelper
         # Create Android push notifications (takes an array of android device tokens)
         # To get the NI icon, data = {icon: 'ni_notification'}
         data[:icon] = 'ni_notification'
+        data[:sound] = 'content://settings/system/notification_sound'
 
         n = Rpush::Gcm::Notification.new
         if Rails.env.production?
@@ -319,7 +320,7 @@ module ApplicationHelper
                            icon: data[:icon]
                          }
         n.data = data # { message: "hi mom!" }
-        n.priority = 'normal'        # Optional, can be either 'normal' or 'high'
+        n.priority = 'high'        # Optional, can be either 'normal' or 'high'
         n.content_available = true # Optional
         # Optional notification payload. See the reference below for more keys you can use!
         # n.notification = { body: 'great match!',
