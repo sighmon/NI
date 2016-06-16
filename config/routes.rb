@@ -103,6 +103,7 @@ NI::Application.routes.draw do
   namespace :admin do
     root :to => "base#index"
     get "welcome_email" => "base#welcome_email"
+    get "reset_password_instructions_email" => "base#reset_password_instructions_email"
     get "subscription_email" => "base#subscription_email"
     get "magazine_purchase_email" => "base#magazine_purchase_email"
     get "users/update_csv" => "users#update_csv"

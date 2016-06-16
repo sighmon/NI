@@ -12,6 +12,21 @@ class Admin::BaseController < ApplicationController
 		end
 	end
 
+	def reset_password_instructions_email
+		@token = "fake_token"
+    @resource = current_user
+    @template = 'devise/mailer/reset_password_instructions'
+    
+    respond_to do |format|
+      format.mjml {
+				render @template, :layout => false
+			}
+			format.text {
+				render @template, :layout => false
+			}
+    end
+	end
+
 	def welcome_email
 		@greeting = 'Hi'
 		@issue = Issue.latest
