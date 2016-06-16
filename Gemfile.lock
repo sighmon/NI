@@ -95,7 +95,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    brakeman (3.3.1)
+    brakeman (3.3.2)
     bugherd (0.0.4)
       rails (>= 3.0)
     builder (3.2.2)
@@ -103,7 +103,7 @@ GEM
       bundler (~> 1.2)
       thor (~> 0.18)
     byebug (9.0.5)
-    cancancan (1.14.0)
+    cancancan (1.15.0)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -268,7 +268,7 @@ GEM
     fog-serverlove (0.1.2)
       fog-core
       fog-json
-    fog-softlayer (1.1.1)
+    fog-softlayer (1.1.2)
       fog-core
       fog-json
     fog-storm_on_demand (0.1.1)
@@ -283,7 +283,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (0.7.0)
+    fog-vsphere (0.8.0)
       fog-core
       rbvmomi (~> 1.8)
     fog-xenserver (0.2.3)
@@ -331,7 +331,7 @@ GEM
     gyoku (0.4.6)
       builder (>= 2.1.2)
     hashr (0.0.22)
-    heroics (0.0.16)
+    heroics (0.0.17)
       erubis (~> 2.0)
       excon
       moneta
@@ -349,7 +349,7 @@ GEM
     i18n (0.7.0)
     inflecto (0.0.2)
     ipaddress (0.8.3)
-    jquery-fileupload-rails (0.4.6)
+    jquery-fileupload-rails (0.4.7)
       actionpack (>= 3.1)
       railties (>= 3.1)
       sass (>= 3.2)
@@ -397,7 +397,7 @@ GEM
     mimemagic (0.3.1)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
-    mjml-rails (2.1.4.1)
+    mjml-rails (2.2.0)
     moneta (0.8.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
@@ -413,8 +413,8 @@ GEM
     paypal-recurring (1.1.0)
     pg (0.18.4)
     pkg-config (1.1.7)
-    platform-api (0.7.0)
-      heroics
+    platform-api (0.8.0)
+      heroics (~> 0.0.17)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -460,7 +460,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.16.0)
-    rake (11.1.2)
+    rake (11.2.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.8.8)
       ffi (>= 0.5.0)
