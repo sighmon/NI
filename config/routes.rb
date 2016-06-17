@@ -100,6 +100,9 @@ NI::Application.routes.draw do
   # get "payment_notifications/create"
   resource :payment_notifications, :only => [:create]
 
+  # PushRegistrations controller
+  resource :push_registrations, only: [:create]
+
   namespace :admin do
     root :to => "base#index"
     get "welcome_email" => "base#welcome_email"

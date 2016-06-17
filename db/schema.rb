@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603063137) do
+ActiveRecord::Schema.define(version: 20160617030311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,13 @@ ActiveRecord::Schema.define(version: 20160603063137) do
     t.string   "paypal_payer_id",   limit: 255
     t.string   "paypal_first_name", limit: 255
     t.string   "paypal_last_name",  limit: 255
+  end
+
+  create_table "push_registrations", force: :cascade do |t|
+    t.text     "token"
+    t.string   "device"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rpush_apps", force: :cascade do |t|
