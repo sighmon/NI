@@ -282,7 +282,7 @@ module ApplicationHelper
         end
         n.device_token = token # 64-character hex string
         n.alert = data[:body]
-        n.content_available = true
+        # n.content_available = true
         n.data = data || {}
         n.save!
     end
