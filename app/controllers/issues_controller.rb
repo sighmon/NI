@@ -169,29 +169,13 @@ class IssuesController < ApplicationController
     @alert_text = input_params[:alert_text]
     @device_id = input_params[:device_id]
 
-    if not Rails.env.production?
-      # If development environment, always push to dev device
-      @device_id = ENV["PARSE_DEV_DEVICE_ID"]
-    end
+    # if not Rails.env.production?
+    #   # If development environment, always push to dev device
+    #   @device_id = ENV["PARSE_DEV_DEVICE_ID"]
+    # end
 
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
-
-    # data = {
-    #   "where" => {
-    #     "objectId" => @device_id #Just push to a single user
-    #     # "deviceType" => "ios" # Now sending to Android too!
-    #   },
-    #   "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
-    #   "data" => {
-    #     "body" => "#{@alert_text + @issue.push_notification_text}",
-    #     "badge" => "Increment",
-    #     "sound" => "new-issue.caf",
-    #     "name" => @issue.number.to_s,
-    #     "publication" => @issue.release.to_time.iso8601.to_s,
-    #     "railsID" => @issue.id.to_s
-    #   }
-    # }
 
     data = {
       body: "#{@alert_text + @issue.push_notification_text}",
@@ -203,19 +187,48 @@ class IssuesController < ApplicationController
     }
 
     if @device_id.empty?
-      # TODO: Loop thorugh all Android tokens and setup one push with an array of tokens
-      android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+      # Loop thorugh all Android PushRegistration tokens and setup one push with an array of tokens
+      android_tokens = []
+      PushRegistration.where(device: 'android').each do |p|
+        android_tokens << p.token
+      end
+      if not android_tokens.empty?
+        # Setup push notifications for Android devices
+        logger.info "Creating #{android_tokens.count} Android push notifications."
+        android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        logger.info "Android push notifications response: #{android_response}"
+      else
+        logger.warn "WARNING: No Android push notifications created."
+      end
 
-      # TODO: Loop through all iOS tokens and setup iOS messages
-      ios_response = true
-      # ios_response = ApplicationHelper.rpush_create_ios_push_notification(token, data)
+      # Loop through all iOS PushRegistration tokens and setup iOS messages
+      ios_responses = []
+      PushRegistration.where(device: 'ios').each do |p|
+        ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+      end
+      if not ios_responses.empty?
+        logger.info "Creating #{ios_responses} iOS push notifications."
+        # Check that all iOS responses were OK
+        ios_response = false
+        ios_responses.each do |r|
+          if r
+            ios_response = true
+          else
+            logger.info "ERROR iOS push notification response: #{r}"
+            ios_response = false
+          end
+        end
+      else
+        logger.warn "WARNING: No iOS push notifications created."
+      end
+
     else
       # Test push!
       if input_params[:test_device_android] == "1"
         android_response = ApplicationHelper.rpush_create_android_push_notification([@device_id], data)
-        ios_response = true
+        ios_response = true # Fake out a true response
       else
-        android_response = true
+        android_response = true # Fake out a true response
         ios_response = ApplicationHelper.rpush_create_ios_push_notification(@device_id, data)
       end
     end
@@ -230,12 +243,16 @@ class IssuesController < ApplicationController
 
     # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin?
 
+    # Check if the push worked and finish
+    # byebug
     if android_response and ios_response and rpush_response and rpush_response.empty?
       # Success!
       # body = JSON.parse(response.body)
 
       # Mark the scheduled to send date, unless a single device push was sent.
-      @issue.notification_sent = @scheduled_datetime unless not @device_id.blank?
+      if @device_id.blank? and Rails.env.production?
+        @issue.notification_sent = @scheduled_datetime
+      end
       
       if @issue.save
         redirect_to @issue, notice: "Push sent!"

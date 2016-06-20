@@ -4,7 +4,7 @@ class PushRegistrationsController < ApplicationController
 
   def create
     # byebug
-    PushRegistration.create!(token: params[:token], device: params[:device])
+    PushRegistration.find_or_create_by(token: params[:token], device: params[:device]).touch
     render nothing: true
   end
 
