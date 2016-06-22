@@ -1,4 +1,4 @@
-class Admin::GuestPassesController < ApplicationController
+class Admin::PushRegistrationsController < ApplicationController
 
   # Cancan authorisation
   load_and_authorize_resource
@@ -9,8 +9,8 @@ class Admin::GuestPassesController < ApplicationController
     else
       per_page = Settings.users_pagination
     end
-    @guest_passes = Kaminari.paginate_array(GuestPass.order(:use_count).reverse_order.all).page(params[:page]).per(per_page)
-  	# @guest_passes = GuestPass.order(:use_count).all.reverse
+    # @push_registrations = PushRegistration.order(:updated_at).reverse_order.all
+    @push_registrations = Kaminari.paginate_array(PushRegistration.order(:updated_at).reverse_order.all).page(params[:page]).per(per_page)
   end
 
   # Cancan not working? so we use verify_admin

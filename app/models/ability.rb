@@ -26,6 +26,7 @@ class Ability
     can :read, Page
     can :read, Category
     cannot :update_categories_colours, Category
+    cannot :manage, PushRegistration
 
     if !user.guest?
         can [:create, :new], Purchase

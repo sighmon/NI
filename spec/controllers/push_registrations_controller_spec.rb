@@ -22,4 +22,37 @@ RSpec.describe PushRegistrationsController, type: :controller do
 
   end
 
+  describe "DELETE #destroy" do
+
+    let(:push_registration) { FactoryGirl.create(:push_registration) }
+
+    context "as a user" do
+
+      it "can't delete a push registration" do
+        expect{
+          delete :destroy, id: push_registration.id
+        }.to change(PushRegistration, :count).by(0)
+      end
+
+    end
+
+    context "as an admin" do
+
+      let(:user) { FactoryGirl.create(:admin_user) }
+
+      before(:each) do
+        sign_in user
+      end
+
+      it "can delete a push registration" do
+        # TODO: Fix this test!
+        expect{
+          delete :destroy, id: push_registration.id
+        }.to change(PushRegistration, :count).by(-1)
+      end
+
+    end
+
+  end
+
 end

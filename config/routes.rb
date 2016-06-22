@@ -101,7 +101,7 @@ NI::Application.routes.draw do
   resource :payment_notifications, :only => [:create]
 
   # PushRegistrations controller
-  resource :push_registrations, only: [:create]
+  resource :push_registrations, only: [:create, :destroy]
 
   namespace :admin do
     root :to => "base#index"
@@ -122,6 +122,7 @@ NI::Application.routes.draw do
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
     resources :guest_passes, :only => [:index]
+    resources :push_registrations, :only => [:index]
   end
 
   namespace :institution do
