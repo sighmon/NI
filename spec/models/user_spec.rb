@@ -56,8 +56,28 @@ describe User, :type => :model do
       expect(user.subscriber?).to be_falsey
     end
 
+    it "should not be able to manage an issue" do
+      issue = FactoryGirl.create(:issue)
+      expect(ability).not_to be_able_to(:manage, issue)
+    end
+
+    it "should be able to read an issue" do
+      issue = FactoryGirl.create(:issue, :published => true)
+      expect(ability).to be_able_to(:read, issue)
+    end
+
     it "should not be able to read an article" do
       article = FactoryGirl.create(:article)
+      expect(ability).not_to be_able_to(:read, article)
+    end
+
+    it "should not be able to manage an article" do
+      article = FactoryGirl.create(:article)
+      expect(ability).not_to be_able_to(:manage, article)
+    end
+
+    it "should not be able to read an unpublished article" do
+      article = FactoryGirl.create(:article, :unpublished => true)
       expect(ability).not_to be_able_to(:read, article)
     end
 
@@ -70,6 +90,16 @@ describe User, :type => :model do
       article = FactoryGirl.create(:article)
       article.issue.trialissue = true
       expect(ability).to be_able_to(:read, article)
+    end
+
+    it "should not be able to manage a push registration" do
+      push_registration = FactoryGirl.create(:push_registration)
+      expect(ability).not_to be_able_to(:manage, push_registration)
+    end
+
+    it "should not be able to manage a payment notifications" do
+      payment_notification = FactoryGirl.create(:payment_notification)
+      expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 
     context "without a parent" do
@@ -150,8 +180,30 @@ describe User, :type => :model do
     let(:subscription) { FactoryGirl.create(:subscription) }
     let(:user) { subscription.user }
 
+    let(:ability) { Ability.new(user) }
+
     it "has a valid subscription" do
       expect(user.subscriber?).to be_truthy
+    end
+
+    it "should be able to read an article" do
+      article = FactoryGirl.create(:article)
+      expect(ability).to be_able_to(:read, article)
+    end
+
+    it "should not be able to manage an article" do
+      article = FactoryGirl.create(:article)
+      expect(ability).not_to be_able_to(:manage, article)
+    end
+
+    it "should not be able to manage a push registration" do
+      push_registration = FactoryGirl.create(:push_registration)
+      expect(ability).not_to be_able_to(:manage, push_registration)
+    end
+
+    it "should not be able to manage a payment notifications" do
+      payment_notification = FactoryGirl.create(:payment_notification)
+      expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 
     it "receives a partial refund" do
