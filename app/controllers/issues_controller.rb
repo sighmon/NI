@@ -237,11 +237,14 @@ class IssuesController < ApplicationController
       if @scheduled_datetime > DateTime.now
         # TODO: Schedule this for the future.
       else
+        # TOFIX: Maybe have the actual sending in the admin panel???
         rpush_response = Rpush.push
       end
     end
 
-    # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin?
+    # TODO: Create a controller for viewing the Rpush notifications.
+
+    # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin? 
 
     # Check if the push worked and finish
     # byebug

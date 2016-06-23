@@ -1,0 +1,54 @@
+<div class="page-header">
+  <h1>Push Notifications</h1>
+  <p><%= @pn_total %> total. <%= @pn_undelivered %> undelivered. </p>
+</div>
+
+<%= paginate @push_notifications %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>device_token</th>
+      <th>alert</th>
+      <!-- <th>expiry</th> -->
+      <th>delivered</th>
+      <!-- <th>failed</th> -->
+      <!-- <th>error_code</th> -->
+      <th>updated_at</th>
+      <th>action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @push_notifications.each do |pn| %>
+    <tr>
+      <td><%= pn.id %></td>
+      <% if pn.device_token %>
+        <td>iOS: <br /><%= pn.device_token.truncate(19, omission: "...#{pn.device_token.last(8)}") unless pn.device_token.nil? %></td>
+      <% else %>
+        <td>Android: <br /><% pn.registration_ids.each do |rid| %>
+          <%= rid.truncate(19, omission: "...#{rid.last(8)}") %>, 
+        <% end %></td>
+      <% end %>
+      <td><%= pn.data["body"] %></td>
+      <% if pn.delivered %>
+        <td><%= pn.delivered_at.try(:strftime, "%d-%m-%Y %H:%M:%S") %></td>
+      <% else %>
+        <td class="red">FAILED: <%= pn.failed_at.try(:strftime, "%d-%m-%Y %H:%M:%S") %><br /><%= pn.error_description %></td>
+      <% end %>
+      <td><%= pn.updated_at.strftime("%d-%m-%Y %H:%M:%S") %></td>
+      <td><%= link_to "Delete", "#", 
+              :method => 'destroy', 
+              :class => 'btn btn-xs btn-danger article-favourite', 
+              :alt => 'Delete this push registration', :title => 'Delete this push registration',
+              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))} %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @push_notifications %>
+
+<div class="form-actions">
+  <%= link_to "Back", admin_root_path, :class => 'btn btn-default' %>
+</div>

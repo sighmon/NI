@@ -123,6 +123,7 @@ NI::Application.routes.draw do
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
     resources :guest_passes, :only => [:index]
     resources :push_registrations, :only => [:index]
+    resources :push_notifications, :only => [:index]
   end
 
   namespace :institution do
