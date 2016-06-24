@@ -282,7 +282,7 @@ module ApplicationHelper
         data[:sound] = "new-issue.caf"
         n.sound = data[:sound]
         n.deliver_after = data[:deliver_after]
-        n.uri = "newint://issues/#{data[:railsID]}"
+        n.uri = generate_notification_uri(data)
         n.device_token = token # 64-character hex string
         n.alert = data[:body]
         # n.content_available = true
@@ -320,7 +320,7 @@ module ApplicationHelper
         data[:sound] = 'content://settings/system/notification_sound'
         # data[:vibrate] = 'Notification.DEFAULT_VIBRATE'
         n.deliver_after = data[:deliver_after]
-        n.uri = "newint://issues/#{data[:railsID]}"
+        n.uri = generate_notification_uri(data)
         n.sound = data[:sound]
         n.registration_ids = tokens # Array of token strings
         n.notification = { body: data[:body],
@@ -337,6 +337,18 @@ module ApplicationHelper
         #                    icon: 'myicon'
         #                  }
         n.save!
+    end
+
+    def self.generate_notification_uri(data)
+        
+        base_uri = "newint://"
+        if data[:articleID] and data[:issueID]
+            return base_uri + "issues/" + data[:issueID] + "/articles/" + data[:articleID]
+        elsif data[:railsID]
+            return base_uri + "issues/" + data[:railsID]
+        else
+            return base_uri
+        end
     end
 
 end
