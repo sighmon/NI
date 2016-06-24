@@ -169,13 +169,13 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
-  gem 'guard-rspec', '1.2.1'
+  gem 'guard-rspec'#, '1.2.1'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
-  gem 'rb-inotify', '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
-  gem 'rb-fsevent', '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-inotify', :require => false#, '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', :require => false#, '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
 end
 
