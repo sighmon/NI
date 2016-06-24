@@ -318,12 +318,15 @@ module ApplicationHelper
         # To get the NI icon, data = {icon: 'ni_notification'}
         data[:icon] = 'ni_notification'
         data[:sound] = 'content://settings/system/notification_sound'
+        # data[:vibrate] = 'Notification.DEFAULT_VIBRATE'
         n.deliver_after = data[:deliver_after]
         n.uri = "newint://issues/#{data[:railsID]}"
         n.sound = data[:sound]
         n.registration_ids = tokens # Array of token strings
         n.notification = { body: data[:body],
-                           icon: data[:icon]
+                           icon: data[:icon],
+                           sound: data[:sound],
+                           vibrate: true
                          }
         n.data = data # { message: "hi mom!" }
         n.priority = 'high'        # Optional, can be either 'normal' or 'high'
