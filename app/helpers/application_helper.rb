@@ -273,13 +273,16 @@ module ApplicationHelper
 
     def self.rpush_create_ios_push_notification(token, data)
         # Create an iOS push notification (doesn't send, just creates) one at a time
-        data[:sound] = "new-issue.caf"
         n = Rpush::Apns::Notification.new
         if Rails.env.production?
             n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"])
         else
             n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"])
         end
+        data[:sound] = "new-issue.caf"
+        n.sound = data[:sound]
+        n.deliver_after = data[:deliver_after]
+        n.uri = "newint://issues/#{data[:railsID]}"
         n.device_token = token # 64-character hex string
         n.alert = data[:body]
         # n.content_available = true
@@ -305,9 +308,6 @@ module ApplicationHelper
 
     def self.rpush_create_android_push_notification(tokens, data)
         # Create Android push notifications (takes an array of android device tokens)
-        # To get the NI icon, data = {icon: 'ni_notification'}
-        data[:icon] = 'ni_notification'
-        data[:sound] = 'content://settings/system/notification_sound'
 
         n = Rpush::Gcm::Notification.new
         if Rails.env.production?
@@ -315,6 +315,12 @@ module ApplicationHelper
         else
             n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"])
         end
+        # To get the NI icon, data = {icon: 'ni_notification'}
+        data[:icon] = 'ni_notification'
+        data[:sound] = 'content://settings/system/notification_sound'
+        n.deliver_after = data[:deliver_after]
+        n.uri = "newint://issues/#{data[:railsID]}"
+        n.sound = data[:sound]
         n.registration_ids = tokens # Array of token strings
         n.notification = { body: data[:body],
                            icon: data[:icon]

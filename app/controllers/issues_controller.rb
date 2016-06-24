@@ -177,13 +177,20 @@ class IssuesController < ApplicationController
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
+    if @scheduled_datetime > DateTime.now
+      # It will be set below
+    else
+      @scheduled_datetime = nil
+    end
+
     data = {
       body: "#{@alert_text + @issue.push_notification_text}",
       badge: "Increment",
       name: @issue.number.to_s,
       publication: @issue.release.to_time.iso8601.to_s,
       railsID: @issue.id.to_s,
-      title: "New Internationalist"
+      title: "New Internationalist",
+      deliver_after: @scheduled_datetime
     }
 
     if @device_id.empty?
@@ -233,24 +240,12 @@ class IssuesController < ApplicationController
       end
     end
 
-    if android_response and ios_response
-      if @scheduled_datetime > DateTime.now
-        # TODO: Schedule this for the future.
-      else
-        # TOFIX: Maybe have the actual sending in the admin panel???
-        rpush_response = Rpush.push
-      end
-    end
-
-    # TODO: Create a controller for viewing the Rpush notifications.
-
-    # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin? 
+    # The actual sending is in the admin panel
+    # rpush_response = Rpush.push
 
     # Check if the push worked and finish
-    # byebug
-    if android_response and ios_response and rpush_response and rpush_response.empty?
+    if android_response and ios_response
       # Success!
-      # body = JSON.parse(response.body)
 
       # Mark the scheduled to send date, unless a single device push was sent.
       if @device_id.blank? and Rails.env.production?
@@ -258,13 +253,13 @@ class IssuesController < ApplicationController
       end
       
       if @issue.save
-        redirect_to @issue, notice: "Push sent!"
+        redirect_to admin_push_notifications_path, notice: "Push notifications setup!"
       else
-        redirect_to @issue, flash: { error: "Couldn't update issue after push successfully sent." }
+        redirect_to @issue, flash: { error: "Couldn't update issue after push successfully setup." }
       end
     else
       # FAIL! server error.
-      redirect_to @issue, flash: { error: "Failed to push. Error: #{android_response} ... #{ios_response} ... #{rpush_response}" }
+      redirect_to @issue, flash: { error: "Failed to setup push notifications. Error: #{android_response} ... #{ios_response}" }
     end
   end
 
