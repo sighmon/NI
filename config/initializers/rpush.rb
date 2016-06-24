@@ -94,16 +94,16 @@ Rpush.reflect do |on|
   # Called when the GCM returns a canonical registration ID.
   # You will need to replace old_id with canonical_id in your records.
   on.gcm_canonical_id do |old_id, canonical_id|
-    d = ::Device.find_by_device_token(old_id)
+    d = PushRegistration.find_by_token(old_id)
     if d.present?
-      d.update_attributes(device_token: canonical_id)
+      d.update_attributes(token: canonical_id)
     end
   end
 
   # Called when the GCM returns a failure that indicates an invalid registration id.
   # You will need to delete the registration_id from your records.
   on.gcm_invalid_registration_id do |app, error, registration_id|
-    d = ::Device.find_by_device_token(registration_id)
+    d = PushRegistration.find_by_token(registration_id)
     if d.present?
       d.destroy
     end
