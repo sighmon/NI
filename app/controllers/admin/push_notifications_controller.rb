@@ -38,7 +38,6 @@ class Admin::PushNotificationsController < ApplicationController
     if current_user and current_user.admin?
       # Send the setup push notifications
       rpush_response = Rpush.push
-      byebug
 
       # Check for Rpush.apns_feedback and send email to admin
       rpush_apns_feedback = Rpush.apns_feedback
