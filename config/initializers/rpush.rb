@@ -36,8 +36,21 @@ Rpush.reflect do |on|
   # Called with a Rpush::Apns::Feedback instance when feedback is received
   # from the APNs that a notification has failed to be delivered.
   # Further notifications should not be sent to the device.
-  # on.apns_feedback do |feedback|
-  # end
+  on.apns_feedback do |feedback|
+    # Send email with feedback
+    if Rails.env.production?
+      begin
+        subject = "Rpush APN feedback"
+        body = "This is an automated email with Rpush Apple push notification feedback:<br /><br />#{feedback}"
+        UserMailer.delay.admin_email(subject, body)
+        ApplicationHelper.start_delayed_jobs
+      rescue Exception
+        logger.error "500 - Email server is down..."
+      end
+    else
+      logger.info "RPUSH APNS FEEDBACK email would happen on production: #{feedback}"
+    end
+  end
 
   # Called when a notification is queued internally for delivery.
   # The internal queue for each app runner can be inspected:
@@ -56,8 +69,21 @@ Rpush.reflect do |on|
 
   # Called when notification delivery failed.
   # Call 'error_code' and 'error_description' on the notification for the cause.
-  # on.notification_failed do |notification|
-  # end
+  on.notification_failed do |notification|
+    # Send email with error
+    if Rails.env.production?
+      begin
+        subject = "Rpush error - notification delivery failed"
+        body = "This is an automated email with Rpush notification failure information:<br /><br />Error code: #{notification.error_code}<br /><br />Error: #{notification.error_description}<br /><br />Notification: #{notification}"
+        UserMailer.delay.admin_email(subject, body)
+        ApplicationHelper.start_delayed_jobs
+      rescue Exception
+        logger.error "500 - Email server is down..."
+      end
+    else
+      logger.info "RPUSH notification error email would happen on production: #{notification.error_code}. Error: #{notification.error_description}. Notification: #{notification}."
+    end
+  end
 
   # Called when the notification delivery failed and only the notification ID
   # is present in memory.
@@ -115,7 +141,10 @@ Rpush.reflect do |on|
     # Send email to myself.
     if Rails.env.production?
       begin
-        UserMailer.delay.apple_pem_certificate()
+        subject = "Apple PEM cert needs renewing"
+        body = "This is an automated email to remind you to renew the <b>Apple PEM Push Notification certificate</b> for iOS devices.<br /><a href='https://developer.apple.com/account/'>developer.apple.com</a><br /><br />It might also be useful to follow this instruction to create the new PEM: <a href='https://github.com/rpush/rpush/wiki/Generating-Certificates'>github.com/rpush/rpush/wiki/Generating-Certificates</a><br /><br />Good luck! And don't forget to check the indenting in the .yml file.<br />
+            Cheers, Computer."
+        UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
         logger.error "500 - Email server is down..."

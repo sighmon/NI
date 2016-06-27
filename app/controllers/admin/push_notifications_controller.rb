@@ -38,8 +38,26 @@ class Admin::PushNotificationsController < ApplicationController
     if current_user and current_user.admin?
       # Send the setup push notifications
       rpush_response = Rpush.push
+      byebug
 
-      # TODO: Check for Rpush.apns_feedback and store somewhere??? Send email to admin? 
+      # Check for Rpush.apns_feedback and send email to admin
+      rpush_apns_feedback = Rpush.apns_feedback
+
+      if rpush_apns_feedback
+        # Send email with feedback
+        if Rails.env.production?
+          begin
+            subject = "Rpush APN feedback"
+            body = "This is an automated email with Rpush Apple push notification feedback:<br /><br />#{rpush_apns_feedback}"
+            UserMailer.delay.admin_email(subject, body)
+            ApplicationHelper.start_delayed_jobs
+          rescue Exception
+            logger.error "500 - Email server is down..."
+          end
+        else
+          logger.info "RPUSH APNS FEEDBACK email would happen on production: #{rpush_apns_feedback}"
+        end
+      end
 
       if rpush_response and rpush_response.empty?
         # Success!

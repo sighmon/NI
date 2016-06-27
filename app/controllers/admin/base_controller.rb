@@ -81,6 +81,20 @@ class Admin::BaseController < ApplicationController
 		end
 	end
 
+	def admin_email
+    @user = current_user
+    @greeting = "Hello"
+    @subject = "Example subject."
+    @body_text = "Example body with <b>HTML</b> text and <a href='#'>links</a>."
+    @template = "user_mailer/admin_email"
+    
+    respond_to do |format|
+			format.mjml {
+				render @template, :layout => false
+			}
+		end
+  end
+
 	private
 
 	def verify_admin

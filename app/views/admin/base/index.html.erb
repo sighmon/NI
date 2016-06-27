@@ -31,6 +31,7 @@
 <p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-default' %></p>
+<p><%= link_to "Admin email", admin_admin_email_path(format: 'mjml'), :class => 'btn btn-info' %></p>
 
 <div class="form-actions">
 	<%= link_to 'Back', root_path, :class => 'btn btn-default' %>

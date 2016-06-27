@@ -108,6 +108,7 @@ NI::Application.routes.draw do
     get "welcome_email" => "base#welcome_email"
     get "subscription_email" => "base#subscription_email"
     get "magazine_purchase_email" => "base#magazine_purchase_email"
+    get "admin_email" => "base#admin_email"
     get "users/update_csv" => "users#update_csv"
     get "users/download_csv" => "users#download_csv"
     resources :users do

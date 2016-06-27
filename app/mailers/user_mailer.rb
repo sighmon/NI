@@ -130,12 +130,12 @@ class UserMailer < ActionMailer::Base
     end
   end
 
-  def apple_pem_certificate()
+  def admin_email(subject, body_text)
     @user = User.first
     @greeting = "Hello"
-    @issue = Issue.latest
-    @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "Apple PEM cert needs renewing") do |format|
+    @subject = subject
+    @body_text = body_text
+    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => subject) do |format|
       format.mjml
     end
   end
