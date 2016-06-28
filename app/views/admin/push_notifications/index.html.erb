@@ -35,7 +35,7 @@
         <td>iOS: <br /><%= pn.device_token.truncate(19, omission: "...#{pn.device_token.last(8)}") unless pn.device_token.nil? %></td>
       <% else %>
         <td>Android: <br /><% pn.registration_ids.each do |rid| %>
-          <%= rid.truncate(19, omission: "...#{rid.last(8)}") %>, 
+          <%= rid.truncate(19, omission: "...#{rid.last(8)}") unless rid.nil? %>, 
         <% end %></td>
       <% end %>
       <td><%= pn.data["body"] %></td>

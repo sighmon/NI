@@ -45,10 +45,10 @@ Rpush.reflect do |on|
         UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
-        logger.error "500 - Email server is down..."
+        Rails.logger.error "500 - Email server is down..."
       end
     else
-      logger.info "RPUSH APNS FEEDBACK email would happen on production: #{feedback}"
+      Rails.logger.info "RPUSH APNS FEEDBACK email would happen on production: #{feedback}"
     end
   end
 
@@ -78,10 +78,10 @@ Rpush.reflect do |on|
         UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
-        logger.error "500 - Email server is down..."
+        Rails.logger.error "500 - Email server is down..."
       end
     else
-      logger.info "RPUSH notification error email would happen on production: #{notification.error_code}. Error: #{notification.error_description}. Notification: #{notification}."
+      Rails.logger.info "RPUSH notification error email would happen on production: #{notification.error_code}. Error: #{notification.error_description}. Notification: #{notification}."
     end
   end
 
@@ -147,10 +147,10 @@ Rpush.reflect do |on|
         UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
-        logger.error "500 - Email server is down..."
+        Rails.logger.error "500 - Email server is down..."
       end
     else
-      logger.info "SEND_APPLE_PEM_CERTIFICATE renewal email would happen on production."
+      Rails.logger.info "SEND_APPLE_PEM_CERTIFICATE renewal email would happen on production."
     end
   end
 
