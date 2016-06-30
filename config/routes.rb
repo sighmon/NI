@@ -100,12 +100,17 @@ NI::Application.routes.draw do
   # get "payment_notifications/create"
   resource :payment_notifications, :only => [:create]
 
+  # PushRegistrations controller
+  resource :push_registrations, only: [:create, :destroy]
+
   namespace :admin do
     root :to => "base#index"
     get "welcome_email" => "base#welcome_email"
     get "reset_password_instructions_email" => "base#reset_password_instructions_email"
     get "subscription_email" => "base#subscription_email"
     get "magazine_purchase_email" => "base#magazine_purchase_email"
+    get "admin_email" => "base#admin_email"
+    get "delete_cache" => "base#delete_cache"
     get "users/update_csv" => "users#update_csv"
     get "users/download_csv" => "users#download_csv"
     resources :users do
@@ -120,6 +125,14 @@ NI::Application.routes.draw do
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
     resources :guest_passes, :only => [:index]
+    resources :push_registrations, :only => [:index]
+    namespace :push_registrations do
+      get :import
+    end
+    resources :push_notifications, :only => [:index, :destroy]
+    namespace :push_notifications do
+      post :send_notifications
+    end
   end
 
   namespace :institution do

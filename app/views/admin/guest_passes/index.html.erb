@@ -2,6 +2,8 @@
 	<h1>Guest Passes</h1>
 </div>
 
+<%= paginate @guest_passes %>
+
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -24,6 +26,8 @@
 	<% end %>
 	</tbody>
 </table>
+
+<%= paginate @guest_passes %>
 
 <div class="form-actions">
 	<%= link_to "Back", admin_root_path, :class => 'btn btn-default' %>

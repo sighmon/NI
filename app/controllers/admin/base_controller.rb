@@ -96,6 +96,40 @@ class Admin::BaseController < ApplicationController
 		end
 	end
 
+	def admin_email
+		@user = current_user
+		@greeting = "Hello"
+		@subject = "Example subject."
+		@body_text = "Example body with <b>HTML</b> text and <a href='#'>links</a>."
+		@template = "user_mailer/admin_email"
+		
+		respond_to do |format|
+			format.mjml {
+				render @template, :layout => false
+			}
+		end
+	end
+
+	def delete_cache
+		if params[:cache] == "all"
+			# Delete all cache
+			Rails.cache.dalli.flush_all
+			logger.info "CACHE: flush_all finished."
+		elsif params[:cache] == "blog"
+			# Flush timely posts on home page. home_blog_latest and home_web_exclusives
+			categories_to_flush = ["/blog/", "/features/web-exclusive/"]
+			categories_to_flush.each do |n|
+				Category.where(name: n).each do |c|
+					c.flush_cache
+				end
+			end
+			Rails.cache.delete("home_blog_latest")
+			Rails.cache.delete("home_web_exclusives")
+			logger.info "CACHE: flush blog finished."
+		end
+		redirect_to admin_root_path, notice: "Cache cleared: #{params[:cache] || "None"}."
+	end
+
 	private
 
 	def verify_admin
