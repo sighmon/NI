@@ -5,6 +5,14 @@
 <p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
 <p><%= link_to "List Users", admin_users_path, :class => 'btn btn-default' %> A list of all <%= User.count %> user accounts and their expiry dates.</p>
 <p>
+  <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
+      <div class="input-append">
+        <%= text_field_tag :query, params[:query], :placeholder => 'Search users by email', :class => "span2 search-query form-control" %>
+        <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
+      </div>
+  <% end %>
+</p>
+<p>
 	<%= link_to "Update CSV user list", admin_users_update_csv_path, :class => 'btn btn-primary' %> 
 	<% if @latest_csv_date %>
 		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv'), :class => 'btn btn-info' %>

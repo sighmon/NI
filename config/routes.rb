@@ -113,6 +113,7 @@ NI::Application.routes.draw do
     get "delete_cache" => "base#delete_cache"
     get "users/update_csv" => "users#update_csv"
     get "users/download_csv" => "users#download_csv"
+    get "users/search" => "users#search"
     resources :users do
       get :free_subscription
       get :crowdfunding_subscription

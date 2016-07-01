@@ -16,31 +16,7 @@
 
 <%= paginate @users %>
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th><%= sortable "email" %></th>
-			<th><%= sortable "username" %></th>
-			<th>Type</th>
-			<th><%= sortable "created_at", "Joined" %></th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @users.each do |user| %>
-		<tr>
-			<td><%= link_to user.email, [:admin, user] %><% if user.subscriber? and not user.subscriptions.empty? %> (<%= user.subscriptions.last.paypal_email %>)<% end %></td>
-			<td><%= user.username %></td>
-			<td><%= user.user_type %></td>
-			<td><%= user.created_at.strftime("%d %B, %Y") %></td>
-			<td><%= link_to "Show", [:admin, user], :class => 'btn btn-default btn-xs' %>
-                <%= link_to "Become", [:admin, user, :become], :class => 'btn btn-xs btn-success' %>
-				<%= link_to "Edit", edit_admin_user_path(user), :class => 'btn btn-xs btn-primary' %>
-				<%= link_to "Delete", admin_user_path(user), :method => :delete, :data => {:confirm => "Are you sure you want to delete this user?"}, :class => 'btn btn-xs btn-danger' %></td>
-		</tr>
-	<% end %>
-	</tbody>
-</table>
+<%= render :partial => "users_table", :locals => { :users => @users } %>
 
 <%= paginate @users %>
 

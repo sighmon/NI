@@ -211,6 +211,18 @@ class Admin::UsersController < Admin::BaseController
 		end
 	end
 
+	def search
+		@query = params[:query]
+		if @query.blank?
+			@users = []
+		else
+			@users = User.where('email ~* ?', "(.*?)#{@query}(.*?)").sorted_by(params[:sort], params[:direction])
+		end
+		respond_to do |format|
+			format.html
+		end
+	end
+
 	private
   
   def sort_column
