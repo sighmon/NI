@@ -9,6 +9,8 @@
 		document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
 		fbq('init', <%= ENV["FACEBOOK_APP_ID"] %>);
+		// fbq('track', "PageView");
+		</script>
 		<noscript><img height="1" width="1" style="display:none"
 		src="https://www.facebook.com/tr?id=<%= ENV["FACEBOOK_APP_ID"] %>&amp;ev=<%= event[:action]%>&amp;cd[value]=<%= event[:amount]%>&amp;cd[currency]=AUD&amp;noscript=1"
 		/></noscript>
