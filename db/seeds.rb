@@ -17,6 +17,10 @@ Settings.guest_pass_key_length = 16
 Settings.category_pagination = 24
 Settings.users_pagination = 100
 
+# Setup push notification apps
+ApplicationHelper.rpush_register_android_app
+ApplicationHelper.rpush_register_ios_app
+
 # TODO: setup the admin user
 
 # Setup an issue.
