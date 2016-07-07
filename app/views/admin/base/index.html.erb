@@ -24,7 +24,7 @@
 <p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-default' %> <%= GuestPass.count %> Guest passes.</p>
 <p><%= link_to "Push Registrations", admin_push_registrations_path, :class => 'btn btn-default' %> <%= PushRegistration.count %> Mobile push registrations.</p>
 <p><%= link_to "Push Notifications", admin_push_notifications_path, :class => 'btn btn-default' %> <%= Rpush::Notification.count %> total. <%= Rpush::Notification.where(delivered: false).count %> undelivered.</p>
-<p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger' %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning' %></p>
+<p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
 
 <hr />
 
