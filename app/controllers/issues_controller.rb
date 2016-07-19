@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
-  newrelic_ignore :only => [:email, :email_non_subscribers, :email_others, :email_renew]
+  newrelic_ignore :only => [:email, :email_non_subscribers, :email_others, :email_renew, :email_special]
   # newrelic_ignore_enduser :only => [:email, :email_non_subscribers, :email_others, :email_renew]
   # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
@@ -151,6 +151,13 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+      format.mjml { render :layout => false }
+    end
+  end
+
+  def email_special
+    respond_to do |format|
       format.text { render :layout => false }
       format.mjml { render :layout => false }
     end

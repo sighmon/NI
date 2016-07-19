@@ -64,6 +64,8 @@ class Admin::BaseController < ApplicationController
 			@template = "user_mailer/subscription_cancellation"
 		elsif params[:subscription_type] == "cancelled_paypal"
 			@template = "user_mailer/subscription_cancelled_via_paypal"
+		elsif params[:subscription_type] == "special"
+			@template = "issues/email_special"
 		else
 			@template = "user_mailer/subscription_confirmation"
 		end
