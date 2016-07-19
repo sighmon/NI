@@ -4,7 +4,7 @@
 			<mj-section padding="0">
 				<mj-column>
 					<mj-text font-size="11px" color="#606b75" font-weight="300">
-						<%= link_to "The world's least reported stories", page_url("subscribe"), style: 'color:inherit;' %>
+						<%= link_to "New Internationalist digital subscription", page_url("subscribe"), style: 'color:inherit;' %>
 					</mj-text>
 				</mj-column>
 				<mj-column>
@@ -17,7 +17,7 @@
 				<mj-column>
 					<mj-image 
 						padding="0"
-						alt="New Internationalist - the world's least reported stories at your fingertips."
+						alt="New Internationalist - under-reported stories delivered to your pocket."
 						href="<%= page_url("subscribe") %>"
 						src="<%= root_url + "assets/600x600-email-header@2x.gif" %>">
 					</mj-image>
