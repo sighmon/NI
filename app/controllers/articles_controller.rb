@@ -66,22 +66,28 @@ class ArticlesController < ApplicationController
   end
 
   def popular
-    @guest_passes = GuestPass.order(:use_count).reverse.first(10)
+    @guest_passes = GuestPass.order(:use_count).reverse.first(12)
 
     # Set meta tags
-    set_meta_tags :title => "Poplar New Internationalist articles",
-            :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+    set_meta_tags :site => 'New Internationalist',
+            :title => "Poplar New Internationalist articles",
+            :description => "Articles from New Internationalist magazine that our readers have shared the most.",
             :keywords => "new, internationalist, magazine, digital, edition, popular, readers, ordered",
             :canonical => popular_url,
+            :alternate => [
+              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+            ],
             :open_graph => {
-            :title => "Poplar New Internationalist articles",
-            :description => "Articles from New Internationalist magazine that our readers have found most popular.",
-            :url   => popular_url,
-            :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
-            :site_name => "New Internationalist Magazine Digital Edition"
+              :title => "Poplar New Internationalist articles",
+              :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+              :url   => popular_url,
+              :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
+              :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-              :card => "summary",
+              :card => "summary_large_image",
               :site => "@#{ENV["TWITTER_NAME"]}",
               :creator => "@#{ENV["TWITTER_NAME"]}",
               :title => @page_title_home,
@@ -279,28 +285,28 @@ class ArticlesController < ApplicationController
             :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-            :card => "summary_large_image",
-            :site => "@#{ENV["TWITTER_NAME"]}",
-            :creator => "@#{ENV["TWITTER_NAME"]}",
-            :title => @article.title,
-            :description => strip_tags(@article.teaser),
-            :image => {
-              :src => first_image_for_meta_data
-            },
-            :app => {
-              :name => {
-              :iphone => ENV["ITUNES_APP_NAME"],
-              :ipad => ENV["ITUNES_APP_NAME"]
+              :card => "summary_large_image",
+              :site => "@#{ENV["TWITTER_NAME"]}",
+              :creator => "@#{ENV["TWITTER_NAME"]}",
+              :title => @article.title,
+              :description => strip_tags(@article.teaser),
+              :image => {
+                :src => first_image_for_meta_data
               },
-              :id => {
-              :iphone => ENV["ITUNES_APP_ID"],
-              :ipad => ENV["ITUNES_APP_ID"]
-              },
-              :url => {
-              :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
-              :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
+                :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+                }
               }
-            }
             }
     respond_to do |format|
       format.html # show.html.erb
