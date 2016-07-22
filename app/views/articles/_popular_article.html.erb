@@ -27,7 +27,7 @@
 				  <div class="home-keynote-text">
 				  	<h3><%= link_to highlight(article.title, @query_array), generate_guest_pass_link_string(guest_pass) %></h3>
 						<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
-						<h5 class="breadcrumb guest-pass-use-count">Shared <%= guest_pass.use_count %> times.</h5>
+						<h5 class="breadcrumb guest-pass-use-count">Shared <%= number_with_delimiter(guest_pass.use_count, :delimiter => ',') %> times.</h5>
 						<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
 						<p><%= link_to 'Read this article', generate_guest_pass_link_string(guest_pass), :class => 'btn btn-default btn-xs' %></p>
 							<meta itemprop="url" content="<%= issue_article_url(article.issue,article) %>">
