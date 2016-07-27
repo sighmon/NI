@@ -67,11 +67,13 @@ class ArticlesController < ApplicationController
 
   def popular
     @guest_passes = GuestPass.order(:use_count).reverse.first(12)
+    @page_title = "Popular New Internationalist articles"
+    @page_description = "Articles from New Internationalist magazine that our readers have shared the most."
 
     # Set meta tags
     set_meta_tags :site => 'New Internationalist',
-            :title => "Poplar New Internationalist articles",
-            :description => "Articles from New Internationalist magazine that our readers have shared the most.",
+            :title => @page_title,
+            :description => @page_description,
             :keywords => "new, internationalist, magazine, digital, edition, popular, readers, ordered",
             :canonical => popular_url,
             :alternate => [
@@ -80,8 +82,8 @@ class ArticlesController < ApplicationController
               {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
             ],
             :open_graph => {
-              :title => "Poplar New Internationalist articles",
-              :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+              :title => @page_title,
+              :description => @page_description,
               :url   => popular_url,
               :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
               :site_name => "New Internationalist Magazine Digital Edition"
@@ -90,7 +92,7 @@ class ArticlesController < ApplicationController
               :card => "summary_large_image",
               :site => "@#{ENV["TWITTER_NAME"]}",
               :creator => "@#{ENV["TWITTER_NAME"]}",
-              :title => @page_title_home,
+              :title => @page_title,
               :description => @page_description,
               :image => {
                 :src => @guest_passes.first.article.first_image.try(:data_url).to_s
@@ -118,6 +120,69 @@ class ArticlesController < ApplicationController
         # Don't show article :body here
         :article => { :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id] }
       }
+      ) }
+    end
+  end
+
+  def quick_reads
+    # Select a random 3 articles, cached for 1 day
+    @quick_reads = Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
+      # Need .to_a here otherwise it caches the scope, not the result of the query
+      Article.order("RANDOM()").limit(3).to_a
+    end
+
+    @page_title = "Quick reads"
+    @page_description = "Three articles selected for you today from New Internationalist magazine."
+
+    # Set meta tags
+    set_meta_tags :site => 'New Internationalist',
+            :title => @page_title,
+            :description => @page_description,
+            :keywords => "new, internationalist, magazine, quick reads, quick, reads, daily, selection, digital, edition",
+            :canonical => quick_reads_url,
+            :alternate => [
+              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+            ],
+            :open_graph => {
+              :title => @page_title,
+              :description => @page_description,
+              :url   => quick_reads_url,
+              :image => @quick_reads.first.first_image.try(:data_url).to_s,
+              :site_name => "New Internationalist Magazine Digital Edition"
+            },
+            :twitter => {
+              :card => "summary_large_image",
+              :site => "@#{ENV["TWITTER_NAME"]}",
+              :creator => "@#{ENV["TWITTER_NAME"]}",
+              :title => @page_title,
+              :description => @page_description,
+              :image => {
+                :src => @quick_reads.first.first_image.try(:data_url).to_s
+              },
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://",
+                :ipad => "newint://"
+                }
+              }
+            }
+    respond_to do |format|
+      format.html# { render :layout => false }
+      
+      format.json { render json: @quick_reads.to_json(
+      :only => 
+        # Don't show article :body here
+        [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id]
       ) }
     end
   end

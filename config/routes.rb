@@ -96,6 +96,7 @@ NI::Application.routes.draw do
 
   get 'search' => 'articles#search'
   get 'popular' => 'articles#popular'
+  get 'quick_reads' => 'articles#quick_reads'
 
   # PayPal payment notification IPN
   # get "payment_notifications/create"

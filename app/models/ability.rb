@@ -23,6 +23,7 @@ class Ability
     end
     can :search, Article
     can :popular, Article
+    can :quick_reads, Article
     can :read, Page
     can :read, Category
     cannot :update_categories_colours, Category

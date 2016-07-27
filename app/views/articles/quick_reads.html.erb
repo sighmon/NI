@@ -1,0 +1,23 @@
+<%- model_class = Article -%>
+<div class="page-header">
+  <h1><%= @page_title %></h1>
+  <h3><%= @page_description %></h3>
+</div>
+
+<div class="row">
+  <% if @quick_reads %>
+    <% @quick_reads.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+</div>
+<div class="row">
+      <% end %>
+      <div class="col-sm-4">
+      <% if article.guest_passes.count > 0 %>
+        <%= render :partial => "popular_article", :locals => { :article => article, :guest_pass => article.guest_passes.first } %>
+      <% else %>
+        <%= render :partial => "home/home_article", :locals => { :article => article } %>
+      <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
