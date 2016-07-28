@@ -131,7 +131,7 @@ class ArticlesController < ApplicationController
       Article.order("RANDOM()").limit(3).to_a
     end
 
-    @page_title = "Quick reads"
+    @page_title = "Today's quick reads"
     @page_description = "Three articles selected for you today from New Internationalist magazine."
 
     # Set meta tags

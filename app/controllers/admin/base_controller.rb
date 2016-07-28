@@ -128,8 +128,12 @@ class Admin::BaseController < ApplicationController
 			Rails.cache.delete("home_blog_latest")
 			Rails.cache.delete("home_web_exclusives")
 			logger.info "CACHE: flush blog finished."
+		elsif params[:cache] == "quick_reads"
+			# Flush quick reads cache
+			Rails.cache.delete("quick_reads")
+			logger.info "CACHE: flush quick_reads finished."
 		end
-		redirect_to admin_root_path, notice: "Cache cleared: #{params[:cache] || "None"}."
+		redirect_to :back, notice: "Cache cleared: #{params[:cache] || "None"}."
 	end
 
 	private

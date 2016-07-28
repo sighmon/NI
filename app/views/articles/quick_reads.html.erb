@@ -1,4 +1,11 @@
 <%- model_class = Article -%>
+
+<% if can? :update, Article %>
+<div class="edit-issue-buttons">
+  <%= link_to "Flush quick reads cache", admin_delete_cache_path(cache: "quick_reads"), :class => 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?'} %>
+</div>
+<% end %>
+
 <div class="page-header">
   <h1><%= @page_title %></h1>
   <h3><%= @page_description %></h3>
@@ -15,7 +22,7 @@
       <% if article.guest_passes.count > 0 %>
         <%= render :partial => "popular_article", :locals => { :article => article, :guest_pass => article.guest_passes.first } %>
       <% else %>
-        <%= render :partial => "home/home_article", :locals => { :article => article } %>
+        <%= render :partial => "categories/category_article", :locals => { :article => article } %>
       <% end %>
       </div>
     <% end %>
