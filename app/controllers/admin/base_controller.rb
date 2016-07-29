@@ -64,6 +64,8 @@ class Admin::BaseController < ApplicationController
 			@template = "user_mailer/subscription_cancellation"
 		elsif params[:subscription_type] == "cancelled_paypal"
 			@template = "user_mailer/subscription_cancelled_via_paypal"
+		elsif params[:subscription_type] == "special"
+			@template = "issues/email_special"
 		else
 			@template = "user_mailer/subscription_confirmation"
 		end
@@ -94,6 +96,44 @@ class Admin::BaseController < ApplicationController
 				render @template, :layout => false
 			}
 		end
+	end
+
+	def admin_email
+		@user = current_user
+		@greeting = "Hello"
+		@subject = "Example subject."
+		@body_text = "Example body with <b>HTML</b> text and <a href='#'>links</a>."
+		@template = "user_mailer/admin_email"
+		
+		respond_to do |format|
+			format.mjml {
+				render @template, :layout => false
+			}
+		end
+	end
+
+	def delete_cache
+		if params[:cache] == "all"
+			# Delete all cache
+			Rails.cache.dalli.flush_all
+			logger.info "CACHE: flush_all finished."
+		elsif params[:cache] == "blog"
+			# Flush timely posts on home page. home_blog_latest and home_web_exclusives
+			categories_to_flush = ["/blog/", "/features/web-exclusive/"]
+			categories_to_flush.each do |n|
+				Category.where(name: n).each do |c|
+					c.flush_cache
+				end
+			end
+			Rails.cache.delete("home_blog_latest")
+			Rails.cache.delete("home_web_exclusives")
+			logger.info "CACHE: flush blog finished."
+		elsif params[:cache] == "quick_reads"
+			# Flush quick reads cache
+			Rails.cache.delete("quick_reads")
+			logger.info "CACHE: flush quick_reads finished."
+		end
+		redirect_to :back, notice: "Cache cleared: #{params[:cache] || "None"}."
 	end
 
 	private

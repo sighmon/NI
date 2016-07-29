@@ -21,7 +21,7 @@
 //= require highlighter/jQuery.highlighter
 //= require URI
 
-window.setTimeout(function() { $(".alert").alert('close'); }, 4000);
+window.setTimeout(function() { $(".alert").alert('close'); }, 10000);
 
 var flip = 0;
 

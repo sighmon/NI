@@ -251,4 +251,104 @@ module ApplicationHelper
         end
     end
 
+    # RPush push notifications
+
+    def self.rpush_register_ios_app
+        # Set-up iOS push notifications
+        app = Rpush::Apns::App.new
+        if Rails.env.production?
+            app.name = ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"]
+            app.certificate = ENV["APPLE_PRODUCTION_PEM"]
+            app.environment = "production" # APNs environment.
+            app.password = ENV["APPLE_PRODUCTION_PEM_PASSSWORD"]
+        else
+            app.name = ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"]
+            app.certificate = ENV["APPLE_DEVELOPMENT_PEM"]
+            app.environment = "sandbox" # APNs environment.
+            app.password = ENV["APPLE_DEVELOPMENT_PEM_PASSSWORD"]
+        end
+        app.connections = 1
+        app.save!
+    end
+
+    def self.rpush_create_ios_push_notification(token, data)
+        # Create an iOS push notification (doesn't send, just creates) one at a time
+        n = Rpush::Apns::Notification.new
+        if Rails.env.production?
+            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"])
+        else
+            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"])
+        end
+        data[:sound] = "new-issue.caf"
+        n.sound = data[:sound]
+        n.deliver_after = data[:deliver_after]
+        n.uri = generate_notification_uri(data)
+        n.device_token = token # 64-character hex string
+        n.alert = data[:body]
+        # n.content_available = true
+        n.data = data || {}
+        n.save!
+    end
+
+    def self.rpush_register_android_app
+        # Set-up Android push notifications
+        app = Rpush::Gcm::App.new
+        if Rails.env.production?
+            app.name = ENV["RPUSH_ANDROID_PRODUCTION_APP_NAME"]
+            app.environment = "production" # APNs environment.
+            app.auth_key = ENV["ANDROID_PRODUCTION_AUTH_KEY"]
+        else
+            app.name = ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"]
+            app.environment = "sandbox" # APNs environment.
+            app.auth_key = ENV["ANDROID_DEVELOPMENT_AUTH_KEY"]
+        end
+        app.connections = 1
+        app.save!
+    end
+
+    def self.rpush_create_android_push_notification(tokens, data)
+        # Create Android push notifications (takes an array of android device tokens)
+
+        n = Rpush::Gcm::Notification.new
+        if Rails.env.production?
+            n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_PRODUCTION_APP_NAME"])
+        else
+            n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"])
+        end
+        # To get the NI icon, data = {icon: 'ni_notification'}
+        data[:icon] = 'ni_notification'
+        data[:sound] = 'content://settings/system/notification_sound'
+        # data[:vibrate] = 'Notification.DEFAULT_VIBRATE'
+        n.deliver_after = data[:deliver_after]
+        n.uri = generate_notification_uri(data)
+        n.sound = data[:sound]
+        n.registration_ids = tokens # Array of token strings
+        n.notification = { body: data[:body],
+                           icon: data[:icon],
+                           sound: data[:sound],
+                           vibrate: true
+                         }
+        n.data = data # { message: "hi mom!" }
+        n.priority = 'high'        # Optional, can be either 'normal' or 'high'
+        n.content_available = true # Optional
+        # Optional notification payload. See the reference below for more keys you can use!
+        # n.notification = { body: 'great match!',
+        #                    title: 'Portugal vs. Denmark',
+        #                    icon: 'myicon'
+        #                  }
+        n.save!
+    end
+
+    def self.generate_notification_uri(data)
+        
+        base_uri = "newint://"
+        if data[:articleID] and data[:issueID]
+            return base_uri + "issues/" + data[:issueID] + "/articles/" + data[:articleID]
+        elsif data[:railsID]
+            return base_uri + "issues/" + data[:railsID]
+        else
+            return base_uri
+        end
+    end
+
 end

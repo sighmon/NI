@@ -55,6 +55,7 @@ NI::Application.routes.draw do
     get :email_non_subscribers
     get :email_others
     get :email_renew
+    get :email_special
     get :zip
     post :send_push_notification
     get :tweet_issue
@@ -95,10 +96,14 @@ NI::Application.routes.draw do
 
   get 'search' => 'articles#search'
   get 'popular' => 'articles#popular'
+  get 'quick_reads' => 'articles#quick_reads'
 
   # PayPal payment notification IPN
   # get "payment_notifications/create"
   resource :payment_notifications, :only => [:create]
+
+  # PushRegistrations controller
+  resource :push_registrations, only: [:create, :destroy]
 
   namespace :admin do
     root :to => "base#index"
@@ -106,8 +111,11 @@ NI::Application.routes.draw do
     get "reset_password_instructions_email" => "base#reset_password_instructions_email"
     get "subscription_email" => "base#subscription_email"
     get "magazine_purchase_email" => "base#magazine_purchase_email"
+    get "admin_email" => "base#admin_email"
+    get "delete_cache" => "base#delete_cache"
     get "users/update_csv" => "users#update_csv"
     get "users/download_csv" => "users#download_csv"
+    get "users/search" => "users#search"
     resources :users do
       get :free_subscription
       get :crowdfunding_subscription
@@ -120,6 +128,14 @@ NI::Application.routes.draw do
     resources :subscriptions, :only => [:update]
     resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
     resources :guest_passes, :only => [:index]
+    resources :push_registrations, :only => [:index]
+    namespace :push_registrations do
+      get :import
+    end
+    resources :push_notifications, :only => [:index, :destroy]
+    namespace :push_notifications do
+      post :send_notifications
+    end
   end
 
   namespace :institution do

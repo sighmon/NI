@@ -1,0 +1,110 @@
+<mjml>
+	<mj-body>
+		<mj-container background-color="#E6E6E6">
+			<mj-section padding="0">
+				<mj-column>
+					<mj-text font-size="11px" color="#606b75" font-weight="300">
+						<%= link_to "New Internationalist digital subscription", page_url("subscribe"), style: 'color:inherit;' %>
+					</mj-text>
+				</mj-column>
+				<mj-column>
+					<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
+						No images? <webversion>Click here</webversion>
+					</mj-text>
+				</mj-column>
+			</mj-section>
+			<mj-section padding="0">
+				<mj-column>
+					<mj-image 
+						padding="0"
+						alt="New Internationalist - under-reported stories delivered to your pocket."
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/600x600-email-header@2x.gif" %>">
+					</mj-image>
+				</mj-column>
+			</mj-section>
+			<mj-section background-color="#FFFFFF">
+				<mj-column>
+
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						Each monthly <em>New Internationalist</em> magazine covers a topic in-depth, engaging local writers to publish previously unreported stories and shed light on corruption, environmental and human rights abuses from all parts of the world.<br /><br />
+
+						<em>New Internationalist</em>’s award winning analysis helps make sense of world events, giving you the background information you need to feel empowered and hopeful for the future.<br /><br />
+
+						Subscribe today from just <b>&#36;15 for 3 months</b>, support independent media, and engage in conversations with friends on interesting and challenging social justice topics you might otherwise avoid.
+					</mj-text>
+
+					<mj-button
+						background-color="#ED4E59"
+						href="<%= page_url('subscribe') %>">
+						Subscribe now!
+					</mj-button>
+
+					<mj-text
+						font-size="14px"
+						font-weight="300"
+						color="#8e8e8e">
+						Your digital subscription includes:
+					</mj-text>
+
+				</mj-column>
+			</mj-section>
+			<mj-section background-color="#FFFFFF" padding="0">
+				<mj-column>
+					<mj-image 
+						padding="0 30 0 30"
+						alt="Apple devices"
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/email-devices-apple.gif" %>">
+					</mj-image>
+				</mj-column>
+				<mj-column>
+					<mj-image 
+						padding="0 30 0 30"
+						alt="Android devices"
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/email-devices-android.gif" %>">
+					</mj-image>
+				</mj-column>
+				<mj-column>
+					<mj-image 
+						padding="0 30 0 30"
+						alt="Apple and Android tablets"
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/email-devices-tablet.gif" %>">
+					</mj-image>
+				</mj-column>
+				<mj-column>
+					<mj-image 
+						padding="0 30 0 30"
+						alt="On-line website access"
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/email-devices-www.gif" %>">
+					</mj-image>
+				</mj-column>
+				<mj-column>
+					<mj-image 
+						padding="0 30 0 30"
+						alt="Access at anytime."
+						href="<%= page_url("subscribe") %>"
+						src="<%= root_url + "assets/email-devices-24x7.gif" %>">
+					</mj-image>
+				</mj-column>
+			</mj-section>
+
+			<mj-section padding="0">
+				<mj-column>
+					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+				</mj-column>
+			</mj-section>
+
+			<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you have previously had a subscription with the New Internationalist.", :unsubscribe_links => true } %>
+
+		</mj-container>
+	</mj-body>
+</mjml>

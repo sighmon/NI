@@ -1,0 +1,19 @@
+<div class="page-header">
+  <h1>User search</h1>
+</div>
+
+<div class="article-search">
+  <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
+      <div class="input-append">
+        <%= text_field_tag :query, params[:query], :placeholder => @query, :class => "span2 search-query form-control" %>
+        <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
+      </div>
+  <% end %>
+</div>
+
+<%= render :partial => "users_table", :locals => { :users => @users } %>
+
+<div class="form-actions">
+  <%= link_to "New User", new_admin_user_path, :class => 'btn btn-success' %>
+  <%= link_to "Back", admin_root_path, :class => 'btn btn-default' %>
+</div>

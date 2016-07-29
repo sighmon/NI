@@ -101,5 +101,39 @@ describe IssuesController, :type => :controller do
     
   end
 
+  context "as an admin" do
+
+    before(:each) do
+      app = Rpush::Apns::App.new
+      app.name = ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"]
+      app.certificate = ENV["APPLE_DEVELOPMENT_PEM"]
+      app.environment = "sandbox" # APNs environment.
+      app.connections = 1
+      app.save!
+      sign_in user
+    end
+
+    let(:user) { FactoryGirl.create(:admin_user) }
+    let(:issue) { FactoryGirl.create(:issue) }
+    let(:push_registration) { FactoryGirl.create(:push_registration) }
+
+    it "should be able to send a push notification" do
+      scheduled_test_time = DateTime.now
+      input_params = {
+        "scheduled_datetime(1i)" => scheduled_test_time.year,
+        "scheduled_datetime(2i)" => scheduled_test_time.month,
+        "scheduled_datetime(3i)" => scheduled_test_time.day,
+        "scheduled_datetime(4i)" => scheduled_test_time.hour,
+        "scheduled_datetime(5i)" => scheduled_test_time.minute,
+        "device_id" => push_registration.token,
+        "alert_text" => "Test message."
+      }
+      
+      post :send_push_notification, :issue_id => issue.id, "/issues/#{issue.id}/send_push_notification" => input_params
+      expect(response).to redirect_to admin_push_notifications_path
+    end
+
+  end
+
 end
 

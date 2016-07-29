@@ -3,7 +3,15 @@
 </div>
 
 <p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
-<p><%= link_to "List Users", admin_users_path, :class => 'btn btn-default' %> A list of all user accounts and their expiry dates.</p>
+<p><%= link_to "List Users", admin_users_path, :class => 'btn btn-default' %> A list of all <%= User.count %> user accounts and their expiry dates.</p>
+<p>
+  <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
+      <div class="input-append">
+        <%= text_field_tag :query, params[:query], :placeholder => 'Search users by email', :class => "span2 search-query form-control" %>
+        <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
+      </div>
+  <% end %>
+</p>
 <p>
 	<%= link_to "Update CSV user list", admin_users_update_csv_path, :class => 'btn btn-primary' %> 
 	<% if @latest_csv_date %>
@@ -13,7 +21,10 @@
 	<% end %>
 </p>
 <p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
-<p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-default' %></p>
+<p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-default' %> <%= GuestPass.count %> Guest passes.</p>
+<p><%= link_to "Push Registrations", admin_push_registrations_path, :class => 'btn btn-default' %> <%= PushRegistration.count %> Mobile push registrations.</p>
+<p><%= link_to "Push Notifications", admin_push_notifications_path, :class => 'btn btn-default' %> <%= Rpush::Notification.count %> total. <%= Rpush::Notification.where(delivered: false).count %> undelivered.</p>
+<p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush quick reads", admin_delete_cache_path(cache: "quick_reads"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
 
 <hr />
 
@@ -30,6 +41,8 @@
 <p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-default' %></p>
+<p><%= link_to "Subscription special - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'special'), :class => 'btn btn-default' %> <%= link_to "Subscription special - text", admin_subscription_email_path(format: 'text', subscription_type: 'special'), :class => 'btn btn-default' %></p>
+<p><%= link_to "Admin email", admin_admin_email_path(format: 'mjml'), :class => 'btn btn-info' %></p>
 
 <div class="form-actions">
 	<%= link_to 'Back', root_path, :class => 'btn btn-default' %>

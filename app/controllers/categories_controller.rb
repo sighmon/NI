@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   load_and_authorize_resource
 
   # Cache index as it takes a long time to compute
-  caches_action :index
+  caches_action :index, layout: false
 
   def index
     @categories = @categories.sort_by(&:display_name)

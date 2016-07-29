@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
@@ -125,6 +125,9 @@ gem 'google-api-client', '0.8.6'
 gem 'mjml-rails'#, git: 'https://github.com/sighmon/mjml-rails.git', require: 'mjml'
 # gem 'mjml-rails', path: '../mjml-rails/'#, require: 'mjml'
 
+# RPush for push notifications migrating away from Parse
+gem 'rpush'
+
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
 
@@ -169,13 +172,13 @@ group :test do
   gem 'simplecov', :require => false
   gem 'timecop'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
-  gem 'guard-rspec', '1.2.1'
+  gem 'guard-rspec'#, '1.2.1'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
-  gem 'rb-inotify', '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
-  gem 'rb-fsevent', '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-inotify', :require => false#, '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', :require => false#, '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
 end
 

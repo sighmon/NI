@@ -43,11 +43,15 @@
      |
     <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
     <hr />
+    <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+     |
+    <%= link_to 'Text subscribe special', issue_email_special_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <hr />
     <p><b>Create a zip file for the iOS app</b></p>
     <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-default btn-xs' %>
     <hr />
 
-    <p><b>iOS app Push Notification</b></p>
+    <p><b>iOS &amp; Android Push Notification</b></p>
 
     <% if not @issue.published? %>
       <p>This issue has to be published to send a push notification.</p>
@@ -57,9 +61,10 @@
       <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue) do |f| %>
         <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
         <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
+        <%= f.input :test_device_android, as: :boolean %>
         <%= f.input :alert_text, :placeholder => 'Message', required: false %>
         <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all devices.\n\nIt automatically includes: #{@issue.push_notification_text}"}) do %>
-          Send Push
+          Setup Push notifications
         <% end %>
       <% end %>
     <% end %>

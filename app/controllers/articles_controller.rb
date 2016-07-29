@@ -66,25 +66,33 @@ class ArticlesController < ApplicationController
   end
 
   def popular
-    @guest_passes = GuestPass.order(:use_count).reverse.first(10)
+    @guest_passes = GuestPass.order(:use_count).reverse.first(12)
+    @page_title = "Popular New Internationalist articles"
+    @page_description = "Articles from New Internationalist magazine that our readers have shared the most."
 
     # Set meta tags
-    set_meta_tags :title => "Poplar New Internationalist articles",
-            :description => "Articles from New Internationalist magazine that our readers have found most popular.",
+    set_meta_tags :site => 'New Internationalist',
+            :title => @page_title,
+            :description => @page_description,
             :keywords => "new, internationalist, magazine, digital, edition, popular, readers, ordered",
             :canonical => popular_url,
+            :alternate => [
+              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+            ],
             :open_graph => {
-            :title => "Poplar New Internationalist articles",
-            :description => "Articles from New Internationalist magazine that our readers have found most popular.",
-            :url   => popular_url,
-            :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
-            :site_name => "New Internationalist Magazine Digital Edition"
+              :title => @page_title,
+              :description => @page_description,
+              :url   => popular_url,
+              :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
+              :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-              :card => "summary",
+              :card => "summary_large_image",
               :site => "@#{ENV["TWITTER_NAME"]}",
               :creator => "@#{ENV["TWITTER_NAME"]}",
-              :title => @page_title_home,
+              :title => @page_title,
               :description => @page_description,
               :image => {
                 :src => @guest_passes.first.article.first_image.try(:data_url).to_s
@@ -112,6 +120,69 @@ class ArticlesController < ApplicationController
         # Don't show article :body here
         :article => { :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id] }
       }
+      ) }
+    end
+  end
+
+  def quick_reads
+    # Select a random 3 articles, cached for 1 day
+    @quick_reads = Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
+      # Need .to_a here otherwise it caches the scope, not the result of the query
+      Article.order("RANDOM()").limit(3).to_a
+    end
+
+    @page_title = "Today's quick reads"
+    @page_description = "Three articles selected for you today from New Internationalist magazine."
+
+    # Set meta tags
+    set_meta_tags :site => 'New Internationalist',
+            :title => @page_title,
+            :description => @page_description,
+            :keywords => "new, internationalist, magazine, quick reads, quick, reads, daily, selection, digital, edition",
+            :canonical => quick_reads_url,
+            :alternate => [
+              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+            ],
+            :open_graph => {
+              :title => @page_title,
+              :description => @page_description,
+              :url   => quick_reads_url,
+              :image => @quick_reads.first.first_image.try(:data_url).to_s,
+              :site_name => "New Internationalist Magazine Digital Edition"
+            },
+            :twitter => {
+              :card => "summary_large_image",
+              :site => "@#{ENV["TWITTER_NAME"]}",
+              :creator => "@#{ENV["TWITTER_NAME"]}",
+              :title => @page_title,
+              :description => @page_description,
+              :image => {
+                :src => @quick_reads.first.first_image.try(:data_url).to_s
+              },
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://",
+                :ipad => "newint://"
+                }
+              }
+            }
+    respond_to do |format|
+      format.html# { render :layout => false }
+      
+      format.json { render json: @quick_reads.to_json(
+      :only => 
+        # Don't show article :body here
+        [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id]
       ) }
     end
   end
@@ -279,28 +350,28 @@ class ArticlesController < ApplicationController
             :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
-            :card => "summary_large_image",
-            :site => "@#{ENV["TWITTER_NAME"]}",
-            :creator => "@#{ENV["TWITTER_NAME"]}",
-            :title => @article.title,
-            :description => strip_tags(@article.teaser),
-            :image => {
-              :src => first_image_for_meta_data
-            },
-            :app => {
-              :name => {
-              :iphone => ENV["ITUNES_APP_NAME"],
-              :ipad => ENV["ITUNES_APP_NAME"]
+              :card => "summary_large_image",
+              :site => "@#{ENV["TWITTER_NAME"]}",
+              :creator => "@#{ENV["TWITTER_NAME"]}",
+              :title => @article.title,
+              :description => strip_tags(@article.teaser),
+              :image => {
+                :src => first_image_for_meta_data
               },
-              :id => {
-              :iphone => ENV["ITUNES_APP_ID"],
-              :ipad => ENV["ITUNES_APP_ID"]
-              },
-              :url => {
-              :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
-              :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+              :app => {
+                :name => {
+                :iphone => ENV["ITUNES_APP_NAME"],
+                :ipad => ENV["ITUNES_APP_NAME"]
+                },
+                :id => {
+                :iphone => ENV["ITUNES_APP_ID"],
+                :ipad => ENV["ITUNES_APP_ID"]
+                },
+                :url => {
+                :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
+                :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+                }
               }
-            }
             }
     respond_to do |format|
       format.html # show.html.erb
@@ -510,75 +581,105 @@ class ArticlesController < ApplicationController
   end
 
   def send_push_notification
-    # Send a parse push notification
+    # Setup a push notification
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
     input_params = params["/issues/#{@issue.id}/articles/#{@article.id}/send_push_notification"]
     @alert_text = input_params[:alert_text]
     @device_id = input_params[:device_id]
 
-    if not Rails.env.production?
-      # If development environment, always push to dev device
-      @device_id = ENV["PARSE_DEV_DEVICE_ID"]
-    end
+    # if not Rails.env.production?
+    #   # If development environment, always push to dev device
+    #   @device_id = ENV["PARSE_DEV_DEVICE_ID"]
+    # end
 
     # Scheduled datetime is in UTC(GMT)
     @scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
 
-    api_endpoint = ENV["PARSE_API_ENDPOINT"]
-    api_headers = {
-      "X-Parse-Application-Id" => ENV["PARSE_APPLICATION_ID"],
-      "X-Parse-REST-API-Key" => ENV["PARSE_REST_API_KEY"],
-      "Content-Type" => "application/json"
-    }
-    api_body = {
-      "where" => {
-      "objectId" => @device_id, #Just push to a single user
-      "deviceType" => "ios"
-      },
-      "push_time" => @scheduled_datetime.to_time.iso8601.to_s,
-      "data" => {
-      "alert" => "#{@alert_text}",
-      "badge" => "Increment",
-      "sound" => "new-issue.caf",
-      "articleID" => @article.id.to_s,
-      "issueID" => @issue.id.to_s
-      }
-    }
-
-    # Remove "objectId" if no @device_id is present
-    api_body["where"].reject!{|k,v| v.nil? || v.empty? }
-    api_body = api_body.to_json
-
-    # logger.info "PARSE to post to api - body: #{api_body.to_s}"
-
-    begin
-      response = HTTParty.post(
-      api_endpoint,
-      headers: api_headers,
-      body: api_body
-      )
-    rescue => e
-      # Uh oh, Parse not available?
-      @httparty_error = e
+    if @scheduled_datetime > DateTime.now
+      # It will be set below
+    else
+      @scheduled_datetime = nil
     end
-    
-    if not @httparty_error and response and response.code == 200
+
+    data = {
+      body: "#{@alert_text}",
+      badge: "Increment",
+      title: "New Internationalist",
+      articleID: @article.id.to_s,
+      issueID: @issue.id.to_s,
+      deliver_after: @scheduled_datetime
+    }
+
+    if @device_id.empty?
+      # Loop thorugh all Android PushRegistration tokens and setup one push with an array of tokens
+      android_tokens = []
+      PushRegistration.where(device: 'android').each do |p|
+        android_tokens << p.token
+      end
+      if not android_tokens.empty?
+        # Setup push notifications for Android devices
+        logger.info "Creating #{android_tokens.count} Android push notifications."
+        android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        logger.info "Android push notifications response: #{android_response}"
+      else
+        logger.warn "WARNING: No Android push notifications created."
+      end
+
+      # Loop through all iOS PushRegistration tokens and setup iOS messages
+      ios_responses = []
+      PushRegistration.where(device: 'ios').each do |p|
+        ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+      end
+      if not ios_responses.empty?
+        logger.info "Creating #{ios_responses} iOS push notifications."
+        # Check that all iOS responses were OK
+        ios_response = false
+        ios_responses.each do |r|
+          if r
+            ios_response = true
+          else
+            logger.info "ERROR iOS push notification response: #{r}"
+            ios_response = false
+          end
+        end
+      else
+        logger.warn "WARNING: No iOS push notifications created."
+      end
+
+    else
+      # Test push!
+      if input_params[:test_device_android] == "1"
+        android_response = ApplicationHelper.rpush_create_android_push_notification([@device_id], data)
+        ios_response = true # Fake out a true response
+      else
+        android_response = true # Fake out a true response
+        ios_response = ApplicationHelper.rpush_create_ios_push_notification(@device_id, data)
+      end
+    end
+
+    # The actual sending is in the admin panel
+    # rpush_response = Rpush.push
+
+    # Check if the push worked and finish
+    if android_response and ios_response
       # Success!
-      # body = JSON.parse(response.body)
 
       # Mark the scheduled to send date, unless a single device push was sent.
-      @article.notification_sent = @scheduled_datetime unless not @device_id.blank?
+      if @device_id.blank? and Rails.env.production?
+        @article.notification_sent = @scheduled_datetime
+      end
       
       if @article.save
-        redirect_to issue_article_path(@issue, @article), notice: "Push sent!"
+        redirect_to admin_push_notifications_path, notice: "Push notifications setup!"
       else
-        redirect_to issue_article_path(@issue, @article), flash: { error: "Couldn't update article after push successfully sent." }
+        redirect_to @article, flash: { error: "Couldn't update article after push successfully setup." }
       end
     else
       # FAIL! server error.
-      redirect_to issue_article_path(@issue, @article), flash: { error: "Failed to push. Response: #{response.to_s unless !response}, Error: #{@httparty_error unless !@httparty_error}" }
+      redirect_to @article, flash: { error: "Failed to setup push notifications. Error: #{android_response} ... #{ios_response}" }
     end
+
   end
 
   def hide_images
