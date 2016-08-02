@@ -5,14 +5,14 @@
 </div>
 
 <div class="row">
-  <% if @guest_passes %>
-    <% @guest_passes.each_with_index do |pass, index| %>
+  <% if @popular_articles %>
+    <% @popular_articles.each_with_index do |article, index| %>
       <% if index % 3 == 0 %>
 </div>
 <div class="row">
       <% end %>
       <div class="col-sm-4">
-        <%= render :partial => "popular_article", :locals => { :article => pass.article, :guest_pass => pass } %>
+        <%= render :partial => "popular_article", :locals => { :article => article, :guest_pass => article.popular_guest_pass } %>
       </div>
     <% end %>
   <% end %>

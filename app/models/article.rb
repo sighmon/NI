@@ -33,6 +33,47 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def score
+    # Article score is based on guest_pass use_count and reduces over time.
+    # logger.info "Use count: " + self.total_guest_passes_use_count.to_s
+    age_in_seconds = Time.now - self.publication
+    mm, ss = age_in_seconds.divmod(60)
+    hh, mm = mm.divmod(60)
+    dd, hh = hh.divmod(24)
+    age_in_days = dd
+    # logger.info "Age: " + age_in_days.to_s
+
+    # Article score algorithm
+    score_drop = 1000
+    maximum_score = 10.0
+    (score_drop / (age_in_days + (score_drop/maximum_score))) * (self.total_guest_passes_use_count/maximum_score)
+
+    # Decay algorithm from https://github.com/clux/decay/blob/master/decay.js
+    # gravity = 1.8
+    # hourAge = (Time.now() - self.publication) / (1000 * 3600);
+    # return (self.total_guest_passes_use_count - 1) / ((hourAge + 2) ** gravity)
+  end
+
+  def total_guest_passes_use_count
+    self.guest_passes.all.inject(0) { |acc,guest_pass| acc + guest_pass.use_count }
+  end
+
+  def self.popular
+    # Returns the 12 most popular articles shared via guest passes and sorted by score
+    Rails.cache.fetch("popular_guest_passes", expires_in: 1.hours) do
+      # Need .to_a here otherwise it caches the scope, not the result of the query
+      # GuestPass.order(:use_count).reverse.first(12).to_a
+
+      # Most popular 12 articles sorted by score
+      Article.all.sort_by(&:score).reverse.first(12)
+    end
+  end
+
+  def popular_guest_pass
+    # Find or create a guest pass for the user 'popular' so that popular gets the guest_pass clicks and uses rather than corrupting the actual guest_pass clicks
+    GuestPass.find_or_create_by(:user_id => User.find_by_username("popular").id, :article_id => self.id)
+  end
+
   def previous
     my_index = self.issue.ordered_articles.find_index(self)
    
@@ -122,6 +163,13 @@ class Article < ActiveRecord::Base
       return true
     else
       return false
+    end
+  end
+
+  def self.quick_reads
+    Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
+      # Need .to_a here otherwise it caches the scope, not the result of the query
+      Article.order("RANDOM()").limit(3).to_a
     end
   end
 

@@ -18,6 +18,10 @@ class HomeController < ApplicationController
 
     @latest_issue = Issue.latest
 
+    @quick_reads = Article.quick_reads
+
+    @popular = Article.popular.first(3)
+
     @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
       latest_issue_categories = []
       @latest_issue.try(:articles).try(:each) do |article|

@@ -70,6 +70,39 @@
 <hr />
 
 <div class="row">
+	<div class="col-sm-6 home-quick-reads">
+		<h4>Today's quick reads</h4>
+		<div class="row">
+		<% @quick_reads.each do |a| %>
+			<% if can? :read, a %>
+				<!-- Link to article -->
+				<a href="<%= issue_article_path(a.issue, a) %>">
+					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
+				</a>
+			<% else %>
+				<!-- Link to quick reads page -->
+				<a href="<%= quick_reads_path %>">
+					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
+				</a>
+			<% end %>
+		<% end %>
+		</div>
+	</div>
+	<div class="col-sm-6 home-popular">
+		<h4>Popular articles</h4>
+		<div class="row">
+		<% @popular.each do |article| %>
+			<a href="<%= generate_guest_pass_link_string(article.popular_guest_pass) %>">
+				<%= render :partial => "home_mini_article", :locals => { :article => article } %>
+			</a>
+		<% end %>
+		</div>
+	</div>
+</div>
+
+<hr />
+
+<div class="row">
 	<nav class="col-sm-12 latest-issue-categories">
 		<h6>What's inside this month's magazine</h6>
     <ul class="breadcrumb">
