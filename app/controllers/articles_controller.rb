@@ -85,7 +85,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :url   => popular_url,
-              :image => @popular_articles.first.first_image.try(:data_url).to_s,
+              :image => @popular_articles.first.try(:first_image).try(:data_url).to_s,
               :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
@@ -95,7 +95,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :image => {
-                :src => @popular_articles.first.first_image.try(:data_url).to_s
+                :src => @popular_articles.first.try(:first_image).try(:data_url).to_s
               },
               :app => {
                 :name => {
@@ -147,7 +147,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :url   => quick_reads_url,
-              :image => @quick_reads.first.first_image.try(:data_url).to_s,
+              :image => @quick_reads.first.try(:first_image).try(:data_url).to_s,
               :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
@@ -157,7 +157,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :image => {
-                :src => @quick_reads.first.first_image.try(:data_url).to_s
+                :src => @quick_reads.first.try(:first_image).try(:data_url).to_s
               },
               :app => {
                 :name => {

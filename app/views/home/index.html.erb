@@ -71,7 +71,7 @@
 
 <div class="row">
 	<div class="col-sm-6 home-quick-reads">
-		<h4>Today's quick reads</h4>
+		<h4><%= link_to "Today's quick reads", quick_reads_path %></h4>
 		<div class="row">
 		<% @quick_reads.each do |a| %>
 			<% if can? :read, a %>
@@ -89,7 +89,7 @@
 		</div>
 	</div>
 	<div class="col-sm-6 home-popular">
-		<h4>Popular articles</h4>
+		<h4><%= link_to "Popular articles", popular_path %></h4>
 		<div class="row">
 		<% @popular.each do |article| %>
 			<a href="<%= generate_guest_pass_link_string(article.popular_guest_pass) %>">

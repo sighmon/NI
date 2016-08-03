@@ -132,8 +132,12 @@
 									<li><a href="http://www.newint.com.au/shop">Shop - Fair Trade on-line shop</a></li>
 									<li><a href="http://www.newint.com.au/blog">Blog - Social Justice news</a></li>
 									<li><a href="http://www.newint.com.au">Home - New Internationalist Australia home page</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><%= link_to "Quick reads", quick_reads_path %></li>
+                  <li><%= link_to "Popular articles", popular_path %></li>
 									<% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
 									<% else %>
+                    <li role="separator" class="divider"></li>
 										<li class="home-donate"><a>
 											<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 												<input type="hidden" name="cmd" value="_s-xclick">
