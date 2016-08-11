@@ -44,7 +44,7 @@ class HomeController < ApplicationController
     @blog_category = Category.find_by_name("/blog/")
 
     @blog_latest = Rails.cache.fetch("home_blog_latest", expires_in: 12.hours) do
-      @blog_category.try(:articles).try(:select, &:published).try(:last)
+      @blog_category.try(:articles).try(:order, :publication).try(:select, &:published).try(:last)
     end
 
     @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
