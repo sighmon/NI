@@ -399,4 +399,10 @@ class User < ActiveRecord::Base
     Settings.users_csv = User.order(:email).all.to_comma()
   end
 
+  def self.find_by_whitelist(ip)
+    # sql one liner to handle both CIDR and IP ranges
+    query = ActiveRecord::Base.send(:sanitize_sql_array, ["with ip as (select ?::inet as value) select * from (select *, regexp_split_to_table(ip_whitelist,E',') as pattern from users) as expanded, regexp_split_to_array(expanded.pattern,E'-') as range where (expanded.pattern <> '' and expanded.pattern !~ '-' and (select value from ip) <<= expanded.pattern::inet) or (expanded.pattern ~ '-' and ((select value from ip) between range[1]::inet and range[2]::inet)) limit 1", ip])
+    self.find_by_sql(query)
+  end
+
 end
