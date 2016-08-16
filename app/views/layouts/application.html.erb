@@ -100,15 +100,11 @@
                     </form>
 									</li>
 									<li>
-										<% if request.ssl? %>
-											<a href="http://ss946.fusionbot.com/cgi-bin/ss_query?rgn=main&sn=157281474">Search our shop</a>
-										<% else %>
-											<form accept-charset="UTF-8" class="form-search" role="search" action="http://ss946.fusionbot.com/cgi-bin/ss_query" method="get" name="fbsearch" id="fbsearch" type="search" results="5" placeholder="Search the shop">
-                        <input type="hidden" name="rgn" value="main">
-                        <input type="hidden" name="sn" value="157281474">
-                        <input type="text" class="form-control search" title="Search for a product" name="keys" size="20" placeholder="Shop search">
-                      </form>
-                    <% end %>
+										<form class="form-search" role="search" action="https://www.newint.com.au/shop/search-results.htm" method="get" type="search" results="20" placeholder="Shop search">
+                      <div class="form-group">
+                        <input type="search" class="form-control text" title="Shop search" name="query" size="20" placeholder="Shop search">
+                      </div>
+                    </form>
 									</li>
 								</ul>
 							</li>
