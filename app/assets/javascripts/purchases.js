@@ -41,5 +41,10 @@ function sendPurchase() {
 function sendPrePurchase(issueNumber, issuePrice) {
 	// Send google the pre-purchase event
 	ga('send', 'event', 'prePurchase', 'buy', issueNumber, issuePrice);
+	dataLayer.push({
+    'conversionValue': issuePrice,
+    'issueNumber': issueNumber,
+    'event': 'prePurchase'
+  });
 	// console.log('PrePurchase made: ' + issueNumber + ', ' + issuePrice);
 };

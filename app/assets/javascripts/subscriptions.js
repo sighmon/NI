@@ -36,5 +36,10 @@ function sendSubscription() {
 function sendPreSubscription() {
 	// Send google the pre-purchase event
 	ga('send', 'event', 'preSubscription', 'buy');
+	dataLayer.push({
+    // 'conversionValue': subscriptionPrice,
+    // 'subscriptionType': subscriptionType,
+    'event': 'preSubscription'
+  });
 	// console.log('PreSubscription made.');
 };
