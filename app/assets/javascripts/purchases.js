@@ -37,3 +37,9 @@ function sendPurchase() {
 	ga('ecommerce:clear');
 	// console.log('Purchase finished.');
 };
+
+function sendPrePurchase(issueNumber, issuePrice) {
+	// Send google the pre-purchase event
+	ga('send', 'event', 'prePurchase', 'buy', issueNumber, issuePrice);
+	// console.log('PrePurchase made: ' + issueNumber + ', ' + issuePrice);
+};

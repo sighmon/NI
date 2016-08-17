@@ -32,3 +32,9 @@ function sendSubscription() {
 	ga('ecommerce:clear');
 	// console.log('Subscription finished.');
 };
+
+function sendPreSubscription() {
+	// Send google the pre-purchase event
+	ga('send', 'event', 'preSubscription', 'buy');
+	// console.log('PreSubscription made.');
+};
