@@ -351,4 +351,8 @@ module ApplicationHelper
         end
     end
 
+    def self.bad_ip_alert_text
+        "Bad IP address in student account! Check your last entry, then go to Admin > Settings to remove this warning."
+    end
+
 end

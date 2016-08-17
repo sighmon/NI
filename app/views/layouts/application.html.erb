@@ -55,6 +55,9 @@
 								<% end %>
 								<% if current_user.try(:admin?) %>
 									<li><%= link_to raw("<i class='fa fa-heart'></i> Admin"), admin_root_path %></li>
+                  <% if Settings.admin_alert and Settings.admin_alert == 1 %>
+                    <% flash[:alert] = ApplicationHelper.bad_ip_alert_text %>
+                  <% end %>
 								<% end %>
 								<% if not current_user.parent and can? :manage, current_user %>
 									<li class="divider"></li>
@@ -144,20 +147,7 @@
 									<% end %>
 								</ul>
 							</li>
-							<!-- SSL by default now. -->
-<!-- 							<li>
-								<% if request.ssl? %>
-									<% link_to image_tag("icon-lock.png", :alt => "Change to a non-https connection", :title => "Change to a non-https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "http"), :class => "ssl-changer" %>
-								<% else %>
-									<% link_to image_tag("icon-unlock.png", :alt => "Change to a https connection", :title => "Change to a https connection", :size => "11x14"), url_for(:only_path => false, :protocol => "https"), :class => "ssl-changer" %>
-								<% end %>
-							</li> -->
 						</ul>
-<!--
-						<form class="navbar-search pull-right">
-							<input type="text" class="search-query" placeholder="Search">
-						</form>
--->
 					</div>
 				</div>
 			</div>
