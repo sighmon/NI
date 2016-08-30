@@ -157,6 +157,9 @@ NI::Application.configure do
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
+  # Memcachier is down.. temporarily don't cache..
+  config.cache_store = :null_store
+
   # Enable serving of images, stylesheets, and JavaScripts from Amazon Cloudfront asset server
   config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
   # Enable serving of stylesheets and javascrips from Amazon S3
