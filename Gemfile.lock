@@ -397,7 +397,6 @@ GEM
     lumberjack (1.0.10)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    memcachier (0.0.2)
     memoist (0.15.0)
     meta-tags (2.2.0)
       actionpack (>= 3.2.0)
@@ -434,8 +433,6 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.4)
-    rack-cache (1.6.1)
-      rack (>= 0.4)
     rack-mini-profiler (0.10.1)
       rack (>= 1.2.0)
     rack-test (0.6.3)
@@ -657,17 +654,14 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   kaminari-bootstrap
-  kgio
   less-rails
   libv8
-  memcachier
   meta-tags
   mjml-rails
   newrelic_rpm
   paypal-recurring
   pg
   platform-api
-  rack-cache
   rack-mini-profiler
   rails (= 4.2.7.1)
   rails-observers

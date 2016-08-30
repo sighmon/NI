@@ -98,9 +98,9 @@ gem 'newrelic_rpm'
 gem 'zipruby'
 
 # Rack Cache and memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-gem 'rack-cache'
+# gem 'rack-cache'
 gem 'dalli'
-gem 'kgio'
+# gem 'kgio'
 # gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
