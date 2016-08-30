@@ -115,9 +115,9 @@ NI::Application.configure do
   config.assets.digest = true
 
   # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
-                             :username => ENV["MEMCACHIER_USERNAME"],
-                             :password => ENV["MEMCACHIER_PASSWORD"],
+  client = Dalli::Client.new((ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+                             :username => ENV["MEMCACHIER_ROSE_USERNAME"],
+                             :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
                              :failover => true,
                              :socket_timeout => 1.5,
                              :socket_failure_delay => 0.2,
