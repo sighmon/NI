@@ -101,7 +101,7 @@ gem 'zipruby'
 gem 'rack-cache'
 gem 'dalli'
 gem 'kgio'
-gem 'memcachier'
+# gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
 gem 'heroku-deflater', :group => :production
