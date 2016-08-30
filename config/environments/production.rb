@@ -115,24 +115,25 @@ NI::Application.configure do
   config.assets.digest = true
 
   # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-  client = Dalli::Client.new((ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
-                             :username => ENV["MEMCACHIER_ROSE_USERNAME"],
-                             :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
-                             :failover => true,
-                             :socket_timeout => 1.5,
-                             :socket_failure_delay => 0.2,
-                             :value_max_bytes => 10485760)
-  # client = Dalli::Client.new((ENV["MEMCACHEDCLOUD_SERVERS"] || "").split(","),
-  #                            :username => ENV["MEMCACHEDCLOUD_USERNAME"],
-  #                            :password => ENV["MEMCACHEDCLOUD_PASSWORD"],
+  # client = Dalli::Client.new((ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+  #                            :username => ENV["MEMCACHIER_ROSE_USERNAME"],
+  #                            :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
   #                            :failover => true,
   #                            :socket_timeout => 1.5,
   #                            :socket_failure_delay => 0.2,
   #                            :value_max_bytes => 10485760)
-  config.action_dispatch.rack_cache = {
-    :metastore    => client,
-    :entitystore  => client
-  }
+  # config.action_dispatch.rack_cache = {
+  #   :metastore    => client,
+  #   :entitystore  => client
+  # }
+  config.cache_store = :dalli_store,
+                    (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+                    {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
+                     :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
+                     :failover => true,
+                     :socket_timeout => 1.5,
+                     :socket_failure_delay => 0.2
+                    }
   config.static_cache_control = "public, max-age=2592000"
 
   # Defaults to Rails.root.join("public/assets")
