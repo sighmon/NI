@@ -56,7 +56,7 @@ class ArticlesController < ApplicationController
       
       format.json { render json: @articles.to_json(
       # Don't show :body here
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id],
         :include => {
           :images => {},
           :categories => { :only => [:name, :colour, :id] }
