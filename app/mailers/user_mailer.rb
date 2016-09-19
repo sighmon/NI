@@ -88,11 +88,12 @@ class UserMailer < ActionMailer::Base
     end
   end
 
-  def free_subscription_confirmation(user)
+  def free_subscription_confirmation(user, number_of_months)
     @user = user
     @greeting = "Hi"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
+    @number_of_months = number_of_months
     @subscription = user.subscriptions.last
     mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription") do |format|
       format.text

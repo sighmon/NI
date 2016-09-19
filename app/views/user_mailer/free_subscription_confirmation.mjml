@@ -46,7 +46,7 @@
 						font-weight="300"
 						color="#8e8e8e">
 						<%= @greeting %> <%= @user.username %>,<br /><br />
-						Lucky you! You've been given a complimentary 1 year subscription to New Internationalist magazine.<br /><br />
+						Lucky you! You've been given a complimentary <%= @number_of_months %> month subscription to New Internationalist magazine.<br /><br />
 					
 						Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
 

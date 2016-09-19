@@ -17,10 +17,11 @@
 		<%= link_to 'CF 3month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 3), :class => 'btn btn-xs btn-warning', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 3 month subscription to: '#{@user.username}'?"))} %> | 
 		<%= link_to 'CF 1month sub', admin_user_crowdfunding_subscription_path(@user,:number_of_months => 1), :class => 'btn btn-xs btn-warning', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 month subscription to: '#{@user.username}'?"))} %>
 		<hr />
-		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-inline' } do |f| %>
+		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
 		    <%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
+		    <%= f.input :send_email, as: :boolean, default: false %>
 		    <%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
-				Give free SILENT sub
+				Give free sub
 			<% end %>
     <% end %>
     <hr />
