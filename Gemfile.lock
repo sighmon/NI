@@ -246,10 +246,9 @@ GEM
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
-    fog-profitbricks (0.0.5)
-      fog-core
-      fog-xml
-      nokogiri
+    fog-profitbricks (2.0.1)
+      fog-core (~> 1.42)
+      fog-json (~> 1.0)
     fog-rackspace (0.1.1)
       fog-core (>= 1.35)
       fog-json (>= 1.0)
@@ -284,7 +283,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.0.1)
+    fog-vsphere (1.1.0)
       fog-core
       rbvmomi (~> 1.8.0)
     fog-xenserver (0.2.3)
@@ -366,7 +365,7 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
-    jwt (1.5.4)
+    jwt (1.5.5)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -399,8 +398,8 @@ GEM
       mime-types (>= 1.16, < 4)
     memcachier (0.0.2)
     memoist (0.15.0)
-    meta-tags (2.2.0)
-      actionpack (>= 3.2.0)
+    meta-tags (2.3.1)
+      actionpack (>= 3.2.0, <= 5.1.0)
     method_source (0.8.2)
     mime-types (2.99.3)
     mimemagic (0.3.2)
