@@ -441,9 +441,21 @@ class HomeController < ApplicationController
       editors_letter = ActionController::Base.helpers.strip_tags(i.editors_letter).gsub("\r\n\r\n", "\n\n")
       {
         title: i.title,
+        subtitle: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
         metadata: {
           thumbnailURL: i.cover_url(:home2x).to_s,
-          excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100)
+          excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+          canonicalURL: issue_url(i),
+          datePublished: i.release.to_datetime.iso8601,
+          dateModified: i.release.to_datetime.iso8601,
+          dateCreated: i.release.to_datetime.iso8601,
+          coverArt: {
+            type: "image",
+            URL: i.cover_url(:home2x).to_s,
+            accessibilityCaption: i.title
+          },
+          keywords: ["new", "internationalist", "magazine", "archive", "digital", "edition", "australia"],
+          authors: [i.editors_name]
         },
         version: "1.2",
         identifier: ENV["APPLE_NEWS_IDENTIFIER"],
