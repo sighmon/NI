@@ -411,6 +411,7 @@ class HomeController < ApplicationController
       @published_issues.pop
     end
 
+    # OLD Apple News format.. new one is JSON
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.rss('version' => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom') do
         xml.channel do
@@ -435,8 +436,105 @@ class HomeController < ApplicationController
       end
     }
 
+    # New Apple News format for Sept 2016
+    @apple_news_issues = @published_issues.map do |i|
+      editors_letter = ActionController::Base.helpers.strip_tags(i.editors_letter).gsub("\r\n\r\n", "\n\n")
+      {
+        title: i.title,
+        metadata: {
+          thumbnailURL: i.cover_url(:home2x).to_s,
+          excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100)
+        },
+        version: "1.2",
+        identifier: ENV["APPLE_NEWS_IDENTIFIER"],
+        language: "en",
+        layout: {
+          columns: 10,
+          width: 1024,
+          margin: 85,
+          gutter: 20
+        },
+        documentStyle: {
+          backgroundColor: "#F5F9FB"
+        },
+        components: [
+          {
+            role: "image",
+            URL: i.cover_url(:home2x).to_s,
+            caption: i.title,
+            layout: "default-image"
+          },
+          {
+            role: "title",
+            text: i.title,
+            layout: "default-title"
+          },
+          {
+            role: "byline",
+            text: "#{i.release.strftime('%B, %Y')}",
+            layout: "default-byline"
+          },
+          {
+            role: "body",
+            text: editors_letter
+          }
+        ],
+        textStyles: {},
+        "textStyles": {},
+        "componentLayouts": {
+          "default-image": {
+            "maximumContentWidth": 200,
+            "margin": {
+              "top": 10
+            }
+          },
+          "default-title": {
+            "margin": {
+              "top": 20,
+              "bottom": 5
+            }
+          },
+          "default-intro": {
+            "margin": {
+              "bottom": 15
+            }
+          },
+          "default-byline": {
+            "margin": {
+              "bottom": 10
+            }
+          }
+        },
+        "componentStyles": {},
+        "componentTextStyles": {
+          "default-title": {
+            "fontName": "AppleSDGothicNeo-Bold",
+            "textColor": "#000000",
+            "fontSize": 38,
+            "stroke": {
+              "color": "#000000",
+              "width": 2
+            }
+          },
+          "default-byline": {
+            "fontName": "AppleSDGothicNeo-Medium",
+            "textColor": "#999999",
+            "fontSize": 18
+          },
+          "default-intro": {
+            "fontName": "AppleSDGothicNeo-Medium",
+            "textColor": "#999999",
+            "fontSize": 14
+          },
+          "default-body": {
+            "textColor": "#333333"
+          }
+        }
+      }
+    end
+
     respond_to do |format|
-      format.json { render json: @published_issues.to_json }
+      format.json { render json: @apple_news_issues.to_json }
       format.xml { render xml: builder.to_xml }
     end
 
