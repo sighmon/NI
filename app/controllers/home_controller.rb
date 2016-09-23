@@ -488,12 +488,52 @@ class HomeController < ApplicationController
           },
           {
             role: "body",
-            text: editors_letter
-          }
+            text: editors_letter,
+            layout: "default-body"
+          },
+          {
+            role: "divider",
+            layout: "default-divider"
+          },
+          i.articles.map do |article|
+            {
+              role: "section",
+              components: [
+                {
+                  role: "photo",
+                  URL: article.first_image.try(:data).to_s.blank? ? "http://localhost:3000/assets/fallback/threehundred_no_image@2x-b294ccae019d66bd8732c653cabe1c30bf242de34ccf5fb434d92bac8db2d8aa.jpg" : article.first_image.data.to_s,
+                  caption: article.first_image.try(:caption).to_s.blank? ? "No image" : ActionController::Base.helpers.strip_tags(article.first_image.try(:caption)),
+                  layout: "article-photo"
+                },
+                {
+                  role: "title",
+                  text: article.title,
+                  layout: "article-title"
+                },
+                { role: "byline",
+                  text: article.teaser.blank? ? article.categories.first.display_name.to_s : article.teaser,
+                  layout: "article-byline"
+                },
+                {
+                  role: "divider",
+                  layout: "default-divider"
+                }
+              ]
+            }
+          end
         ],
         textStyles: {},
         "textStyles": {},
         "componentLayouts": {
+          "default-divider": {
+            "margin": {
+              "bottom": 20
+            },
+            "stroke": {
+              color: "#DBDBDB",
+              width: 2
+            }
+          },
           "default-image": {
             "maximumContentWidth": 200,
             "margin": {
@@ -512,6 +552,28 @@ class HomeController < ApplicationController
             }
           },
           "default-byline": {
+            "margin": {
+              "bottom": 10
+            }
+          },
+          "default-body": {
+            "margin": {
+              "bottom": 20
+            }
+          },
+          "article-photo": {
+            "ignoreDocumentGutter": "both",
+            "ignoreDocumentMargin": "both",
+            "margin": 0,
+            "gutter": 0
+          },
+          "article-title": {
+            "margin": {
+              "top": 20,
+              "bottom": 5
+            }
+          },
+          "article-byline": {
             "margin": {
               "bottom": 10
             }
@@ -540,6 +602,20 @@ class HomeController < ApplicationController
           },
           "default-body": {
             "textColor": "#333333"
+          },
+          "article-title": {
+            "fontName": "AppleSDGothicNeo-Bold",
+            "textColor": "#000000",
+            "fontSize": 20,
+            "stroke": {
+              "color": "#000000",
+              "width": 2
+            }
+          },
+          "article-byline": {
+            "fontName": "AppleSDGothicNeo-Medium",
+            "textColor": "#999999",
+            "fontSize": 18
           }
         }
       }
