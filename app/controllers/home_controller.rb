@@ -437,188 +437,193 @@ class HomeController < ApplicationController
     }
 
     # New Apple News format for Sept 2016
-    @apple_news_issues = @published_issues.map do |i|
-      editors_letter = ActionController::Base.helpers.strip_tags(i.editors_letter).gsub("\r\n\r\n", "\n\n")
-      {
-        title: i.title,
-        subtitle: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
-        metadata: {
-          thumbnailURL: i.cover_url(:home2x).to_s,
-          excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
-          canonicalURL: issue_url(i),
-          datePublished: i.release.to_datetime.iso8601,
-          dateModified: i.release.to_datetime.iso8601,
-          dateCreated: i.release.to_datetime.iso8601,
-          coverArt: {
-            type: "image",
-            URL: i.cover_url(:home2x).to_s,
-            accessibilityCaption: i.title
-          },
-          keywords: ["new", "internationalist", "magazine", "archive", "digital", "edition", "australia"],
-          authors: [i.editors_name]
+    latest_issue = @published_issues.first
+    editors_letter = ActionController::Base.helpers.strip_tags(latest_issue.editors_letter).gsub("\r\n\r\n", "\n\n")
+    @apple_news_issues = {
+      title: latest_issue.title,
+      subtitle: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+      metadata: {
+        thumbnailURL: latest_issue.cover_url(:home2x).to_s,
+        excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+        canonicalURL: issue_url(latest_issue),
+        datePublished: latest_issue.release.to_datetime.iso8601,
+        dateModified: latest_issue.release.to_datetime.iso8601,
+        dateCreated: latest_issue.release.to_datetime.iso8601,
+        coverArt: {
+          type: "image",
+          URL: latest_issue.cover_url(:home2x).to_s,
+          accessibilityCaption: latest_issue.title
         },
-        version: "1.2",
-        identifier: ENV["APPLE_NEWS_IDENTIFIER"],
-        language: "en",
-        layout: {
-          columns: 10,
-          width: 1024,
-          margin: 85,
-          gutter: 20
-        },
-        documentStyle: {
-          backgroundColor: "#F5F9FB"
-        },
-        components: [
-          {
-            role: "image",
-            URL: i.cover_url(:home2x).to_s,
-            caption: i.title,
-            layout: "default-image"
+        keywords: ["new", "internationalist", "magazine", "archive", "digital", "edition", "australia"],
+        authors: [latest_issue.editors_name]
+      },
+      version: "1.2",
+      identifier: ENV["APPLE_NEWS_IDENTIFIER"],
+      language: "en",
+      layout: {
+        columns: 10,
+        width: 1024,
+        margin: 85,
+        gutter: 20
+      },
+      documentStyle: {
+        backgroundColor: "#F5F9FB"
+      },
+      "textStyles": {},
+      "componentLayouts": {
+        "default-divider": {
+          "margin": {
+            "top": 10,
+            "bottom": 20
           },
-          {
-            role: "title",
-            text: i.title,
-            layout: "default-title"
-          },
-          {
-            role: "byline",
-            text: "#{i.release.strftime('%B, %Y')}",
-            layout: "default-byline"
-          },
-          {
-            role: "body",
-            text: editors_letter,
-            layout: "default-body"
-          },
-          {
-            role: "divider",
-            layout: "default-divider"
-          },
-          i.articles.map do |article|
-            {
-              role: "section",
-              components: [
-                {
-                  role: "photo",
-                  URL: article.first_image.try(:data).to_s.blank? ? "http://localhost:3000/assets/fallback/threehundred_no_image@2x-b294ccae019d66bd8732c653cabe1c30bf242de34ccf5fb434d92bac8db2d8aa.jpg" : article.first_image.data.to_s,
-                  caption: article.first_image.try(:caption).to_s.blank? ? "No image" : ActionController::Base.helpers.strip_tags(article.first_image.try(:caption)),
-                  layout: "article-photo"
-                },
-                {
-                  role: "title",
-                  text: article.title,
-                  layout: "article-title"
-                },
-                { role: "byline",
-                  text: article.teaser.blank? ? article.categories.first.display_name.to_s : article.teaser,
-                  layout: "article-byline"
-                },
-                {
-                  role: "divider",
-                  layout: "default-divider"
-                }
-              ]
-            }
-          end
-        ],
-        textStyles: {},
-        "textStyles": {},
-        "componentLayouts": {
-          "default-divider": {
-            "margin": {
-              "bottom": 20
-            },
-            "stroke": {
-              color: "#DBDBDB",
-              width: 2
-            }
-          },
-          "default-image": {
-            "maximumContentWidth": 200,
-            "margin": {
-              "top": 10
-            }
-          },
-          "default-title": {
-            "margin": {
-              "top": 20,
-              "bottom": 5
-            }
-          },
-          "default-intro": {
-            "margin": {
-              "bottom": 15
-            }
-          },
-          "default-byline": {
-            "margin": {
-              "bottom": 10
-            }
-          },
-          "default-body": {
-            "margin": {
-              "bottom": 20
-            }
-          },
-          "article-photo": {
-            "ignoreDocumentGutter": "both",
-            "ignoreDocumentMargin": "both",
-            "margin": 0,
-            "gutter": 0
-          },
-          "article-title": {
-            "margin": {
-              "top": 20,
-              "bottom": 5
-            }
-          },
-          "article-byline": {
-            "margin": {
-              "bottom": 10
-            }
+          "stroke": {
+            color: "#DBDBDB",
+            width: 2
           }
         },
-        "componentStyles": {},
-        "componentTextStyles": {
-          "default-title": {
-            "fontName": "AppleSDGothicNeo-Bold",
-            "textColor": "#000000",
-            "fontSize": 38,
-            "stroke": {
-              "color": "#000000",
-              "width": 2
-            }
-          },
-          "default-byline": {
-            "fontName": "AppleSDGothicNeo-Medium",
-            "textColor": "#999999",
-            "fontSize": 18
-          },
-          "default-intro": {
-            "fontName": "AppleSDGothicNeo-Medium",
-            "textColor": "#999999",
-            "fontSize": 14
-          },
-          "default-body": {
-            "textColor": "#333333"
-          },
-          "article-title": {
-            "fontName": "AppleSDGothicNeo-Bold",
-            "textColor": "#000000",
-            "fontSize": 20,
-            "stroke": {
-              "color": "#000000",
-              "width": 2
-            }
-          },
-          "article-byline": {
-            "fontName": "AppleSDGothicNeo-Medium",
-            "textColor": "#999999",
-            "fontSize": 18
+        "default-image": {
+          "maximumContentWidth": 200,
+          "margin": {
+            "top": 10
+          }
+        },
+        "default-title": {
+          "margin": {
+            "top": 20,
+            "bottom": 5
+          }
+        },
+        "default-intro": {
+          "margin": {
+            "bottom": 15
+          }
+        },
+        "default-byline": {
+          "margin": {
+            "bottom": 10
+          }
+        },
+        "default-body": {
+          "margin": {
+            "bottom": 20
+          }
+        },
+        "article-photo": {
+          "ignoreDocumentGutter": "both",
+          "ignoreDocumentMargin": "both",
+          "margin": 0,
+          "gutter": 0
+        },
+        "article-title": {
+          "margin": {
+            "top": 20,
+            "bottom": 5
+          }
+        },
+        "article-byline": {
+          "margin": {
+            "bottom": 10
           }
         }
+      },
+      "componentStyles": {},
+      "componentTextStyles": {
+        "default-title": {
+          "fontName": "AppleSDGothicNeo-Bold",
+          "textColor": "#000000",
+          "fontSize": 38,
+          "stroke": {
+            "color": "#000000",
+            "width": 2
+          }
+        },
+        "default-byline": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 18
+        },
+        "default-intro": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 14
+        },
+        "default-body": {
+          "textColor": "#333333"
+        },
+        "article-title": {
+          "fontName": "AppleSDGothicNeo-Bold",
+          "textColor": "#000000",
+          "fontSize": 20,
+          "stroke": {
+            "color": "#000000",
+            "width": 2
+          }
+        },
+        "article-byline": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 18
+        }
       }
+    }
+
+    # Add the issue information
+    @apple_news_issues[:components] = [
+      {
+        role: "image",
+        URL: latest_issue.cover_url(:home2x).to_s,
+        caption: latest_issue.title,
+        layout: "default-image"
+      },
+      {
+        role: "title",
+        text: latest_issue.title,
+        layout: "default-title"
+      },
+      {
+        role: "byline",
+        text: "#{latest_issue.release.strftime('%B, %Y')}",
+        layout: "default-byline"
+      },
+      {
+        role: "body",
+        text: editors_letter,
+        layout: "default-body"
+      },
+      {
+        role: "divider",
+        layout: "default-divider"
+      }
+    ]
+
+    # Add the article information
+    latest_issue.articles.each do |article|
+      @apple_news_issues[:components].push(
+        {
+          role: "section",
+          components: [
+            {
+              role: "photo",
+              URL: article.first_image.try(:data).to_s.blank? ? ActionController::Base.helpers.image_path("fallback/no_image.jpg") : article.first_image.data.to_s,
+              caption: article.first_image.try(:caption).to_s.blank? ? "No caption" : ActionController::Base.helpers.strip_tags(article.first_image.try(:caption)),
+              layout: "article-photo"
+            },
+            {
+              role: "title",
+              text: article.title,
+              layout: "article-title"
+            },
+            { role: "byline",
+              text: article.teaser.blank? ? article.categories.first.display_name.to_s : ActionController::Base.helpers.strip_tags(article.teaser),
+              layout: "article-byline"
+            },
+            {
+              role: "divider",
+              layout: "default-divider"
+            }
+          ]
+        }
+      )
     end
 
     respond_to do |format|
