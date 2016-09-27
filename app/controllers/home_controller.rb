@@ -449,11 +449,11 @@ class HomeController < ApplicationController
         datePublished: latest_issue.release.to_datetime.iso8601,
         dateModified: latest_issue.release.to_datetime.iso8601,
         dateCreated: latest_issue.release.to_datetime.iso8601,
-        coverArt: {
-          type: "image",
-          URL: latest_issue.cover_url(:home2x).to_s,
-          accessibilityCaption: latest_issue.title
-        },
+        # coverArt: {
+        #   type: "image",
+        #   URL: latest_issue.cover_url(:home2x).to_s,
+        #   accessibilityCaption: latest_issue.title
+        # },
         keywords: ["new", "internationalist", "magazine", "archive", "digital", "edition", "australia"],
         authors: [latest_issue.editors_name]
       },
