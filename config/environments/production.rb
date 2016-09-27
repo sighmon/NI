@@ -18,6 +18,9 @@ NI::Application.configure do
   config.action_mailer.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
   config.action_mailer.asset_host = ENV['NI_APP_HOST']
 
+  # Default URL for helpers in models
+  Rails.application.routes.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
+
   # Force SSL for any Devise action
   config.to_prepare { Devise::SessionsController.force_ssl }
   config.to_prepare { Devise::RegistrationsController.force_ssl }
