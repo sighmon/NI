@@ -597,7 +597,7 @@ class HomeController < ApplicationController
     ]
 
     # Add the article information
-    latest_issue.articles.each do |article|
+    latest_issue.categorised_articles.each do |article|
       @apple_news_issues[:components].push(
         {
           role: "section",
