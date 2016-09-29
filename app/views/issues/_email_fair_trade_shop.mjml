@@ -4,7 +4,7 @@
 				font-size="14px"
 				font-weight="bold"
 				align="center"
-				color="#8e8e8e">
+				color="#787878">
 				<span style="text-transform: uppercase;">Fair Trade Shop</span>
 			</mj-text>
 			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -29,7 +29,7 @@
 			<mj-text
 				font-size="14px"
 				font-weight="300"
-				color="#8e8e8e">
+				color="#787878">
 				Need inspiration in the kitchen? Beautifully illustrated on every page with unique and exclusive artwork, this calendar will fill your kitchen with the colours of the world, while the vegetarian recipes from different parts of the world will inspire any jaded chef's imagination. The large fold-open format provides plenty of space to write your appointments, making it as practical as it is pleasing to the eye.
 			</mj-text>
 		</mj-column>

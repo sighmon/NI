@@ -38,7 +38,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						<%= @greeting %> <%= @user.username %>,
 						<%= simple_format @body_text %>
 					</mj-text>
