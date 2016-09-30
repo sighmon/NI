@@ -41,14 +41,14 @@ Rpush.reflect do |on|
     if Rails.env.production?
       begin
         subject = "Rpush APN feedback"
-        body = "This is an automated email with Rpush Apple push notification feedback:<br /><br />#{feedback}"
+        body = "This is an automated email with Rpush Apple push notification feedback:<br /><br />#{feedback.to_s}"
         UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
         Rails.logger.error "500 - Email server is down..."
       end
     else
-      Rails.logger.info "RPUSH APNS FEEDBACK email would happen on production: #{feedback}"
+      Rails.logger.info "RPUSH APNS FEEDBACK email would happen on production: #{feedback.to_s}"
     end
   end
 
@@ -74,14 +74,14 @@ Rpush.reflect do |on|
     if Rails.env.production?
       begin
         subject = "Rpush error - notification delivery failed"
-        body = "This is an automated email with Rpush notification failure information:<br /><br />Error code: #{notification.error_code}<br /><br />Error: #{notification.error_description}<br /><br />Notification: #{notification}"
+        body = "This is an automated email with Rpush notification failure information:<br /><br />Error code: #{notification.error_code}<br /><br />Error: #{notification.error_description}<br /><br />Notification: #{notification.to_s}"
         UserMailer.delay.admin_email(subject, body)
         ApplicationHelper.start_delayed_jobs
       rescue Exception
         Rails.logger.error "500 - Email server is down..."
       end
     else
-      Rails.logger.info "RPUSH notification error email would happen on production: #{notification.error_code}. Error: #{notification.error_description}. Notification: #{notification}."
+      Rails.logger.info "RPUSH notification error email would happen on production: #{notification.error_code}. Error: #{notification.error_description}. Notification: #{notification.to_s}."
     end
   end
 
