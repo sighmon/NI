@@ -184,7 +184,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			if @free_subscription.save
 				# Send a confirmation email?
-				byebug
+				# byebug
 				if send_email == "1"
 					UserMailer.delay.free_subscription_confirmation(User.find(params[:user_id]), @number_of_months)
 					ApplicationHelper.start_delayed_jobs
