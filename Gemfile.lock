@@ -131,7 +131,6 @@ GEM
     coffee-script-source (1.10.0)
     commonjs (0.2.7)
     concurrent-ruby (1.0.2)
-    connection_pool (2.2.0)
     curb (0.9.3)
     dalli (2.7.6)
     database_cleaner (1.5.3)
@@ -284,9 +283,9 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.2.0)
+    fog-vsphere (1.2.2)
       fog-core
-      rbvmomi (~> 1.8.0)
+      rbvmomi (~> 1.9)
     fog-xenserver (0.2.3)
       fog-core
       fog-xml
@@ -378,7 +377,7 @@ GEM
       addressable (~> 2.3)
     less (2.6.0)
       commonjs (~> 0.2.7)
-    less-rails (2.7.1)
+    less-rails (2.8.0)
       actionpack (>= 4.0)
       less (~> 2.6.0)
       sprockets (> 2, < 4)
@@ -412,8 +411,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.3.0)
-    net-http-persistent (3.0.0)
-      connection_pool (~> 2.2)
+    net-http-persistent (2.9.4)
     netrc (0.11.0)
     newrelic_rpm (3.16.3.323)
     nokogiri (1.6.8.1)
@@ -477,10 +475,11 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
-    rbvmomi (1.8.2)
-      builder
-      nokogiri (>= 1.4.1)
-      trollop
+    rbvmomi (1.9.4)
+      builder (~> 3.2)
+      json (>= 1.8)
+      nokogiri (~> 1.5)
+      trollop (~> 2.1)
     ref (2.0.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
@@ -662,6 +661,7 @@ DEPENDENCIES
   memcachier
   meta-tags
   mjml-rails
+  net-http-persistent (~> 2.9.4)
   newrelic_rpm
   paypal-recurring
   pg

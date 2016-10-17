@@ -127,6 +127,9 @@ gem 'mjml-rails'#, git: 'https://github.com/sighmon/mjml-rails.git', require: 'm
 
 # RPush for push notifications migrating away from Parse
 gem 'rpush'
+# Temporary fix for rpush:
+# https://github.com/rpush/rpush/issues/306
+gem 'net-http-persistent', '~> 2.9.4'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
