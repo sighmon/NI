@@ -5,3 +5,6 @@
 
 # Registered by default in the mjml-rails gem
 # Mime::Type.register "text/html", :mjml
+
+# Google AMP mime type
+Mime::Type.register 'text/html', :amp

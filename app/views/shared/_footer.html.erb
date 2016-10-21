@@ -1,0 +1,59 @@
+<div class="footer">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <!-- <div class="home-image">
+        <%= link_to retina_image_tag('utne-winner.png', :alt => 'Awards New Internationalist magazine has won', :title => 'Awards New Internationalist magazine has won', :width => 75, :height => 96), page_path("awards") %>
+      </div> -->
+      <p class="brand">New Internationalist</p>
+      <% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
+        <p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, click the 'send feedback' tab on the bottom right of any page. Enjoy reading the magazine.</p>
+      <% else %>
+        <p>The <b>New Internationalist</b> is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all.</p>
+        <div class="home-donate">
+          <p>If you like the magazine and support what we do, perhaps you'd like to donate some money to help us reach a wider audience?</p>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="GSMBBM2JT2W28">
+            <button type="submit" class="btn btn-default"><i class="fa fa-heart"></i> Donate!</button>
+          </form>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-4">
+      <h5>Site map:</h5>
+      <ul>
+        <li><% if current_user.nil? %><%= link_to "Subscribe", page_path("subscribe") %><% else %><%= link_to "Subscribe", new_subscription_path %><% end %></li>
+        <li><%= link_to "Magazine archive", issues_path %></li>
+        <li><%= link_to "Search", search_path %></li>
+        <li><%= link_to "Categories", categories_path %></li>
+        <li><%= link_to "Mobile applications", page_path("apps") %></li>
+        <li><%= link_to "Help", page_path("help") %></li>
+        <li><%= link_to "RSS feed", rss_url(format: :xml) %></li>
+      </ul>
+    </div>
+    <div class="col-sm-4">
+      <h5>Find us:</h5>
+      <ul>
+        <li>Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">@<%= ENV["TWITTER_NAME"] %></a></li>
+        <li>Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a></li>
+        <li>Google+: <a href="https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>">+<%= ENV["GOOGLE_PLUS_NAME"] %></a></li>
+        <li>Instagram: <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>">@<%= ENV["INSTAGRAM_NAME"] %></a></li>
+        <li>Youtube: <a href="https://www.youtube.com/user/<%= ENV["YOUTUBE_NAME"] %>/videos"><%= ENV["YOUTUBE_NAME"] %></a></li>
+        <li>Apple: <a href="<%= ENV["ITUNES_APP_LINK"] %>">App Store</a></li>
+        <li>Android: <a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>">Play Store</a></li>
+      </ul>
+      <h5>Contact us:</h5>
+      <ul>
+        <li>Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a></li>
+        <li>Phone: +61 8 8232 1563</li>
+        <li>172 Gilles Street,<br />Adelaide 5000<br />Australia</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="copyright">
+    <p>&copy; Copyright <b>New Internationalist</b> 1973-<%= DateTime.now.year %>. Except where otherwise noted, content on this site is <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">licensed</a> under <a href="http://creativecommons.org">Creative Commons</a>.</p>
+    <p>Except where otherwise noted, images on this site are &copy; the attributed photographer/illustrator or representative agency.</p>
+  </div>
+</div>
