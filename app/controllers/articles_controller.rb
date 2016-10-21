@@ -374,6 +374,7 @@ class ArticlesController < ApplicationController
             }
     respond_to do |format|
       format.html # show.html.erb
+      format.amp { NewRelic::Agent.ignore_transaction }
     end
   end
 
