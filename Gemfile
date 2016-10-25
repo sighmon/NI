@@ -232,10 +232,10 @@ gem 'fog'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-gem 'retina_image_tag', :git => 'git://github.com/sighmon/retina_image_tag.git'
+gem 'retina_image_tag', :git => 'https://github.com/sighmon/retina_image_tag.git'
 
 # Highlighter.js for highlighting text
-gem 'highlighter-js', :git => 'git://github.com/sighmon/highlighter.js.git'
+gem 'highlighter-js', :git => 'https://github.com/sighmon/highlighter.js.git'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
@@ -253,7 +253,7 @@ gem 'acts_as_list'
 # CSV exporting gem
 # https://github.com/crafterm/comma
 # gem 'comma', '~> 3.0'
-gem 'comma',  :git => "git://github.com/crafterm/comma.git"
+gem 'comma',  :git => "https://github.com/crafterm/comma.git"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

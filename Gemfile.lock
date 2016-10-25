@@ -1,17 +1,17 @@
 GIT
-  remote: git://github.com/crafterm/comma.git
+  remote: https://github.com/crafterm/comma.git
   revision: a03949da109c650363d210b99e83b2519e1e164e
   specs:
     comma (3.0.4)
 
 GIT
-  remote: git://github.com/sighmon/highlighter.js.git
+  remote: https://github.com/sighmon/highlighter.js.git
   revision: 2cef55d2c5c6c903a9dd5f347671373f451dd120
   specs:
     highlighter-js (0.0.1)
 
 GIT
-  remote: git://github.com/sighmon/retina_image_tag.git
+  remote: https://github.com/sighmon/retina_image_tag.git
   revision: 7fad00b8f012206d664568dee1ee4f90e2e8a5a9
   specs:
     retina_image_tag (1.0.3)
