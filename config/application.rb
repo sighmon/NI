@@ -1,4 +1,7 @@
-require File.expand_path('../boot', __FILE__)
+# require File.expand_path('../boot', __FILE__)
+
+# Rails 5
+require_relative 'boot'
 
 require 'rails/all'
 

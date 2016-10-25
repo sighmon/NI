@@ -1,4 +1,7 @@
-NI::Application.routes.draw do
+# NI::Application.routes.draw do
+
+# Rails 5
+Rails.application.routes.draw do
 
   # Ignore Wordpress login requests
   RESPOND_403.each do |r2|
