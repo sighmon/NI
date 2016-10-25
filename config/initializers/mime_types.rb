@@ -7,4 +7,4 @@
 # Mime::Type.register "text/html", :mjml
 
 # Google AMP mime type
-Mime::Type.register 'text/html', :amp
+Mime::Type.register_alias 'text/html', :amp
