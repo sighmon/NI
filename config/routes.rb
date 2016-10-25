@@ -1,4 +1,7 @@
-NI::Application.routes.draw do
+# NI::Application.routes.draw do
+
+# Rails 5
+Rails.application.routes.draw do
 
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
