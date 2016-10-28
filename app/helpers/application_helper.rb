@@ -255,14 +255,13 @@ module ApplicationHelper
 
     def self.rpush_register_ios_app
         # Set-up iOS push notifications
-        app = Rpush::Apns::App.new
         if Rails.env.production?
-            app.name = ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME")
+            app = Rpush::Apns::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
             app.certificate = ENV.fetch("APPLE_PRODUCTION_PEM")
             app.environment = "production" # APNs environment.
             app.password = ENV.fetch("APPLE_PRODUCTION_PEM_PASSSWORD")
         else
-            app.name = ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME")
+            app = Rpush::Apns::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
             app.certificate = ENV.fetch("APPLE_DEVELOPMENT_PEM")
             app.environment = "sandbox" # APNs environment.
             app.password = ENV.fetch("APPLE_DEVELOPMENT_PEM_PASSSWORD")
@@ -294,11 +293,11 @@ module ApplicationHelper
         # Set-up Android push notifications
         app = Rpush::Gcm::App.new
         if Rails.env.production?
-            app.name = ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME")
+            app = Rpush::Gcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
             app.environment = "production" # APNs environment.
             app.auth_key = ENV.fetch("ANDROID_PRODUCTION_AUTH_KEY")
         else
-            app.name = ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME")
+            app = Rpush::Gcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
             app.environment = "sandbox" # APNs environment.
             app.auth_key = ENV.fetch("ANDROID_DEVELOPMENT_AUTH_KEY")
         end
