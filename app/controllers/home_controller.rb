@@ -18,6 +18,10 @@ class HomeController < ApplicationController
 
     @latest_issue = Issue.latest
 
+    @quick_reads = Article.quick_reads
+
+    @popular = Article.popular.first(3)
+
     @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
       latest_issue_categories = []
       @latest_issue.try(:articles).try(:each) do |article|
@@ -40,7 +44,7 @@ class HomeController < ApplicationController
     @blog_category = Category.find_by_name("/blog/")
 
     @blog_latest = Rails.cache.fetch("home_blog_latest", expires_in: 12.hours) do
-      @blog_category.try(:articles).try(:select, &:published).try(:last)
+      @blog_category.try(:articles).try(:order, :publication).try(:select, &:published).try(:last)
     end
 
     @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
@@ -407,6 +411,7 @@ class HomeController < ApplicationController
       @published_issues.pop
     end
 
+    # OLD Apple News format.. new one is JSON
     builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
       xml.rss('version' => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom') do
         xml.channel do
@@ -431,8 +436,12 @@ class HomeController < ApplicationController
       end
     }
 
+    # New Apple News format for Sept 2016
+    latest_issue = @published_issues.first
+    @apple_news_json = latest_issue.apple_news_json
+
     respond_to do |format|
-      format.json { render json: @published_issues.to_json }
+      format.json { render json: @apple_news_json }
       format.xml { render xml: builder.to_xml }
     end
 

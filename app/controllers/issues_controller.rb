@@ -206,7 +206,16 @@ class IssuesController < ApplicationController
       PushRegistration.where(device: 'android').each do |p|
         android_tokens << p.token
       end
-      if not android_tokens.empty?
+
+      # Setup notifications in batches of 1,000 tokens.
+      if not android_tokens.empty? and android_tokens.count > 1000
+        android_tokens.each_slice(1000).to_a.each do |tokens|
+          # Setup push notifications for Android devices
+          logger.info "Creating #{tokens.count} Android push notifications."
+          android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+          logger.info "Android push notifications response: #{android_response}"
+        end
+      elsif not android_tokens.empty?
         # Setup push notifications for Android devices
         logger.info "Creating #{android_tokens.count} Android push notifications."
         android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)

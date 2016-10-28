@@ -44,7 +44,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						<%= @greeting %> <%= @user.username %>,<br /><br />
 						Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.<br /><br />
 					
@@ -67,7 +67,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 
 						If you come across any problems, simply hit 'reply' to this email and we'll reply as soon as we can.<br /><br />
 
@@ -91,14 +91,14 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Mobile applications</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: <%= @user.username %>
 					</mj-text>
 				</mj-column>
@@ -115,7 +115,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
 					</mj-text>
 				</mj-column>
@@ -129,7 +129,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
 					</mj-text>
 				</mj-column>
@@ -148,7 +148,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Recent magazines</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>

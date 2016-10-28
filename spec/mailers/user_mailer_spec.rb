@@ -116,7 +116,7 @@ describe UserMailer, :type => :mailer do
       let(:user) { subscription.user }
       let(:mail) {
         @issue = issue
-        UserMailer.free_subscription_confirmation(user)
+        UserMailer.free_subscription_confirmation(user,12)
       }
 
       it "renders the headers" do
@@ -126,7 +126,7 @@ describe UserMailer, :type => :mailer do
       end
 
       it "renders the body" do
-        expect(mail.body.encoded).to match("Lucky you! You've been given a complimentary 1 year")
+        expect(mail.body.encoded).to match("Lucky you! You've been given a complimentary 12 month")
         expect(mail.body.encoded).to match(user.username)
         # Check that the MJML > HTML renderer has worked
         expect(mail.body.encoded).not_to match("mj-body")

@@ -1,5 +1,9 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+
+# To make sure rememberable is on
+Devise::TRUE_VALUES << ["on"]
+
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -109,14 +113,14 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 4.weeks
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
-  # config.rememberable_options = {}
+  config.rememberable_options = {secure: true}
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..128.

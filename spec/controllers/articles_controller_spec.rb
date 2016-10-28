@@ -112,6 +112,40 @@ describe ArticlesController, :type => :controller do
 
     end
 
+    describe "GET popular articles" do
+
+      context "given an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { article.issue }
+
+        it "can view the popular articles page" do
+          get :popular
+          expect(response.status).to eq(200)
+        end 
+
+      end
+
+    end
+
+    describe "GET quick reads" do
+
+      context "given an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { article.issue }
+
+        it "can view the quick reads page" do
+          get :quick_reads
+          expect(response.status).to eq(200)
+        end 
+
+      end
+
+    end
+
     describe "POST push notification" do
 
       let(:article) { FactoryGirl.create(:article) }

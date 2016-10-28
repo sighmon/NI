@@ -7,7 +7,7 @@
 <p>
   <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Search users by email', :class => "span2 search-query form-control" %>
+        <%= text_field_tag :query, params[:query], :placeholder => 'Search for a user', :class => "span2 search-query form-control" %>
         <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
       </div>
   <% end %>

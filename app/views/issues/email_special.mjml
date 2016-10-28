@@ -29,12 +29,12 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
-						Each monthly <em>New Internationalist</em> magazine covers a topic in-depth, engaging local writers to publish previously unreported stories and shed light on corruption, environmental and human rights abuses from all parts of the world.<br /><br />
+						color="#787878">
+						Each monthly <em>New Internationalist</em> magazine covers a topic in-depth. Local writers will update you on previously under-reported stories that shine a light on today's big issues - inequality, climate justice and human rights - from every corner of the world.<br /><br />
 
-						<em>New Internationalist</em>’s award winning analysis helps make sense of world events, giving you the background information you need to feel empowered and hopeful for the future.<br /><br />
+						<em>New Internationalist</em>’s multi-award-winning analysis helps make sense of world events, giving you the background information you need to feel empowered and hopeful for the future.<br /><br />
 
-						Subscribe today from just <b>&#36;15 for 3 months</b>, support independent media, and engage in conversations with friends on interesting and challenging social justice topics you might otherwise avoid.
+						Subscribe today from just <b>&#36;<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true)) %> for 3 months</b>. You’ll be supporting independent media, and you’ll be able to engage in conversations with friends on interesting and challenging social justice topics you might otherwise avoid.
 					</mj-text>
 
 					<mj-button
@@ -46,7 +46,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						Your digital subscription includes:
 					</mj-text>
 

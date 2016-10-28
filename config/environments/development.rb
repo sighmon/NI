@@ -50,6 +50,9 @@ NI::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000', :protocol => 'http' }
   config.action_mailer.asset_host = 'http://localhost:3000'
 
+  # Default URL for helpers in models
+  Rails.application.routes.default_url_options = { :host => 'localhost:3000', :protocol => 'http' }
+
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   # Now using /config/application.yml figaro gem

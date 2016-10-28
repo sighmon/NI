@@ -3,12 +3,12 @@
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
 				<mj-column>
-					<mj-text font-size="11px" color="#606b75" font-weight="300">
+					<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px">
 						<%= link_to "#{@issue.title} - #{@issue.release.strftime("%B %Y")}", issue_url(@issue), style: 'color:inherit;' %>
 					</mj-text>
 				</mj-column>
 				<mj-column>
-					<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
+					<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px" align="right">
 						No images? <webversion>Click here</webversion>
 					</mj-text>
 				</mj-column>
@@ -44,7 +44,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format @issue.keynote.teaser %>
 					</mj-text>
 
@@ -70,7 +71,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">This month's magazine</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -91,7 +92,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						Hi [salutation],<br /><br />
 						Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "log in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 					</mj-text>
@@ -100,7 +102,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e"
+						padding="0px 25px"
+						color="#787878"
 						padding-top="0">
 						<%= simple_format @issue.email_text %>
 					</mj-text>
@@ -130,7 +133,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">A note from the editor</span>
 					</mj-text>
 
@@ -139,7 +142,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<div style="float:right;width:100px;height:100px;border-radius:50%;overflow:hidden;">
 							<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100px", :height => "100px", :style => "margin-top:-10px;"), issue_url(@issue) %>
 						</div>
@@ -164,7 +168,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Feature articles</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -197,7 +201,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format article.teaser %>
 					</mj-text>
 					<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
@@ -220,7 +225,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Regulars</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -253,7 +258,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format article.teaser %>
 					</mj-text>
 					<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
@@ -276,7 +282,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Film, music &amp; book reviews</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -309,7 +315,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format article.teaser %>
 					</mj-text>
 					<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
@@ -332,7 +339,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Opinion pieces</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -365,7 +372,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format article.teaser %>
 					</mj-text>
 					<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
@@ -388,7 +396,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Agenda articles</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -414,7 +422,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						<%= simple_format article.teaser %>
 					</mj-text>
 					<mj-divider border-color="#e5e5e5" border-width="1px"></mj-divider>
@@ -437,14 +446,14 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Mobile applications</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: [username,fallback=oops]
 					</mj-text>
 				</mj-column>
@@ -461,7 +470,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
 					</mj-text>
 				</mj-column>
@@ -475,7 +485,8 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						padding="0px 25px"
+						color="#787878">
 						Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
 					</mj-text>
 				</mj-column>

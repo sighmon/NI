@@ -1,8 +1,10 @@
 <div class="edit-issue-buttons">
-  <%= link_to "Import Parse registrations", admin_push_registrations_import_path,
-          :method => 'get',
-          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Import from parse?'))},
-          :class => 'btn btn-warning' %>
+  <p><%= link_to "Import Parse registrations", admin_push_registrations_import_path,
+            :method => 'get',
+            :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Import from parse?'))},
+            :class => 'btn btn-warning' %></p>
+  <p>To import from the command line: <br />
+  $ PushRegistration.import_from_parse(6)</p>
 </div>
 
 <div class="page-header">

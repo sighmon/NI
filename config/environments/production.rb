@@ -18,6 +18,9 @@ NI::Application.configure do
   config.action_mailer.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
   config.action_mailer.asset_host = ENV['NI_APP_HOST']
 
+  # Default URL for helpers in models
+  Rails.application.routes.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
+
   # Force SSL for any Devise action
   config.to_prepare { Devise::SessionsController.force_ssl }
   config.to_prepare { Devise::RegistrationsController.force_ssl }
@@ -115,17 +118,25 @@ NI::Application.configure do
   config.assets.digest = true
 
   # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
-                             :username => ENV["MEMCACHIER_USERNAME"],
-                             :password => ENV["MEMCACHIER_PASSWORD"],
-                             :failover => true,
-                             :socket_timeout => 1.5,
-                             :socket_failure_delay => 0.2,
-                             :value_max_bytes => 10485760)
-  config.action_dispatch.rack_cache = {
-    :metastore    => client,
-    :entitystore  => client
-  }
+  # client = Dalli::Client.new((ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+  #                            :username => ENV["MEMCACHIER_ROSE_USERNAME"],
+  #                            :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
+  #                            :failover => true,
+  #                            :socket_timeout => 1.5,
+  #                            :socket_failure_delay => 0.2,
+  #                            :value_max_bytes => 10485760)
+  # config.action_dispatch.rack_cache = {
+  #   :metastore    => client,
+  #   :entitystore  => client
+  # }
+  config.cache_store = :dalli_store,
+                    (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+                    {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
+                     :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
+                     :failover => true,
+                     :socket_timeout => 1.5,
+                     :socket_failure_delay => 0.2
+                    }
   config.static_cache_control = "public, max-age=2592000"
 
   # Defaults to Rails.root.join("public/assets")
@@ -149,6 +160,9 @@ NI::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
+
+  # Memcachier is down.. temporarily don't cache..
+  # config.cache_store = :null_store
 
   # Enable serving of images, stylesheets, and JavaScripts from Amazon Cloudfront asset server
   config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"

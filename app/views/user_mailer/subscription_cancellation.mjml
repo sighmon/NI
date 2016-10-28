@@ -44,7 +44,7 @@
 					<mj-text
 						font-size="14px"
 						font-weight="300"
-						color="#8e8e8e">
+						color="#787878">
 						<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
 						Your subscription is now cancelled. Sorry things didn't work out, but thank you very much for your previous support, we really appreciate it.<br /><br />
 
@@ -69,7 +69,7 @@
 						font-size="14px"
 						font-weight="bold"
 						align="center"
-						color="#8e8e8e">
+						color="#787878">
 						<span style="text-transform: uppercase;">Recent magazines</span>
 					</mj-text>
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>

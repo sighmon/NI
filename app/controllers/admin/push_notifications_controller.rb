@@ -46,15 +46,15 @@ class Admin::PushNotificationsController < ApplicationController
         # Send email with feedback
         if Rails.env.production?
           begin
-            subject = "Rpush APN feedback"
-            body = "This is an automated email with Rpush Apple push notification feedback:<br /><br />#{rpush_apns_feedback}"
+            subject = "Rpush APN feedback from controller"
+            body = "This is an automated email with Rpush Apple push notification feedback from controller:<br /><br />#{rpush_apns_feedback.to_s}"
             UserMailer.delay.admin_email(subject, body)
             ApplicationHelper.start_delayed_jobs
           rescue Exception
             logger.error "500 - Email server is down..."
           end
         else
-          logger.info "RPUSH APNS FEEDBACK email would happen on production: #{rpush_apns_feedback}"
+          logger.info "RPUSH APNS FEEDBACK email would happen on production: #{rpush_apns_feedback.to_s}"
         end
       end
 

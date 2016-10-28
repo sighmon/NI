@@ -1,0 +1,64 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "<%= issue_article_url(@issue, @article) %>"
+  },
+  "headline": "<%= @article.title %>",
+  <% if @article.first_image %>
+    "image": {
+      "@type": "ImageObject",
+      "url": "<%= @article.first_image.try(:data).to_s %>",
+      "height": <%= @article.first_image.try(:height) %>,
+      "width": <%= @article.first_image.try(:width) %>
+    },
+  <% end %>
+  "datePublished": "<%= @article.publication.to_time.iso8601 %>",
+  "dateModified": "<%= @article.updated_at.to_time.iso8601 %>",
+  "author": {
+    "@type": "Person",
+    "name": "<%= @article.author %>"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "New Internationalist",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "<%= image_url("new-internationalist-google-amp-600x60.png") %>",
+      "width": 600,
+      "height": 60
+    }
+  },
+  "description": "<%= strip_tags(@article.teaser) %>"
+}
+</script>
+
+<div class="logo">
+  <a href="<%= root_url %>">New Internationalist</a>
+</div>
+
+<h1><%= @article.title %></h1>
+<h2><%= simple_format @article.teaser %></h2>
+<div class="breadcrumb">
+  <%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %>
+  <!-- <br /><%= link_to "Read this on the desktop site", issue_article_url(@issue, @article) %> -->
+</div>
+
+<% if @article.body.blank? %>
+  <%= simple_format expand_image_tags(source_to_body(@article, :debug => current_user.try(:admin?)), :debug => "amp") %>
+<% else %>
+  <%= simple_format expand_image_tags(@article.body, :debug => "amp") %>
+<% end %>
+
+<hr />
+
+<% if not @related_articles.blank? %>
+  <h4>Also on this theme</h4>
+  <ul>
+  <% @related_articles.first(10).each do |article| %>
+    <li><%= link_to article.title, issue_article_path(article.issue, article) %></li>
+  <% end %>
+  </ul>
+<% end %>

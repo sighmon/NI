@@ -56,7 +56,7 @@ class ArticlesController < ApplicationController
       
       format.json { render json: @articles.to_json(
       # Don't show :body here
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id],
         :include => {
           :images => {},
           :categories => { :only => [:name, :colour, :id] }
@@ -66,7 +66,7 @@ class ArticlesController < ApplicationController
   end
 
   def popular
-    @guest_passes = GuestPass.order(:use_count).reverse.first(12)
+    @popular_articles = Article.popular
     @page_title = "Popular New Internationalist articles"
     @page_description = "Articles from New Internationalist magazine that our readers have shared the most."
 
@@ -85,7 +85,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :url   => popular_url,
-              :image => @guest_passes.first.article.first_image.try(:data_url).to_s,
+              :image => @popular_articles.first.try(:first_image).try(:data_url).to_s,
               :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
@@ -95,7 +95,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :image => {
-                :src => @guest_passes.first.article.first_image.try(:data_url).to_s
+                :src => @popular_articles.first.try(:first_image).try(:data_url).to_s
               },
               :app => {
                 :name => {
@@ -115,21 +115,19 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       
-      format.json { render json: @guest_passes.to_json(
-      :include => {
-        # Don't show article :body here
-        :article => { :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id] }
-      }
+      format.json { render json: @popular_articles.to_json(
+      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
+        :include => {
+          :images => {},
+          :categories => { :only => [:name, :colour, :id] }
+        }
       ) }
     end
   end
 
   def quick_reads
     # Select a random 3 articles, cached for 1 day
-    @quick_reads = Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
-      # Need .to_a here otherwise it caches the scope, not the result of the query
-      Article.order("RANDOM()").limit(3).to_a
-    end
+    @quick_reads = Article.quick_reads
 
     @page_title = "Today's quick reads"
     @page_description = "Three articles selected for you today from New Internationalist magazine."
@@ -149,7 +147,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :url   => quick_reads_url,
-              :image => @quick_reads.first.first_image.try(:data_url).to_s,
+              :image => @quick_reads.first.try(:first_image).try(:data_url).to_s,
               :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
@@ -159,7 +157,7 @@ class ArticlesController < ApplicationController
               :title => @page_title,
               :description => @page_description,
               :image => {
-                :src => @quick_reads.first.first_image.try(:data_url).to_s
+                :src => @quick_reads.first.try(:first_image).try(:data_url).to_s
               },
               :app => {
                 :name => {
@@ -336,6 +334,7 @@ class ArticlesController < ApplicationController
             :description => strip_tags(@article.teaser),
             :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
             :canonical => issue_article_url(@issue, @article),
+            :amphtml => issue_article_url(@issue, @article, format: :amp),
             :alternate => [
               {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, 
               {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"},
@@ -375,6 +374,7 @@ class ArticlesController < ApplicationController
             }
     respond_to do |format|
       format.html # show.html.erb
+      format.amp { NewRelic::Agent.ignore_transaction }
     end
   end
 

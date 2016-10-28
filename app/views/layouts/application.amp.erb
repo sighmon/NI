@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+  <%= display_meta_tags :site => ENV['APP_NAME'], :reverse => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <style amp-custom>
+    @font-face {
+      font-family: 'Bodega';
+      src:url('/assets/ni.eot');
+      src:url('/assets/ni.eot?#iefix') format('embedded-opentype'), url('/assets/ni.woff') format('woff'), url('/assets/ni.ttf') format('truetype'), url('/assets/ni.svg#Bodega') format('svg');
+      font-weight: normal;
+      font-style: normal;
+
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.6em;
+    }
+    h1 {
+      font-size: 2.8em;
+      letter-spacing: -0.05em;
+      margin-top: 1em;
+      line-height: 1.2em;
+    }
+    h2 {
+      font-weight: normal;
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+    .breadcrumb {
+      margin-bottom: 2em;
+    }
+    .breadcrumb a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: normal;
+      opacity: 0.7;
+    }
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+      max-width: 800px;
+    }
+    .logo {
+      font-family: "Bodega";
+      background-position: left 16px center;
+      background-repeat: no-repeat;
+      /*background-image: -webkit-image-set(
+        url(/img/ic_menu_white_1x_web_24dp.png) 1x,
+        url(/img/ic_menu_white_2x_web_24dp.png) 2x
+        );*/
+      background-color: #f00d16;
+      text-align: left;
+      padding: 16px;
+      /*padding-left: 72px;*/
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    }
+    .logo > a {
+      font-size: 30px;
+      font-weight: normal;
+      color: white;
+      /*text-transform: uppercase;*/
+      text-decoration: none;
+    }
+    .brand {
+      font-family: "Bodega";
+      font-size: 30px;
+      /*color: #f00d16;*/
+    }
+    hr {
+      border: 0;
+      height: 2px;
+      background-color: #999999;
+    }
+    .footer {
+      margin-top: 4em;
+      padding: 1em 2em;
+      background-color: rgba(250,176,59,0.58);
+    }
+    .author-note {
+      opacity: 0.7;
+      font-size: 0.9em;
+      margin-bottom: 4em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <%= yield %>
+    <%= render :partial => "shared/footer.html.erb" %>
+    <%= render :partial => "shared/amp_analytics", :locals => { :page => @article } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<div class="col-xs-4">
+      <% if article.first_image %>
+        <%= retina_image_tag(article.first_image.data_url(:threehundred).to_s, alt: strip_tags(article.first_image.caption), title: strip_tags(article.first_image.caption), width: '100%') %>
+      <% else %>
+        <%= retina_image_tag('fallback/threehundred_no_image.jpg', alt: '', title: '', width: '100%') %>
+      <% end %>
+        <h6><%= article.title %></h6>
+      </div>

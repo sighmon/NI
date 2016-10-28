@@ -129,7 +129,7 @@
 	  </dl>
 
 	  <div class="form-actions">
-	  	<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success' %>
+			<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success', :onclick => "sendPreSubscription();" %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn btn-default' %>
 	  </div>
 	<% end %>

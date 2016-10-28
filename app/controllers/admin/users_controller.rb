@@ -100,7 +100,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			if @free_subscription.save
 			    # Send the user an email
-				UserMailer.delay.free_subscription_confirmation(User.find(params[:user_id]))
+				UserMailer.delay.free_subscription_confirmation(User.find(params[:user_id]), 12)
 				ApplicationHelper.start_delayed_jobs
 				format.html { redirect_to admin_user_path(@user), notice: 'Free subscription was successfully created.' }
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
@@ -168,19 +168,27 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def free_silent_subscription
-		# Give a free x month subscription, DOESN'T SEND EMAIL CONFIRMATION
+		# Give a free x month subscription
 		@user = User.find(params[:user_id])
+		
 		if request.post?
 			@number_of_months = params["/admin/users/#{@user.id}/free_silent_subscription"][:number_of_months]
+			send_email = params["/admin/users/#{@user.id}/free_silent_subscription"][:send_email]
 		else
 			@number_of_months = params[:number_of_months]
+			send_email = params[:send_email]
 		end
 
 		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => @number_of_months, :purchase_date => DateTime.now, :price_paid => 0)
 
 		respond_to do |format|
 			if @free_subscription.save
-			    # Don't send a confirmation email.
+				# Send a confirmation email?
+				# byebug
+				if send_email == "1"
+					UserMailer.delay.free_subscription_confirmation(User.find(params[:user_id]), @number_of_months)
+					ApplicationHelper.start_delayed_jobs
+				end
 				format.html { redirect_to admin_user_path(@user), notice: "Free #{@number_of_months} month subscription was successfully created." }
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
@@ -216,7 +224,7 @@ class Admin::UsersController < Admin::BaseController
 		if @query.blank?
 			@users = []
 		else
-			@users = User.where('email ~* ?', "(.*?)#{@query}(.*?)").sorted_by(params[:sort], params[:direction])
+			@users = User.where('email ~* :query or username ~* :query', { query: @query }).sorted_by(params[:sort], params[:direction])
 		end
 		respond_to do |format|
 			format.html

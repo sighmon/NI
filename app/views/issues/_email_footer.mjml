@@ -14,7 +14,7 @@
 					font-size="12px"
 					font-weight="300">
 					New Internationalist Publications Pty Ltd<br />
-					15 Austin Street, Adelaide 5000, Australia.<br />
+					172 Gilles Street, Adelaide 5000, Australia.<br />
 					ABN 11 005 523 124<br />
 					<a href="http://www.newint.com.au" style="color:inherit;">www.newint.com.au</a><br />
 					Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au" style="color:inherit;"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a><br />

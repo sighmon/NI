@@ -472,6 +472,210 @@ class Issue < ActiveRecord::Base
     }
   end
 
+  def apple_news_json
+    editors_letter = ActionController::Base.helpers.strip_tags(self.editors_letter).gsub("\r\n\r\n", "\n\n")
+    apple_news_hash = {
+      title: self.title,
+      subtitle: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+      metadata: {
+        thumbnailURL: self.cover_url(:home2x).to_s,
+        excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+        canonicalURL: Rails.application.routes.url_helpers.issue_url(self),
+        datePublished: self.release.to_datetime.iso8601,
+        dateModified: self.release.to_datetime.iso8601,
+        dateCreated: self.release.to_datetime.iso8601,
+        # coverArt: {
+        #   type: "image",
+        #   URL: self.cover_url(:home2x).to_s,
+        #   accessibilityCaption: self.title
+        # },
+        keywords: ["new", "internationalist", "magazine", "archive", "digital", "edition", "australia"],
+        authors: [self.editors_name]
+      },
+      version: "1.2",
+      identifier: ENV["APPLE_NEWS_IDENTIFIER"],
+      language: "en",
+      layout: {
+        columns: 10,
+        width: 1024,
+        margin: 85,
+        gutter: 20
+      },
+      documentStyle: {
+        backgroundColor: "#F5F9FB"
+      },
+      # "textStyles": {},
+      "componentLayouts": {
+        "default-divider": {
+          "margin": {
+            "top": 10,
+            "bottom": 20
+          },
+          "stroke": {
+            color: "#DBDBDB",
+            width: 2
+          }
+        },
+        "default-image": {
+          "maximumContentWidth": 200,
+          "margin": {
+            "top": 10
+          }
+        },
+        "default-title": {
+          "margin": {
+            "top": 20,
+            "bottom": 5
+          }
+        },
+        "default-intro": {
+          "margin": {
+            "bottom": 15
+          }
+        },
+        "default-byline": {
+          "margin": {
+            "bottom": 10
+          }
+        },
+        "default-body": {
+          "margin": {
+            "bottom": 20
+          }
+        },
+        "article-photo": {
+          "ignoreDocumentGutter": "both",
+          "ignoreDocumentMargin": "both",
+          "margin": 0,
+          "gutter": 0
+        },
+        "article-title": {
+          "margin": {
+            "top": 20,
+            "bottom": 5
+          }
+        },
+        "article-byline": {
+          "margin": {
+            "bottom": 10
+          }
+        }
+      },
+      "componentStyles": {},
+      "componentTextStyles": {
+        "default-title": {
+          "fontName": "AppleSDGothicNeo-Bold",
+          "textColor": "#000000",
+          "fontSize": 38,
+          "stroke": {
+            "color": "#000000",
+            "width": 2
+          }
+        },
+        "default-byline": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 18
+        },
+        "default-intro": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 14
+        },
+        "default-body": {
+          "textColor": "#333333"
+        },
+        "article-title": {
+          "fontName": "AppleSDGothicNeo-Bold",
+          "textColor": "#000000",
+          "fontSize": 20,
+          "stroke": {
+            "color": "#000000",
+            "width": 2
+          }
+        },
+        "article-byline": {
+          "fontName": "AppleSDGothicNeo-Medium",
+          "textColor": "#999999",
+          "fontSize": 18
+        }
+      }
+    }
+
+    # Add the issue information
+    apple_news_hash[:components] = [
+      {
+        role: "image",
+        URL: self.cover_url(:home2x).to_s,
+        caption: self.title,
+        layout: "default-image"
+      },
+      {
+        role: "title",
+        text: self.title,
+        layout: "default-title",
+        textStyle: "default-title"
+      },
+      {
+        role: "byline",
+        text: "#{self.release.strftime('%B, %Y')}",
+        layout: "default-byline",
+        textStyle: "default-byline"
+      },
+      {
+        role: "body",
+        text: editors_letter,
+        layout: "default-body",
+        textStyle: "default-body"
+      },
+      {
+        role: "divider",
+        layout: "default-divider",
+        "stroke": {
+          color: "#DBDBDB",
+          width: 2
+        }
+      }
+    ]
+
+    # Add the article information
+    self.ordered_articles.each do |article|
+      apple_news_hash[:components].push(
+        {
+          role: "section",
+          components: [
+            {
+              role: "photo",
+              URL: article.first_image.try(:data).to_s.blank? ? ActionController::Base.helpers.image_path("fallback/no_image.jpg") : article.first_image.data.to_s,
+              caption: article.first_image.try(:caption).to_s.blank? ? "No caption" : ActionController::Base.helpers.strip_tags(article.first_image.try(:caption)),
+              layout: "article-photo"
+            },
+            {
+              role: "title",
+              text: article.title,
+              layout: "article-title",
+              textStyle: "article-title"
+            },
+            { role: "byline",
+              text: article.teaser.blank? ? article.categories.first.display_name.to_s : ActionController::Base.helpers.strip_tags(article.teaser),
+              layout: "article-byline",
+              textStyle: "article-byline"
+            },
+            {
+              role: "divider",
+              layout: "default-divider",
+              "stroke": {
+                color: "#DBDBDB",
+                width: 2
+              }
+            }
+          ]
+        }
+      )
+    end
+    return apple_news_hash.to_json
+  end
+
   def google_play_inapp_id
     number.to_s + 'single'
   end

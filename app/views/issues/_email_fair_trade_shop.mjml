@@ -4,7 +4,7 @@
 				font-size="14px"
 				font-weight="bold"
 				align="center"
-				color="#8e8e8e">
+				color="#787878">
 				<span style="text-transform: uppercase;">Fair Trade Shop</span>
 			</mj-text>
 			<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
@@ -16,21 +16,21 @@
 			<!-- Latest from the Fair Trade Shop -->
 			<mj-image
 				alt="Latest product in the Fair Trade Shop"
-				href="http://www.newint.com.au/shop"
-				src="http://www.newint.com.au/shop/img/3976-fullsize.jpg">
+				href="http://www.newint.com.au/shop/ni-world-in-your-kitchen-calendar-133.htm"
+				src="http://www.newint.com.au/shop/img/133-email-fullsize.jpg">
 			</mj-image>
 			<mj-text
 				font-size="18px"
 				font-weight="bold"
 				align="center"
 				color="#606b75">
-				<a href="http://www.newint.com.au/shop/fair-trade-jute-shopping-bag-black-3976.htm" style="color:inherit;">Jute Shopper
+				<a href="http://www.newint.com.au/shop/ni-world-in-your-kitchen-calendar-133.htm" style="color:inherit;">World in Your Kitchen Calendar
 			</mj-text>
 			<mj-text
 				font-size="14px"
 				font-weight="300"
-				color="#8e8e8e">
-				Stylish and durable, these jute hessian shopping bags have been made by women working with a fair trade project in Bangladesh.
+				color="#787878">
+				Need inspiration in the kitchen? Beautifully illustrated on every page with unique and exclusive artwork, this calendar will fill your kitchen with the colours of the world, while the vegetarian recipes from different parts of the world will inspire any jaded chef's imagination. The large fold-open format provides plenty of space to write your appointments, making it as practical as it is pleasing to the eye.
 			</mj-text>
 		</mj-column>
 	</mj-section>

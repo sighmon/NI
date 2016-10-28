@@ -23,6 +23,14 @@ ApplicationHelper.rpush_register_ios_app
 
 # TODO: setup the admin user
 
+# Setup a popular user to attach guest passes to
+user = User.new
+user.username = 'popular'
+user.email = 'popular@test.com'
+user.password = 'valid_password'
+user.password_confirmation = 'valid_password'
+user.save!
+
 # Setup an issue.
 
 require_dependency Rails.root.join("app/models/issue.rb").to_s

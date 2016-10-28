@@ -1,3 +1,24 @@
+<!-- Google Structured Data for search results -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "name": "<%= ENV['APP_NAME'] %>",
+  "url": "<%= root_url %>",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://digital.newint.com.au/search?utf8=✓&query={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "sameAs": [
+    "https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>",
+    "https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>",
+    "https://twitter.com/<%= ENV["TWITTER_NAME"] %>",
+    "https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>"
+  ]
+}
+</script>
+
 <% if @latest_issue.try(:keynote).try(:first_image) %>
 	<div id="myCarousel" class="carousel slide home-hero">
     <!-- Keynote hero image -->
@@ -64,6 +85,39 @@
       <a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>"><i class="fa fa-android"></i></a>
       <!-- <a href="#"><i class="fa fa-github-alt"></i></a> -->
     </p>
+	</div>
+</div>
+
+<hr />
+
+<div class="row">
+	<div class="col-sm-6 home-quick-reads">
+		<h4><%= link_to "Today's quick reads", quick_reads_path %></h4>
+		<div class="row">
+		<% @quick_reads.each do |a| %>
+			<% if can? :read, a %>
+				<!-- Link to article -->
+				<a href="<%= issue_article_path(a.issue, a) %>">
+					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
+				</a>
+			<% else %>
+				<!-- Link to quick reads page -->
+				<a href="<%= quick_reads_path %>">
+					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
+				</a>
+			<% end %>
+		<% end %>
+		</div>
+	</div>
+	<div class="col-sm-6 home-popular">
+		<h4><%= link_to "Popular articles", popular_path %></h4>
+		<div class="row">
+		<% @popular.each do |article| %>
+			<a href="<%= generate_guest_pass_link_string(article.popular_guest_pass) %>">
+				<%= render :partial => "home_mini_article", :locals => { :article => article } %>
+			</a>
+		<% end %>
+		</div>
 	</div>
 </div>
 
