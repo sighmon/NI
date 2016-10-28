@@ -245,7 +245,7 @@ module ApplicationHelper
 
     def self.start_delayed_jobs
         if Rails.env.production?
-            PlatformAPI.connect_oauth(ENV["HEROKU_OAUTH"]).dyno.create(ENV["HEROKU_OAUTH_APP_NAME"],{command: 'rake jobs:workoff'})
+            PlatformAPI.connect_oauth(ENV.fetch("HEROKU_OAUTH")).dyno.create(ENV.fetch("HEROKU_OAUTH_APP_NAME"),{command: 'rake jobs:workoff'})
         else
             Delayed::Worker.new({:exit_on_complete => true}).start
         end
@@ -257,15 +257,15 @@ module ApplicationHelper
         # Set-up iOS push notifications
         app = Rpush::Apns::App.new
         if Rails.env.production?
-            app.name = ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"]
-            app.certificate = ENV["APPLE_PRODUCTION_PEM"]
+            app.name = ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME")
+            app.certificate = ENV.fetch("APPLE_PRODUCTION_PEM")
             app.environment = "production" # APNs environment.
-            app.password = ENV["APPLE_PRODUCTION_PEM_PASSSWORD"]
+            app.password = ENV.fetch("APPLE_PRODUCTION_PEM_PASSSWORD")
         else
-            app.name = ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"]
-            app.certificate = ENV["APPLE_DEVELOPMENT_PEM"]
+            app.name = ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME")
+            app.certificate = ENV.fetch("APPLE_DEVELOPMENT_PEM")
             app.environment = "sandbox" # APNs environment.
-            app.password = ENV["APPLE_DEVELOPMENT_PEM_PASSSWORD"]
+            app.password = ENV.fetch("APPLE_DEVELOPMENT_PEM_PASSSWORD")
         end
         app.connections = 1
         app.save!
@@ -275,9 +275,9 @@ module ApplicationHelper
         # Create an iOS push notification (doesn't send, just creates) one at a time
         n = Rpush::Apns::Notification.new
         if Rails.env.production?
-            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_PRODUCTION_APP_NAME"])
+            n.app = Rpush::Apns::App.find_by_name(ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
         else
-            n.app = Rpush::Apns::App.find_by_name(ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"])
+            n.app = Rpush::Apns::App.find_by_name(ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
         end
         data[:sound] = "new-issue.caf"
         n.sound = data[:sound]
@@ -311,9 +311,9 @@ module ApplicationHelper
 
         n = Rpush::Gcm::Notification.new
         if Rails.env.production?
-            n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_PRODUCTION_APP_NAME"])
+            n.app = Rpush::Gcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
         else
-            n.app = Rpush::Gcm::App.find_by_name(ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"])
+            n.app = Rpush::Gcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
         end
         # To get the NI icon, data = {icon: 'ni_notification'}
         data[:icon] = 'ni_notification'
