@@ -294,13 +294,13 @@ module ApplicationHelper
         # Set-up Android push notifications
         app = Rpush::Gcm::App.new
         if Rails.env.production?
-            app.name = ENV["RPUSH_ANDROID_PRODUCTION_APP_NAME"]
+            app.name = ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME")
             app.environment = "production" # APNs environment.
-            app.auth_key = ENV["ANDROID_PRODUCTION_AUTH_KEY"]
+            app.auth_key = ENV.fetch("ANDROID_PRODUCTION_AUTH_KEY")
         else
-            app.name = ENV["RPUSH_ANDROID_DEVELOPMENT_APP_NAME"]
+            app.name = ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME")
             app.environment = "sandbox" # APNs environment.
-            app.auth_key = ENV["ANDROID_DEVELOPMENT_AUTH_KEY"]
+            app.auth_key = ENV.fetch("ANDROID_DEVELOPMENT_AUTH_KEY")
         end
         app.connections = 1
         app.save!
