@@ -10,12 +10,6 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= favicon_link_tag %>
-  <!-- BugHerd bug code -->
-  <% if current_user %>
-  	<%= bugherd_tag :metadata => { :user_id => current_user.id.to_s, :controller => controller.controller_name }, :reporter => { :email => current_user.email, :required => "true" } %>
-  <% else %>
-  	<%= bugherd_tag %>
-  <% end %>
   <!-- Google Analytics tracking code -->
   <%= analytics_init :local => ( Rails.env.development? or Rails.env.test? ) %>
   <%= render :partial => "shared/ga_events" %>

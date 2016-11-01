@@ -70,7 +70,7 @@ gem 'curb'
 gem 'meta-tags', :require => 'meta_tags'
 
 # BugHerd gem for bug reporting https://github.com/BugHerd/bugherd-ruby
-gem 'bugherd'
+# gem 'bugherd'
 
 # Google Analytics https://github.com/bgarret/google-analytics-rails
 gem 'google-analytics-rails'
