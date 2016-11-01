@@ -159,12 +159,16 @@ class Article < ActiveRecord::Base
 
   # Guest pass checking
   def is_valid_guest_pass(key)
-    pass = self.guest_passes.where(:key => key).first
-    if pass
-      pass.last_used = DateTime.now
-      pass.use_count += 1
-      pass.save
-      return true
+    if key
+      pass = self.guest_passes.where(:key => key).first
+      if pass
+        pass.last_used = DateTime.now
+        pass.use_count += 1
+        pass.save
+        return true
+      else
+        return false
+      end
     else
       return false
     end
