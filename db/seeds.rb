@@ -24,7 +24,7 @@ ApplicationHelper.rpush_register_ios_app
 # TODO: setup the admin user
 
 # Setup a popular user to attach guest passes to
-user = User.new
+user = User.find_or_create_by(username:'popular')
 user.username = 'popular'
 user.email = 'popular@test.com'
 user.password = 'valid_password'
