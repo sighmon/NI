@@ -19,6 +19,29 @@ jQuery ->
   $('.category_autocomplete').autocomplete
     source: $('.autocomplete-data').data('autocomplete-source')
 
+  # Subscription advert for non-signed in visitors
+  readCookie = (name) ->
+    nameEQ = name + '='
+    ca = document.cookie.split(';')
+    i = 0
+    while i < ca.length
+      c = ca[i]
+      while c.charAt(0) == ' '
+        c = c.substring(1, c.length)
+      if c.indexOf(nameEQ) == 0
+        return c.substring(nameEQ.length, c.length)
+      i++
+    null
+
+  dontShowAdvert = readCookie("subscriptionAdvertClosed")
+  if dontShowAdvert != "true"
+    $('.subscription-advert').show()    
+
+  $('.subscription-advert .fa-times').click ->
+    $('.subscription-advert').hide()
+    document.cookie = "subscriptionAdvertClosed=true"
+    event.preventDefault()
+
   # Modal & Carousel setup
 
   $imageModal = $("#imageModal").modal(show: false)

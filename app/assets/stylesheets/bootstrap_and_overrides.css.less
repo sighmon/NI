@@ -1268,6 +1268,35 @@ mark, .mark {
 
 //- end highlighter.js stuff
 
+.subscription-advert {
+	position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(161, 205, 81, 1);
+  display: none;
+}
+
+.subscription-advert p {
+	margin: 1em auto;
+	max-width: 80%;
+}
+
+.subscription-advert p a, .subscription-advert p {
+	color: black;
+}
+
+.subscription-advert:hover {
+	background-color: @niRed;
+}
+
+.subscription-advert:hover p {
+	color: white;
+}
+
 #myCarousel {
 	// .shadow;
 	margin: 0 -4em 2em -4em;
