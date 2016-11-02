@@ -146,7 +146,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.20160826)
+    domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     excon (0.54.0)
@@ -281,7 +281,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.4.0)
+    fog-vsphere (1.5.0)
       fog-core
       rbvmomi (~> 1.9)
     fog-xenserver (0.2.3)
@@ -593,7 +593,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    unicorn (5.1.0)
+    unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uri-js-rails (1.15.2)
