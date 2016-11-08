@@ -25,16 +25,23 @@ class Article < ActiveRecord::Base
   index_name BONSAI_INDEX_NAME
 
 
-  def self.search(params, unpublished = false)
+  def self.search(params, show_unpublished = false)
     results_per_page = params[:per_page].to_i
     if results_per_page <= 0
       results_per_page = Settings.article_pagination
     end
-    __elasticsearch__.search(load: true, :page => params[:page], :per_page => results_per_page) do
-      query {string params[:query], default_operator: "AND"} if params[:query].present?
-      filter :term, :published => true unless unpublished
-      sort { by :publication, 'desc' }
-    end
+    # __elasticsearch__.search(load: true, :page => params[:page], :per_page => results_per_page) do
+    #   query {string params[:query], default_operator: "AND"} if params[:query].present?
+    #   filter :term, :published => true unless show_unpublished
+    #   sort { by :publication, 'desc' }
+    # end
+    query_hash = {
+      sort: [{ publication: { order: "desc"} }]
+    }
+    query_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    query_hash.merge!({ post_filter: { term: { unpublished: true}} }) unless show_unpublished
+
+    __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
   end
 
   def score
@@ -99,17 +106,17 @@ class Article < ActiveRecord::Base
     return self.issue.ordered_articles[my_index+1]
   end
 
-  mapping do
-    indexes :id, type: 'integer'
-    indexes :title
-    indexes :teaser
-    indexes :category
-    indexes :author
-    indexes :body
-    indexes :featured_image_caption
-    indexes :publication, type: 'date'
-    indexes :published, type: 'boolean', as: 'published'
-  end
+  # mapping do
+  #   indexes :id, type: 'integer'
+  #   indexes :title
+  #   indexes :teaser
+  #   indexes :category
+  #   indexes :author
+  #   indexes :body
+  #   indexes :featured_image_caption
+  #   indexes :publication, type: 'date'
+  #   indexes :published, type: 'boolean', as: 'published'
+  # end
 
   def create_categories_from_article_source
     if self.categories.blank?

@@ -31,18 +31,13 @@ class Issue < ActiveRecord::Base
     if admin
       pagination = 200
     end
-    # __elasticsearch__.search(load: true, :page => params[:page], :per_page => pagination) do
-    #   query {string params[:query], default_operator: "AND"} if params[:query].present?
-    #   filter :term, :published => true unless admin
-    #   sort { by :release, 'desc' }
-    # end
-    __elasticsearch__.search(
-      query: { query_string: {
-        query: params[:query] || "*"
-      }},
-      size: pagination,
-      from: params[:page] || 1
-    ).records
+    search_hash = {
+      sort: [{ release: {order: "desc"}}]
+    }
+    search_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin
+
+    __elasticsearch__.search(search_hash).page(params[:page]).per(pagination).records
   end
 
   def self.latest
