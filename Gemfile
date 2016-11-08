@@ -244,7 +244,9 @@ gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some 
 
 # Tire for elasticsearch
 # http://railscasts.com/episodes/306-elasticsearch-part-1
-gem 'tire'
+# gem 'tire' # Retired..
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 # Acts as list for sortable lists
 # http://railscasts.com/episodes/147-sortable-lists-revised?view=asciicast

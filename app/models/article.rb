@@ -18,8 +18,8 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :categories, allow_destroy: true, reject_if: :category_exists
   accepts_nested_attributes_for :images, allow_destroy: true
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
@@ -30,7 +30,7 @@ class Article < ActiveRecord::Base
     if results_per_page <= 0
       results_per_page = Settings.article_pagination
     end
-    tire.search(load: true, :page => params[:page], :per_page => results_per_page) do
+    __elasticsearch__.search(load: true, :page => params[:page], :per_page => results_per_page) do
       query {string params[:query], default_operator: "AND"} if params[:query].present?
       filter :term, :published => true unless unpublished
       sort { by :publication, 'desc' }

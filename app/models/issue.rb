@@ -12,8 +12,8 @@ class Issue < ActiveRecord::Base
 
   after_commit :flush_cache
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   include ActionView::Helpers::TextHelper
 
@@ -26,23 +26,23 @@ class Issue < ActiveRecord::Base
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
-  # Not over-riding this anymore as it breaks kaminari-bootstrap styling
-  # def self.search(params)
-  #   tire.search(load: true) do
-  #     query { string params[:query]} if params[:query].present?
-  #   end
-  # end
-
   def self.search(params, admin = false)
     pagination = Settings.issue_pagination
     if admin
       pagination = 200
     end
-    tire.search(load: true, :page => params[:page], :per_page => pagination) do
-      query {string params[:query], default_operator: "AND"} if params[:query].present?
-      filter :term, :published => true unless admin
-      sort { by :release, 'desc' }
-    end
+    # __elasticsearch__.search(load: true, :page => params[:page], :per_page => pagination) do
+    #   query {string params[:query], default_operator: "AND"} if params[:query].present?
+    #   filter :term, :published => true unless admin
+    #   sort { by :release, 'desc' }
+    # end
+    __elasticsearch__.search(
+      query: { query_string: {
+        query: params[:query] || "*"
+      }},
+      size: pagination,
+      from: params[:page] || 1
+    ).records
   end
 
   def self.latest
