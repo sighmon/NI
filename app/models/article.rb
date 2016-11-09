@@ -39,6 +39,7 @@ class Article < ActiveRecord::Base
       sort: [{ publication: { order: "desc"} }]
     }
     query_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    # TOFIX: Work out how to make it so that we can remove articles from unpublished Issues.
     query_hash.merge!({ post_filter: { term: { unpublished: true}} }) unless show_unpublished
 
     __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
