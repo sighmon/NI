@@ -43,7 +43,10 @@ class Issue < ActiveRecord::Base
   def self.latest
     Issue.where(published: true).order(:release).last
   end
-    
+
+  def self.latest_free
+    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.first
+  end
  
   def gift_to_subscribers
     User.all.select{|u| u.subscriber?}.each{|u| self.gift_to_user(u)}

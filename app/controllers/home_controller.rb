@@ -30,7 +30,9 @@ class HomeController < ApplicationController
       latest_issue_categories.sort_by(&:short_display_name)
     end
 
-    @latest_free_issue = @issues.select{|issue| issue.trialissue and not issue.digital_exclusive}.reverse.first
+    @latest_free_issue = Rails.cache.fetch("home_latest_free_issue", expires_in: 12.hours) do
+      Issue.latest_free
+    end
 
     @features_category = Category.find_by_name("/features/")
 
