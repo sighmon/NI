@@ -3,6 +3,13 @@ require 'rails_helper'
 
 describe ArticlesController, :type => :controller do
 
+  setup do
+    Article.__elasticsearch__.index_name = 'ni-test'
+    Article.__elasticsearch__.create_index!
+    # Article.__elasticsearch__.import
+    # Article.__elasticsearch__.refresh_index!
+  end
+
   context "as a subscriber" do
 
     before(:each) do
@@ -73,7 +80,7 @@ describe ArticlesController, :type => :controller do
         it "can't view the body" do
           get :body, {article_id: article.id, issue_id: article.issue.id}
           expect(response.status).to eq(403)
-        end 
+        end
 
       end
 
@@ -141,6 +148,38 @@ describe ArticlesController, :type => :controller do
           get :quick_reads
           expect(response.status).to eq(200)
         end 
+
+      end
+
+    end
+
+    describe "GET search" do
+
+      context "with an article" do
+
+        let(:article) { FactoryGirl.create(:article) }
+
+        let(:issue) { FactoryGirl.create(:published_issue) }
+
+        it "can search the article" do
+          article.issue_id = issue.id
+          Article.__elasticsearch__.import
+          Article.__elasticsearch__.refresh_index!
+          get :search# , format: 'json'
+          expect(response.status).to eq(200)
+          # TOFIX: work out why assigns is empty
+          expect(assigns(:articles).records).to include(article)
+        end
+
+        it "can search the article JSON" do
+          article.issue_id = issue.id
+          Article.__elasticsearch__.import
+          Article.__elasticsearch__.refresh_index!
+          get :search, format: 'json'
+          expect(response.status).to eq(200)
+          # TOFIX: work out why response is nil
+          expect(JSON.parse(response.body).first.try(['title'])).to eq(article.title)
+        end
 
       end
 

@@ -1,12 +1,38 @@
 require 'rails_helper'
 
-
 describe IssuesController, :type => :controller do
+
+  setup do
+    Issue.__elasticsearch__.index_name = 'ni-test'
+    Issue.__elasticsearch__.create_index!
+    # Issue.__elasticsearch__.import
+    # Issue.__elasticsearch__.refresh_index!
+  end
 
   context "as a guest" do
    
     context "with an issue" do
-      let(:issue) { FactoryGirl.create(:issue) }
+      let(:issue) { FactoryGirl.create(:published_issue) }
+
+      describe "GET issue list" do
+
+        it "should show issue" do
+          get :index, :issue_id => issue.id
+          Issue.__elasticsearch__.import
+          Issue.__elasticsearch__.refresh_index!
+          expect(response.status).to eq(200)
+          expect(assigns(:issues).records).to include(issue)
+        end
+
+        it "should show issue JSON" do
+          get :index, format: 'json', :issue_id => issue.id
+          expect(response.status).to eq(200)
+          Issue.__elasticsearch__.import
+          Issue.__elasticsearch__.refresh_index!
+          expect(JSON.parse(response.body).first['title']).to eq(issue.title)
+        end
+
+      end
 
       describe "GET email" do
 
