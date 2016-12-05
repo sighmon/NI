@@ -29,11 +29,11 @@ SecureHeaders::Configuration.default do |config|
     # form_action: %w('self' github.com),
     form_action: %w('self'),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.apple.com.edgekey.net *.thawte.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    img_src: %W('self' data: *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
-    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com *.thawte.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com *.thawte.com *.googletagmanager.com *.newrelic.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     style_src: %W('self' 'unsafe-inline' *.twitter.com *.twimg.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
