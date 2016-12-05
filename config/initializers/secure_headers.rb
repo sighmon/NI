@@ -34,7 +34,7 @@ SecureHeaders::Configuration.default do |config|
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
     script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com *.thawte.com *.googletagmanager.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
-    style_src: %W('self' 'unsafe-inline' *.twitter.com *.twimg.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    style_src: %W('self' 'unsafe-inline' *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
   }
