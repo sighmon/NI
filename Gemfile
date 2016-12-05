@@ -141,6 +141,9 @@ gem 'net-http-persistent', '~> 2.9.4'
 # https://github.com/alexreisner/geocoder
 # gem 'geocoder'
 
+# For header security https://github.com/twitter/secureheaders
+gem 'secure_headers'
+
 # For development
 group :development do
   # gem 'taps', :require => false
