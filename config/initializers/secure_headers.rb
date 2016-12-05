@@ -23,13 +23,13 @@ SecureHeaders::Configuration.default do |config|
     default_src: %w(https: 'self'),
     base_uri: %w('self'),
     block_all_mixed_content: true, # see http://www.w3.org/TR/mixed-content/
-    child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com), # if child-src isn't supported, the value for frame-src will be set.
+    child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com), # if child-src isn't supported, the value for frame-src will be set.
     connect_src: %w('self' wss: *.disqus.com),
     font_src: %W('self' data: #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # form_action: %w('self' github.com),
-    form_action: %w('self'),
+    form_action: %w('self' syndication.twitter.com),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    img_src: %W('self' data: *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
