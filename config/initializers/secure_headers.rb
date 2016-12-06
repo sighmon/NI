@@ -27,7 +27,7 @@ SecureHeaders::Configuration.default do |config|
     connect_src: %w('self' wss: *.disqus.com),
     font_src: %W('self' data: #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # form_action: %w('self' github.com),
-    form_action: %w('self' syndication.twitter.com),
+    form_action: %w('self' syndication.twitter.com *.paypal.com),
     frame_ancestors: %w('none'),
     img_src: %W('self' data: *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # media_src: %w(utoob.com),
