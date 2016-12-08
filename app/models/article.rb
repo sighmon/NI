@@ -18,23 +18,25 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :categories, allow_destroy: true, reject_if: :category_exists
   accepts_nested_attributes_for :images, allow_destroy: true
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
 
-  def self.search(params, unpublished = false)
+  def self.search(params, show_unpublished = false)
     results_per_page = params[:per_page].to_i
     if results_per_page <= 0
       results_per_page = Settings.article_pagination
     end
-    tire.search(load: true, :page => params[:page], :per_page => results_per_page) do
-      query {string params[:query], default_operator: "AND"} if params[:query].present?
-      filter :term, :published => true unless unpublished
-      sort { by :publication, 'desc' }
-    end
+    query_hash = {
+      sort: [{ publication: { order: "desc"} }]
+    }
+    query_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    query_hash.merge!({ post_filter: { term: { published: true}} }) unless show_unpublished
+
+    __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
   end
 
   def score
@@ -99,17 +101,17 @@ class Article < ActiveRecord::Base
     return self.issue.ordered_articles[my_index+1]
   end
 
-  mapping do
-    indexes :id, type: 'integer'
-    indexes :title
-    indexes :teaser
-    indexes :category
-    indexes :author
-    indexes :body
-    indexes :featured_image_caption
-    indexes :publication, type: 'date'
-    indexes :published, type: 'boolean', as: 'published'
-  end
+  # mapping do
+  #   indexes :id, type: 'integer'
+  #   indexes :title
+  #   indexes :teaser
+  #   indexes :category
+  #   indexes :author
+  #   indexes :body
+  #   indexes :featured_image_caption
+  #   indexes :publication, type: 'date'
+  #   indexes :published, type: 'boolean', as: 'published'
+  # end
 
   def create_categories_from_article_source
     if self.categories.blank?
@@ -159,12 +161,16 @@ class Article < ActiveRecord::Base
 
   # Guest pass checking
   def is_valid_guest_pass(key)
-    pass = self.guest_passes.where(:key => key).first
-    if pass
-      pass.last_used = DateTime.now
-      pass.use_count += 1
-      pass.save
-      return true
+    if key
+      pass = self.guest_passes.where(:key => key).first
+      if pass
+        pass.last_used = DateTime.now
+        pass.use_count += 1
+        pass.save
+        return true
+      else
+        return false
+      end
     else
       return false
     end

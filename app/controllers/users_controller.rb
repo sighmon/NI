@@ -57,7 +57,34 @@ class UsersController < ApplicationController
             # purchases << {:purchase_date => purchase.purchase_date, :issue_id => purchase.issue_id, :issue_number => purchase.issue.number}
             purchases << purchase.issue.number
         end
-        hash = {:username => user.username, :id => user.id, :expiry => expiry, :purchases => purchases}
+        favourites = []
+        user.favourites.order(:created_at).reverse_order.limit(20).each do |favourite|
+            favourites << {
+                :id => favourite.id,
+                :issue_id => favourite.issue_id,
+                :article_id => favourite.article_id,
+                :created_at => favourite.created_at
+            }
+        end
+        guest_passes = []
+        user.guest_passes.order(:created_at).reverse_order.limit(20).each do |guest_pass|
+            guest_passes << {
+                :id => guest_pass.id,
+                :issue_id => guest_pass.article.issue_id,
+                :article_id => guest_pass.article_id,
+                :created_at => guest_pass.created_at,
+                :use_count => guest_pass.use_count,
+                :key => guest_pass.key
+            }
+        end
+        hash = {
+            :username => user.username,
+            :id => user.id,
+            :expiry => expiry,
+            :purchases => purchases,
+            :favourites => favourites,
+            :guest_passes => guest_passes
+        }
     end
 
     def re_sign_in

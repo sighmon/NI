@@ -12,8 +12,8 @@ class Issue < ActiveRecord::Base
 
   after_commit :flush_cache
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   include ActionView::Helpers::TextHelper
 
@@ -26,29 +26,27 @@ class Issue < ActiveRecord::Base
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
-  # Not over-riding this anymore as it breaks kaminari-bootstrap styling
-  # def self.search(params)
-  #   tire.search(load: true) do
-  #     query { string params[:query]} if params[:query].present?
-  #   end
-  # end
-
   def self.search(params, admin = false)
     pagination = Settings.issue_pagination
     if admin
       pagination = 200
     end
-    tire.search(load: true, :page => params[:page], :per_page => pagination) do
-      query {string params[:query], default_operator: "AND"} if params[:query].present?
-      filter :term, :published => true unless admin
-      sort { by :release, 'desc' }
-    end
+    search_hash = {
+      sort: [{ release: {order: "desc"}}]
+    }
+    search_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin
+
+    __elasticsearch__.search(search_hash).page(params[:page]).per(pagination).records
   end
 
   def self.latest
     Issue.where(published: true).order(:release).last
   end
-    
+
+  def self.latest_free
+    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.first
+  end
  
   def gift_to_subscribers
     User.all.select{|u| u.subscriber?}.each{|u| self.gift_to_user(u)}

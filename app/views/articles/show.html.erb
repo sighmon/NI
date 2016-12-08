@@ -245,3 +245,7 @@
 <% end %>
 
 <%= render :partial => "disqus", :object => @article %>
+
+<% if not current_user %>
+  <%= link_to raw('<div class="subscription-advert"><p>Our independent global journalism is entirely subscriber-funded. <b>Subscribe</b> for instant access to our 8-year archive of award-winning magazines.&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></p></div>'), page_path('subscribe') %>
+<% end %>
