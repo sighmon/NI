@@ -19,7 +19,9 @@
 </head>
 <body>
 
-	<%= google_tag_manager %>
+  <% if not no_tracking %>
+    <%= google_tag_manager %>
+  <% end %>
 	
 	<div class="container">
 	
