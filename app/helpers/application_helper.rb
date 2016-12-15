@@ -354,9 +354,13 @@ module ApplicationHelper
         "Bad IP address in student account! Check your last entry, then go to Admin > Settings to remove this warning."
     end
 
-    def no_tracking
+    def self.no_tracking(request)
         exempt_pages = request.try(:url).try(:include?, "securedrop")
         return exempt_pages
+    end
+
+    def no_tracking(request)
+        ApplicationHelper.no_tracking(request)
     end
 
 end

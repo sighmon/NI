@@ -21,6 +21,11 @@ class PagesController < ApplicationController
     # @page = Page.find(params[:id])
     # Now finding by permalink
     @page = Page.find_by_permalink!(params[:id])
+    @no_tracking = ApplicationHelper.no_tracking(request)
+    if @no_tracking
+      # logger.info "No tracking for page #{@page.title}"
+      NewRelic::Agent.ignore_transaction
+    end
     @current_issue = Issue.all.sort_by(&:release).last
     @first_image = ""
     @issues = Issue.where(published: true).sort_by(&:release).reverse.first(4)

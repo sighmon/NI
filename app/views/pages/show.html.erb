@@ -46,9 +46,11 @@
     <%= retina_image_tag(@current_issue.cover_url(:thumb).to_s, :alt => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :title => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :size => "141x200", :class => 'subscribe-current-issue') %>
   <% end %>
   <%= simple_format @page.body %>
-  <div id="thawteseal" style="text-align:center;" title="Click to Verify - This site chose Thawte SSL for secure e-commerce and confidential communications.">
-    <div><script type="text/javascript" src="https://seal.thawte.com/getthawteseal?host_name=digital.newint.com.au&amp;size=M&amp;lang=en"></script></div>
-  </div>
+  <% if not @no_tracking %>
+    <div id="thawteseal" style="text-align:center;" title="Click to Verify - This site chose Thawte SSL for secure e-commerce and confidential communications.">
+      <div><script type="text/javascript" src="https://seal.thawte.com/getthawteseal?host_name=digital.newint.com.au&amp;size=M&amp;lang=en"></script></div>
+    </div>
+  <% end %>
 </div>
 
 <div class="clearfix"></div>

@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= favicon_link_tag %>
   <!-- Google Analytics tracking code -->
-  <% if not no_tracking %>
+  <% if not @no_tracking %>
     <%= analytics_init :local => ( Rails.env.development? or Rails.env.test? ) %>
     <%= render :partial => "shared/ga_events" %>
     <%= render :partial => "shared/fb_events" %>
@@ -19,7 +19,7 @@
 </head>
 <body>
 
-  <% if not no_tracking %>
+  <% if not @no_tracking %>
     <%= google_tag_manager %>
   <% end %>
 	
@@ -164,7 +164,7 @@
 
 		<%= render :partial => "shared/footer" %>
 
-		<% if not no_tracking %><%= render :partial => "shared/disqus" %><% end %>
+		<% if not @no_tracking %><%= render :partial => "shared/disqus" %><% end %>
 
 	</div>
 
