@@ -1,6 +1,9 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
+Status: All good
+Period: December, 2016
+
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
   /  |/ / _ \ | /| / / / __ \/ __/
@@ -18,7 +21,8 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  16 Dec 2016
+  19 Dec 2016
+  Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
   newint.com.au
@@ -26,11 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEcBAEBCgAGBQJYU2cpAAoJEAUYQUYgRXjfWccIAI0sBMhUlGB+SyvOZQMqpJou
-a0S1HaTbC4rkRDG94kftLSGY3g1ws+jZ81GxAgRhRJL5nom4VDDeQy7xmG268YhB
-7Qy1LX5NwbHCdn6EgR2tp7lR4fsOWoS4Om9h/l/x7Tecmoe8ybjUPVkHtDTFo5sr
-gd3mT6658y19u3q9P95Ctv1WCLF+Phk5RKn9XBo369VjsswCdOvJ3JrrFy/hyO5u
-c4E7j6hezGLthURIPwSkcMAJAPHgoqDGuCXJVClTFRZl1YhScnh7WMuGpjuq7VQ2
-lRF7cqyGPsWZJCIKq5JWVL8KFeS69SZqEF98qWMOT7g+ilug9Bnp5d4FUzvfX4o=
-=ojBe
+iQIcBAEBCgAGBQJYV3A4AAoJELbJxtlC+xj5wfcQAM+hwjtiliQadQccqCevdEie
+2QDiMBV9r0uXGUZT67w2JyPUcNn8L45tWwfY5s4/svXhlDeCn/sJDYGRywn8av4x
+JyBsmFCWpES3mz0lU4npMA096szKmZ07z+zVpKj4F/D8wniZswaSzCJLfET1kSwQ
+OV52D87eL5/bH5d0lLPZ3+wEWGGTCGn5lolyzY4fwcwepBWn77m1tfY3Vs7F59yI
+b20Xmdv0LH7PgRXZzACFKKOpd1TPXNKQcZTOqCrbe0NnNA3PkRvIr7A/s/uhbbB6
+H4dzolgxXMt63lxob067yeLxo4CsZ8m/N2SUrFVwItVPI1vcxUd0pngjG1n0C6xw
+/ro0zOFQXdh1a2KxVYWioBrJVyFp+HNQwcVg/pYTcsY6R001hwwCWoNCFSEJY/eQ
+p7bNK1jIaCy9osRrZ5u6FCG/W/gXSZyASHMO+9NOa7XLDs7mARd1jw0OGl7JNci4
+4k1F5DKTnWdx+IG11giVMvnMJp48iTcu44ycUbMLH9E81VJUUUDOeGjZW1AM9V3a
+cVH9xwjrSSdP/ZBSC4mh7ZVDaBHwettMUS/pMMJwdKYkaiJSyFozh0ZIe+VYhvVI
+5zw+vIBtno+cocjVTpqKDFXRDPZb+ZS1AxgbZm0axqI5QmzRN28VxUYUTdA91I8H
+skgDz+1sFvCN0YuR0GLE
+=Dioe
 -----END PGP SIGNATURE-----
