@@ -30,6 +30,7 @@
         <li><%= link_to "Mobile applications", page_path("apps") %></li>
         <li><%= link_to "Help", page_path("help") %></li>
         <li><%= link_to "RSS feed", rss_url(format: :xml) %></li>
+        <li><%= link_to "Warrant canary", "/canary.txt" %></li>
       </ul>
     </div>
     <div class="col-sm-4">
@@ -46,8 +47,9 @@
       <h5>Contact us:</h5>
       <ul>
         <li>Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a></li>
-        <li>Phone: +61 8 8232 1563</li>
-        <li>172 Gilles Street,<br />Adelaide 5000<br />Australia</li>
+        <li>PGP Public Key and Fingerprint:<br /><%= link_to "#{ENV['PGP_PUBLIC_KEY_FINGERPRINT']}", "#{ENV['PGP_PUBLIC_KEY_LINK']}" %></li>
+        <li>Phone: <%= ENV["PHONE_NUMBER"] %></li>
+        <li><%= raw(ENV["STREET_ADDRESS"]) %></li>
       </ul>
     </div>
   </div>

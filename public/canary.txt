@@ -1,0 +1,36 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+    _   __             _       __ 
+   / | / /__ _      __(_)___  / /_
+  /  |/ / _ \ | /| / / / __ \/ __/
+ / /|  /  __/ |/ |/ / / / / / /_  
+/_/ |_/\___/|__/|__/_/_/ /_/\__/  
+                                  
+As of the date below, New Internationalist Publications Pty Ltd have never received any:
+
+  * National Security Letter, of any type, for any purpose.
+  * Requests from any law enforcement agency worldwide or corporate entity for backdoors in any software and/or hardware projects to which we currently are an active contributor, nor are we aware of other contributors to these projects having received such a request.
+  * Foreign Intelligence Surveillance Court orders of any type.
+  * Subpoenas and/or search warrants accompanied by a gag order pursuant to the Electronic Communications Privacy Act.
+
+Nor have we received, nor are we aware of, occurences of any of the above, with respect to any and all machines we operate, maintain, and/or develop on.
+
+This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
+
+  16 Dec 2016
+  New Internationalist Publications Pty Ltd
+  172 Gilles Street, Adelaide 5000
+  newint.com.au
+  digital.newint.com.au
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBCgAGBQJYU2cpAAoJEAUYQUYgRXjfWccIAI0sBMhUlGB+SyvOZQMqpJou
+a0S1HaTbC4rkRDG94kftLSGY3g1ws+jZ81GxAgRhRJL5nom4VDDeQy7xmG268YhB
+7Qy1LX5NwbHCdn6EgR2tp7lR4fsOWoS4Om9h/l/x7Tecmoe8ybjUPVkHtDTFo5sr
+gd3mT6658y19u3q9P95Ctv1WCLF+Phk5RKn9XBo369VjsswCdOvJ3JrrFy/hyO5u
+c4E7j6hezGLthURIPwSkcMAJAPHgoqDGuCXJVClTFRZl1YhScnh7WMuGpjuq7VQ2
+lRF7cqyGPsWZJCIKq5JWVL8KFeS69SZqEF98qWMOT7g+ilug9Bnp5d4FUzvfX4o=
+=ojBe
+-----END PGP SIGNATURE-----
