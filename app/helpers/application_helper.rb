@@ -355,7 +355,7 @@ module ApplicationHelper
     end
 
     def self.no_tracking(request)
-        exempt_pages = request.try(:url).try(:include?, "securedrop")
+        exempt_pages = (request.try(:url).try(:include?, "securedrop") or request.try(:url).try(:include?, "how-to-leak"))
         return exempt_pages
     end
 
