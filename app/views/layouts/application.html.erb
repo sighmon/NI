@@ -132,6 +132,9 @@
                   <li role="separator" class="divider"></li>
                   <li><%= link_to "Quick reads", quick_reads_path %></li>
                   <li><%= link_to "Popular articles", popular_path %></li>
+                  <li role="separator" class="divider"></li>
+                  <li><%= link_to "How to leak to New Internationalist", page_path("how-to-leak") %></li>
+                  <li><%= link_to "SecureDrop server", page_path("securedrop") %></li>
 									<% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
 									<% else %>
                     <li role="separator" class="divider"></li>

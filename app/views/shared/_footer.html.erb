@@ -30,6 +30,8 @@
         <li><%= link_to "Mobile applications", page_path("apps") %></li>
         <li><%= link_to "Help", page_path("help") %></li>
         <li><%= link_to "RSS feed", rss_url(format: :xml) %></li>
+        <li><%= link_to "How to leak", page_path("how-to-leak") %></li>
+        <li><%= link_to "SecureDrop", page_path("securedrop") %></li>
         <li><%= link_to "Warrant canary", "/canary.txt" %></li>
       </ul>
     </div>
@@ -46,6 +48,7 @@
       </ul>
       <h5>Contact us:</h5>
       <ul>
+        <li>Anonymously: <%= link_to "SecureDrop server", page_path("securedrop") %></li>
         <li>Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a></li>
         <li>PGP Public Key and Fingerprint:<br /><%= link_to "#{ENV['PGP_PUBLIC_KEY_FINGERPRINT']}", "#{ENV['PGP_PUBLIC_KEY_LINK']}" %></li>
         <li>Phone: <%= ENV["PHONE_NUMBER"] %></li>
