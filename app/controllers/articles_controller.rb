@@ -44,12 +44,15 @@ class ArticlesController < ApplicationController
             :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
             :keywords => "new, internationalist, magazine, digital, edition, search",
             :canonical => search_url,
+            :fb => {
+              :app_id => ENV["FACEBOOK_APP_ID"]
+            },
             :open_graph => {
-            :title => @page_title,
-            :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
-            #:type  => :magazine,
-            :url   => search_url,
-            :site_name => "New Internationalist Magazine Digital Edition"
+              :title => @page_title,
+              :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
+              #:type  => :magazine,
+              :url   => search_url,
+              :site_name => "New Internationalist Magazine Digital Edition"
             }
     respond_to do |format|
       format.html # show.html.erb
@@ -81,6 +84,9 @@ class ArticlesController < ApplicationController
               {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
               {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
             ],
+            :fb => {
+              :app_id => ENV["FACEBOOK_APP_ID"]
+            },
             :open_graph => {
               :title => @page_title,
               :description => @page_description,
@@ -143,6 +149,9 @@ class ArticlesController < ApplicationController
               {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
               {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
             ],
+            :fb => {
+              :app_id => ENV["FACEBOOK_APP_ID"]
+            },
             :open_graph => {
               :title => @page_title,
               :description => @page_description,
@@ -340,13 +349,16 @@ class ArticlesController < ApplicationController
               {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"},
               {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
             ],
+            :fb => {
+              :app_id => ENV["FACEBOOK_APP_ID"]
+            },
             :open_graph => {
-            :title => @article.title,
-            :description => strip_tags(@article.teaser),
-            #:type  => :magazine,
-            :url   => issue_article_url(@issue, @article),
-            :image => first_image_for_meta_data,
-            :site_name => "New Internationalist Magazine Digital Edition"
+              :title => @article.title,
+              :description => strip_tags(@article.teaser),
+              #:type  => :magazine,
+              :url   => issue_article_url(@issue, @article),
+              :image => first_image_for_meta_data,
+              :site_name => "New Internationalist Magazine Digital Edition"
             },
             :twitter => {
               :card => "summary_large_image",

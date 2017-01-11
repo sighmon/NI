@@ -52,6 +52,9 @@ class PagesController < ApplicationController
     set_meta_tags :title => @page.title,
                   :description => @page.teaser,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",
+                  :fb => {
+                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  },
                   :open_graph => {
                     :title => @page.title,
                     :description => @page.teaser,
