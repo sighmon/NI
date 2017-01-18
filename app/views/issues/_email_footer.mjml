@@ -46,6 +46,11 @@
 					<strong>Don't forget our</strong>:<br />
 					Fair Trade Shop: <a href="http://www.newint.com.au/shop" style="color:inherit;">newint.com.au/shop</a><br />
 					Blog: <a href="http://www.newint.com.au/blog" style="color:inherit;">newint.com.au/blog</a><br /><br />
+					<strong>Contact us</strong>:<br />
+					How to leak to New Internationalist: <a href="https://digital.newint.com.au/how-to-leak" style="color:inherit;">digital.newint.com.au/how-to-leak</a><br />
+					Contact us anonymously: <a href="https://digital.newint.com.au/securedrop" style="color:inherit;">digital.newint.com.au/securedrop</a><br />
+					Encrypted email: <a href="https://pgp.mit.edu/pks/lookup?search=newint.com.au" style="color:inherit;">newint.com.au PGP keys</a><br />
+					Warrant canary: <a href="https://digital.newint.com.au/canary.txt" style="color:inherit;">digital.newint.com.au/canary.txt</a><br /><br />
 					<strong>On social media</strong>:<br />
 					Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>" style="color:inherit;">@<%= ENV["TWITTER_NAME"] %></a><br />
 					Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>" style="color:inherit;">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a><br />
