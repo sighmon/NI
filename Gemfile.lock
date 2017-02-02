@@ -21,7 +21,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.4)
+    CFPropertyList (2.3.5)
     actionmailer (4.2.7.1)
       actionpack (= 4.2.7.1)
       actionview (= 4.2.7.1)
@@ -97,7 +97,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    brakeman (3.4.1)
+    brakeman (3.5.0)
     builder (3.2.3)
     bundler-audit (0.5.0)
       bundler (~> 1.2)
@@ -157,7 +157,7 @@ GEM
       faraday
       multi_json
     erubis (2.7.0)
-    eventmachine (1.2.1)
+    eventmachine (1.2.2)
     excon (0.54.0)
     execjs (2.7.0)
     extlib (0.9.16)
@@ -327,7 +327,7 @@ GEM
       os (~> 0.9)
       signet (~> 0.7)
     growl (1.0.3)
-    guard (2.14.0)
+    guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (~> 1.0)
@@ -343,7 +343,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     gyoku (0.4.6)
       builder (>= 2.1.2)
-    hashie (3.4.6)
+    hashie (3.5.1)
     heroics (0.0.17)
       erubis (~> 2.0)
       excon
@@ -356,7 +356,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpi (1.1.1)
       rack
-    i18n (0.7.0)
+    i18n (0.8.0)
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jquery-fileupload-rails (0.4.7)
