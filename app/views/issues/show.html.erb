@@ -86,7 +86,7 @@
   <% end %>
 <% end %>
 
-<div class="row issue-top-box">
+<div class="row issue-top-box" itemscope itemtype="http://schema.org/Product">
   <div class="col-sm-4 issue-title">
     <!-- Magazine cover -->
     <%= retina_image_tag(@issue.cover_url(:home).to_s, :class => 'shadow home-latest-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400) %>
@@ -101,7 +101,17 @@
     <% end %>
   </div>
   <div class="col-sm-8">
-    <h1><%= @issue.title %></h1>
+    <h1 itemprop="name"><%= @issue.title %></h1>
+    <meta itemprop="description" content="<%= @page_description %>">
+    <meta itemprop="brand" content="New Internationalist">
+    <meta itemprop="logo" content="<%= asset_url("favicon-196x196.png") %>">
+    <meta itemprop="releaseDate" content="<%= @issue.release.to_time.iso8601 %>">
+    <span itemscope itemtype="http://schema.org/Offer">
+      <link itemprop="availability" href="http://schema.org/InStock">
+      <meta itemprop="sku" content="<%= @issue.number %>">
+      <meta itemprop="priceCurrency" content="AUD">
+      <meta itemprop="price" content="<%= cents_to_dollars(Settings.issue_price) %>">
+    </span>
     <% if @issue.editors_letter != "" %>
       <h3>A note from the editor</h3>
       <div class="table-of-contents-editors-letter">

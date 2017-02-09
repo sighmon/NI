@@ -43,6 +43,7 @@
             </div>
             
           <% end %>
+            <meta itemprop="headline" content="<%= article.title %>">
             <meta itemprop="url" content="<%= issue_article_url(article.issue,article) %>">
             <meta itemprop="dateCreated" content="<%= article.issue.release.strftime("%e %B %Y") %>">
             <meta itemprop="datePublished" content="<%= article.issue.release.strftime("%e %B %Y") %>">
