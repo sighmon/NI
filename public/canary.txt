@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: January, 2017
+Period: February, 2017
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  14 Jan 2017
+  16 February 2017
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJYeXfIAAoJELbJxtlC+xj5rNcQALRwcqTzVXh1a2GvRTt6m7m7
-tmgrOy/JQx1AGLHLCNNpD/2K5p0VtHNTLRfB7Iqzj4Iayva46R+YQ5Zg2CMLDZsJ
-PH+KPPc1NbMT3G01nFlyj3S1dZWkb5ay5fP+FQ+Xjb0tlYFSsn/84WEXqTRUWlNx
-JgkZaFNf9+psgxoQC43xvlpWAmXfmqiQ9xkEHxa+FJmHhRI8WmlyNhpoYatrp1Mk
-EIR2+GtUR/lZd0RH8nvjkLuArh8fX7Wi+gi/L7cEieESbzb82HZdaWYYrUsvh7MO
-0obXqcu2cEVpzW+IWdXWSkrsh/0VKqkZ20fQ+N1EnZjQIok4DRFGSZtsFRG+CKBz
-wg1szpbmZoiSuteKwuA+Tr2754yYASVwyBwCysVGjwKzld7ctbwRuVO8dUogvqDm
-j0zHDHGaotaMpgjQ7rIyy85htd1IPLmH8d+qFadXtEY+nFCyfIGUi6m1rrDSngiY
-ra8SKh8g8kpGkfGn7sTi15WV9zy2p6BUI1eXTftdKhD3fnMUViZbyAyeJvgFSQR1
-Yz3BbO6rq7BzMwmuYBR3dRIOjRQeEwywnlm2YqzZB3Samut45KDmnFqIW9/HvjXh
-Y7bGp99bR/rp9/8X/3UG4YoTHiJDlAb45u+ePAY5ZbGqVyAm3aAJbkk1MPS8y1C7
-YFkb3o4s1g+Y0fZ1tXXK
-=hIDg
+iQIcBAEBCgAGBQJYpPafAAoJELbJxtlC+xj5CSAQAMO3Mxk3qwFW/Ul2LmmJSkR5
+B6V2HNj5oau1LxH0X3c6m6eosfbLVXyeKK9s4YCuinmt7LECCYgPRMrM/GqEoAcm
+hFL0Ma74ND1jxg+Tutb9Wl5UNpPvHZccmxqTvt4+Hgu3bqle9NFhhSq+f5ht2wRA
+xdHQqYX790iC01TtmMdszJqYtJkdIe8pkkyZ0gUmZUkg091sIDq16OFSjCaXuUBH
+b8JiQOf453sDmcSZyY5jLdjT05os/GzsYu+Kj4Udd8j0LDBqiYICHfNtY135vtNG
+6dhRSAnZ8uGS67ByigYqzEoSEX1BMwp3YnpvBSXsl9DGBFkklwJbv945e6NxnK1y
++2d+m+MclkLd9RFiSHgfrEFlwBmq5fybrHfuuF6pL4GDmnf4D6UngXyhg5nsYjxF
+OIJHIexXmBZ+5DYuMyqxwzzgXKlwiGYvgwPpG2c0i6t4dG17hnpghsb+wSSNhqMN
+ojuzP1oRIdhJ3dEsbt9jyTJRiGvVbwZO28i8VjKrHArJ9nfleJ13o6ShzvLGzRTr
+bu7DTpPlEP7+5Fg2sL+3T6ZQPQSRT6qKEXIoKC0IkKcWpQlOSf14EK12EepaJHQz
+8uZKnXti+xyCRkGy+Zj2boDQFUzeIGO8Pe/+ZbyweSQGmWfvZjrTBjiKIACE95hN
+9Qq254X0Bvg3QW5k+Oe1
+=pE/S
 -----END PGP SIGNATURE-----
