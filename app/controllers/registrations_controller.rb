@@ -17,7 +17,13 @@ class RegistrationsController < Devise::RegistrationsController
   # To prevent redirect loop when overriding after_sign_in_path_for(resource) in sessions_controller.rb
   def after_sign_up_path_for(resource)
     send_analytics
-    signed_in_root_path(resource)
+    # signed_in_root_path(resource)
+    # Now use stored path
+    after_sign_up_url = stored_location_for(resource)
+    if (not after_sign_up_url) or (after_sign_up_url == uk_login_url)
+      after_sign_up_url = root_path
+    end
+    after_sign_up_url
   end
 
   def after_update_path_for(resource)
