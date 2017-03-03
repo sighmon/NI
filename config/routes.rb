@@ -1,8 +1,8 @@
 NI::Application.routes.draw do
 
   # Ignore Wordpress login requests
-  RESPOND_200.each do |r2|
-    get "/#{r2}", to: proc { [200, {}, ['']] }
+  RESPOND_403.each do |r2|
+    get "/#{r2}", to: proc { [403, {}, ['']] }
   end
 
   # Routes for the categories breadcrumbs
