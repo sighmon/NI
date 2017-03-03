@@ -1,5 +1,10 @@
 NI::Application.routes.draw do
 
+  # Ignore Wordpress login requests
+  RESPOND_200.each do |r2|
+    get "/#{r2}", to: proc { [200, {}, ['']] }
+  end
+
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
   get 'update_categories_colours' => 'categories#colours'
