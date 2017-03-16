@@ -215,13 +215,13 @@ class IssuesController < ApplicationController
         android_tokens.each_slice(1000).to_a.each do |tokens|
           # Setup push notifications for Android devices
           logger.info "Creating #{tokens.count} Android push notifications."
-          android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+          android_response = ApplicationHelper.delay.rpush_create_android_push_notification(tokens, data)
           logger.info "Android push notifications response: #{android_response}"
         end
       elsif not android_tokens.empty?
         # Setup push notifications for Android devices
         logger.info "Creating #{android_tokens.count} Android push notifications."
-        android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        android_response = ApplicationHelper.delay.rpush_create_android_push_notification(android_tokens, data)
         logger.info "Android push notifications response: #{android_response}"
       else
         logger.warn "WARNING: No Android push notifications created."
@@ -230,7 +230,7 @@ class IssuesController < ApplicationController
       # Loop through all iOS PushRegistration tokens and setup iOS messages
       ios_responses = []
       PushRegistration.where(device: 'ios').each do |p|
-        ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+        ios_responses << ApplicationHelper.delay.rpush_create_ios_push_notification(p.token, data)
       end
       if not ios_responses.empty?
         logger.info "Creating #{ios_responses} iOS push notifications."
@@ -247,6 +247,9 @@ class IssuesController < ApplicationController
       else
         logger.warn "WARNING: No iOS push notifications created."
       end
+
+      # Start jobs in the background
+      view_context.start_delayed_jobs
 
     else
       # Test push!
