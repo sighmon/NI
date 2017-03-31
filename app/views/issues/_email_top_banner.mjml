@@ -1,0 +1,11 @@
+<mj-section background-color="#faac0b" padding="0">
+				<mj-column>
+					<mj-text
+						font-size="14px"
+						font-weight="bold"
+						align="center"
+						color="#333333">
+						<span><%= link_to "Community Share Offer - last days to become a co-owner. INVEST!", "http://www.crowdfunder.co.uk/new-internationalist?utm_medium=ni-aus-enews&utm_source=april-email-newsletter", style: 'color:inherit;' %></span>
+					</mj-text>
+				</mj-column>
+			</mj-section>
