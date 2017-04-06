@@ -58,7 +58,7 @@
     <% elsif @issue.notification_sent %>
       <p><b>Sent</b>: <%= @issue.notification_sent.in_time_zone("Australia/Adelaide").strftime("%d/%m/%Y at %I:%M%p") %><br />(<%= @issue.notification_sent.strftime("%d/%m/%Y at %I:%M%p GMT") %>)</p>
     <% else %>
-      <%= simple_form_for issue_send_push_notification_path(@issue), :url => issue_send_push_notification_path(@issue) do |f| %>
+      <%= simple_form_for issue_setup_push_notification_path(@issue), :url => issue_setup_push_notification_path(@issue) do |f| %>
         <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
         <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
         <%= f.input :test_device_android, as: :boolean %>

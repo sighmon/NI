@@ -62,7 +62,7 @@ NI::Application.routes.draw do
     get :email_renew
     get :email_special
     get :zip
-    post :send_push_notification
+    post :setup_push_notification
     get :tweet_issue
     get :wall_post_issue
     get :email_issue
