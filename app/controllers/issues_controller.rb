@@ -178,7 +178,7 @@ class IssuesController < ApplicationController
     Issue.delay.setup_push_notifications(params)
     # Start jobs in the background
     # view_context.start_delayed_jobs
-    redirect_to @issue, notice: "Push notifications setup."
+    redirect_to admin_push_notifications_path, notice: "Push notifications setup as a delayed job."
   end
 
   # GET /issues/1

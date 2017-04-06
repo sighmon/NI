@@ -47,7 +47,7 @@ describe IssuesController, :type => :controller do
       describe "POST push notification" do
 
         it "should not be able to send a push notification" do
-          post :send_push_notification, :issue_id => issue.id
+          post :setup_push_notification, :issue_id => issue.id
           expect(response).to redirect_to issues_url
         end
 
@@ -67,7 +67,7 @@ describe IssuesController, :type => :controller do
     describe "POST push notification" do
 
       it "should not be able to send a push notification" do
-        post :send_push_notification, :issue_id => issue.id
+        post :setup_push_notification, :issue_id => issue.id
         expect(response).to redirect_to issues_url
       end
 
@@ -120,7 +120,7 @@ describe IssuesController, :type => :controller do
     describe "POST push notification" do
 
       it "should not be able to send a push notification" do
-        post :send_push_notification, :issue_id => issue.id
+        post :setup_push_notification, :issue_id => issue.id
         expect(response).to redirect_to issues_url
       end
 
@@ -156,7 +156,7 @@ describe IssuesController, :type => :controller do
         "alert_text" => "Test message."
       }
       
-      post :send_push_notification, :issue_id => issue.id, "/issues/#{issue.id}/send_push_notification" => input_params
+      post :setup_push_notification, :issue_id => issue.id, "/issues/#{issue.id}/setup_push_notification" => input_params
       expect(response).to redirect_to admin_push_notifications_path
     end
 
