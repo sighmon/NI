@@ -189,7 +189,7 @@ class Article < ActiveRecord::Base
   def self.quick_reads
     Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
       # Need .to_a here otherwise it caches the scope, not the result of the query
-      self.published_articles.sample(3).to_a
+      self.published_articles.sample(3).sort_by{|a| a.publication}.reverse.to_a
     end
   end
 
