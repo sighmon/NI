@@ -159,6 +159,16 @@ class Article < ActiveRecord::Base
     (not unpublished) and issue.published
   end
 
+  def self.published_articles
+    all_published_articles = []
+    Article.find_each do |a|
+      if a.published
+        all_published_articles << a
+      end
+    end
+    all_published_articles
+  end
+
   # Guest pass checking
   def is_valid_guest_pass(key)
     if key
@@ -179,7 +189,7 @@ class Article < ActiveRecord::Base
   def self.quick_reads
     Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
       # Need .to_a here otherwise it caches the scope, not the result of the query
-      Article.order("RANDOM()").limit(3).to_a
+      self.published_articles.sample(3).to_a
     end
   end
 
