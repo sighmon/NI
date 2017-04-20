@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: March, 2017
+Period: April, 2017
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  16 March 2017
+  20 April 2017
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJYyc02AAoJELbJxtlC+xj5grcP/R+og3FZZ9NujERRe5XzT3zC
-/hPGVhIeIgCuSHtXaLb6OiaTdrrSo3yh3i+djIRF+6PBaSzZgvoBwl/iwLQHkiGM
-mcc5vbxQRORpSbATPfCxVvhmbyPdIt3/qTHRQiD1PzuFTh7zEoRCwA7ivLz7AbiZ
-bpLUwTT5BmHgXC6MVOPkUGc1wEeVu7eJ/9HGYsX4u0UAZnx5bDSE6ci4dL3xTKQr
-qKf75wzCO8NWIzv1B1SeGQEXamIBYscGh3dCF2TlI6YL9rxl+5JbDmf+e2qcffbT
-WkdJozlt4cuC0TquNj68rDALQhXkf/0TEm9KWbKtOYdefPgeUPoGTz3XZhUI021j
-lvL8QWs9OgLyItNAGETcThFrNXSP6nMicd7PRrTtyPEyvdMN/8uTZ34ppp6M6zBN
-XUdVuDtgz11B8V72AxbjgmthHfsrUQqkNYy5OgyG4oZw2ztdIaLg0G6vJmofh1JC
-kggsOlS0SJzxvvbAhD+BI9FI1SbxOsjQPkZGpHqGdTBMU4R5fi5DLQu2fF10VQOh
-MMWyjnDp7U9ndaaU0LxwgGYuhiINzFQcckkEknjpRVg6biJoug8KEhER3pT9aDRa
-HNZj6VLrorE63SHQPYE2TApiioJWaaAsj/tnhy1GUT0eILTMqP2xsuRpFDRYyRsN
-wiANSRikCrXx4uWg6hPo
-=KpSK
+iQIcBAEBCgAGBQJY+ECCAAoJELbJxtlC+xj5G2MP/3YtmabhkRQedYzPXYQ4wV30
+KY8N7J6uABfXEFfvoCE6wyzm/AquaUmv/+tAoJ9Dq9kT6/DYy/TU7OE+VlfAAXbE
+Q3p6RiIQND9hSJCXAy9mt8bdTTeNGdU8wY6lB7xOT/pF5XRbEiORGiN0wdBnKG0s
+Ksz99kAzZKBTAier3u8Cs/YkpaOmxzJhkteZK57NAtpO4983G+FGFtvOCWuJLZeX
+JWktJ/WmMKHtqKu1WEn0siQMI+u4gNO6NmeqVFmNr+Z6RJkPnf6Bk4Ddg1Y1c8go
+BIoz6Vex6/VGsicvIivFCjDczqOAiRi1xxMjwsJpFk9gcKjTb/YOKY8iPLOjdFkz
+R3NG+Hz0/FPLxroeFyySfyEI4YYfWQc/mLSQuGf8y1OOeOUeL8q4ypC1H4pKvN7C
+Al7WAqdUGM85xqlk0nbTqyC8fflUL+CiulZoX8eyjTR7jtDeUc25/4a3Bdx0MQWE
+JGparv2gxje8M4n1YEUsPrQLIv6NcPwBdJW7xwPEcXnAqMhDNH6M3Gl6gOfjbKRD
+yqmm470+mqggiqdMzhmME30koLc22ZAI9hR0Gyi160pUxu5xMxImPr521sUawVxM
+3DbVuv5CDWia/dAonXLe8pb9nTXf5WNFGtt4OBU/7qJtn3D41Hfxr74BmJXCYfTY
+nzS/4UeGQe5v1pwuWnc4
+=GAX4
 -----END PGP SIGNATURE-----
