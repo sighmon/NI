@@ -25,7 +25,8 @@
 				</mj-column>
 			</mj-section>
 
-			<%= render :partial => 'issues/email_top_banner', :formats => [:html] %>
+			<!-- Add the '=' sign to render the banner -->
+			<% render :partial => 'issues/email_top_banner', :formats => [:html] %>
 
 			<mj-section padding="0">
 				<mj-column>
