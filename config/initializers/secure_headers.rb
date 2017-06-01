@@ -33,7 +33,7 @@ SecureHeaders::Configuration.default do |config|
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
-    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
