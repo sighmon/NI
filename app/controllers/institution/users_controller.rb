@@ -47,7 +47,7 @@ class Institution::UsersController < Institution::BaseController
   # POST /institution/users
   # POST /institution/users.json
   def create
-    @user = current_user.children.create(user_params.merge :email => "design+parent_id_#{current_user.id}_child_username_#{params["user"]["username"]}@newint.com.au")
+    @user = current_user.children.create(user_params.merge :email => "design+parent_id_#{current_user.id}_child_username_#{params["user"]["username"].downcase.tr(" ", "_")}@newint.com.au")
 
     respond_to do |format|
       if @user.save
