@@ -13,6 +13,7 @@
   <!-- Google Analytics tracking code -->
   <% if not @no_tracking %>
     <%= analytics_init :local => ( Rails.env.development? or Rails.env.test? ) %>
+    <% log_fb_event(ENV['FACEBOOK_PAGEVIEW'], ENV['FACEBOOK_PAGEVIEW_VALUE']) %>
     <%= render :partial => "shared/ga_events" %>
     <%= render :partial => "shared/fb_events" %>
   <% end %>
