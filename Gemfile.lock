@@ -82,10 +82,10 @@ GEM
       nokogiri
     ansi (1.5.0)
     arel (6.0.4)
-    asset_sync (2.0.0)
-      activemodel
+    asset_sync (2.1.0)
+      activemodel (>= 4.1.0)
       fog-core
-      mime-types
+      mime-types (>= 2.99)
       unf
     autoparse (0.3.3)
       addressable (>= 2.3.1)
@@ -97,7 +97,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    brakeman (3.6.1)
+    brakeman (3.6.2)
     builder (3.2.3)
     bundler-audit (0.5.0)
       bundler (~> 1.2)
@@ -116,9 +116,9 @@ GEM
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
     coderay (1.1.1)
-    coffee-rails (4.2.1)
+    coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.2.x)
+      railties (>= 4.0.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -130,10 +130,10 @@ GEM
     dalli (2.7.6)
     database_cleaner (1.6.1)
     debug_inspector (0.0.3)
-    delayed_job (4.1.2)
-      activesupport (>= 3.0, < 5.1)
-    delayed_job_active_record (4.1.1)
-      activerecord (>= 3.0, < 5.1)
+    delayed_job (4.1.3)
+      activesupport (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.2)
+      activerecord (>= 3.0, < 5.2)
       delayed_job (>= 3.0, < 5)
     devise (4.3.0)
       bcrypt (~> 3.0)
@@ -158,7 +158,7 @@ GEM
       multi_json
     erubis (2.7.0)
     eventmachine (1.2.3)
-    excon (0.55.0)
+    excon (0.56.0)
     execjs (2.7.0)
     extlib (0.9.16)
     factory_girl (4.8.0)
@@ -228,7 +228,7 @@ GEM
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-core (1.44.2)
+    fog-core (1.44.3)
       builder
       excon (~> 0.49)
       formatador (~> 0.2)
@@ -256,7 +256,7 @@ GEM
       multi_json (~> 1.10)
     fog-local (0.3.1)
       fog-core (~> 1.27)
-    fog-openstack (0.1.20)
+    fog-openstack (0.1.21)
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
@@ -301,7 +301,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.9.2)
+    fog-vsphere (1.10.0)
       fog-core
       rbvmomi (~> 1.9)
     fog-xenserver (0.3.0)
@@ -365,7 +365,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpi (1.1.1)
       rack
-    i18n (0.8.1)
+    i18n (0.8.4)
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jquery-fileupload-rails (0.4.7)
@@ -436,7 +436,7 @@ GEM
     multipart-post (2.0.0)
     nenv (0.3.0)
     net-http-persistent (2.9.4)
-    newrelic_rpm (4.1.0.333)
+    newrelic_rpm (4.2.0.334)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     nori (1.1.5)
@@ -458,7 +458,7 @@ GEM
     rack (1.6.8)
     rack-cache (1.7.0)
       rack (>= 0.4)
-    rack-mini-profiler (0.10.4)
+    rack-mini-profiler (0.10.5)
       rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -626,7 +626,7 @@ GEM
       httpi (~> 1.0)
       nokogiri (>= 1.4.0)
     xml-simple (1.1.5)
-    xpath (2.0.0)
+    xpath (2.1.0)
       nokogiri (~> 1.3)
     zipruby (0.3.6)
 
