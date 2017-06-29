@@ -162,6 +162,56 @@ class Issue < ActiveRecord::Base
     return Settings.issue_price
   end
 
+  # Import articles from the new newint.org server
+  def import_articles_from_newint_org(options = {})
+
+    # TODO: Do we need options?
+    issue_number_to_import = self.number
+    if not options.nil?
+      issue_number_to_import = options[:issue_number]
+    else
+      options = {}
+    end
+
+    xcsfr_token = csrf_token_from_newint_org
+
+    if xcsfr_token
+      # TODO: import issue details
+      issue_request = HTTPI::Request.new
+      issue_request.url = ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s
+      issue_request.headers = { "Accept": "application/json", "X-CSRF-Token": xcsfr_token }
+      response_from_newint_org = HTTPI.get(issue_request)
+      # byebug
+      logger.info "REST API ISSUE RESPONSE: " + response_from_newint_org.code.to_s
+      logger.info response_from_newint_org.headers
+
+      # TODO: request the articles, and create them here.
+      
+    else
+      logger.info "NO VALID TOKEN. :-("
+    end
+
+  end
+
+  def csrf_token_from_newint_org
+    # First get a token
+    request = HTTPI::Request.new
+    request.url = ENV["NEWINT_ORG_REST_TOKEN_URL"]
+    request.headers = { "Content-type": "text/plain" }
+    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
+    response = HTTPI.get(request)
+    # byebug
+    logger.info "REST API RESPONSE: " + response.code.to_s
+    logger.info response.headers
+
+    xcsfr_token = nil
+    if response.code >= 200 and response.code < 400
+      # TODO: check the token is in the body
+      xcsfr_token = response.body
+    end
+    return xcsfr_token
+  end
+
   # Setting up SOAP to import articles from Bricolage using Savon
   def self.bricolage_wrapper()
     #HTTPI.log_level = :debug
@@ -251,7 +301,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def create_article_from_element(element, options)
+  def create_article_from_bricolage_element(element, options)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     story_id = element[:id].to_i
     # TODO: Allow for posibility that issue is nil.
@@ -301,7 +351,7 @@ class Issue < ActiveRecord::Base
       stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
       #return stories
       stories.collect do |element|
-        a = self.create_article_from_element(element, options)
+        a = self.create_article_from_bricolage_element(element, options)
       end
       stories
     end
