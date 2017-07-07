@@ -73,7 +73,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_list (0.9.6)
+    acts_as_list (0.9.7)
       activerecord (>= 3.0)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
@@ -301,7 +301,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.11.0)
+    fog-vsphere (1.11.1)
       fog-core
       rbvmomi (~> 1.9)
     fog-xenserver (0.3.0)
