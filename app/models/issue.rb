@@ -165,7 +165,7 @@ class Issue < ActiveRecord::Base
   # Import articles from the new newint.org server
   def import_articles_from_newint_org(options = {})
 
-    # TODO: Do we need options?
+    # Optional: hand in issue number {issue_number: xxx}
     issue_number_to_import = self.number
     if not options.nil?
       issue_number_to_import = options[:issue_number]
@@ -176,17 +176,39 @@ class Issue < ActiveRecord::Base
     xcsfr_token = csrf_token_from_newint_org
 
     if xcsfr_token
-      # TODO: import issue details
+      # Import issue details
       issue_request = HTTPI::Request.new
       issue_request.url = ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s
       issue_request.headers = { "Accept": "application/json", "X-CSRF-Token": xcsfr_token }
+      issue_request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
       response_from_newint_org = HTTPI.get(issue_request)
-      # byebug
-      logger.info "REST API ISSUE RESPONSE: " + response_from_newint_org.code.to_s
-      logger.info response_from_newint_org.headers
-
-      # TODO: request the articles, and create them here.
-      
+      logger.info "ISSUE RESPONSE: " + response_from_newint_org.code.to_s
+      # logger.info response_from_newint_org.headers
+      if response_from_newint_org.code >= 200 and response_from_newint_org.code < 300
+        # Request the articles using the issue tid.
+        issue_tid = JSON.parse(response_from_newint_org.body)["list"].first["tid"]
+        articles_request = HTTPI::Request.new
+        articles_request.url = ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s
+        articles_request.headers = { "Accept": "application/json", "X-CSRF-Token": xcsfr_token }
+        articles_request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
+        articles_response_from_newint_org = HTTPI.get(articles_request)
+        logger.info "ARTICLES RESPONSE: " + articles_response_from_newint_org.code.to_s
+        if articles_response_from_newint_org.code >= 200 and articles_response_from_newint_org.code < 300
+          # TODO: create articles from json.
+          articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org.body)["list"]
+          return articles_json_from_newint_org
+        else
+          # Bad articles response
+          logger.warn "ARTICLES RESPONSE CODE: " + articles_response_from_newint_org.code.to_s
+          logger.warn articles_response_from_newint_org.headers
+          return nil
+        end
+        
+        return issue_tid
+      else
+        logger.warn "CHECK RESPONSE FROM NEWINT.ORG!"
+        return nil
+      end
     else
       logger.info "NO VALID TOKEN. :-("
     end
@@ -201,12 +223,12 @@ class Issue < ActiveRecord::Base
     request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
     response = HTTPI.get(request)
     # byebug
-    logger.info "REST API RESPONSE: " + response.code.to_s
-    logger.info response.headers
+    logger.info "TOKEN RESPONSE: " + response.code.to_s
+    # logger.info response.headers
 
     xcsfr_token = nil
-    if response.code >= 200 and response.code < 400
-      # TODO: check the token is in the body
+    if response.code >= 200 and response.code < 300
+      # Token has arrived
       xcsfr_token = response.body
     end
     return xcsfr_token
