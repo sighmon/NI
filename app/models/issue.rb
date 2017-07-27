@@ -177,25 +177,43 @@ class Issue < ActiveRecord::Base
 
     if xcsfr_token
       # Import issue details
-      issue_request = HTTPI::Request.new
-      issue_request.url = ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s
-      issue_request.headers = { "Accept": "application/json", "X-CSRF-Token": xcsfr_token }
-      issue_request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-      response_from_newint_org = HTTPI.get(issue_request)
-      logger.info "ISSUE RESPONSE: " + response_from_newint_org.code.to_s
-      # logger.info response_from_newint_org.headers
-      if response_from_newint_org.code >= 200 and response_from_newint_org.code < 300
+      response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s, xcsfr_token)
+      
+      if response_from_newint_org
         # Request the articles using the issue tid.
-        issue_tid = JSON.parse(response_from_newint_org.body)["list"].first["tid"]
-        articles_request = HTTPI::Request.new
-        articles_request.url = ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s
-        articles_request.headers = { "Accept": "application/json", "X-CSRF-Token": xcsfr_token }
-        articles_request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-        articles_response_from_newint_org = HTTPI.get(articles_request)
-        logger.info "ARTICLES RESPONSE: " + articles_response_from_newint_org.code.to_s
-        if articles_response_from_newint_org.code >= 200 and articles_response_from_newint_org.code < 300
-          # TODO: create articles from json.
-          articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org.body)["list"]
+        issue_tid = JSON.parse(response_from_newint_org)["list"].first["tid"]
+        articles_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s, xcsfr_token)
+        if articles_response_from_newint_org
+          # Articles from this issue
+          articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org)["list"]
+
+          articles_json_from_newint_org.each do |a|
+            # TODO: create article from json.
+
+            # Request contributor information.
+            article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + a["field_contributor"].first["id"].to_s + ".json", xcsfr_token)
+            if article_info_response_from_newint_org
+              article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
+              # TODO: write name to article: article_info_json_from_newint_org["name"]
+              byebug
+            end
+
+            # Request categories information.
+            if a["field_tags"] and not a["field_tags"].empty?
+              a["field_tags"].each do |cat|
+                article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", xcsfr_token)
+                if article_category_response_from_newint_org
+                  article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
+                  byebug
+                  # TODO: find/create category and add it to article: article_category_json_from_newint_org["name"]
+                end
+              end
+            end
+
+            # TODO: request image information.
+
+          end
+
           return articles_json_from_newint_org
         else
           # Bad articles response
@@ -213,6 +231,25 @@ class Issue < ActiveRecord::Base
       logger.info "NO VALID TOKEN. :-("
     end
 
+  end
+
+  def request_json_from_newint_org(url, token)
+    request = HTTPI::Request.new
+    request.url = url
+    request.headers = { "Accept": "application/json", "X-CSRF-Token": token }
+    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
+    response_from_newint_org = HTTPI.get(request)
+    logger.info "Request to: #{url}"
+    logger.info "Response: #{response_from_newint_org.code.to_s}"
+    response_body = nil
+    if response_from_newint_org.code >= 200 and response_from_newint_org.code < 300
+      # Good response
+      response_body = response_from_newint_org.body
+    else
+      logger.warn "Error! Headers: #{response_from_newint_org.headers}"
+      logger.warn "Error! Body: #{response_from_newint_org.body}"
+    end
+    return response_body
   end
 
   def csrf_token_from_newint_org
