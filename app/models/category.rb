@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
 
   def self.create_from_element(article,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
-    c = Category.where(:name => element.try(:text)).first_or_create
+    c = Category.where(:name => element).first_or_create
     article.categories << c unless article.categories.include?(c)
     return c
   end

@@ -189,13 +189,26 @@ class Issue < ActiveRecord::Base
 
           articles_json_from_newint_org.each do |a|
             # TODO: create article from json.
+            byebug
+            article_created = self.articles.where(story_id: a["nid"]).first_or_create
+            article_created.update_attributes(
+              title: a["title"],
+              teaser: a["field_deck"]["value"].try(:gsub,/\n/, " "),
+              publication: Time.at(a["created"].to_i).to_datetime,
+              body: a["body"]["value"].try(:gsub,/\n/, " "),
+              unpublished: options[:unpublished]
+            )
+
+            # TODO: pull out embedded images and create them in the db
 
             # Request contributor information.
             article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + a["field_contributor"].first["id"].to_s + ".json", xcsfr_token)
             if article_info_response_from_newint_org
               article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
-              # TODO: write name to article: article_info_json_from_newint_org["name"]
-              byebug
+              # Write name to article: article_info_json_from_newint_org["name"]
+              article_created.update_attributes(
+                author: article_info_json_from_newint_org["name"],
+              )
             end
 
             # Request categories information.
@@ -204,31 +217,43 @@ class Issue < ActiveRecord::Base
                 article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", xcsfr_token)
                 if article_category_response_from_newint_org
                   article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
-                  byebug
-                  # TODO: find/create category and add it to article: article_category_json_from_newint_org["name"]
+                  # Find/create category and add it to article.
+                  # TODO: work on regex for Category.create_from_element to find similar categories.
+                  Category.create_from_element(article_created, article_category_json_from_newint_org["name"].try(:titlecase))
                 end
               end
             end
 
-            # TODO: request image information.
+            # Request image information.
+            if a["field_image"] and not a["field_image"].empty?
+              article_image_response_from_newint_org = request_json_from_newint_org(a["field_image"]["file"]["uri"].to_s + ".json", xcsfr_token)
+              if article_image_response_from_newint_org
+                article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
+                # TODO: find/create image and add it to article: article_image_json_from_newint_org
+                byebug
+              else
+                logger.info ""
+              end
+            end
 
           end
 
           return articles_json_from_newint_org
         else
           # Bad articles response
-          logger.warn "ARTICLES RESPONSE CODE: " + articles_response_from_newint_org.code.to_s
-          logger.warn articles_response_from_newint_org.headers
+          logger.warn "ARTICLES REQUEST FAILED."
           return nil
         end
         
-        return issue_tid
+        logger.info "Finished getting articles."
+        return "Success!"
       else
         logger.warn "CHECK RESPONSE FROM NEWINT.ORG!"
         return nil
       end
     else
       logger.info "NO VALID TOKEN. :-("
+      return nil
     end
 
   end
@@ -375,7 +400,7 @@ class Issue < ActiveRecord::Base
     )
     category_list = element.xpath(".//assets:category",'assets' => assets)
     category_list.collect do |cat|
-      c = Category.create_from_element(a,cat)
+      c = Category.create_from_element(a,cat.try(:text))
     end
     return a
   end
