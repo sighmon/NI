@@ -117,7 +117,7 @@ class CategoriesController < ApplicationController
     # Expire the cache
     expire_action :action => :index
 
-    if params[:category][:colour]
+    if params[:category][:colour] and not params[:category][:colour].empty?
       params[:category][:colour] = params[:category][:colour].match("[0-9a-f]+")[0].hex
     end
     logger.info params
