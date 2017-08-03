@@ -9,7 +9,20 @@ class Category < ActiveRecord::Base
 
   def self.create_from_element(article,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
-    c = Category.where(:name => element).first_or_create
+    c = nil
+    if Category.where(:name => element).empty?
+      # Try a looser search
+      loose_search = Category.where("name ilike ?", "%#{element}%")
+      if not loose_search.empty?
+        # Match the first loose category, user will check if it's suitable
+        c = loose_search.first
+      end
+    end
+
+    if c.nil?
+      # Fallback to first_or_create
+      c = Category.where(:name => element).first_or_create
+    end
     article.categories << c unless article.categories.include?(c)
     return c
   end

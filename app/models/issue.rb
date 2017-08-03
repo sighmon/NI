@@ -199,8 +199,6 @@ class Issue < ActiveRecord::Base
               unpublished: options[:unpublished]
             )
 
-            # TODO: pull out embedded images and create them in the db
-
             # Request contributor information.
             article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + a["field_contributor"].first["id"].to_s + ".json", xcsfr_token)
             if article_info_response_from_newint_org
@@ -218,7 +216,6 @@ class Issue < ActiveRecord::Base
                 if article_category_response_from_newint_org
                   article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
                   # Find/create category and add it to article.
-                  # TODO: work on regex for Category.create_from_element to find similar categories.
                   Category.create_from_element(article_created, article_category_json_from_newint_org["name"].try(:titlecase))
                 end
               end
@@ -230,11 +227,14 @@ class Issue < ActiveRecord::Base
               if article_image_response_from_newint_org
                 article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
                 # TODO: find/create image and add it to article: article_image_json_from_newint_org
+                # Image.create_from_uri(article_created, uri)
                 byebug
               else
-                logger.info ""
+                logger.warn "IMAGE REQUEST FAILED for #{a["field_image"]["file"]["uri"].to_s}"
               end
             end
+
+            # TODO: pull out embedded images and create them in the db
 
           end
 
