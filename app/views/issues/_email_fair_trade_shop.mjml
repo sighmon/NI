@@ -16,22 +16,30 @@
 			<!-- Latest from the Fair Trade Shop -->
 			<mj-image
 				alt="Latest product in the Fair Trade Shop"
-				href="http://www.newint.com.au/shop/nokero-solar-light-n233-3986.htm"
-				src="http://www.newint.com.au/shop/img/3986-email-fullsize.jpg">
+				href="http://www.newint.com.au/shop/torch-salamander-solar-usb-rechargeable-4006.htm"
+				src="http://www.newint.com.au/shop/img/4006-email-1200px.jpg">
 			</mj-image>
 			<mj-text
 				font-size="18px"
 				font-weight="bold"
 				align="center"
 				color="#606b75">
-				<a href="http://www.newint.com.au/shop/nokero-solar-light-n233-3986.htm" style="color:inherit;">Nokero Solar Light
+				<a href="http://www.newint.com.au/shop/torch-salamander-solar-usb-rechargeable-4006.htm" style="color:inherit;">Solar Torch and Powerbank
 			</mj-text>
 			<mj-text
 				font-size="14px"
 				font-weight="300"
 				color="#787878">
-				This new generation Nokero N233 solar light is perfect for camping, backpacking, emergency lighting and other off-grid lighting. It is bright enough for reading, working or lighting up a tent and runs up to 15 hours after just a day's charge. Use it hanging or standing as a desk lamp, or carry as you would a torch at night. It's light, compact and tough, made from high impact ABS, polycarbonate, steel. 
+				The POWERplus Salamander solar torch combines a very bright, long lasting, 3W LED flashlight with a 2,400 mAh emergency powerbank.<br /><br />
+
+				Made from high quality components, the Salamander has excellent performance in both lighting and charging. Beneath the watertight bottom cap is a micro USB charging-in port to charge the Salamander's battery quickly, and a USB charging-out port to charge your mobile USB rechargeable devices like mobile phones and GPS units from the battery storage, in emergencies.
 			</mj-text>
+			<mj-button
+				background-color="#ED4E59"
+				href="http://www.newint.com.au/shop/torch-salamander-solar-usb-rechargeable-4006.htm"
+				align="center">
+				Read more and order
+			</mj-button>
 		</mj-column>
 	</mj-section>
 
