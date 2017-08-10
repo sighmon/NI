@@ -25,6 +25,12 @@ class Image < ActiveRecord::Base
     image.save
   end
 
+  def self.create_from_uri(article, uri)
+    # TODO: image = article.images.where(:data.original_filename => uri.last.part).first_or_create
+    response = HTTParty.get(uri)
+    byebug
+  end
+
   def extract_caption_from_article()
     if (not article.nil?) and (not media_id.nil?)
       Nokogiri.XML(self.article.source).at_xpath("//*[@related_media_id=#{media_id}]//*[@type='rel_media_caption']/text()").try(:text)

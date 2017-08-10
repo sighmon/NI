@@ -193,9 +193,9 @@ class Issue < ActiveRecord::Base
             article_created = self.articles.where(story_id: a["nid"]).first_or_create
             article_created.update_attributes(
               title: a["title"],
-              teaser: a["field_deck"]["value"].try(:gsub,/\n/, " "),
+              teaser: (a["field_deck"].try(:[],"value").try(:gsub,/\n/, " ") unless a["field_deck"].empty?),
               publication: Time.at(a["created"].to_i).to_datetime,
-              body: a["body"]["value"].try(:gsub,/\n/, " "),
+              body: (a["body"]["value"].try(:gsub,/\n/, " ") unless a["body"].empty?),
               unpublished: options[:unpublished]
             )
 
@@ -234,7 +234,14 @@ class Issue < ActiveRecord::Base
               end
             end
 
-            # TODO: pull out embedded images and create them in the db
+            # Pull out embedded images and create them in the db
+            article_html = Nokogiri::HTML.fragment(article_created.body)
+            byebug # TODO: CRASHING HERE!
+            article_html.css('img').each do |img|
+              Image.create_from_uri(article_created, img["src"])
+            end
+
+            # TODO: Remove the img HTML from the article_created.body
 
           end
 
