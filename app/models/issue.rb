@@ -188,8 +188,8 @@ class Issue < ActiveRecord::Base
           articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org)["list"]
 
           articles_json_from_newint_org.each do |a|
-            # TODO: create article from json.
-            byebug
+            # Create article from json.
+            # byebug
             article_created = self.articles.where(story_id: a["nid"]).first_or_create
             article_created.update_attributes(
               title: a["title"],
@@ -226,9 +226,16 @@ class Issue < ActiveRecord::Base
               article_image_response_from_newint_org = request_json_from_newint_org(a["field_image"]["file"]["uri"].to_s + ".json", xcsfr_token)
               if article_image_response_from_newint_org
                 article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
-                # TODO: find/create image and add it to article: article_image_json_from_newint_org
-                # Image.create_from_uri(article_created, uri)
-                byebug
+                # Find or create image and add it to article
+                header_image_created = Image.create_from_uri(article_created, article_image_json_from_newint_org["url"].to_s, {alt: a["field_image"]["alt"], media_id: a["field_image"]["file"]["id"]})
+                # Embed new File code to article body
+                if header_image_created
+                  image_file_code = "[File:#{header_image_created.id}|full]"
+                  if not article_created.body.include?(image_file_code)
+                    article_created.body.prepend(image_file_code)
+                    article_created.save
+                  end
+                end
               else
                 logger.warn "IMAGE REQUEST FAILED for #{a["field_image"]["file"]["uri"].to_s}"
               end
@@ -236,12 +243,19 @@ class Issue < ActiveRecord::Base
 
             # Pull out embedded images and create them in the db
             article_html = Nokogiri::HTML.fragment(article_created.body)
-            byebug # TODO: CRASHING HERE!
-            article_html.css('img').each do |img|
-              Image.create_from_uri(article_created, img["src"])
-            end
+            image_fragments = article_html.css('img')
+            image_fragments.each do |img|
+              image_uri = "https://" + URI.parse(ENV["NEWINT_ORG_REST_TOKEN_URL"]).host + img["src"]
+              image_created = Image.create_from_uri(article_created, image_uri, {alt: img["alt"]})
+              if image_created
+                image_file_code = "[File:#{image_created.id}]"
+                # Remove the img HTML from the article_created.body and replace with [File:xxx]
+                # Hack: Nokogiri parses out the trailing <img /> slash, so to find it I have to use brittle regex
+                article_created.body = article_created.body.sub(/#{img.to_html[0...-1]}(.*?)>/, image_file_code)
+                article_created.save
+              end
 
-            # TODO: Remove the img HTML from the article_created.body
+            end
 
           end
 
