@@ -236,9 +236,16 @@ class Issue < ActiveRecord::Base
       )
     end
 
-    # Request categories information.
+    # Request categories tags and themes.
+    article_json_tags = []
     if article_json["field_tags"] and not article_json["field_tags"].empty?
-      article_json["field_tags"].each do |cat|
+      article_json_tags += article_json["field_tags"]
+    end
+    if article_json["field_themes"] and not article_json["field_themes"].empty?
+      article_json_tags += article_json["field_themes"]
+    end
+    if not article_json_tags.empty?
+      article_json_tags.each do |cat|
         article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", token)
         if article_category_response_from_newint_org
           article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
