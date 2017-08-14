@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: July, 2017
+Period: August, 2017
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  14 July 2017
+  14 August 2017
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJZaBz8AAoJELbJxtlC+xj5bzIP/ipHQ5ZjuQ4Rp8lVWbzsid4M
-/qIEDz9t4BzSqknkburUs7WVU8WSheT1wLQAz42JrG4JYhwFLJUewBdbHnswTDPV
-ezkBe3vgVbwtNlpPNU5TNEIfPpqkisGAKMpx5WrBEZSyPSQ5XYpByowRjtVxxUg9
-ZkzZCCYgTTb5DBCLIeGsGF89Q6f8oEGPPezxeHR+1Gq2oZrEgUpFQS52kR8a9+Bl
-MN6PSAIFapgrn7Wf6h327SxsS61OLfTeu/kyn1M0JsgRZkpFrPyqnvkciJ7UoD1s
-QDz1bB4W7tk6hawxiBzRnBQ5PSQdD0+59f3ez/LdZJwjVpHTgYoOvsQm/CUHEXtZ
-CKQaQyUtTrlb3ZoI0WVvDoulq06kvjoQxa4Yq2DegwuK+Z1J/q+lANvtO/PMo+yH
-OHZqJTl1OGn/m2jTsbrQoBG5/MHH2OasNblZpQqw45+ASGKeCPpn7KxpYqEd2a/3
-Tmxblk9ho5/uPY99RXpL7oTYATcTub7kCth0HVp41fWRrhzFsDptc3mCqS28xi8v
-OncRtdkJ4yq4nUIglWQiJ887mQY9WP6I0dsgoUruqltqIcR/HbpB1b76q29lqaAZ
-LzMf6LABdvcboQBi/VNigdGI41a/2XYNIK6mMvehWSuRuJMhadJ/kfQ/quNOPRNW
-/ShJB8oNE034iQMCd5lZ
-=X76m
+iQIcBAEBCgAGBQJZkX6+AAoJELbJxtlC+xj50KsP/0vKK2S4wRl6IaxeJtjfKkVh
+06c1jw4P8rpGCFupx9oQ3EfZKudLEL8rlxc1eEm9HZS+ZyWHuawCo51Yj6XphU4C
+wNXsIT5Cab7eSuuuPpRmRI6MgFLmDqeWrPFZKdvXSKT6eyBWa7CkqkK2ipf+cuVN
+Q/38m51bj42Hec7w+N4oebFi0F591p/+DzWfQE96rBcRLJAcb8whb4b49KdZ57vi
+3oHJj/0AkzdGtm3mPmpb3TKIxgYQpXdAcsPj5xRhiSxcxWjXSsjNNLBQEu9/cv8S
+jxNIkus/QXzyeLC916CnBk44p1HUY8Vd8tEY34I6DqngVLHMVVCiWrkZjWEMIr+D
+kmJZ0RXDoPZYmu7NaYJ6uRFGOG7fKpfy0aJcCKIKJpiXkXgeI3743KMW0Gfyeqpe
+QEbLTQ6cf05llPQli8r+FPHxHLBOQtl0lwkt4R4jzLCSy0a0mfgaLLZ+mAUe7CCt
+xUxmi2GhBKZ1G8/VqJl0tYEA+fcoFsJeaP6rhYgTvpBkL/o7dmvQK77SqljVG+Fj
+fAmR1+o1d4E2KqvgvxjQ0KCdL46e+r/e8celLKheKbF8CzIj13Iys0oHxUGDVlx2
+dCpRfn9e2jRx4WblFc9cqlQn7NTyYpwuySDAE4BfR8XT2aEQ7CYu2iGv2u59bAJ1
+Fa8u/tMjZZxQI8xf5PRk
+=Nibh
 -----END PGP SIGNATURE-----
