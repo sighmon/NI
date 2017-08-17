@@ -26,15 +26,16 @@ class Article < ActiveRecord::Base
 
 
   def self.search(params, show_unpublished = false)
-    results_per_page = params[:per_page].to_i
-    if results_per_page <= 0
-      results_per_page = Settings.article_pagination
+    results_per_page = Settings.article_pagination
+    if params[:per_page] and (params[:per_page].to_i > 0)
+      results_per_page = params[:per_page].to_i
     end
     query_hash = {
       sort: [{ publication: { order: "desc"} }]
     }
     query_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
-    query_hash.merge!({ post_filter: { term: { published: true}} }) unless show_unpublished
+    # TOFIX: Elasticsearch 5 won't post_filter on published
+    # query_hash.merge!({ post_filter: { term: { published: true}} }) unless show_unpublished
 
     __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
   end
