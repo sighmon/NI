@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   require 'net/http'
 
   include ArticlesHelper
-   
+
   skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share, :popular]
 
   # Cancan authorisation
