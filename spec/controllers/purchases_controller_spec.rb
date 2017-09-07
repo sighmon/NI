@@ -43,7 +43,7 @@ describe PurchasesController, :type => :controller do
          it "should create a purchase" do
            PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(true)
            expect {
-             post :create, {:issue_id => issue.id}
+             post :create, params: {:issue_id => issue.id}
            }.to change(Purchase, :count).by(1)
          end
        end
@@ -53,7 +53,7 @@ describe PurchasesController, :type => :controller do
          it "should not a purchase" do
            PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(false)
            expect {
-             post :create, {:issue_id => issue.id}
+             post :create, params: {:issue_id => issue.id}
            }.to change(Purchase, :count).by(0)
          end
 

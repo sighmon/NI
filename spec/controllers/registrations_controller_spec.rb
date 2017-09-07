@@ -13,7 +13,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: user.username, email: user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, :user => attributes
+            post :create, params: {:user => attributes}
           }.to change(User, :count).by(1)
         end
       end
@@ -23,7 +23,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: "", email: user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, {:user => attributes}
+            post :create, params: {:user => attributes}
           }.to change(User, :count).by(0)
         end
       end
@@ -33,7 +33,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: user.username, email: "", password: "password", password_confirmation: "password" }
           expect {
-            post :create, {:user => attributes}
+            post :create, params: {:user => attributes}
           }.to change(User, :count).by(0)
         end
       end
@@ -51,7 +51,7 @@ describe RegistrationsController do
           new_user = FactoryBot.build(:user)
           attributes = { username: new_user.username, email: new_user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, {:user => attributes}
+            post :create, params: {:user => attributes}
           }.to change(User, :count).by(0)
         end
       end
@@ -62,7 +62,7 @@ describe RegistrationsController do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
           expect {
-            put :update, { user: attributes }
+            put :update, params: { user: attributes }
             user.reload
           }.to change(user, :email).to(newemail)
         end
@@ -84,7 +84,7 @@ describe RegistrationsController do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
           expect_any_instance_of(User).not_to receive(:update_attributes)
-          put :update, { user: attributes }
+          put :update, params: { user: attributes }
         end
       end
     end
