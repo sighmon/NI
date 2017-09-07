@@ -25,6 +25,43 @@ class Image < ActiveRecord::Base
     image.save
   end
 
+  def self.create_from_uri(article, uri, options = {})
+
+    if not options.nil?
+      image_alt_text = options[:alt]
+      image_media_id = options[:media_id]
+    else
+      options = {}
+    end
+
+    response = HTTParty.get(uri)
+
+    if response.code >= 200 and response.code < 400
+      # image_as_string = Base64.decode64(response.body)
+      sio = StringIO.new(response.body)
+      sio.class.class_eval { attr_accessor :original_filename, :content_type }
+      sio.original_filename = uri.split("/").last
+      sio.content_type = response.headers["content-type"]
+
+      if image_media_id
+        # It's a header image, so check if it already exists
+        image = article.images.where(:media_id => image_media_id).first_or_create
+      else
+        # Try and find it by filename?
+        image = article.images.where(:data => uri.split("/").last).first_or_create
+        image.hidden = true
+      end
+      image.caption = image_alt_text
+      # image.credit = image.extract_credit_from_article
+      image.data = sio
+      image.save
+      return image
+    else
+      logger.warn "ERROR GETTING IMAGE: #{uri}, RESPONSE: #{response.code}"
+      return nil
+    end
+  end
+
   def extract_caption_from_article()
     if (not article.nil?) and (not media_id.nil?)
       Nokogiri.XML(self.article.source).at_xpath("//*[@related_media_id=#{media_id}]//*[@type='rel_media_caption']/text()").try(:text)

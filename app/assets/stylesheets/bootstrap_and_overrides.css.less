@@ -723,6 +723,10 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 	margin-bottom: 0.5em;
 }
 
+.shared-sign-up .form-control {
+	margin-bottom: 0.5em;
+}
+
 .category_autocomplete {
 	max-width: 50%;
 	float: left;
@@ -1544,6 +1548,16 @@ blockquote.pull-left {
 	float: left;
 }
 
+blockquote.block-quote {
+	font-size: 1em;
+	color: @gray;
+}
+
+blockquote > .attribution {
+	font-size: 0.9em;
+	color: @gray-light;
+}
+
 .footnotes {
 	padding: 1em;
 	font-size: 0.9em;
@@ -1600,8 +1614,8 @@ blockquote.pull-left {
 	margin: 0;
 }
 
-.factbox h2, .factbox h3, .factbox h4 {
-	margin-top: 0;
+.factbox h2, .factbox h3, .factbox h4, .box h2, .box h3, .box h4 {
+	margin-top: 0.2em;
 }
 
 .factbox p {

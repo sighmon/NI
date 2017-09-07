@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.1'
 
 gem 'rails', '5.0.0.1'
 
@@ -159,6 +159,7 @@ group :development do
   # Run bundle-audit to check for Ruby/Rails vulnerabilities
   gem 'bundler-audit'
   gem 'ruby-prof'
+  gem 'thin'
 end
 
 # Cucumber and Rspec install for testing
@@ -172,8 +173,8 @@ end
 group :test do
   # i don't THINK we use cucumber anymore
   #gem 'cucumber-rails', :require => false
-  gem 'capybara'
-  gem 'capybara-webkit'
+  #gem 'capybara'
+  #gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'simplecov', :require => false
   gem 'timecop'

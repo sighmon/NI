@@ -99,7 +99,8 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/viewfrom/") +
       articles_of_category("/columns/mark-engler/") +
       articles_of_category("/columns/steve-parry/") + 
-      articles_of_category("/columns/kate-smurthwaite/")
+      articles_of_category("/columns/kate-smurthwaite/") + 
+      articles_of_category("/columns/chris-coltrane/")
       ).sort_by(&:publication)
   end
 
@@ -115,6 +116,7 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/mark-engler/") -
       articles_of_category("/columns/steve-parry/") - 
       articles_of_category("/columns/kate-smurthwaite/") -
+      articles_of_category("/columns/chris-coltrane/") -
       articles_of_category("/video/")
       ).sort_by(&:publication)
   end
@@ -160,6 +162,178 @@ class Issue < ActiveRecord::Base
 
   def price
     return Settings.issue_price
+  end
+
+  # Import articles from the new newint.org server
+  def import_articles_from_newint_org(options = {})
+
+    # Optional: hand in issue number {issue_number: xxx}
+    # Optional: mark articles as unpublished? options[:unpublished]
+    # Optional: hand in a specific article URL {article_url: xxx}
+    issue_number_to_import = self.number
+    article_url_to_import = nil
+    if not options.nil?
+      issue_number_to_import = options[:issue_number]
+      article_url_to_import = options[:article_url]
+    else
+      options = {}
+    end
+
+    xcsfr_token = csrf_token_from_newint_org
+
+    # TODO: Handle downloading a specific article? options[:article_url]
+
+    if xcsfr_token
+      # Import issue details
+      response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s, xcsfr_token)
+      
+      if response_from_newint_org
+        # Request the articles using the issue tid.
+        issue_tid = JSON.parse(response_from_newint_org)["list"].first["tid"]
+        articles_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s, xcsfr_token)
+        if articles_response_from_newint_org
+          # Articles from this issue
+          articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org)["list"]
+
+          articles_json_from_newint_org.each do |a|
+            # Create article from json.
+            article_created = create_article_from_newint_org_json(a, xcsfr_token, options)
+          end
+
+          # return articles_json_from_newint_org
+          return true
+        else
+          # Bad articles response
+          logger.warn "ARTICLES REQUEST FAILED."
+          return nil
+        end
+        
+        logger.info "Finished getting articles."
+        return "Success!"
+      else
+        logger.warn "CHECK RESPONSE FROM NEWINT.ORG!"
+        return nil
+      end
+    else
+      logger.info "NO VALID TOKEN. :-("
+      return nil
+    end
+
+  end
+
+  def create_article_from_newint_org_json(article_json, token, options)
+    article_created = self.articles.where(story_id: article_json["nid"]).first_or_create
+    article_created.update_attributes(
+      title: article_json["title"],
+      teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ") unless article_json["field_deck"].empty?),
+      publication: Time.at(article_json["created"].to_i).to_datetime,
+      body: (article_json["body"]["value"].try(:gsub,/\n/, " ") unless article_json["body"].empty?),
+      unpublished: options[:unpublished]
+    )
+
+    # Request contributor information.
+    article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + article_json["field_contributor"].first["id"].to_s + ".json", token)
+    if article_info_response_from_newint_org
+      article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
+      # Write name to article: article_info_json_from_newint_org["name"]
+      article_created.update_attributes(
+        author: article_info_json_from_newint_org["name"],
+      )
+    end
+
+    # Request categories tags and themes.
+    article_json_tags = []
+    if article_json["field_tags"] and not article_json["field_tags"].empty?
+      article_json_tags += article_json["field_tags"]
+    end
+    if article_json["field_themes"] and not article_json["field_themes"].empty?
+      article_json_tags += article_json["field_themes"]
+    end
+    if not article_json_tags.empty?
+      article_json_tags.each do |cat|
+        article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", token)
+        if article_category_response_from_newint_org
+          article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
+          # Find/create category and add it to article.
+          Category.create_from_element(article_created, article_category_json_from_newint_org["name"].try(:titlecase))
+        end
+      end
+    end
+
+    # Request image information.
+    if article_json["field_image"] and not article_json["field_image"].empty?
+      article_image_response_from_newint_org = request_json_from_newint_org(article_json["field_image"]["file"]["uri"].to_s + ".json", token)
+      if article_image_response_from_newint_org
+        article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
+        # Find or create image and add it to article
+        header_image_created = Image.create_from_uri(article_created, article_image_json_from_newint_org["url"].to_s, {alt: article_json["field_image"]["alt"], media_id: article_json["field_image"]["file"]["id"]})
+        # Embed new File code to article body
+        if header_image_created
+          image_file_code = "[File:#{header_image_created.id}|full]"
+          if not article_created.body.include?(image_file_code)
+            article_created.body.prepend(image_file_code)
+            article_created.save
+          end
+        end
+      else
+        logger.warn "IMAGE REQUEST FAILED for #{article_json["field_image"]["file"]["uri"].to_s}"
+      end
+    end
+
+    # Pull out embedded images and create them in the db
+    article_html = Nokogiri::HTML.fragment(article_created.body)
+    image_fragments = article_html.css('img')
+    image_fragments.each do |img|
+      image_uri = "https://" + URI.parse(ENV["NEWINT_ORG_REST_TOKEN_URL"]).host + img["src"]
+      image_created = Image.create_from_uri(article_created, image_uri, {alt: img["alt"]})
+      if image_created
+        image_file_code = "[File:#{image_created.id}]"
+        # Remove the img HTML from the article_created.body and replace with [File:xxx]
+        # Hack: Nokogiri parses out the trailing <img /> slash, so to find it I have to use brittle regex
+        article_created.body = article_created.body.sub(/#{img.to_html[0...-1]}(.*?)>/, image_file_code)
+        article_created.save
+      end
+
+    end
+    return article_created
+  end
+
+  def request_json_from_newint_org(url, token)
+    request = HTTPI::Request.new
+    request.url = url
+    request.headers = { "Accept": "application/json", "X-CSRF-Token": token }
+    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
+    response_from_newint_org = HTTPI.get(request)
+    logger.info "Request to: #{url}"
+    logger.info "Response: #{response_from_newint_org.code.to_s}"
+    response_body = nil
+    if response_from_newint_org.code >= 200 and response_from_newint_org.code < 300
+      # Good response
+      response_body = response_from_newint_org.body
+    else
+      logger.warn "Error! Headers: #{response_from_newint_org.headers}"
+      logger.warn "Error! Body: #{response_from_newint_org.body}"
+    end
+    return response_body
+  end
+
+  def csrf_token_from_newint_org
+    # First get a token
+    request = HTTPI::Request.new
+    request.url = ENV["NEWINT_ORG_REST_TOKEN_URL"]
+    request.headers = { "Content-type": "text/plain" }
+    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
+    response = HTTPI.get(request)
+    # byebug
+    logger.info "TOKEN RESPONSE: " + response.code.to_s
+    # logger.info response.headers
+
+    xcsfr_token = nil
+    if response.code >= 200 and response.code < 300
+      # Token has arrived
+      xcsfr_token = response.body
+    end
+    return xcsfr_token
   end
 
   # Setting up SOAP to import articles from Bricolage using Savon
@@ -251,7 +425,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def create_article_from_element(element, options)
+  def create_article_from_bricolage_element(element, options)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     story_id = element[:id].to_i
     # TODO: Allow for posibility that issue is nil.
@@ -266,7 +440,7 @@ class Issue < ActiveRecord::Base
     )
     category_list = element.xpath(".//assets:category",'assets' => assets)
     category_list.collect do |cat|
-      c = Category.create_from_element(a,cat)
+      c = Category.create_from_element(a,cat.try(:text))
     end
     return a
   end
@@ -301,7 +475,7 @@ class Issue < ActiveRecord::Base
       stories = doc.xpath("//assets:story",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
       #return stories
       stories.collect do |element|
-        a = self.create_article_from_element(element, options)
+        a = self.create_article_from_bricolage_element(element, options)
       end
       stories
     end
@@ -737,6 +911,114 @@ class Issue < ActiveRecord::Base
       return " The #{release.strftime("%B")} edition of New Internationalist magazine is ready to read."
     else
       return ""
+    end
+  end
+
+  def self.setup_push_notifications(params)
+    # sleep 3
+    this_issue = Issue.find(params["issue_id"])
+    input_params = params["/issues/#{this_issue.id}/setup_push_notification"]
+    alert_text = input_params["alert_text"]
+    device_id = input_params["device_id"]
+
+    # Scheduled datetime is in UTC(GMT)
+    scheduled_datetime = DateTime.new(input_params["scheduled_datetime(1i)"].to_i, input_params["scheduled_datetime(2i)"].to_i, input_params["scheduled_datetime(3i)"].to_i, input_params["scheduled_datetime(4i)"].to_i, input_params["scheduled_datetime(5i)"].to_i)
+
+    if scheduled_datetime > DateTime.now
+      # It will be set below
+    else
+      scheduled_datetime = nil
+    end
+
+    data = {
+      body: "#{alert_text + this_issue.push_notification_text}",
+      badge: "Increment",
+      name: this_issue.number.to_s,
+      publication: this_issue.release.to_time.iso8601.to_s,
+      railsID: this_issue.id.to_s,
+      title: "New Internationalist",
+      deliver_after: scheduled_datetime
+    }
+
+    if device_id.empty?
+      # Loop thorugh all Android PushRegistration tokens and setup one push with an array of tokens
+      android_tokens = []
+      PushRegistration.where(device: 'android').each do |p|
+        android_tokens << p.token
+      end
+
+      # Setup notifications in batches of 1,000 tokens.
+      if not android_tokens.empty? and android_tokens.count > 1000
+        android_tokens.each_slice(1000).to_a.each do |tokens|
+          # Setup push notifications for Android devices
+          logger.info "Creating #{tokens.count} Android push notifications."
+          android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+          logger.info "Android push notifications response: #{android_response}"
+        end
+      elsif not android_tokens.empty?
+        # Setup push notifications for Android devices
+        logger.info "Creating #{android_tokens.count} Android push notifications."
+        android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        logger.info "Android push notifications response: #{android_response}"
+      else
+        logger.warn "WARNING: No Android push notifications created."
+      end
+
+      # Loop through all iOS PushRegistration tokens and setup iOS messages
+      ios_responses = []
+      PushRegistration.where(device: 'ios').each do |p|
+        ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+      end
+      if not ios_responses.empty?
+        logger.info "Creating #{ios_responses} iOS push notifications."
+        # Check that all iOS responses were OK
+        ios_response = false
+        ios_responses.each do |r|
+          if r
+            ios_response = true
+          else
+            logger.info "ERROR iOS push notification response: #{r}"
+            ios_response = false
+          end
+        end
+      else
+        logger.warn "WARNING: No iOS push notifications created."
+      end
+
+    else
+      # Test push!
+      if input_params["test_device_android"] == "1"
+        android_response = ApplicationHelper.rpush_create_android_push_notification([device_id], data)
+        ios_response = true # Fake out a true response
+      else
+        android_response = true # Fake out a true response
+        ios_response = ApplicationHelper.rpush_create_ios_push_notification(device_id, data)
+      end
+    end
+
+    # The actual sending is in the admin panel
+    # rpush_response = Rpush.push
+
+    # Check if the push worked and finish
+    if android_response and ios_response
+      # Success!
+
+      # Mark the scheduled to send date, unless a single device push was sent.
+      if device_id.blank? and Rails.env.production?
+        this_issue.notification_sent = scheduled_datetime
+      end
+      
+      if this_issue.save
+        # redirect_to admin_push_notifications_path, notice: "Push notifications setup!"
+        logger.info "Push notifications setup!"
+      else
+        # redirect_to self, flash: { error: "Couldn't update issue after push successfully setup." }
+        logger.error "PUSH NOTIFICATIONS ERROR: Couldn't update issue after push successfully setup."
+      end
+    else
+      # FAIL! server error.
+      # redirect_to self, flash: { error: "Failed to setup push notifications. Error: #{android_response} ... #{ios_response}" }
+      logger.error "Failed to setup push notifications. Error: #{android_response} ... #{ios_response}"
     end
   end
 

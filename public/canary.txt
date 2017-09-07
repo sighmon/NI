@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Status: All good
+Period: August, 2017
+
+    _   __             _       __ 
+   / | / /__ _      __(_)___  / /_
+  /  |/ / _ \ | /| / / / __ \/ __/
+ / /|  /  __/ |/ |/ / / / / / /_  
+/_/ |_/\___/|__/|__/_/_/ /_/\__/  
+                                  
+As of the date below, New Internationalist Publications Pty Ltd have never received any:
+
+  * National Security Letter, of any type, for any purpose.
+  * Requests from any law enforcement agency worldwide or corporate entity for backdoors in any software and/or hardware projects to which we currently are an active contributor, nor are we aware of other contributors to these projects having received such a request.
+  * Foreign Intelligence Surveillance Court orders of any type.
+  * Subpoenas and/or search warrants accompanied by a gag order pursuant to the Electronic Communications Privacy Act.
+
+Nor have we received, nor are we aware of, occurences of any of the above, with respect to any and all machines we operate, maintain, and/or develop on.
+
+This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
+
+  14 August 2017
+  Simon Loffler - Developer
+  New Internationalist Publications Pty Ltd
+  172 Gilles Street, Adelaide 5000
+  newint.com.au
+  digital.newint.com.au
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJZkX6+AAoJELbJxtlC+xj50KsP/0vKK2S4wRl6IaxeJtjfKkVh
+06c1jw4P8rpGCFupx9oQ3EfZKudLEL8rlxc1eEm9HZS+ZyWHuawCo51Yj6XphU4C
+wNXsIT5Cab7eSuuuPpRmRI6MgFLmDqeWrPFZKdvXSKT6eyBWa7CkqkK2ipf+cuVN
+Q/38m51bj42Hec7w+N4oebFi0F591p/+DzWfQE96rBcRLJAcb8whb4b49KdZ57vi
+3oHJj/0AkzdGtm3mPmpb3TKIxgYQpXdAcsPj5xRhiSxcxWjXSsjNNLBQEu9/cv8S
+jxNIkus/QXzyeLC916CnBk44p1HUY8Vd8tEY34I6DqngVLHMVVCiWrkZjWEMIr+D
+kmJZ0RXDoPZYmu7NaYJ6uRFGOG7fKpfy0aJcCKIKJpiXkXgeI3743KMW0Gfyeqpe
+QEbLTQ6cf05llPQli8r+FPHxHLBOQtl0lwkt4R4jzLCSy0a0mfgaLLZ+mAUe7CCt
+xUxmi2GhBKZ1G8/VqJl0tYEA+fcoFsJeaP6rhYgTvpBkL/o7dmvQK77SqljVG+Fj
+fAmR1+o1d4E2KqvgvxjQ0KCdL46e+r/e8celLKheKbF8CzIj13Iys0oHxUGDVlx2
+dCpRfn9e2jRx4WblFc9cqlQn7NTyYpwuySDAE4BfR8XT2aEQ7CYu2iGv2u59bAJ1
+Fa8u/tMjZZxQI8xf5PRk
+=Nibh
+-----END PGP SIGNATURE-----

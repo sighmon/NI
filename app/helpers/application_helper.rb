@@ -354,4 +354,25 @@ module ApplicationHelper
         "Bad IP address in student account! Check your last entry, then go to Admin > Settings to remove this warning."
     end
 
+    def self.no_tracking(request)
+        exempt_pages = (request.try(:url).try(:include?, "securedrop") or request.try(:url).try(:include?, "how-to-leak"))
+        return exempt_pages
+    end
+
+    def no_tracking(request)
+        ApplicationHelper.no_tracking(request)
+    end
+
+    def log_event(category, action, label)
+        # Log a google analytics event to limit ad spending
+        session[:events] ||= Array.new
+        session[:events] << {:category => category, :action => action, :label => label}
+    end
+
+    def log_fb_event(action, amount)
+        # Log an event with Facebook to limit ad spending
+        session[:fb_events] ||= Array.new
+        session[:fb_events] << {:action => action, :amount => amount}
+    end
+
 end

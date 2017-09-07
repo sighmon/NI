@@ -3,6 +3,11 @@
 # Rails 5
 Rails.application.routes.draw do
 
+  # Ignore Wordpress login requests
+  RESPOND_403.each do |r2|
+    get "/#{r2}", to: proc { [403, {}, ['']] }
+  end
+
   # Routes for the categories breadcrumbs
   resources :categories, :only => [:index, :show, :edit, :update]
   get 'update_categories_colours' => 'categories#colours'
@@ -60,7 +65,7 @@ Rails.application.routes.draw do
     get :email_renew
     get :email_special
     get :zip
-    post :send_push_notification
+    post :setup_push_notification
     get :tweet_issue
     get :wall_post_issue
     get :email_issue

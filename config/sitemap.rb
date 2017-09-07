@@ -89,9 +89,18 @@ SitemapGenerator::Sitemap.create do
   # Add categories:
   Category.find_each do |category|
     add category_path(category), :priority => 0.4, :lastmod => category.updated_at, :alternates => [{
-        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/categories"
+        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"
       }, {
         :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"
+      }]
+  end
+
+  # Add pages:
+  Page.find_each do |page|
+    add page_path(page), :priority => 0.4, :lastmod => page.updated_at, :alternates => [{
+        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
+      }, {
+        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
       }]
   end
 

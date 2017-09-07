@@ -23,6 +23,9 @@ class CategoriesController < ApplicationController
                     {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"},
                     {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
                   ],
+                  :fb => {
+                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -61,6 +64,9 @@ class CategoriesController < ApplicationController
                     {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"},
                     {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
                   ],
+                  :fb => {
+                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  },
                   :open_graph => {
                     :title => @page_title,
                     :description => @page_description,
@@ -111,7 +117,7 @@ class CategoriesController < ApplicationController
     # Expire the cache
     expire_action :action => :index
 
-    if params[:category][:colour]
+    if params[:category][:colour] and not params[:category][:colour].empty?
       params[:category][:colour] = params[:category][:colour].match("[0-9a-f]+")[0].hex
     end
     logger.info params

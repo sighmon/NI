@@ -25,6 +25,8 @@ class SessionsController < Devise::SessionsController
     sign_in_url = new_user_session_url
     if request.referer == sign_in_url
       super
+    elsif request.referer == uk_login_url
+      root_path
     else
       stored_location_for(resource) || request.referer || root_path
     end

@@ -22,6 +22,8 @@ module ArticlesHelper
           elsif e["element_type"] == "pull_quote"
             alignment = e.at_xpath("field[@type='alignment']").text
             "<blockquote class='pull-#{alignment}'>"+process_children(e, debug)+"</blockquote>"
+          elsif e["element_type"] == "block_quote"
+            "<blockquote class='block-quote'>"+process_children(e, debug)+"</blockquote>"
           elsif e["element_type"] == "box"
             "<div class='box'>"+process_children(e,debug)+"</div>"
           elsif e["element_type"] == "factbox_third_width"
@@ -63,9 +65,12 @@ module ArticlesHelper
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
         elsif e.name == "field"
-          if ["paragraph","quote","an_author_note", "author", "postscript_text", "box_deck", "product_information", "factbox_content"].include? e["type"]
+          if ["paragraph","quote", "block_quote","an_author_note", "author", "postscript_text", "box_deck", "product_information", "factbox_content"].include? e["type"]
             # paragraph-like things
             "<p>#{e.text.gsub(/\n/, " ")}</p>"
+          elsif ["attribution"].include? e["type"]
+            # block quote attribution
+            "<p class='attribution'>#{e.text.gsub(/\n/, " ")}</p>"
           elsif ["list_item"].include? e["type"]
             # list-like things
             "<li>#{e.text.gsub(/\n/, " ")}</li>"

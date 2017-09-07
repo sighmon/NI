@@ -43,6 +43,10 @@
 		<dt></dt>
 		<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
 		<% end %>
+		<% if @user.uk_user? and not @user.subscriber? %>
+			<dt><strong>Note:</strong></dt>
+			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
+		<% end %>
 	<% end %>
 	<% end %>
 </dl>

@@ -5,6 +5,7 @@
   "@type": "WebSite",
   "name": "<%= ENV['APP_NAME'] %>",
   "url": "<%= root_url %>",
+  "dateModified": "<%= @latest_issue.release.to_time.iso8601 %>",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://digital.newint.com.au/search?utf8=✓&query={search_term_string}",
@@ -87,6 +88,8 @@
     </p>
 	</div>
 </div>
+
+<%= render :partial => "shared/account_sign_up" %>
 
 <hr />
 

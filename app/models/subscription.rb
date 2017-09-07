@@ -26,6 +26,8 @@ class Subscription < ActiveRecord::Base
   def expiry_date
     if was_recurring? and refunded_on.nil?
       return (valid_from + duration.months)
+    elsif not refunded_on.nil?
+      return refunded_on
     else
       return (cancellation_date or (valid_from + duration.months))
     end
