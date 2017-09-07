@@ -169,16 +169,19 @@ class Issue < ActiveRecord::Base
 
     # Optional: hand in issue number {issue_number: xxx}
     # Optional: mark articles as unpublished? options[:unpublished]
+    # Optional: hand in a specific article URL {article_url: xxx}
     issue_number_to_import = self.number
+    article_url_to_import = nil
     if not options.nil?
       issue_number_to_import = options[:issue_number]
+      article_url_to_import = options[:article_url]
     else
       options = {}
     end
 
     xcsfr_token = csrf_token_from_newint_org
 
-    # TODO: Handle downloading a specific article?
+    # TODO: Handle downloading a specific article? options[:article_url]
 
     if xcsfr_token
       # Import issue details
