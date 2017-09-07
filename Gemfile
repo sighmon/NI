@@ -190,6 +190,8 @@ group :test do
   gem 'rb-inotify', :require => false#, '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
   gem 'rb-fsevent', :require => false#, '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  # Rails 5
+  gem 'rails-controller-testing'
 end
 
 gem 'twitter-bootstrap-rails'#, '2.1.6'

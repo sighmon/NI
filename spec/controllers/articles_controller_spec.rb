@@ -24,7 +24,7 @@ describe ArticlesController, :type => :controller do
       let(:issue) { article.issue }
 
       it "can view the body" do
-        get :body, {article_id: article.id, issue_id: article.issue.id}
+        get :body, params: {article_id: article.id, issue_id: article.issue.id}
         expect(response.status).to eq(200)
       end 
 
@@ -37,12 +37,12 @@ describe ArticlesController, :type => :controller do
       let(:issue) { article.issue }
 
       it "can't view the body" do
-        get :body, {article_id: article.id, issue_id: article.issue.id}
+        get :body, params: {article_id: article.id, issue_id: article.issue.id}
         expect(response.status).to eq(403)
       end
 
       it "can't show the article" do
-        get :show, {id: article.id, issue_id: article.issue.id}
+        get :show, params: {id: article.id, issue_id: article.issue.id}
         expect(response.status).to eq(302)
       end
 
@@ -54,7 +54,7 @@ describe ArticlesController, :type => :controller do
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
-        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        post :send_push_notification, params: {:issue_id => issue.id, :article_id => article.id}
         expect(response).to redirect_to root_url
       end
 
@@ -78,7 +78,7 @@ describe ArticlesController, :type => :controller do
         let(:issue) { article.issue }
 
         it "can't view the body" do
-          get :body, {article_id: article.id, issue_id: article.issue.id}
+          get :body, params: {article_id: article.id, issue_id: article.issue.id}
           expect(response.status).to eq(403)
         end
 
@@ -92,7 +92,7 @@ describe ArticlesController, :type => :controller do
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
-        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        post :send_push_notification, params: {:issue_id => issue.id, :article_id => article.id}
         expect(response).to redirect_to root_url
       end
 
@@ -111,7 +111,7 @@ describe ArticlesController, :type => :controller do
         let(:issue) { article.issue }
 
         it "can't view the body" do
-          get :body, {article_id: article.id, issue_id: article.issue.id}
+          get :body, params: {article_id: article.id, issue_id: article.issue.id}
           expect(response.status).to eq(403)
         end 
 
@@ -191,7 +191,7 @@ describe ArticlesController, :type => :controller do
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
-        post :send_push_notification, :issue_id => issue.id, :article_id => article.id
+        post :send_push_notification, params: {:issue_id => issue.id, :article_id => article.id}
         expect(response).to redirect_to root_url
       end
 
@@ -214,7 +214,7 @@ describe ArticlesController, :type => :controller do
         let(:article) { FactoryBot.create(:article) }
 
         it "assigns the article" do
-          get :show, {id: article.id, issue_id: article.issue.id}
+          get :show, params: {id: article.id, issue_id: article.issue.id}
           expect(assigns(:article)).to eq(article)
         end
 
@@ -231,7 +231,7 @@ describe ArticlesController, :type => :controller do
         it "creates a new article" do
           # byebug
           expect {
-            post :create, {:article => @article_attributes, :issue_id => @issue.id}
+            post :create, params: {:article => @article_attributes, :issue_id => @issue.id}
           }.to change(Article, :count).by(1)
         end
 
@@ -245,7 +245,7 @@ describe ArticlesController, :type => :controller do
             ##ArticlesController.should_receive(:create)
             ##ArticlesController.any_instance.stub(:create) {|*args| ArticlesController.create(*args)}
             #ArticlesController.any_instance.should_receive(:create)
-            post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @new_category_attributes }}), :issue_id => @issue.id}
+            post :create, params: {:article => @article_attributes.merge({ :categories_attributes => { "0" => @new_category_attributes }}), :issue_id => @issue.id}
             expect(@issue.articles.last.categories.first.name).to eq(@new_category_attributes[:name])
           end
 
@@ -258,7 +258,7 @@ describe ArticlesController, :type => :controller do
 
           it "creates an new article with the category" do
             expect {
-              post :create, {:article => @article_attributes.merge({ :categories_attributes => { "0" => @category_attributes }}), :issue_id => @issue.id}
+              post :create, params: {:article => @article_attributes.merge({ :categories_attributes => { "0" => @category_attributes }}), :issue_id => @issue.id}
             }.to change(Article, :count).by(1)
             expect(@issue.articles.last.categories).to eq([@category])
           end
@@ -283,13 +283,13 @@ describe ArticlesController, :type => :controller do
           end
 
           it "adds the category to the article" do
-            put :update, {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
+            put :update, params: {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
 
             # why is this different from above?
-            #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("name") }}, :issue_id => @article.issue.id, :id => @article.id}
+            #put :update, params: {:article => {:categories_attributes => { "0" => @category.attributes.slice("name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
             # familiar ID error
-            #put :update, {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
+            #put :update, params: {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
             expect(@article.categories.collect(&:name)).to eq([Category.new(@category_attributes).name])
           end
@@ -302,7 +302,7 @@ describe ArticlesController, :type => :controller do
             it "does not add the category to the article" do
 
               expect {
-                put :update, {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
+                put :update, params: {:article => {:categories_attributes => { "0" => @category_attributes }}, :issue_id => @article.issue.id, :id => @article.id}
               }.to change(@article.categories, :count).by(0)
             end   
           end
@@ -338,7 +338,7 @@ describe ArticlesController, :type => :controller do
             "alert_text" => "Test message."
           }
           
-          post :send_push_notification, :issue_id => article.issue.id, :article_id => article.id, "/issues/#{article.issue.id}/articles/#{article.id}/send_push_notification" => input_params
+          post :send_push_notification, params: {:issue_id => article.issue.id, :article_id => article.id, "/issues/#{article.issue.id}/articles/#{article.id}/send_push_notification" => input_params}
           expect(response).to redirect_to admin_push_notifications_path
         end
 
