@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  before_filter :auto_signin_ip
+  before_action :auto_signin_ip
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Save this page location to session
-  after_filter :store_location
+  after_action :store_location
 
   protected
 

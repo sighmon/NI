@@ -43,7 +43,8 @@ module NI
     config.i18n.enforce_available_locales = true
 
     # Rails 4 addition
-    config.active_record.raise_in_transactional_callbacks = true
+    # Removed for Rails 5
+    # config.active_record.raise_in_transactional_callbacks = true
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -88,7 +89,7 @@ module NI
 
     config.to_prepare do
       DeviseController.respond_to :html, :json
-      Devise::SessionsController.skip_before_filter :auto_signin_ip
+      Devise::SessionsController.skip_before_action :auto_signin_ip
     end
   end
 end

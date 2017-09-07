@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
    
-  skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
+  skip_before_action :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.

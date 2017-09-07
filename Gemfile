@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.1'
 
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.1.3'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
@@ -193,6 +193,7 @@ gem 'twitter-bootstrap-rails'#, '2.1.6'
 gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'therubyracer'
+gem 'font-awesome-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

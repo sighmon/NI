@@ -4,7 +4,7 @@ class Admin::PushNotificationsController < ApplicationController
   # load_and_authorize_resource
 
   # verify_admin
-  before_filter :verify_admin
+  before_action :verify_admin
 
   def index
     if params[:per_page].present?
