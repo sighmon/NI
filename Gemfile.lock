@@ -540,6 +540,8 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     ref (2.0.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -739,6 +741,7 @@ DEPENDENCIES
   rails_serve_static_assets
   rb-fsevent
   rb-inotify
+  record_tag_helper
   retina_image_tag!
   rmagick
   rpush

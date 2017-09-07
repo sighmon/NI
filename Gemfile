@@ -12,6 +12,9 @@ gem 'actionpack-action_caching', git: 'https://github.com/rails/actionpack-actio
 gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
 
+# Rails 5
+gem 'record_tag_helper'
+
 #### For heroku to serve static assets
 gem 'rails_serve_static_assets'
 

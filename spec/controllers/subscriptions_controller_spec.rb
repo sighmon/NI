@@ -53,7 +53,7 @@ describe SubscriptionsController, :type => :controller do
           it "should create a subscription" do
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(true)
             expect {
-              post :create, {:user_id => user.id}
+              post :create, params: {:user_id => user.id}
             }.to change(Subscription, :count).by(1)
           end
         end
@@ -63,7 +63,7 @@ describe SubscriptionsController, :type => :controller do
           it "should not create a subscription" do
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(false)
             expect {
-              post :create, {:user_id => user.id}
+              post :create, params: {:user_id => user.id}
             }.to change(Subscription, :count).by(0)
           end
 

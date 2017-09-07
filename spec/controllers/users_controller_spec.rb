@@ -14,7 +14,7 @@ describe UsersController, :type => :controller do
     describe "JSON user information" do
 
       it "should have an expiry date, id and username" do
-        get :show, :id => user.id, :format => :json
+        get :show, params: {:id => user.id, :format => :json}
         # byebug
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["expiry"]).not_to eq("")
@@ -40,7 +40,7 @@ describe UsersController, :type => :controller do
     describe "JSON user information" do
 
       it "should have a purchase" do
-        get :show, :id => user.id, :format => :json
+        get :show, params: {:id => user.id, :format => :json}
         # byebug
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["purchases"].count).to eq(1)
@@ -65,7 +65,7 @@ describe UsersController, :type => :controller do
     describe "JSON user information" do
 
       it "should have a favourite" do
-        get :show, :id => user.id, :format => :json
+        get :show, params: {:id => user.id, :format => :json}
         # byebug
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["favourites"].count).to eq(1)
@@ -89,7 +89,7 @@ describe UsersController, :type => :controller do
     describe "JSON user information" do
 
       it "should have a guest pass" do
-        get :show, :id => user.id, :format => :json
+        get :show, params: {:id => user.id, :format => :json}
         # byebug
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["guest_passes"].count).to eq(1)

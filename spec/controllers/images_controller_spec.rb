@@ -44,7 +44,7 @@ describe ImagesController, :type => :controller do
     describe "GET index" do
       it "redirects to home" do
         image = FactoryGirl.create(:image)
-        get :index, {:issue_id => image.article.issue.id, :article_id => image.article.id}
+        get :index, params: {:issue_id => image.article.issue.id, :article_id => image.article.id}
         expect(response).to redirect_to(issues_url)
       end
     end
@@ -54,13 +54,13 @@ describe ImagesController, :type => :controller do
         it "does not create a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, params: {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(0)
         end
 
         it "redirects to the issues" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, params: {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(response).to redirect_to(issues_path)
         end
       end
@@ -76,12 +76,12 @@ describe ImagesController, :type => :controller do
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
           expect_any_instance_of(Image).not_to receive(:update_attributes)
-          put :update, {:id => image.to_param, :image => { :these => "params" }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => { :these => "params" }, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 
         it "redirects to the issues" do
           image = FactoryGirl.create(:image)
-          put :update, {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id} 
+          put :update, params: {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id} 
           expect(response).to redirect_to(issues_path)
         end
       end
@@ -91,7 +91,7 @@ describe ImagesController, :type => :controller do
           image = FactoryGirl.create(:image)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Image).to receive(:save).and_return(false)
-          put :update, {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(assigns(:image)).to eq(image)
         end
 
@@ -102,13 +102,13 @@ describe ImagesController, :type => :controller do
       it "should not destroy any images" do
         image = FactoryGirl.create(:image)
         expect {
-          delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          delete :destroy, params: {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
         }.to change(Image, :count).by(0)
       end
 
       it "redirects to issues" do
         image = FactoryGirl.create(:image)
-        delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        delete :destroy, params: {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
         expect(response).to redirect_to(issues_path)
       end
     end
@@ -124,7 +124,7 @@ describe ImagesController, :type => :controller do
     describe "GET index" do
       it "assigns all images as @images" do
         image = FactoryGirl.create(:image)
-        get :index, {:issue_id => image.article.issue_id, :article_id => image.article_id}
+        get :index, params: {:issue_id => image.article.issue_id, :article_id => image.article_id}
         expect(assigns(:images)).to eq([image])
       end
     end
@@ -132,7 +132,7 @@ describe ImagesController, :type => :controller do
     describe "GET new" do
       it "assigns a new image as @image" do
         article = FactoryGirl.create(:article)
-        get :new, {:issue_id => article.issue.id, :article_id => article.id}
+        get :new, params: {:issue_id => article.issue.id, :article_id => article.id}
         expect(assigns(:image)).to be_a_new(Image)
       end
     end
@@ -140,7 +140,7 @@ describe ImagesController, :type => :controller do
     describe "GET show" do
       it "assigns the requested image as @image" do
         image = FactoryGirl.create(:image)
-        get :show, {:id => image.id, :issue_id => image.article.issue.id, :article_id => image.article.id}
+        get :show, params: {:id => image.id, :issue_id => image.article.issue.id, :article_id => image.article.id}
         expect(assigns(:image)).to eq(image)
       end
     end
@@ -149,7 +149,7 @@ describe ImagesController, :type => :controller do
     describe "GET edit" do
       it "assigns the requested image as @image" do
         image = FactoryGirl.create(:image)
-        get :edit, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        get :edit, params: {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
         expect(assigns(:image)).to eq(image)
       end
     end
@@ -159,20 +159,20 @@ describe ImagesController, :type => :controller do
         it "creates a new Image" do
           expect {
             image = FactoryGirl.build(:image)
-            post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, params: {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           }.to change(Image, :count).by(1)
         end
 
         it "assigns a newly created image as @image" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, params: {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(assigns(:newimage)).to be_a(Image)
           expect(assigns(:newimage)).to be_persisted
         end
 
         it "redirects to the article" do
           image = FactoryGirl.build(:image)
-          post :create, {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, params: {:image => FactoryGirl.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(response).to redirect_to(issue_article_path(image.article.issue,image.article))
         end
       end
@@ -182,7 +182,7 @@ describe ImagesController, :type => :controller do
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Image).to receive(:save).and_return(false)
           article = FactoryGirl.create(:article)
-          post :create, {:image => {  }, :article_id => article.id, :issue_id => article.issue.id, :formats => [:js]}
+          post :create, params: {:image => {  }, :article_id => article.id, :issue_id => article.issue.id, :formats => [:js]}
           expect(assigns(:image)).to be_a_new(Image)
         end
 
@@ -190,7 +190,7 @@ describe ImagesController, :type => :controller do
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Image).to receive(:save).and_return(false)
           article = FactoryGirl.create(:article)
-          post :create, {:image => {  }, :article_id => article.id, :issue_id => article.issue.id}
+          post :create, params: {:image => {  }, :article_id => article.id, :issue_id => article.issue.id}
           expect(response).to render_template("new")
         end
       end
@@ -206,18 +206,18 @@ describe ImagesController, :type => :controller do
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
           expect_any_instance_of(Image).to receive(:update_attributes).with(image_params)
-          put :update, {:id => image.to_param, :image => image_params, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => image_params, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 
         it "assigns the requested image as @image" do
           image = FactoryGirl.create(:image)
-          put :update, {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(assigns(:image)).to eq(image)
         end
 
         it "redirects to the image" do
           image = FactoryGirl.create(:image)
-          put :update, {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id} 
+          put :update, params: {:id => image.to_param, :image => valid_attributes_for_image(image), :article_id => image.article.id, :issue_id => image.article.issue.id} 
           expect(response).to redirect_to(issue_article_image_path(image.article.issue,image.article,image))
         end
       end
@@ -227,7 +227,7 @@ describe ImagesController, :type => :controller do
           image = FactoryGirl.create(:image)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Image).to receive(:save).and_return(false)
-          put :update, {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(assigns(:image)).to eq(image)
         end
 
@@ -235,7 +235,7 @@ describe ImagesController, :type => :controller do
           image = FactoryGirl.create(:image)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Image).to receive(:save).and_return(false)
-          put :update, {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          put :update, params: {:id => image.to_param, :image => {  }, :article_id => image.article.id, :issue_id => image.article.issue.id}
           expect(response).to render_template("edit")
         end
       end
@@ -245,13 +245,13 @@ describe ImagesController, :type => :controller do
       it "destroys the requested image" do
         image = FactoryGirl.create(:image)
         expect {
-          delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+          delete :destroy, params: {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
         }.to change(Image, :count).by(-1)
       end
 
       it "redirects to the images list" do
         image = FactoryGirl.create(:image)
-        delete :destroy, {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
+        delete :destroy, params: {:id => image.to_param, :article_id => image.article.id, :issue_id => image.article.issue.id}
         expect(response).to redirect_to(issue_article_images_path(image.article.issue,image.article))
       end
     end
