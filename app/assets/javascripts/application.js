@@ -15,7 +15,13 @@
 //= require jquery_ujs
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
+
+// Boostrap 4
+// require jquery3  // to avoid errors
+//= require popper
+// require bootstrap // to avoid errors
 //= require bootstrap-sprockets
+
 //= require_tree .
 //= require retina_image_tag
 //= require highlighter/jQuery.highlighter
