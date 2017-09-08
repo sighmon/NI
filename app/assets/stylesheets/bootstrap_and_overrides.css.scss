@@ -1,21 +1,21 @@
-@import "twitter/bootstrap/bootstrap";
+@import "bootstrap";
 body { 
 	padding-top: 60px;
 	background-color: #fdfdfd;
 }
 // @import "twitter/bootstrap/responsive";
-// @import "twitter/bootstrap/variables.less";
+// @import "twitter/bootstrap/variables.scss";
 
 // Set the correct sprite paths
-@iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings");
-@iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white");
+$iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings");
+$iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white");
 
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
-// @fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
-// @fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
-// @fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
-// @fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
-// @fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+// $fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+// $fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
+// $fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+// $fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+// $fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
 
 // Font Awesome
 // @import "fontawesome/font-awesome";
@@ -23,7 +23,7 @@ body {
 // Fixes from Glyphicon code
 // http://astronautweb.co/snippet/font-awesome/
 
-.font-awesome-family {
+@mixin font-awesome-family {
 	font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
@@ -31,14 +31,18 @@ body {
   text-decoration: inherit;
 }
 
+@mixin pull-right {
+	float: right;
+}
+
 .icon-star:after {
-	.font-awesome-family;
+	@include font-awesome-family;
 	content: "\f005";
 }
 
 // Glyphicons
-//@import "twitter/bootstrap/sprites.less";
-//@import "twitter/bootstrap/glyphicons.less";
+//@import "twitter/bootstrap/sprites.scss";
+//@import "twitter/bootstrap/glyphicons.scss";
 
 // Your custom LESS stylesheets goes here
 //
@@ -49,7 +53,7 @@ body {
 // See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
 //
 // Example:
-// @link-color: #ff0000;
+// $link-color: #ff0000;
 
 // Fix the mobile submenu problem
 .dropdown-backdrop {
@@ -60,47 +64,52 @@ body {
 // Twitter Bootstrap variable edits
 //=================================
 
+$gray-darker:            lighten(#000, 13.5%) !default; // #222
+$gray-dark:              lighten(#000, 20%) !default;   // #333
+$gray:                   lighten(#000, 33.5%) !default; // #555
+$gray-light:             lighten(#000, 60%) !default;   // #999
+$gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
 // Scaffolding
 // -------------------------
-@text-color:            @gray-dark;
+$text-color:            $gray-dark;
 
 // Typography
 // -------------------------
-// @sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-// @sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
-@sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
-// @serifFontFamily:       "iABCRegular", serif;
+// $sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+// $sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
+$sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+// $serifFontFamily:       "iABCRegular", serif;
 
-@font-family-base:        @sansFontFamily;
-// @baseFontSize:          12px;
-// @baseLineHeight:        18px;
+$font-family-base:        $sansFontFamily;
+// $baseFontSize:          12px;
+// $baseLineHeight:        18px;
 // Open Sans
-@font-size-base:          13px;
-// @line-height-base:        20px;
+$font-size-base:          13px;
+// $line-height-base:        20px;
 
 //** Unit-less `line-height` for use in components like buttons.
-@line-height-base:        1.6; // 20/14
+$line-height-base:        1.6; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
+$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 
 //** By default, this inherits from the `<body>`.
-@headings-font-family:    inherit;
-@headings-font-weight:    600;
-@headings-line-height:    @line-height-computed;
-@headings-color:          inherit;
+$headings-font-family:    inherit;
+$headings-font-weight:    600;
+$headings-line-height:    $line-height-computed;
+$headings-color:          inherit;
 
-@articleFontSize:		14px;
-@articleLineHeight:		23px;
-@articleParagraphMargin:1em;
+$articleFontSize:		14px;
+$articleLineHeight:		23px;
+$articleParagraphMargin:1em;
 
 /*
-@baseFontFamily:        @serifFontFamily;
-@baseFontSize:          21px;
-@baseLineHeight:        32px;
+$baseFontFamily:        $serifFontFamily;
+$baseFontSize:          21px;
+$baseLineHeight:        32px;
 */
 
-// @headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+// $headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
 h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
@@ -112,23 +121,65 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 
 // Navbar
 // -------------------------
-@navbar-collapse-width:             767px;
+$navbar-collapse-width:             767px;
 
-@navbar-height:                    40px;
-@navbarBackgroundHighlight:       #ffffff;
-@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
-@navbarBorder:                    darken(@navbarBackground, 12%);
+$navbar-height:                    40px;
+$navbarBackgroundHighlight:       #ffffff;
+$navbarBackground:                darken($navbarBackgroundHighlight, 5%);
+$navbarBorder:                    darken($navbarBackground, 12%);
 
-@navbarText:                      #777;
-@navbarLinkColor:                 #777;
-@navbarLinkColorHover:            @gray-dark;
-@navbarLinkColorActive:           @gray;
-@navbarLinkBackgroundHover:       transparent;
-@navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
+$navbarText:                      #777;
+$navbarLinkColor:                 #777;
+$navbarLinkColorHover:            $gray-dark;
+$navbarLinkColorActive:           $gray;
+$navbarLinkBackgroundHover:       transparent;
+$navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 
-@navbarBrandColor:                @navbarLinkColor;
+$navbarBrandColor:                $navbarLinkColor;
 
+@mixin gradient {
+	background: #ffe0c2;
+	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
+	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
+}
 
+@mixin gradient-gray {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+}
+
+@mixin gradient-gray-darker {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
+}
+
+@mixin gradient-home-latest-issue {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	background: -webkit-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	background: linear-gradient(to bottom, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$boxHomeBackgroundColourLight, endColorstr=$boxHomeBackgroundColour,GradientType=0 );
+}
+
+@mixin no-gradient {
+	background-color: transparent;
+	background: none;
+}
+
+@mixin box {
+	background-color: $boxBackgroundColour;
+	padding: 1.5em 2em;
+	margin: 2em 0 2em 0;
+	border-radius: 5px;
+}
 
 
 
@@ -138,28 +189,28 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 
 // NI Colours
 
-@niBrown: #f1edd9;
-@niRed: #f00d16; /* or #da2128; */
-@niGreen: rgba(134,197,67,0.1);
-@boxBackgroundColour: #E4E1DF;
-@boxGrayLightest: #F5F5F5;
-@boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
-@boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
-@footerColour: rgba(250,176,59,0.58);
-// @footerColour: rgba(250,176,59,0.38); // Old footer 2013
+$niBrown: #f1edd9;
+$niRed: #f00d16; /* or #da2128; */
+$niGreen: rgba(134,197,67,0.1);
+$boxBackgroundColour: #E4E1DF;
+$boxGrayLightest: #F5F5F5;
+$boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
+$boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
+$footerColour: rgba(250,176,59,0.58);
+// $footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
 // Column fixes
 
-@grid-gutter-width: 2em;
+$grid-gutter-width: 2em;
 
 // Negative margin nested rows out to align the content of columns
 .row-fluid {
-  margin-left:  (@grid-gutter-width / -2);
-  margin-right: (@grid-gutter-width / -2);
+  margin-left:  ($grid-gutter-width / -2);
+  margin-right: ($grid-gutter-width / -2);
 }
 
 // Transition image animation fix
-.transition-fix {
+@mixin transition-fix {
 	-webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
 }
@@ -184,7 +235,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 // Top Nav Bar
 
 .navbar, .navbar-search .search-query {
-	font-family: @headings-font-family;
+	font-family: $headings-font-family;
 	font-size: 14px;
 	line-height: 20px;
 }
@@ -200,7 +251,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar .brand {
 	font-family: "Bodega";
-	color: @niRed;
+	color: $niRed;
 	font-size: 26px;
 	padding-left: 0px;
 }
@@ -268,7 +319,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote h5 {
 	margin-bottom: 0;
-	color: @gray;
+	color: $gray;
 	opacity: 0.7;
 }
 
@@ -291,7 +342,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .instagram {
 	margin-bottom: 2em;
-	border: 1px solid @gray-lighter;
+	border: 1px solid $gray-lighter;
 	border-radius: 3px;
 }
 
@@ -306,7 +357,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .instagram h5 {
 	font-size: 0.9em;
 	font-weight: normal;
-	color: @gray-light;
+	color: $gray-light;
 	margin-bottom: 1em;
 }
 
@@ -318,7 +369,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote .share-links .fa, .article-title .share-links .fa, .end-of-article-social-sharing .share-links .fa, .subscription-offer .share-links .fa, .social-media .fa {
 	margin-left: 0.5em;
-	color: @gray;
+	color: $gray;
 	opacity: 0.7;
 }
 
@@ -344,7 +395,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 0.9em;
-	color: @gray-light;
+	color: $gray-light;
 	margin-top: 0;
 }
 
@@ -353,20 +404,20 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-quick-reads h6, .home-popular h6 {
-	color: @gray;
+	color: $gray;
 	line-height: 1.3em;
 }
 
 .home-quick-reads .row a div, .home-popular .row a div {
 	opacity: 1;
 	transition: .3s ease;
-	.transition-fix;
+	@include transition-fix;
 }
 
 .home-quick-reads .row a div:hover, .home-popular .row a div:hover {
 	opacity: 0.8;
 	transition: .3s ease;
-	.transition-fix;
+	@include transition-fix;
 }
 
 .latest-issue-categories ul {
@@ -381,8 +432,14 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: 0.5em;
 }
 
+@mixin editors-photo {
+	float: right;
+	margin: 0px 0px 10px 10px;
+	border-radius: 5px;
+}
+
 .home-editors-photo-container {
-	.editors-photo;
+	@include editors-photo;
 	width: 100px;
 	height: 100px;
 	overflow: hidden;
@@ -390,7 +447,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-editors-photo {
-	.editors-photo;
+	@include editors-photo;
 	margin-top: -10px;
 }
 
@@ -402,7 +459,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	text-align: center;
 	padding: 1.7em 1.7em 2em 1.7em;
 	border-radius: 2px;
-	.gradient-home-latest-issue;
+	@include gradient-home-latest-issue;
 }
 
 .home-latest-cover {
@@ -415,7 +472,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 // Past home styling
 
 .hero-unit {
-	background-color: @gray-lighter;
+	background-color: $gray-lighter;
 	padding: 1.5em 2em;
 	border-radius: 3px;
 }
@@ -451,16 +508,16 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-bottom: 1em;
 }
 
-@homeCoverListMargin: 7px;
+$homeCoverListMargin: 7px;
 
 .home-cover-list {
-	margin: 20px -@homeCoverListMargin 20px -@homeCoverListMargin;
+	margin: 20px -$homeCoverListMargin 20px -$homeCoverListMargin;
 }
 
 .home-cover-list img {
-	margin-left: @homeCoverListMargin;
-	margin-right: @homeCoverListMargin;
-	margin-bottom: (@homeCoverListMargin * 2) + 3;
+	margin-left: $homeCoverListMargin;
+	margin-right: $homeCoverListMargin;
+	margin-bottom: ($homeCoverListMargin * 2) + 3;
 	border-radius: 2px;
 }
 
@@ -472,8 +529,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	margin-top: 1em;
 	margin-bottom: 1em;
 	border-radius: 2px;
-	background-color: @boxHomeBackgroundColour;
-	.gradient-gray-darker;
+	background-color: $boxHomeBackgroundColour;
+	@include gradient-gray-darker;
 }
 
 .home-keynote img {
@@ -481,17 +538,17 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	// margin-bottom: 1em;
 	transition: .3s ease;
 	border-radius: 2px 2px 0px 0px;
-	.transition-fix;
+	@include transition-fix;
 }
 
 .home-keynote img:hover {
 	opacity: 0.8;
 	transition: .3s ease;
-	.transition-fix;
+	@include transition-fix;
 }
 
 .home-keynote h3 {
-	color: @gray-light;
+	color: $gray-light;
 	font-size: 1.3em;
 	line-height: 1.4em;
 	margin-bottom: 0;
@@ -503,7 +560,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-keynote h5 {
-	color: @gray-light;
+	color: $gray-light;
 	font-weight: normal;
 }
 
@@ -550,18 +607,18 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .breadcrumb {
-	font-family: @headings-font-family;
+	font-family: $headings-font-family;
 	background-image: none;
 	background-color: transparent;
 	padding: 0px;
 	margin-right: 5px;
 	border: none;
 	box-shadow: none;
-	color: @gray-light;
+	color: $gray-light;
 }
 
 .breadcrumb a {
-	color: @gray;
+	color: $gray;
 }
 
 .breadcrumb .label {
@@ -571,7 +628,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .breadcrumb .label:hover {
 	color: #000;
-	background-color: @footerColour;
+	background-color: $footerColour;
 	text-shadow:none;
 }
 
@@ -587,11 +644,11 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	font-size: 1em;
 	font-weight: normal;
 	line-height: 1.3em;
-	color: @gray;
+	color: $gray;
 }
 
 .page-header img {
-	.pull-right;
+	@include pull-right;
 	margin-top: -40px;
 }
 
@@ -608,8 +665,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .footer {
-	color: @gray-dark;
-	background-color: @footerColour;
+	color: $gray-dark;
+	background-color: $footerColour;
 	margin: 0 -53px -53px -53px;
 	padding: 2em;
 	text-align: center;
@@ -617,18 +674,19 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .footer .brand {
-	.navbar .brand;
-	color: @gray-dark;
+	// @include navbar;
+	// @include brand;
+	color: $gray-dark;
 	margin-top: -0.5em;
 }
 
 .footer a {
-	color: @gray;
+	color: $gray;
 	text-decoration: underline;
 }
 
 .footer a:hover {
-	color: @niRed;
+	color: $niRed;
 }
 
 .footer h5 {
@@ -655,8 +713,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-donate .btn:hover {
 	background-color: rgba(255, 255, 255, 0.3);
-	color: @niRed;
-	border-color: @niRed;
+	color: $niRed;
+	border-color: $niRed;
 }
 
 // Issues listed as a tables
@@ -679,7 +737,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .purchase-issue h4 {
 	font-size: 1em;
 	font-weight: normal;
-	color: @gray-light;
+	color: $gray-light;
 	margin-top: -10px;
 }
 
@@ -691,13 +749,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .favourited-date, .issue-purchase-date {
 	margin: -1.5em 1.5em 2em 1.5em;
-	color: @gray-light;
+	color: $gray-light;
 }
 
 // Marketing box styling
 
 .marketing-subscribe {
-	.box;
+	@include box;
 	float: right;
 	margin-top: -350px;
 	width: 30%;
@@ -711,7 +769,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .marketing-subscribe h4 {
 	margin-top: 8px;
-	color: @gray;
+	color: $gray;
 }
 
 // Remove the 220px width on select form items & text inputs
@@ -777,53 +835,53 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 
 // Shadow
 
-@shadowColour: #999999;
-@shadowSizeNormal: 0px 2px 5px;
-@shadowSizeSmall: 0px 1px 2px;
-@shadowSizeHover: 0px 4px 7px;
-@shadowSizeActive: 0px 0px 7px;
+$shadowColour: #999999;
+$shadowSizeNormal: 0px 2px 5px;
+$shadowSizeSmall: 0px 1px 2px;
+$shadowSizeHover: 0px 4px 7px;
+$shadowSizeActive: 0px 0px 7px;
 
-.shadow {
-	-moz-box-shadow: @shadowSizeNormal @shadowColour;
-	-webkit-box-shadow: @shadowSizeNormal @shadowColour;
-	box-shadow: @shadowSizeNormal @shadowColour;
+@mixin shadow {
+	-moz-box-shadow: $shadowSizeNormal $shadowColour;
+	-webkit-box-shadow: $shadowSizeNormal $shadowColour;
+	box-shadow: $shadowSizeNormal $shadowColour;
 }
 
 a:hover .shadow {
 	position: relative;
 	top: -1px;
-	-moz-box-shadow: @shadowSizeHover @shadowColour;
-	-webkit-box-shadow: @shadowSizeHover @shadowColour;
-	box-shadow: @shadowSizeHover @shadowColour;
+	-moz-box-shadow: $shadowSizeHover $shadowColour;
+	-webkit-box-shadow: $shadowSizeHover $shadowColour;
+	box-shadow: $shadowSizeHover $shadowColour;
 }
 
 a:active .shadow {
 	position: relative;
 	top: 0px;
-	-moz-box-shadow: @shadowSizeActive @shadowColour;
-	-webkit-box-shadow: @shadowSizeActive @shadowColour;
-	box-shadow: @shadowSizeActive @shadowColour;
+	-moz-box-shadow: $shadowSizeActive $shadowColour;
+	-webkit-box-shadow: $shadowSizeActive $shadowColour;
+	box-shadow: $shadowSizeActive $shadowColour;
 }
 
 .shadow-light {
-	@shadowColour: #333333;
-	@shadowSizeNormal: 0px 1px 3px;
-	.shadow;
+	$shadowColour: #333333;
+	$shadowSizeNormal: 0px 1px 3px;
+	@include shadow;
 }
 
-.shadow-small {
-	-moz-box-shadow: @shadowSizeSmall @shadowColour;
-	-webkit-box-shadow: @shadowSizeSmall @shadowColour;
-	box-shadow: @shadowSizeSmall @shadowColour;
+@mixin shadow-small {
+	-moz-box-shadow: $shadowSizeSmall $shadowColour;
+	-webkit-box-shadow: $shadowSizeSmall $shadowColour;
+	box-shadow: $shadowSizeSmall $shadowColour;
 }
 
 // Edit buttons
 
-.edit-issue-buttons {
+@mixin edit-issue-buttons {
 	float: right;
 	border-radius: 5px;
-	border: 1px dashed @gray-light;
-	background-color: @gray-lighter;
+	border: 1px dashed $gray-light;
+	background-color: $gray-lighter;
 	padding: 10px;
 	width: intrinsic;
 	position: relative;
@@ -832,7 +890,7 @@ a:active .shadow {
 }
 
 .edit-article-buttons {
-	.edit-issue-buttons;
+	@include edit-issue-buttons;
 	margin-left: 10px;
 }
 
@@ -877,24 +935,24 @@ a:active .shadow {
 	// height: 30px;
 }
 
-@issueCoverListMargin: 9px;
+$issueCoverListMargin: 9px;
 
 .issue-cover-list {
-	margin: 0px -@issueCoverListMargin 20px -@issueCoverListMargin;
+	margin: 0px -$issueCoverListMargin 20px -$issueCoverListMargin;
 }
 
 .issue-cover-list .issue-information {
 	float: left;
-	margin-left: @issueCoverListMargin;
-	margin-right: @issueCoverListMargin;
-	margin-bottom: (@issueCoverListMargin * 2) + 3;
+	margin-left: $issueCoverListMargin;
+	margin-right: $issueCoverListMargin;
+	margin-bottom: ($issueCoverListMargin * 2) + 3;
 	border-radius: 2px;
-	background-color: @boxHomeBackgroundColour;
-	color: @gray-light;
+	background-color: $boxHomeBackgroundColour;
+	color: $gray-light;
 }
 
 .issue-information:hover {
-	background-color: @gray-light;
+	background-color: $gray-light;
 	color: white;
 	opacity: 0.9;
 }
@@ -920,16 +978,18 @@ a:active .shadow {
 	margin-top: 0px;
 }
 
+$issueTitleH2FontSize: 1.2em;
+
 .issue-list-title h2 {
-	font-size: @issueTitleH2FontSize;
-	line-height: @issueTitleH2FontSize;
+	font-size: $issueTitleH2FontSize;
+	line-height: $issueTitleH2FontSize;
 	font-weight: normal;
-	color: @gray-light;
+	color: $gray-light;
 }
 
 .issue-top-box {
 	// gradient
-	.gradient-gray;
+	@include gradient-gray;
 
 	padding: 1em 1em 1em 0;
 	margin: 0 0 2em 0;
@@ -948,14 +1008,12 @@ a:active .shadow {
 	margin-top: 0px;
 }
 
-@issueTitleH2FontSize: 1.2em;
-
 .issue-title h2 {
-	font-size: @issueTitleH2FontSize;
-	line-height: @issueTitleH2FontSize;
+	font-size: $issueTitleH2FontSize;
+	line-height: $issueTitleH2FontSize;
 	margin-top: 0.5em;
 	font-weight: normal;
-	color: @gray-light;
+	color: $gray-light;
 }
 
 .page-header .ios-issue-page, .ios-issue-page {
@@ -981,7 +1039,7 @@ a:active .shadow {
 }
 
 .articles-not-categorised-for-display h3 {
-	color: @niRed;
+	color: $niRed;
 	margin-top: 0px;
 }
 
@@ -990,15 +1048,15 @@ a:active .shadow {
 }
 
 .issue-unpublished {
-	-moz-box-shadow: @shadowSizeNormal @niRed;
-	-webkit-box-shadow: @shadowSizeNormal @niRed;
-	box-shadow: @shadowSizeNormal @niRed;
+	-moz-box-shadow: $shadowSizeNormal $niRed;
+	-webkit-box-shadow: $shadowSizeNormal $niRed;
+	box-shadow: $shadowSizeNormal $niRed;
 }
 
 a:hover .issue-unpublished, a:active .issue-unpublished {
-	-moz-box-shadow: @shadowSizeHover @niRed;
-	-webkit-box-shadow: @shadowSizeHover @niRed;
-	box-shadow: @shadowSizeHover @niRed;
+	-moz-box-shadow: $shadowSizeHover $niRed;
+	-webkit-box-shadow: $shadowSizeHover $niRed;
+	box-shadow: $shadowSizeHover $niRed;
 }
 
 // Issue.articles styling
@@ -1007,7 +1065,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	border-radius: 5px;
 	min-height: 200px;
 	padding: 1em;
-	background-color: @niGreen;
+	background-color: $niGreen;
 }
 
 .keynote h5 {
@@ -1044,7 +1102,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-sections + .issue-sections {
-	border-top: 1px solid @gray-lighter;
+	border-top: 1px solid $gray-lighter;
 }
 
 .issue-sections h3 {
@@ -1093,14 +1151,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 .editors-letter h3, .issue-articles-container h3 {
 	margin-top: 0px;
 	padding-top: 0px;
-	color: @gray-light;
+	color: $gray-light;
 	line-height: 1em;
-}
-
-.editors-photo {
-	float: right;
-	margin: 0px 0px 10px 10px;
-	border-radius: 5px;
 }
 
 // Article styling
@@ -1108,7 +1160,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 mark, .mark {
 	/* Highlighted search results */
 	background-color: transparent;
-	color: @niRed;
+	color: $niRed;
 	padding: inherit;
 }
 
@@ -1127,12 +1179,12 @@ mark, .mark {
 	// font-weight: 600;
 	font-size: 1.2em;
 	line-height: 1.3em;
-	color: @gray-light;
+	color: $gray-light;
 	/* padding-bottom: 0.75em; */
 }
 
 .article-title p {
-	color: @gray-light;
+	color: $gray-light;
 }
 
 .article-title .issue-cover {
@@ -1142,7 +1194,7 @@ mark, .mark {
 }
 
 .article-title .issue-cover:hover {
-	.shadow-small;
+	@include shadow-small;
 	position: relative;
 	top: -1px;
 }
@@ -1153,7 +1205,7 @@ mark, .mark {
 
 .most-shared h3 {
 	margin-bottom: 0;
-	color: @gray-dark;
+	color: $gray-dark;
 }
 
 .most-shared h4 {
@@ -1172,7 +1224,7 @@ mark, .mark {
 }
 
 .articles_as_table p {
-	color: @gray;
+	color: $gray;
 }
 
 .articles_as_table th:nth-child(1), .articles_as_table td:nth-child(1) {
@@ -1304,7 +1356,7 @@ mark, .mark {
 }
 
 .subscription-advert:hover {
-	background-color: @niRed;
+	background-color: $niRed;
 }
 
 .subscription-advert:hover p {
@@ -1373,7 +1425,7 @@ mark, .mark {
 
 .article-image-top-right {
 	width: 300px;
-	.pull-right;
+	@include pull-right;
 	margin-left: 20px;
 }
 
@@ -1387,7 +1439,7 @@ mark, .mark {
 	max-height: 400px;
 	margin: 0 auto 0 auto;
 	overflow: hidden;
-	.shadow;
+	@include shadow;
 	margin-bottom: 1em;
 	background-position-x: 25%;
 	background-position-y: 50%;
@@ -1402,21 +1454,21 @@ mark, .mark {
 }
 
 .letters-box {
-	.box;
+	@include box;
 }
 
 .article-body {
 /*
-	font-family: @serifFontFamily;
+	font-family: $serifFontFamily;
 	font-size: 21px;
 	line-height: 32px;
 */
-	font-size: @articleFontSize;
-	line-height: @articleLineHeight;
+	font-size: $articleFontSize;
+	line-height: $articleLineHeight;
 }
 
 .article-body p {
-	margin-bottom: @articleParagraphMargin;
+	margin-bottom: $articleParagraphMargin;
 }
 
 .article-body h3 {
@@ -1424,7 +1476,7 @@ mark, .mark {
 }
 
 .article-body-letters h3 {
-	color: @gray;
+	color: $gray;
 }
 
 .article-body ul li {
@@ -1446,24 +1498,24 @@ mark, .mark {
 	margin-top: 1em;
 }
 
-.article-image {
+@mixin article-image {
 	float: right;
 	max-width: 340px;
 	margin: 0px 0px 2em 2em;
 }
 
 .article-image img {
-	.shadow;
+	@include shadow;
 	margin-bottom: 1em;
 }
 
 .home-image {
-	.article-image;
+	@include article-image;
 	margin: 0px 0px 0px 2em;
 }
 
 .home-image img {
-	.shadow;
+	@include shadow;
 }
 
 .article-image.article-image-small {
@@ -1484,7 +1536,7 @@ mark, .mark {
 	max-width: 280px;
 	font-size: 0.9em;
 	line-height: 1.6em;
-	color: @gray;
+	color: $gray;
 }
 
 .new-image-caption h4, .new-image-caption h3 {
@@ -1496,7 +1548,7 @@ mark, .mark {
 	font-size: 0.9em;
 	line-height: 1.6em;
 	margin-top: -1px;
-	color: @gray-light;
+	color: $gray-light;
 	max-width: 280px;
 }
 
@@ -1521,7 +1573,7 @@ mark, .mark {
 }
 
 .article-image-cartoon img {
-	.shadow;
+	@include shadow;
 	margin-bottom: 0.5em;
 }
 
@@ -1534,7 +1586,7 @@ mark, .mark {
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 	border-right-style: none;
 	border-left-style: none;
-	color: @niRed;
+	color: $niRed;
 	width: 30%;
 	float: right;
 	text-align: right;
@@ -1560,66 +1612,22 @@ blockquote.pull-left {
 
 blockquote.block-quote {
 	font-size: 1em;
-	color: @gray;
+	color: $gray;
 }
 
 blockquote > .attribution {
 	font-size: 0.9em;
-	color: @gray-light;
+	color: $gray-light;
 }
 
 .footnotes {
 	padding: 1em;
 	font-size: 0.9em;
-	color: @gray;
-}
-
-.gradient {
-	background: #ffe0c2;
-	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
-	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
-}
-
-.gradient-gray {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-}
-
-.gradient-gray-darker {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
-}
-
-.gradient-home-latest-issue {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	background: -webkit-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	background: linear-gradient(to bottom, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@boxHomeBackgroundColourLight, endColorstr=@boxHomeBackgroundColour,GradientType=0 );
-}
-
-.no-gradient {
-	background-color: transparent;
-	background: none;
-}
-
-.box {
-	background-color: @boxBackgroundColour;
-	padding: 1.5em 2em;
-	margin: 2em 0 2em 0;
-	border-radius: 5px;
+	color: $gray;
 }
 
 .factbox {
-	.box;
+	@include box;
 	width: 30%;
 	margin: 0;
 }
@@ -1648,7 +1656,7 @@ blockquote > .attribution {
 
 .author-note {
 	font-size: 0.9em;
-	color: @gray;
+	color: $gray;
 }
 
 .article-favourite {
@@ -1665,7 +1673,7 @@ blockquote > .attribution {
 }
 
 .issue-title .article-favourite {
-	color: @gray;
+	color: $gray;
 	opacity: 0.6;
 	// font-size: 0.8em;
 }
@@ -1683,7 +1691,7 @@ blockquote > .attribution {
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
-	color: @gray-light;
+	color: $gray-light;
 	margin-top: -7px;
 	margin-bottom: 20px;
 }
@@ -1751,7 +1759,7 @@ ul.ui-autocomplete {
 }
 
 .article-related-by-theme h4 {
-	color: @gray;
+	color: $gray;
 }
 
 #generate_from_source {
@@ -1759,39 +1767,39 @@ ul.ui-autocomplete {
 }
 
 .red {
-	color: @niRed;
+	color: $niRed;
 }
 
 
 // PAGE styling (About, Help etc)
 
 .help-list {
-	.box;
-	.gradient-gray;
+	@include box;
+	@include gradient-gray;
 }
 
 .help-body img {
 	float: right;
-	.shadow;
+	@include shadow;
 	margin: 0px 0px 1em 1em;
 }
 
 .quick-help {
 	float:right;
-	.box;
+	@include box;
 	margin-top: 0px;
 }
 
 .subscription-offer {
 	border-radius: 5px;
 	padding: 1em;
-	margin-bottom: @grid-gutter-width;
-	background-color: @gray-lighter;
-	.gradient-gray;
+	margin-bottom: $grid-gutter-width;
+	background-color: $gray-lighter;
+	@include gradient-gray;
 }
 
 .subscription-offer .label {
-	background-color: @gray;
+	background-color: $gray;
 	margin-left: -1.35em;
 	border-radius: 0 .25em .25em 0;
 	text-transform: uppercase;
@@ -1896,7 +1904,7 @@ ul.ui-autocomplete {
 	float: right;
 	margin: 0 0 1em 2em;
 	max-width: 30%;
-	.shadow;
+	@include shadow;
 }
 
 .special-offer {
@@ -1951,7 +1959,7 @@ ul.ui-autocomplete {
 
 #error .brand {
 	font-family: "Bodega";
-	color: @niRed;
+	color: $niRed;
 	font-size: 26px;
 }
 
@@ -1966,7 +1974,7 @@ ul.ui-autocomplete {
 .admin-settings label {
 	font-size: 1.3em;
 	font-weight: bold;
-	color: @gray;
+	color: $gray;
 	padding-bottom: 1em;
 	padding-right: 1em;
 }
@@ -2032,12 +2040,12 @@ ul.ui-autocomplete {
 	}
 
 	.sign-in:after {
-		.font-awesome-family;
+		@include font-awesome-family;
 		content: "\f090";
 	}
 
 	.sign-up:after {
-		.font-awesome-family;
+		@include font-awesome-family;
 		content: "\f055";
 	}
 }
@@ -2240,7 +2248,7 @@ ul.ui-autocomplete {
 	.container {
 		// .shadow;
 		border-radius: 3px;
-		border: 1px solid @gray-lighter;
+		border: 1px solid $gray-lighter;
 		margin: -60px auto 4em auto;
 		padding: 60px 4em 4em 4em;
 		max-width: 1050px;
