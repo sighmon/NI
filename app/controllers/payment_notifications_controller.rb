@@ -13,7 +13,7 @@ class PaymentNotificationsController < ApplicationController
 		# TODO: using activemerchant to validate the IPN: https://go.developer.ebay.com/developers/community/blogs/saranyan/paypal-ipn-using-rails-3.1-and-active-merchant
 
 		PaymentNotification.create!(:params => params, :user_id => params[:rp_invoice_id], :status => params[:payment_status], :transaction_id => params[:txn_id], :transaction_type => params[:txn_type] )
-		render :nothing => true
+		render json: {success: true}
 	end
 
 	private
