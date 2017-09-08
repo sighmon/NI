@@ -110,12 +110,17 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
+    autoprefixer-rails (7.1.4)
+      execjs
     bcrypt (3.1.11)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     brakeman (3.7.2)
     builder (3.2.3)
     bundler-audit (0.6.0)
@@ -142,7 +147,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    commonjs (0.2.7)
     concurrent-ruby (1.0.5)
     curb (0.9.4)
     daemons (1.2.4)
@@ -430,13 +434,6 @@ GEM
     kgio (2.11.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    less (2.6.0)
-      commonjs (~> 0.2.7)
-    less-rails (2.8.0)
-      actionpack (>= 4.0)
-      less (~> 2.6.0)
-      sprockets (> 2, < 4)
-      tilt
     libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -644,11 +641,6 @@ GEM
     tilt (2.0.8)
     timecop (0.9.1)
     trollop (2.1.2)
-    twitter-bootstrap-rails (4.0.0)
-      actionpack (~> 5.0, >= 5.0.1)
-      execjs (~> 2.7)
-      less-rails (~> 2.8, >= 2.8.0)
-      railties (~> 5.0, >= 5.0.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -687,6 +679,7 @@ DEPENDENCIES
   asset_sync
   better_errors (= 1.1.0)
   binding_of_caller
+  bootstrap-sass
   brakeman
   bundler-audit
   byebug
@@ -721,7 +714,6 @@ DEPENDENCIES
   kaminari
   kaminari-bootstrap
   kgio
-  less-rails
   libv8
   memcachier
   meta-tags
@@ -760,7 +752,6 @@ DEPENDENCIES
   therubyracer
   thin
   timecop
-  twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   unicorn
   uri-js-rails

@@ -194,8 +194,9 @@ group :test do
   gem 'rails-controller-testing'
 end
 
-gem 'twitter-bootstrap-rails'#, '2.1.6'
-gem 'less-rails'
+# gem 'twitter-bootstrap-rails'#, '2.1.6'
+gem 'bootstrap-sass'
+# gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'therubyracer'
 gem 'font-awesome-rails'
