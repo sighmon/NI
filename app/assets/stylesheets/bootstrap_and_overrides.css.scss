@@ -220,10 +220,10 @@ $grid-gutter-width: 2em;
 
 a:visited {
 	// color: #428bca;
-	color: #316796;
+	// color: #316796;
 }
 
-a.btn:visited { color: #333; }
+// a.btn:visited { color: #333; }
 
 a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
 
@@ -236,7 +236,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar, .navbar-search .search-query {
 	font-family: $headings-font-family;
-	font-size: 14px;
+	// font-size: 14px;
 	line-height: 20px;
 }
 
@@ -263,6 +263,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar-right {
 	margin-right: 0;
+}
+
+.nav-item {
+	// padding-top: 8px;
 }
 
 .dropdown-menu > li > form {
@@ -657,7 +661,7 @@ $homeCoverListMargin: 7px;
 .footer {
 	color: $gray-dark;
 	background-color: $footerColour;
-	margin: 0 -53px -53px -53px;
+	margin: 0 -16px -65px -16px;
 	padding: 2em;
 	text-align: center;
 	border-radius: 0 0 3px 3px;
@@ -2163,7 +2167,7 @@ ul.ui-autocomplete {
 		// .shadow;
 		border-radius: 3px;
 		border: 1px solid $gray-lighter;
-		margin: -60px auto 4em auto;
+		margin: -50px auto 4em auto;
 		padding: 60px 4em 4em 4em;
 		max-width: 1050px;
 	}
