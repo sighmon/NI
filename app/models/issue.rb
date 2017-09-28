@@ -232,7 +232,10 @@ class Issue < ActiveRecord::Base
     )
 
     # Request contributor information.
-    article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + article_json["field_contributor"].first["id"].to_s + ".json", token)
+    if article_json["field_contributor"]
+      article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + article_json["field_contributor"].first.try(:[],"id").to_s + ".json", token)  
+    end
+    
     if article_info_response_from_newint_org
       article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
       # Write name to article: article_info_json_from_newint_org["name"]
