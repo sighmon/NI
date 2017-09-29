@@ -12,7 +12,7 @@ class Category < ActiveRecord::Base
     c = nil
     if Category.where(:name => element).empty?
       # Try a looser search
-      loose_search = Category.where("name ilike ?", "%#{element}%")
+      loose_search = Category.where("name ilike ?", "%#{element.parameterize}%")
       if not loose_search.empty?
         # Match the first loose category, user will check if it's suitable
         c = loose_search.first
