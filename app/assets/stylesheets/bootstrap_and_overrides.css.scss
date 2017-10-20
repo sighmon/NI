@@ -1,7 +1,7 @@
 // @import "bootstrap";
 body { 
 	padding-top: 60px;
-	background-color: #fdfdfd;
+	background-color: rgb(25, 19, 33) !important;
 }
 // @import "twitter/bootstrap/responsive";
 // @import "twitter/bootstrap/variables.scss";
@@ -137,6 +137,10 @@ $navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 
 $navbarBrandColor:                $navbarLinkColor;
 
+.bg-menu-ni {
+	background-color: rgb(25, 19, 33) !important;
+}
+
 @mixin gradient {
 	background: #ffe0c2;
 	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
@@ -180,7 +184,6 @@ $navbarBrandColor:                $navbarLinkColor;
 	margin: 2em 0 2em 0;
 	border-radius: 5px;
 }
-
 
 
 //==============
@@ -230,6 +233,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .no-padding {
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.container {
+	background-color: rgb(255, 255, 255);
 }
 
 // Top Nav Bar
@@ -2169,7 +2176,11 @@ ul.ui-autocomplete {
 		border: 1px solid $gray-lighter;
 		margin: -50px auto 4em auto;
 		padding: 60px 4em 4em 4em;
-		max-width: 1050px;
+		// max-width: 1050px !important;
+		max-width: 854px !important;
+	}
+	.navbar {
+		padding: 0.5rem 18rem !important;
 	}
 	.navbar-inner {
 		// height: 100px;
