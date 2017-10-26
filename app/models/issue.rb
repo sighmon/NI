@@ -225,7 +225,7 @@ class Issue < ActiveRecord::Base
     article_created = self.articles.where(story_id: article_json["nid"]).first_or_create
     article_created.update_attributes(
       title: article_json["title"],
-      teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ") unless article_json["field_deck"].empty?),
+      teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ").try(:gsub,/<p>/, "").try(:gsub,/<\/p>/, "") unless article_json["field_deck"].empty?),
       publication: Time.at(article_json["created"].to_i).to_datetime,
       body: (article_json["body"]["value"].try(:gsub,/\n/, " ") unless article_json["body"].empty?),
       unpublished: options[:unpublished]
