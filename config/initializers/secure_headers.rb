@@ -29,7 +29,7 @@ SecureHeaders::Configuration.default do |config|
     # form_action: %w('self' github.com),
     form_action: %w('self' syndication.twitter.com *.paypal.com),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
