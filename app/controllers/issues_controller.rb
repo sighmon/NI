@@ -191,9 +191,9 @@ class IssuesController < ApplicationController
     #sections_of_articles_definitions
     #moved to the model
 
-    # Limit showing just last five web exclusives & two blogs unless you're an admin
+    # Limit showing just last six web exclusives & two blogs unless you're an admin
     @blogs = @issue.blogs.last(2)
-    @web_exclusives = @issue.web_exclusive.last(5)
+    @web_exclusives = @issue.web_exclusive.last(6)
     if current_user and current_user.admin?
       @blogs = @issue.blogs
       @web_exclusives = @issue.web_exclusive
