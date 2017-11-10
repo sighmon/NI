@@ -17,7 +17,7 @@
   </div>
 <% end %>
 
-<div class="page-header">
+<div class="page-header<% if @page.permalink == "four-good-reasons-to-subscribe" %> page-header-center<% end %>">
   <h1><%= @page.title %></h1>
   <% if @page.permalink == "subscribe" %>
     <%= retina_image_tag 'paypal.png', :alt => 'Secure payments by PayPal', :title => 'Secure payments by PayPal', :size => "200x51", :class => 'subscribe-image' %>
@@ -44,6 +44,24 @@
   <% end %>
   <% if @page.permalink == "seven-good-reasons-to-subscribe" %>
     <%= retina_image_tag(@current_issue.cover_url(:thumb).to_s, :alt => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :title => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :size => "141x200", :class => 'subscribe-current-issue') %>
+  <% end %>
+  <% if @page.permalink == "four-good-reasons-to-subscribe" %>
+    <div class="row"> 
+      <div class="col-md-6"> 
+        <div class="subscription-offer-two overlapping-covers">
+          <% Issue.where(published: true).last(3).each do |issue| %>
+            <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :class => "shadow"), issue_path(issue) %>
+          <% end %>
+        </div> 
+      </div> 
+
+      <div class="col-md-6"> 
+        <div class="subscription-offer-two subscription-buttons"> 
+          <p><a href="/subscriptions/new/express?utf8=✓&duration=12&autodebit=1&commit=Pay+with+PayPal+Express" class="btn btn-success btn-lg"><strong>$<%= cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true)) %></strong> - digital subscription*</a> </p>
+          <p><a href="/subscriptions/new/express?utf8=✓&duration=12&autodebit=1&paper=1&commit=Pay+with+PayPal+Express" class="btn btn-success btn-lg"><strong>$<%= cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true, paper: true)) %></strong> - print &amp; digital subscription*</a> </p>
+        </div> 
+      </div>
+    </div>
   <% end %>
   <%= simple_format @page.body %>
   <% if not @no_tracking %>

@@ -597,6 +597,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	line-height: 2em;
 }
 
+.page-header-center {
+	text-align: center;
+}
+
 .footer {
 	color: @gray-dark;
 	background-color: @footerColour;
@@ -1841,18 +1845,45 @@ ul.ui-autocomplete {
 	font-size: 1.1em;
 }
 
-.overlapping-covers > img {
+.subscription-offer-two .fa-leaf {
+	color: rgb(136,193,0);
+}
+
+.subscription-offer-two .fa-unlock {
+	color: rgb(255,138,0);
+}
+
+.subscription-offer-two .fa-trophy {
+	color: rgb(250,190,40);
+}
+
+.subscription-offer-two .fa-thumbs-up {
+	color: rgb(38,86,157);
+}
+
+.subscription-offer-two h3 + p {
+	opacity: 0.8;
+}
+
+.subscription-offer-two.subscription-buttons {
+	padding-top: 4em;
+}
+
+.overlapping-covers a > img {
 	position: relative;
-	left: 5%;
-	width: 30%;
+	// left: 5%;
+	width: 28%;
+	margin: 0 5px;
 }
 
-.overlapping-covers img + img {
-	left: -1%;
+.overlapping-covers a img + img {
+	// left: -1%;
+	// top: 5px;
 }
 
-.overlapping-covers img + img + img {
-	left: -7%;
+.overlapping-covers a img + img + img {
+	// left: -7%;
+	// top: 10px;
 }
 
 .subscribe-current-issue {
@@ -2053,6 +2084,16 @@ ul.ui-autocomplete {
 	}
 	.issue-article.keynote .issue-cover {
 		width: 45%;
+	}
+	.subscription-offer-two {
+		text-align: center;
+		padding: 1em 1em;
+	}
+	.overlapping-covers a > img {
+		width: 25%;
+	}
+	.subscription-offer-two.subscription-buttons {
+		padding: 1em 0em;
 	}
 }
  
