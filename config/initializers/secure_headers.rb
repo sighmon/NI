@@ -23,17 +23,17 @@ SecureHeaders::Configuration.default do |config|
     default_src: %w(https: 'self'),
     base_uri: %w('self'),
     block_all_mixed_content: true, # see http://www.w3.org/TR/mixed-content/
-    child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com *.youtube.com *.googletagmanager.com), # if child-src isn't supported, the value for frame-src will be set.
+    child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com), # if child-src isn't supported, the value for frame-src will be set.
     connect_src: %w('self' wss: *.google-analytics.com *.disqus.com),
     font_src: %W('self' data: *.gstatic.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # form_action: %w('self' github.com),
     form_action: %w('self' syndication.twitter.com *.paypal.com),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net public.tableau.com),
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
-    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})

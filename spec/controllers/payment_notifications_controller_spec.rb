@@ -3,7 +3,7 @@ require 'rails_helper'
 describe PaymentNotificationsController, :type => :controller do
   context "with a recurring subscribed user" do
     let(:user) do
-      FactoryGirl.create(:subscription, paypal_profile_id: "RECURRING_PAYMENT_ID").user
+      FactoryBot.create(:subscription, paypal_profile_id: "RECURRING_PAYMENT_ID").user
     end
 
     describe "PUT create" do
@@ -66,7 +66,7 @@ describe PaymentNotificationsController, :type => :controller do
  
   context "with an unsubscribed user" do
     let(:user) do
-      FactoryGirl.create(:user)      
+      FactoryBot.create(:user)      
     end    
 
     describe "PUT create" do

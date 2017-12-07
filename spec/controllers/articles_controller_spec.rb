@@ -13,13 +13,13 @@ describe ArticlesController, :type => :controller do
   context "as a subscriber" do
 
     before(:each) do
-      @user = FactoryGirl.create(:subscription).user
+      @user = FactoryBot.create(:subscription).user
       sign_in @user
     end
 
     context "given an article" do
 
-      let(:article) { FactoryGirl.create(:article) }
+      let(:article) { FactoryBot.create(:article) }
 
       let(:issue) { article.issue }
 
@@ -32,7 +32,7 @@ describe ArticlesController, :type => :controller do
 
     context "given an unpublished article" do
 
-      let(:article) { FactoryGirl.create(:article, unpublished: true) }
+      let(:article) { FactoryBot.create(:article, unpublished: true) }
 
       let(:issue) { article.issue }
 
@@ -50,7 +50,7 @@ describe ArticlesController, :type => :controller do
 
     describe "POST push notification" do
 
-      let(:article) { FactoryGirl.create(:article) }
+      let(:article) { FactoryBot.create(:article) }
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
@@ -65,7 +65,7 @@ describe ArticlesController, :type => :controller do
   context "as a non-subscriber" do
 
     before(:each) do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryBot.create(:user)
       sign_in @user
     end
 
@@ -73,7 +73,7 @@ describe ArticlesController, :type => :controller do
 
       context "given an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
         let(:issue) { article.issue }
 
@@ -88,7 +88,7 @@ describe ArticlesController, :type => :controller do
 
     describe "POST push notification" do
 
-      let(:article) { FactoryGirl.create(:article) }
+      let(:article) { FactoryBot.create(:article) }
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
@@ -106,7 +106,7 @@ describe ArticlesController, :type => :controller do
 
       context "given an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
         let(:issue) { article.issue }
 
@@ -123,7 +123,7 @@ describe ArticlesController, :type => :controller do
 
       context "given an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
         let(:issue) { article.issue }
 
@@ -140,7 +140,7 @@ describe ArticlesController, :type => :controller do
 
       context "given an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
         let(:issue) { article.issue }
 
@@ -157,9 +157,9 @@ describe ArticlesController, :type => :controller do
 
       context "with an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
-        let(:issue) { FactoryGirl.create(:published_issue) }
+        let(:issue) { FactoryBot.create(:published_issue) }
 
         it "can search the article" do
           article.issue_id = issue.id
@@ -187,7 +187,7 @@ describe ArticlesController, :type => :controller do
 
     describe "POST push notification" do
 
-      let(:article) { FactoryGirl.create(:article) }
+      let(:article) { FactoryBot.create(:article) }
       let(:issue) { article.issue }
 
       it "should not be able to send a push notification" do
@@ -203,15 +203,15 @@ describe ArticlesController, :type => :controller do
   context "as an admin" do
 
     before(:each) do
-      @user = FactoryGirl.create(:admin_user)
+      @user = FactoryBot.create(:admin_user)
       sign_in @user
-      @issue = FactoryGirl.create(:issue)
+      @issue = FactoryBot.create(:issue)
     end
 
     describe "GET show" do
       context "with an article" do
 
-        let(:article) { FactoryGirl.create(:article) }
+        let(:article) { FactoryBot.create(:article) }
 
         it "assigns the article" do
           get :show, params: {id: article.id, issue_id: article.issue.id}
@@ -225,7 +225,7 @@ describe ArticlesController, :type => :controller do
       context "with valid params" do
 
         before(:each) do
-          @article_attributes = FactoryGirl.attributes_for(:article,issue: @issue)
+          @article_attributes = FactoryBot.attributes_for(:article,issue: @issue)
         end
 
         it "creates a new article" do
@@ -237,7 +237,7 @@ describe ArticlesController, :type => :controller do
 
         context "with a new category" do
           before(:each) do
-            @new_category_attributes = FactoryGirl.attributes_for(:category)
+            @new_category_attributes = FactoryBot.attributes_for(:category)
           end
 
           it "creates an article with a new category" do
@@ -253,7 +253,7 @@ describe ArticlesController, :type => :controller do
 
         context "with an existing category" do
           before(:each) do
-            @category = Category.create(@category_attributes = FactoryGirl.attributes_for(:category))
+            @category = Category.create(@category_attributes = FactoryBot.attributes_for(:category))
           end
 
           it "creates an new article with the category" do
@@ -273,13 +273,13 @@ describe ArticlesController, :type => :controller do
       context "with an existing article" do
      
         before(:each) do
-          @article = FactoryGirl.create(:article)
+          @article = FactoryBot.create(:article)
         end
 
         context "and an existing category" do
            
           before(:each) do
-            @category_attributes = FactoryGirl.attributes_for(:category)
+            @category_attributes = FactoryBot.attributes_for(:category)
           end
 
           it "adds the category to the article" do
@@ -323,8 +323,8 @@ describe ArticlesController, :type => :controller do
           app.save!
         end
 
-        let(:article) { FactoryGirl.create(:article) }
-        let(:push_registration) { FactoryGirl.create(:push_registration) }
+        let(:article) { FactoryBot.create(:article) }
+        let(:push_registration) { FactoryBot.create(:push_registration) }
 
         it "should be able to send a push notification" do
           scheduled_test_time = DateTime.now

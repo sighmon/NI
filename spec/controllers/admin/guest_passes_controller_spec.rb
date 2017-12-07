@@ -12,7 +12,7 @@ describe Admin::GuestPassesController, :type => :controller do
 
     context "as an authorized user" do
       it "returns http success" do
-        sign_in FactoryGirl.create(:admin_user)
+        sign_in FactoryBot.create(:admin_user)
         get 'index'
         expect(response).to be_success
       end

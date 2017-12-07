@@ -42,6 +42,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+<<<<<<< HEAD
     CFPropertyList (2.3.5)
     actioncable (5.1.4)
       actionpack (= 5.1.4)
@@ -62,24 +63,63 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     actionview (5.1.4)
       activesupport (= 5.1.4)
+=======
+    CFPropertyList (2.3.6)
+    actionmailer (4.2.10)
+      actionpack (= 4.2.10)
+      actionview (= 4.2.10)
+      activejob (= 4.2.10)
+      mail (~> 2.5, >= 2.5.4)
+      rails-dom-testing (~> 1.0, >= 1.0.5)
+    actionpack (4.2.10)
+      actionview (= 4.2.10)
+      activesupport (= 4.2.10)
+      rack (~> 1.6)
+      rack-test (~> 0.6.2)
+      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    actionpack-action_caching (1.2.0)
+      actionpack (>= 4.0.0, < 6)
+    actionpack-page_caching (1.1.0)
+      actionpack (>= 4.0.0, < 6)
+    actionview (4.2.10)
+      activesupport (= 4.2.10)
+>>>>>>> master
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+<<<<<<< HEAD
     activejob (5.1.4)
       activesupport (= 5.1.4)
       globalid (>= 0.3.6)
     activemerchant (1.73.0)
+=======
+    activejob (4.2.10)
+      activesupport (= 4.2.10)
+      globalid (>= 0.3.0)
+    activemerchant (1.75.0)
+>>>>>>> master
       activesupport (>= 3.2.14, < 6.x)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
       nokogiri (~> 1.4)
+<<<<<<< HEAD
     activemodel (5.1.4)
       activesupport (= 5.1.4)
     activerecord (5.1.4)
       activemodel (= 5.1.4)
       activesupport (= 5.1.4)
       arel (~> 8.0)
+=======
+    activemodel (4.2.10)
+      activesupport (= 4.2.10)
+      builder (~> 3.1)
+    activerecord (4.2.10)
+      activemodel (= 4.2.10)
+      activesupport (= 4.2.10)
+      arel (~> 6.0)
+>>>>>>> master
     activerecord-deprecated_finders (1.0.4)
     activerecord-session_store (1.1.0)
       actionpack (>= 4.0, < 5.2)
@@ -87,12 +127,20 @@ GEM
       multi_json (~> 1.11, >= 1.11.2)
       rack (>= 1.5.2, < 3)
       railties (>= 4.0, < 5.2)
+<<<<<<< HEAD
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+=======
+    activesupport (4.2.10)
+>>>>>>> master
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+<<<<<<< HEAD
     acts_as_list (0.9.9)
+=======
+    acts_as_list (0.9.10)
+>>>>>>> master
       activerecord (>= 3.0)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
@@ -100,8 +148,13 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     ansi (1.5.0)
+<<<<<<< HEAD
     arel (8.0.0)
     asset_sync (2.2.0)
+=======
+    arel (6.0.4)
+    asset_sync (2.3.0)
+>>>>>>> master
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -116,20 +169,28 @@ GEM
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
-    binding_of_caller (0.7.2)
+    binding_of_caller (0.7.3)
       debug_inspector (>= 0.0.1)
+<<<<<<< HEAD
     bootstrap (4.0.0.beta2)
       autoprefixer-rails (>= 6.0.3)
       popper_js (>= 1.12.3, < 2)
       sass (>= 3.5.2)
+=======
+>>>>>>> master
     brakeman (4.0.1)
     builder (3.2.3)
     bundler-audit (0.6.0)
       bundler (~> 1.2)
       thor (~> 0.18)
     byebug (9.1.0)
+<<<<<<< HEAD
     cancancan (2.0.0)
     capybara (2.15.4)
+=======
+    cancancan (2.1.2)
+    capybara (2.16.1)
+>>>>>>> master
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
@@ -149,11 +210,15 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+<<<<<<< HEAD
     crass (1.0.2)
+=======
+    crass (1.0.3)
+>>>>>>> master
     curb (0.9.4)
-    daemons (1.2.4)
+    daemons (1.2.5)
     dalli (2.7.6)
-    database_cleaner (1.6.1)
+    database_cleaner (1.6.2)
     debug_inspector (0.0.3)
     delayed_job (4.1.3)
       activesupport (>= 3.0, < 5.2)
@@ -175,11 +240,11 @@ GEM
       elasticsearch-transport (= 5.0.4)
     elasticsearch-api (5.0.4)
       multi_json
-    elasticsearch-model (5.0.1)
+    elasticsearch-model (5.0.2)
       activesupport (> 3)
       elasticsearch (~> 5)
       hashie
-    elasticsearch-rails (5.0.1)
+    elasticsearch-rails (5.0.2)
     elasticsearch-transport (5.0.4)
       faraday
       multi_json
@@ -189,10 +254,14 @@ GEM
     excon (0.59.0)
     execjs (2.7.0)
     extlib (0.9.16)
+<<<<<<< HEAD
     factory_girl (4.8.1)
+=======
+    factory_bot (4.8.2)
+>>>>>>> master
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.8.0)
-      factory_girl (~> 4.8.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
@@ -245,12 +314,12 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (1.4.1)
+    fog-aws (2.0.0)
       fog-core (~> 1.38)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-brightbox (0.13.0)
+    fog-brightbox (0.14.0)
       fog-core (~> 1.22)
       fog-json
       inflecto (~> 0.0.2)
@@ -298,7 +367,11 @@ GEM
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
+<<<<<<< HEAD
     fog-ovirt (0.1.1)
+=======
+    fog-ovirt (0.1.2)
+>>>>>>> master
       fog-core (~> 1.45)
       fog-json
       fog-xml (~> 0.1.1)
@@ -307,7 +380,7 @@ GEM
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
-    fog-profitbricks (4.0.0)
+    fog-profitbricks (4.1.1)
       fog-core (~> 1.42)
       fog-json (~> 1.0)
     fog-rackspace (0.1.5)
@@ -358,7 +431,7 @@ GEM
     formatador (0.2.5)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
-    globalid (0.4.0)
+    globalid (0.4.1)
       activesupport (>= 4.2.0)
     google-analytics-rails (1.1.1)
     google-api-client (0.8.6)
@@ -374,7 +447,11 @@ GEM
       signet (~> 0.6)
     google-tag-manager-rails (0.1.3)
       rails (>= 3.0.0)
+<<<<<<< HEAD
     googleauth (0.6.1)
+=======
+    googleauth (0.6.2)
+>>>>>>> master
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
       logging (~> 2.0)
@@ -382,6 +459,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
+    grease (0.3.1)
     growl (1.0.3)
     guard (2.14.1)
       formatador (>= 0.2.4)
@@ -414,7 +492,11 @@ GEM
       multi_xml (>= 0.5.2)
     httpi (1.1.1)
       rack
+<<<<<<< HEAD
     i18n (0.9.0)
+=======
+    i18n (0.9.1)
+>>>>>>> master
       concurrent-ruby (~> 1.0)
     inflecto (0.0.2)
     ipaddress (0.8.3)
@@ -430,6 +512,7 @@ GEM
       railties (>= 3.2.16)
     json (2.1.0)
     jwt (2.1.0)
+<<<<<<< HEAD
     kaminari (1.1.0)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.0)
@@ -448,6 +531,34 @@ GEM
     kgio (2.11.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+=======
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-bootstrap (3.0.1)
+      kaminari (>= 0.13.0)
+      rails
+    kaminari-core (1.1.1)
+    kgio (2.11.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    less (2.6.0)
+      commonjs (~> 0.2.7)
+    less-rails (3.0.0)
+      actionpack (>= 4.0)
+      grease
+      less (~> 2.6.0)
+      sprockets (> 2, < 4)
+      tilt
+>>>>>>> master
     libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -461,17 +572,21 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
-    mail (2.6.6)
-      mime-types (>= 1.16, < 4)
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
     memcachier (0.0.2)
     memoist (0.16.0)
-    meta-tags (2.6.0)
+    meta-tags (2.7.0)
       actionpack (>= 3.2.0, < 5.3)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+<<<<<<< HEAD
     mini_mime (0.1.4)
+=======
+    mini_mime (1.0.0)
+>>>>>>> master
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     mjml-rails (2.4.3)
@@ -484,8 +599,12 @@ GEM
     net-http2 (0.16.0)
       http-2 (= 0.8.4)
     netrc (0.11.0)
+<<<<<<< HEAD
     newrelic_rpm (4.5.0.337)
     nio4r (2.1.0)
+=======
+    newrelic_rpm (4.6.0.338)
+>>>>>>> master
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nori (1.1.5)
@@ -499,16 +618,25 @@ GEM
     platform-api (2.1.0)
       heroics (~> 0.0.23)
       moneta (~> 0.8.1)
+<<<<<<< HEAD
     popper_js (1.12.5)
     pry (0.11.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.0)
     rack (2.0.3)
+=======
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    public_suffix (3.0.1)
+    rack (1.6.8)
+>>>>>>> master
     rack-cache (1.7.1)
       rack (>= 0.4)
-    rack-mini-profiler (0.10.5)
+    rack-mini-profiler (0.10.7)
       rack (>= 1.2.0)
+<<<<<<< HEAD
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
     rails (5.1.4)
@@ -530,6 +658,27 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
+=======
+    rack-test (0.6.3)
+      rack (>= 1.0)
+    rails (4.2.10)
+      actionmailer (= 4.2.10)
+      actionpack (= 4.2.10)
+      actionview (= 4.2.10)
+      activejob (= 4.2.10)
+      activemodel (= 4.2.10)
+      activerecord (= 4.2.10)
+      activesupport (= 4.2.10)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.2.10)
+      sprockets-rails
+    rails-deprecated_sanitizer (1.0.3)
+      activesupport (>= 4.2.0.alpha)
+    rails-dom-testing (1.0.8)
+      activesupport (>= 4.2.0.beta, < 5.0)
+      nokogiri (~> 1.6)
+      rails-deprecated_sanitizer (>= 1.0.1)
+>>>>>>> master
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails-settings-cached (0.4.1)
@@ -539,6 +688,7 @@ GEM
       rails_stdout_logging
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.5)
+<<<<<<< HEAD
     railties (5.1.4)
       actionpack (= 5.1.4)
       activesupport (= 5.1.4)
@@ -547,13 +697,26 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.19.0)
     rake (12.1.0)
+=======
+    railties (4.2.10)
+      actionpack (= 4.2.10)
+      activesupport (= 4.2.10)
+      rake (>= 0.8.7)
+      thor (>= 0.18.1, < 2.0)
+    raindrops (0.19.0)
+    rake (12.3.0)
+>>>>>>> master
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rbovirt (0.1.4)
       nokogiri
       rest-client (> 1.7.0)
+<<<<<<< HEAD
     rbvmomi (1.11.3)
+=======
+    rbvmomi (1.11.5)
+>>>>>>> master
       builder (~> 3.0)
       json (>= 1.8)
       nokogiri (~> 1.5)
@@ -570,7 +733,11 @@ GEM
       netrc (~> 0.8)
     retriable (1.4.1)
     rmagick (2.16.0)
+<<<<<<< HEAD
     rpush (3.0.0)
+=======
+    rpush (3.0.1)
+>>>>>>> master
       activesupport
       ansi
       multi_json (~> 1.0)
@@ -596,7 +763,11 @@ GEM
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
+<<<<<<< HEAD
     rspec-rails (3.7.1)
+=======
+    rspec-rails (3.7.2)
+>>>>>>> master
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -607,12 +778,16 @@ GEM
     rspec-support (3.7.0)
     ruby-prof (0.16.2)
     ruby_dep (1.5.0)
+<<<<<<< HEAD
     sass (3.5.2)
+=======
+    sass (3.5.3)
+>>>>>>> master
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.6)
+    sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -626,7 +801,11 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
+<<<<<<< HEAD
     secure_headers (5.0.1)
+=======
+    secure_headers (5.0.4)
+>>>>>>> master
       useragent (>= 0.15.0)
     shellany (0.0.1)
     show_me_the_cookies (3.1.0)
@@ -653,7 +832,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stackprof (0.2.10)
+    stackprof (0.2.11)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -666,9 +845,18 @@ GEM
     tilt (2.0.8)
     timecop (0.9.1)
     trollop (2.1.2)
+<<<<<<< HEAD
     tzinfo (1.2.3)
+=======
+    twitter-bootstrap-rails (3.2.2)
+      actionpack (>= 3.1)
+      execjs (>= 2.2.2, >= 2.2)
+      less-rails (>= 2.5.0)
+      railties (>= 3.1)
+    tzinfo (1.2.4)
+>>>>>>> master
       thread_safe (~> 0.1)
-    uglifier (3.2.0)
+    uglifier (4.0.1)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -719,7 +907,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
-  factory_girl_rails
+  factory_bot_rails
   figaro
   flamegraph
   fog
@@ -750,9 +938,14 @@ DEPENDENCIES
   platform-api
   rack-cache
   rack-mini-profiler
+<<<<<<< HEAD
   rails (= 5.1.4)
   rails-controller-testing
   rails-observers!
+=======
+  rails (= 4.2.10)
+  rails-observers
+>>>>>>> master
   rails-settings-cached (= 0.4.1)
   rails_12factor
   rails_serve_static_assets
@@ -783,7 +976,11 @@ DEPENDENCIES
   zipruby
 
 RUBY VERSION
+<<<<<<< HEAD
    ruby 2.3.1p112
+=======
+   ruby 2.4.2p198
+>>>>>>> master
 
 BUNDLED WITH
    1.12.5

@@ -665,6 +665,10 @@ $homeCoverListMargin: 7px;
 	line-height: 2em;
 }
 
+.page-header-center {
+	text-align: center;
+}
+
 .footer {
 	color: $gray-dark;
 	background-color: $footerColour;
@@ -1845,6 +1849,62 @@ ul.ui-autocomplete {
 	font-weight: normal;
 }
 
+.subscription-offer-two {
+	text-align: center;
+	padding: 1em 2em;
+}
+
+.subscription-offer-two h2 {
+	font-size: 3em;
+}
+
+.subscription-offer-two p {
+	padding-left: 2em;
+	padding-right: 2em;
+	font-size: 1.1em;
+}
+
+.subscription-offer-two .fa-leaf {
+	color: rgb(136,193,0);
+}
+
+.subscription-offer-two .fa-unlock {
+	color: rgb(255,138,0);
+}
+
+.subscription-offer-two .fa-trophy {
+	color: rgb(250,190,40);
+}
+
+.subscription-offer-two .fa-thumbs-up {
+	color: rgb(38,86,157);
+}
+
+.subscription-offer-two h3 + p {
+	opacity: 0.8;
+}
+
+.subscription-offer-two.subscription-buttons {
+	padding-top: 4em;
+}
+
+.overlapping-covers a > img {
+	position: relative;
+	// left: 5%;
+	width: 28%;
+	margin: 0 5px;
+}
+
+.overlapping-covers a img + img {
+	// left: -1%;
+	// top: 5px;
+}
+
+.overlapping-covers a img + img + img {
+	// left: -7%;
+	// top: 10px;
+}
+
 .subscribe-current-issue {
 	float: right;
 	margin: 0 0 1em 2em;
@@ -1856,6 +1916,16 @@ ul.ui-autocomplete {
 	text-align: center;
 	margin-bottom: 2em;
 	min-height: 265px;
+}
+
+.special-feature h3 {
+	opacity: 0.8;
+	font-size: 1.2em;
+}
+
+.modal-body.video {
+	padding: 0;
+	margin-bottom: -10px;
 }
 
 .privacy-policy {
@@ -2043,6 +2113,16 @@ ul.ui-autocomplete {
 	}
 	.issue-article.keynote .issue-cover {
 		width: 45%;
+	}
+	.subscription-offer-two {
+		text-align: center;
+		padding: 1em 1em;
+	}
+	.overlapping-covers a > img {
+		width: 25%;
+	}
+	.subscription-offer-two.subscription-buttons {
+		padding: 1em 0em;
 	}
 }
  

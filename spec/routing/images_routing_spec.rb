@@ -4,7 +4,7 @@ describe ImagesController, :type => :routing do
   describe "routing" do
 
     before (:each) do
-      image = FactoryGirl.create(:image)
+      image = FactoryBot.create(:image)
     end
 
     it "routes to #index" do

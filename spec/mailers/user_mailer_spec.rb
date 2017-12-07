@@ -3,8 +3,8 @@ require 'rails_helper'
 describe UserMailer, :type => :mailer do
 
   describe "user_signup_confirmation" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:issue) { FactoryGirl.create(:published_issue) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:issue) { FactoryBot.create(:published_issue) }
     let(:mail) {
       @issue = issue
       UserMailer.user_signup_confirmation(user)
@@ -25,7 +25,7 @@ describe UserMailer, :type => :mailer do
     end
 
     context "is a UK user" do
-      let(:user) { FactoryGirl.create(:uk_user) }
+      let(:user) { FactoryBot.create(:uk_user) }
       let(:mail) {
         @issue = issue
         UserMailer.user_signup_confirmation_uk(user)
@@ -46,7 +46,7 @@ describe UserMailer, :type => :mailer do
     end
 
     context "is an institutional user" do
-      let(:user) { FactoryGirl.create(:institution_user) }
+      let(:user) { FactoryBot.create(:institution_user) }
       let(:mail) {
         @issue = issue
         UserMailer.make_institutional_confirmation(user)
@@ -68,9 +68,9 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "subscription_confirmation" do
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
-    let(:issue) { FactoryGirl.create(:published_issue) }
+    let(:issue) { FactoryBot.create(:published_issue) }
     let(:mail) {
       @issue = issue
       UserMailer.subscription_confirmation(subscription)
@@ -90,7 +90,7 @@ describe UserMailer, :type => :mailer do
     end
 
     context "for a 10 year media subscription" do
-      let(:subscription) { FactoryGirl.create(:media_subscription) }
+      let(:subscription) { FactoryBot.create(:media_subscription) }
       let(:user) { subscription.user }
       let(:mail) {
         @issue = issue
@@ -112,7 +112,7 @@ describe UserMailer, :type => :mailer do
     end
 
     context "for a free subscription" do
-      let(:subscription) { FactoryGirl.create(:subscription) }
+      let(:subscription) { FactoryBot.create(:subscription) }
       let(:user) { subscription.user }
       let(:mail) {
         @issue = issue
@@ -135,9 +135,9 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "subscription_cancellation" do
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
-    let(:issue) { FactoryGirl.create(:published_issue) }
+    let(:issue) { FactoryBot.create(:published_issue) }
     let(:mail) {
       @issue = issue
       UserMailer.subscription_cancellation(subscription)
@@ -158,9 +158,9 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "subscription_cancelled_via_paypal" do
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
-    let(:issue) { FactoryGirl.create(:published_issue) }
+    let(:issue) { FactoryBot.create(:published_issue) }
     let(:mail) {
       @issue = issue
       UserMailer.subscription_cancelled_via_paypal(subscription)
@@ -181,7 +181,7 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "issue_purchase" do
-    let(:purchase) { FactoryGirl.create(:purchase) }
+    let(:purchase) { FactoryBot.create(:purchase) }
     let(:mail) {
       UserMailer.issue_purchase(purchase)
     }

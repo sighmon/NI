@@ -24,7 +24,7 @@ describe PaymentNotification, :type => :model do
 		end
 
 		let(:user) do
-			subscription = FactoryGirl.create(:subscription)
+			subscription = FactoryBot.create(:subscription)
 			subscription.paypal_profile_id = paypal_profile_id
 			subscription.save
 			subscription.user

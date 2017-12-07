@@ -5,14 +5,14 @@ describe User, :type => :model do
 
   context "institution" do
     let(:user) do
-      FactoryGirl.create(:user, :institution => true)
+      FactoryBot.create(:user, :institution => true)
     end
 
     let(:ability) { Ability.new(user) }
 
     context "with a child" do
       before(:each) do
-        child = FactoryGirl.create(:user)
+        child = FactoryBot.create(:user)
         user.children << child
       end
       it "can manage child" do
@@ -26,7 +26,7 @@ describe User, :type => :model do
     end
 
     it "can create a child without an email" do
-      newuser = FactoryGirl.build(:user)
+      newuser = FactoryBot.build(:user)
       child = user.children.create(username: newuser.username, password: newuser.password)
       expect(child.email).to be_blank
     end
@@ -35,7 +35,7 @@ describe User, :type => :model do
 
   context "normal user" do
     let(:user) do
-      FactoryGirl.create(:user)
+      FactoryBot.create(:user)
     end
   
     let(:ability) { Ability.new(user) }
@@ -57,48 +57,48 @@ describe User, :type => :model do
     end
 
     it "should not be able to manage an issue" do
-      issue = FactoryGirl.create(:issue)
+      issue = FactoryBot.create(:issue)
       expect(ability).not_to be_able_to(:manage, issue)
     end
 
     it "should be able to read an issue" do
-      issue = FactoryGirl.create(:issue, :published => true)
+      issue = FactoryBot.create(:issue, :published => true)
       expect(ability).to be_able_to(:read, issue)
     end
 
     it "should not be able to read an article" do
-      article = FactoryGirl.create(:article)
+      article = FactoryBot.create(:article)
       expect(ability).not_to be_able_to(:read, article)
     end
 
     it "should not be able to manage an article" do
-      article = FactoryGirl.create(:article)
+      article = FactoryBot.create(:article)
       expect(ability).not_to be_able_to(:manage, article)
     end
 
     it "should not be able to read an unpublished article" do
-      article = FactoryGirl.create(:article, :unpublished => true)
+      article = FactoryBot.create(:article, :unpublished => true)
       expect(ability).not_to be_able_to(:read, article)
     end
 
     it "should be able to read a trial article" do
-      article = FactoryGirl.create(:article, :trialarticle => true)
+      article = FactoryBot.create(:article, :trialarticle => true)
       expect(ability).to be_able_to(:read, article)
     end
 
     it "should be able to read a trial issue's article" do
-      article = FactoryGirl.create(:article)
+      article = FactoryBot.create(:article)
       article.issue.trialissue = true
       expect(ability).to be_able_to(:read, article)
     end
 
     it "should not be able to manage a push registration" do
-      push_registration = FactoryGirl.create(:push_registration)
+      push_registration = FactoryBot.create(:push_registration)
       expect(ability).not_to be_able_to(:manage, push_registration)
     end
 
     it "should not be able to manage a payment notifications" do
-      payment_notification = FactoryGirl.create(:payment_notification)
+      payment_notification = FactoryBot.create(:payment_notification)
       expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 
@@ -110,7 +110,7 @@ describe User, :type => :model do
 
     context "with a subscriber parent" do
       before(:each) do
-        sub = FactoryGirl.create(:subscription)
+        sub = FactoryBot.create(:subscription)
         sub.user.children << user
       end
       it "has a subscription" do
@@ -128,14 +128,14 @@ describe User, :type => :model do
 
     context "with a child" do
       before(:each) do
-        child = FactoryGirl.create(:user)
+        child = FactoryBot.create(:user)
         user.children << child
       end
       it "can manage child" do
         expect(ability).to be_able_to(:manage, user.children.first)
       end
       it "cannot manage a non-child user" do
-        sibling = FactoryGirl.create(:user)
+        sibling = FactoryBot.create(:user)
         expect(ability).not_to be_able_to(:manage, sibling)
       end
     end
@@ -144,7 +144,7 @@ describe User, :type => :model do
 
   context "uk user" do
     let(:user) do
-      FactoryGirl.create(:uk_user)
+      FactoryBot.create(:uk_user)
     end
   
     let(:ability) { Ability.new(user) }
@@ -177,7 +177,7 @@ describe User, :type => :model do
       Timecop.return() 
     end
   
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
 
     let(:ability) { Ability.new(user) }
@@ -187,22 +187,22 @@ describe User, :type => :model do
     end
 
     it "should be able to read an article" do
-      article = FactoryGirl.create(:article)
+      article = FactoryBot.create(:article)
       expect(ability).to be_able_to(:read, article)
     end
 
     it "should not be able to manage an article" do
-      article = FactoryGirl.create(:article)
+      article = FactoryBot.create(:article)
       expect(ability).not_to be_able_to(:manage, article)
     end
 
     it "should not be able to manage a push registration" do
-      push_registration = FactoryGirl.create(:push_registration)
+      push_registration = FactoryBot.create(:push_registration)
       expect(ability).not_to be_able_to(:manage, push_registration)
     end
 
     it "should not be able to manage a payment notifications" do
-      payment_notification = FactoryGirl.create(:payment_notification)
+      payment_notification = FactoryBot.create(:payment_notification)
       expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 

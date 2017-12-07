@@ -4,7 +4,7 @@ RSpec.describe PushRegistrationsController, type: :controller do
 
   describe "POST #create" do
 
-    let(:push_registration) { FactoryGirl.create(:push_registration) }
+    let(:push_registration) { FactoryBot.create(:push_registration) }
 
     it "saved the token" do
       expect{
@@ -25,7 +25,7 @@ RSpec.describe PushRegistrationsController, type: :controller do
   describe "DELETE #destroy" do
 
     it "can delete a push registration" do
-      push_registration = FactoryGirl.create(:push_registration)
+      push_registration = FactoryBot.create(:push_registration)
       expect{
         delete :destroy, params: { id: push_registration.id }
       }.to change(PushRegistration, :count).by(-1)

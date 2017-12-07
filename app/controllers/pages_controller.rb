@@ -49,6 +49,10 @@ class PagesController < ApplicationController
       @first_image = img_srcs[0]
     end
 
+    if not @first_image
+      @first_image = ENV["DEFAULT_PAGE_META_IMAGE"]
+    end
+
     set_meta_tags :title => @page.title,
                   :description => @page.teaser,
                   :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",

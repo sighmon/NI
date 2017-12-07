@@ -4,7 +4,7 @@ describe UsersController, :type => :controller do
 
   context "as a user with a subscription" do
 
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
 
     before(:each) do
@@ -29,7 +29,7 @@ describe UsersController, :type => :controller do
 
   context "as a user with a purchase" do
 
-    let(:purchase) { FactoryGirl.create(:purchase) }
+    let(:purchase) { FactoryBot.create(:purchase) }
     let(:user) { purchase.user }
     let(:issue) { purchase.issue }
 
@@ -54,7 +54,7 @@ describe UsersController, :type => :controller do
 
   context "as a user with a favourite" do
 
-    let(:favourite) { FactoryGirl.create(:favourite) }
+    let(:favourite) { FactoryBot.create(:favourite) }
     let(:user) { favourite.user }
     let(:article) { favourite.article }
 
@@ -78,7 +78,7 @@ describe UsersController, :type => :controller do
 
   context "as a user with a guest pass" do
 
-    let(:guest_pass) { FactoryGirl.create(:guest_pass) }
+    let(:guest_pass) { FactoryBot.create(:guest_pass) }
     let(:user) { guest_pass.user }
     let(:article) { guest_pass.article }
 

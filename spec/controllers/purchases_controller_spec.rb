@@ -22,8 +22,8 @@ describe PurchasesController, :type => :controller do
 
   context "as a user and with an issue" do
 
-   let(:user) { FactoryGirl.create(:user) }
-   let(:issue) { FactoryGirl.create(:issue) }
+   let(:user) { FactoryBot.create(:user) }
+   let(:issue) { FactoryBot.create(:issue) }
 
    before(:each) do
      sign_in user

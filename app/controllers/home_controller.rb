@@ -172,13 +172,13 @@ class HomeController < ApplicationController
   def get_instagram_json
     Rails.cache.fetch("instagram_json", expires_in: 12.hours) do
       begin
-        response = HTTParty.get("https://www.instagram.com/#{ENV['INSTAGRAM_NAME']}/media/")
+        response = HTTParty.get("https://www.instagram.com/#{ENV['INSTAGRAM_NAME']}/?__a=1")
       rescue Exception => e
         @instagram_error = e
       end
       
       if not @instagram_error and response and response.code == 200
-        JSON.parse(response.body)["items"]
+        JSON.parse(response.body)["user"]["media"]["nodes"]
       end
     end
   end

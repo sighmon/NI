@@ -172,9 +172,11 @@ class Issue < ActiveRecord::Base
     # Optional: hand in a specific article URL {article_url: xxx}
     issue_number_to_import = self.number
     article_url_to_import = nil
+    force_reimport_all = false
     if not options.nil?
       issue_number_to_import = options[:issue_number]
       article_url_to_import = options[:article_url]
+      force_reimport_all = options[:force]
     else
       options = {}
     end
@@ -222,79 +224,98 @@ class Issue < ActiveRecord::Base
   end
 
   def create_article_from_newint_org_json(article_json, token, options)
+    force_reimport_all = false
+    if not options.nil?
+      force_reimport_all = options[:force]
+    else
+      options = {}
+    end
     article_created = self.articles.where(story_id: article_json["nid"]).first_or_create
-    article_created.update_attributes(
-      title: article_json["title"],
-      teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ") unless article_json["field_deck"].empty?),
-      publication: Time.at(article_json["created"].to_i).to_datetime,
-      body: (article_json["body"]["value"].try(:gsub,/\n/, " ") unless article_json["body"].empty?),
-      unpublished: options[:unpublished]
-    )
-
-    # Request contributor information.
-    article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + article_json["field_contributor"].first["id"].to_s + ".json", token)
-    if article_info_response_from_newint_org
-      article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
-      # Write name to article: article_info_json_from_newint_org["name"]
+    
+    if (article_created.title == nil) or (force_reimport_all == true)
+      # It doesn't already exist, so import
+      
       article_created.update_attributes(
-        author: article_info_json_from_newint_org["name"],
+        title: article_json["title"],
+        teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ").try(:gsub,/<p>/, "").try(:gsub,/<\/p>/, "") unless article_json["field_deck"].empty?),
+        publication: Time.at(article_json["created"].to_i).to_datetime,
+        body: (article_json["body"]["value"].try(:gsub,/\n/, " ") unless article_json["body"].empty?),
+        unpublished: options[:unpublished]
       )
-    end
 
-    # Request categories tags and themes.
-    article_json_tags = []
-    if article_json["field_tags"] and not article_json["field_tags"].empty?
-      article_json_tags += article_json["field_tags"]
-    end
-    if article_json["field_themes"] and not article_json["field_themes"].empty?
-      article_json_tags += article_json["field_themes"]
-    end
-    if not article_json_tags.empty?
-      article_json_tags.each do |cat|
-        article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", token)
-        if article_category_response_from_newint_org
-          article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
-          # Find/create category and add it to article.
-          Category.create_from_element(article_created, article_category_json_from_newint_org["name"].try(:titlecase))
-        end
+      # Request contributor information.
+      if article_json["field_contributor"]
+        article_info_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + article_json["field_contributor"].first.try(:[],"id").to_s + ".json", token)  
       end
-    end
+      
+      if article_info_response_from_newint_org
+        article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
+        # Write name to article: article_info_json_from_newint_org["name"]
+        article_created.update_attributes(
+          author: article_info_json_from_newint_org["name"],
+        )
+      end
 
-    # Request image information.
-    if article_json["field_image"] and not article_json["field_image"].empty?
-      article_image_response_from_newint_org = request_json_from_newint_org(article_json["field_image"]["file"]["uri"].to_s + ".json", token)
-      if article_image_response_from_newint_org
-        article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
-        # Find or create image and add it to article
-        header_image_created = Image.create_from_uri(article_created, article_image_json_from_newint_org["url"].to_s, {alt: article_json["field_image"]["alt"], media_id: article_json["field_image"]["file"]["id"]})
-        # Embed new File code to article body
-        if header_image_created
-          image_file_code = "[File:#{header_image_created.id}|full]"
-          if not article_created.body.include?(image_file_code)
-            article_created.body.prepend(image_file_code)
-            article_created.save
+      # Request categories tags and themes.
+      article_json_tags = []
+      if article_json["field_tags"] and not article_json["field_tags"].empty?
+        article_json_tags += article_json["field_tags"]
+      end
+      if article_json["field_themes"] and not article_json["field_themes"].empty?
+        article_json_tags += article_json["field_themes"]
+      end
+      if not article_json_tags.empty?
+        article_json_tags.each do |cat|
+          article_category_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_TAXONOMY_TERM_URL"] + cat["id"].to_s + ".json", token)
+          if article_category_response_from_newint_org
+            article_category_json_from_newint_org = JSON.parse(article_category_response_from_newint_org)
+            # Find/create category and add it to article.
+            Category.create_from_element(article_created, article_category_json_from_newint_org["name"].try(:titlecase))
           end
         end
-      else
-        logger.warn "IMAGE REQUEST FAILED for #{article_json["field_image"]["file"]["uri"].to_s}"
-      end
-    end
-
-    # Pull out embedded images and create them in the db
-    article_html = Nokogiri::HTML.fragment(article_created.body)
-    image_fragments = article_html.css('img')
-    image_fragments.each do |img|
-      image_uri = "https://" + URI.parse(ENV["NEWINT_ORG_REST_TOKEN_URL"]).host + img["src"]
-      image_created = Image.create_from_uri(article_created, image_uri, {alt: img["alt"]})
-      if image_created
-        image_file_code = "[File:#{image_created.id}]"
-        # Remove the img HTML from the article_created.body and replace with [File:xxx]
-        # Hack: Nokogiri parses out the trailing <img /> slash, so to find it I have to use brittle regex
-        article_created.body = article_created.body.sub(/#{img.to_html[0...-1]}(.*?)>/, image_file_code)
-        article_created.save
       end
 
+      # Request image information.
+      if article_json["field_image"] and not article_json["field_image"].empty?
+        article_image_response_from_newint_org = request_json_from_newint_org(article_json["field_image"]["file"]["uri"].to_s + ".json", token)
+        if article_image_response_from_newint_org
+          article_image_json_from_newint_org = JSON.parse(article_image_response_from_newint_org)
+          # Find or create image and add it to article
+          header_image_created = Image.create_from_uri(article_created, article_image_json_from_newint_org["url"].to_s, {alt: article_json["field_image"]["alt"], media_id: article_json["field_image"]["file"]["id"]})
+          # Embed new File code to article body
+          if header_image_created
+            image_file_code = "[File:#{header_image_created.id}|full]"
+            if not article_created.body.include?(image_file_code)
+              article_created.body.prepend(image_file_code)
+              article_created.save
+            end
+          end
+        else
+          logger.warn "IMAGE REQUEST FAILED for #{article_json["field_image"]["file"]["uri"].to_s}"
+        end
+      end
+
+      # Pull out embedded images and create them in the db
+      article_html = Nokogiri::HTML.fragment(article_created.body)
+      image_fragments = article_html.css('img')
+      image_fragments.each do |img|
+        image_uri = "https://" + URI.parse(ENV["NEWINT_ORG_REST_TOKEN_URL"]).host + img["src"]
+        image_created = Image.create_from_uri(article_created, image_uri, {alt: img["alt"]})
+        if image_created
+          image_file_code = "[File:#{image_created.id}]"
+          # Remove the img HTML from the article_created.body and replace with [File:xxx]
+          # Hack: Nokogiri parses out the trailing <img /> slash, so to find it I have to use brittle regex
+          article_created.body = article_created.body.sub(/#{img.to_html[0...-1]}(.*?)>/, image_file_code)
+          article_created.save
+        end
+
+      end
+
+    else
+      # It's already imported, so don't overwrite.
+
     end
+    
     return article_created
   end
 
