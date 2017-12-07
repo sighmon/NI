@@ -163,10 +163,10 @@ GEM
     excon (0.59.0)
     execjs (2.7.0)
     extlib (0.9.16)
-    factory_girl (4.9.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
@@ -696,7 +696,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
-  factory_girl_rails
+  factory_bot_rails
   figaro
   flamegraph
   fog

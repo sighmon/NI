@@ -10,7 +10,7 @@ describe RegistrationsController do
     describe "POST create" do
       context "with valid params" do
         it "creates a new user" do
-          user = FactoryGirl.build(:user)
+          user = FactoryBot.build(:user)
           attributes = { username: user.username, email: user.email, password: "password", password_confirmation: "password" }
           expect {
             post :create, :user => attributes
@@ -20,7 +20,7 @@ describe RegistrationsController do
 
       context "with a blank username" do
         it "doesn't create a new user" do
-          user = FactoryGirl.build(:user)
+          user = FactoryBot.build(:user)
           attributes = { username: "", email: user.email, password: "password", password_confirmation: "password" }
           expect {
             post :create, {:user => attributes}
@@ -30,7 +30,7 @@ describe RegistrationsController do
 
       context "with a blank email" do
         it "doesn't create a new user" do
-          user = FactoryGirl.build(:user)
+          user = FactoryBot.build(:user)
           attributes = { username: user.username, email: "", password: "password", password_confirmation: "password" }
           expect {
             post :create, {:user => attributes}
@@ -41,14 +41,14 @@ describe RegistrationsController do
   end
  
   context "as a user" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     before (:each) do
       sign_in user
     end
     describe "POST create" do
       context "with valid params" do
         it "doesn't create a new user" do
-          new_user = FactoryGirl.build(:user)
+          new_user = FactoryBot.build(:user)
           attributes = { username: new_user.username, email: new_user.email, password: "password", password_confirmation: "password" }
           expect {
             post :create, {:user => attributes}
@@ -73,8 +73,8 @@ describe RegistrationsController do
   # this is really testing cancan more than Devise....
   context "as a child" do
     let(:user) do
-      parent = FactoryGirl.create(:user)
-      user = FactoryGirl.create(:user)
+      parent = FactoryBot.create(:user)
+      user = FactoryBot.create(:user)
       parent.children << user
       user
     end

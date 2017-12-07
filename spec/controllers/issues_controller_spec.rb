@@ -12,7 +12,7 @@ describe IssuesController, :type => :controller do
   context "as a guest" do
    
     context "with an issue" do
-      let(:issue) { FactoryGirl.create(:published_issue) }
+      let(:issue) { FactoryBot.create(:published_issue) }
 
       describe "GET issue list" do
 
@@ -57,8 +57,8 @@ describe IssuesController, :type => :controller do
 
   context "as a user with an issue" do
 
-    let(:user) { FactoryGirl.create(:user) }
-    let(:issue) { FactoryGirl.create(:issue) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:issue) { FactoryBot.create(:issue) }
 
     before(:each) do
       sign_in user
@@ -77,7 +77,7 @@ describe IssuesController, :type => :controller do
 
   context "as a user with a purchase" do
 
-    let(:purchase) { FactoryGirl.create(:purchase) }
+    let(:purchase) { FactoryBot.create(:purchase) }
     let(:user) { purchase.user }
     let(:issue) { purchase.issue }
 
@@ -108,10 +108,10 @@ describe IssuesController, :type => :controller do
       Timecop.return() 
     end
     
-    let(:user) { FactoryGirl.create(:user) }
-    let(:subscription) { FactoryGirl.create(:subscription) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:subscription) { FactoryBot.create(:subscription) }
     let(:user) { subscription.user }
-    let(:issue) { FactoryGirl.create(:issue) }
+    let(:issue) { FactoryBot.create(:issue) }
 
     it "has a valid subscription" do
       expect(user.subscriber?).to be_truthy
@@ -140,9 +140,9 @@ describe IssuesController, :type => :controller do
       sign_in user
     end
 
-    let(:user) { FactoryGirl.create(:admin_user) }
-    let(:issue) { FactoryGirl.create(:issue) }
-    let(:push_registration) { FactoryGirl.create(:push_registration) }
+    let(:user) { FactoryBot.create(:admin_user) }
+    let(:issue) { FactoryBot.create(:issue) }
+    let(:push_registration) { FactoryBot.create(:push_registration) }
 
     it "should be able to send a push notification" do
       scheduled_test_time = DateTime.now

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DeviseMailer do
   describe 'reset_password_instructions' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { described_class.reset_password_instructions(user, "faketoken", {}).deliver_now }
 
 

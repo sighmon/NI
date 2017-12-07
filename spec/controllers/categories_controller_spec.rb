@@ -11,7 +11,7 @@ describe CategoriesController, :type => :controller do
 
   context "With a category" do
 
-    let (:category){FactoryGirl.create(:category)}
+    let (:category){FactoryBot.create(:category)}
 
     describe "GET 'show'" do
       it "returns http success" do

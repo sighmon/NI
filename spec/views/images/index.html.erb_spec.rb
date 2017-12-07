@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe "images/index", :type => :view do
   before(:each) do
-    image = FactoryGirl.create(:image)
-    FactoryGirl.create(:image,article: image.article)
+    image = FactoryBot.create(:image)
+    FactoryBot.create(:image,article: image.article)
     @article = image.article
     @issue = @article.issue
     @images = @article.images

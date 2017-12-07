@@ -10,7 +10,7 @@ describe "ImageUploads", :type => :feature do
   #end
 
   context "as an admin" do
-    let(:admin) { FactoryGirl.create(:admin_user) }
+    let(:admin) { FactoryBot.create(:admin_user) }
 
     before(:each) do
       # poke the warden helper to login
@@ -19,7 +19,7 @@ describe "ImageUploads", :type => :feature do
 
     context "given an article" do
 
-      let(:article) { FactoryGirl.create(:article) }
+      let(:article) { FactoryBot.create(:article) }
 
       describe "GET /issue/:id/article/:id/images/new" do
         it "works! (now write some real specs)" do

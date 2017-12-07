@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe "IP Whitelist", :type => :request do
 
-  let(:parent) { FactoryGirl.create(:subscription).user }
-  let(:child) { FactoryGirl.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
-  let(:article) { FactoryGirl.create(:article) }
+  let(:parent) { FactoryBot.create(:subscription).user }
+  let(:child) { FactoryBot.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
+  let(:article) { FactoryBot.create(:article) }
 
   describe "GET /issue/:id/article/:id" do
     it "should be able to read the body" do
@@ -18,9 +18,9 @@ end
 
 describe "Not in IP Whitelist", :type => :request do
 
-  let(:parent) { FactoryGirl.create(:subscription).user }
-  let(:child) { FactoryGirl.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
-  let(:article) { FactoryGirl.create(:article) }
+  let(:parent) { FactoryBot.create(:subscription).user }
+  let(:child) { FactoryBot.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
+  let(:article) { FactoryBot.create(:article) }
 
   describe "GET /issue/:id/article/:id" do
     it "should not be able to read the body" do

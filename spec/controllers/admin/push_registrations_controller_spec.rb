@@ -11,7 +11,7 @@ RSpec.describe Admin::PushRegistrationsController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do
-      user = FactoryGirl.create(:admin_user)
+      user = FactoryBot.create(:admin_user)
       sign_in user
       get :index
       expect(response).to have_http_status(:success)

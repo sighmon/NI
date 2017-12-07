@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "images/edit", :type => :view do
   before(:each) do
-    @showimage = FactoryGirl.create(:image)
+    @showimage = FactoryBot.create(:image)
     @article = @showimage.article
     @issue = @article.issue
   end

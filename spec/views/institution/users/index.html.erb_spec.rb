@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "institution/users/index", :type => :view do
   before(:each) do
     assign(:users, [
-      @child = FactoryGirl.create(:child_user),
+      @child = FactoryBot.create(:child_user),
     ])
     assign(:user, @child.parent)
   end

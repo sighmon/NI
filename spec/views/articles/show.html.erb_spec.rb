@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "articles/show", :type => :view do
-  let(:article) { FactoryGirl.create(:article) }
+  let(:article) { FactoryBot.create(:article) }
 
   it "shows the article" do
     #get issue_article_path(article.issue,article)

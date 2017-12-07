@@ -4,7 +4,7 @@ include Warden::Test::Helpers
 
 describe "Institution::Users", :type => :request do
   context "as an institution"
-  let(:child) { FactoryGirl.create(:child_user) }
+  let(:child) { FactoryBot.create(:child_user) }
   before(:each) do
     login_as child.parent, scope: :user
   end

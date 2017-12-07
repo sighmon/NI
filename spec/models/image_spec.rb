@@ -4,7 +4,7 @@ describe Image, :type => :model do
 
   context "article" do 
 
-    let(:article) { FactoryGirl.create(:article) }
+    let(:article) { FactoryBot.create(:article) }
 
     it "can create a new image with article.image.create" do
       expect {

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :push_registration do
     token "<00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000>"

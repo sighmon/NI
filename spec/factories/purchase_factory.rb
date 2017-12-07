@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :purchase do
     association :issue, factory: :published_issue

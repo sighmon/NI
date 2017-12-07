@@ -28,7 +28,7 @@ describe SubscriptionsController, :type => :controller do
 
   context "as a user" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     before(:each) do
       sign_in user
