@@ -2,6 +2,7 @@ FactoryBot.define do
   
   factory :subscription do
     valid_from { DateTime.now }
+    purchase_date { DateTime.now }
     duration 3
     user
 
