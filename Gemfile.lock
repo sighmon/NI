@@ -96,7 +96,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.3)
       debug_inspector (>= 0.0.1)
-    brakeman (4.0.1)
+    brakeman (4.1.0)
     builder (3.2.3)
     bundler-audit (0.6.0)
       bundler (~> 1.2)
@@ -531,7 +531,7 @@ GEM
     rbovirt (0.1.4)
       nokogiri
       rest-client (> 1.7.0)
-    rbvmomi (1.11.5)
+    rbvmomi (1.11.6)
       builder (~> 3.0)
       json (>= 1.8)
       nokogiri (~> 1.5)
@@ -649,7 +649,7 @@ GEM
       railties (>= 3.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (4.0.1)
+    uglifier (4.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
