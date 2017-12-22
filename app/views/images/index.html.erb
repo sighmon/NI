@@ -25,7 +25,7 @@
       <tr>
         <td><%= link_to image.id, issue_article_image_path(@issue, @article, image) %></td>
         <td><%= link_to retina_image_tag(image.data_url(:thumb).to_s, size: '80x80'), issue_article_image_path(@issue, @article, image) %></td>
-        <td><%= link_to image.data_url.split("/").last, image.data_url %></td>
+        <td><%= link_to sanitize(image.data_url).split("/").last, issue_article_image_path(@issue, @article, image) %></td>
         <td><%= image.position %></td>
         <td><%= link_to image.article_id, issue_article_path(@issue, @article) %></td>
         <td><%= image.media_id %></td>
