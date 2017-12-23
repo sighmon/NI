@@ -174,7 +174,9 @@ class Issue < ActiveRecord::Base
     article_url_to_import = nil
     force_reimport_all = false
     if not options.nil?
-      issue_number_to_import = options[:issue_number]
+      if options[:issue_number]
+        issue_number_to_import = options[:issue_number]
+      end
       article_url_to_import = options[:article_url]
       force_reimport_all = options[:force]
     else
@@ -182,8 +184,6 @@ class Issue < ActiveRecord::Base
     end
 
     xcsfr_token = csrf_token_from_newint_org
-
-    # TODO: Handle downloading a specific article? options[:article_url]
 
     if xcsfr_token
       # Import issue details
@@ -193,13 +193,16 @@ class Issue < ActiveRecord::Base
         # Request the articles using the issue tid.
         issue_tid = JSON.parse(response_from_newint_org)["list"].first["tid"]
         articles_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s, xcsfr_token)
+        # TODO: Alternatively only request the article by URL.
         if articles_response_from_newint_org
           # Articles from this issue
           articles_json_from_newint_org = JSON.parse(articles_response_from_newint_org)["list"]
-
           articles_json_from_newint_org.each do |a|
-            # Create article from json.
-            article_created = create_article_from_newint_org_json(a, xcsfr_token, options)
+            # Create article from json only if article_url_to_import is nil, or matches the url
+            if article_url_to_import.nil? or article_url_to_import == a["url"]
+              # byebug
+              article_created = create_article_from_newint_org_json(a, xcsfr_token, options)
+            end
           end
 
           # return articles_json_from_newint_org
