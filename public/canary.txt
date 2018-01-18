@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: December, 2017
+Period: January, 2018
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  16 December 2017
+  18 January 2018
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlo0y+8ACgkQtsnG2UL7
-GPmBTg//WuwTn9hEBpemTrnneJZnvTkzjEugsJO2U3jV6AjdIaKNqj4aHlVtXuNC
-zzQOVO+X9x/ZxdFSY1Q8sZkEtAgvrxX7jEZ3DHZ7C8mY6RHG0NMS6Kj41LBplqiR
-IGg4fpyDNOPNET2Zj16b65CuWVeD9M6qkwXcXQ9+FrSvnZ7NXmFp/DnTVARdRQco
-v2EMfi4BIVWOihuupOD1ci7//k24j3jgy7VoAAhFM/3fNpNqFsZ9+sWmy8pgPqIV
-jgJHe+lrfpK24riJ0T1aZ7vJvDy2LYE2LUjo2PO5u5k4hXKB8OnY99l20M3b/qrs
-mzYOBtAGFvHbqSbutGYyZB3qvXfEoeLjRhan3aT39ua6eWjxGtZ6mD/muPpVIjW3
-a3FVO9S42WrgZ8BrHeqjCAieLeepjQInnncbg947SPvIum/+42K2vGVXqWcFUiKV
-FapyFsSLK8/4lvGNEF4NEUECnF4jvY7L6fxwTHBTgPrcJAyVJxtvhAYkt1guL0mH
-HDEQSXCdXqNudAgmfXD3YzEZoGYmfV8geuHDPft+fGU12RwxeOOliPgwd6vCXb3U
-Yd5ltx5r1A+uu9hSyyd8hBAIlgly1pWB1uXmPw7i4fYOKw9KFIC14PoYuEvtysWQ
-VL33VoFlWfD9g9CXP48RRohJKmt0T1Cb6+y/gc+YcN1hA7wZzVk=
-=OHUb
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlpf/t8ACgkQtsnG2UL7
+GPkd5hAAiZwQT8NslFLO5eH+gG8qsqHVMLozw9gZ42OXD5rKxzSIqOFmkBsicEcA
+4Q2NOSBL6EPwUjVtA3nHrIXVelWjz008Z5pS5Qa3VdhAwLG5CUReXPav5d+jPJdb
+hpKl5Ipo5iDoAdL27d+mmkLS84T/3nzoCJSQxa5hGtPbdHlQxu260zzZgZfGRX63
+XkjyETSwziAptY8kQWdyO96ezdXvDK8kYrTxyuoK4ZdVzCnJZsdPZ/IbsH4RrfVh
+05pKbxPCBwS6H/n8EB2jA20Gui+qhnFBK/iL8OV1jiUXEoZVPSTxIAkIXjvdQxeo
+eBhsLQSxw9Xwn28slYBMB45hAtoeZ8umVqW4JDOJV/r33QsodOi4j5MEUul2dRlW
+p2sr0pJtiry2GO90hV6iL9y7C2lhmPA8hGABXVVaa4MCfnPHZuAjGhYYcaw/G6ya
+kHppQ7CioPmkG/z6EsYZeVf6J4Dd4zaJQ4Rd/voC9yHJVJWQ11e01RWTAdNftCvm
+tTHmnoW+l9Pukek2gH/7Mmcm8RpdHhn/aas4dC3ruB1Y8U6zYNWznpewGF7PVmm2
+U9JKFfa/I/FkzN9POY2PjgGGD0x3vMaqcS6EZ3vp3WJeGcoui8chJaNS3vblxcN9
+uSJN1n8fuqq9GC9aQpEcbQp2CRmw1pc7A+Qjz9Cz0oX9uMbR030=
+=OMgh
 -----END PGP SIGNATURE-----
