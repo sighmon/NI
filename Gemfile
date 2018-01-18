@@ -26,9 +26,9 @@ gem 'platform-api'
 
 # gem 'sqlite3'
 
-# Postgresql to fix error 17th Sept 2012
-# http://stackoverflow.com/questions/7087385/pg-gem-trace-bpt-trap-5-error-on-mac-os-x-lion
-gem 'pg'
+# TOFIX: Un-stick to let it upgrade when v1.0.0 is compatible with Rails.
+# https://github.com/rails/rails/issues/31669
+gem 'pg', '0.21.0'
 
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
