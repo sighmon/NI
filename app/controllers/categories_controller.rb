@@ -116,6 +116,7 @@ class CategoriesController < ApplicationController
   def update
     # Expire the cache
     expire_action :action => :index
+    expire_action :action => :show
 
     if params[:category][:colour] and not params[:category][:colour].empty?
       params[:category][:colour] = params[:category][:colour].match("[0-9a-f]+")[0].hex
