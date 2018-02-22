@@ -50,7 +50,11 @@ module Devise
         else
           Rails.logger.debug "User found: #{resource.username}"
           # They do have an account, so lets sync it with the UK data.
-          resource.email = uk_user_details["data"]["email"]
+          if uk_user_details["data"]["email"]
+            resource.email = uk_user_details["data"]["email"]
+          else
+            resource.email = generate_uk_email_address(uk_user_details["data"]["id"])
+          end
           resource.uk_expiry = parse_expiry_from_uk_details(uk_user_details["data"]["expiry"])
           resource.uk_id = uk_user_details["data"]["id"]
         end
@@ -100,7 +104,7 @@ module Devise
         elsif response and response.code == 404
           # User not found!
           body = response.body
-          Rails.logger.debug "NOT FOUND! Can't find UK user with ID: #{authentication_hash[:login]}, lname: #{authentication_hash[:password]}"
+          Rails.logger.debug "NOT FOUND! Can't find UK user with ID: #{cleaned_login}, lname: #{cleaned_password}"
           return body
         else
           # FAIL! server error.
@@ -111,7 +115,11 @@ module Devise
 
       def build_user_from_uk_info(user, uk_info)
         if user and uk_info
-          user.email = uk_info["data"]["email"]
+          if uk_info["data"]["email"]
+            user.email = uk_info["data"]["email"]
+          else
+            user.email = generate_uk_email_address(uk_info["data"]["id"])
+          end
           user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"]
           user.password = Devise.friendly_token
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
@@ -130,6 +138,10 @@ module Devise
 
       def parse_expiry_from_uk_details(uk_info)
         DateTime.strptime(uk_info, "%Y-%m-%d")
+      end
+
+      def generate_uk_email_address(uk_id)
+        "tech+no_email_subscriber_id#{uk_id}@newint.org"
       end
 
     end
