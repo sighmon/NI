@@ -89,7 +89,7 @@ class Admin::UsersController < Admin::BaseController
 		flash[:notice] = "user has been deleted."
 		end
 
-		redirect_to admin_users_path
+		redirect_to admin_root_path
 	end
 
 	def free_subscription
