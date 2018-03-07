@@ -719,7 +719,7 @@ DEPENDENCIES
   libv8
   memcachier
   meta-tags
-  mjml-rails
+  mjml-rails (= 2.4.3)
   net-http-persistent (~> 2.9.4)
   newrelic_rpm
   paypal-recurring
