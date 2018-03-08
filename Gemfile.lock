@@ -176,7 +176,7 @@ GEM
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     flamegraph (0.9.5)
-    fog (1.42.0)
+    fog (2.0.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
       fog-aws (>= 0.6.0)
@@ -525,7 +525,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.19.0)
     rake (12.3.0)
-    rb-fsevent (0.10.2)
+    rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rbovirt (0.1.5)
