@@ -1,7 +1,8 @@
 <mj-section background-color="#faac0b" padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#333333">

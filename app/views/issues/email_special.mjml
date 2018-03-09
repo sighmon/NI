@@ -1,4 +1,7 @@
 <mjml>
+	<mj-head>
+		<mj-preview>New Internationalist - under-reported stories delivered to your pocket.</mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
@@ -28,6 +31,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Each monthly <em>New Internationalist</em> magazine covers a topic in-depth. Local writers will update you on previously under-reported stories that shine a light on today's big issues - inequality, climate justice and human rights - from every corner of the world.<br /><br />
@@ -45,6 +49,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Your digital subscription includes:

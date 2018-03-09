@@ -122,7 +122,7 @@ gem 'google-api-client', '0.8.6'
 # https://github.com/angelodlfrtr/mjml-ruby
 # gem 'mjml', git: 'https://github.com/angelodlfrtr/mjml-ruby.git'
 
-gem 'mjml-rails', '2.4.3'#, git: 'https://github.com/sighmon/mjml-rails.git', require: 'mjml'
+gem 'mjml-rails'#, '2.4.3'#, git: 'https://github.com/sighmon/mjml-rails.git', require: 'mjml'
 # gem 'mjml-rails', path: '../mjml-rails/'#, require: 'mjml'
 
 # RPush for push notifications migrating away from Parse

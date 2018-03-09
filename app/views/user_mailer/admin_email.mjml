@@ -1,4 +1,7 @@
 <mjml>
+	<mj-head>
+		<mj-preview>Admin email</mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
@@ -37,6 +40,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						<%= @greeting %> <%= @user.username %>,

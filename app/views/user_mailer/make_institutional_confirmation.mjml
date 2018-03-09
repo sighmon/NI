@@ -1,4 +1,7 @@
 <mjml>
+	<mj-head>
+		<mj-preview>New Internationalist - Institutional user account</mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
@@ -43,6 +46,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
@@ -61,6 +65,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						After you've created the account you can share the username and password of that student account with the school.<br /><br />
@@ -95,6 +100,7 @@
 				<mj-column>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -143,6 +149,7 @@
 				<mj-column>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -151,6 +158,7 @@
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the student login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>.
@@ -168,6 +176,7 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
@@ -182,6 +191,7 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.

@@ -1,4 +1,7 @@
 <mjml>
+	<mj-head>
+		<mj-preview>Your New Internationalist subscription has been cancelled via PayPal.</mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
@@ -43,6 +46,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
@@ -74,6 +78,7 @@
 				<mj-column>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">

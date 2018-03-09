@@ -1,7 +1,8 @@
 <!-- <mj-section background-color="#FFFFFF" padding="20px 0 0 0">
-		<mj-column>
+		<mj-column vertical-align="top">
 			<mj-text
 				font-size="14px"
+				line-height="22px"
 				font-weight="bold"
 				align="center"
 				color="#787878">
@@ -12,7 +13,7 @@
 	</mj-section>
 
 	<mj-section background-color="#FFFFFF" padding="0">
-		<mj-column>
+		<mj-column vertical-align="top">
 			<! Latest from the Fair Trade Shop >
 			<mj-image
 				alt="Latest product in the Fair Trade Shop"
@@ -28,6 +29,7 @@
 			</mj-text>
 			<mj-text
 				font-size="14px"
+				line-height="22px"
 				font-weight="300"
 				color="#787878">
 				The POWERplus Salamander solar torch combines a very bright, long lasting, 3W LED flashlight with a 2,400 mAh emergency powerbank.<br /><br />
@@ -44,7 +46,7 @@
 	</mj-section>
 
 	<mj-section padding="0">
-		<mj-column>
+		<mj-column vertical-align="top">
 			<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 			<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>

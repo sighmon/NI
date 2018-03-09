@@ -1,5 +1,5 @@
 <mj-section background-color="#fad094">
-		<mj-column>
+		<mj-column vertical-align="top">
 			<!-- Footer left -->
 				<mj-image
 					align="left"
@@ -12,6 +12,7 @@
 				</mj-image>
 				<mj-text
 					font-size="12px"
+					line-height="20px"
 					font-weight="300">
 					New Internationalist Publications Pty Ltd<br />
 					172 Gilles Street, Adelaide 5000, Australia.<br />
@@ -23,6 +24,7 @@
 				<% unless local_assigns[:reason].nil? %>
 					<mj-text
 						font-size="12px"
+						line-height="20px"
 						font-weight="300">
 						<%= reason %>
 					</mj-text>
@@ -30,6 +32,7 @@
 				<% unless local_assigns[:unsubscribe_links].nil? %>
 					<mj-text
 						font-size="12px"
+						line-height="20px"
 						font-weight="300">
 						<forwardtoafriend>Forward to a friend</forwardtoafriend><br />
 						<preferences>Update your preferences</preferences><br />
@@ -37,11 +40,12 @@
 					</mj-text>
 				<% end %>
 		</mj-column>
-		<mj-column>
+		<mj-column vertical-align="top">
 			<!-- Footer right -->
 				<mj-text
 					padding-top="36px"
 					font-size="12px"
+					line-height="20px"
 					font-weight="300">
 					<strong>Don't forget our</strong>:<br />
 					Shop: <a href="http://www.newint.com.au/shop" style="color:inherit;">newint.com.au/shop</a><br />
@@ -64,7 +68,7 @@
 	</mj-section>
 
 	<mj-section padding="0">
-		<mj-column>
+		<mj-column vertical-align="top">
 			<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 			<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
 		</mj-column>

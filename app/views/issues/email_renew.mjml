@@ -1,20 +1,23 @@
 <mjml>
+	<mj-head>
+		<mj-preview><%= "The #{@issue.release.strftime("%B %Y")} issue of New Internationalist has been published: #{@issue.title}" %></mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px">
 						<%= link_to "#{@issue.title} - #{@issue.release.strftime("%B %Y")}", issue_url(@issue), style: 'color:inherit;' %>
 					</mj-text>
 				</mj-column>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px" align="right">
 						No images? <webversion>Click here</webversion>
 					</mj-text>
 				</mj-column>
 			</mj-section>
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-image 
 						width="250"
 						alt="New Internationalist"
@@ -30,7 +33,7 @@
 				</mj-column>
 			</mj-section>
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 
 					<mj-text
 						font-size="22px" 
@@ -43,6 +46,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -59,16 +63,17 @@
 			</mj-section>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
 				</mj-column>
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -79,7 +84,7 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Cover -->
 					<mj-image
 						alt="NI <%= @issue.number %> - <%= @issue.title %>"
@@ -91,6 +96,7 @@
 					<!-- Welcome -->
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -107,6 +113,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -118,6 +125,7 @@
 				<% if not @issue.email_text.blank? %>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878"
@@ -130,17 +138,18 @@
 			</mj-section>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
 				</mj-column>
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -151,6 +160,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -166,16 +176,17 @@
 			</mj-section>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
 				</mj-column>
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -192,7 +203,7 @@
 			</mj-section>
 			<mj-section background-color="#FFFFFF" padding="0">
 				<% end %>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Feature article -->
 				<% if article.first_image %>
 					<mj-image
@@ -210,6 +221,7 @@
 					</mj-text>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -222,7 +234,7 @@
 		<% end %>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
@@ -230,9 +242,10 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -249,7 +262,7 @@
 			</mj-section>
 			<mj-section background-color="#FFFFFF" padding="0">
 				<% end %>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Regular article -->
 				<% if article.first_image %>
 					<mj-image
@@ -267,6 +280,7 @@
 					</mj-text>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -279,7 +293,7 @@
 		<% end %>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
@@ -287,9 +301,10 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -306,7 +321,7 @@
 			</mj-section>
 			<mj-section background-color="#FFFFFF" padding="0">
 				<% end %>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Regular article -->
 				<% if article.first_image %>
 					<mj-image
@@ -324,6 +339,7 @@
 					</mj-text>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -336,7 +352,7 @@
 		<% end %>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
@@ -344,9 +360,10 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -363,7 +380,7 @@
 			</mj-section>
 			<mj-section background-color="#FFFFFF" padding="0">
 				<% end %>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Regular article -->
 				<% if article.first_image %>
 					<mj-image
@@ -381,6 +398,7 @@
 					</mj-text>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -393,7 +411,7 @@
 		<% end %>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
@@ -401,9 +419,10 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -420,7 +439,7 @@
 			</mj-section>
 			<mj-section background-color="#FFFFFF" padding="0">
 				<% end %>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Agenda articles -->
 					<mj-text
 						font-size="18px"
@@ -431,6 +450,7 @@
 					</mj-text>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -443,7 +463,7 @@
 		<% end %>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
@@ -451,9 +471,10 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -462,6 +483,7 @@
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: [username,fallback=oops]
@@ -470,7 +492,7 @@
 			</mj-section>
 
 			<mj-section background-color="#FFFFFF" padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- iOS -->
 					<mj-image
 						alt="Apple iOS application for iPhone, iPad and iPod Touch"
@@ -479,13 +501,14 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
 						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
 					</mj-text>
 				</mj-column>
-				<mj-column>
+				<mj-column vertical-align="top">
 					<!-- Android -->
 					<mj-image
 						alt="Google Play application for Android tablets and phones"
@@ -494,6 +517,7 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						padding="0px 25px"
 						color="#787878">
@@ -503,7 +527,7 @@
 			</mj-section>
 
 			<mj-section padding="0">
-				<mj-column>
+				<mj-column vertical-align="top">
 					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
 					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
 					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>

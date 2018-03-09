@@ -1,4 +1,7 @@
 <mjml>
+	<mj-head>
+		<mj-preview>New Internationalist magazine - thanks for creating an account!</mj-preview>
+	</mj-head>
 	<mj-body>
 		<mj-container background-color="#E6E6E6">
 			<mj-section padding="0">
@@ -43,6 +46,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						<%= @greeting %> <%= @user.username %>,<br /><br />
@@ -59,6 +63,7 @@
 
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						If you come across any problems, simply hit 'reply' to this email and we'll get back to you as soon as we can.<br /><br />
@@ -89,6 +94,7 @@
 				<mj-column>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -137,6 +143,7 @@
 				<mj-column>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#787878">
@@ -145,6 +152,7 @@
 					<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: <%= @user.username %>
@@ -162,6 +170,7 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
@@ -176,6 +185,7 @@
 					</mj-image>
 					<mj-text
 						font-size="14px"
+						line-height="22px"
 						font-weight="300"
 						color="#787878">
 						Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
