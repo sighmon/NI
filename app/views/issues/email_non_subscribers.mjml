@@ -213,6 +213,7 @@
 				<% end %>
 					<mj-text
 						font-size="18px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#606b75">
@@ -272,6 +273,7 @@
 				<% end %>
 					<mj-text
 						font-size="18px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#606b75">
@@ -331,6 +333,7 @@
 				<% end %>
 					<mj-text
 						font-size="18px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#606b75">
@@ -390,6 +393,7 @@
 				<% end %>
 					<mj-text
 						font-size="18px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#606b75">
@@ -442,6 +446,7 @@
 					<!-- Agenda articles -->
 					<mj-text
 						font-size="18px"
+						line-height="22px"
 						font-weight="bold"
 						align="center"
 						color="#606b75">
