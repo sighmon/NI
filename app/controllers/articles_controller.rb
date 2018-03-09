@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
    
-  skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share]
+  skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share, :popular]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
@@ -122,12 +122,13 @@ class ArticlesController < ApplicationController
       format.html # show.html.erb
       
       format.json { render json: @popular_articles.to_json(
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id],
-        :include => {
-          :images => {},
-          :categories => { :only => [:name, :colour, :id] }
-        }
-      ) }
+      :only => [:title, :teaser, :keynote, :id, :issue_id],
+        # :include => {
+        #   :images => {},
+        #   :categories => { :only => [:name, :colour, :id] }
+        # },
+        :methods => [:total_guest_passes_use_count, :popular_guest_pass_key, :first_image]
+      ), callback: params[:callback] }
     end
   end
 

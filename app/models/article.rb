@@ -81,6 +81,11 @@ class Article < ActiveRecord::Base
     GuestPass.find_or_create_by(:user_id => User.find_by_username("popular").id, :article_id => self.id)
   end
 
+  def popular_guest_pass_key
+    # Used in the JSON feed for newint.com.au
+    popular_guest_pass.key
+  end
+
   def previous
     my_index = self.issue.ordered_articles.find_index(self)
    
