@@ -178,7 +178,16 @@ class HomeController < ApplicationController
       end
       
       if not @instagram_error and response and response.code == 200
-        JSON.parse(response.body)["user"]["media"]["nodes"]
+        instagram_body = JSON.parse(response.body)
+        begin
+          # TODO: fix this
+          return instagram_body["graphql"]["user"]["media"]["nodes"]
+        rescue Exception => e
+          @instagram_error = e
+          return nil
+        end
+      else
+        nil
       end
     end
   end
