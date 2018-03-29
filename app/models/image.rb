@@ -34,7 +34,12 @@ class Image < ActiveRecord::Base
       options = {}
     end
 
-    response = HTTParty.get(uri)
+    begin
+      response = HTTParty.get(uri)
+    rescue Exception => e
+      logger.warn "Error: " + e.to_s
+      response = Net::HTTPNotFound.new('1.1', 404, nil)
+    end
 
     if response.code >= 200 and response.code < 400
       # image_as_string = Base64.decode64(response.body)
