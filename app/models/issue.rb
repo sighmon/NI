@@ -100,6 +100,7 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/mark-engler/") +
       articles_of_category("/columns/steve-parry/") + 
       articles_of_category("/columns/kate-smurthwaite/") + 
+      articles_of_category("/columns/omar-hamdi/") + 
       articles_of_category("/columns/chris-coltrane/")
       ).sort_by(&:publication)
   end
@@ -116,6 +117,7 @@ class Issue < ActiveRecord::Base
       articles_of_category("/columns/mark-engler/") -
       articles_of_category("/columns/steve-parry/") - 
       articles_of_category("/columns/kate-smurthwaite/") -
+      articles_of_category("/columns/omar-hamdi/") -
       articles_of_category("/columns/chris-coltrane/") -
       articles_of_category("/video/")
       ).sort_by(&:publication)
