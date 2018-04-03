@@ -9,6 +9,8 @@
 #   # asset_host = Rails.env.production? ? ENV['NI_APP_HOST'] : 'localhost:3000'
 # end
 
-# Mjml.setup do |config|
-#   config.template_language = :erb # :erb (default), :slim, :haml, or any other you are using
-# end
+Mjml.setup do |config|
+  # config.template_language = :erb # :erb (default), :slim, :haml, or any other you are using
+  # Default is `false` (errors suppressed), set to `true` to enable error raising
+  config.raise_render_exception = true
+end
