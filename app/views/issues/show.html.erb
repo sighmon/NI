@@ -97,7 +97,7 @@
       <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), :class => 'btn btn-default' %></p>
     <% end %>
     <% if not current_user.try(:subscriber?) %>
-      <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", new_issue_purchase_path(@issue), :class => 'btn btn-success' %></p>
+      <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success' %></p>
     <% end %>
   </div>
   <div class="col-sm-8">
