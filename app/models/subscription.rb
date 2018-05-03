@@ -24,12 +24,22 @@ class Subscription < ActiveRecord::Base
   end
 
   def expiry_date
-    if was_recurring? and refunded_on.nil?
+    if paper_only
+      # Free 3 month trial for paper only subscribers
+      # TODO: work out if this is too confusing for subscribers...
+      return (valid_from + 3.months)
+    elsif was_recurring? and refunded_on.nil?
       return (valid_from + duration.months)
     elsif not refunded_on.nil?
       return refunded_on
     else
       return (cancellation_date or (valid_from + duration.months))
+    end
+  end
+
+  def expiry_date_paper_only
+    if paper_only
+      return (valid_from + duration.months)
     end
   end
 
@@ -75,15 +85,16 @@ class Subscription < ActiveRecord::Base
     special = options[:special] or false
     autodebit = options[:autodebit] or false
     paper = options[:paper] or false
+    paper_only = options[:paper_only] or false
     institution = options[:institution] or false
     if autodebit
         case duration
         when 3
-            price = Settings.subscription_price * duration * 15 / 18
+          price = Settings.subscription_price * duration * 15 / 18
         when 6
-            price = Settings.subscription_price * duration * 25 / 36
+          price = Settings.subscription_price * duration * 25 / 36
         when 12
-            price = Settings.subscription_price * duration * 40 / 72
+          price = Settings.subscription_price * duration * 40 / 72
         end
     else
         case duration
@@ -121,6 +132,17 @@ class Subscription < ActiveRecord::Base
         price += 13000
       elsif not autodebit and not paper
         price += 17000
+      end
+    end
+    if paper_only
+      # Paper only price $88
+      case duration
+      when 3
+        price = Settings.subscription_price * duration * 11 / 36
+      when 6
+        price = Settings.subscription_price * duration * 22 / 36
+      when 12
+        price = Settings.subscription_price * duration * 88 / 72
       end
     end
     return price

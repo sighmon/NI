@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617030311) do
+ActiveRecord::Schema.define(version: 20180419053650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 20160617030311) do
     t.string   "paypal_postal_code",       limit: 255
     t.boolean  "paper_copy"
     t.string   "paypal_country_code",      limit: 255
+    t.boolean  "paper_only"
   end
 
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree

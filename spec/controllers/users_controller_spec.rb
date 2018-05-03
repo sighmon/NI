@@ -19,6 +19,7 @@ describe UsersController, :type => :controller do
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["expiry"]).not_to eq("")
         expect(JSON.parse(response.body)["expiry"].to_date).to eq(user.expiry_date.to_date)
+        # TODO: Write expiry test for paper & paper_only
         expect(JSON.parse(response.body)["id"]).to eq(user.id)
         expect(JSON.parse(response.body)["username"]).to eq(user.username)
       end

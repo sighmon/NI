@@ -98,12 +98,14 @@ class User < ActiveRecord::Base
     is_recurring? 'is_recurring'
     was_recurring? 'was_recurring'
     has_paper_copy? 'has_paper_copy'
+    has_paper_only? 'has_paper_only'
     institution?
 
     last_subscription_including_cancelled :paypal_first_name => 'paypal_first_name'
     last_subscription_including_cancelled :paypal_last_name => 'paypal_last_name'
     last_subscription_including_cancelled :paypal_email => 'paypal_email'
     last_subscription_including_cancelled :paper_copy => 'paper_copy'
+    last_subscription_including_cancelled :paper_only => 'paper_only'
     last_subscription_including_cancelled :purchase_date => 'purchase_date'
     last_subscription_including_cancelled :valid_from => 'valid_from'
     last_subscription_including_cancelled :duration
@@ -153,6 +155,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def paper_only_subscription_valid?
+    return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.is_current?}.include?(true)
+  end
+
   def uk_user?
     not uk_id.nil?
   end
@@ -184,6 +190,10 @@ class User < ActiveRecord::Base
     return self.current_subscriptions.collect{|s| s.paper_copy}.include?(true)
   end
 
+  def has_paper_only?
+    return self.current_subscriptions.collect{|s| s.paper_only}.include?(true)
+  end
+
   def expiry_date
     if uk_user?
       # Check for local subscriptions
@@ -208,6 +218,10 @@ class User < ActiveRecord::Base
       end
       return host.subscriptions.collect{|s| s.expiry_date}.sort.last
     end
+  end
+
+  def expiry_date_paper_only
+    return self.current_subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
   end
 
   def expiry_date_including_ios(request)
@@ -295,6 +309,9 @@ class User < ActiveRecord::Base
     end
     if uk_id
       t += " (UK)"
+    end
+    if has_paper_only?
+      t = "Paper Subscriber"
     end
     "#{t}"
   end

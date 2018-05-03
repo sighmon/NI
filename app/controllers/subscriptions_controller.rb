@@ -57,6 +57,12 @@ class SubscriptionsController < ApplicationController
       @paper = false
     end
 
+    if params[:paper_only] == "1"
+      @paper_only = true
+    else
+      @paper_only = false
+    end
+
     if params[:institution] == "1"
       @institution = true
     else
@@ -64,9 +70,10 @@ class SubscriptionsController < ApplicationController
     end
 
     @express_purchase_subscription_duration = params[:duration].to_i
-    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, institution: @institution, special: params[:special]})
+    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, paper_only: @paper_only, institution: @institution, special: params[:special]})
     session[:express_autodebit] = @autodebit
     session[:express_paper] = @paper
+    session[:express_paper_only] = @paper_only
     session[:express_institution] = @institution
     session[:express_purchase_price] = @express_purchase_price
     session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
@@ -74,12 +81,22 @@ class SubscriptionsController < ApplicationController
     if @autodebit
       # Autodebit setup
       if @paper == true
-        # Paper & digital
-        if @institution == true
-          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper institution subscription to New Internationalist Magazine."
+        if @paper_only
+          # Paper only
+          if @institution == true
+            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for a Paper institution subscription to New Internationalist Magazine."
+          else
+            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for a Paper subscription to New Internationalist Magazine."
+          end
         else
-          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
+          # Paper & digital
+          if @institution == true
+            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper institution subscription to New Internationalist Magazine."
+          else
+            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
+          end
         end
+
       else
         # Just digital
         if @institution == true
@@ -101,10 +118,19 @@ class SubscriptionsController < ApplicationController
       redirect_to response.checkout_url if response.valid?
     else
       if @paper == true
-        if @institution == true
-          payment_description = "New Internationalist Magazine - institution subscription to both the digital edition and the paper edition."
+        if @paper_only
+          # Paper only
+          if @institution == true
+            payment_description = "New Internationalist Magazine - institution subscription to the paper edition."
+          else
+            payment_description = "New Internationalist Magazine - subscription to the paper edition."
+          end
         else
-          payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
+          if @institution == true
+            payment_description = "New Internationalist Magazine - institution subscription to both the digital edition and the paper edition."
+          else
+            payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
+          end
         end
       else
         if @institution == true
@@ -347,6 +373,7 @@ class SubscriptionsController < ApplicationController
     @subscription.paypal_country_code = session[:express_country_code]
     @subscription.paypal_postal_code = session[:express_postal_code]
     @subscription.paper_copy = session[:express_paper]
+    @subscription.paper_only = session[:express_paper_only]
   end
 
   def express_purchase_options
@@ -360,7 +387,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.fetch(:subscription, {}).permit(:valid_from, :duration, :cancellation_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund, :purchase_date, :price_paid, :paper_copy)
+    params.fetch(:subscription, {}).permit(:valid_from, :duration, :cancellation_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund, :purchase_date, :price_paid, :paper_copy, :paper_only)
   end
   
 end

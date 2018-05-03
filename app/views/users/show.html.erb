@@ -47,6 +47,14 @@
 			<dt><strong>Note:</strong></dt>
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
+		<% if @user.has_paper_only? %>
+			<dt><strong>Paper expiry date:</strong></dt>
+			<dd><% begin %>
+				<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+			<% rescue NoMethodError %>
+				No current subscription.
+			<% end %></dd>
+		<% end %>
 	<% end %>
 	<% end %>
 </dl>
