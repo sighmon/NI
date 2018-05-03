@@ -316,6 +316,10 @@ class Issue < ActiveRecord::Base
 
       end
 
+      # Fix bad blockquotes from Drupal
+      article_created.body = article_created.body.sub(/<div class="blockquote quote--(.*?)">(.*?)<\/div>/){"<blockquote class='pull-" + $1 + "'><p>" + $2 + "</p></blockquote>"}
+      article_created.save
+
     else
       # It's already imported, so don't overwrite.
 
