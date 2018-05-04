@@ -4,22 +4,26 @@
 </div>
 
 <dl class="dl-horizontal">
-	<% if current_user == @user %>
-		<% if not @user.parent %>
-			<dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-			<dd><%= @user.email %></dd>
-		<% end %>
-		<dt><strong>Account type:</strong></dt>
+<% if current_user == @user %>
+	<% if not @user.parent %>
+		<dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+		<dd><%= @user.email %></dd>
+	<% end %>
+	<dt><strong>Account type:</strong></dt>
 	<dd><%= @user.user_type %></dd>
 	<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
-		<dt><strong>Expiry date:</strong></dt>
+		<% if @user.has_paper_only? %>
+			<dt><strong>Digital trial expires:</strong></dt>
+		<% else %>
+			<dt><strong>Expiry date:</strong></dt>
+		<% end %>
 		<dd><% begin %>
 			<%= @user.expiry_date.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
 	<% end %>
-	<% if not @user.parent %>
+	<% if not @user.parent and not @user.has_paper_only? %>
 		<% if @user.subscriber? and @user.is_recurring? and @user.has_paper_copy? %>
 			<dt></dt>
 			<dd>(Automatic renewal, Digital + Paper copy)</dd>
@@ -32,8 +36,10 @@
 			<dt></dt>
 			<dd>(Automatic renewal)</dd>
 			<dt></dt>
-			<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
-		<% elsif @user.subscriber? %>
+			<% if not @user.has_paper_only? %>
+				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+			<% end %>
+		<% elsif @user.subscriber? and not @user.has_paper_only? %>
 		<dt></dt>
 		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-default' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
 		<% elsif @user.subscription_lapsed? %>
@@ -47,16 +53,32 @@
 			<dt><strong>Note:</strong></dt>
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
-		<% if @user.has_paper_only? %>
-			<dt><strong>Paper expiry date:</strong></dt>
-			<dd><% begin %>
-				<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
-			<% rescue NoMethodError %>
-				No current subscription.
-			<% end %></dd>
+	<% end %>
+	<% if @user.has_paper_only? %>
+		<!-- TODO: Add this into the tests above properly -->
+		<dt><strong>Paper subscription:</strong></dt>
+		<dd><% begin %>
+			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+		<% rescue NoMethodError %>
+			No current subscription.
+		<% end %></dd>
+		<% if @user.subscriber? and @user.is_recurring? %>
+			<dt></dt>
+			<dd>(Automatic renewal)</dd>
+			<dt></dt>
+			<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+		<% elsif @user.subscriber? %>
+			<dt></dt>
+			<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-default' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
+		<% elsif @user.subscription_lapsed? %>
+			<dt></dt>
+			<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
+			<% else %>
+			<dt></dt>
+			<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
 		<% end %>
 	<% end %>
-	<% end %>
+<% end %>
 </dl>
 
 <% if (@user == current_user) and current_user.institution %>

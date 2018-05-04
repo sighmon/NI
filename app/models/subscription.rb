@@ -26,8 +26,7 @@ class Subscription < ActiveRecord::Base
   def expiry_date
     if paper_only
       # Free 3 month trial for paper only subscribers
-      # TODO: work out if this is too confusing for subscribers...
-      return (valid_from + 3.months)
+      return (cancellation_date or (valid_from + 3.months))
     elsif was_recurring? and refunded_on.nil?
       return (valid_from + duration.months)
     elsif not refunded_on.nil?
@@ -136,14 +135,7 @@ class Subscription < ActiveRecord::Base
     end
     if paper_only
       # Paper only price $88
-      case duration
-      when 3
-        price = Settings.subscription_price * duration * 11 / 36
-      when 6
-        price = Settings.subscription_price * duration * 22 / 36
-      when 12
-        price = Settings.subscription_price * duration * 88 / 72
-      end
+      price = Settings.subscription_price * duration * 88 / 72
     end
     return price
   end

@@ -57,8 +57,10 @@ class SubscriptionsController < ApplicationController
       @paper = false
     end
 
-    if params[:paper_only] == "1"
+    if params[:paper] == "2" or params[:paper_only] == "1"
       @paper_only = true
+      # To handle /subscriptions/new
+      @paper = true
     else
       @paper_only = false
     end

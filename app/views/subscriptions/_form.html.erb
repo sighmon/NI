@@ -1,6 +1,6 @@
 <% if @cancel_subscription %>
 
-	<% if @user.subscriber? %>
+	<% if @user.subscriber? and not @subscription.paper_only? %>
 		<dl class="dl-horizontal">
 			<dt>Expiry date:</dt> 
 		<% begin %>
@@ -9,6 +9,17 @@
 			<dd>No current subscription.</dd>
 		<% end %>
 		</dl>
+	<% elsif @user.subscriber? %>
+		<% if @user.has_paper_only? %>
+		<dl class="dl-horizontal">
+			<dt>Subscription expires:</dt>
+			<dd><% begin %>
+				<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+			<% rescue NoMethodError %>
+				No current subscription.
+			<% end %></dd>
+		</dl>
+		<% end %>
 	<% end %>
 
 	<%= simple_form_for(@subscription) do |f| %>
@@ -111,12 +122,13 @@
 	  </dl>
 	  <hr />
 	  <h2>Paper edition?</h2>
-	  <p>Would you like a copy of the paper edition as well as the digital edition?</p>
 	  <dl class="dl-horizontal subscribe-options">
 	  	<dt><%= radio_button_tag 'paper', '1', 'false' %></dt>
-	  	<dd>Yes, paper copy too please.</dd>
+	  	<dd>Paper and digital editions.</dd>
+	  	<dt><%= radio_button_tag 'paper', '2', 'false' %></dt>
+	  	<dd>Paper edition only.</dd>
 	  	<dt><%= radio_button_tag 'paper', '0', 'true' %></dt>
-	  	<dd>No thanks, just a digital edition.</dd>
+	  	<dd>Digital edition only.</dd>
 	  </dl>
 	  <hr />
 	  <h2>Institution</h2>

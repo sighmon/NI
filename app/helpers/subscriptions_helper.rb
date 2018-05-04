@@ -12,28 +12,34 @@ module SubscriptionsHelper
             ) +
             content_tag(:tbody,
                 content_tag(:tr,
-                    content_tag(:td, "Ongoing Automatic debit subscription payment") +
+                    content_tag(:td, "Ongoing Automatic debit digital subscription") +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(6,autodebit: true))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true)))
                 ) +
     			content_tag(:tr,
-    				content_tag(:td, "Once-off subscription payment") +
+    				content_tag(:td, "Once-off digital subscription") +
     				content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false))) +
     				content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(6,autodebit: false))) +
     				content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: false)))
     			) +
                 content_tag(:tr,
-                    content_tag(:td, "Ongoing Automatic debit subscription payment, Digital + Paper") +
+                    content_tag(:td, "Ongoing Automatic debit subscription, Digital + Paper") +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(3,{autodebit: true, paper: true}))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(6,{autodebit: true, paper: true}))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: true, paper: true})))
                 ) +
                 content_tag(:tr,
-                    content_tag(:td, "Once-off subscription payment, Digital + Paper") +
+                    content_tag(:td, "Once-off subscription, Digital + Paper") +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(3,{autodebit: false, paper: true}))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(6,{autodebit: false, paper: true}))) +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: false, paper: true})))
+                ) +
+                content_tag(:tr,
+                    content_tag(:td, "Paper only subscription") +
+                    content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(3,{autodebit: false, paper: true, paper_only: true}))) +
+                    content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(6,{autodebit: false, paper: true, paper_only: true}))) +
+                    content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: false, paper: true, paper_only: true})))
                 ) +
                 content_tag(:tr,
                     content_tag(:td, "Institution automatic debit subscription payment") +
