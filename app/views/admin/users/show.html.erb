@@ -43,12 +43,16 @@
 	<dd><%= @user.sign_in_count %> <span class="author-note">(<%= @user.current_sign_in_at.try(:strftime,"%d %b, %Y") %> - <%= @user.current_sign_in_ip %>)</span></dd>
 	<dt><strong>Expiry date:</strong></dt>
 	<dd><%= user_expiry_as_string(@user) %><br />
-		<% if @user.is_recurring? and @user.has_paper_copy? %>
+		<% if @user.is_recurring? and @user.has_paper_copy? and not @user.has_paper_only? %>
 			(Automatic debit, Digital + Paper edition)
-		<% elsif @user.was_recurring? and @user.has_cancelled_recurring? %>
+		<% elsif @user.was_recurring? and @user.has_cancelled_recurring? and not @user.has_paper_only? %>
 			(Automatic debit - CANCELLED)
-		<% elsif @user.is_recurring? %>
+		<% elsif @user.is_recurring? and not @user.has_paper_only? %>
 			(Automatic debit)
+		<% elsif @user.is_recurring? and @user.has_paper_only? %>
+			(Automatic debit paper only)
+		<% elsif @user.has_paper_only? %>
+			(Paper only copy)
 		<% end %>
 	</dd>
 	<% if @payment_notifications.last %>

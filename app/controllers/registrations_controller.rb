@@ -7,6 +7,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  prepend_before_action :check_captcha, only: [:create]
+
   protected
 
   def configure_permitted_parameters
@@ -39,6 +41,15 @@ class RegistrationsController < Devise::RegistrationsController
   def send_analytics
     log_event('signup', 'complete', 'registration')
     log_fb_event(ENV['FACEBOOK_REGISTRATIONS_CONVERSION'], '0.00')
+  end
+
+  def check_captcha
+    unless verify_recaptcha
+      self.resource = resource_class.new sign_up_params
+      resource.validate # Look for any other validation errors besides Recaptcha
+      set_minimum_password_length
+      respond_with resource
+    end 
   end
 
 end

@@ -38,6 +38,9 @@ gem 'delayed_job_active_record'
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
 
+# reCAPTCHA to avoid spam sign-ups
+gem 'recaptcha', require: 'recaptcha/rails'
+
 # User role management via Cancan https://github.com/ryanb/cancan
 gem 'cancancan'
 
