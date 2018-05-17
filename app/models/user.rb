@@ -413,7 +413,9 @@ class User < ActiveRecord::Base
   end
 
   def self.update_admin_users_csv
-    Settings.users_csv = User.order(:email).all.to_comma()
+    Settings.users_csv = User.uncached do
+      User.order(:email).all.to_comma()
+    end
   end
 
   def self.find_by_whitelist(ip)
