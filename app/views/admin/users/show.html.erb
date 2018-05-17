@@ -55,6 +55,19 @@
 			(Paper only copy)
 		<% end %>
 	</dd>
+	<% if @user.has_paper_only? %>
+		<!-- Paper only -->
+		<dt><strong>Paper subscription:</strong></dt>
+		<dd><% begin %>
+			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+		<% rescue NoMethodError %>
+			No current subscription.
+		<% end %></dd>
+		<% if @user.subscriber? and @user.is_recurring? %>
+			<dt></dt>
+			<dd>(Automatic renewal)</dd>
+		<% end %>
+	<% end %>
 	<% if @payment_notifications.last %>
 		<dt>Last transaction:</dt>
 		<dd><%= @payment_notifications.last.transaction_type %> <span class="author-note">(<%= @payment_notifications.last.created_at.try(:strftime,"%d %b, %Y") %>)</span></dd>
