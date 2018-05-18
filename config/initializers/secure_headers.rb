@@ -35,7 +35,7 @@ SecureHeaders::Configuration.default do |config|
     # plugin_types: %w(application/x-shockwave-flash),
     script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net *.google.com *.gstatic.com),
     style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
-    upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
+    upgrade_insecure_requests: Rails.env.production?, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
   }
   # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.

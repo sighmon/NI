@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/actionpack-action_caching.git
-  revision: 985767a265820804fde51fb977e4d67aa87df358
+  revision: 52c0fc712035bcc80ba0cd4f8c82769c580b5d03
   specs:
     actionpack-action_caching (1.2.0)
       actionpack (>= 4.0.0, < 6)
@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails-observers.git
-  revision: c569dc1525259f5ab82cddf90958777473499997
+  revision: fb6b95509c3f1a50c973280ddc2b56648e33623f
   specs:
     rails-observers (0.2.0)
       activemodel (>= 4.2)
@@ -69,7 +69,7 @@ GEM
     activejob (5.1.4)
       activesupport (= 5.1.4)
       globalid (>= 0.3.6)
-    activemerchant (1.75.0)
+    activemerchant (1.78.0)
       activesupport (>= 3.2.14, < 6.x)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
@@ -86,7 +86,7 @@ GEM
       activerecord (>= 4.0)
       multi_json (~> 1.11, >= 1.11.2)
       rack (>= 1.5.2, < 3)
-      railties (>= 4.0, < 5.2)
+      railties (>= 4.0)
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -101,7 +101,7 @@ GEM
       nokogiri
     ansi (1.5.0)
     arel (8.0.0)
-    asset_sync (2.3.0)
+    asset_sync (2.4.0)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -110,17 +110,19 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
+    autoprefixer-rails (8.5.0)
+      execjs
     bcrypt (3.1.12)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    brakeman (4.3.0)
-    bootstrap (4.0.0.beta2.1)
+    bootstrap (4.0.0)
       autoprefixer-rails (>= 6.0.3)
-      popper_js (>= 1.12.3, < 2)
+      popper_js (>= 1.12.9, < 2)
       sass (>= 3.5.2)
+    brakeman (4.3.0)
     builder (3.2.3)
     bundler-audit (0.6.0)
       bundler (~> 1.2)
@@ -181,7 +183,7 @@ GEM
     elasticsearch-transport (5.0.5)
       faraday
       multi_json
-    erubi (1.7.0)
+    erubi (1.7.1)
     erubis (2.7.0)
     eventmachine (1.2.7)
     excon (0.62.0)
@@ -352,8 +354,8 @@ GEM
     fog-xml (0.1.3)
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
-    font-awesome-rails (4.7.0.2)
-      railties (>= 3.2, < 5.2)
+    font-awesome-rails (4.7.0.4)
+      railties (>= 3.2, < 6.0)
     formatador (0.2.5)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -484,6 +486,7 @@ GEM
       http-2 (= 0.9.0)
     netrc (0.11.0)
     newrelic_rpm (5.1.0.344)
+    nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     nori (1.1.5)
@@ -499,17 +502,17 @@ GEM
     platform-api (2.1.0)
       heroics (~> 0.0.23)
       moneta (~> 0.8.1)
-    popper_js (1.12.5)
+    popper_js (1.12.9)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.2)
-    rack (1.6.10)
+    rack (2.0.5)
     rack-cache (1.7.2)
       rack (>= 0.4)
     rack-mini-profiler (1.0.0)
       rack (>= 1.2.0)
-    rack-test (0.8.2)
+    rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.1.4)
       actioncable (= 5.1.4)
@@ -530,8 +533,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     rails-settings-cached (0.4.1)
       rails (>= 4.0.0)
     rails_12factor (0.0.3)
@@ -628,8 +631,7 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
-    secure_headers (5.0.5)
-      useragent (>= 0.15.0)
+    secure_headers (6.0.0)
     shellany (0.0.1)
     show_me_the_cookies (4.0.0)
       capybara (>= 2, < 4)
@@ -679,7 +681,6 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uri-js-rails (1.15.2)
-    useragent (0.16.10)
     warden (1.2.7)
       rack (>= 1.0)
     wasabi (2.5.1)
