@@ -5,6 +5,27 @@ GIT
     comma (3.0.4)
 
 GIT
+  remote: https://github.com/rails/actionpack-action_caching.git
+  revision: 985767a265820804fde51fb977e4d67aa87df358
+  specs:
+    actionpack-action_caching (1.2.0)
+      actionpack (>= 4.0.0, < 6)
+
+GIT
+  remote: https://github.com/rails/actionpack-page_caching.git
+  revision: cfcb9521168a82741f6af9e07ebc6dac153224fc
+  specs:
+    actionpack-page_caching (1.1.0)
+      actionpack (>= 4.0.0, < 6)
+
+GIT
+  remote: https://github.com/rails/rails-observers.git
+  revision: c569dc1525259f5ab82cddf90958777473499997
+  specs:
+    rails-observers (0.2.0)
+      activemodel (>= 4.2)
+
+GIT
   remote: https://github.com/sighmon/highlighter.js.git
   revision: 2cef55d2c5c6c903a9dd5f347671373f451dd120
   specs:
@@ -22,55 +43,54 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (2.3.6)
-    actionmailer (4.2.10)
-      actionpack (= 4.2.10)
-      actionview (= 4.2.10)
-      activejob (= 4.2.10)
+    actioncable (5.1.4)
+      actionpack (= 5.1.4)
+      nio4r (~> 2.0)
+      websocket-driver (~> 0.6.1)
+    actionmailer (5.1.4)
+      actionpack (= 5.1.4)
+      actionview (= 5.1.4)
+      activejob (= 5.1.4)
       mail (~> 2.5, >= 2.5.4)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
-    actionpack (4.2.10)
-      actionview (= 4.2.10)
-      activesupport (= 4.2.10)
-      rack (~> 1.6)
-      rack-test (~> 0.6.2)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-dom-testing (~> 2.0)
+    actionpack (5.1.4)
+      actionview (= 5.1.4)
+      activesupport (= 5.1.4)
+      rack (~> 2.0)
+      rack-test (>= 0.6.3)
+      rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionpack-action_caching (1.2.0)
-      actionpack (>= 4.0.0, < 6)
-    actionpack-page_caching (1.1.0)
-      actionpack (>= 4.0.0, < 6)
-    actionview (4.2.10)
-      activesupport (= 4.2.10)
+    actionview (5.1.4)
+      activesupport (= 5.1.4)
       builder (~> 3.1)
-      erubis (~> 2.7.0)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
+      erubi (~> 1.4)
+      rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (4.2.10)
-      activesupport (= 4.2.10)
-      globalid (>= 0.3.0)
-    activemerchant (1.78.0)
+    activejob (5.1.4)
+      activesupport (= 5.1.4)
+      globalid (>= 0.3.6)
+    activemerchant (1.75.0)
       activesupport (>= 3.2.14, < 6.x)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
       nokogiri (~> 1.4)
-    activemodel (4.2.10)
-      activesupport (= 4.2.10)
-      builder (~> 3.1)
-    activerecord (4.2.10)
-      activemodel (= 4.2.10)
-      activesupport (= 4.2.10)
-      arel (~> 6.0)
+    activemodel (5.1.4)
+      activesupport (= 5.1.4)
+    activerecord (5.1.4)
+      activemodel (= 5.1.4)
+      activesupport (= 5.1.4)
+      arel (~> 8.0)
     activerecord-deprecated_finders (1.0.4)
     activerecord-session_store (1.1.1)
       actionpack (>= 4.0)
       activerecord (>= 4.0)
       multi_json (~> 1.11, >= 1.11.2)
       rack (>= 1.5.2, < 3)
-      railties (>= 4.0)
-    activesupport (4.2.10)
+      railties (>= 4.0, < 5.2)
+    activesupport (5.1.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     acts_as_list (0.9.12)
       activerecord (>= 3.0)
@@ -80,8 +100,8 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     ansi (1.5.0)
-    arel (6.0.4)
-    asset_sync (2.4.0)
+    arel (8.0.0)
+    asset_sync (2.3.0)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -97,6 +117,10 @@ GEM
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     brakeman (4.3.0)
+    bootstrap (4.0.0.beta2.1)
+      autoprefixer-rails (>= 6.0.3)
+      popper_js (>= 1.12.3, < 2)
+      sass (>= 3.5.2)
     builder (3.2.3)
     bundler-audit (0.6.0)
       bundler (~> 1.2)
@@ -122,7 +146,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    commonjs (0.2.7)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     curb (0.9.4)
@@ -158,6 +181,7 @@ GEM
     elasticsearch-transport (5.0.5)
       faraday
       multi_json
+    erubi (1.7.0)
     erubis (2.7.0)
     eventmachine (1.2.7)
     excon (0.62.0)
@@ -328,6 +352,8 @@ GEM
     fog-xml (0.1.3)
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
+    font-awesome-rails (4.7.0.2)
+      railties (>= 3.2, < 5.2)
     formatador (0.2.5)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -355,7 +381,6 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    grease (0.3.1)
     growl (1.0.3)
     guard (2.14.2)
       formatador (>= 0.2.4)
@@ -422,14 +447,6 @@ GEM
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    less (2.6.0)
-      commonjs (~> 0.2.7)
-    less-rails (3.0.0)
-      actionpack (>= 4.0)
-      grease
-      less (~> 2.6.0)
-      sprockets (> 2, < 4)
-      tilt
     libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -482,6 +499,7 @@ GEM
     platform-api (2.1.0)
       heroics (~> 0.0.23)
       moneta (~> 0.8.1)
+    popper_js (1.12.5)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -491,29 +509,29 @@ GEM
       rack (>= 0.4)
     rack-mini-profiler (1.0.0)
       rack (>= 1.2.0)
-    rack-test (0.6.3)
-      rack (>= 1.0)
-    rails (4.2.10)
-      actionmailer (= 4.2.10)
-      actionpack (= 4.2.10)
-      actionview (= 4.2.10)
-      activejob (= 4.2.10)
-      activemodel (= 4.2.10)
-      activerecord (= 4.2.10)
-      activesupport (= 4.2.10)
-      bundler (>= 1.3.0, < 2.0)
-      railties (= 4.2.10)
-      sprockets-rails
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.9)
-      activesupport (>= 4.2.0, < 5.0)
-      nokogiri (~> 1.6)
-      rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.4)
-      loofah (~> 2.2, >= 2.2.2)
-    rails-observers (0.1.5)
-      activemodel (>= 4.0)
+    rack-test (0.8.2)
+      rack (>= 1.0, < 3)
+    rails (5.1.4)
+      actioncable (= 5.1.4)
+      actionmailer (= 5.1.4)
+      actionpack (= 5.1.4)
+      actionview (= 5.1.4)
+      activejob (= 5.1.4)
+      activemodel (= 5.1.4)
+      activerecord (= 5.1.4)
+      activesupport (= 5.1.4)
+      bundler (>= 1.3.0)
+      railties (= 5.1.4)
+      sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.2)
+      actionpack (~> 5.x, >= 5.0.1)
+      actionview (~> 5.x, >= 5.0.1)
+      activesupport (~> 5.x)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.0.3)
+      loofah (~> 2.0)
     rails-settings-cached (0.4.1)
       rails (>= 4.0.0)
     rails_12factor (0.0.3)
@@ -521,9 +539,10 @@ GEM
       rails_stdout_logging
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.5)
-    railties (4.2.10)
-      actionpack (= 4.2.10)
-      activesupport (= 4.2.10)
+    railties (5.1.4)
+      actionpack (= 5.1.4)
+      activesupport (= 5.1.4)
+      method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.19.0)
@@ -541,6 +560,8 @@ GEM
       trollop (~> 2.1)
     recaptcha (4.8.0)
       json
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     ref (2.0.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -647,11 +668,6 @@ GEM
     tilt (2.0.8)
     timecop (0.9.1)
     trollop (2.1.2)
-    twitter-bootstrap-rails (3.2.2)
-      actionpack (>= 3.1)
-      execjs (>= 2.2.2, >= 2.2)
-      less-rails (>= 2.5.0)
-      railties (>= 3.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.10)
@@ -669,6 +685,9 @@ GEM
     wasabi (2.5.1)
       httpi (~> 1.0)
       nokogiri (>= 1.4.0)
+    websocket-driver (0.6.5)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.3)
     xml-simple (1.1.5)
     xpath (3.0.0)
       nokogiri (~> 1.8)
@@ -678,8 +697,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack-action_caching
-  actionpack-page_caching
+  actionpack-action_caching!
+  actionpack-page_caching!
   activemerchant
   activerecord-deprecated_finders
   activerecord-session_store
@@ -687,6 +706,7 @@ DEPENDENCIES
   asset_sync
   better_errors (= 1.1.0)
   binding_of_caller
+  bootstrap (~> 4.0.0.beta)
   brakeman
   bundler-audit
   byebug
@@ -705,6 +725,7 @@ DEPENDENCIES
   figaro
   flamegraph
   fog
+  font-awesome-rails
   formtastic
   google-analytics-rails
   google-api-client (= 0.8.6)
@@ -720,7 +741,6 @@ DEPENDENCIES
   kaminari
   kaminari-bootstrap
   kgio
-  less-rails
   libv8
   memcachier
   meta-tags
@@ -732,14 +752,16 @@ DEPENDENCIES
   platform-api
   rack-cache
   rack-mini-profiler
-  rails (= 4.2.10)
-  rails-observers
+  rails (= 5.1.4)
+  rails-controller-testing
+  rails-observers!
   rails-settings-cached (= 0.4.1)
   rails_12factor
   rails_serve_static_assets
   rb-fsevent
   rb-inotify
   recaptcha
+  record_tag_helper
   retina_image_tag!
   rmagick
   rpush
@@ -758,7 +780,6 @@ DEPENDENCIES
   therubyracer
   thin
   timecop
-  twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   unicorn
   uri-js-rails

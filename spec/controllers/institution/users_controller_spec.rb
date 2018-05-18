@@ -118,7 +118,7 @@ describe Institution::UsersController, :type => :controller do
           # specifies that the Institution::User created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          child_user_params = FactoryGirl.attributes_for(:child_user)
+          child_user_params = FactoryBot.attributes_for(:child_user)
           # TOFIX: Ugly hack merging uk_id & uk_expiry to "" insetad of nil
           child_user_action_params = ActionController::Parameters.new(child_user_params.merge({uk_id: "",uk_expiry: ""})).permit(:username, :email, :uk_id, :uk_expiry, :password, :password_confirmation)
           # byebug
@@ -127,14 +127,14 @@ describe Institution::UsersController, :type => :controller do
         end
 
         it "assigns the requested user as @user" do
-          user = FactoryGirl.create(:user)
-          put :update, params: {:id => user.to_param, :user => FactoryGirl.attributes_for(:user)}
+          user = FactoryBot.create(:user)
+          put :update, params: {:id => user.to_param, :user => FactoryBot.attributes_for(:user)}
           expect(assigns(:user)).to eq(user)
         end
 
         it "redirects to the parent" do
           user = child
-          put :update, params: {:id => user.to_param, :user => FactoryGirl.attributes_for(:child_user)}
+          put :update, params: {:id => user.to_param, :user => FactoryBot.attributes_for(:child_user)}
           expect(response).to redirect_to(parent)
         end
       end

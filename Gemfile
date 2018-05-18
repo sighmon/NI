@@ -5,10 +5,10 @@ ruby '2.4.2'
 gem 'rails', '5.1.4'
 
 #### Rails 4 upgrade
-gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+# gem 'protected_attributes'
+gem 'rails-observers', git: 'https://github.com/rails/rails-observers.git'
+gem 'actionpack-page_caching', git: 'https://github.com/rails/actionpack-page_caching.git'
+gem 'actionpack-action_caching', git: 'https://github.com/rails/actionpack-action_caching.git'
 gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
 
