@@ -45,7 +45,7 @@ SecureHeaders::Configuration.default do |config|
   })
   config.hpkp = {
     report_only: false,
-    max_age: 60.days.to_i,
+    max_age: 30.days.to_i,
     include_subdomains: true,
     report_uri: "#{ENV["REPORT_URI_PKP"]}",
     pins: [
