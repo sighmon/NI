@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: May, 2018
+Period: June, 2018
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  3 May 2018
+  4 June 2018
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlrrFhMACgkQtsnG2UL7
-GPlzMRAA2cfZUFDXbFkkLH65WXx3xr+qkVVdsRkimO8/v/P5TT2xaNxveJBm6zXT
-itzdxpPMkzV3G/aYydB/g1UWXSm5tU0bYwsDRw0VwsWomSWbqer2aONeq4em5YYS
-UHOGceoCa78EN01lKxl3ZqvVKSoCwOj3BaowTqK0tsePzC8Ce8qkSw7GTVm0QuEz
-jGZon7tje/pYoHQyoSWQ1njRIcBWrhZZGMZdd5fWrVEX/6BnK7CsTAYn8/jtQwLV
-61bqd/usrpLPch84+VLo4f/yDKGXxIDkIZhEXmxHYmWo3hpoVISC+Cxz+C6D0/9a
-NvfeCSoGaJ0HuMFBaFSlHWIOtjeLYjqgt21117K01g5He6Ph4dQl2MMUQhUGP9mi
-pcp5t0nbP8XZLq1yzg++0nU+vYkMe5p4yC9FbKtmGo7sAj02Syk/BGLVWzXzhubV
-RJwvt0BKtrFpSWqP9BVxcwTGkiPOgnNAIBIToxF8EPOMVSsNMNiNXE2RG0uLqExg
-tIitNNS5MaVvHYgWV85/7onn/NowN8pRAkRYUak4tjU61abW9JtyvoI0K3mBbEoY
-+gyTByTk7ffrpW8yLRpugh0p1IDvUgaOlxOHei9MOJzcstshvkhw1w4pe+EhSIDC
-HM26tHCY48gv5xP+sVqCKsa/hCjROfgUfmPrqFd1k8CyQ7tHOR4=
-=AFlK
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlsUVwEACgkQtsnG2UL7
+GPkunxAAmZmlTgQvZEiOdThXxTiPMK5VXb3Swq6AA1KFrst7Zz8q26X4GGMRYHXw
+z2kZYJ5XbYdr/4WKYjT3ni6bna17TbeIpaB2LwvV6PNHBkvH6VtNf6zvJPaYFgei
+rdvAvA5xIoNEoxIcJXTwywI3kaNDOFlXBMXf0OE7q/Tg1YYDY2+EtnxDJ7pZVCT7
+w7taRyAK9Y2b7DFDURUk3P6dxRGW0eOc8pW72DA68R4ck5frPk2bO5b6MrNFUHGH
+QmHEd30KrXQ2mKU1Psrn/lo/Pzgwrvb/fVotwuTQGJz+xR6ETcIVCs+WfUrREj2m
+OLAsJ+2gXQKXHbrgaYGgJNur6FkCBAExxOexgg0LTBfn0WAbiXrlDiA+ngIiUQMS
+StVxokJaoVcF2WRke4+u9tPgwWmSmgCxksxL2k+QFF6N6RZh9VyPX4urwAedR/a2
+OmNWLJSN9HgiAeGrL/nh28jnqsKBgW+gfik/hsKUIJX234MFC5TxCZVWtvofVIsc
+bGVEwVCrqc//FueFLpjk+foohzwfHyy8XBSG40aBB9xCFxD0PYHDJbptIkdpEGQT
+T/KJDKU5h78zxwxNwVH8OJZSUrwhOtK7Fe/F9hkG5olyEtuocdSl5G1VL+65V6es
+uWgGMlEjTQH9k0hFhI4VPFClvPmBjmj3rBOeDAPrb1JPCZFIvnM=
+=l4+G
 -----END PGP SIGNATURE-----
