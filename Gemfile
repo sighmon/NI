@@ -199,7 +199,7 @@ end
 
 # gem 'twitter-bootstrap-rails'#, '2.1.6'
 # gem 'bootstrap-sass'
-gem 'bootstrap', '~> 4.0.0.beta'
+gem 'bootstrap', '~> 4.1.1'
 # gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'therubyracer'
