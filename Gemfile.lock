@@ -103,7 +103,7 @@ GEM
       thor (~> 0.18)
     byebug (10.0.2)
     cancancan (2.2.0)
-    capybara (3.2.1)
+    capybara (3.3.1)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -211,9 +211,9 @@ GEM
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
       json (~> 2.0)
-    fog-aliyun (0.2.2)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
+    fog-aliyun (0.3.2)
+      fog-core
+      fog-json
       ipaddress (~> 0.8)
       xml-simple (~> 1.1)
     fog-atmos (0.1.0)
@@ -264,25 +264,25 @@ GEM
     fog-joyent (0.0.1)
       fog-core (~> 1.42)
       fog-json (>= 1.0)
-    fog-json (1.0.2)
-      fog-core (~> 1.0)
+    fog-json (1.2.0)
+      fog-core
       multi_json (~> 1.10)
     fog-local (0.5.0)
       fog-core (>= 1.27, < 3.0)
-    fog-openstack (0.1.25)
-      fog-core (~> 1.40)
+    fog-openstack (0.1.26)
+      fog-core (~> 1.45.0)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
-    fog-ovirt (1.0.4)
-      fog-core (~> 1.45)
+    fog-ovirt (1.1.0)
+      fog-core
       fog-json
-      fog-xml (~> 0.1.1)
+      fog-xml
       ovirt-engine-sdk (>= 4.1.3)
       rbovirt (~> 0.1.5)
-    fog-powerdns (0.1.1)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
+    fog-powerdns (0.2.0)
+      fog-core
+      fog-json
+      fog-xml
     fog-profitbricks (4.1.1)
       fog-core (~> 1.42)
       fog-json (~> 1.0)
@@ -535,12 +535,12 @@ GEM
     rbovirt (0.1.6)
       nokogiri
       rest-client (> 1.7.0)
-    rbvmomi (1.12.0)
+    rbvmomi (1.13.0)
       builder (~> 3.0)
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
-    recaptcha (4.8.0)
+    recaptcha (4.9.0)
       json
     ref (2.0.0)
     responders (2.4.0)
@@ -655,7 +655,7 @@ GEM
       railties (>= 3.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.11)
+    uglifier (4.1.12)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
