@@ -2,64 +2,62 @@
 	<mj-head>
 		<mj-preview>Admin email</mj-preview>
 	</mj-head>
-	<mj-body>
-		<mj-container background-color="#E6E6E6">
-			<mj-section padding="0">
-				<mj-column>
-					<mj-text font-size="11px" color="#606b75" font-weight="300">
-						<%= link_to "#{@subject}", user_url(@user), style: 'color:inherit;' %>
-					</mj-text>
-				</mj-column>
-				<mj-column>
-					<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-						No images? <%= link_to "Click here", user_url(@user, format: 'mjml'), style: 'color:inherit;' %>
-					</mj-text>
-				</mj-column>
-			</mj-section>
-			<mj-section padding="0">
-				<mj-column>
-					<mj-image 
-						width="250"
-						alt="New Internationalist"
-						href="<%= root_url %>"
-						src="<%= root_url + "assets/new-internationalist@2x.png" %>">
-					</mj-image>
-				</mj-column>
-			</mj-section>
-			<mj-section background-color="#FFFFFF">
-				<mj-column>
+	<mj-body background-color="#E6E6E6">
+		<mj-section padding="0">
+			<mj-column>
+				<mj-text font-size="11px" color="#606b75" font-weight="300">
+					<%= link_to "#{@subject}", user_url(@user), style: 'color:inherit;' %>
+				</mj-text>
+			</mj-column>
+			<mj-column>
+				<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
+					No images? <%= link_to "Click here", user_url(@user, format: 'mjml'), style: 'color:inherit;' %>
+				</mj-text>
+			</mj-column>
+		</mj-section>
+		<mj-section padding="0">
+			<mj-column>
+				<mj-image 
+					width="250"
+					alt="New Internationalist"
+					href="<%= root_url %>"
+					src="<%= root_url + "assets/new-internationalist@2x.png" %>">
+				</mj-image>
+			</mj-column>
+		</mj-section>
+		<mj-section background-color="#FFFFFF">
+			<mj-column>
 
-					<mj-text
-						font-size="22px" 
-						color="#ED4E59" 
-						font-family="helvetica"
-						font-weight="bold"
-						align="center">
-						<%= link_to "#{@subject}", user_url(@user), style: 'color:inherit;' %>
-					</mj-text>
+				<mj-text
+					font-size="22px" 
+					color="#ED4E59" 
+					font-family="helvetica"
+					font-weight="bold"
+					align="center">
+					<%= link_to "#{@subject}", user_url(@user), style: 'color:inherit;' %>
+				</mj-text>
 
-					<mj-text
-						font-size="14px"
-						line-height="22px"
-						font-weight="300"
-						color="#787878">
-						<%= @greeting %> <%= @user.username %>,
-						<%= simple_format @body_text %>
-					</mj-text>
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					color="#787878">
+					<%= @greeting %> <%= @user.username %>,
+					<%= simple_format @body_text %>
+				</mj-text>
 
-				</mj-column>
-			</mj-section>
+			</mj-column>
+		</mj-section>
 
-			<mj-section padding="0">
-				<mj-column>
-					<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
-					<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-					<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
-				</mj-column>
-			</mj-section>
+		<mj-section padding="0">
+			<mj-column>
+				<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+				<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+			</mj-column>
+		</mj-section>
 
-			<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
 
-		</mj-container>
 	</mj-body>
 </mjml>
