@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: June, 2018
+Period: July, 2018
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  4 June 2018
+  6 July 2018
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlsUVwEACgkQtsnG2UL7
-GPkunxAAmZmlTgQvZEiOdThXxTiPMK5VXb3Swq6AA1KFrst7Zz8q26X4GGMRYHXw
-z2kZYJ5XbYdr/4WKYjT3ni6bna17TbeIpaB2LwvV6PNHBkvH6VtNf6zvJPaYFgei
-rdvAvA5xIoNEoxIcJXTwywI3kaNDOFlXBMXf0OE7q/Tg1YYDY2+EtnxDJ7pZVCT7
-w7taRyAK9Y2b7DFDURUk3P6dxRGW0eOc8pW72DA68R4ck5frPk2bO5b6MrNFUHGH
-QmHEd30KrXQ2mKU1Psrn/lo/Pzgwrvb/fVotwuTQGJz+xR6ETcIVCs+WfUrREj2m
-OLAsJ+2gXQKXHbrgaYGgJNur6FkCBAExxOexgg0LTBfn0WAbiXrlDiA+ngIiUQMS
-StVxokJaoVcF2WRke4+u9tPgwWmSmgCxksxL2k+QFF6N6RZh9VyPX4urwAedR/a2
-OmNWLJSN9HgiAeGrL/nh28jnqsKBgW+gfik/hsKUIJX234MFC5TxCZVWtvofVIsc
-bGVEwVCrqc//FueFLpjk+foohzwfHyy8XBSG40aBB9xCFxD0PYHDJbptIkdpEGQT
-T/KJDKU5h78zxwxNwVH8OJZSUrwhOtK7Fe/F9hkG5olyEtuocdSl5G1VL+65V6es
-uWgGMlEjTQH9k0hFhI4VPFClvPmBjmj3rBOeDAPrb1JPCZFIvnM=
-=l4+G
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAls/FiwACgkQtsnG2UL7
+GPmS2BAAyurzbLHav6ng+SmdqlS/tjiscH9NE38yIEqAgnBiAVMKmTNc/RcZIDzL
+abFRFiWXoozyPbFqIMW36gT6QDoQ96fVBR57IxLE9GwPnHz6UkeFjdDfZbsIsCVW
+uALntkddu6O4n0hhEZGElVERKETWU7/+9GSRc2SYPvzPb5XlVWVIDgP7hdQ2l0ZG
+xhQf1qLgUOmRoFKy8kOimhjZ0wixZE9GKPV4x/eKM8ZjGCVqbKSPmppEauVHVh1O
+gFGppOmTwLfjFIf8dM4/PAxjiDFPpedBv0Qagk64LtJsiMvqxVYY/BH5bb/Bbul8
+tpFkR8Bf6urLvuTSfpCXu/gULIbq2yH53U96sruCGrKsT7LDcxS1MNmo0Wp8fRrt
+RxULRWpy7Jy8U4sJbSVshdoXgXSMRTTHunK24svi+BO4NboLszhoaqfdgxy5uOUI
+C8iW3v5PeGyuL28YW3734zVcEoQIVWRbZlO4rZhDZYE170exNvo33pkeDA9p3j2Y
+mJ3IALiGyrK76fCW5/xBR6r9sf5yQT3e9s6IrvqcVQ9LD2GpAD2fnene/E7CzTlD
+otlqxafeXC4TFBuqWCyuT0eRwFuKcV76zaP005bPBSu5iU/GeLFK6UkQlXDleicI
+04rb7F4dq1h/G3EJU5l8tBP1HSwBCau5GgljBE0KmG8nDyXEOdk=
+=/FHV
 -----END PGP SIGNATURE-----
