@@ -139,6 +139,7 @@ NI::Application.routes.draw do
     end
     resources :push_notifications, :only => [:index, :destroy]
     namespace :push_notifications do
+      post :run_delayed_jobs
       post :send_notifications
     end
   end

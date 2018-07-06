@@ -63,7 +63,7 @@
         <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
         <%= f.input :test_device_android, as: :boolean %>
         <%= f.input :alert_text, :placeholder => 'Message', required: false %>
-        <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again! It'll send it to all devices.\n\nIt automatically includes: #{@issue.push_notification_text}"}) do %>
+        <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again!\n\nIt automatically includes: #{@issue.push_notification_text}"}) do %>
           Setup Push notifications
         <% end %>
       <% end %>
