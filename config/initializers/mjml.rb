@@ -13,4 +13,5 @@ Mjml.setup do |config|
   # config.template_language = :erb # :erb (default), :slim, :haml, or any other you are using
   # Default is `false` (errors suppressed), set to `true` to enable error raising
   config.raise_render_exception = true
+  # config.mjml_binary_version_supported = "4.0."
 end
