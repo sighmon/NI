@@ -103,7 +103,7 @@ GEM
       thor (~> 0.18)
     byebug (10.0.2)
     cancancan (2.2.0)
-    capybara (3.3.1)
+    capybara (3.4.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -590,17 +590,21 @@ GEM
     rspec-support (3.7.1)
     ruby-prof (0.17.0)
     ruby_dep (1.5.0)
-    sass (3.5.6)
+    sass (3.5.7)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.7)
-      railties (>= 4.0.0, < 6)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
+    sassc (1.12.1)
+      ffi (~> 1.9.6)
+      sass (>= 3.3.0)
+    sassc-rails (1.3.0)
+      railties (>= 4.0.0)
+      sass
+      sassc (~> 1.9)
+      sprockets (> 2.11)
+      sprockets-rails
+      tilt
     savon (1.2.0)
       akami (~> 1.2.0)
       builder (>= 2.1.2)
@@ -655,7 +659,7 @@ GEM
       railties (>= 3.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.14)
+    uglifier (4.1.15)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -747,7 +751,7 @@ DEPENDENCIES
   rspec-legacy_formatters
   rspec-rails
   ruby-prof
-  sass-rails
+  sassc-rails
   savon (~> 1.2.0)
   secure_headers
   show_me_the_cookies
