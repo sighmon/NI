@@ -1,7 +1,7 @@
 // @import "bootstrap";
 body { 
-	padding-top: 60px;
-	background-color: rgb(25, 19, 33) !important;
+	padding-top: 3.75rem;
+	// background-color: rgb(25, 19, 33) !important;
 }
 // @import "twitter/bootstrap/responsive";
 // @import "twitter/bootstrap/variables.scss";
@@ -82,16 +82,16 @@ $sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "H
 // $serifFontFamily:       "iABCRegular", serif;
 
 $font-family-base:        $sansFontFamily;
-// $baseFontSize:          12px;
-// $baseLineHeight:        18px;
+// $baseFontSize:          0.75em;
+// $baseLineHeight:        1.125em;
 // Open Sans
-$font-size-base:          13px;
-// $line-height-base:        20px;
+$font-size-base:          0.5;
+// $line-height-base:        1.25em;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.6; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
+$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~1.25em
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    inherit;
@@ -99,31 +99,31 @@ $headings-font-weight:    600;
 $headings-line-height:    $line-height-computed;
 $headings-color:          inherit;
 
-$articleFontSize:		14px;
-$articleLineHeight:		23px;
-$articleParagraphMargin:1em;
+$articleFontSize:		1rem;
+$articleLineHeight:		1.5rem;
+$articleParagraphMargin: 1rem;
 
 /*
 $baseFontFamily:        $serifFontFamily;
-$baseFontSize:          21px;
-$baseLineHeight:        32px;
+$baseFontSize:          1.313em;
+$baseLineHeight:        2em;
 */
 
 // $headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
-h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
+h1 { letter-spacing: -0.05rem; font-size: 1.75rem; line-height: 2.063em; margin-top: 0; }
+h2 { /* letter-spacing: -0.063em; */ font-size: 1.5em; line-height: 1.875em; }
 
 h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 	margin-top: 0;
 }
 
-// ABC news base body font Verdana 12px 18px line-height
+// ABC news base body font Verdana 0.75em 1.125em line-height
 
 // Navbar
 // -------------------------
-$navbar-collapse-width:             767px;
+$navbar-collapse-width:           48rem;
 
-$navbar-height:                    40px;
+$navbar-height:                   2.5rem;
 $navbarBackgroundHighlight:       #ffffff;
 $navbarBackground:                darken($navbarBackgroundHighlight, 5%);
 $navbarBorder:                    darken($navbarBackground, 12%);
@@ -138,7 +138,8 @@ $navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 $navbarBrandColor:                $navbarLinkColor;
 
 .bg-menu-ni {
-	background-color: rgb(25, 19, 33) !important;
+	// background-color: rgb(25, 19, 33); // Purple
+	background-color: #eeeeee;
 }
 
 @mixin gradient {
@@ -182,7 +183,7 @@ $navbarBrandColor:                $navbarLinkColor;
 	background-color: $boxBackgroundColour;
 	padding: 1.5em 2em;
 	margin: 2em 0 2em 0;
-	border-radius: 5px;
+	border-radius: 0.313em;
 }
 
 
@@ -243,29 +244,30 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar, .navbar-search .search-query {
 	font-family: $headings-font-family;
-	// font-size: 14px;
-	line-height: 20px;
+	// font-size: 0.875em;
+	line-height: 1.25em;
 }
 
 .navbar-search {
-	margin: 5px 10px 0px 10px;
+	margin: 0.313em 0.625em 0em 0.625em;
 }
 
 .navbar .nav > li > a {
 	text-shadow: none;
-	padding: 13px 10px 7px;
+	padding: 0.813em 0.625em 0.438em;
+	color: red;
 }
 
 .navbar .brand {
 	font-family: "Bodega";
 	color: $niRed;
-	font-size: 26px;
-	padding-left: 0px;
+	font-size: 1.625em;
+	padding-left: 0em;
 }
 
 .navbar .container {
-	margin-bottom: 0px;
-	padding-bottom: 0px; 
+	margin-bottom: 0em;
+	padding-bottom: 0em; 
 }
 
 .navbar-right {
@@ -273,16 +275,16 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .nav-item {
-	// padding-top: 8px;
+	// padding-top: 0.5em;
 }
 
 .dropdown-menu > li > form {
-	padding: 3px 10px;
+	padding: 0.188em 0.625em;
 	margin: 0;
 }
 
 .ios-menu-bar {
-	margin-top: -12px;
+	margin-top: -0.75em;
 	opacity: 0.3;
 }
 
@@ -291,7 +293,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .ssl-changer {
-	margin-top: -2px;
+	margin-top: -0.125em;
 	opacity:0.3;
 	filter:alpha(opacity=30); /* For IE8 and earlier */
 }
@@ -310,13 +312,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 // Home page styling
 
 #myCarousel.carousel.slide.home-hero {
-	margin-top: -20px;
-	height: 500px;
+	margin-top: -1.25em;
+	height: 31.25em;
 	overflow: hidden;
 }
 
 .alert + #myCarousel.carousel.slide.home-hero {
-	margin-top: 20px;
+	margin-top: 1.25em;
 }
 
 .home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
@@ -353,12 +355,12 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .instagram {
 	margin-bottom: 2em;
-	border: 1px solid $gray-lighter;
-	border-radius: 3px;
+	border: 0.063em solid $gray-lighter;
+	border-radius: 0.188em;
 }
 
 .instagram h4, .instagram h5 {
-	margin: auto 20px auto 20px;
+	margin: auto 1.25em auto 1.25em;
 }
 
 .instagram h4 {
@@ -375,7 +377,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .instagram img {
 	width: 100%;
 	padding-bottom: 1em;
-	border-radius: 3px 3px 0 0;
+	border-radius: 0.188em 0.188em 0 0;
 }
 
 .home-keynote .share-links .fa, .article-title .share-links .fa, .end-of-article-social-sharing .share-links .fa, .subscription-offer .share-links .fa, .social-media .fa {
@@ -445,37 +447,37 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 @mixin editors-photo {
 	float: right;
-	margin: 0px 0px 10px 10px;
-	border-radius: 5px;
+	margin: 0em 0em 0.625em 0.625em;
+	border-radius: 0.313em;
 }
 
 .home-editors-photo-container {
 	@include editors-photo;
-	width: 100px;
-	height: 100px;
+	width: 6.25em;
+	height: 6.25em;
 	overflow: hidden;
 	border-radius: 50%;
 }
 
 .home-editors-photo {
 	@include editors-photo;
-	margin-top: -10px;
+	margin-top: -0.625em;
 }
 
 .home-latest-issue {
 	position: relative;
 	z-index: 1000;
-	margin-top: -300px;
+	margin-top: -18.75em;
 	margin-bottom: 2em;
 	text-align: center;
 	padding: 1.7em 1.7em 2em 1.7em;
-	border-radius: 2px;
+	border-radius: 0.125em;
 	@include gradient-home-latest-issue;
 }
 
 .home-latest-cover {
 	margin-bottom: 1em;
-	border-radius: 2px;
+	border-radius: 0.125em;
 	width: 100%;
 	height: auto;
 }
@@ -485,13 +487,13 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .hero-unit {
 	background-color: $gray-lighter;
 	padding: 1.5em 2em;
-	border-radius: 3px;
+	border-radius: 0.188em;
 }
 
 .hero-unit h1 {
 	font-size: 2.2em;
 	font-weight: bold;
-	margin-top: 0px;
+	margin-top: 0em;
 	margin-bottom: 0.25em;
 	// opacity: 0.9;
 }
@@ -512,24 +514,24 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .ios-home-ad img {
-	max-height: 40px;
+	max-height: 2.5em;
 }
 
 .ios-home-ad a:nth-of-type(1) img {
 	margin-bottom: 1em;
 }
 
-$homeCoverListMargin: 7px;
+$homeCoverListMargin: 0.438em;
 
 .home-cover-list {
-	margin: 20px -$homeCoverListMargin 20px -$homeCoverListMargin;
+	margin: 1.25em -$homeCoverListMargin 1.25em -$homeCoverListMargin;
 }
 
 .home-cover-list img {
 	margin-left: $homeCoverListMargin;
 	margin-right: $homeCoverListMargin;
 	margin-bottom: ($homeCoverListMargin * 2) + 3;
-	border-radius: 2px;
+	border-radius: 0.125em;
 }
 
 .hide-meta {
@@ -539,7 +541,7 @@ $homeCoverListMargin: 7px;
 .home-keynote {
 	margin-top: 1em;
 	margin-bottom: 1em;
-	border-radius: 2px;
+	border-radius: 0.125em;
 	background-color: $boxHomeBackgroundColour;
 	@include gradient-gray-darker;
 }
@@ -548,7 +550,7 @@ $homeCoverListMargin: 7px;
 	width: 100%;
 	// margin-bottom: 1em;
 	transition: .3s ease;
-	border-radius: 2px 2px 0px 0px;
+	border-radius: 0.125em 0.125em 0em 0em;
 	@include transition-fix;
 }
 
@@ -580,7 +582,7 @@ $homeCoverListMargin: 7px;
 }
 
 .category-article-issue {
-	min-height: 75px;
+	min-height: 4.688em;
 	margin: 1.5em 0 0.5em 0;
 }
 
@@ -588,7 +590,7 @@ $homeCoverListMargin: 7px;
 	position: relative;
 	z-index: 1;
 	width: inherit;
-	border-radius: 2px;
+	border-radius: 0.125em;
 }
 
 .category-article-issue h5 {
@@ -604,7 +606,7 @@ $homeCoverListMargin: 7px;
 .user_nav {
 	// float: right;
 	// position: relative;
-	// top: 2px;
+	// top: 0.125em;
 }
 
 // Weird icon bug fix
@@ -621,8 +623,8 @@ $homeCoverListMargin: 7px;
 	font-family: $headings-font-family;
 	background-image: none;
 	background-color: transparent;
-	padding: 0px;
-	margin-right: 5px;
+	padding: 0em;
+	margin-right: 0.313em;
 	border: none;
 	box-shadow: none;
 	color: $gray-light;
@@ -648,7 +650,7 @@ $homeCoverListMargin: 7px;
 }
 
 .page-header {
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 .page-header h3 {
@@ -660,7 +662,7 @@ $homeCoverListMargin: 7px;
 
 .page-header img {
 	@include pull-right;
-	margin-top: -40px;
+	margin-top: -2.5em;
 }
 
 .page-header .share-links img, .issue-title img {
@@ -678,10 +680,10 @@ $homeCoverListMargin: 7px;
 .footer {
 	color: $gray-dark;
 	background-color: $footerColour;
-	margin: 0 -16px -65px -16px;
+	margin: 0 -1em -4.063em -1em;
 	padding: 2em;
 	text-align: center;
-	border-radius: 0 0 3px 3px;
+	border-radius: 0 0 0.188em 0.188em;
 }
 
 .footer .brand {
@@ -731,7 +733,7 @@ $homeCoverListMargin: 7px;
 // Issues listed as a tables
 
 .issues_as_table {
-	width: 300px;
+	width: 18.75em;
 }
 
 // Purchases listed as a table on the user profile
@@ -742,14 +744,14 @@ $homeCoverListMargin: 7px;
 
 .purchase-issue h3 {
 	font-size: 1.2em;
-	// margin: 0px;
+	// margin: 0em;
 }
 
 .purchase-issue h4 {
 	font-size: 1em;
 	font-weight: normal;
 	color: $gray-light;
-	margin-top: -10px;
+	margin-top: -0.625em;
 }
 
 .subscription-price-table {
@@ -768,22 +770,22 @@ $homeCoverListMargin: 7px;
 .marketing-subscribe {
 	@include box;
 	float: right;
-	margin-top: -350px;
+	margin-top: -21.875em;
 	width: 30%;
 }
 
 .marketing-subscribe h3 {
-	margin: 0px;
+	margin: 0em;
 	font-size: 1.5em;
 	line-height: 1.2em;
 }
 
 .marketing-subscribe h4 {
-	margin-top: 8px;
+	margin-top: 0.5em;
 	color: $gray;
 }
 
-// Remove the 220px width on select form items & text inputs
+// Remove the 13.75em width on select form items & text inputs
 
 select {
 	width: auto;
@@ -832,25 +834,25 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 // Give the dl dd a little more breathing space between entries
 
 .dl-horizontal dd {
-	margin-bottom: 5px;
+	margin-bottom: 0.313em;
 }
 
 // Give the subscription options radio buttons some breathing room
 
 .subscribe-options dt {
-	margin-top: -3px;
-	padding-left: 2px;
-	padding-right: 2px;
-	padding-bottom: 2px;
+	margin-top: -0.188em;
+	padding-left: 0.125em;
+	padding-right: 0.125em;
+	padding-bottom: 0.125em;
 }
 
 // Shadow
 
 $shadowColour: #999999;
-$shadowSizeNormal: 0px 2px 5px;
-$shadowSizeSmall: 0px 1px 2px;
-$shadowSizeHover: 0px 4px 7px;
-$shadowSizeActive: 0px 0px 7px;
+$shadowSizeNormal: 0em 0.125em 0.313em;
+$shadowSizeSmall: 0em 0.063em 0.125em;
+$shadowSizeHover: 0em 0.25em 0.438em;
+$shadowSizeActive: 0em 0em 0.438em;
 
 @mixin shadow {
 	-moz-box-shadow: $shadowSizeNormal $shadowColour;
@@ -860,7 +862,7 @@ $shadowSizeActive: 0px 0px 7px;
 
 a:hover .shadow {
 	position: relative;
-	top: -1px;
+	top: -0.063em;
 	-moz-box-shadow: $shadowSizeHover $shadowColour;
 	-webkit-box-shadow: $shadowSizeHover $shadowColour;
 	box-shadow: $shadowSizeHover $shadowColour;
@@ -868,7 +870,7 @@ a:hover .shadow {
 
 a:active .shadow {
 	position: relative;
-	top: 0px;
+	top: 0em;
 	-moz-box-shadow: $shadowSizeActive $shadowColour;
 	-webkit-box-shadow: $shadowSizeActive $shadowColour;
 	box-shadow: $shadowSizeActive $shadowColour;
@@ -876,7 +878,7 @@ a:active .shadow {
 
 .shadow-light {
 	$shadowColour: #333333;
-	$shadowSizeNormal: 0px 1px 3px;
+	$shadowSizeNormal: 0em 0.063em 0.188em;
 	@include shadow;
 }
 
@@ -890,31 +892,31 @@ a:active .shadow {
 
 @mixin edit-issue-buttons {
 	float: right;
-	border-radius: 5px;
-	border: 1px dashed $gray-light;
+	border-radius: 0.313em;
+	border: 0.063em dashed $gray-light;
 	background-color: $gray-lighter;
-	padding: 10px;
+	padding: 0.625em;
 	width: intrinsic;
 	position: relative;
 	z-index: 1000;
-	// margin: 20px inherit 20px inherit;
+	// margin: 1.25em inherit 1.25em inherit;
 }
 
 .edit-article-buttons {
 	@include edit-issue-buttons;
-	margin-left: 10px;
+	margin-left: 0.625em;
 }
 
 .edit-issue-buttons hr {
-	margin: 10px 0px;
+	margin: 0.625em 0em;
 	border: none;
 }
 
 .form-actions {
-	padding: 18px 0px 1em 0px;
+	padding: 1.125em 0em 1em 0em;
 	margin-top: 1em;
 	background-color: transparent;
-	border-top: 1px dashed #e5e5e5;
+	border-top: 0.063em dashed #e5e5e5;
 }
 
 .edit-issue-buttons .simple_form, .edit-article-buttons .simple_form {
@@ -922,34 +924,34 @@ a:active .shadow {
 }
 
 .edit-issue-buttons .simple_form .btn, .edit-article-buttons .simple_form .btn {
-	// margin-top: -9px;
+	// margin-top: -0.563em;
 }
 
 .edit-issue-buttons .control-group, .edit-article-buttons .control-group {
-	margin-bottom: 0px;
+	margin-bottom: 0em;
 }
 
 
 // Issue styling
 
 .pagination {
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 .issue-search {
 	float: right;
-	margin-top: -60px;
+	margin-top: -3.75em;
 }
 
 .issue-search .btn {
-	// margin-top: -10px;
-	// height: 30px;
+	// margin-top: -0.625em;
+	// height: 1.875em;
 }
 
-$issueCoverListMargin: 9px;
+$issueCoverListMargin: 0.563em;
 
 .issue-cover-list {
-	margin: 0px -$issueCoverListMargin 20px -$issueCoverListMargin;
+	margin: 0em -$issueCoverListMargin 1.25em -$issueCoverListMargin;
 }
 
 .issue-cover-list .issue-information {
@@ -957,7 +959,7 @@ $issueCoverListMargin: 9px;
 	margin-left: $issueCoverListMargin;
 	margin-right: $issueCoverListMargin;
 	margin-bottom: ($issueCoverListMargin * 2) + 3;
-	border-radius: 2px;
+	border-radius: 0.125em;
 	background-color: $boxHomeBackgroundColour;
 	color: $gray-light;
 }
@@ -975,18 +977,18 @@ $issueCoverListMargin: 9px;
 }
 
 .issue-information img {
-	border-radius: 2px 2px 0 0;
+	border-radius: 0.125em 0.125em 0 0;
 }
 
 .issue-list-title {
-	// padding-bottom: 0px;
+	// padding-bottom: 0em;
 	border: none;
 	margin-bottom: 1em;
 }
 
 .issue-list-title h1 {
 	/* padding-bottom: 0.25em; */
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 $issueTitleH2FontSize: 1.2em;
@@ -1004,19 +1006,19 @@ $issueTitleH2FontSize: 1.2em;
 
 	padding: 1em 1em 1em 0;
 	margin: 0 0 2em 0;
-	border-radius: 5px;
+	border-radius: 0.313em;
 }
 
 .issue-title {
-	padding-bottom: 0px;
-	margin-top: 0px;
+	padding-bottom: 0em;
+	margin-top: 0em;
 	border: none;
 	text-align: center;
 }
 
 .issue-title h1 {
-	padding-top: 0px;
-	margin-top: 0px;
+	padding-top: 0em;
+	margin-top: 0em;
 }
 
 .issue-title h2 {
@@ -1038,20 +1040,20 @@ $issueTitleH2FontSize: 1.2em;
 
 .issue-cover {
 	float: left;
-	margin: 0px 20px 20px 0px;
-	border-radius: 2px;
+	margin: 0em 1.25em 1.25em 0em;
+	border-radius: 0.125em;
 }
 
 .articles-not-categorised-for-display {
-	border-radius: 5px;
+	border-radius: 0.313em;
 	background-color: #f6e2e2;
-	padding: 10px;
-	margin-bottom: 20px;
+	padding: 0.625em;
+	margin-bottom: 1.25em;
 }
 
 .articles-not-categorised-for-display h3 {
 	color: $niRed;
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 .articles-not-categorised-for-display .issue-article {
@@ -1073,8 +1075,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 // Issue.articles styling
 
 .keynote {
-	border-radius: 5px;
-	min-height: 200px;
+	border-radius: 0.313em;
+	min-height: 12.5em;
 	padding: 1em;
 	background-color: $niGreen;
 }
@@ -1096,7 +1098,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-keynote .home-keynote img {
-	border-radius: 2px;
+	border-radius: 0.125em;
 }
 
 .home-keynote .new-image-caption {
@@ -1113,7 +1115,7 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .issue-sections + .issue-sections {
-	border-top: 1px solid $gray-lighter;
+	border-top: 0.063em solid $gray-lighter;
 }
 
 .issue-sections h3 {
@@ -1134,8 +1136,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .issue-article:last-child {
 	border-bottom: none;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
+	margin-bottom: 0em;
+	padding-bottom: 0em;
 }
 
 .article-search {
@@ -1143,9 +1145,9 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .article-search .btn {
-	// margin-top: -10px;
+	// margin-top: -0.625em;
 	// margin-bottom: 1em;
-	// height: 30px;
+	// height: 1.875em;
 }
 
 .article-search .input-append {
@@ -1160,8 +1162,8 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 }
 
 .editors-letter h3, .issue-articles-container h3 {
-	margin-top: 0px;
-	padding-top: 0px;
+	margin-top: 0em;
+	padding-top: 0em;
 	color: $gray-light;
 	line-height: 1em;
 }
@@ -1176,14 +1178,14 @@ mark, .mark {
 }
 
 .article-title {
-	padding-bottom: 0px;
-	margin-top: 0px;
-	border-bottom: 1px dashed #eeeeee;
+	padding-bottom: 0em;
+	margin-top: 0em;
+	border-bottom: 0.063em dashed #eeeeee;
 }
 
 .article-title h1 {
 	/* padding-bottom: 0.25em; */
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 .article-title h2 {
@@ -1200,14 +1202,14 @@ mark, .mark {
 
 .article-title .issue-cover {
 	float: right;
-	margin: 0px 0px 20px 20px;
-	margin-top: -40px;
+	margin: 0em 0em 1.25em 1.25em;
+	margin-top: -2.5em;
 }
 
 .article-title .issue-cover:hover {
 	@include shadow-small;
 	position: relative;
-	top: -1px;
+	top: -0.063em;
 }
 
 .article-title .article-favourite, .end-of-article-social-sharing .article-favourite {
@@ -1265,12 +1267,12 @@ mark, .mark {
 }
 
 .btn-caret {
-  background: asset-url("share-highlight-caret.png") no-repeat 0px 0px;
-  width: 14px;
-  height: 7px;
+  background: asset-url("share-highlight-caret.png") no-repeat 0em 0em;
+  width: 0.875em;
+  height: 0.438em;
   position: absolute;
-  top: -6px;
-  left: 14px;
+  top: -0.375em;
+  left: 0.875em;
 }
 
 .btn-left, .btn-right {
@@ -1281,30 +1283,30 @@ mark, .mark {
 
 .share-highlight-btn {
     position: absolute;
-    width: 300px;
-    top: 25px;
-    left: -30px;
+    width: 18.75em;
+    top: 1.563em;
+    left: -1.875em;
 }      
 
 .save-pref-btn {
   width: 100%;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;  
-          border-radius: 4px;  
+  -webkit-border-radius: 0.25em;
+     -moz-border-radius: 0.25em;  
+          border-radius: 0.25em;  
 }
 
 
 .btn-left, .btn-right, .save-pref-btn {
-  padding: 0 10px;
-  border: 1px solid #bbbbbb;
-  border-bottom-width: 2px;
+  padding: 0 0.625em;
+  border: 0.063em solid #bbbbbb;
+  border-bottom-width: 0.125em;
   cursor: pointer;
-  font: bold 14px/30px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: bold 0.875em/1.875em "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #444444;
-  text-shadow: white 0 1px 1px;
-  -webkit-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
-     -moz-box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
-          box-shadow: rgba(0, 0, 0, .1) 0px 1px 3px;
+  text-shadow: white 0 0.063em 0.063em;
+  -webkit-box-shadow: rgba(0, 0, 0, .1) 0em 0.063em 0.188em;
+     -moz-box-shadow: rgba(0, 0, 0, .1) 0em 0.063em 0.188em;
+          box-shadow: rgba(0, 0, 0, .1) 0em 0.063em 0.188em;
 }
 
 .btn-left, .btn-right, button.save-pref-btn {
@@ -1331,16 +1333,16 @@ mark, .mark {
 
 .btn-left {
   border-right-color: #ffffff;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;  
-          border-radius: 4px 0 0 4px;  
+  -webkit-border-radius: 0.25em 0 0 0.25em;
+     -moz-border-radius: 0.25em 0 0 0.25em;  
+          border-radius: 0.25em 0 0 0.25em;  
 }
 
 .btn-right {
   border-left-color: #999999;
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
+  -webkit-border-radius: 0 0.25em 0.25em 0;
+     -moz-border-radius: 0 0.25em 0.25em 0;
+          border-radius: 0 0.25em 0.25em 0;
 }
 
 //- end highlighter.js stuff
@@ -1376,7 +1378,7 @@ mark, .mark {
 
 #myCarousel {
 	// .shadow;
-	margin: 0 -4em 2em -4em;
+	margin: 0 -1em 2em -1em;
 }
 
 .carousel-control {
@@ -1384,7 +1386,7 @@ mark, .mark {
 }
 
 .carousel-caption {
-	padding: 10px 15px;
+	padding: 0.625em 0.938em;
 }
 
 .carousel-inner > .item > img {
@@ -1393,8 +1395,8 @@ mark, .mark {
 }
 
 .carousel-control {
-	margin: 3px;
-	border-width: 0px;
+	margin: 0.188em;
+	border-width: 0em;
 }
 
 .modal .carousel-control {
@@ -1405,8 +1407,8 @@ mark, .mark {
 }
 
 .article-image-carousel {
-	margin: 0px 13px 15px 0px;
-	padding: 0px;
+	margin: 0em 0.813em 0.938em 0em;
+	padding: 0em;
 	max-width: 100%;
 }
 
@@ -1429,25 +1431,25 @@ mark, .mark {
 
 .article-thumb {
 	// .shadow-light;
-	border-radius: 2px;
+	border-radius: 0.125em;
 	// float: right;
-	// margin-left: 20px;
+	// margin-left: 1.25em;
 }
 
 .article-image-top-right {
-	width: 300px;
+	width: 18.75em;
 	@include pull-right;
-	margin-left: 20px;
+	margin-left: 1.25em;
 }
 
 .article-image-top-right .article-image-carousel {
-	margin-right: 0px;
+	margin-right: 0em;
 }
 
 // Not used but the zooming on size change was nice.
 .article-image-top {
 	width: 100%;
-	max-height: 400px;
+	max-height: 25em;
 	margin: 0 auto 0 auto;
 	overflow: hidden;
 	@include shadow;
@@ -1471,8 +1473,8 @@ mark, .mark {
 .article-body {
 /*
 	font-family: $serifFontFamily;
-	font-size: 21px;
-	line-height: 32px;
+	font-size: 1.313em;
+	line-height: 2em;
 */
 	font-size: $articleFontSize;
 	line-height: $articleLineHeight;
@@ -1511,8 +1513,8 @@ mark, .mark {
 
 @mixin article-image {
 	float: right;
-	max-width: 340px;
-	margin: 0px 0px 2em 2em;
+	max-width: 21.25em;
+	margin: 0em 0em 2em 2em;
 }
 
 .article-image img {
@@ -1522,7 +1524,7 @@ mark, .mark {
 
 .home-image {
 	@include article-image;
-	margin: 0px 0px 0px 2em;
+	margin: 0em 0em 0em 2em;
 }
 
 .home-image img {
@@ -1530,11 +1532,11 @@ mark, .mark {
 }
 
 .article-image.article-image-small {
-	width: 150px;
+	width: 9.375em;
 }
 
 .article-image-small img {
-	max-width: 150px;
+	max-width: 9.375em;
 }
 
 .article-image-float-none {
@@ -1544,23 +1546,23 @@ mark, .mark {
 
 .new-image-caption {
 	text-align: left;
-	max-width: 280px;
+	max-width: 17.5em;
 	font-size: 0.9em;
 	line-height: 1.6em;
 	color: $gray;
 }
 
 .new-image-caption h4, .new-image-caption h3 {
-	margin-bottom: 0px;
+	margin-bottom: 0em;
 }
 
 .new-image-credit {
 	text-align: left;
 	font-size: 0.9em;
 	line-height: 1.6em;
-	margin-top: -1px;
+	margin-top: -0.063em;
 	color: $gray-light;
-	max-width: 280px;
+	max-width: 17.5em;
 }
 
 .article-image-cartoon {
@@ -1568,19 +1570,19 @@ mark, .mark {
 }
 
 .article-image-cartoon .new-image-credit, .article-image-cartoon .new-image-caption {
-	max-width: 600px;
+	max-width: 37.5em;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .article-image-full .new-image-credit, .article-image-full .new-image-caption {
-	max-width: 945px;
+	max-width: 59.063em;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .article-image-centre .new-image-credit, .article-image-centre .new-image-caption {
-	max-width: 300px;
+	max-width: 18.75em;
 }
 
 .article-image-cartoon img {
@@ -1589,9 +1591,9 @@ mark, .mark {
 }
 
 .no-shadow img {
-	-moz-box-shadow: 0px 0px 0px #FFFFFF;
-	-webkit-box-shadow: 0px 0px 0px #FFFFFF;
-	box-shadow: 0px 0px 0px #FFFFFF;
+	-moz-box-shadow: 0em 0em 0em #FFFFFF;
+	-webkit-box-shadow: 0em 0em 0em #FFFFFF;
+	box-shadow: 0em 0em 0em #FFFFFF;
 }
 
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
@@ -1606,17 +1608,17 @@ blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
 	margin-bottom: 0;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 1em;
 }
 
 blockquote.pull-right, blockquote.pull- {
-	padding: 0px;
-	margin: 0px 0px 1em 1em;
+	padding: 0em;
+	margin: 0em 0em 1em 1em;
 }
 
 blockquote.pull-left {
-	padding: 0px;
-	margin: 0px 1em 1em 0px;
+	padding: 0em;
+	margin: 0em 1em 1em 0em;
 	text-align: left;
 	float: left;
 }
@@ -1672,11 +1674,11 @@ blockquote > .attribution {
 
 .article-favourite {
 	font-size: 1.0em;
-	min-width: 12px;
+	min-width: 0.75em;
 }
 
 .article-favourite, .ios-issue-page, .page-header .ios-issue-page {
-	margin: 2px 10px 5px 0;
+	margin: 0.125em 0.625em 0.313em 0;
 }
 
 .article-title .ios-issue-page, .end-of-article-social-sharing .ios-issue-page {
@@ -1703,8 +1705,8 @@ blockquote > .attribution {
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
 	color: $gray-light;
-	margin-top: -7px;
-	margin-bottom: 20px;
+	margin-top: -0.438em;
+	margin-bottom: 1.25em;
 }
 
 ul.ui-autocomplete {
@@ -1712,17 +1714,17 @@ ul.ui-autocomplete {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border: solid 1px #999;
+	border: solid 0.063em #999;
 	cursor: default;
 	li {
 		background-color: #FFF;
-		border-top: solid 1px #DDD;
+		border-top: solid 0.063em #DDD;
 		margin: 0;
 		padding: 0;
 	a {
 		color: #000;
 		display: block;
-		padding: 3px;
+		padding: 0.188em;
 	}
 	a:hover, a:active {
 		background-color: #0081C2;
@@ -1731,38 +1733,38 @@ ul.ui-autocomplete {
 }
 
 .end-of-article-social-sharing {
-	border-top: 1px dashed #e5e5e5;
+	border-top: 0.063em dashed #e5e5e5;
 	padding-top: 1em;
 	margin-top: 2em;
 }
 
 .related-articles {
-	border-top: 1px dashed #e5e5e5;
+	border-top: 0.063em dashed #e5e5e5;
 	padding: 1em;
 	margin: 1em 0 -1.5em 0;
-	border-radius: 5px;
+	border-radius: 0.313em;
 }
 
 .article-previous {
 	float: left;
 	max-width: 40%;
-	margin-left: 20px;
+	margin-left: 1.25em;
 }
 
 .article-next {
 	float: right;
 	max-width: 40%;
 	text-align: right;
-	margin-right: 20px;
+	margin-right: 1.25em;
 }
 
 .article-previous i {
-	margin: 0 5px 0 -20px;
+	margin: 0 0.313em 0 -1.25em;
 }
 
 .article-next i {
 	float: right;
-	margin: 5px -20px 0 8px;
+	margin: 0.313em -1.25em 0 0.5em;
 }
 
 .article-related-by-theme {
@@ -1792,17 +1794,17 @@ ul.ui-autocomplete {
 .help-body img {
 	float: right;
 	@include shadow;
-	margin: 0px 0px 1em 1em;
+	margin: 0em 0em 1em 1em;
 }
 
 .quick-help {
 	float:right;
 	@include box;
-	margin-top: 0px;
+	margin-top: 0em;
 }
 
 .subscription-offer {
-	border-radius: 5px;
+	border-radius: 0.313em;
 	padding: 1em;
 	margin-bottom: $grid-gutter-width;
 	background-color: $gray-lighter;
@@ -1821,7 +1823,7 @@ ul.ui-autocomplete {
 
 .subscription-offer h4 {
 	font-size: 1.4em;
-	margin-top: 0px;
+	margin-top: 0em;
 	line-height: 1.3em;
 }
 
@@ -1835,7 +1837,7 @@ ul.ui-autocomplete {
 }
 
 .subscription-top-image {
-	margin: 0 auto 20px auto;
+	margin: 0 auto 1.25em auto;
 	text-align: center;
 }
 
@@ -1898,17 +1900,17 @@ ul.ui-autocomplete {
 	position: relative;
 	// left: 5%;
 	width: 28%;
-	margin: 0 5px;
+	margin: 0 0.313em;
 }
 
 .overlapping-covers a img + img {
 	// left: -1%;
-	// top: 5px;
+	// top: 0.313em;
 }
 
 .overlapping-covers a img + img + img {
 	// left: -7%;
-	// top: 10px;
+	// top: 0.625em;
 }
 
 .subscribe-current-issue {
@@ -1921,7 +1923,7 @@ ul.ui-autocomplete {
 .special-offer {
 	text-align: center;
 	margin-bottom: 2em;
-	min-height: 265px;
+	min-height: 16.563em;
 }
 
 .special-feature h3 {
@@ -1931,7 +1933,7 @@ ul.ui-autocomplete {
 
 .modal-body.video {
 	padding: 0;
-	margin-bottom: -10px;
+	margin-bottom: -0.625em;
 }
 
 .privacy-policy {
@@ -1964,14 +1966,14 @@ ul.ui-autocomplete {
 
 #error {
 	width: 30%;
-	min-width: 300px;
+	min-width: 18.75em;
 	margin: 1em auto 1em auto;
 }
 
 #error .brand {
 	font-family: "Bodega";
 	color: $niRed;
-	font-size: 26px;
+	font-size: 1.625em;
 }
 
 
@@ -1998,7 +2000,7 @@ ul.ui-autocomplete {
 // Sign-up page
 
 .session-button {
-	margin-top: 30px;
+	margin-top: 1.875em;
 }
 
 
@@ -2008,20 +2010,20 @@ ul.ui-autocomplete {
 //=============
 
 /* Portrait phones */
-@media (max-width: 360px) {
+@media (max-width: 22.5em) {
 
 	.navbar .brand {
-		font-size: 22px;
+		font-size: 1.375em;
 	}
 
 	.article-thumb {
 		float: none;
-		margin-left: 0px;
+		margin-left: 0em;
 		clear: right;
 	}
 	.clear-hack {
 		display: block;
-		margin-top: 10px;
+		margin-top: 0.625em;
 	}
 	.factbox {
 		width: inherit;
@@ -2038,7 +2040,7 @@ ul.ui-autocomplete {
 }
 
 /* Portrait phones including iPhone 6 */
-@media (max-width: 375px) {
+@media (max-width: 23.438em) {
 	input, textarea, .uneditable-input {
 		width: 95%;
 	}
@@ -2062,17 +2064,17 @@ ul.ui-autocomplete {
 }
 
 /* Landscape phones */
-@media (max-width: 480px) {
+@media (max-width: 30em) {
 	.user_nav {
 		// position: relative;
-		// top: 0px;
+		// top: 0em;
 	}
 	.article-image {
 		width: 100%;
 	}
 
 	.article-image-small {
-		width: 150px;
+		width: 9.375em;
 	}
 
 	.article-image-centre.article-image-small {
@@ -2080,7 +2082,7 @@ ul.ui-autocomplete {
 	}
 	
 	.hero-unit {
-		padding: 10px 20px 20px 20px;
+		padding: 0.625em 1.25em 1.25em 1.25em;
 	}
 	
 	.quick-help {
@@ -2090,18 +2092,18 @@ ul.ui-autocomplete {
 	
 	.marketing-subscribe {
 		float: none;
-		margin-top: 20px;
+		margin-top: 1.25em;
 		width: auto;
 	}
 	.dl-horizontal dt {
 		float: left;
-		margin-right: 10px;
+		margin-right: 0.625em;
 	}
 	.dl-horizontal dd {
-		margin-top: 2px;
+		margin-top: 0.125em;
 	}
 	.star-ratings-previous-year + dd {
-		margin-top: -7px;
+		margin-top: -0.438em;
 	}
 	.form-search .btn {
 		width: 100%;
@@ -2133,41 +2135,41 @@ ul.ui-autocomplete {
 }
  
 /* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
+@media (max-width: 47.938em) {
 	.user_nav {
 		// position: relative;
-		// top: 0px;
+		// top: 0em;
 		margin-right: 0.5em;
 	}
 	.navbar .brand {
-		margin-left: 15px;
+		margin-left: 0.938em;
 	}
 	.article-title .issue-cover {
-		margin-top: 0px;
+		margin-top: 0em;
 	}
 	.issue-search {
 		float: none;
-		margin-top: 0px;
+		margin-top: 0em;
 	}
 	.hero-unit {
-		padding: 10px 20px 20px 20px;
+		padding: 0.625em 1.25em 1.25em 1.25em;
 	}
 	.dl-horizontal dt {
 		float: left;
-		margin-right: 10px;
+		margin-right: 0.625em;
 	}
 	.dl-horizontal dd {
-		margin-top: 2px;
+		margin-top: 0.125em;
 	}
 	.star-ratings-previous-year {
-		margin-top: 0px;
+		margin-top: 0em;
 	}
 	.issues_as_table, .purchases_as_table {
 		width: 100%;
 	}
 	.page-header .subscribe-image {
 		float: none;
-		width: 175px;
+		width: 10.938em;
 		margin-top: 0;
 	}
 	.article-image-top-right {
@@ -2175,7 +2177,7 @@ ul.ui-autocomplete {
 	}
 	.footer {
 		margin: 0 -1em 0 -1em;
-		border-radius: 0px;
+		border-radius: 0em;
 	}
 	.span6.editors-letter {
 		background-color: #fdfdfd;
@@ -2197,7 +2199,7 @@ ul.ui-autocomplete {
 	}
 
 	.home-latest-issue {
-		margin-top: 0px;
+		margin-top: 0em;
 		margin-bottom: 2em;
 	}
 
@@ -2215,38 +2217,38 @@ ul.ui-autocomplete {
 }
  
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 48em) and (max-width: 61.938em) {
 	.user_nav {
 		// position: relative;
-		// top: 0px;
+		// top: 0em;
 	}
 	.article-title .issue-cover {
-		margin-top: 0px;
+		margin-top: 0em;
 	}
 	.issue-list-title h2 {
-		width: 445px;
+		width: 27.813em;
 	}
 	.issue-search {
-		margin-top: -70px;
+		margin-top: -4.375em;
 	}
 	.dl-horizontal dt {
 		float: left;
-		margin-right: 10px;
+		margin-right: 0.625em;
 	}
 	.dl-horizontal dd {
-		margin-top: 2px;
+		margin-top: 0.125em;
 	}
 	.star-ratings-previous-year + dd {
-		margin-top: -7px;
+		margin-top: -0.438em;
 	}
 	.home-image {
-		margin: -20px 0px 0px 2em;
+		margin: -1.25em 0em 0em 2em;
 	}
 	.navbar-brand {
-		padding-right: 7px;
+		padding-right: 0.438em;
 	}
 	.navbar .nav > li > a {
-		padding: 13px 7px 7px;
+		padding: 0.813em 0.438em 0.438em;
 	}
 
 	.home-free-issue, .home-editor-note {
@@ -2255,21 +2257,21 @@ ul.ui-autocomplete {
 }
  
 /* Large desktop */
-@media (min-width: 992px) {
+@media (min-width: 62em) {
 	.container {
 		// .shadow;
-		border-radius: 3px;
-		border: 1px solid $gray-lighter;
-		margin: -50px auto 4em auto;
-		padding: 60px 4em 4em 4em;
-		// max-width: 1050px !important;
-		max-width: 854px !important;
+		border-radius: 0.188em;
+		border: 0.063em solid $gray-lighter;
+		margin: -3.125em auto 4em auto;
+		padding: 3.75em 4em 4em 4em;
+		// max-width: 65.625em !important;
+		max-width: 60em !important;
 	}
 	.navbar {
 		padding: 0.5rem 18rem !important;
 	}
 	.navbar-inner {
-		// height: 100px;
+		// height: 6.25em;
 	}
 	.navbar-inner .container {
 		-moz-box-shadow: none;
@@ -2278,7 +2280,7 @@ ul.ui-autocomplete {
 		border: none;
 	}
 	.home-image {
-		margin: -20px 0px 0px 2em;
+		margin: -1.25em 0em 0em 2em;
 	}
 
 	.home-free-issue, .home-editor-note {

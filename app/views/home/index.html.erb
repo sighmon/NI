@@ -26,9 +26,9 @@
     <div class="carousel-inner">
       <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
       	<% if can? :read, @latest_issue.keynote %>
-	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :size => "1050x444"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
+	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
 	      <% else %>
-	      	<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :size => "1050x444"), new_issue_purchase_path(@latest_issue) %>
+	      	<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), new_issue_purchase_path(@latest_issue) %>
 	      <% end %>
         <meta itemprop="url" content="<%= @latest_issue.keynote.first_image.data_url.to_s %>">
         <meta itemprop="width" content="2100">
