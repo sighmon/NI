@@ -50,9 +50,9 @@
 		<!-- Latest cover -->
 		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, :class => 'shadow home-latest-cover', :alt => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400), issue_path(@latest_issue), :itemprop => "url" %>
 		<% if can? :read, @latest_issue.keynote %>
-			<p><%= link_to "Read this issue", issue_path(@latest_issue), :class => 'btn btn-default btn-lg' %></p>
+			<p><%= link_to "Read this issue", issue_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% else %>
-			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-default btn-lg' %></p>
+			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% end %>
 		<% if not current_user.try(:subscriber?) %>
 	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success btn-lg' %></p>

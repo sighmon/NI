@@ -25,120 +25,123 @@
   <% end %>
 
   <nav class="navbar navbar-expand-md fixed-top bg-menu-ni">
-    <a class="navbar-brand brand" href="<%= root_path %>">New Internationalist</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><%= link_to "Archive", issues_path, class: 'nav-link' %></li>
-        <% if current_user.nil? %>
-          <li class="nav-item"><%= link_to "Subscribe", page_path("subscribe"), class: 'nav-link' %></li>
-        <% elsif not current_user.try(:subscriber?) and not current_user.parent %>
-          <li class="nav-item"><%= link_to "Subscribe", new_subscription_path, class: 'nav-link' %></li>
-        <% end %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to "Search results", search_path, class: 'dropdown-item' %>
-            <%= link_to "Categories/themes", categories_path, class: 'dropdown-item' %>
-            <form accept-charset="UTF-8" action="/issues" class="form-search dropdown-item" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-              <input type="text" class="form-control search" id="query" name="query" placeholder="Issue search">
-            </form>
-            <form accept-charset="UTF-8" action="/search" class="form-search dropdown-item" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
-              <input type="text" class="form-control search" id="query" name="query" placeholder="Article search">
-            </form>
-            <form class="form-search dropdown-item" role="search" action="https://www.newint.com.au/shop/search-results.htm" method="get" type="search" results="20" placeholder="Shop search">
-              <input type="search" class="form-control text" title="Shop search" name="query" size="20" placeholder="Shop search">
-            </form>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Apps
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to raw("<i class='fa fa-apple'></i> iOS app"), page_path("ios"), class: 'dropdown-item' %>
-            <%= link_to raw("<i class='fa fa-play'></i> Android app"), page_path("android"), class: 'dropdown-item' %>
-            <div class="dropdown-divider"></div>
-            <%= link_to "All apps", page_path("apps"), class: 'dropdown-item' %>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            More
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to "Help!", page_path("help"), class: 'dropdown-item' %>
-            <a href="https://www.newint.com.au/shop" class="dropdown-item">Shop - Fair Trade on-line shop</a>
-            <a href="https://www.newint.com.au/blog" class="dropdown-item">Blog - Social Justice news</a>
-            <a href="https://www.newint.com.au" class="dropdown-item">Home - New Internationalist Australia home page</a>
-            <div class="dropdown-divider"></div>
-            <%= link_to "Quick reads", quick_reads_path, class: 'dropdown-item' %>
-            <%= link_to "Popular articles", popular_path, class: 'dropdown-item' %>
-            <div class="dropdown-divider"></div>
-            <%= link_to "How to leak to New Internationalist", page_path("how-to-leak"), class: 'dropdown-item' %>
-            <%= link_to "SecureDrop server", page_path("securedrop"), class: 'dropdown-item' %>
-            <% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
-            <% else %>
+    <div class="container">
+      <a class="navbar-brand brand" href="<%= root_path %>">New Internationalist</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><%= link_to "Archive", issues_path, class: 'nav-link' %></li>
+          <% if current_user.nil? %>
+            <li class="nav-item"><%= link_to "Subscribe", page_path("subscribe"), class: 'nav-link' %></li>
+          <% elsif not current_user.try(:subscriber?) and not current_user.parent %>
+            <li class="nav-item"><%= link_to "Subscribe", new_subscription_path, class: 'nav-link' %></li>
+          <% end %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "Search results", search_path, class: 'dropdown-item' %>
+              <%= link_to "Categories/themes", categories_path, class: 'dropdown-item' %>
+              <form accept-charset="UTF-8" action="/issues" class="form-search dropdown-item" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+                <input type="text" class="form-control search" id="query" name="query" placeholder="Issue search">
+              </form>
+              <form accept-charset="UTF-8" action="/search" class="form-search dropdown-item" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+                <input type="text" class="form-control search" id="query" name="query" placeholder="Article search">
+              </form>
+              <form class="form-search dropdown-item" role="search" action="https://www.newint.com.au/shop/search-results.htm" method="get" type="search" results="20" placeholder="Shop search">
+                <input type="search" class="form-control text" title="Shop search" name="query" size="20" placeholder="Shop search">
+              </form>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Apps
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to raw("<i class='fa fa-apple'></i> iOS app"), page_path("ios"), class: 'dropdown-item' %>
+              <%= link_to raw("<i class='fa fa-play'></i> Android app"), page_path("android"), class: 'dropdown-item' %>
               <div class="dropdown-divider"></div>
-              <a>
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="dropdown-item">
-                  <input type="hidden" name="cmd" value="_s-xclick">
-                  <input type="hidden" name="hosted_button_id" value="GSMBBM2JT2W28">
-                  <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate using PayPal</button>
-                </form>
-              </a>
-            <% end %>
-          </div>
-        </li>
-      </ul>
-
-      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <% if user_signed_in? %>
-        <%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-success nav-item' %>
-
-        <div class="btn-group" role="group">
-          <button id="user-nav-dropdown" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-            <% if current_user.try(:subscriber?) %>
-              <%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user, class: 'dropdown-item' %>
+              <%= link_to "All apps", page_path("apps"), class: 'dropdown-item' %>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "Help!", page_path("help"), class: 'dropdown-item' %>
+              <a href="https://www.newint.com.au/shop" class="dropdown-item">Shop - Fair Trade on-line shop</a>
+              <a href="https://www.newint.com.au/blog" class="dropdown-item">Blog - Social Justice news</a>
+              <a href="https://www.newint.com.au" class="dropdown-item">Home - New Internationalist Australia home page</a>
               <div class="dropdown-divider"></div>
-            <% elsif not current_user.parent %>
-              <%= link_to raw("<i class='fa fa-star'></i> Subscribe"), new_subscription_path, class: 'dropdown-item' %>
+              <%= link_to "Quick reads", quick_reads_path, class: 'dropdown-item' %>
+              <%= link_to "Popular articles", popular_path, class: 'dropdown-item' %>
               <div class="dropdown-divider"></div>
-            <% end %>
-            <% if current_user.try(:admin?) %>
-              <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_admin_user_path(current_user), class: 'dropdown-item' %>
-            <% else %>
-            <% if not current_user.parent and can? :manage, current_user %>
-              <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_user_registration_path(current_user), class: 'dropdown-item' %>
-            <% end %>
-            <% end %>
-            <% if current_user.try(:admin?) %>
-              <%= link_to raw("<i class='fa fa-heart'></i> Admin"), admin_root_path, class: 'dropdown-item' %>
-              <% if Settings.admin_alert and Settings.admin_alert == 1 %>
-                <% flash[:alert] = ApplicationHelper.bad_ip_alert_text %>
+              <%= link_to "How to leak to New Internationalist", page_path("how-to-leak"), class: 'dropdown-item' %>
+              <%= link_to "SecureDrop server", page_path("securedrop"), class: 'dropdown-item' %>
+              <% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
+              <% else %>
+                <div class="dropdown-divider"></div>
+                <a>
+                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="dropdown-item">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="GSMBBM2JT2W28">
+                    <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate using PayPal</button>
+                  </form>
+                </a>
               <% end %>
-            <% end %>
-            <% if not current_user.parent and can? :manage, current_user %>
-              <div class="dropdown-divider"></div>
-            <% end %>
-            <% if session[:auto_signin] %>
-              <%= link_to "Sign out", users_re_sign_in_path, class: 'dropdown-item' %>
-            <% else %>
-              <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
-            <% end %>
-          </div>
-        </div>
+            </div>
+          </li>
+        </ul>
 
-        <% else %>
-          <%= link_to raw("<span>Sign in</span>"), new_user_session_path, :class => 'btn btn-outline-success' %> <%= link_to raw("<span>Sign up</span>"), new_user_registration_path, :class => 'btn btn-outline-success' %>
-        <% end %>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <% if user_signed_in? %>
+          <%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-success nav-item' %>
+
+          <div class="btn-group" role="group">
+            <button id="user-nav-dropdown" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+              <% if current_user.try(:subscriber?) %>
+                <%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+              <% elsif not current_user.parent %>
+                <%= link_to raw("<i class='fa fa-star'></i> Subscribe"), new_subscription_path, class: 'dropdown-item' %>
+                <div class="dropdown-divider"></div>
+              <% end %>
+              <% if current_user.try(:admin?) %>
+                <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_admin_user_path(current_user), class: 'dropdown-item' %>
+              <% else %>
+              <% if not current_user.parent and can? :manage, current_user %>
+                <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_user_registration_path(current_user), class: 'dropdown-item' %>
+              <% end %>
+              <% end %>
+              <% if current_user.try(:admin?) %>
+                <%= link_to raw("<i class='fa fa-heart'></i> Admin"), admin_root_path, class: 'dropdown-item' %>
+                <% if Settings.admin_alert and Settings.admin_alert == 1 %>
+                  <% flash[:alert] = ApplicationHelper.bad_ip_alert_text %>
+                <% end %>
+              <% end %>
+              <% if not current_user.parent and can? :manage, current_user %>
+                <div class="dropdown-divider"></div>
+              <% end %>
+              <% if session[:auto_signin] %>
+                <%= link_to "Sign out", users_re_sign_in_path, class: 'dropdown-item' %>
+              <% else %>
+                <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
+              <% end %>
+            </div>
+          </div>
+
+          <% else %>
+            <%= link_to raw("<span>Sign in</span>"), new_user_session_path, :class => 'btn btn-outline-success' %> <%= link_to raw("<span>Sign up</span>"), new_user_registration_path, :class => 'btn btn-outline-success' %>
+          <% end %>
+
+        </div>
 
       </div>
 
-    </div>
+    </div> <!-- container -->
   </nav>
 	
 	<div class="container">

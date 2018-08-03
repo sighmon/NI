@@ -174,9 +174,9 @@ $navbarBrandColor:                $navbarLinkColor;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$boxHomeBackgroundColourLight, endColorstr=$boxHomeBackgroundColour,GradientType=0 );
 }
 
-@mixin no-gradient {
-	background-color: transparent;
-	background: none;
+.no-gradient {
+	background-color: transparent !important;
+	background: none !important;
 }
 
 @mixin box {
@@ -241,6 +241,12 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 // Top Nav Bar
+
+.navbar .container {
+	margin-top: 0;
+	padding-top: 0;
+	background-color: transparent;
+}
 
 .navbar, .navbar-search .search-query {
 	font-family: $headings-font-family;
@@ -630,9 +636,10 @@ $homeCoverListMargin: 0.438em;
 
 .breadcrumb {
 	font-family: $headings-font-family;
+	font-size: 0.8em;
 	background-image: none;
-	background-color: transparent;
-	padding: 0em;
+	background-color: transparent !important;
+	padding: 1em 0em !important;
 	margin-right: 0.313em;
 	border: none;
 	box-shadow: none;
@@ -815,6 +822,7 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 
 .shared-sign-up .form-control {
 	margin-bottom: 0.5em;
+	float: left;
 }
 
 .category_autocomplete {
@@ -2277,12 +2285,12 @@ ul.ui-autocomplete {
 		max-width: 60em !important;
 	}
 	.navbar {
-		padding: 0.5rem 18rem !important;
+		// padding: 0.5rem 18rem !important;
 	}
 	.navbar-inner {
 		// height: 6.25em;
 	}
-	.navbar-inner .container {
+	.navbar .container {
 		-moz-box-shadow: none;
 		-webkit-box-shadow: none;
 		box-shadow: none;
