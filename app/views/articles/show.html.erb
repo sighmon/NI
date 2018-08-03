@@ -121,7 +121,7 @@
       <div class="new-image-credit"><%= i.credit %></div>
       <% if can? :manage, Image %>
         <%= link_to t('.show', :default => t("helpers.links.show")),
-                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-default btn-xs' %>
+                    issue_article_image_path(@issue, @article, i), :class => 'btn btn-outline-secondary' %>
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
                     edit_issue_article_image_path(@issue, @article, i), :class => 'btn btn-xs btn-primary' %>
         <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

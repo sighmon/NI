@@ -63,7 +63,7 @@
         <!-- <td><%=l article.created_at %></td> -->
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' unless article.issue.nil? %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' unless article.issue.nil? %>
           <% else %>
             <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' unless article.issue.nil? %>
           <% end %>

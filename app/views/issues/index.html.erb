@@ -51,7 +51,7 @@
         <% if can? :update, @issue %>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_path(issue), :class => 'btn btn-default btn-xs' %>
+                      edit_issue_path(issue), :class => 'btn btn-outline-secondary' %>
           <% if can? :destroy, @issue %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       issue_path(issue),
