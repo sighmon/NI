@@ -78,14 +78,14 @@ $text-color:            $gray-dark;
 // -------------------------
 // $sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 // $sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
-$sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+$sansFontFamily:		"Fira Sans", "Calibri", "Gil Sans", sans-serif !important;
 // $serifFontFamily:       "iABCRegular", serif;
 
 $font-family-base:        $sansFontFamily;
 // $baseFontSize:          0.75em;
 // $baseLineHeight:        1.125em;
 // Open Sans
-$font-size-base:          0.5;
+$font-size-base:          16;
 // $line-height-base:        1.25em;
 
 //** Unit-less `line-height` for use in components like buttons.
@@ -276,6 +276,15 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .nav-item {
 	// padding-top: 0.5em;
+}
+
+a.nav-link {
+	color: $gray;
+}
+
+.nav-link {
+	position: relative;
+	top: 0.25em;
 }
 
 .dropdown-menu > li > form {
