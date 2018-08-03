@@ -449,7 +449,7 @@ GEM
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.19)
+    libv8 (6.7.288.46.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -470,6 +470,8 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
+    mini_racer (0.2.0)
+      libv8 (>= 6.3)
     minitest (5.11.3)
     mjml-rails (4.2.0)
     moneta (0.8.1)
@@ -561,7 +563,6 @@ GEM
       json
     record_tag_helper (1.0.0)
       actionview (~> 5.x)
-    ref (2.0.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -655,9 +656,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stackprof (0.2.12)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -742,6 +740,7 @@ DEPENDENCIES
   libv8
   memcachier
   meta-tags
+  mini_racer
   mjml-rails
   net-http-persistent (~> 2.9.4)
   newrelic_rpm
@@ -775,7 +774,6 @@ DEPENDENCIES
   simplecov
   sitemap_generator
   stackprof
-  therubyracer
   thin
   timecop
   uglifier (>= 1.0.3)

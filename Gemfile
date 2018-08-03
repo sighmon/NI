@@ -202,7 +202,7 @@ end
 gem 'bootstrap', '~> 4.1.1'
 # gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
-gem 'therubyracer'
+gem 'mini_racer'
 gem 'font-awesome-rails'
 
 # Gems used only for assets and not required

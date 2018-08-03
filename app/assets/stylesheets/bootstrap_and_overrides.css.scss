@@ -696,15 +696,18 @@ $homeCoverListMargin: 0.438em;
 .footer {
 	color: $gray-dark;
 	background-color: $footerColour;
-	margin: 0 -1em -4.063em -1em;
+	margin: 0 -1rem -4rem -1rem;
 	padding: 2em;
 	text-align: center;
 	border-radius: 0 0 0.188em 0.188em;
+	font-size: 0.9em;
 }
 
 .footer .brand {
 	// @include navbar;
 	// @include brand;
+	font-family: "Bodega";
+	font-size: 1.7em;
 	color: $gray-dark;
 	margin-top: -0.5em;
 }
@@ -822,7 +825,8 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 
 .shared-sign-up .form-control {
 	margin-bottom: 0.5em;
-	float: left;
+	margin: auto;
+	max-width: 30rem;
 }
 
 .category_autocomplete {
@@ -927,6 +931,10 @@ a:active .shadow {
 .edit-issue-buttons hr {
 	margin: 0.625em 0em;
 	border: none;
+}
+
+.actions {
+	margin: auto;
 }
 
 .form-actions {
