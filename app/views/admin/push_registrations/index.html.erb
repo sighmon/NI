@@ -1,10 +1,15 @@
 <div class="edit-issue-buttons">
-  <p><%= link_to "Import Parse registrations", admin_push_registrations_import_path,
+  <p><% link_to "Import Parse registrations", admin_push_registrations_import_path,
             :method => 'get',
             :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Import from parse?'))},
             :class => 'btn btn-warning' %></p>
-  <p>To import from the command line: <br />
-  $ PushRegistration.import_from_parse(6)</p>
+  <!-- <p>To import from the command line: <br />
+  $ PushRegistration.import_from_parse(6)</p> -->
+  <p><b>How to find your device token</b></p>
+  <p>Open the iOS/Android app.</p>
+  <p>Tap 'i' for About screen.</p>
+  <p>Double tap 'About'.</p>
+  <p>Do a find on this page for the start of it.</p>
 </div>
 
 <div class="page-header">

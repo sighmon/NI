@@ -116,8 +116,7 @@ class HomeController < ApplicationController
 
     @world_beaters = @world_beaters.try(:sample)
 
-    # Need to get an access token to complete this.. not sure it's necessary.. might just do it via JSON
-    # @instagram = Instagram.client(:access_token => session[:access_token])
+    # Now using legit Instagram API
     @instagram_json = get_instagram_json
 
   	# Set meta tags
@@ -172,7 +171,7 @@ class HomeController < ApplicationController
   def get_instagram_json
     Rails.cache.fetch("instagram_json", expires_in: 12.hours) do
       begin
-        response = HTTParty.get("https://www.instagram.com/#{ENV['INSTAGRAM_NAME']}/?__a=1")
+        response = HTTParty.get("https://api.instagram.com/v1/users/self/media/recent/?access_token=#{ENV['INSTAGRAM_ACCESS_TOKEN']}")
       rescue Exception => e
         @instagram_error = e
       end
@@ -180,7 +179,7 @@ class HomeController < ApplicationController
       if not @instagram_error and response and response.code == 200
         instagram_body = JSON.parse(response.body)
         begin
-          return instagram_body["graphql"]["user"]["edge_owner_to_timeline_media"]["edges"]
+          return instagram_body["data"]
         rescue Exception => e
           @instagram_error = e
           return nil

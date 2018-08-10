@@ -27,13 +27,14 @@ class Article < ActiveRecord::Base
 
   def self.search(params, show_unpublished = false)
     results_per_page = Settings.article_pagination
+    clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
     if params[:per_page] and (params[:per_page].to_i > 0)
       results_per_page = params[:per_page].to_i
     end
     query_hash = {
       sort: [{ publication: { order: "desc"} }]
     }
-    query_hash.merge!({query: { query_string: { query: params[:query], default_operator: "AND" }}}) if params[:query].present?
+    query_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
     query_hash.merge!({ post_filter: { term: { unpublished: false}} }) unless show_unpublished
 

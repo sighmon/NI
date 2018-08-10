@@ -33,6 +33,11 @@ class Admin::PushNotificationsController < ApplicationController
     end
   end
 
+  def run_delayed_jobs
+    ApplicationHelper.start_delayed_jobs
+    redirect_to admin_push_notifications_path, notice: "Delayed jobs running..."
+  end
+
   def send_notifications
     # Another paranoid check
     if current_user and current_user.admin?
