@@ -1,4 +1,4 @@
-<p class="share-links"><span class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></span><span class="clear-hack"></span>
+<p class="share-links"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %>
   <% if can? :create, Favourite %>
     <!-- Favourite -->
     <% if article_favourited?(@article) %>

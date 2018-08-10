@@ -41,7 +41,7 @@
 			<% end %>
 		<% elsif @user.subscriber? and not @user.has_paper_only? %>
 		<dt></dt>
-		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-default' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
+		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
 		<% elsif @user.subscription_lapsed? %>
 		<dt></dt>
 		<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
@@ -69,7 +69,7 @@
 			<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
 		<% elsif @user.subscriber? %>
 			<dt></dt>
-			<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-default' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
+			<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
 		<% elsif @user.subscription_lapsed? %>
 			<dt></dt>
 			<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
@@ -175,7 +175,7 @@
 <% end %>
 
 <div class="form-actions">
-	<%= link_to "Back", issues_path, :class => 'btn btn-default' %>
+	<%= link_to "Back", issues_path, :class => 'btn btn-outline-secondary' %>
 	<% if current_user.admin? %>
 		<%= link_to "Edit User", edit_admin_user_path(@user), :class => 'btn btn-primary' %>
 	<% elsif (current_user == @user) and (not @user.parent) and (can? :manage, @user) %>

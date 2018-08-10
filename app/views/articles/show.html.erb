@@ -79,7 +79,7 @@
   <nav>
     <ul class="breadcrumb">
     <% @article.categories.each do |category| %>
-      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
       <% if can? :manage, Article %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
@@ -213,7 +213,7 @@
   </nav>
 
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issue_path(@issue), :class => 'btn btn-default'  %>
+              issue_path(@issue), :class => 'btn btn-outline-secondary'  %>
   <% if can? :update, @article %>
 	  <%= link_to t('.edit', :default => t("helpers.links.edit")),
 	              edit_issue_article_path(@issue,@article), :class => 'btn btn-primary' %>
@@ -233,7 +233,7 @@
     <div class='share-highlight-btn'>
       <div class='btn-caret'>
       </div>
-      <div class='btn btn-default'>
+      <div class='btn btn-outline-secondary'>
         <div class="tweet-button">
           <%= link_to "Tweet", issue_article_tweet_path(@article.issue, @article), :target => "_blank" %>
         </div>

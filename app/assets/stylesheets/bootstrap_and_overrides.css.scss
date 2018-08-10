@@ -461,6 +461,11 @@ a.nav-link {
 	margin-bottom: 0.3em;
 }
 
+.breadcrumb li {
+	margin: inherit;
+	margin-bottom: 0.5em;
+}
+
 .home-editor-note h3 {
 	margin-top: 0.5em;
 }
@@ -695,6 +700,10 @@ $homeCoverListMargin: 0.438em;
 
 .page-header .share-links {
 	line-height: 2em;
+}
+
+.page-header .share-links a {
+	color: $gray;
 }
 
 .page-header-center {
@@ -1034,8 +1043,7 @@ $issueTitleH2FontSize: 1.2em;
 }
 
 .issue-top-box {
-	// gradient
-	@include gradient-gray;
+	// @include gradient-gray;
 
 	padding: 1em 1em 1em 0;
 	margin: 0 0 2em 0;
@@ -1122,16 +1130,25 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	margin-top: 0.5em;
 }
 
+.table-of-contents-editors-letter > p {
+	opacity: 0.9;
+}
+
 .issue-keynote-text h3 {
 	margin-top: 0;
 }
 
 .issue-keynote .home-keynote {
 	background-color: transparent;
+	background: none;
 }
 
 .issue-keynote .home-keynote img {
 	border-radius: 0.125em;
+}
+
+.issue-keynote-body-text {
+	opacity: 0.9;
 }
 
 .home-keynote .new-image-caption {

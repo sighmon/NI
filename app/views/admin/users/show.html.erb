@@ -115,7 +115,7 @@
 <%= guest_passess_as_table(@user.guest_passes, true) %>
 
 <div class="form-actions">
-	<%= link_to "Back", admin_users_path, :class => 'btn btn-default' %>
+	<%= link_to "Back", admin_users_path, :class => 'btn btn-outline-secondary' %>
 	<%= link_to "Edit User", edit_admin_user_path(@user), :class => 'btn btn-primary' %>
 	<%= link_to "Delete User", admin_user_path(@user), :method => :delete, :data => {:confirm => "Are you sure you want to delete this user?"}, :class => 'btn btn-danger' %>
 </div>
