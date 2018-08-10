@@ -427,13 +427,14 @@ a.nav-link {
 	margin-top: 0;
 }
 
-.home-quick-reads img, .home-popular img {
-	// text-align: center;
+.home-quick-reads h6, .home-popular h6 {
+	margin-top: 0.5em;
 }
 
 .home-quick-reads h6 a, .home-popular h6 a {
 	color: $gray;
 	line-height: 1.3em;
+	margin-top: 1em !important;
 }
 
 .home-quick-reads h6 a:hover, .home-popular h6 a:hover {
@@ -543,7 +544,7 @@ a.nav-link {
 $homeCoverListMargin: 0.438em;
 
 .home-cover-list {
-	margin: 1.25em -$homeCoverListMargin 1.25em -$homeCoverListMargin;
+	// margin: 1.25em -$homeCoverListMargin 1.25em -$homeCoverListMargin;
 }
 
 .home-cover-list img {
@@ -583,12 +584,15 @@ $homeCoverListMargin: 0.438em;
 	color: $gray-light;
 	font-size: 1.3em;
 	line-height: 1.4em;
+	margin-top: 0.5em;
 	margin-bottom: 0;
 }
 
 .home-keynote h4 {
 	font-weight: inherit;
 	font-size: 1em;
+	line-height: 1.4em;
+	opacity: 0.9;
 }
 
 .home-keynote h5 {
@@ -634,13 +638,13 @@ $homeCoverListMargin: 0.438em;
 	background-image: none;
 }
 
-.label {
-	background-color: #999;
+.badge {
+	padding: 0.5em !important;
 }
 
 .breadcrumb {
 	font-family: $headings-font-family;
-	font-size: 0.8em;
+	font-size: 0.9em;
 	background-image: none;
 	background-color: transparent !important;
 	padding: 1em 0em !important;
@@ -654,12 +658,12 @@ $homeCoverListMargin: 0.438em;
 	color: $gray;
 }
 
-.breadcrumb .label {
+.breadcrumb .badge {
 	color: #FFF;
 	font-weight: normal;
 }
 
-.breadcrumb .label:hover {
+.breadcrumb .badge:hover {
 	color: #000;
 	background-color: $footerColour;
 	text-shadow:none;

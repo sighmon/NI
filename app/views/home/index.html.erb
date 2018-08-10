@@ -126,7 +126,7 @@
     <ul class="breadcrumb">
     <% if @latest_issue_categories %>
 	    <% @latest_issue_categories.each do |category| %>
-	      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+	      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
 	      <% if can? :manage, category %><li><%= category.name %></li><% end %>
 	    <% end %>
 	   <% end %>
@@ -163,7 +163,7 @@
 			<p>Here are the <%= link_to "most recent magazines", issues_path %> we've published.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
-					<% @issues.sort_by(&:release).reverse.first(4).each do |issue| %>
+					<% @issues.sort_by(&:release).reverse.first(3).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
 						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
