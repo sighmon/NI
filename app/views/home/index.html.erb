@@ -100,14 +100,10 @@
 		<% @quick_reads.each do |a| %>
 			<% if can? :read, a %>
 				<!-- Link to article -->
-				<a href="<%= issue_article_path(a.issue, a) %>">
-					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
-				</a>
+				<%= render :partial => "home_mini_article", :locals => { :article => a, :article_link => issue_article_path(a.issue, a) } %>
 			<% else %>
 				<!-- Link to quick reads page -->
-				<a href="<%= quick_reads_path %>">
-					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
-				</a>
+				<%= render :partial => "home_mini_article", :locals => { :article => a, :article_link => quick_reads_path } %>
 			<% end %>
 		<% end %>
 		</div>
@@ -116,9 +112,7 @@
 		<h4><%= link_to "Popular articles", popular_path %></h4>
 		<div class="row">
 		<% @popular.each do |article| %>
-			<a href="<%= generate_guest_pass_link_string(article.popular_guest_pass) %>">
-				<%= render :partial => "home_mini_article", :locals => { :article => article } %>
-			</a>
+			<%= render :partial => "home_mini_article", :locals => { :article => article, :article_link => generate_guest_pass_link_string(article.popular_guest_pass) } %>
 		<% end %>
 		</div>
 	</div>

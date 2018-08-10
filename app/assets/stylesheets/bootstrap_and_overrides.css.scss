@@ -431,18 +431,22 @@ a.nav-link {
 	// text-align: center;
 }
 
-.home-quick-reads h6, .home-popular h6 {
+.home-quick-reads h6 a, .home-popular h6 a {
 	color: $gray;
 	line-height: 1.3em;
 }
 
-.home-quick-reads .row a div, .home-popular .row a div {
+.home-quick-reads h6 a:hover, .home-popular h6 a:hover {
+	text-decoration: none;
+}
+
+.home-quick-reads .row div a, .home-popular .row div a {
 	opacity: 1;
 	transition: .3s ease;
 	@include transition-fix;
 }
 
-.home-quick-reads .row a div:hover, .home-popular .row a div:hover {
+.home-quick-reads .row div a:hover, .home-popular .row div a:hover {
 	opacity: 0.8;
 	transition: .3s ease;
 	@include transition-fix;
