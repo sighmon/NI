@@ -144,7 +144,7 @@
 			<p>These are the most recent magazines we've published. See the <%= link_to "Magazine archive", issues_path %> for a full list of issues.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
-					<% @issues.sort_by(&:release).reverse.first(6).each do |issue| %>
+					<% @issues.sort_by(&:release).reverse.first(5).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
 						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue), :itemprop => "url" %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
