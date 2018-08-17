@@ -26,9 +26,13 @@
 	<% end %>
 
 	<%= simple_form_for [@issue, @purchase] do |f| %>
-	  
-	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  Purchase amount: $<%= cents_to_dollars(session[:express_purchase_price]) %>
+		
+		<dl class="dl-horizontal">
+			<dt>Name:</dt>
+			<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
+			<dt>Purchase amount:</dt>
+			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
+		</dl>
 	  <div class="form-actions">
 		<%= f.button :submit, "Complete your purchase", :onclick => "sendPurchase();", :class => 'btn btn-success' %>
 	  </div>
