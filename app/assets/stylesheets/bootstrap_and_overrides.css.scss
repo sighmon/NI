@@ -1870,13 +1870,13 @@ ul.ui-autocomplete {
 }
 
 .subscription-offer .label {
-	background-color: $gray;
-	margin-left: -1.35em;
+	background-color: $gray-light;
+	margin-left: -1em;
 	border-radius: 0 .25em .25em 0;
 	text-transform: uppercase;
 	font-weight: normal;
 	letter-spacing: 0.1em;
-	padding-top: 0.3em;
+	padding: 0.2em 0.5em 0.2em 1em;
 }
 
 .subscription-offer h4 {
