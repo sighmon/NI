@@ -12,7 +12,7 @@ class FavouritesController < ApplicationController
   end
 
   def create
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
     @favourite = Favourite.create(:user_id => @user.id, :issue_id => @issue.id, :article_id => @article.id)
@@ -30,7 +30,7 @@ class FavouritesController < ApplicationController
   end
 
   def destroy
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
     @favourite = Favourite.find(params[:id])
