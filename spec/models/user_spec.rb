@@ -21,7 +21,7 @@ describe User, :type => :model do
       it "destroys child when destroyed" do
         child_id = user.children.first.id
         user.destroy
-        expect { User.find(child_id) }.to raise_exception
+        expect { User.find(child_id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
