@@ -6,16 +6,16 @@
 <dl class="dl-horizontal">
 <% if current_user == @user %>
 	<% if not @user.parent %>
-		<dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
+		<dt><%= model_class.human_attribute_name(:email) %>:</dt>
 		<dd><%= @user.email %></dd>
 	<% end %>
-	<dt><strong>Account type:</strong></dt>
+	<dt>Account type:</dt>
 	<dd><%= @user.user_type %></dd>
 	<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
 		<% if @user.has_paper_only? %>
-			<dt><strong>Digital trial expires:</strong></dt>
+			<dt>Digital trial expires:</dt>
 		<% else %>
-			<dt><strong>Expiry date:</strong></dt>
+			<dt>Expiry date:</dt>
 		<% end %>
 		<dd><% begin %>
 			<%= @user.expiry_date.strftime("%e %B, %Y") %>
@@ -50,13 +50,13 @@
 		<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
 		<% end %>
 		<% if @user.uk_user? and not @user.subscriber? %>
-			<dt><strong>Note:</strong></dt>
+			<dt>Note:</dt>
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
 	<% end %>
 	<% if @user.has_paper_only? %>
 		<!-- TODO: Add this into the tests above properly -->
-		<dt><strong>Paper subscription:</strong></dt>
+		<dt>Paper subscription:</dt>
 		<dd><% begin %>
 			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>

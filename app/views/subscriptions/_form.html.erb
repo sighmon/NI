@@ -49,17 +49,17 @@
 	<%= simple_form_for(@subscription) do |f| %>
 
 	  <dl class="dl-horizontal">
-	  	<dt><strong>Name:</strong></dt>
+	  	<dt>Name:</dt>
 	  	<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
 		<% if session[:express_autodebit] %>
-			<dt><strong>Debit every:</strong></dt>
+			<dt>Debit every:</dt>
 			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
-			<dt><strong>Debit amount:</strong></dt>
+			<dt>Debit amount:</dt>
 			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
 		<% else %>
-			<dt><strong>Subscription:</strong></dt>
+			<dt>Subscription:</dt>
 			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
-			<dt><strong>Amount:</strong></dt>
+			<dt>Amount:</dt>
 			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
 		<% end %>
 	  </dl>

@@ -25,7 +25,7 @@
 		window.issuePrice = <%= cents_to_dollars(session[:express_purchase_price]) %>;
 	<% end %>
 
-	<%= simple_form_for([@issue, @purchase]) do |f| %>
+	<%= simple_form_for [@issue, @purchase] do |f| %>
 	  
 	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
 	  Purchase amount: $<%= cents_to_dollars(session[:express_purchase_price]) %>
