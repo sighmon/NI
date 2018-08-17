@@ -10,9 +10,9 @@
         <%= text_field_tag :query, params[:query], :placeholder => 'Article search', :class => "span2 search-query form-control" %>
         <%= submit_tag "Search", name: nil, :class => 'btn btn-outline-secondary' %>
       </div>
-      <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />
-      Or limit your search to <%= link_to "Magazine main themes", issues_path %>.</p>
   <% end %>
+  <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />
+  Or limit your search to <%= link_to "Magazine main themes", issues_path %>.</p>
 </div>
 
 <h4>Search results<% if params[:query] %> for: <span class="red"><%= params[:query] %></span><% else %>:<% end %></h4>

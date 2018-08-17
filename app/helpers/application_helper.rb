@@ -128,13 +128,13 @@ module ApplicationHelper
                 first_image = guest_pass.article.first_image
                 table += "<tr>"
                 if first_image
-                    table += "<td>#{link_to retina_image_tag(first_image.data_url(:thumb).to_s, :class => 'shadow', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "150x150"), generate_guest_pass_link_string(guest_pass)}</td>"
+                    table += "<td>#{link_to retina_image_tag(first_image.data_url(:thumb).to_s, :class => 'shadow-sm', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "150x150"), generate_guest_pass_link_string(guest_pass)}</td>"
                 else
                     table += "<td>#{link_to retina_image_tag("fallback/default_article_image.jpg", :width => "200", :class => "shadow"), generate_guest_pass_link_string(guest_pass)}</td>"
                 end
                 table += "<td><h4>#{link_to guest_pass.article.title, generate_guest_pass_link_string(guest_pass)}</h4><p>#{guest_pass.article.teaser}</p></td>"
                 table += "<td>#{guest_pass.article.issue.release.strftime("%B, %Y")}</td>"
-                table += "<td>#{link_to retina_image_tag(guest_pass.article.issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "141x200"), issue_path(guest_pass.article.issue)}</td>"
+                table += "<td>#{link_to retina_image_tag(guest_pass.article.issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "141x200"), issue_path(guest_pass.article.issue)}</td>"
                 table += "<td>#{guest_pass.use_count}</td>"
                 table += "</tr>"
             end

@@ -137,6 +137,10 @@ $navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 
 $navbarBrandColor:                $navbarLinkColor;
 
+.navbar-toggler {
+	background-color: $gray-light !important;
+}
+
 .bg-menu-ni {
 	// background-color: rgb(25, 19, 33); // Purple
 	background-color: #eeeeee;
@@ -202,6 +206,8 @@ $boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 $boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 $footerColour: rgba(250,176,59,0.58);
 // $footerColour: rgba(250,176,59,0.38); // Old footer 2013
+
+$containerMarginLeftRight: 2rem;
 
 // Column fixes
 
@@ -714,7 +720,7 @@ $homeCoverListMargin: 0.438em;
 .footer {
 	color: $gray-dark;
 	background-color: $footerColour;
-	margin: 0 -1rem -4rem -1rem;
+	margin: 0 (-$containerMarginLeftRight) -4rem (-$containerMarginLeftRight);
 	padding: 2em;
 	text-align: center;
 	border-radius: 0 0 0.188em 0.188em;
@@ -899,7 +905,7 @@ $shadowSizeActive: 0em 0em 0.438em;
 	box-shadow: $shadowSizeNormal $shadowColour;
 }
 
-a:hover .shadow {
+a:hover .shadow-sm {
 	position: relative;
 	top: -0.063em;
 	-moz-box-shadow: $shadowSizeHover $shadowColour;
@@ -907,7 +913,7 @@ a:hover .shadow {
 	box-shadow: $shadowSizeHover $shadowColour;
 }
 
-a:active .shadow {
+a:active .shadow-sm {
 	position: relative;
 	top: 0em;
 	-moz-box-shadow: $shadowSizeActive $shadowColour;
@@ -983,7 +989,7 @@ a:active .shadow {
 
 .issue-search {
 	float: right;
-	margin-top: -3.75em;
+	margin-top: 3.75em;
 }
 
 .issue-search .btn {
@@ -991,31 +997,31 @@ a:active .shadow {
 	// height: 1.875em;
 }
 
-$issueCoverListMargin: 0.563em;
+$issueCoverListMargin: 1.1em;
 
 .issue-cover-list {
-	margin: 0em -$issueCoverListMargin 1.25em -$issueCoverListMargin;
+	// margin: 0em -$issueCoverListMargin 1.25em -$issueCoverListMargin;
 }
 
 .issue-cover-list .issue-information {
 	float: left;
 	margin-left: $issueCoverListMargin;
 	margin-right: $issueCoverListMargin;
-	margin-bottom: ($issueCoverListMargin * 2) + 3;
+	margin-bottom: ($issueCoverListMargin * 2);
 	border-radius: 0.125em;
-	background-color: $boxHomeBackgroundColour;
+	// background-color: $boxHomeBackgroundColour;
 	color: $gray-light;
 }
 
 .issue-information:hover {
-	background-color: $gray-light;
-	color: white;
+	// background-color: $gray-light;
+	// color: white;
 	opacity: 0.9;
 }
 
 .issue-information p {
 	text-align: center;
-	margin: 0.3em 0 0.3em 0;
+	margin: 0.5em 0 0.5em 0;
 	font-size: 0.9em;
 }
 
@@ -1429,7 +1435,7 @@ mark, .mark {
 
 #myCarousel {
 	// .shadow;
-	margin: 0 -1em 2em -1em;
+	margin: 0 (-$containerMarginLeftRight) 2em (-$containerMarginLeftRight);
 }
 
 .carousel-control {
@@ -2201,6 +2207,7 @@ ul.ui-autocomplete {
 	.issue-search {
 		float: none;
 		margin-top: 0em;
+		margin-bottom: 2em;
 	}
 	.hero-unit {
 		padding: 0.625em 1.25em 1.25em 1.25em;
@@ -2315,6 +2322,8 @@ ul.ui-autocomplete {
 		border: 0.063em solid $gray-lighter;
 		margin: -3.125em auto 4em auto;
 		padding: 3.75em 4em 4em 4em;
+		padding-left: $containerMarginLeftRight !important;
+		padding-right: $containerMarginLeftRight !important;
 		// max-width: 65.625em !important;
 		max-width: 60em !important;
 	}
@@ -2335,7 +2344,7 @@ ul.ui-autocomplete {
 	}
 
 	.home-free-issue, .home-editor-note {
-		padding-left: 3em;
+		padding-left: 2em !important;
 	}
 	.table-of-contents-editors-letter {
 		-webkit-column-count: 2;
