@@ -9,10 +9,10 @@ FactoryBot.define do
       "recurring_payment_id" "fake_paypal_profile_id"
       "profile_status" "Active"
     end
-    transaction_id "fake_transaction_id"
-    transaction_type "recurring_payment"
+    transaction_id { "fake_transaction_id" }
+    transaction_type { "recurring_payment" }
     user
-    status "Completed"
+    status { "Completed" }
   end
 
 end
