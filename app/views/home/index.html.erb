@@ -347,10 +347,10 @@
 		<hr />
 		<!-- Instagram -->
 		<% if @instagram_json %>
-			<% @instagram_json.first(2).each do |item| %>
+			<% @instagram_json.first(4).each do |item| %>
 				<div class="instagram">
 					<a href="<%= item["link"] %>"><img src="<%= item["images"]["standard_resolution"]["url"] %>" alt="<%= strip_tags(item["caption"]["text"]) %>" title="<%= strip_tags(item["caption"]["text"]) %>"></a>
-					<h4><a href="<%= item["link"] %>"><%= strip_tags(item["caption"]["text"]) %></a></h4>
+					<!-- <h4><a href="<%= item["link"] %>"><%= strip_tags(item["caption"]["text"]) %></a></h4> -->
 					<h5><%= DateTime.strptime(item["created_time"].to_s,'%s').try(:strftime,"#{DateTime.strptime(item["created_time"].to_s,'%s').day.ordinalize} %B %Y") %> by <%= link_to "#{ENV["INSTAGRAM_NAME"]}", "https://instagram.com/#{ENV["INSTAGRAM_NAME"]}" %></h5>
 				</div>
 			<% end %>

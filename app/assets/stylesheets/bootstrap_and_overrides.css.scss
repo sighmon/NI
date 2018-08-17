@@ -765,6 +765,7 @@ $homeCoverListMargin: 0.438em;
 .home-donate .btn {
 	background-color: transparent;
 	border-color: inherit;
+	color: inherit;
 }
 
 .home-donate .btn:hover {
@@ -2193,13 +2194,16 @@ ul.ui-autocomplete {
  
 /* Landscape phone to portrait tablet */
 @media (max-width: 47.938em) {
+	.container {
+		max-width: 95% !important;
+	}
 	.user_nav {
 		// position: relative;
 		// top: 0em;
 		margin-right: 0.5em;
 	}
 	.navbar .brand {
-		margin-left: 0.938em;
+		// margin-left: 0.938em;
 	}
 	.article-title .issue-cover {
 		margin-top: 0em;
@@ -2276,6 +2280,9 @@ ul.ui-autocomplete {
  
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 48em) and (max-width: 61.938em) {
+	.container {
+		max-width: 95% !important;
+	}
 	.user_nav {
 		// position: relative;
 		// top: 0em;
@@ -2287,7 +2294,7 @@ ul.ui-autocomplete {
 		width: 27.813em;
 	}
 	.issue-search {
-		margin-top: -4.375em;
+		// margin-top: -4.375em;
 	}
 	.dl-horizontal dt {
 		float: left;
