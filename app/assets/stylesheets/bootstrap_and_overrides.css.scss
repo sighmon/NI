@@ -146,48 +146,9 @@ $navbarBrandColor:                $navbarLinkColor;
 	background-color: #eeeeee;
 }
 
-@mixin gradient {
-	background: #ffe0c2;
-	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
-	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
-}
-
-@mixin gradient-gray {
-	background-color: $boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-}
-
-@mixin gradient-gray-darker {
-	background-color: $boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
-}
-
-@mixin gradient-home-latest-issue {
-	background-color: $boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
-	background: -webkit-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
-	background: linear-gradient(to bottom, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$boxHomeBackgroundColourLight, endColorstr=$boxHomeBackgroundColour,GradientType=0 );
-}
-
 .no-gradient {
 	background-color: transparent !important;
 	background: none !important;
-}
-
-@mixin box {
-	background-color: $boxBackgroundColour;
-	padding: 1.5em 2em;
-	margin: 2em 0 2em 0;
-	border-radius: 0.313em;
 }
 
 
@@ -223,6 +184,50 @@ $grid-gutter-width: 2em;
 @mixin transition-fix {
 	-webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
+}
+
+@mixin gradient {
+	background: #ffe0c2;
+	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
+	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
+}
+
+@mixin gradient-gray {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+}
+
+@mixin gradient-gray-darker {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
+}
+
+@mixin gradient-home-latest-issue {
+	background-color: $boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	background: -webkit-linear-gradient(top, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	background: linear-gradient(to bottom, $boxHomeBackgroundColourLight 0%, $boxHomeBackgroundColour 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$boxHomeBackgroundColourLight, endColorstr=$boxHomeBackgroundColour,GradientType=0 );
+}
+
+@mixin box {
+	background-color: $boxHomeBackgroundColour;
+	padding: 1.5em 2em;
+	margin: 2em 0 2em 0;
+	border-radius: 0.313em;
+}
+
+.box.gradient {
+	@include box;
+	@include gradient;
 }
 
 
@@ -511,6 +516,10 @@ a.nav-link {
 	border-radius: 0.125em;
 	width: 100%;
 	height: auto;
+}
+
+.table.table-striped.categories-table th:last-child, .table.table-striped.categories-table td:last-child {
+	min-width: 10rem;
 }
 
 // Past home styling
