@@ -40,10 +40,10 @@ SecureHeaders::Configuration.default do |config|
   }
   # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.
   config.csp_report_only = config.csp.merge({
-    img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST'])}),
-    font_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST'])}),
-    script_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST'])}),
-    style_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST'])}),
+    img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    font_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    script_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    style_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
     report_uri: %W(#{ENV["REPORT_URI_CSP_REPORT_ONLY"]})
   })
   # Disabling as it is being deprecated by Chrome.
