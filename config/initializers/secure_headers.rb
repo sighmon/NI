@@ -41,6 +41,9 @@ SecureHeaders::Configuration.default do |config|
   # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.
   config.csp_report_only = config.csp.merge({
     img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    font_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    script_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    style_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     report_uri: %W(#{ENV["REPORT_URI_CSP_REPORT_ONLY"]})
   })
   # Disabling as it is being deprecated by Chrome.
