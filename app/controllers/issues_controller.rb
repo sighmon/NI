@@ -8,10 +8,10 @@ class IssuesController < ApplicationController
   # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
   # :show So that iOS can post, :index so that issues.json jquery works
-  skip_before_filter :verify_authenticity_token, :only => [:show, :index]
+  skip_before_action :verify_authenticity_token, :only => [:show, :index]
 
   # Devise authorisation
-  # before_filter :authenticate_user!, :except => [:show, :index]
+  # before_action :authenticate_user!, :except => [:show, :index]
 
   # GET /issues
   # GET /issues.json

@@ -14,7 +14,7 @@ describe Admin::GuestPassesController, :type => :controller do
       it "returns http success" do
         sign_in FactoryBot.create(:admin_user)
         get 'index'
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end

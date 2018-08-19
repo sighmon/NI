@@ -6,7 +6,7 @@ SecureHeaders::Configuration.default do |config|
       lax: true # mark all cookies as SameSite=lax
     }
   }
-  config.hsts = "max-age=#{20.years.to_i}; includeSubdomains; preload"
+  config.hsts = "max-age=#{1.week.to_i}; includeSubdomains; preload"
   config.x_frame_options = "DENY"
   config.x_content_type_options = "nosniff"
   config.x_xss_protection = "1; mode=block"
@@ -20,7 +20,7 @@ SecureHeaders::Configuration.default do |config|
 
     # directive values: these values will directly translate into source directives
     # default_src: %w(https: 'self'),
-    default_src: %w(https: 'self'),
+    default_src: %W(https: 'self'),
     base_uri: %w('self'),
     block_all_mixed_content: Rails.env.production?, # see http://www.w3.org/TR/mixed-content/
     child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com), # if child-src isn't supported, the value for frame-src will be set.

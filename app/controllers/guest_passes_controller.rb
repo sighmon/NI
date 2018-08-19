@@ -13,7 +13,7 @@ class GuestPassesController < ApplicationController
   end
 
   def create
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
     @guest_pass = GuestPass.create(:user_id => @user.id, :article_id => @article.id)
@@ -31,7 +31,7 @@ class GuestPassesController < ApplicationController
   end
 
   def destroy
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
     @guest_pass = GuestPass.find(params[:id])

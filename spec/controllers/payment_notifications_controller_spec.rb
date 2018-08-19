@@ -57,7 +57,7 @@ describe PaymentNotificationsController, :type => :controller do
           "controller"=>"payment_notifications"
         } 
         expect {
-          post :create, valid_params 
+          post :create, params: valid_params, format: :json
         }.to change(Subscription, :count).by(1)
       end
     end
@@ -106,7 +106,7 @@ describe PaymentNotificationsController, :type => :controller do
           "controller"=>"payment_notifications"
         }
         expect {
-          post :create, valid_params 
+          post :create, params: valid_params, format: :json
         }.to change(Subscription, :count).by(0)
 
       end

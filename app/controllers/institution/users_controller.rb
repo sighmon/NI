@@ -47,7 +47,7 @@ class Institution::UsersController < Institution::BaseController
   # POST /institution/users
   # POST /institution/users.json
   def create
-    @user = current_user.children.create(user_params.merge :email => "design+parent_id_#{current_user.id}_child_username_#{params["user"]["username"].try(:downcase).try(:tr," ", "_")}@newint.com.au")
+    @user = current_user.children.create(user_params.merge :email => "design+parent_id_#{current_user.id}_child_username_#{params["user"].try(:[],"username").try(:downcase).try(:tr," ", "_")}@newint.com.au")
 
     respond_to do |format|
       if @user.save
@@ -63,7 +63,7 @@ class Institution::UsersController < Institution::BaseController
   # PUT /institution/users/1
   # PUT /institution/users/1.json
   def update
-    if params[:user][:password].blank?
+    if params[:user] and params[:user][:password].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end

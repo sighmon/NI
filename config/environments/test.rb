@@ -1,4 +1,5 @@
-NI::Application.configure do
+# NI::Application.configure do
+Rails.application.configure do
 # Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -15,7 +16,12 @@ NI::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   # config.serve_static_assets = true
-  config.static_cache_control = "public, max-age=3600"
+  # Rails 5
+  # config.static_cache_control = "public, max-age=3600"
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=3600'
+  }
 
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
@@ -29,6 +35,7 @@ NI::Application.configure do
 
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
+  config.action_mailer.perform_caching = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the

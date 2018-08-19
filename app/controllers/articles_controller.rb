@@ -2,8 +2,8 @@ class ArticlesController < ApplicationController
   require 'net/http'
 
   include ArticlesHelper
-   
-  skip_before_filter :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share, :popular]
+
+  skip_before_action :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share, :popular]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
@@ -496,7 +496,7 @@ class ArticlesController < ApplicationController
   def tweet
     @article = Article.find(params[:article_id])
     if current_user
-      @user = User.find(current_user)
+      @user = User.find(current_user.id)
       @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_tweet"
@@ -513,7 +513,7 @@ class ArticlesController < ApplicationController
   def wall_post
     @article = Article.find(params[:article_id])
     if current_user
-      @user = User.find(current_user)
+      @user = User.find(current_user.id)
       @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_wall_post"
@@ -539,7 +539,7 @@ class ArticlesController < ApplicationController
   def email_article
     @article = Article.find(params[:article_id])
     if current_user
-      @user = User.find(current_user)
+      @user = User.find(current_user.id)
       @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_email"
@@ -557,7 +557,7 @@ class ArticlesController < ApplicationController
     if can? :read, @article or request_has_valid_itunes_receipt
           
       if current_user
-        @user = User.find(current_user)
+        @user = User.find(current_user.id)
       else
         # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
         @user = User.find_by_username("subscriber")
@@ -578,7 +578,7 @@ class ArticlesController < ApplicationController
     if can? :read, @article or request_has_valid_google_play_receipt
           
       if current_user
-        @user = User.find(current_user)
+        @user = User.find(current_user.id)
       else
         # If a user has an Google Play subscription, attach the guest pass to 'subscriber'
         @user = User.find_by_username("subscriber")

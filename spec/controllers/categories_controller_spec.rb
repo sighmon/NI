@@ -5,7 +5,7 @@ describe CategoriesController, :type => :controller do
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -15,8 +15,8 @@ describe CategoriesController, :type => :controller do
 
     describe "GET 'show'" do
       it "returns http success" do
-        get 'show', :id => category.id
-        expect(response).to be_success
+        get 'show', params: {:id => category.id}
+        expect(response).to be_successful
       end
     end
 

@@ -1,0 +1,63 @@
+/* FONT-FACE DEFINITIONS */
+
+/* NI font - Bodega Sans Black */
+
+@font-face {
+    font-family: 'Bodega';
+    src:url('/assets/ni.eot');
+    src:url('/assets/ni.eot?#iefix') format('embedded-opentype'), url('/assets/ni.woff') format('woff'), url('/assets/ni.ttf') format('truetype'), url('/assets/ni.svg#Bodega') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* Fira Sans - Google fonts */
+// https://fonts.google.com/specimen/Fira+Sans
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    src: url(/assets/firasans-light-webfont.woff2) format("woff2"), url(/assets/firasans-light-webfont.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 300;
+    font-style: italic;
+    font-stretch: normal;
+    src: url(/assets/firasans-lightitalic-webfont.woff2) format("woff2"), url(/assets/firasans-lightitalic-webfont.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    src: url(/assets/firasans-book-webfont.woff2) format("woff2"), url(/assets/firasans-book-webfont.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: normal;
+    src: url(/assets/firasans-bookitalic-webfont.woff2) format("woff2"), url(/assets/firasans-bookitalic-webfont.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    src: url(/assets/firasans-medium-webfont.woff2) format("woff2"), url(/assets/firasans-medium-webfont.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 600;
+    font-style: italic;
+    font-stretch: normal;
+    src: url(/assets/firasans-mediumitalic-webfont.woff2) format("woff2"), url(/assets/firasans-mediumitalic-webfont.woff) format("woff")
+}

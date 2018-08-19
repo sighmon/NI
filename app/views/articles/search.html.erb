@@ -8,11 +8,11 @@
   <%= form_tag search_path, :class => 'form-search form-inline', method: :get do %>
       <div class="input-append">
         <%= text_field_tag :query, params[:query], :placeholder => 'Article search', :class => "span2 search-query form-control" %>
-        <%= submit_tag "Search", name: nil, :class => 'btn btn-default' %>
+        <%= submit_tag "Search", name: nil, :class => 'btn btn-outline-secondary' %>
       </div>
-      <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />
-      Or limit your search to <%= link_to "Magazine main themes", issues_path %>.</p>
   <% end %>
+  <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />
+  Or limit your search to <%= link_to "Magazine main themes", issues_path %>.</p>
 </div>
 
 <h4>Search results<% if params[:query] %> for: <span class="red"><%= params[:query] %></span><% else %>:<% end %></h4>
@@ -63,7 +63,7 @@
         <!-- <td><%=l article.created_at %></td> -->
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' unless article.issue.nil? %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' unless article.issue.nil? %>
           <% else %>
             <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' unless article.issue.nil? %>
           <% end %>

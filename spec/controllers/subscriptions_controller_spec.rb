@@ -51,9 +51,12 @@ describe SubscriptionsController, :type => :controller do
         context "and stubbed success" do
 
           it "should create a subscription" do
+            warn_level = $VERBOSE
+            $VERBOSE = nil
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(true)
+            $VERBOSE = warn_level
             expect {
-              post :create, {:user_id => user.id}
+              post :create, params: {:user_id => user.id}
             }.to change(Subscription, :count).by(1)
           end
         end
@@ -61,9 +64,12 @@ describe SubscriptionsController, :type => :controller do
         context "and stubbed failure" do
 
           it "should not create a subscription" do
+            warn_level = $VERBOSE
+            $VERBOSE = nil
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(false)
+            $VERBOSE = warn_level
             expect {
-              post :create, {:user_id => user.id}
+              post :create, params: {:user_id => user.id}
             }.to change(Subscription, :count).by(0)
           end
 

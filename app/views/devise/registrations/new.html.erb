@@ -14,7 +14,7 @@
   </div>
 
   <div class="actions">
-    <%= f.button :submit, "Sign up" %>
+    <%= f.button :submit, "Sign up", class: 'btn btn-secondary' %>
     <%= render :partial => "shared/privacy" %>
     <%= render :partial => "devise/shared/links" %>
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>

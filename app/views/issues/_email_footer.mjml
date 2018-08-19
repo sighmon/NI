@@ -6,9 +6,10 @@
 					padding-top="0"
 					padding-bottom="0"
 					width="200px"
-					alt="New Internationalist"
+					alt="New Internationalist - The world unspun"
+					title="New Internationalist - The world unspun"
 					href="<%= root_url %>"
-					src="<%= root_url + 'assets/new-internationalist-footer@2x.png' %>">
+					src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>">
 				</mj-image>
 				<mj-text
 					font-size="12px"

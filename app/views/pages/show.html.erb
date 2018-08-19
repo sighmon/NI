@@ -33,7 +33,7 @@
       <% if @issues %>
         <% @issues.each do |issue| %>
         <span itemscope itemtype="http://schema.org/CreativeWork">
-          <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
+          <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
           <span class="hide-meta" itemprop="name"><%= issue.title %></span>
           <span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
           <span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -75,7 +75,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              :back, :class => 'btn btn-default'  %>
+              :back, :class => 'btn btn-outline-secondary'  %>
   <% if can? :update, @page %>
     <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_page_path(@page), :class => 'btn btn-primary' %>
