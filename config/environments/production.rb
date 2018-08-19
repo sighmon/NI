@@ -112,8 +112,8 @@ Rails.application.configure do
   # Rails 5
   # Trying to get assets to compress again 27 June 2014.
   config.assets.compress = true
-  # config.assets.js_compressor = :uglifier
-  config.assets.css_compressor = :less
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   # config.assets.compile = false
