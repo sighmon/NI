@@ -279,7 +279,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	font-family: "Bodega";
 	color: $niRed;
 	font-size: 1.625em;
-	padding-left: 0em;
+	padding: 0em;
 }
 
 .navbar .container {
@@ -694,8 +694,8 @@ $homeCoverListMargin: 0.438em;
 }
 
 .page-header {
-	margin-top: 0em;
-	margin-bottom: 1em;
+	margin-top: 1em;
+	margin-bottom: 2em;
 }
 
 .page-header h3 {
@@ -743,6 +743,7 @@ $homeCoverListMargin: 0.438em;
 	font-size: 1.7em;
 	color: $gray-dark;
 	margin-top: -0.5em;
+	margin-bottom: 1em;
 }
 
 .footer a {
@@ -1246,7 +1247,7 @@ mark, .mark {
 
 .article-title {
 	padding-bottom: 0em;
-	margin-top: 0em;
+	// margin-top: 0em;
 	border-bottom: 0.063em dashed #eeeeee;
 }
 
@@ -2319,7 +2320,7 @@ ul.ui-autocomplete {
 		margin: -1.25em 0em 0em 2em;
 	}
 	.navbar-brand {
-		padding-right: 0.438em;
+		padding-right: 0.5em;
 	}
 	.navbar .nav > li > a {
 		padding: 0.813em 0.438em 0.438em;

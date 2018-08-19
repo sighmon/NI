@@ -20,6 +20,7 @@
 				<mj-image 
 					padding="0"
 					alt="New Internationalist - under-reported stories delivered to your pocket."
+					title="New Internationalist - under-reported stories delivered to your pocket."
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/600x600-email-header@2x.gif" %>">
 				</mj-image>
@@ -61,6 +62,7 @@
 				<mj-image 
 					padding="0 30 0 30"
 					alt="Apple devices"
+					title="Apple devices"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-apple.gif" %>">
 				</mj-image>
@@ -69,6 +71,7 @@
 				<mj-image 
 					padding="0 30 0 30"
 					alt="Android devices"
+					title="Android devices"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-android.gif" %>">
 				</mj-image>
@@ -77,6 +80,7 @@
 				<mj-image 
 					padding="0 30 0 30"
 					alt="Apple and Android tablets"
+					title="Apple and Android tablets"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-tablet.gif" %>">
 				</mj-image>
@@ -85,6 +89,7 @@
 				<mj-image 
 					padding="0 30 0 30"
 					alt="On-line website access"
+					title="On-line website access"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-www.gif" %>">
 				</mj-image>
@@ -93,6 +98,7 @@
 				<mj-image 
 					padding="0 30 0 30"
 					alt="Access at anytime."
+					title="Access at anytime."
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-24x7.gif" %>">
 				</mj-image>

@@ -26,7 +26,7 @@
 
   <nav class="navbar navbar-expand-md fixed-top bg-menu-ni">
     <div class="container">
-      <a class="navbar-brand brand" href="<%= root_path %>">New Internationalist</a>
+      <%= link_to retina_image_tag("new-internationalist-logo-300px.png", :alt => "New Internationalist - The world unspun", :title => "New Internationalist - The world unspun", width: 150, class: "navbar-brand brand"), root_path %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
