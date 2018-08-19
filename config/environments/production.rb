@@ -147,14 +147,14 @@ Rails.application.configure do
   #   :metastore    => client,
   #   :entitystore  => client
   # }
-  config.cache_store = :dalli_store,
-                    (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
-                    {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
-                     :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
-                     :failover => true,
-                     :socket_timeout => 1.5,
-                     :socket_failure_delay => 0.2
-                    }
+  config.cache_store = :dalli_store#,
+                    # (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
+                    # {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
+                    #  :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
+                    #  :failover => true,
+                    #  :socket_timeout => 1.5,
+                    #  :socket_failure_delay => 0.2
+                    # }
   config.static_cache_control = "public, max-age=2592000"
 
   # Defaults to Rails.root.join("public/assets")
