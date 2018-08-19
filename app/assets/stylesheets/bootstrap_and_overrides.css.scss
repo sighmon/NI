@@ -35,6 +35,10 @@ $iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white")
 	float: right;
 }
 
+.pull-right {
+	@include pull-right;
+}
+
 .icon-star:after {
 	@include font-awesome-family;
 	content: "\f005";
@@ -223,6 +227,10 @@ $grid-gutter-width: 2em;
 	padding: 1.5em 2em;
 	margin: 2em 0 2em 0;
 	border-radius: 0.313em;
+}
+
+.box {
+	@include box;
 }
 
 .box.gradient {
@@ -485,6 +493,10 @@ a.nav-link {
 	float: right;
 	margin: 0em 0em 0.625em 0.625em;
 	border-radius: 0.313em;
+}
+
+.editors-photo {
+	@include editors-photo;
 }
 
 .home-editors-photo-container {
@@ -914,6 +926,10 @@ $shadowSizeActive: 0em 0em 0.438em;
 	-moz-box-shadow: $shadowSizeNormal $shadowColour;
 	-webkit-box-shadow: $shadowSizeNormal $shadowColour;
 	box-shadow: $shadowSizeNormal $shadowColour;
+}
+
+.shadow {
+	@include shadow;
 }
 
 a:hover .shadow-sm {
@@ -1583,6 +1599,10 @@ mark, .mark {
 	float: right;
 	max-width: 21.25em;
 	margin: 0em 0em 2em 2em;
+}
+
+.article-image {
+	@include article-image;
 }
 
 .article-image img {
