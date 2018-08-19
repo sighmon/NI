@@ -148,8 +148,7 @@ gem 'net-http-persistent', '~> 2.9.4'
 # gem 'geocoder'
 
 # For header security https://github.com/twitter/secureheaders
-# Rails 5 has this built in.
-# gem 'secure_headers'
+gem 'secure_headers'
 
 # For development
 group :development do
