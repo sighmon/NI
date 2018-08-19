@@ -39,10 +39,11 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
   process :store_geometry
   def store_geometry
     if @file
-      img = ::Magick::Image::read(@file.file).first
+      img = MiniMagick::Image.open(@file.file)
+      # byebug
       if model
-        model.width = img.columns
-        model.height = img.rows
+        model.width = img.width
+        model.height = img.height
       end
     end
   end
