@@ -4,9 +4,9 @@
 
 <% if can? :update, @user %>
 	<div class="edit-issue-buttons">
-		<p><%= link_to 'Download a CSV file', admin_users_path(:format => :csv), :class => 'btn btn-xs btn-warning' %></p>
-		<p><%= link_to 'Try the new way', admin_root_path, :class => 'btn btn-xs btn-default' %></p>
-		<p><%= link_to 'List all users on this page', admin_users_path(users_per_page: 10000), :class => 'btn btn-xs btn-default' %></p>
+		<p><%= link_to 'Download a CSV file', admin_users_path(:format => :csv), :class => 'btn btn-sm btn-warning' %></p>
+		<p><%= link_to 'Try the new way', admin_root_path, :class => 'btn btn-sm btn-outline-secondary' %></p>
+		<p><%= link_to 'List all users on this page', admin_users_path(users_per_page: 10000), :class => 'btn btn-sm btn-outline-secondary' %></p>
 	</div>
 <% end %>
 

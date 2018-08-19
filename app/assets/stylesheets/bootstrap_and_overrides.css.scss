@@ -534,6 +534,10 @@ a.nav-link {
 	min-width: 10rem;
 }
 
+.table.table-bordered.admin th:first-child, .table.table-bordered.admin td:first-child {
+	max-width: 20rem;
+}
+
 // Past home styling
 
 .hero-unit {
