@@ -658,7 +658,6 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
-    secure_headers (6.0.0)
     shellany (0.0.1)
     show_me_the_cookies (4.0.0)
       capybara (>= 2, < 4)
@@ -798,7 +797,6 @@ DEPENDENCIES
   ruby-prof
   sassc-rails
   savon (~> 1.2.0)
-  secure_headers
   show_me_the_cookies
   simple_form
   simplecov
