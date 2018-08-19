@@ -20,8 +20,8 @@ SecureHeaders::Configuration.default do |config|
 
     # directive values: these values will directly translate into source directives
     # default_src: %w(https: 'self'),
-    default_src: %W(https: 'self' #{ENV['NI_APP_HOST']}),
-    base_uri: %w('self'),
+    default_src: %w(https: 'self'),
+    base_uri: %W('self' #{ENV['NI_APP_HOST']}),
     block_all_mixed_content: Rails.env.production?, # see http://www.w3.org/TR/mixed-content/
     child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com), # if child-src isn't supported, the value for frame-src will be set.
     connect_src: %w('self' wss: *.google-analytics.com *.disqus.com),
