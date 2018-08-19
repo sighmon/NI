@@ -24,7 +24,7 @@
 					title="New Internationalist - The world unspun"
 					href="<%= root_url %>"
 					padding="20px"
-					src="<%= root_url + "assets/new-internationalist-logo-300px@2x.png" %>">
+					src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>">
 				</mj-image>
 			</mj-column>
 		</mj-section>
