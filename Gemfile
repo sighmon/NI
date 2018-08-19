@@ -237,6 +237,7 @@ gem 'simple_form'
 
 # RMagick for image editing
 gem 'rmagick', :require => false
+gem 'mini_magick'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave

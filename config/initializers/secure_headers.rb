@@ -29,12 +29,12 @@ SecureHeaders::Configuration.default do |config|
     # form_action: %w('self' github.com),
     form_action: %w('self' syndication.twitter.com *.paypal.com),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net public.tableau.com #{ENV['NI_APP_HOST']}),
+    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net public.tableau.com),
     # media_src: %w(utoob.com),
-    object_src: %W('self' *.youtube.com *.vimeo.com #{ENV['NI_APP_HOST']}),
+    object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
-    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net *.google.com *.gstatic.com #{ENV['NI_APP_HOST']}),
-    style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{ENV['NI_APP_HOST']}),
+    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.disqus.com disqus.com *.disquscdn.com *.thawte.com *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net *.google.com *.gstatic.com),
+    style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com *.disquscdn.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: Rails.env.production?, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
   }
