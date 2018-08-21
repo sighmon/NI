@@ -19,7 +19,7 @@
 		<mj-section padding="0">
 			<mj-column vertical-align="top">
 				<mj-image 
-					width="250"
+					width="300"
 					alt="New Internationalist"
 					href="<%= root_url %>"
 					src="<%= root_url + "assets/new-internationalist@2x.png" %>">

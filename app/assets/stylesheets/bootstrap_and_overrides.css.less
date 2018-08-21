@@ -114,7 +114,7 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 // -------------------------
 @navbar-collapse-width:             767px;
 
-@navbar-height:                    40px;
+@navbar-height:                    56px;
 @navbarBackgroundHighlight:       #ffffff;
 @navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);
@@ -201,8 +201,21 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .navbar .brand {
 	font-family: "Bodega";
 	color: @niRed;
-	font-size: 26px;
+	// font-size: 26px;
 	padding-left: 0px;
+}
+
+.navbar-brand {
+	padding: 6px 0px;
+	height: inherit;
+}
+
+.navbar-nav {
+	padding: 6px 0px 0px 2em;
+}
+
+.navbar-nav li {
+	padding-top: 11px;
 }
 
 .navbar .container {
@@ -537,6 +550,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	// float: right;
 	// position: relative;
 	// top: 2px;
+	// margin-top: 2px;
 }
 
 // Weird icon bug fix
@@ -619,7 +633,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .footer .brand {
 	.navbar .brand;
 	color: @gray-dark;
-	margin-top: -0.5em;
+	margin-bottom: 1em;
 }
 
 .footer a {
