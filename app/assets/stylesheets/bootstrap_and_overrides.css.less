@@ -146,6 +146,9 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 @boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 @boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 @footerColour: rgba(250,176,59,0.58);
+
+@niBlue2018: #69adaf;
+
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
 // Column fixes
@@ -167,9 +170,18 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 
 // Link colours
 
+a {
+	
+}
+
+a:hover {
+
+}
+
 a:visited {
 	// color: #428bca;
 	color: #316796;
+	// color: @niBlue2018;
 }
 
 a.btn:visited { color: #333; }
@@ -225,6 +237,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .navbar-right {
 	margin-right: 0;
+}
+
+.user_nav .dropdown-menu {
+	top: 80%;
 }
 
 .dropdown-menu > li > form {
