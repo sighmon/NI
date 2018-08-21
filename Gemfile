@@ -171,6 +171,7 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'show_me_the_cookies'
   gem 'byebug'
+  gem 'rubocop-rspec'
 end
 
 group :test do

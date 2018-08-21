@@ -1,4 +1,4 @@
-<%= simple_form_for ([@issue, @article, @showimage]), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+<%= simple_form_for [@issue, @article, @showimage], :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
   <%= f.input :data %>
   <%= f.input :caption %>
   <%= f.input :credit %>
