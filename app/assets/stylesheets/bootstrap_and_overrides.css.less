@@ -960,9 +960,8 @@ a:active .shadow {
 .issue-top-box {
 	// gradient
 	.gradient-gray;
-
-	padding: 1em 1em 1em 0;
-	margin: 0 0 2em 0;
+	padding: 3em 3em 1em 3em;
+	margin: -2em -4em 2em -4em;
 	border-radius: 5px;
 }
 
@@ -1390,7 +1389,7 @@ mark, .mark {
 }
 
 .all-article-images img {
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 
@@ -1540,10 +1539,18 @@ mark, .mark {
 	margin-right: auto;
 }
 
+.article-image-full {
+	.no-shadow;
+	margin: 1.5em -3.7em 1.5em -3.7em;
+}
+
+.article-image-cartoon.article-image-full img {
+	.no-shadow;
+}
+
 .article-image-full .new-image-credit, .article-image-full .new-image-caption {
-	max-width: 945px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 1em 4em 0.7em 4em;
+	max-width: 100%;
 }
 
 .article-image-centre .new-image-credit, .article-image-centre .new-image-caption {
@@ -1555,10 +1562,14 @@ mark, .mark {
 	margin-bottom: 0.5em;
 }
 
-.no-shadow img {
+.no-shadow {
 	-moz-box-shadow: 0px 0px 0px #FFFFFF;
 	-webkit-box-shadow: 0px 0px 0px #FFFFFF;
 	box-shadow: 0px 0px 0px #FFFFFF;
+}
+
+.no-shadow img {
+	.no-shadow;
 }
 
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
@@ -2222,6 +2233,13 @@ ul.ui-autocomplete {
 
 	.issue-keynote-image-caption {
 		display: none;
+	}
+
+	.article-image-full {
+		margin: 1.5em -1em 1.5em -1em;
+	}
+	.article-image-full .new-image-caption, .article-image-full .new-image-credit {
+		margin: 1em 1em 0.7em 1em;
 	}
 }
  
