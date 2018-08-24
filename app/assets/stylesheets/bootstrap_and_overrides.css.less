@@ -70,6 +70,8 @@ body {
 // @sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 // @sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
 @sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+@league-gothic-font: "League Gothic", sans-serif;
+@libre-baskerville: "Libre Baskerville", serif;
 // @serifFontFamily:       "iABCRegular", serif;
 
 @font-family-base:        @sansFontFamily;
@@ -100,12 +102,36 @@ body {
 @baseLineHeight:        32px;
 */
 
-// @headings-font-family:	"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
 h1 { letter-spacing: -1px; font-size: 28px; line-height: 33px; margin-top: 0; }
 h2 { /* letter-spacing: -1px; */ font-size: 24px; line-height: 30px; }
 
 h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 	margin-top: 0;
+}
+
+.league-gothic-headings-font {
+	font-family: @league-gothic-font;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 1em;
+	// text-transform: uppercase;
+}
+
+h1, h2, h3 {
+	.league-gothic-headings-font;
+}
+h1 {
+	font-size: 4em;
+}
+h2 {
+	font-size: 3em;
+}
+h3 {
+	font-size: 2.5em;
+}
+h4 {
+	font-size: 2em;
+	// line-height: 1em;
 }
 
 // ABC news base body font Verdana 12px 18px line-height
@@ -226,7 +252,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 	padding: 6px 0px 0px 2em;
 }
 
-.navbar-nav li {
+ul.navbar-nav > li {
 	padding-top: 11px;
 }
 
@@ -292,7 +318,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-hero + .row .home-keynote h3 {
-	font-size: 1.5em;
+	font-size: 2.5em;
 }
 
 .home-keynote h5 {
@@ -370,6 +396,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .home-keynote h6, .home-editor-note h4, .issue-top-box h3, .latest-issue-categories h6, .social-networks h4, .home-quick-reads h4, .home-popular h4 {
+	font-family: @sansFontFamily;
 	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 0.9em;
@@ -521,8 +548,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .home-keynote h3 {
 	color: @gray-light;
-	font-size: 1.3em;
-	line-height: 1.4em;
+	font-size: 2.5em;
+	line-height: 1em;
 	margin-bottom: 0;
 }
 
@@ -580,7 +607,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 }
 
 .breadcrumb {
-	font-family: @headings-font-family;
+	font-family: @sansFontFamily;
 	background-image: none;
 	background-color: transparent;
 	padding: 0px;
@@ -950,10 +977,13 @@ a:active .shadow {
 	margin-top: 0px;
 }
 
-.issue-list-title h2 {
+.issue-list-title h2, .page-header h3 {
+	font-family: @libre-baskerville;
 	font-size: @issueTitleH2FontSize;
 	line-height: @issueTitleH2FontSize;
+	font-style: italic;
 	font-weight: normal;
+	line-height: 1.7em;
 	color: @gray-light;
 }
 
@@ -1126,6 +1156,14 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	line-height: 1em;
 }
 
+.table-of-contents-editors-letter h4 {
+	.league-gothic-headings-font;
+	line-height: 1em;
+	font-size: 2.5em;
+	opacity: 0.9;
+	text-transform: uppercase;
+}
+
 .editors-photo {
 	float: right;
 	margin: 0px 0px 10px 10px;
@@ -1153,9 +1191,11 @@ mark, .mark {
 }
 
 .article-title h2 {
-	// font-weight: 600;
+	font-weight: normal;
+	font-family: @libre-baskerville;
+	font-style: italic;
 	font-size: 1.2em;
-	line-height: 1.3em;
+	line-height: 1.7em;
 	color: @gray-light;
 	/* padding-bottom: 0.75em; */
 }
@@ -1389,7 +1429,7 @@ mark, .mark {
 }
 
 .all-article-images img {
-	width: 100%;
+	// width: 100%;
 	height: auto;
 }
 
@@ -1546,6 +1586,7 @@ mark, .mark {
 
 .article-image-cartoon.article-image-full img {
 	.no-shadow;
+	width: 100%;
 }
 
 .article-image-full .new-image-credit, .article-image-full .new-image-caption {
@@ -1793,6 +1834,7 @@ ul.ui-autocomplete {
 
 .article-related-by-theme h4 {
 	color: @gray;
+	font-size: 1.3em;
 }
 
 #generate_from_source {
@@ -1977,6 +2019,12 @@ ul.ui-autocomplete {
 	max-width: 100%;
 }
 
+.page-body h4 {
+	.league-gothic-headings-font;
+	opacity: 0.9;
+	margin-top: 1em;
+}
+
 
 // 404 error page styling
 
@@ -2064,7 +2112,7 @@ ul.ui-autocomplete {
 	input, textarea, .uneditable-input {
 		width: 95%;
 	}
-	a.btn.btn-success.navbar-btn .nav-username {
+	a.btn.btn-default.navbar-btn .nav-username {
 		display: none;
 	}
 
