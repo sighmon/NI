@@ -76,7 +76,7 @@
 <% if can? :update, @issue %>
   <% if not @issue.uncategorised.empty? %>
     <div class="articles-not-categorised-for-display">
-      <h3>Articles not displayed.</h3>
+      <h3>Articles not displayed</h3>
       <% @issue.uncategorised.each do |article| %>
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
           <%= render :partial => "article_uncategorised", :locals => { :article => article } %>
@@ -126,8 +126,8 @@
 </div>
 
 <div class="row issue-keynote">
-  <div class="col-sm-12">
-    <h3>Keynote article.</h3>
+  <div class="col-sm-12 big-story">
+    <h3>The big story</h3>
   </div>
   <div itemscope itemtype="http://schema.org/Article">
     <% if @issue.keynote %>
@@ -159,7 +159,7 @@
 
       <% if not @issue.features.empty? %>
         <div class="issue-sections">
-          <h3>Features.</h3>
+          <h3>Features</h3>
           <% @issue.features.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -170,7 +170,7 @@
 
       <% if not @web_exclusives.empty? %>
         <div class="issue-sections">
-          <h3>Web exclusives.</h3>
+          <h3>Web exclusives</h3>
           <% @web_exclusives.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -182,7 +182,7 @@
 
       <% if not @issue.alternatives.empty? %>
         <div class="issue-sections">
-          <h3>Alternatives.</h3>
+          <h3>Alternatives</h3>
           <% @issue.alternatives.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -193,7 +193,7 @@
 
       <% if not @blogs.empty? %>
         <div class="issue-sections">
-          <h3>Blog.</h3>
+          <h3>Blog</h3>
           <% @blogs.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -209,7 +209,7 @@
 
     <% if not @issue.opinion.empty? %>
       <div class="issue-sections">
-        <h3>Opinion.</h3>
+        <h3>Opinion</h3>
         <% @issue.opinion.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :locals => { :article => article } %>
@@ -220,7 +220,7 @@
     
     <% if not @issue.agendas.empty? %>
         <div class="issue-sections">
-          <h3>Agenda.</h3>
+          <h3>Agenda</h3>
           <% @issue.agendas.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -231,7 +231,7 @@
 
       <% if not @issue.currents.empty? %>
         <div class="issue-sections">
-          <h3>Currents.</h3>
+          <h3>Currents</h3>
           <% @issue.currents.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
@@ -246,7 +246,7 @@
 
     <% if not @issue.videos.empty? %>
       <div class="issue-sections">
-        <h3>Videos.</h3>
+        <h3>Videos</h3>
         <% @issue.videos.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :locals => { :article => article } %>
@@ -257,7 +257,7 @@
 
     <% if not @issue.regulars.empty? %>
       <div class="issue-sections">
-        <h3>Regulars.</h3>
+        <h3>Regulars</h3>
         <% @issue.regulars.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :locals => { :article => article } %>
@@ -268,7 +268,7 @@
 
     <% if not @issue.mixedmedia.empty? %>
       <div class="issue-sections">
-        <h3>Film, Book &amp; Music Reviews.</h3>
+        <h3>Film, Book &amp; Music Reviews</h3>
         <% @issue.mixedmedia.each do |article| %>
           <div class="issue-article" itemscope itemtype="http://schema.org/Article">
             <%= render :partial => "article", :locals => { :article => article } %>

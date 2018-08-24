@@ -174,6 +174,7 @@ h4 {
 @footerColour: rgba(250,176,59,0.58);
 
 @niBlue2018: #69adaf;
+@niBlue2018Darker: #0a9c9e;
 
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
@@ -197,17 +198,18 @@ h4 {
 // Link colours
 
 a {
-	
-}
-
-a:hover {
-
+	color: @niBlue2018Darker;
 }
 
 a:visited {
 	// color: #428bca;
-	color: #316796;
+	// color: #316796;
+	color: @niBlue2018;
 	// color: @niBlue2018;
+}
+
+a:hover {
+	color: @niBlue2018Darker;
 }
 
 a.btn:visited { color: #333; }
@@ -946,14 +948,15 @@ a:active .shadow {
 	margin-right: @issueCoverListMargin;
 	margin-bottom: (@issueCoverListMargin * 2) + 3;
 	border-radius: 2px;
-	background-color: @boxHomeBackgroundColour;
+	// background-color: @boxHomeBackgroundColour;
 	color: @gray-light;
 }
 
 .issue-information:hover {
-	background-color: @gray-light;
-	color: white;
+	// background-color: @gray-light;
+	// color: white;
 	opacity: 0.9;
+	color: @gray-dark;
 }
 
 .issue-information p {
@@ -990,8 +993,8 @@ a:active .shadow {
 .issue-top-box {
 	// gradient
 	.gradient-gray;
-	padding: 3em 3em 1em 3em;
-	margin: -2em -4em 2em -4em;
+	padding: 6em 3em 1em 3em;
+	margin: -5em -4em 2em -4em;
 	border-radius: 5px;
 }
 
@@ -1081,6 +1084,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	margin-top: 0;
 }
 
+.big-story h3 {
+	text-transform: uppercase;
+}
+
 .issue-keynote .home-keynote {
 	background-color: transparent;
 }
@@ -1104,6 +1111,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .issue-sections + .issue-sections {
 	border-top: 1px solid @gray-lighter;
+}
+
+.issue-sections > h3 {
+	text-transform: uppercase;
 }
 
 .issue-sections h3 {
@@ -2288,6 +2299,15 @@ ul.ui-autocomplete {
 	}
 	.article-image-full .new-image-caption, .article-image-full .new-image-credit {
 		margin: 1em 1em 0.7em 1em;
+	}
+	.issue-top-box {
+		margin: -4em -1em 2em -1em;
+		padding: inherit;
+		padding-top: 4em;
+	}
+	.issue-keynote .home-keynote {
+		background-color: transparent;
+		background: transparent;
 	}
 }
  
