@@ -35,8 +35,8 @@
 	        <div class="navbar-header pull-right">
 	        	<div class="btn-group user_nav">
 							<% if user_signed_in? %>
-							<%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-success navbar-btn' %>
-							<a class="btn btn-success dropdown-toggle navbar-btn" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-default navbar-btn' %>
+							<a class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<% if current_user.try(:subscriber?) %>
 									<li><%= link_to raw("Expiry date:<br />#{current_user.expiry_date.strftime("%e %B, %Y")}"), current_user %></li>
