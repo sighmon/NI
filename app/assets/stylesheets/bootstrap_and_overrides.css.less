@@ -72,6 +72,7 @@ body {
 @sansFontFamily:		"Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
 @league-gothic-font: "League Gothic", sans-serif;
 @libre-baskerville: "Libre Baskerville", serif;
+@bagnard-regular: "BagnardRegular", serif;
 // @serifFontFamily:       "iABCRegular", serif;
 
 @font-family-base:        @sansFontFamily;
@@ -1634,27 +1635,29 @@ mark, .mark {
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 	border-right-style: none;
 	border-left-style: none;
-	color: @niRed;
-	width: 30%;
+	// color: @niRed;
+	width: 40%;
 	float: right;
 	text-align: right;
 }
 
 blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
 	margin-bottom: 0;
-	font-weight: bold;
-	font-size: 16px;
+	font-size: 1.5em;
+	font-family: "BagnardRegular", serif;
+	line-height: 1.2em;
+	letter-spacing: -0.02em;
+	text-align: center;
 }
 
 blockquote.pull-right, blockquote.pull- {
-	padding: 0px;
-	margin: 0px 0px 1em 1em;
+	padding: 1em;
+	margin: 1em 0px 1em 1em;
 }
 
 blockquote.pull-left {
-	padding: 0px;
-	margin: 0px 1em 1em 0px;
-	text-align: left;
+	padding: 1em;
+	margin: 1em 1em 1em 0px;
 	float: left;
 }
 
@@ -2217,6 +2220,10 @@ ul.ui-autocomplete {
 	}
 	.subscription-offer-two.subscription-buttons {
 		padding: 1em 0em;
+	}
+	blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
+		width: inherit;
+		margin: 0;
 	}
 }
  
