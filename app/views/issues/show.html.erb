@@ -220,7 +220,7 @@
     
     <% if not @issue.agendas.empty? %>
         <div class="issue-sections">
-          <h3>Agenda</h3>
+          <h3><%= @agenda_name %></h3>
           <% @issue.agendas.each do |article| %>
             <div class="issue-article" itemscope itemtype="http://schema.org/Article">
               <%= render :partial => "article", :locals => { :article => article } %>
