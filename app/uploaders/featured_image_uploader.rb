@@ -43,12 +43,12 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   # Use RMagick
   version :fullwidth do
     # process :resize_to_limit => [945, 400]
-    process :resize_to_fill => [945, 400]
+    process :resize_to_fill => [1050, 445]
   end
 
   # Retina display @2x version
   version :fullwidth2x do
-    process :resize_to_fill => [1890, 800]
+    process :resize_to_fill => [2100, 890]
     def full_filename (for_file = model.featured_image.file)
       "fullwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

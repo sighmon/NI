@@ -166,7 +166,8 @@ h4 {
 // NI Colours
 
 @niBrown: #f1edd9;
-@niRed: #f00d16; /* or #da2128; */
+/* @niRed: #f00d16; or #da2128; */
+@niRed: #d71921; /* 2018 red */
 @niGreen: rgba(134,197,67,0.1);
 @boxBackgroundColour: #E4E1DF;
 @boxGrayLightest: #F5F5F5;
@@ -1721,6 +1722,27 @@ blockquote > .attribution {
 	border-radius: 5px;
 }
 
+.blue {
+	background-color: @niBlue2018Darker;
+}
+
+.yellow {
+	background-color: @footerColour;
+}
+
+.centre {
+	text-align: center;
+}
+
+.conversation {
+	.yellow;
+	.centre;
+}
+
+.conversation h2 {
+	font-size: 4em;
+}
+
 .factbox {
 	.box;
 	width: 30%;
@@ -2168,6 +2190,10 @@ ul.ui-autocomplete {
 
 	.article-image-centre.article-image-small {
 		width: 100%;
+	}
+
+	.article-image-centre img {
+		max-width: 100%;
 	}
 	
 	.hero-unit {
