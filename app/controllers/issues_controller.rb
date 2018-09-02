@@ -201,9 +201,11 @@ class IssuesController < ApplicationController
 
     @categories = @issue.all_articles_categories
 
-    @agenda_name = 'Agenda'
-    if ApplicationHelper.redesigned?(@issue.release)
-      @agenda_name = 'Currents'
+    redesigned = ApplicationHelper.redesigned?(@issue.release)
+
+    @features_name = 'Features'
+    if redesigned
+      @features_name = 'The Big Story'
     end
     
     # Set meta tags

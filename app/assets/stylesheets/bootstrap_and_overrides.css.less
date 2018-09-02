@@ -175,8 +175,9 @@ h4 {
 @boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 @footerColour: rgb(230,166,72);
 
-@niBlue2018: #69adaf;
+@niBlue2018: #3fb6b9;
 @niBlue2018Darker: #0a9c9e;
+@niBlue2018Lighter: #7ecfd1;
 
 // @footerColour: rgba(250,176,59,0.38); // Old footer 2013
 
@@ -221,6 +222,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .no-padding {
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.square {
+	list-style-type: square;
 }
 
 // Top Nav Bar
@@ -1492,6 +1497,9 @@ mark, .mark {
 
 .letters-box {
 	.box;
+	font-family: @libre-baskerville;
+	font-style: italic;
+	font-size: 1.2em;
 }
 
 .article-body {
@@ -1602,6 +1610,18 @@ mark, .mark {
 .article-image-full {
 	.no-shadow;
 	margin: 1.5em -3.7em 1.5em -3.7em;
+}
+
+.article-image-half {
+	float: right;
+	margin: 1em 0 1.5em 1.5em;
+}
+
+.article-image-half .new-image-credit, .article-image-half .new-image-credit {
+	margin: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	background-color: red;
 }
 
 .article-image-cartoon.article-image-full img {
@@ -1717,9 +1737,9 @@ blockquote > .attribution {
 
 .box {
 	background-color: @boxBackgroundColour;
-	padding: 1.5em 2em;
-	margin: 2em 0 2em 0;
-	border-radius: 5px;
+	padding: 1.5em 3.7em;
+	margin: 2em -3.7em 2em -3.7em;
+	// border-radius: 5px;
 }
 
 .blue {
@@ -1728,6 +1748,10 @@ blockquote > .attribution {
 
 .yellow {
 	background-color: @footerColour;
+}
+
+.yellow-lighter {
+	background-color: #f9ead3;
 }
 
 .centre {
@@ -1743,7 +1767,45 @@ blockquote > .attribution {
 	font-size: 4em;
 }
 
-.factbox {
+.box.letters {
+	.yellow;
+	border-width: 0.7em;  
+  border-style: dashed;
+  border-color: @gray-darker;
+}
+
+.box.letters .author-note {
+	color: inherit;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.box.debate {
+	.yellow-lighter;
+	.centre;
+	margin: 2em -4em 2em -4em;
+}
+
+.box.debate h4 {
+	.league-gothic-headings-font;
+	font-size: 3em;
+}
+
+.box h3 {
+	font-family: @libre-baskerville;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 1.4em;
+	margin-bottom: 1.5em;
+}
+
+.box h4 {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.factbox, .boxout {
 	.box;
 	width: 30%;
 	margin: 0;
@@ -1776,6 +1838,10 @@ blockquote > .attribution {
 	color: @gray;
 }
 
+.author-note strong {
+	text-transform: uppercase;
+}
+
 .article-favourite {
 	font-size: 1.0em;
 	min-width: 12px;
@@ -1805,6 +1871,19 @@ blockquote > .attribution {
 
 .clear-hack {
 	display: none;
+}
+
+.star-ratings {
+	.box;
+	background-color: @niBlue2018Lighter;
+}
+
+.star-ratings h4 {
+	font-family: @libre-baskerville;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 1.2em;
+	margin-bottom: 1.5em;
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
@@ -2334,8 +2413,9 @@ ul.ui-autocomplete {
 		display: none;
 	}
 
-	.article-image-full {
+	.article-image-full, .box {
 		margin: 1.5em -1em 1.5em -1em;
+		padding: 1.5em 1em;
 	}
 	.article-image-full .new-image-caption, .article-image-full .new-image-credit {
 		margin: 1em 1em 0.7em 1em;
