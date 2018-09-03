@@ -154,23 +154,23 @@
 
 <div class="article-body <% if not @letters.empty? %>article-body-letters<% end %>">
 
-  <% if not @letters.empty? %>
+  <% if @letters and not @letters.empty? %>
     <div class="article-image article-image-small no-shadow"><%= retina_image_tag('section-letters.png', alt: 'Letters icon.', title: 'Letters icon.') %></div>
   <% end %>
 
-  <% if @article.images.empty? and not @temperature_check.empty? %>
+  <% if @article.images and @article.images.empty? and @temperature_check and not @temperature_check.empty? %>
     <div class="article-image article-image-small no-shadow"><%= retina_image_tag('section-temperature-check.png', alt: 'Temperature check icon.', title: 'Temperature check icon.') %></div>
   <% end %>
 
-  <% if not @view_from_africa.empty? %>
+  <% if @view_from_africa and not @view_from_africa.empty? %>
     <div class="article-image no-shadow"><%= image_tag('section-view-from-africa.png', alt: 'View from Africa illustration by Kate Copeland.', title: 'View from Africa illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
-  <% if not @view_from_india.empty? %>
+  <% if @view_from_india and not @view_from_india.empty? %>
     <div class="article-image no-shadow"><%= image_tag('section-view-from-india.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
-  <% if not @view_from_america.empty? %>
+  <% if @view_from_america and not @view_from_america.empty? %>
     <div class="article-image no-shadow"><%= image_tag('section-view-from-america.png', alt: 'View from America illustration by Kate Copeland.', title: 'View from America illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
@@ -183,14 +183,14 @@
 
 <div class="clearfix"></div>
 
-<% if not @letters.empty? %>
+<% if @letters and not @letters.empty? %>
   <div class="letters-box">
     <p>The <b>New Internationalist</b> welcomes your letters. But please keep them short. They may be edited for purposes of space or clarity. Letters should be sent to <a href="mailto:letters@newint.org?Subject=Letters submission">letters@newint.org</a> or to your local NI office. Please remember to include a town and country for your address.</p>
     <p>The views expressed on this letters page are not necessarily those of the <b>New Internationalist</b>.</p>
   </div>
 <% end %>
 
-<% if not @debate.empty? %>
+<% if @debate and not @debate.empty? %>
   <div class="box debate">
     <h4>What do you think?</h4>
     <p>Tell us here: <a href="mailto:letters@newint.org?Subject=The debate - feedback">letters@newint.org</a></p><p>We will print a selection of your views in the next issue.</p>
