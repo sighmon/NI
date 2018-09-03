@@ -166,6 +166,14 @@
     <div class="article-image no-shadow"><%= image_tag('section-view-from-africa.png', alt: 'View from Africa illustration by Kate Copeland.', title: 'View from Africa illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
+  <% if not @view_from_india.empty? %>
+    <div class="article-image no-shadow"><%= image_tag('section-view-from-india.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %></div>
+  <% end %>
+
+  <% if not @view_from_america.empty? %>
+    <div class="article-image no-shadow"><%= image_tag('section-view-from-america.png', alt: 'View from America illustration by Kate Copeland.', title: 'View from America illustration by Kate Copeland.', width: 300) %></div>
+  <% end %>
+
   <% if @article.body.blank? %>
     <%= simple_format expand_image_tags(source_to_body(@article, :debug => current_user.try(:admin?)), :debug => current_user.try(:admin?)) %>
   <% else %>

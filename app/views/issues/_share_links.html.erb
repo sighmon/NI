@@ -6,5 +6,5 @@
 	<%= link_to raw('<i class="fa fa-twitter"></i>'), issue_tweet_issue_path(@issue), :class => 'article-favourite', :alt => 'Tweet about this issue', :title => 'Tweet about this issue', :target => "_blank" %>
 	<!-- Facebook button -->
 	<%= link_to raw('<i class="fa fa-facebook-square"></i>'), issue_wall_post_issue_path(@issue), :class => 'article-favourite', :alt => 'Share this issue on Facebook', :title => 'Share this issue on Facebook', :target => "_blank" %>
-	<%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for Android or iOS mobile devices.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for Android or iOS mobile devices.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %>
+	<% link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@issue.title}' in the New Internationalist magazine app for Android or iOS mobile devices.", :title => "Open '#{@issue.title}' in the New Internationalist magazine app for Android or iOS mobile devices.", :size => "14x24", :class => 'ios-issue-page'), app_link(issue_path(@issue)) %>
 </div>
