@@ -1,6 +1,6 @@
         <div class="home-keynote">
           <div class="col-sm-8">
-          <% if can? :read, article %>
+          <% if user_signed_in? and can? :read, article %>
             <!-- Can read this article, so link to it -->
             <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
             <% if not article.featured_image.blank? %>
@@ -71,7 +71,7 @@
           <% end %>
           </div> <!-- END col-sm-8 -->
           <div class="col-sm-4 issue-keynote-text">
-          <% if can? :read, article %>
+          <% if user_signed_in? and can? :read, article %>
             <h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
             <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
             <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
@@ -82,7 +82,7 @@
             <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
             <p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %><!-- no p yet -->
           <% end %>
-          <% if can? :manage, Article %>
+          <% if user_signed_in? and can? :manage, Article %>
             <%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %>
             <%= link_to 'Destroy', issue_article_path(@issue,article), data: { confirm: 'Are you sure?'}, method: :delete, class: 'btn btn-xs btn-danger' %></p>
             <ul class="list-unstyled">

@@ -1,5 +1,5 @@
 <p class="share-links"><span class="breadcrumb"><%= link_to "NI #{@issue.number} - #{@article.publication.strftime("%B, %Y")}", issue_path(@issue) %></span><span class="clear-hack"></span>
-  <% if can? :create, Favourite %>
+  <% if user_signed_in? and can? :create, Favourite %>
     <!-- Favourite -->
     <% if article_favourited?(@article) %>
       <%= link_to raw('<i class="fa fa-heart red"></i>'), issue_article_favourite_path(@issue.id, @article.id, favourite_id_for_article(@article)), :method => 'delete', :class => 'article-favourite', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
@@ -8,7 +8,7 @@
     <% end %>
     <!-- END Favourite -->
   <% end %>
-  <% if can? :create, GuestPass %>
+  <% if user_signed_in? and can? :create, GuestPass %>
     <!-- Sharing options -->
     <% if article_has_a_guest_pass?(@article) %>
       <%= link_to raw('<i class="fa fa-share"></i>'), issue_article_guest_pass_path(@issue.id, @article.id, guest_pass_id_for_article(@article)), :method => 'delete', :class => 'article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %>
