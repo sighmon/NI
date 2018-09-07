@@ -33,7 +33,7 @@ class Issue < ActiveRecord::Base
       pagination = 200
     end
     search_hash = {
-      sort: [{ release: {order: "desc"}}]
+      sort: [{ release: {order: "desc", "unmapped_type": "long"}}]
     }
     search_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin

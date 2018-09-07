@@ -32,7 +32,7 @@ class Article < ActiveRecord::Base
       results_per_page = params[:per_page].to_i
     end
     query_hash = {
-      sort: [{ publication: { order: "desc"} }]
+      sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
     }
     query_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
