@@ -1,4 +1,4 @@
-				<% if can? :read, article %>
+				<% if user_signed_in? and can? :read, article %>
 					<!-- Can read this article, so link to it -->
 					<h3><%= link_to article.title, issue_article_path(article.issue,article) %></h3>
 					<h5 class="breadcrumb"><%= link_to "#{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %><%= render :partial => "home_share_links", :locals => { :article => article } %></h5>

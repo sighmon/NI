@@ -6,7 +6,7 @@
         <%= link_to retina_image_tag('utne-winner.png', :alt => 'Awards New Internationalist magazine has won', :title => 'Awards New Internationalist magazine has won', :width => 75, :height => 96), page_path("awards") %>
       </div> -->
       <%= link_to retina_image_tag("new-internationalist.png", :alt => "New Internationalist - The world unspun", :title => "New Internationalist - The world unspun", width: 150, class: "brand"), root_path %>
-      <% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
+      <% if user_signed_in? and current_user.try(:subscriber?) or current_user.try(:admin?) %>
         <p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, our contact details are in the footer. Enjoy reading the magazine.</p>
       <% else %>
         <p>The <b>New Internationalist</b> is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all.</p>

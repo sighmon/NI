@@ -1,5 +1,5 @@
 				<div class="home-keynote">
-					<% if can? :read, article %>
+					<% if user_signed_in? and can? :read, article %>
 						<!-- Can read this article, so link to it -->
 						<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 						<% if not article.featured_image.blank? %>
