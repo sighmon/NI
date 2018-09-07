@@ -434,15 +434,15 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.agendas.empty? %>
+	<% if not @issue.currents.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.agendas.each_with_index do |article,index| %>
+		<% @issue.currents.each_with_index do |article,index| %>
 			<% if index % 3 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
 			<% end %>
 			<mj-column vertical-align="top">
-				<!-- Agenda articles -->
+				<!-- Currents articles -->
 				<mj-text
 					font-size="18px"
 					line-height="22px"
