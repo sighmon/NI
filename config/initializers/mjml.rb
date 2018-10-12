@@ -15,3 +15,5 @@ Mjml.setup do |config|
   config.raise_render_exception = true
   # config.mjml_binary_version_supported = "4.0."
 end
+# Uncomment this line to discover a different binary version
+# Mjml::BIN = Mjml.discover_mjml_bin
