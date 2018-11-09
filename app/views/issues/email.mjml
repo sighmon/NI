@@ -5,13 +5,13 @@
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
 			<mj-column vertical-align="top">
-				<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px">
+				<mj-text
+					font-size="11px"
+					color="#606b75"
+					font-weight="300"
+					padding="0px 25px"
+					align="center">
 					<%= link_to "#{@issue.title} - #{@issue.release.strftime("%B %Y")}", issue_url(@issue), style: 'color:inherit;' %>
-				</mj-text>
-			</mj-column>
-			<mj-column vertical-align="top">
-				<mj-text font-size="11px" color="#606b75" font-weight="300" padding="0px 25px" align="right">
-					No images? <webversion>Click here</webversion>
 				</mj-text>
 			</mj-column>
 		</mj-section>
@@ -204,7 +204,7 @@
 					font-weight="bold"
 					align="center"
 					color="#787878">
-					<span style="text-transform: uppercase;">Feature articles</span>
+					<span style="text-transform: uppercase;">The Big Story</span>
 				</mj-text>
 				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 			</mj-column>
@@ -444,7 +444,7 @@
 					font-weight="bold"
 					align="center"
 					color="#787878">
-					<span style="text-transform: uppercase;">Currents articles</span>
+					<span style="text-transform: uppercase;">Currents</span>
 				</mj-text>
 				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
 			</mj-column>

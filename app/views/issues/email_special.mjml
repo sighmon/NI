@@ -5,13 +5,12 @@
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
 			<mj-column>
-				<mj-text font-size="11px" color="#606b75" font-weight="300">
+				<mj-text
+					font-size="11px"
+					color="#606b75"
+					font-weight="300"
+					align="center">
 					<%= link_to "New Internationalist digital subscription", page_url("subscribe"), style: 'color:inherit;' %>
-				</mj-text>
-			</mj-column>
-			<mj-column>
-				<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-					No images? <webversion>Click here</webversion>
 				</mj-text>
 			</mj-column>
 		</mj-section>
