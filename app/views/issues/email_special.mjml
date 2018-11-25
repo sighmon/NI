@@ -58,7 +58,7 @@
 		<mj-section background-color="#FFFFFF" padding="0">
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Apple devices"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-apple.gif" %>">
@@ -66,7 +66,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Android devices"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-android.gif" %>">
@@ -74,7 +74,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Apple and Android tablets"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-tablet.gif" %>">
@@ -82,7 +82,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="On-line website access"
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-www.gif" %>">
@@ -90,7 +90,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Access at anytime."
 					href="<%= page_url("subscribe") %>"
 					src="<%= root_url + "assets/email-devices-24x7.gif" %>">

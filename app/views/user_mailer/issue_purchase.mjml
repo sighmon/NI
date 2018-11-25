@@ -19,7 +19,7 @@
 			<mj-column>
 				<mj-image 
 					padding="0"
-					width="300"
+					width="300px"
 					alt="Thanks for your purchase!"
 					href="<%= issue_url(@purchase.issue) %>"
 					src="<%= @purchase.try(:issue).try(:cover_url) %>">
