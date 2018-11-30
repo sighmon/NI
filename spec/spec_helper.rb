@@ -17,6 +17,13 @@
 RSpec.configure do |config|
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
+
+  config.before(:suite) do
+    # Set subscription_price and issue_price for view tests
+    Settings.subscription_price = 600
+    Settings.issue_price = 750
+  end
+
 =begin
   # These two settings work together to allow you to limit a spec run
   # to individual examples or groups you care about by tagging them with
