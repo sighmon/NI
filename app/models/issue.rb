@@ -46,7 +46,7 @@ class Issue < ActiveRecord::Base
   end
 
   def self.latest_free
-    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.first
+    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.sort.last
   end
  
   def gift_to_subscribers
