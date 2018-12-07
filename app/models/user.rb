@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
   end
 
   def has_paper_only?
-    return self.current_subscriptions.collect{|s| s.paper_only}.include?(true)
+    return self.current_paper_subscriptions.collect{|s| s.paper_only}.include?(true)
   end
 
   def expiry_date
@@ -221,7 +221,7 @@ class User < ActiveRecord::Base
   end
 
   def expiry_date_paper_only
-    return self.current_subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
+    return self.current_paper_subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
   end
 
   def expiry_date_including_ios(request)
@@ -283,6 +283,10 @@ class User < ActiveRecord::Base
 
   def current_subscriptions
     return self.subscriptions.select{|s| s.is_current?}
+  end
+
+  def current_paper_subscriptions
+    return self.subscriptions.select{|s| s.is_current_paper?}
   end
 
   def refunds_due

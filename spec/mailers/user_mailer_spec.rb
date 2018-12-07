@@ -111,6 +111,36 @@ describe UserMailer, :type => :mailer do
       end
     end
 
+    context "with a paper only subscription" do
+      let(:subscription) { FactoryBot.create(:paper_only_subscription) }
+      let(:user) { subscription.user }
+      let(:mail) {
+        @issue = issue
+        UserMailer.subscription_confirmation(subscription)
+      }
+
+      it "renders the headers" do
+        expect(mail.subject).to eq("New Internationalist Digital Subscription")
+        expect(mail.to).to eq([user.email])
+        expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
+      end
+
+      it "renders the body" do
+        expect(mail.body.encoded).to match("Hi")
+        expect(mail.body.encoded).to match(user.username)
+        # Check that the MJML > HTML renderer has worked
+        expect(mail.body.encoded).not_to match("mj-body")
+        # Check that the body includes Your subscription is due for renewal:
+        expect(mail.body.encoded).to match("Your subscription is due for renewal:")
+        # And the date is correct
+        expect(mail.body.encoded).to match(subscription.expiry_date_paper_only.try(:strftime, "%e %B, %Y"))
+        # Check that the body includes the free 3 month trial.
+        expect(mail.body.encoded).to match("3-month trial")
+        # And the date is correct
+        expect(mail.body.encoded).to match(subscription.expiry_date.try(:strftime, "%e %B, %Y"))
+      end
+    end
+
     context "for a free subscription" do
       let(:subscription) { FactoryBot.create(:subscription) }
       let(:user) { subscription.user }

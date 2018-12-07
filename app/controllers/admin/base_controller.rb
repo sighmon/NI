@@ -55,6 +55,10 @@ class Admin::BaseController < ApplicationController
 		@issues = Issue.where(published: true).last(8).reverse
 		@subscription = Subscription.first
 		@user = @subscription.user
+		if params[:user]
+			@user = User.find(params[:user])
+			@subscription = @user.subscriptions.last
+		end
 
 		if params[:subscription_type] == "free"
 			@template = "user_mailer/free_subscription_confirmation"

@@ -26,6 +26,19 @@ describe UsersController, :type => :controller do
 
     end
 
+    describe "the user with a paper only subscription" do
+
+      it "should have an expiry_date +3m and expiry_date_paper_only" do
+        # user.expiry_date should have 3 months added to it as a free trial
+        # user.expiry_date_paper_only should be subscription.valid_from + duration
+        subscription.paper_only = true
+        subscription.save
+        expect(user.expiry_date.to_date).to eq(subscription.valid_from.to_date + 3.months)
+        expect(user.expiry_date_paper_only.to_date).to eq(subscription.valid_from.to_date + subscription.duration.months)
+      end
+
+    end
+
   end
 
   context "as a user with a purchase" do
