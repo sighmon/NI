@@ -7,12 +7,13 @@ class PagesController < ApplicationController
   # override default configuration for no_tracking pages
   SecureHeaders::Configuration.override(:no_tracking) do |config|
     config.csp[:child_src] = %w('self')
-    config.csp[:img_src] = %W('self' data: *.newint.com.au #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net)
-    config.csp[:script_src] = %W('self' #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net)
-    config.csp[:style_src] = %W('self' 'unsafe-inline' #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net)
+    config.csp[:img_src] = %W('self' data: *.newint.com.au)
+    config.csp[:script_src] = %W('self')
+    config.csp[:style_src] = %W('self' 'unsafe-inline')
     config.csp[:object_src] = %w('self')
     config.csp[:connect_src] = %w('self')
     config.csp[:form_action] = %w('self')
+    config.referrer_policy = "no-referrer"
   end
   
   # GET /pages

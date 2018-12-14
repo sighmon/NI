@@ -165,7 +165,12 @@ NI::Application.configure do
   # config.cache_store = :null_store
 
   # Enable serving of images, stylesheets, and JavaScripts from Amazon Cloudfront asset server
-  config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
+  # config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
+
+  # Avoid loading external assets for no_tracking pages
+  config.action_controller.asset_host = Proc.new { |source, request = nil, *_|
+    request && ApplicationHelper.no_tracking(request) ? "#{ENV['NI_APP_HOST']}" : "https://#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net"
+  }
   # Enable serving of stylesheets and javascrips from Amazon S3
   # config.action_controller.asset_host = "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com"
   config.assets.enabled = true
