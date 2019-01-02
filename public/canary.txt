@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: December, 2018
+Period: January, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  7 December 2018
+  2 January 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlwJqusACgkQtsnG2UL7
-GPkPeg/9Ehks+QoSJNM/RIftKLSy/rAWftS83I07zXp2p2IRic2v011aFl/HrITq
-69cSOGo4ZlgRyw+8JBp4+Z3VniJMf3+tQXWdjz+I1WgXzrr6eDjk/3LhLqksq6r2
-v3PDtWAmBl0KqQG31Z3OxN07Bkkl3lgPMAGU119V5uzo07vPAV6VlGWdVHwzSpBk
-h9zFL7yPTLIZNVVwuPGAsYCr+FDma0rIyKIoVWuNJ8ftvqsJ/IDhH4OiYziOzPr8
-vIOL1pR+skvNF0z0PHQCmPCHd+kFTiV3Ro7J6OyiFM+CJTZC4yQNh18zEE84lJkJ
-35kpRYV+SI/IPA0KPcCIxUdARO+IcW5yyHv08sYNenL8B/QfumfipytEygg6uKs7
-o+MY1Ton5eA2TVSlnw4akbKeNwGobV88iekZyB6SlEqsHQa5s7YPzqZw1IVhTn01
-FrCzCeUwKEXAZx4yzLNJNTP9yqyxrrXHFBjze4IqM4UYJoX0prTJSBZoMvHpjd8e
-PfLmwtTW1lRJ27RCjdTF5cSqrpUJ9Eggu/LzR+j96wdNFn69AJBAnlwpXOa7akLu
-fK4QIO8fQ8z0CKnI9q9AeYJVfKTQ8JMyFoc3qFEBMR35wwII2prexq3AHVoIfk5u
-ompT43TJR8FhUn+wNyh3f2zpb45Le8wgV7/cmMZu8JKuTaeSGog=
-=XxJ+
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlwsH/QACgkQtsnG2UL7
+GPnuag//ZHgL/FzpWnm+9V+DbcDgWKDoHHaAQjUftdw6qXrRktCXOPKTjBIhNX2R
+5qlZqAiJDF4HpBGZ8OpWRWFgtYn/A70egbgcr8YYuuLI9ZcE4iHv/sP3dmHMc3wm
+7d/c0IXZMo6RwLBvi0QxB+bLf6NeEIIZ/P2SWAlABHkiOtIWKNBi99Igcagu+dbb
+PFlvGm3Bw6e2ZEz2efswwOf9ywLoGuBKCZeR1tZmnBt6cU5fS0E8J2avX8qfqRLd
+h5SpjarnhIkG7GoAuLG3gFonfulqoqwnZRVct9GmnsIai2MFvGV23JqHdoMqhsa/
+d4J6sTWLuzmIVGB1grXGP70lTvtCf0WcZSjstA2BT5Y7/O8BM2ofXfapcJUA0+GE
+LA37n9EWQ8EAU8tUI/mj0/oSXLlUN83pZ9kWBbljPypKnTh3TMQt7JGN+dbM5rOa
+ndsq47p7cpZupgXM+XprhsfZ+nQMERSbaDvfGeVeZJUJafpWsjJD3ReNe+fNifHk
+f5UIPTJBzquEn3Ibg0ij3zzQMvRXFIlEGQVtMxuCUZcjnQtQ09wS0ccfpBosdr61
+a2uvHi4aseC+Q0ylRmBUBivMilMApzhzPcx69oZkZj4iUR0KVwDxXK3Uhocjxe3j
+lZ7KK6N4xy5+TAdBB/elejaFVeD/BVM4qR8aNuM9QARMtVFRLj8=
+=zUTe
 -----END PGP SIGNATURE-----
