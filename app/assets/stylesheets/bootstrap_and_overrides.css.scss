@@ -109,6 +109,8 @@ $articleFontSize:		1rem;
 $articleLineHeight:		1.5rem;
 $articleParagraphMargin: 1rem;
 
+$issueTitleH2FontSize: 1.2em;
+
 /*
 $baseFontFamily:        $serifFontFamily;
 $baseFontSize:          1.313em;
@@ -124,7 +126,7 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 }
 
 // ABC news base body font Verdana 0.75em 1.125em line-height
-.league-gothic-headings-font {
+@mixin league-gothic-headings-font {
 	font-family: $league-gothic-font;
 	font-weight: normal;
 	letter-spacing: normal;
@@ -133,7 +135,7 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 }
 
 h1, h2, h3 {
-	.league-gothic-headings-font;
+	@include league-gothic-headings-font;
 }
 h1 {
 	font-size: 4rem;
@@ -176,9 +178,13 @@ $navbarBrandColor:                $navbarLinkColor;
 	background-color: #eeeeee;
 }
 
-.no-gradient {
+@mixin no-gradient {
 	background-color: transparent !important;
 	background: none !important;
+}
+
+.no-gradient {
+	@include no-gradient;
 }
 
 
@@ -261,6 +267,12 @@ $grid-gutter-width: 2em;
 	border-radius: 0.313em;
 }
 
+@mixin no-shadow {
+	-moz-box-shadow: 0em 0em 0em #FFFFFF;
+	-webkit-box-shadow: 0em 0em 0em #FFFFFF;
+	box-shadow: 0em 0em 0em #FFFFFF;
+}
+
 .box {
 	@include box;
 }
@@ -299,6 +311,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .container {
 	background-color: rgb(255, 255, 255);
+}
+
 .square {
 	list-style-type: square;
 }
@@ -509,7 +523,7 @@ a.nav-link {
 }
 
 .home-keynote h6, .home-editor-note h4, .issue-top-box h3, .latest-issue-categories h6, .social-networks h4, .home-quick-reads h4, .home-popular h4 {
-	font-family: @sansFontFamily;
+	font-family: $sansFontFamily;
 	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 0.9em;
@@ -522,7 +536,7 @@ a.nav-link {
 }
 
 .home-editor-letter h4 {
-	.league-gothic-headings-font;
+	@include league-gothic-headings-font;
 	line-height: 1em;
 	font-size: 2.5em;
 	opacity: 0.9;
@@ -669,7 +683,7 @@ $homeCoverListMargin: 0.438em;
 .home-cover-list img {
 	margin-left: $homeCoverListMargin;
 	margin-right: $homeCoverListMargin;
-	margin-bottom: ($homeCoverListMargin * 2) + 3;
+	margin-bottom: (($homeCoverListMargin * 2) + 3);
 	border-radius: 0.125em;
 }
 
@@ -1171,9 +1185,6 @@ $issueCoverListMargin: 1.1em;
 	/* padding-bottom: 0.25em; */
 	margin-top: 0em;
 }
-
-<<<<<<< HEAD:app/assets/stylesheets/bootstrap_and_overrides.css.scss
-$issueTitleH2FontSize: 1.2em;
 
 .issue-list-title h2, .page-header h3 {
 	font-family: $libre-baskerville;
@@ -1725,7 +1736,7 @@ mark, .mark {
 }
 
 .inequality-watch h4 {
-	.league-gothic-headings-font;
+	@include league-gothic-headings-font;
 	font-size: 7em;
 	margin-bottom: 0rem;
 }
@@ -1849,7 +1860,7 @@ mark, .mark {
 }
 
 .article-image-full {
-	.no-shadow;
+	@include no-shadow;
 	margin: 1.5em -3.7em 1.5em -3.7em;
 }
 
@@ -1865,7 +1876,7 @@ mark, .mark {
 }
 
 .article-image-cartoon.article-image-full img {
-	.no-shadow;
+	@include no-shadow;
 	width: 100%;
 }
 
@@ -1884,13 +1895,7 @@ mark, .mark {
 }
 
 .no-shadow img {
-	-moz-box-shadow: 0em 0em 0em #FFFFFF;
-	-webkit-box-shadow: 0em 0em 0em #FFFFFF;
-	box-shadow: 0em 0em 0em #FFFFFF;
-}
-
-.no-shadow img {
-	.no-shadow;
+	@include no-shadow;
 }
 
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
@@ -1938,43 +1943,6 @@ blockquote > .attribution {
 	color: $gray;
 }
 
-.gradient {
-	background: #ffe0c2;
-	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
-	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
-}
-
-.gradient-gray {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-}
-
-.gradient-gray-darker {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
-	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
-}
-
-.gradient-home-latest-issue {
-	background-color: @boxHomeBackgroundColour;
-	background: -moz-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	background: -webkit-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	background: linear-gradient(to bottom, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@boxHomeBackgroundColourLight, endColorstr=@boxHomeBackgroundColour,GradientType=0 );
-}
-
-.no-gradient {
-	background-color: transparent;
-	background: none;
-}
-
 .box {
 	background-color: $boxBackgroundColour;
 	padding: 1.5em 3.7em;
@@ -1982,19 +1950,19 @@ blockquote > .attribution {
 	// border-radius: 5px;
 }
 
-.blue {
+@mixin blue {
 	background-color: $niBlue2018Light;
 }
 
-.yellow {
+@mixin yellow {
 	background-color: $niYellow2018;
 }
 
-.yellow-lighter {
+@mixin yellow-lighter {
 	background-color: #f9ead3;
 }
 
-.centre {
+@mixin centre {
 	text-align: center;
 }
 
@@ -2008,7 +1976,7 @@ blockquote > .attribution {
 }
 
 .box.letters {
-	.yellow;
+	@include yellow;
 	border-width: 0.7em;  
   border-style: dashed;
   border-color: $gray-darker;
@@ -2021,13 +1989,13 @@ blockquote > .attribution {
 }
 
 .box.debate {
-	.yellow-lighter;
-	.centre;
+	@include yellow-lighter;
+	@include centre;
 	margin: 2em -4em 2em -4em;
 }
 
 .box.debate h4 {
-	.league-gothic-headings-font;
+	@include league-gothic-headings-font;
 	font-size: 3em;
 }
 
@@ -2120,7 +2088,7 @@ blockquote > .attribution {
 }
 
 .star-ratings {
-	.box;
+	@include box;
 	background-color: $niBlue2018Lighter;
 }
 
@@ -2389,7 +2357,7 @@ ul.ui-autocomplete {
 }
 
 .page-body h4 {
-	.league-gothic-headings-font;
+	@include league-gothic-headings-font;
 	opacity: 0.9;
 	margin-top: 1em;
 }
