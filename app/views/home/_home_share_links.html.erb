@@ -1,6 +1,6 @@
 <span class="clear-hack"></span>
 <span class="share-links">
-  <% if can? :create, Favourite %>
+  <% if user_signed_in? and can? :create, Favourite %>
     <!-- Favourite -->
     <% if article_favourited?(article) %>
       <%= link_to raw('<i class="fa fa-heart red"></i>'), issue_article_favourite_path(article.issue, article, favourite_id_for_article(article)), :method => 'delete', :alt => 'Remove from favourites', :title => 'Remove from favourites' %>
@@ -9,7 +9,7 @@
     <% end %>
     <!-- END Favourite -->
   <% end %>
-  <% if can? :create, GuestPass %>
+  <% if user_signed_in? and can? :create, GuestPass %>
     <!-- Sharing options -->
     <% if article_has_a_guest_pass?(article) %>
       <!-- Email button -->

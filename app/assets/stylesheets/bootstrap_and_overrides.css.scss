@@ -1,5 +1,5 @@
 // @import "bootstrap";
-body { 
+body {
 	padding-top: 3.75rem;
 	// background-color: rgb(25, 19, 33) !important;
 }
@@ -80,14 +80,16 @@ $text-color:            $gray-dark;
 
 // Typography
 // -------------------------
-// $sansFontFamily:        "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-// $sansFontFamily:        Verdana, Helvetica, Arial, sans-serif;
 $sansFontFamily:		"Fira Sans", "Calibri", "Gil Sans", sans-serif !important;
+$league-gothic-font: "League Gothic", sans-serif;
+$libre-baskerville: "Libre Baskerville", serif;
+$bagnard-regular: "BagnardRegular", serif;
 // $serifFontFamily:       "iABCRegular", serif;
 
 $font-family-base:        $sansFontFamily;
 // $baseFontSize:          0.75em;
 // $baseLineHeight:        1.125em;
+
 // Open Sans
 $font-size-base:          16;
 // $line-height-base:        1.25em;
@@ -122,6 +124,30 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 }
 
 // ABC news base body font Verdana 0.75em 1.125em line-height
+.league-gothic-headings-font {
+	font-family: $league-gothic-font;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 1rem;
+	// text-transform: uppercase;
+}
+
+h1, h2, h3 {
+	.league-gothic-headings-font;
+}
+h1 {
+	font-size: 4rem;
+}
+h2 {
+	font-size: 3rem;
+}
+h3 {
+	font-size: 2.5rem;
+}
+h4 {
+	font-size: 2rem;
+	// line-height: 1rem;
+}
 
 // Navbar
 // -------------------------
@@ -171,6 +197,12 @@ $boxHomeBackgroundColour: rgba(0, 0, 0, 0.06);
 $boxHomeBackgroundColourLight: rgba(0, 0, 0, 0.01);
 $footerColour: rgba(250,176,59,0.58);
 // $footerColour: rgba(250,176,59,0.38); // Old footer 2013
+
+$niBlue2018: #3fb6b9;
+$niBlue2018Darker: #0a9c9e;
+$niBlue2018Lighter: #7ecfd1;
+$niBlue2018Light: #ddf1f2;
+$niYellow2018: rgba(230, 166, 72, 0.43);
 
 $containerMarginLeftRight: 2rem;
 
@@ -241,9 +273,19 @@ $grid-gutter-width: 2em;
 
 // Link colours
 
+a {
+	color: $niBlue2018Darker;
+}
+
 a:visited {
 	// color: #428bca;
 	// color: #316796;
+	color: $niBlue2018;
+	// color: $niBlue2018;
+}
+
+a:hover {
+	color: $niBlue2018Darker;
 }
 
 // a.btn:visited { color: #333; }
@@ -257,6 +299,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .container {
 	background-color: rgb(255, 255, 255);
+.square {
+	list-style-type: square;
 }
 
 // Top Nav Bar
@@ -286,8 +330,23 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .navbar .brand {
 	font-family: "Bodega";
 	color: $niRed;
-	font-size: 1.625em;
+	// font-size: 1.625em;
 	padding: 0em;
+	color: $niRed;
+	padding-left: 0px;
+}
+
+.navbar-brand {
+	padding: 6px 0px;
+	height: inherit;
+}
+
+.navbar-nav {
+	padding: 6px 0px 0px 2em;
+}
+
+ul.navbar-nav > li {
+	padding-top: 11px;
 }
 
 .navbar .container {
@@ -310,6 +369,10 @@ a.nav-link {
 .nav-link {
 	position: relative;
 	top: 0.25em;
+}
+
+.user_nav .dropdown-menu {
+	top: 80%;
 }
 
 .dropdown-menu > li > form {
@@ -355,13 +418,20 @@ a.nav-link {
 	margin-top: 1.25em;
 }
 
+.alert {
+	position: absolute;
+	z-index: 1001;
+	width: 50%;
+	left: 25%;
+}
+
 .home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
 	margin-top: 0;
 	background-color: inherit;
 }
 
 .home-hero + .row .home-keynote h3 {
-	font-size: 1.5em;
+	font-size: 2.5em;
 }
 
 .home-keynote h5 {
@@ -439,6 +509,7 @@ a.nav-link {
 }
 
 .home-keynote h6, .home-editor-note h4, .issue-top-box h3, .latest-issue-categories h6, .social-networks h4, .home-quick-reads h4, .home-popular h4 {
+	font-family: @sansFontFamily;
 	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 0.9em;
@@ -448,6 +519,18 @@ a.nav-link {
 
 .home-quick-reads h6, .home-popular h6 {
 	margin-top: 0.5em;
+}
+
+.home-editor-letter h4 {
+	.league-gothic-headings-font;
+	line-height: 1em;
+	font-size: 2.5em;
+	opacity: 0.9;
+	text-transform: uppercase;
+}
+
+.home-quick-reads img, .home-popular img {
+	// text-align: center;
 }
 
 .home-quick-reads h6 a, .home-popular h6 a {
@@ -621,6 +704,11 @@ $homeCoverListMargin: 0.438em;
 	font-size: 1.3em;
 	line-height: 1.4em;
 	margin-top: 0.5em;
+
+  // TODO:
+	// color: $gray-light;
+	// font-size: 2.5em;
+	// line-height: 1em;
 	margin-bottom: 0;
 }
 
@@ -763,7 +851,7 @@ $homeCoverListMargin: 0.438em;
 }
 
 .footer a {
-	color: $gray;
+	color: $gray-darker;
 	text-decoration: underline;
 }
 
@@ -785,7 +873,7 @@ $homeCoverListMargin: 0.438em;
 }
 
 .footer .copyright {
-	opacity: 0.8;
+	// opacity: 0.8;
 }
 
 .home-donate .btn {
@@ -813,8 +901,10 @@ $homeCoverListMargin: 0.438em;
 }
 
 .purchase-issue h3 {
-	font-size: 1.2em;
-	margin-top: 1em;
+	// TODO:
+	// font-size: 1.2em;
+	// margin-top: 1em;
+	margin-bottom: 0.5em;
 }
 
 .purchase-issue h4 {
@@ -840,19 +930,29 @@ $homeCoverListMargin: 0.438em;
 .marketing-subscribe {
 	@include box;
 	float: right;
-	margin-top: -21.875em;
+	// margin-top: -21.875em;
+	margin-top: -24.5em;
+	margin-right: -4em;
+	padding: 3em;
 	width: 30%;
 }
 
 .marketing-subscribe h3 {
-	margin: 0em;
-	font-size: 1.5em;
+	margin: 0px;
+	font-size: 2em;
 	line-height: 1.2em;
 }
 
 .marketing-subscribe h4 {
-	margin-top: 0.5em;
-	color: $gray;
+	// margin-top: 0.5em;
+	// color: $gray;
+	font-family: $libre-baskerville;
+	font-size: $issueTitleH2FontSize;
+	line-height: $issueTitleH2FontSize;
+	font-style: italic;
+	font-weight: normal;
+	line-height: 1.7em;
+	color: $gray-light;
 }
 
 // Remove the 13.75em width on select form items & text inputs
@@ -1038,7 +1138,7 @@ $issueCoverListMargin: 1.1em;
 	float: left;
 	margin-left: $issueCoverListMargin;
 	margin-right: $issueCoverListMargin;
-	margin-bottom: ($issueCoverListMargin * 2);
+	margin-bottom: ($issueCoverListMargin * 2) + 3;
 	border-radius: 0.125em;
 	// background-color: $boxHomeBackgroundColour;
 	color: $gray-light;
@@ -1048,6 +1148,7 @@ $issueCoverListMargin: 1.1em;
 	// background-color: $gray-light;
 	// color: white;
 	opacity: 0.9;
+	color: $gray-dark;
 }
 
 .issue-information p {
@@ -1071,17 +1172,26 @@ $issueCoverListMargin: 1.1em;
 	margin-top: 0em;
 }
 
+<<<<<<< HEAD:app/assets/stylesheets/bootstrap_and_overrides.css.scss
 $issueTitleH2FontSize: 1.2em;
 
-.issue-list-title h2 {
+.issue-list-title h2, .page-header h3 {
+	font-family: $libre-baskerville;
 	font-size: $issueTitleH2FontSize;
 	line-height: $issueTitleH2FontSize;
+	font-style: italic;
 	font-weight: normal;
+	line-height: 1.7em;
 	color: $gray-light;
 }
 
 .issue-top-box {
-	// @include gradient-gray;
+	@include gradient-gray;
+
+	// TODO:
+	// padding: 6em 3em 1em 3em;
+	// margin: -5em -4em 2em -4em;
+	// border-radius: 5px;
 
 	padding: 1em 1em 1em 0;
 	margin: 0 0 2em 0;
@@ -1176,6 +1286,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	margin-top: 0;
 }
 
+.big-story h3 {
+	text-transform: uppercase;
+}
+
 .issue-keynote .home-keynote {
 	background-color: transparent;
 	background: none;
@@ -1204,6 +1318,10 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .issue-sections + .issue-sections {
 	border-top: 0.063em solid $gray-lighter;
+}
+
+.issue-sections > h3 {
+	text-transform: uppercase;
 }
 
 .issue-sections h3 {
@@ -1256,6 +1374,20 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 	line-height: 1em;
 }
 
+.table-of-contents-editors-letter h4 {
+	@include league-gothic-headings-font;
+	line-height: 1em;
+	font-size: 2.5em;
+	opacity: 0.9;
+	text-transform: uppercase;
+}
+
+.editors-photo {
+	float: right;
+	margin: 0rem 0rem 1rem 1rem;
+	border-radius: 0.125em;
+}
+
 // Article styling
 
 mark, .mark {
@@ -1277,9 +1409,11 @@ mark, .mark {
 }
 
 .article-title h2 {
-	// font-weight: 600;
+	font-weight: normal;
+	font-family: $libre-baskerville;
+	font-style: italic;
 	font-size: 1.2em;
-	line-height: 1.3em;
+	line-height: 1.7em;
 	color: $gray-light;
 	/* padding-bottom: 0.75em; */
 }
@@ -1346,6 +1480,27 @@ mark, .mark {
 
 .articles_as_table th:last-child, .articles_as_table td:last-child {
 	text-align: right;
+}
+
+.mixed-media-books h3, .mixed-media-books img {
+	text-align: center;
+}
+
+.mixed-media-books h4, .mixed-media-books h5 {
+	font-weight: normal;
+	font-family: $libre-baskerville;
+	font-style: italic;
+	font-size: 1.2em;
+	line-height: 1.7em;
+	text-align: center;
+}
+
+.mixed-media-books .col-sm-6 {
+	padding: 0 2em;
+}
+
+.mixed-media-books .article-image-full {
+	margin: 0;
 }
 
 // highlighter.js
@@ -1513,7 +1668,7 @@ mark, .mark {
 }
 
 .all-article-images img {
-	max-width: 100%;
+	// width: 100%;
 	height: auto;
 }
 
@@ -1556,6 +1711,31 @@ mark, .mark {
 
 .letters-box {
 	@include box;
+	font-family: $libre-baskerville;
+	font-style: italic;
+	font-size: 1.2em;
+}
+
+.inequality-watch {
+	@include box;
+	background-color: $niRed;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.inequality-watch h4 {
+	.league-gothic-headings-font;
+	font-size: 7em;
+	margin-bottom: 0rem;
+}
+
+.inequality-watch h5 {
+	margin-top: 0rem;
+}
+
+.inequality-watch h4 + h5 {
+	margin-bottom: 2em;
 }
 
 .article-body {
@@ -1665,12 +1845,33 @@ mark, .mark {
 	max-width: 37.5em;
 	margin-left: auto;
 	margin-right: auto;
+	text-align: center;
+}
+
+.article-image-full {
+	.no-shadow;
+	margin: 1.5em -3.7em 1.5em -3.7em;
+}
+
+.article-image-half {
+	float: right;
+	margin: 1em 0 1.5em 1.5em;
+}
+
+.article-image-half .new-image-credit, .article-image-half .new-image-credit {
+	margin: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.article-image-cartoon.article-image-full img {
+	.no-shadow;
+	width: 100%;
 }
 
 .article-image-full .new-image-credit, .article-image-full .new-image-caption {
-	max-width: 59.063em;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 1em 4em 0.7em 4em;
+	max-width: 100%;
 }
 
 .article-image-centre .new-image-credit, .article-image-centre .new-image-caption {
@@ -1688,30 +1889,36 @@ mark, .mark {
 	box-shadow: 0em 0em 0em #FFFFFF;
 }
 
+.no-shadow img {
+	.no-shadow;
+}
+
 blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 	border-right-style: none;
 	border-left-style: none;
-	color: $niRed;
-	width: 30%;
+	// color: $niRed;
+	width: 40%;
 	float: right;
 	text-align: right;
 }
 
 blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
 	margin-bottom: 0;
-	font-weight: bold;
-	font-size: 1em;
+	font-size: 1.5em;
+	font-family: "BagnardRegular", serif;
+	line-height: 1.2em;
+	letter-spacing: -0.02em;
+	text-align: center;
 }
 
 blockquote.pull-right, blockquote.pull- {
-	padding: 0em;
-	margin: 0em 0em 1em 1em;
+	padding: 1em;
+	margin: 1em 0rem 1em 1em;
 }
 
 blockquote.pull-left {
-	padding: 0em;
-	margin: 0em 1em 1em 0em;
-	text-align: left;
+	padding: 1em;
+	margin: 1em 1em 1em 0rem;
 	float: left;
 }
 
@@ -1731,10 +1938,123 @@ blockquote > .attribution {
 	color: $gray;
 }
 
-.factbox {
+.gradient {
+	background: #ffe0c2;
+	background: -moz-linear-gradient(left, #ffe0c2 0%, #eecddb 50%, #c5e2e5 100%);
+	background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe0c2', endColorstr='#c5e2e5',GradientType=1 );
+}
+
+.gradient-gray {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+}
+
+.gradient-gray-darker {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(top, #d3d3d3 0%, #ffffff 100%);
+	background: linear-gradient(to bottom, #d3d3d3 0%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3d3d3', endColorstr='#ffffff',GradientType=0 );
+}
+
+.gradient-home-latest-issue {
+	background-color: @boxHomeBackgroundColour;
+	background: -moz-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: -webkit-linear-gradient(top, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	background: linear-gradient(to bottom, @boxHomeBackgroundColourLight 0%, @boxHomeBackgroundColour 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@boxHomeBackgroundColourLight, endColorstr=@boxHomeBackgroundColour,GradientType=0 );
+}
+
+.no-gradient {
+	background-color: transparent;
+	background: none;
+}
+
+.box {
+	background-color: $boxBackgroundColour;
+	padding: 1.5em 3.7em;
+	margin: 2em -3.7em 2em -3.7em;
+	// border-radius: 5px;
+}
+
+.blue {
+	background-color: $niBlue2018Light;
+}
+
+.yellow {
+	background-color: $niYellow2018;
+}
+
+.yellow-lighter {
+	background-color: #f9ead3;
+}
+
+.centre {
+	text-align: center;
+}
+
+.conversation {
+	@include yellow;
+	@include centre;
+}
+
+.conversation h2 {
+	font-size: 4em;
+}
+
+.box.letters {
+	.yellow;
+	border-width: 0.7em;  
+  border-style: dashed;
+  border-color: $gray-darker;
+}
+
+.box.letters .author-note {
+	color: inherit;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+.box.debate {
+	.yellow-lighter;
+	.centre;
+	margin: 2em -4em 2em -4em;
+}
+
+.box.debate h4 {
+	.league-gothic-headings-font;
+	font-size: 3em;
+}
+
+.box h3 {
+	font-family: $libre-baskerville;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 1.4em;
+	margin-bottom: 1.5em;
+}
+
+.box p + h3 {
+	margin-top: 2em;
+	margin-bottom: 1em;
+}
+
+.box h4 {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.factbox, .boxout {
 	@include box;
-	width: 30%;
-	margin: 0;
+	// TODO:
+	// width: 30%;
+	// margin: 0;
 }
 
 .factbox h2, .factbox h3, .factbox h4, .box h2, .box h3, .box h4 {
@@ -1762,6 +2082,10 @@ blockquote > .attribution {
 .author-note {
 	font-size: 0.9em;
 	color: $gray;
+}
+
+.author-note strong {
+	text-transform: uppercase;
 }
 
 .article-favourite {
@@ -1793,6 +2117,19 @@ blockquote > .attribution {
 
 .clear-hack {
 	display: none;
+}
+
+.star-ratings {
+	.box;
+	background-color: $niBlue2018Lighter;
+}
+
+.star-ratings h4 {
+	font-family: $libre-baskerville;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 1.2em;
+	margin-bottom: 1.5em;
 }
 
 .star-ratings-previous-year, .star-ratings-previous-year + dd {
@@ -1865,6 +2202,7 @@ ul.ui-autocomplete {
 
 .article-related-by-theme h4 {
 	color: $gray;
+	font-size: 1.3em;
 }
 
 #generate_from_source {
@@ -1881,6 +2219,7 @@ ul.ui-autocomplete {
 .help-list {
 	@include box;
 	@include gradient-gray;
+	margin: 2em -4em 2em -4em;
 }
 
 .help-body img {
@@ -2049,6 +2388,12 @@ ul.ui-autocomplete {
 	max-width: 100%;
 }
 
+.page-body h4 {
+	.league-gothic-headings-font;
+	opacity: 0.9;
+	margin-top: 1em;
+}
+
 
 // 404 error page styling
 
@@ -2136,7 +2481,7 @@ ul.ui-autocomplete {
 	input, textarea, .uneditable-input {
 		width: 95%;
 	}
-	a.btn.btn-success.navbar-btn .nav-username {
+	a.btn.btn-default.navbar-btn .nav-username {
 		display: none;
 	}
 
@@ -2171,6 +2516,14 @@ ul.ui-autocomplete {
 
 	.article-image-centre.article-image-small {
 		width: 100%;
+	}
+
+	.article-image-centre img {
+		max-width: 100%;
+	}
+
+	.all-article-images img {
+		max-width: 100%;
 	}
 	
 	.hero-unit {
@@ -2223,6 +2576,10 @@ ul.ui-autocomplete {
 	}
 	.subscription-offer-two.subscription-buttons {
 		padding: 1em 0em;
+	}
+	blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
+		width: inherit;
+		margin: 0;
 	}
 }
  
@@ -2309,6 +2666,33 @@ ul.ui-autocomplete {
 
 	.issue-keynote-image-caption {
 		display: none;
+	}
+
+	.box, .boxout {
+		margin: 1.5em -0.96em 1.5em -0.96em;
+		padding: 1.5em 1em;
+	}
+
+	.article-image-full {
+		margin: 1.5em -0.96em 1.5em -0.96em;
+		padding: 0;
+	}
+
+	.article-image-full .new-image-caption, .article-image-full .new-image-credit {
+		margin: 1em 1em 0.7em 1em;
+	}
+	.issue-top-box {
+		margin: -4em -1em 2em -1em;
+		padding: inherit;
+		padding-top: 4em;
+	}
+	.issue-keynote .home-keynote {
+		background-color: transparent;
+		background: transparent;
+	}
+	.alert {
+		width: 80%;
+		left: 10%;
 	}
 }
  

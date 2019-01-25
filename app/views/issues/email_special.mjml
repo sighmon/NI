@@ -5,13 +5,12 @@
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
 			<mj-column>
-				<mj-text font-size="11px" color="#606b75" font-weight="300">
+				<mj-text
+					font-size="11px"
+					color="#606b75"
+					font-weight="300"
+					align="center">
 					<%= link_to "New Internationalist digital subscription", page_url("subscribe"), style: 'color:inherit;' %>
-				</mj-text>
-			</mj-column>
-			<mj-column>
-				<mj-text font-size="11px" color="#606b75" font-weight="300" align="right">
-					No images? <webversion>Click here</webversion>
 				</mj-text>
 			</mj-column>
 		</mj-section>
@@ -60,7 +59,7 @@
 		<mj-section background-color="#FFFFFF" padding="0">
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Apple devices"
 					title="Apple devices"
 					href="<%= page_url("subscribe") %>"
@@ -69,7 +68,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Android devices"
 					title="Android devices"
 					href="<%= page_url("subscribe") %>"
@@ -78,7 +77,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Apple and Android tablets"
 					title="Apple and Android tablets"
 					href="<%= page_url("subscribe") %>"
@@ -87,7 +86,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="On-line website access"
 					title="On-line website access"
 					href="<%= page_url("subscribe") %>"
@@ -96,7 +95,7 @@
 			</mj-column>
 			<mj-column>
 				<mj-image 
-					padding="0 30 0 30"
+					padding="0px 30px 0px 30px"
 					alt="Access at anytime."
 					title="Access at anytime."
 					href="<%= page_url("subscribe") %>"

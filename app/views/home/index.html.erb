@@ -25,7 +25,7 @@
     <!-- Keynote hero image -->
     <div class="carousel-inner">
       <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-      	<% if can? :read, @latest_issue.keynote %>
+      	<% if user_signed_in? and can? :read, @latest_issue.keynote %>
 	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
 	      <% else %>
 	      	<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), new_issue_purchase_path(@latest_issue) %>
@@ -42,19 +42,19 @@
 <div class="row">
 	<div class="col-sm-4">
 		<div class="home-keynote no-gradient">
-			<h6>This month's keynote article</h6>
+			<h6>This month's big story</h6>
 			<%= render :partial => "home_article_no_image", :locals => { :article => @latest_issue.keynote } unless @latest_issue.keynote.nil? %>
 		</div>
 	</div>
 	<div class="col-sm-4 home-latest-issue">
 		<!-- Latest cover -->
 		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, :class => 'shadow-sm home-latest-cover', :alt => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400), issue_path(@latest_issue), :itemprop => "url" %>
-		<% if can? :read, @latest_issue.keynote %>
+		<% if user_signed_in? and can? :read, @latest_issue.keynote %>
 			<p><%= link_to "Read this issue", issue_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% else %>
 			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% end %>
-		<% if not current_user.try(:subscriber?) %>
+		<% if not user_signed_in? or not current_user.try(:subscriber?) %>
 	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success btn-lg' %></p>
 		<% end %>
   	<p class="ios-home-ad"><%= link_to image_tag('app-store.svg', alt: 'Download the New Internationalist magazine app for iPad and iPhone.', title: 'Download the New Internationalist magazine app for iPad and iPhone.'), "#{ENV["ITUNES_APP_LINK"]}" %><%= link_to image_tag('google-play.svg', alt: 'Get New Internationalist magazine app on Google Play', title: 'Get New Internationalist magazine app on Google Play'), "#{ENV["GOOGLE_PLAY_APP_LINK"]}" %></p>
@@ -65,7 +65,7 @@
 		<div class="home-editors-photo-container">
 			<%= retina_image_tag @latest_issue.editors_photo_url(:thumb).to_s, :class => 'home-editors-photo', :alt => "#{@latest_issue.editors_name}", :title => "#{@latest_issue.editors_name}", :width => "100" %>
 		</div>
-		<p><%= simple_format truncate(strip_tags(@latest_issue.editors_letter), :length => 256) %></p>
+		<p><%= simple_format truncate(strip_tags(@latest_issue.editors_letter), length: 256, escape: false) %></p>
 		<p><%= link_to 'Read more...', issue_path(@latest_issue), :class => 'btn btn-outline-secondary' %></p>
 	</div>
 </div>
@@ -97,7 +97,7 @@
 		<h4><%= link_to "Today's quick reads", quick_reads_path %></h4>
 		<div class="row">
 		<% @quick_reads.each do |a| %>
-			<% if can? :read, a %>
+			<% if user_signed_in? and can? :read, a %>
 				<!-- Link to article -->
 				<%= render :partial => "home_mini_article", :locals => { :article => a, :article_link => issue_article_path(a.issue, a) } %>
 			<% else %>
@@ -126,7 +126,7 @@
     <% if @latest_issue_categories %>
 	    <% @latest_issue_categories.each do |category| %>
 	      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
-	      <% if can? :manage, category %><li><%= category.name %></li><% end %>
+	      <% if user_signed_in? and can? :manage, category %><li><%= category.name %></li><% end %>
 	    <% end %>
 	   <% end %>
     </ul>

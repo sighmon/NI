@@ -33,7 +33,7 @@ class Issue < ActiveRecord::Base
       pagination = 200
     end
     search_hash = {
-      sort: [{ release: {order: "desc"}}]
+      sort: [{ release: {order: "desc", "unmapped_type": "long"}}]
     }
     search_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin
@@ -46,7 +46,7 @@ class Issue < ActiveRecord::Base
   end
 
   def self.latest_free
-    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.first
+    Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.sort.last
   end
  
   def gift_to_subscribers
@@ -192,7 +192,7 @@ class Issue < ActiveRecord::Base
       # Import issue details
       response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ISSUE_URL"] + issue_number_to_import.to_s, xcsfr_token)
       
-      if response_from_newint_org
+      if response_from_newint_org and not JSON.parse(response_from_newint_org)["list"].empty?
         # Request the articles using the issue tid.
         issue_tid = JSON.parse(response_from_newint_org)["list"].first["tid"]
         articles_response_from_newint_org = request_json_from_newint_org(ENV["NEWINT_ORG_REST_ARTICLES_URL"] + issue_tid.to_s, xcsfr_token)
@@ -220,6 +220,7 @@ class Issue < ActiveRecord::Base
         return "Success!"
       else
         logger.warn "CHECK RESPONSE FROM NEWINT.ORG!"
+        logger.warn JSON.parse(response_from_newint_org)
         return nil
       end
     else

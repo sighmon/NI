@@ -1,10 +1,10 @@
 <%- model_class = Issue -%>
 
-<% if can? :update, @issue %>
+<% if user_signed_in? and can? :update, @issue %>
 <div class="edit-issue-buttons">
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_issue_path(@issue), :class => 'btn btn-primary btn-xs' %>
-  <% if can? :destroy, @issue %>
+  <% if user_signed_in? and can? :destroy, @issue %>
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
           issue_path(@issue),
           :method => 'delete',
@@ -12,7 +12,7 @@
           :class => 'btn btn-xs btn-danger' %>
   <% end %>
    | 
-  <% if can? :create, Article %>
+  <% if user_signed_in? and can? :create, Article %>
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-xs btn-success' %>
      |
     <%= link_to 'Import Articles', issue_import_path(@issue), :class => 'btn btn-xs btn-warning',
@@ -73,10 +73,10 @@
 </div>
 <% end %>
 
-<% if can? :update, @issue %>
+<% if user_signed_in? and can? :update, @issue %>
   <% if not @issue.uncategorised.empty? %>
     <div class="articles-not-categorised-for-display">
-      <h3>Articles not displayed.</h3>
+      <h3>Articles not displayed</h3>
       <% @issue.uncategorised.each do |article| %>
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
           <%= render :partial => "article_uncategorised", :locals => { :article => article } %>
@@ -126,8 +126,8 @@
 </div>
 
 <div class="row issue-keynote" itemscope itemtype="http://schema.org/Article">
-  <div class="col-sm-12">
-    <h3>Keynote article.</h3>
+  <div class="col-sm-12 big-story">
+    <h3>The big story</h3>
   </div>
   <% if @issue.keynote %>
     <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
@@ -144,7 +144,7 @@
     <ul class="breadcrumb">
     <% @categories.each do |category| %>
       <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
-      <% if can? :manage, category %><li><%= category.name %></li><% end %>
+      <% if user_signed_in? and can? :manage, category %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
   </nav>
@@ -152,137 +152,234 @@
 
 <hr />
 
-<div class="row">
-  <div class="col-sm-4">
+<% if not @issue.features.empty? %>
 
-      <% if not @issue.features.empty? %>
-        <div class="issue-sections">
-          <h3>Features.</h3>
-          <% @issue.features.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+  <h3><%= @features_name %></h3>
 
-      <% if not @web_exclusives.empty? %>
-        <div class="issue-sections">
-          <h3>Web exclusives.</h3>
-          <% @web_exclusives.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
-          <p class="more-button"><%= link_to 'Read more web-exclusives...', category_path(Category.find_by_name("/features/web-exclusive/")), :class => 'btn btn-outline-secondary' %></p>
-        </div>
-      <% end %>
-
-      <% if not @issue.alternatives.empty? %>
-        <div class="issue-sections">
-          <h3>Alternatives.</h3>
-          <% @issue.alternatives.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% if not @blogs.empty? %>
-        <div class="issue-sections">
-          <h3>Blog.</h3>
-          <% @blogs.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
-          <p class="more-button"><%= link_to 'Read more blogs...', category_path(Category.find_by_name("/blog/")), :class => 'btn btn-outline-secondary' %></p>
-        </div>
-      <% end %>
-
+  <div class="row">
+    <% @issue.features.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
   </div>
-
-  <div class="col-sm-4">
-
-    <% if not @issue.opinion.empty? %>
-      <div class="issue-sections">
-        <h3>Opinion.</h3>
-        <% @issue.opinion.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :locals => { :article => article } %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    
-    <% if not @issue.agendas.empty? %>
-        <div class="issue-sections">
-          <h3>Agenda.</h3>
-          <% @issue.agendas.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
-        </div>
+  <div class="row">
       <% end %>
-
-      <% if not @issue.currents.empty? %>
-        <div class="issue-sections">
-          <h3>Currents.</h3>
-          <% @issue.currents.each do |article| %>
-            <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-              <%= render :partial => "article", :locals => { :article => article } %>
-            </div>
-          <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
         </div>
-      <% end %>
-
-  </div>
-
-  <div class="col-sm-4">
-
-    <% if not @issue.videos.empty? %>
-      <div class="issue-sections">
-        <h3>Videos.</h3>
-        <% @issue.videos.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :locals => { :article => article } %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if not @issue.regulars.empty? %>
-      <div class="issue-sections">
-        <h3>Regulars.</h3>
-        <% @issue.regulars.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :locals => { :article => article } %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if not @issue.mixedmedia.empty? %>
-      <div class="issue-sections">
-        <h3>Film, Book &amp; Music Reviews.</h3>
-        <% @issue.mixedmedia.each do |article| %>
-          <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-            <%= render :partial => "article", :locals => { :article => article } %>
-          </div>
-        <% end %>
       </div>
     <% end %>
   </div>
-</div>
+
+  <hr />
+
+<% end %>
+
+<% if not @web_exclusives.empty? %>
+
+  <h3>Web exclusives</h3>
+
+  <div class="row">
+    <% @web_exclusives.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+    <p class="more-button"><%= link_to 'Read more web-exclusives...', category_path(Category.find_by_name("/features/web-exclusive/")), :class => 'btn btn-outline-secondary' %></p>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.alternatives.empty? %>
+
+  <h3>Alternatives</h3>
+
+  <div class="row">
+    <% @issue.alternatives.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @blogs.empty? %>
+
+  <h3>Blogs</h3>
+
+  <div class="row">
+    <% @blogs.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+    <p class="more-button"><%= link_to 'Read more blogs...', category_path(Category.find_by_name("/blog/")), :class => 'btn btn-outline-secondary' %></p>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.opinion.empty? %>
+
+  <h3>Opinion</h3>
+
+  <div class="row">
+    <% @issue.opinion.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.agendas.empty? %>
+
+  <h3>Agenda</h3>
+
+  <div class="row">
+    <% @issue.agendas.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.currents.empty? %>
+
+  <h3>Currents</h3>
+
+  <div class="row">
+    <% @issue.currents.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.videos.empty? %>
+
+  <h3>Videos</h3>
+
+  <div class="row">
+    <% @issue.videos.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.regulars.empty? %>
+
+  <h3>Regulars</h3>
+
+  <div class="row">
+    <% @issue.regulars.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
+
+<% if not @issue.mixedmedia.empty? %>
+
+  <h3>Film, Book &amp; Music Reviews</h3>
+
+  <div class="row">
+    <% @issue.mixedmedia.each_with_index do |article, index| %>
+      <% if index % 3 == 0 %>
+  </div>
+  <div class="row">
+      <% end %>
+      <div class="col-sm-4">
+        <div class="issue-article" itemscope itemtype="http://schema.org/Article">
+          <%= render :partial => "article", :locals => { :article => article } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr />
+
+<% end %>
 
 <div class="clearfix"></div>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               issues_path, :class => 'btn btn-outline-secondary' %>
-  <% if can? :create, Article %>
+  <% if user_signed_in? and can? :create, Article %>
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %>
   <% end %>
 </div>

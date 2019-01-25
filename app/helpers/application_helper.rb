@@ -376,4 +376,8 @@ module ApplicationHelper
         session[:fb_events] << {:action => action, :amount => amount}
     end
 
+    def self.redesigned?(object_date)
+        object_date > Time.new(2018, 8).to_datetime
+    end
+
 end

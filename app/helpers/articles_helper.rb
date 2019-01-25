@@ -193,6 +193,10 @@ module ArticlesHelper
           version = :threehundred
           css_class = "all-article-images article-image-cartoon article-image-centre"
           image_width = 300
+        elsif options.include?("half")
+          version = nil
+          css_class = "all-article-images article-image-half"
+          image_width = 472
         end
         
         if options.include?("ns")
@@ -219,7 +223,7 @@ module ArticlesHelper
         if media_url
           tag_method = method(:retina_image_tag)
           image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
-          if options.include?("full")
+          if options.include?("full") or options.include?("half")
             tag_method = method(:image_tag)
           end
           image_html = "<div class='#{css_class}' itemprop='image' itemscope itemtype='https://schema.org/ImageObject'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"<meta itemprop='url' content='#{image.data_url.to_s}'><meta itemprop='width' content='#{image.width}'><meta itemprop='height' content='#{image.height}'></div>"

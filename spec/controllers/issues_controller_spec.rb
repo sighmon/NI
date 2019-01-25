@@ -53,6 +53,21 @@ describe IssuesController, :type => :controller do
 
       end
     end
+
+    context "with a trialissue" do
+      let(:issue) { FactoryBot.create(:published_trial_issue) }
+
+      describe "SHOW issue" do
+
+        it "should be able to see a trial issue" do
+          get :show, :id => issue.id
+          expect(response.status).to eq(200)
+        end
+
+      end
+
+    end
+
   end
 
   context "as a user with an issue" do

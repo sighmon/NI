@@ -200,6 +200,13 @@ class IssuesController < ApplicationController
     end
 
     @categories = @issue.all_articles_categories
+
+    redesigned = ApplicationHelper.redesigned?(@issue.release)
+
+    @features_name = 'Features'
+    if redesigned
+      @features_name = 'The Big Story'
+    end
     
     # Set meta tags
     @page_title = @issue.title
@@ -570,6 +577,10 @@ class IssuesController < ApplicationController
       :access_type => 'offline'
     )
     client.authorization.fetch_access_token!
+
+    # Ruby doesn't like new lines in user_agent anymore.
+    # ArgumentError (header field value cannot include CR/LF):
+    client.user_agent = client.user_agent.squish
 
     # Discover the API
     publisher = client.discovered_api('androidpublisher', 'v2')

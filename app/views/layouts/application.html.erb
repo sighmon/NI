@@ -148,7 +148,7 @@
 
 		<% flash.each do |name, msg| %>
       <% if msg.is_a?(String) %>
-        <div class="alert in alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+        <div class="alert fade in alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <%= content_tag :div, msg, :id => "flash_#{name}" %>
         </div>

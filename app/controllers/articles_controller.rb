@@ -289,6 +289,11 @@ class ArticlesController < ApplicationController
     #@article.is_valid_guest_pass(params[:utm_source])
     @newimage = Image.new
     @letters = @article.categories.select{|c| c.name.include?("/letters/")}
+    @view_from_africa = @article.categories.select{|c| c.name.include?("/columns/view-from-africa/")}
+    @view_from_india = @article.categories.select{|c| c.name.include?("/columns/view-from-india/")}
+    @view_from_america = @article.categories.select{|c| c.name.include?("/columns/view-from-america/")}
+    @debate = @article.categories.select{|c| c.name.include?("/sections/argument/")}
+    @temperature_check = @article.categories.select{|c| c.name.include?("/columns/temperature-check/")}
     # Push the single top image to the right for these categories
     @image_top_right = @article.categories.select{|c| 
       c.name.include?("/letters-from/") or 
@@ -803,6 +808,10 @@ class ArticlesController < ApplicationController
       :access_type => 'offline'
     )
     client.authorization.fetch_access_token!
+
+    # Ruby doesn't like new lines in user_agent anymore.
+    # ArgumentError (header field value cannot include CR/LF):
+    client.user_agent = client.user_agent.squish
 
     # Discover the API
     publisher = client.discovered_api('androidpublisher', 'v2')

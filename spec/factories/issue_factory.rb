@@ -9,6 +9,11 @@ FactoryBot.define do
     	published { true }
     end
 
+    factory :published_trial_issue do
+      published { true }
+      trialissue { true }
+    end
+
   end
 
 end
