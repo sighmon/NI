@@ -5,7 +5,7 @@ describe ArticlesController, :type => :controller do
 
   setup do
     Article.__elasticsearch__.index_name = 'ni-test'
-    Article.__elasticsearch__.create_index!
+    Article.__elasticsearch__.create_index! force: true
     # Article.__elasticsearch__.import
     # Article.__elasticsearch__.refresh_index!
   end

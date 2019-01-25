@@ -4,7 +4,7 @@ describe IssuesController, :type => :controller do
 
   setup do
     Issue.__elasticsearch__.index_name = 'ni-test'
-    Issue.__elasticsearch__.create_index!
+    Issue.__elasticsearch__.create_index! force: true
     # Issue.__elasticsearch__.import
     # Issue.__elasticsearch__.refresh_index!
   end
@@ -60,7 +60,7 @@ describe IssuesController, :type => :controller do
       describe "SHOW issue" do
 
         it "should be able to see a trial issue" do
-          get :show, :id => issue.id
+          get :show, params: {:id => issue.id}
           expect(response.status).to eq(200)
         end
 
