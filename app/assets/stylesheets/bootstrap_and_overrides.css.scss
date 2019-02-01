@@ -283,7 +283,7 @@ $grid-gutter-width: 2em;
 
 // Link colours
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, p a, li a, td a, .article-next-previous a {
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, p a, li a, td a, .article-next-previous a, .actions a {
 	color: $niBlue2018;
 }
 
@@ -293,7 +293,7 @@ a:visited {
 	// color: $niBlue2018;
 }
 
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hover, li a:hover, td a:hover, .article-next-previous a:hover {
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hover, li a:hover, td a:hover, .article-next-previous a:hover, .actions a:hover {
 	color: $niBlue2018Darker;
 }
 
@@ -1247,6 +1247,7 @@ $issueCoverListMargin: 0.8em;
 }
 
 .issue-title h2 {
+	font-family: $sansFontFamily;
 	font-size: $issueTitleH2FontSize;
 	line-height: $issueTitleH2FontSize;
 	margin-top: 0.5em;
