@@ -285,18 +285,17 @@ $grid-gutter-width: 2em;
 
 // Link colours
 
-a {
-	color: $niBlue2018Darker;
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, p a, li a {
+	color: $niBlue2018;
 }
 
 a:visited {
 	// color: #428bca;
 	// color: #316796;
-	color: $niBlue2018;
 	// color: $niBlue2018;
 }
 
-a:hover {
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hover, li a:hover {
 	color: $niBlue2018Darker;
 }
 
@@ -433,8 +432,9 @@ a.nav-link {
 }
 
 .alert {
-	position: absolute;
+	position: absolute !important;
 	z-index: 1001;
+	margin-top: 1rem;
 	width: 50%;
 	left: 25%;
 }
@@ -1199,14 +1199,9 @@ $issueCoverListMargin: 1.1em;
 .issue-top-box {
 	@include gradient-gray;
 
-	// TODO:
-	// padding: 6em 3em 1em 3em;
-	// margin: -5em -4em 2em -4em;
-	// border-radius: 5px;
-
-	padding: 1em 1em 1em 0;
-	margin: 0 0 2em 0;
-	border-radius: 0.313em;
+	padding: 6em 2em 1em 1em;
+	margin: -5em -2em 2em -2em !important;
+	border-radius: 0;
 }
 
 .issue-title {
@@ -1861,7 +1856,7 @@ mark, .mark {
 
 .article-image-full {
 	@include no-shadow;
-	margin: 1.5em -3.7em 1.5em -3.7em;
+	margin: 1.5em -2em 1.5em -2em;
 }
 
 .article-image-half {
@@ -1945,8 +1940,8 @@ blockquote > .attribution {
 
 .box {
 	background-color: $boxBackgroundColour;
-	padding: 1.5em 3.7em;
-	margin: 2em -3.7em 2em -3.7em;
+	padding: 1.5em 4em;
+	margin: 2em -4em 2em -4em;
 	// border-radius: 5px;
 }
 
@@ -2642,7 +2637,7 @@ ul.ui-autocomplete {
 	}
 
 	.article-image-full {
-		margin: 1.5em -0.96em 1.5em -0.96em;
+		margin: 1.5em -1.5em 1.5em -1.5em;
 		padding: 0;
 	}
 
@@ -2650,7 +2645,7 @@ ul.ui-autocomplete {
 		margin: 1em 1em 0.7em 1em;
 	}
 	.issue-top-box {
-		margin: -4em -1em 2em -1em;
+		margin: -2em -1.6em 2em -1.6em !important;
 		padding: inherit;
 		padding-top: 4em;
 	}
@@ -2718,7 +2713,7 @@ ul.ui-autocomplete {
 		padding-left: $containerMarginLeftRight !important;
 		padding-right: $containerMarginLeftRight !important;
 		// max-width: 65.625em !important;
-		max-width: 60em !important;
+		max-width: 65.625em !important;
 	}
 	.navbar {
 		// padding: 0.5rem 18rem !important;
