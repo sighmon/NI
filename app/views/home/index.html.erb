@@ -65,7 +65,7 @@
 		<div class="home-editors-photo-container">
 			<%= retina_image_tag @latest_issue.editors_photo_url(:thumb).to_s, :class => 'home-editors-photo', :alt => "#{@latest_issue.editors_name}", :title => "#{@latest_issue.editors_name}", :width => "100" %>
 		</div>
-		<p><%= simple_format truncate(strip_tags(@latest_issue.editors_letter), length: 256, escape: false) %></p>
+		<div class="home-editor-letter"><p><%= simple_format truncate(@latest_issue.editors_letter, length: 350, escape: false) %></p></div>
 		<p><%= link_to 'Read more...', issue_path(@latest_issue), :class => 'btn btn-outline-secondary' %></p>
 	</div>
 </div>

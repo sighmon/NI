@@ -9,7 +9,7 @@
     <% @popular_articles.each_with_index do |article, index| %>
       <% if index % 3 == 0 %>
 </div>
-<div class="row">
+<div class="row popular">
       <% end %>
       <div class="col-sm-4">
         <%= render :partial => "popular_article", :locals => { :article => article, :guest_pass => article.popular_guest_pass } %>

@@ -71,7 +71,7 @@ $iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white")
 $gray-darker:            lighten(#000, 13.5%) !default; // #222
 $gray-dark:              lighten(#000, 20%) !default;   // #333
 $gray:                   lighten(#000, 33.5%) !default; // #555
-$gray-light:             lighten(#000, 60%) !default;   // #999
+$gray-light:             lighten(#000, 50%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
 // Scaffolding
@@ -81,7 +81,6 @@ $text-color:            $gray-dark;
 // Typography
 // -------------------------
 $sansFontFamily:		"Fira Sans", "Calibri", "Gil Sans", sans-serif !important;
-$league-gothic-font: "League Gothic", sans-serif;
 $libre-baskerville: "Libre Baskerville", serif;
 $bagnard-regular: "BagnardRegular", serif;
 // $serifFontFamily:       "iABCRegular", serif;
@@ -125,12 +124,11 @@ h1 + h2, h2 + h3, .page-header > h2, .page-header > h3 {
 	margin-top: 0;
 }
 
-// ABC news base body font Verdana 0.75em 1.125em line-height
 @mixin league-gothic-headings-font {
-	font-family: $league-gothic-font;
-	font-weight: normal;
-	letter-spacing: normal;
-	line-height: 1rem;
+	font-family: "League Gothic", sans-serif !important;
+	font-weight: normal !important;
+	letter-spacing: normal !important;
+	line-height: 2.5rem !important;
 	// text-transform: uppercase;
 }
 
@@ -285,7 +283,7 @@ $grid-gutter-width: 2em;
 
 // Link colours
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, p a, li a {
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, p a, li a, td a, .article-next-previous a {
 	color: $niBlue2018;
 }
 
@@ -295,7 +293,7 @@ a:visited {
 	// color: $niBlue2018;
 }
 
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hover, li a:hover {
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hover, li a:hover, td a:hover, .article-next-previous a:hover {
 	color: $niBlue2018Darker;
 }
 
@@ -537,8 +535,8 @@ a.nav-link {
 
 .home-editor-letter h4 {
 	@include league-gothic-headings-font;
-	line-height: 1em;
-	font-size: 2.5em;
+	line-height: 1em !important;
+	font-size: 2em;
 	opacity: 0.9;
 	text-transform: uppercase;
 }
@@ -569,6 +567,19 @@ a.nav-link {
 	@include transition-fix;
 }
 
+.quick-reads .home-keynote h4 {
+	margin-top: 1em;
+}
+
+.quick-reads .share-links {
+	margin-top: 0.5em;
+}
+
+.popular h5 + h5 {
+	padding-top: 0em;
+	margin-top: -1em;
+}
+
 .latest-issue-categories ul {
 	text-align: justify;
 }
@@ -583,6 +594,8 @@ a.nav-link {
 }
 
 .home-editor-note h3 {
+	@include league-gothic-headings-font;
+	font-size: 2.5em;
 	margin-top: 0.5em;
 }
 
@@ -715,8 +728,8 @@ $homeCoverListMargin: 0.438em;
 
 .home-keynote h3 {
 	color: $gray-light;
-	font-size: 1.3em;
-	line-height: 1.4em;
+	font-size: 2.2em;
+	line-height: 1em !important;
 	margin-top: 0.5em;
 
   // TODO:
@@ -812,8 +825,22 @@ $homeCoverListMargin: 0.438em;
 }
 
 .page-header {
-	margin-top: 1em;
+	margin-top: 2em;
 	margin-bottom: 2em;
+}
+
+.page-header h1 {
+	font-size: 3em;
+}
+
+.page-header h2 {
+	font-weight: normal;
+	font-family: $libre-baskerville !important;
+	font-style: italic;
+	font-size: 1.2em;
+	line-height: 1.6em !important;
+	color: $gray-light;
+	margin-top: 1em;
 }
 
 .page-header h3 {
@@ -1081,15 +1108,17 @@ a:active .shadow-sm {
 // Edit buttons
 
 @mixin edit-issue-buttons {
-	float: right;
-	border-radius: 0.313em;
 	border: 0.063em dashed $gray-light;
 	background-color: $gray-lighter;
-	padding: 0.625em;
-	width: intrinsic;
+	padding: 2em;
+	margin-top: 1em;
 	position: relative;
 	z-index: 1000;
 	// margin: 1.25em inherit 1.25em inherit;
+}
+
+.edit-issue-buttons {
+	@include edit-issue-buttons;
 }
 
 .edit-article-buttons {
@@ -1142,17 +1171,17 @@ a:active .shadow-sm {
 	// height: 1.875em;
 }
 
-$issueCoverListMargin: 1.1em;
+$issueCoverListMargin: 0.8em;
 
 .issue-cover-list {
-	// margin: 0em -$issueCoverListMargin 1.25em -$issueCoverListMargin;
+	margin: 0em ($issueCoverListMargin * -1) 1.25em ($issueCoverListMargin * -1);
 }
 
 .issue-cover-list .issue-information {
 	float: left;
 	margin-left: $issueCoverListMargin;
 	margin-right: $issueCoverListMargin;
-	margin-bottom: ($issueCoverListMargin * 2) + 3;
+	margin-bottom: ($issueCoverListMargin * 1.5);
 	border-radius: 0.125em;
 	// background-color: $boxHomeBackgroundColour;
 	color: $gray-light;
@@ -1172,7 +1201,7 @@ $issueCoverListMargin: 1.1em;
 }
 
 .issue-information img {
-	border-radius: 0.125em 0.125em 0 0;
+	border-radius: 0.125em;
 }
 
 .issue-list-title {
@@ -1187,7 +1216,7 @@ $issueCoverListMargin: 1.1em;
 }
 
 .issue-list-title h2, .page-header h3 {
-	font-family: $libre-baskerville;
+	font-family: $libre-baskerville !important;
 	font-size: $issueTitleH2FontSize;
 	line-height: $issueTitleH2FontSize;
 	font-style: italic;
@@ -1200,7 +1229,7 @@ $issueCoverListMargin: 1.1em;
 	@include gradient-gray;
 
 	padding: 6em 2em 1em 1em;
-	margin: -5em -2em 2em -2em !important;
+	margin: -4em -2em 2em -2em !important;
 	border-radius: 0;
 }
 
@@ -1211,7 +1240,8 @@ $issueCoverListMargin: 1.1em;
 	text-align: center;
 }
 
-.issue-title h1 {
+.issue-top-box h1 {
+	font-size: 3.5rem;
 	padding-top: 0em;
 	margin-top: 0em;
 }
@@ -1382,9 +1412,9 @@ a:hover .issue-unpublished, a:active .issue-unpublished {
 
 .table-of-contents-editors-letter h4 {
 	@include league-gothic-headings-font;
-	line-height: 1em;
-	font-size: 2.5em;
-	opacity: 0.9;
+	line-height: 2rem !important;
+	font-size: 2em;
+	opacity: 0.8;
 	text-transform: uppercase;
 }
 
@@ -1405,23 +1435,21 @@ mark, .mark {
 
 .article-title {
 	padding-bottom: 0em;
-	// margin-top: 0em;
-	border-bottom: 0.063em dashed #eeeeee;
 }
 
 .article-title h1 {
-	/* padding-bottom: 0.25em; */
-	margin-top: 0em;
+	// margin-top: 1em;
+	font-size: 3em;
 }
 
 .article-title h2 {
 	font-weight: normal;
-	font-family: $libre-baskerville;
+	font-family: $libre-baskerville !important;
 	font-style: italic;
 	font-size: 1.2em;
-	line-height: 1.7em;
+	line-height: 1.6em !important;
 	color: $gray-light;
-	/* padding-bottom: 0.75em; */
+	margin-top: 1em;
 }
 
 .article-title p {
@@ -1759,6 +1787,7 @@ mark, .mark {
 }
 
 .article-body h3 {
+	font-size: 2em;
 	line-height: 1.3em;
 }
 
@@ -1823,8 +1852,8 @@ mark, .mark {
 }
 
 .new-image-caption {
-	text-align: left;
-	max-width: 17.5em;
+	text-align: center;
+	max-width: 21em;
 	font-size: 0.9em;
 	line-height: 1.6em;
 	color: $gray;
@@ -1835,12 +1864,12 @@ mark, .mark {
 }
 
 .new-image-credit {
-	text-align: left;
+	text-align: center;
 	font-size: 0.9em;
 	line-height: 1.6em;
 	margin-top: -0.063em;
 	color: $gray-light;
-	max-width: 17.5em;
+	max-width: 21em;
 }
 
 .article-image-cartoon {
@@ -1881,7 +1910,7 @@ mark, .mark {
 }
 
 .article-image-centre .new-image-credit, .article-image-centre .new-image-caption {
-	max-width: 18.75em;
+	max-width: 21em;
 }
 
 .article-image-cartoon img {
@@ -1994,12 +2023,16 @@ blockquote > .attribution {
 	font-size: 3em;
 }
 
+.box h2 {
+	font-size: 2.5em;
+}
+
 .box h3 {
-	font-family: $libre-baskerville;
-	font-weight: normal;
-	font-style: italic;
-	font-size: 1.4em;
-	margin-bottom: 1.5em;
+	// font-family: $libre-baskerville;
+	// font-weight: normal;
+	// font-style: italic;
+	font-size: 2em;
+	margin-bottom: 1em;
 }
 
 .box p + h3 {
@@ -2183,6 +2216,7 @@ ul.ui-autocomplete {
 	@include box;
 	@include gradient-gray;
 	margin: 2em -4em 2em -4em;
+	padding: 1.5em 4em;
 }
 
 .help-body img {
@@ -2195,6 +2229,7 @@ ul.ui-autocomplete {
 	float:right;
 	@include box;
 	margin-top: 0em;
+	padding-top: 0em;
 }
 
 .subscription-offer {
@@ -2349,6 +2384,10 @@ ul.ui-autocomplete {
 
 .page-body .new-image-caption, .page-body .new-image-credit {
 	max-width: 100%;
+}
+
+.page-body h3 {
+	font-size: 2em;
 }
 
 .page-body h4 {
