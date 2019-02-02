@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: January, 2019
+Period: February, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  2 January 2019
+  2 February 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlwsH/QACgkQtsnG2UL7
-GPnuag//ZHgL/FzpWnm+9V+DbcDgWKDoHHaAQjUftdw6qXrRktCXOPKTjBIhNX2R
-5qlZqAiJDF4HpBGZ8OpWRWFgtYn/A70egbgcr8YYuuLI9ZcE4iHv/sP3dmHMc3wm
-7d/c0IXZMo6RwLBvi0QxB+bLf6NeEIIZ/P2SWAlABHkiOtIWKNBi99Igcagu+dbb
-PFlvGm3Bw6e2ZEz2efswwOf9ywLoGuBKCZeR1tZmnBt6cU5fS0E8J2avX8qfqRLd
-h5SpjarnhIkG7GoAuLG3gFonfulqoqwnZRVct9GmnsIai2MFvGV23JqHdoMqhsa/
-d4J6sTWLuzmIVGB1grXGP70lTvtCf0WcZSjstA2BT5Y7/O8BM2ofXfapcJUA0+GE
-LA37n9EWQ8EAU8tUI/mj0/oSXLlUN83pZ9kWBbljPypKnTh3TMQt7JGN+dbM5rOa
-ndsq47p7cpZupgXM+XprhsfZ+nQMERSbaDvfGeVeZJUJafpWsjJD3ReNe+fNifHk
-f5UIPTJBzquEn3Ibg0ij3zzQMvRXFIlEGQVtMxuCUZcjnQtQ09wS0ccfpBosdr61
-a2uvHi4aseC+Q0ylRmBUBivMilMApzhzPcx69oZkZj4iUR0KVwDxXK3Uhocjxe3j
-lZ7KK6N4xy5+TAdBB/elejaFVeD/BVM4qR8aNuM9QARMtVFRLj8=
-=zUTe
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlxVB0cACgkQtsnG2UL7
+GPk/BBAAok0Edf2iSF+Qj70miEInixaLD/WNhpEOhw79NEyr2L7EnhNKUMOD1KiC
+8ffrEhw5hjVYF0G9Y5szDd6OeUbPBhfvhi5ACxZtah9hI9QCjoCj7Puk+LVQidxb
+AnfkKB0YDX1Xcn2dbSLlf6FKJoNOXneSlD46w1hZkxBTnH48GnCXabUGu6cyKCYj
+qe4NvApW2rFCHp81amc7DDpoHJMmGoKooH+a/fRApAJTDYErXOSnSQ/857Y556nk
+24+OIYklMDNQpnWWezWR87PfkoposbkDsKq/MFJAo8K/mnr3wu6DNQ7AcVYqMrDN
+X+rx1f0OVA/AUBnjy7uS6Tj28Fo8ikCY1cXZHVtZKEP+5bnlehDTV/JpTXeTex7e
+JAbxMnYw1aIcQQQVic2IPaxXyvX0eVg0eIr2gJ5QqRPe+aS8y49McfL6HeLbYvIe
+YZ00Dz6EzYyJQB8Eg8j+OkCaTHy2XmYe4UmpqB95rhi/7APDIXGHtaGXDBXzj7wN
+fzuN58N6K5ml4PmEoaAk0gL+rpIN7OlzqTkyUD1l4H1P+nLTfjy1bIHJf1wIAYOb
+1ADAEd1WDdS6tbb6c4r29zhI9GNHTc4EnW4+J3ruKCXlZQ5XaJBBejJo/b0Ki5BH
+SxwxV7elf7OqGg5PuMAGyT8b+VLr7a4PuBpNxr8eIYeyJfA4ofg=
+=Jhyj
 -----END PGP SIGNATURE-----
