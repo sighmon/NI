@@ -51,16 +51,17 @@ describe ImagesController, :type => :controller do
 
     describe "POST create" do
       describe "with valid params" do
+
+        let(:article) { FactoryBot.create(:article) }
+
         it "does not create a new Image" do
           expect {
-            image = FactoryBot.build(:image)
-            post :create, params: {:image => FactoryBot.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, params: {:image => valid_attributes, :article_id => article.id, :issue_id => article.issue.id}
           }.to change(Image, :count).by(0)
         end
 
         it "redirects to the issues" do
-          image = FactoryBot.build(:image)
-          post :create, params: {:image => FactoryBot.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, params: {:image => valid_attributes, :article_id => article.id, :issue_id => article.issue.id}
           expect(response).to redirect_to(issues_path)
         end
       end
@@ -156,24 +157,24 @@ describe ImagesController, :type => :controller do
 
     describe "POST create" do
       describe "with valid params" do
+
+        let(:article) { FactoryBot.create(:article) }
+
         it "creates a new Image" do
           expect {
-            image = FactoryBot.build(:image)
-            post :create, params: {:image => FactoryBot.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+            post :create, params: {:image => valid_attributes, :article_id => article.id, :issue_id => article.issue.id}
           }.to change(Image, :count).by(1)
         end
 
         it "assigns a newly created image as @image" do
-          image = FactoryBot.build(:image)
-          post :create, params: {:image => FactoryBot.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
+          post :create, params: {:image => valid_attributes, :article_id => article.id, :issue_id => article.issue.id}
           expect(assigns(:newimage)).to be_a(Image)
           expect(assigns(:newimage)).to be_persisted
         end
 
         it "redirects to the article" do
-          image = FactoryBot.build(:image)
-          post :create, params: {:image => FactoryBot.attributes_for(:image), :article_id => image.article.id, :issue_id => image.article.issue.id}
-          expect(response).to redirect_to(issue_article_path(image.article.issue,image.article))
+          post :create, params: {:image => valid_attributes, :article_id => article.id, :issue_id => article.issue.id}
+          expect(response).to redirect_to(issue_article_path(article.issue,article))
         end
       end
 
@@ -200,7 +201,7 @@ describe ImagesController, :type => :controller do
       describe "with valid params" do
         it "updates the requested image" do
           image = FactoryBot.create(:image)
-          image_params = FactoryBot.attributes_for(:image)
+          image_params = valid_attributes
           # Assuming there are no other images in the database, this
           # specifies that the Image created on the previous line
           # receives the :update_attributes message with whatever params are
