@@ -9,7 +9,7 @@
 					alt="New Internationalist - The world unspun"
 					title="New Internationalist - The world unspun"
 					href="<%= root_url %>"
-					src="<%= root_url + 'assets/new-internationalist@2x.png' %>">
+					src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>">
 				</mj-image>
 				<mj-text
 					font-size="12px"

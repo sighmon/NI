@@ -1,5 +1,7 @@
 module ArticlesHelper
 
+  include ActionView::Helpers::AssetUrlHelper
+
   def source_to_body(article, options = {})
     debug = options[:debug] or false
     if not article.source.blank?
@@ -60,7 +62,7 @@ module ArticlesHelper
           elsif ["page_no"].include? e["element_type"]
             #ignore
           elsif e["element_type"] == "word_power"
-            "<div class='word-power'><div class='all-article-images article-image-cartoon no-shadow'><img alt='Word power by Mitchell and Richardson' title='Word power by Mitchell and Richardson' src='/assets/word-power@2x.jpg' width='300' /></div><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
+            "<div class='word-power'><div class='all-article-images article-image-cartoon no-shadow'><img alt='Word power by Mitchell and Richardson' title='Word power by Mitchell and Richardson' src='#{asset_url('word-power@2x.jpg')}' width='300' /></div><dl class='dl-horizontal'>"+process_children(e,debug)+"</dl></div>"
           else
             "[UNKNOWN_CONTAINER{type="+e["element_type"]+"}: "+process_children(e,debug)+" /CONTAINER]" if debug
           end
