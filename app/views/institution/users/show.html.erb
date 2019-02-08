@@ -4,17 +4,17 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:username) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:username) %>:</dt>
   <dd><%= @user.username %></dd>
-  <dt><strong>Managed by:</strong></dt>
+  <dt>Managed by:</dt>
   <dd><%= @user.parent.try(:username) %> (<%= @user.parent_id %>)</dd>
-  <dt><strong>Created at:</strong></dt>
+  <dt>Created at:</dt>
   <dd><%=l @user.created_at %></dd>
 </dl>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              user_path(current_user), :class => 'btn btn-default'  %>
+              user_path(current_user), :class => 'btn btn-outline-secondary'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_institution_user_path(@user), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

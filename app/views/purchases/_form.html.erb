@@ -1,9 +1,12 @@
 <div class="purchase-issue">
-	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200") %>
+	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200") %>
 	<h3><%= @issue.title %></h3>
 	<h4>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h4>
 	<% if not @has_token %>
-		<p>Price: $<%= cents_to_dollars(Settings.issue_price) %></p>
+		<dl class="dl-horizontal">
+			<dt>Price:</dt>
+			<dd>$<%= cents_to_dollars(Settings.issue_price) %></dd>
+		</dl>
 	<% end %>
 </div>
 
@@ -25,10 +28,14 @@
 		window.issuePrice = <%= cents_to_dollars(session[:express_purchase_price]) %>;
 	<% end %>
 
-	<%= simple_form_for([@issue, @purchase]) do |f| %>
-	  
-	  Name: <%= session[:express_first_name] %> <%= session[:express_last_name] %> <br />
-	  Purchase amount: $<%= cents_to_dollars(session[:express_purchase_price]) %>
+	<%= simple_form_for [@issue, @purchase] do |f| %>
+		
+		<dl class="dl-horizontal">
+			<dt>Name:</dt>
+			<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
+			<dt>Purchase amount:</dt>
+			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
+		</dl>
 	  <div class="form-actions">
 		<%= f.button :submit, "Complete your purchase", :onclick => "sendPurchase();", :class => 'btn btn-success' %>
 	  </div>
@@ -58,6 +65,6 @@
 <% else %>
 	<div class="form-actions">
 		<%= link_to 'Purchase this issue with PayPal', express_new_issue_purchase_path, :class => 'btn btn-success', :onclick => "sendPrePurchase(#{@issue.number},#{cents_to_dollars(Settings.issue_price)});" %>
-		<%= link_to 'Cancel', issue_path(@issue), :class => 'btn btn-default' %>
+		<%= link_to 'Cancel', issue_path(@issue), :class => 'btn btn-outline-secondary' %>
 	</div>
 <% end %>

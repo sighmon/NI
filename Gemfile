@@ -2,15 +2,18 @@ source 'https://rubygems.org'
 
 ruby '2.5.3'
 
-gem 'rails', '4.2.11'
+gem 'rails', '5.2.2'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+gem 'rails-observers', git: 'https://github.com/rails/rails-observers.git'
+gem 'actionpack-page_caching', git: 'https://github.com/rails/actionpack-page_caching.git'
+gem 'actionpack-action_caching', git: 'https://github.com/rails/actionpack-action_caching.git'
 gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
+
+# Rails 5
+gem 'record_tag_helper'
 
 #### For heroku to serve static assets
 gem 'rails_serve_static_assets'
@@ -101,9 +104,9 @@ gem 'newrelic_rpm'
 gem 'zipruby'
 
 # Rack Cache and memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-gem 'rack-cache'
+# gem 'rack-cache'
 gem 'dalli'
-gem 'kgio'
+# gem 'kgio'
 gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
@@ -171,7 +174,6 @@ group :test, :development do
   gem 'factory_bot_rails'
   gem 'show_me_the_cookies'
   gem 'byebug'
-  gem 'rubocop-rspec'
 end
 
 group :test do
@@ -182,6 +184,7 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', :require => false
   gem 'timecop'
+  gem 'rubocop-rspec'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
   gem 'guard-rspec'#, '1.2.1'
   gem 'rspec-activemodel-mocks'
@@ -191,17 +194,22 @@ group :test do
   gem 'rb-inotify', :require => false#, '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
   gem 'rb-fsevent', :require => false#, '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
   gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  # Rails 5
+  gem 'rails-controller-testing'
 end
 
-gem 'twitter-bootstrap-rails'#, '2.1.6'
-gem 'less-rails'
+# gem 'twitter-bootstrap-rails'#, '2.1.6'
+# gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.1.1'
+# gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
-gem 'therubyracer'
+gem 'mini_racer'
+gem 'font-awesome-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
 # group :assets do
-gem 'sassc-rails'
+gem 'sassc'
 gem 'coffee-rails'#, '~> 3.2.1'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -229,6 +237,7 @@ gem 'simple_form'
 
 # RMagick for image editing
 gem 'rmagick', :require => false
+gem 'mini_magick'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave

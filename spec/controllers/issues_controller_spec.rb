@@ -4,7 +4,7 @@ describe IssuesController, :type => :controller do
 
   setup do
     Issue.__elasticsearch__.index_name = 'ni-test'
-    Issue.__elasticsearch__.create_index!
+    Issue.__elasticsearch__.create_index! force: true
     # Issue.__elasticsearch__.import
     # Issue.__elasticsearch__.refresh_index!
   end
@@ -19,7 +19,7 @@ describe IssuesController, :type => :controller do
         it "should show issue" do
           Issue.__elasticsearch__.import
           Issue.__elasticsearch__.refresh_index!
-          get :index, :issue_id => issue.id
+          get :index, params: {:issue_id => issue.id}
           expect(response.status).to eq(200)
           # TOFIX: Work out why assigns(:issues) is empty in rake spec. post_filter might be the cause
           # expect(assigns(:issues).records).to include(issue)
@@ -28,7 +28,7 @@ describe IssuesController, :type => :controller do
         it "should show issue JSON" do
           Issue.__elasticsearch__.import
           Issue.__elasticsearch__.refresh_index!
-          get :index, format: 'json', :issue_id => issue.id
+          get :index, params: {format: 'json', :issue_id => issue.id}
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).first['title']).to eq(issue.title)
         end
@@ -38,7 +38,7 @@ describe IssuesController, :type => :controller do
       describe "GET email" do
 
         it "works" do
-          get :email, :issue_id => issue.id
+          get :email, params: {:issue_id => issue.id}
           expect(response.status).to eq(200)
         end
 
@@ -47,7 +47,7 @@ describe IssuesController, :type => :controller do
       describe "POST push notification" do
 
         it "should not be able to send a push notification" do
-          post :setup_push_notification, :issue_id => issue.id
+          post :setup_push_notification, params: {:issue_id => issue.id}
           expect(response).to redirect_to issues_url
         end
 
@@ -60,7 +60,7 @@ describe IssuesController, :type => :controller do
       describe "SHOW issue" do
 
         it "should be able to see a trial issue" do
-          get :show, :id => issue.id
+          get :show, params: {:id => issue.id}
           expect(response.status).to eq(200)
         end
 
@@ -82,7 +82,7 @@ describe IssuesController, :type => :controller do
     describe "POST push notification" do
 
       it "should not be able to send a push notification" do
-        post :setup_push_notification, :issue_id => issue.id
+        post :setup_push_notification, params: {:issue_id => issue.id}
         expect(response).to redirect_to issues_url
       end
 
@@ -103,7 +103,7 @@ describe IssuesController, :type => :controller do
     describe "POST iOS download issue for offline reading" do
 
       it "should be able to download issue" do
-        post :show, :id => issue.id, :format => :json
+        post :show, params: {:id => issue.id, :format => :json}
         # TODO: FIX sort out why it's returning 302 redirected.
         # byebug
         expect(response.status).to eq(200)
@@ -135,7 +135,7 @@ describe IssuesController, :type => :controller do
     describe "POST push notification" do
 
       it "should not be able to send a push notification" do
-        post :setup_push_notification, :issue_id => issue.id
+        post :setup_push_notification, params: {:issue_id => issue.id}
         expect(response).to redirect_to issues_url
       end
 
@@ -171,7 +171,7 @@ describe IssuesController, :type => :controller do
         "alert_text" => "Test message."
       }
       
-      post :setup_push_notification, :issue_id => issue.id, "/issues/#{issue.id}/setup_push_notification" => input_params
+      post :setup_push_notification, params: {:issue_id => issue.id, "/issues/#{issue.id}/setup_push_notification" => input_params}
       expect(response).to redirect_to admin_push_notifications_path
     end
 

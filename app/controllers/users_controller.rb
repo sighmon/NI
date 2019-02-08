@@ -7,7 +7,7 @@ class UsersController < ApplicationController
         redirect_to new_user_session_path, :alert => "You need to be logged in to view your profile."
     end
 
-    skip_before_filter :verify_authenticity_token, :only => [:show]
+    skip_before_action :verify_authenticity_token, :only => [:show]
 
     def show
 

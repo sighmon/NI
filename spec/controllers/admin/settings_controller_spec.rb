@@ -7,7 +7,7 @@ describe Admin::SettingsController, :type => :controller do
       user = FactoryBot.create(:admin_user)
       sign_in user
       get 'index'
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
  

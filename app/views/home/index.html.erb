@@ -26,9 +26,9 @@
     <div class="carousel-inner">
       <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
       	<% if user_signed_in? and can? :read, @latest_issue.keynote %>
-	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :size => "1050x444"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
+	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
 	      <% else %>
-	      	<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :size => "1050x444"), new_issue_purchase_path(@latest_issue) %>
+	      	<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, :alt => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :title => "#{strip_tags(@latest_issue.keynote.first_image.caption)}", :width => "1050"), new_issue_purchase_path(@latest_issue) %>
 	      <% end %>
         <meta itemprop="url" content="<%= @latest_issue.keynote.first_image.data_url.to_s %>">
         <meta itemprop="width" content="2100">
@@ -48,17 +48,16 @@
 	</div>
 	<div class="col-sm-4 home-latest-issue">
 		<!-- Latest cover -->
-		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, :class => 'shadow home-latest-cover', :alt => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400), issue_path(@latest_issue), :itemprop => "url" %>
+		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, :class => 'shadow-sm home-latest-cover', :alt => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400), issue_path(@latest_issue), :itemprop => "url" %>
 		<% if user_signed_in? and can? :read, @latest_issue.keynote %>
-			<p><%= link_to "Read this issue", issue_path(@latest_issue), :class => 'btn btn-default btn-lg' %></p>
+			<p><%= link_to "Read this issue", issue_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% else %>
-			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-default btn-lg' %></p>
+			<p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@latest_issue), :class => 'btn btn-outline-secondary btn-lg' %></p>
 		<% end %>
 		<% if not user_signed_in? or not current_user.try(:subscriber?) %>
 	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success btn-lg' %></p>
 		<% end %>
-  	<p class="ios-home-ad"><a href="<%= ENV["ITUNES_APP_LINK"] %>" target="itunes_store"><img src="/assets/app-store.svg" alt="Download the New Internationalist magazine app for iPad and iPhone." title="Download the New Internationalist magazine app for iPad and iPhone." /></a>
-		<a href="<%= ENV["GOOGLE_PLAY_APP_LINK"] %>"><img alt="Get New Internationalist magazine app on Google Play" title="Get New Internationalist magazine app on Google Play" src="/assets/google-play.svg" /></a></p>
+  	<p class="ios-home-ad"><%= link_to retina_image_tag('app-store.png', alt: 'Download the New Internationalist magazine app for iPad and iPhone.', title: 'Download the New Internationalist magazine app for iPad and iPhone.'), "#{ENV["ITUNES_APP_LINK"]}" %></p><p class="ios-home-ad"><%= link_to retina_image_tag('google-play.png', alt: 'Get New Internationalist magazine app on Google Play', title: 'Get New Internationalist magazine app on Google Play'), "#{ENV["GOOGLE_PLAY_APP_LINK"]}" %></p>
 	</div>
 	<div class="col-sm-4 home-editor-note">
 		<h4>A note from the editor</h4>
@@ -66,8 +65,8 @@
 		<div class="home-editors-photo-container">
 			<%= retina_image_tag @latest_issue.editors_photo_url(:thumb).to_s, :class => 'home-editors-photo', :alt => "#{@latest_issue.editors_name}", :title => "#{@latest_issue.editors_name}", :width => "100" %>
 		</div>
-		<div class="home-editor-letter"><%= simple_format truncate(@latest_issue.editors_letter, :length => 256, :escape => false) %></div>
-		<p><%= link_to 'Read more...', issue_path(@latest_issue), :class => 'btn btn-default btn-xs' %></p>
+		<div class="home-editor-letter"><p><%= simple_format truncate(@latest_issue.editors_letter, length: 350, escape: false) %></p></div>
+		<p><%= link_to 'Read more...', issue_path(@latest_issue), :class => 'btn btn-outline-secondary' %></p>
 	</div>
 </div>
 
@@ -100,14 +99,10 @@
 		<% @quick_reads.each do |a| %>
 			<% if user_signed_in? and can? :read, a %>
 				<!-- Link to article -->
-				<a href="<%= issue_article_path(a.issue, a) %>">
-					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
-				</a>
+				<%= render :partial => "home_mini_article", :locals => { :article => a, :article_link => issue_article_path(a.issue, a) } %>
 			<% else %>
 				<!-- Link to quick reads page -->
-				<a href="<%= quick_reads_path %>">
-					<%= render :partial => "home_mini_article", :locals => { :article => a } %>
-				</a>
+				<%= render :partial => "home_mini_article", :locals => { :article => a, :article_link => quick_reads_path } %>
 			<% end %>
 		<% end %>
 		</div>
@@ -116,9 +111,7 @@
 		<h4><%= link_to "Popular articles", popular_path %></h4>
 		<div class="row">
 		<% @popular.each do |article| %>
-			<a href="<%= generate_guest_pass_link_string(article.popular_guest_pass) %>">
-				<%= render :partial => "home_mini_article", :locals => { :article => article } %>
-			</a>
+			<%= render :partial => "home_mini_article", :locals => { :article => article, :article_link => generate_guest_pass_link_string(article.popular_guest_pass) } %>
 		<% end %>
 		</div>
 	</div>
@@ -132,7 +125,7 @@
     <ul class="breadcrumb">
     <% if @latest_issue_categories %>
 	    <% @latest_issue_categories.each do |category| %>
-	      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+	      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
 	      <% if user_signed_in? and can? :manage, category %><li><%= category.name %></li><% end %>
 	    <% end %>
 	   <% end %>
@@ -146,13 +139,13 @@
 	<!-- For subscribers -->
 	<% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
 		<div class="col-sm-12">
-			<h2>Magazine archive</h2>
+			<h2 class="home-section-title">Magazine archive</h2>
 			<p>These are the most recent magazines we've published. See the <%= link_to "Magazine archive", issues_path %> for a full list of issues.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
-					<% @issues.sort_by(&:release).reverse.first(6).each do |issue| %>
+					<% @issues.sort_by(&:release).reverse.first(5).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue), :itemprop => "url" %>
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue), :itemprop => "url" %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -164,14 +157,14 @@
 	<% else %>
 	<!-- For guests (not logged in) or non-subscribers -->
 		<div class="col-sm-8">
-			<h2>Magazine archive</h2>
+			<h2 class="home-section-title">Magazine archive</h2>
 
 			<p>Here are the <%= link_to "most recent magazines", issues_path %> we've published.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
-					<% @issues.sort_by(&:release).reverse.first(4).each do |issue| %>
+					<% @issues.sort_by(&:release).reverse.first(3).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -181,14 +174,14 @@
 			</div>
 		</div>
 		<div class="col-sm-4 home-free-issue">
-			<h2>Try it first</h2>
+			<h2 class="home-section-title">Try it first</h2>
 
 			<p>Read a full sample magazine..</p>
 
 			<div class="home-cover-list">
 				<% if @latest_free_issue %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(@latest_free_issue.cover_url(:thumb).to_s, :class => 'shadow', :alt => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :title => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(@latest_free_issue) %>
+						<%= link_to retina_image_tag(@latest_free_issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :title => "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(@latest_free_issue) %>
 						<span class="hide-meta" itemprop="name"><%= @latest_free_issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= @latest_free_issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= @latest_free_issue.release.strftime("%e %B %Y") %></span>
@@ -201,7 +194,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Latest blog and web-exclusive articles</h2>
+		<h2 class="home-section-title">Latest blog and web-exclusive articles</h2>
 		<p>New <% if @blog_category %><%= link_to 'blog posts', category_path(@blog_category) %><% else %>blog posts<% end %> and <% if @web_exclusive_category %><%= link_to 'web-exclusive articles', category_path(@web_exclusive_category) %><% else %>web-exclusive articles<% end %> from newint.org</p>
 	</div>
 </div>
@@ -222,7 +215,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Recent feature articles</h2>
+		<h2 class="home-section-title">Recent feature articles</h2>
 		<p>A selection of <% if @features_category %><%= link_to 'feature articles', category_path(@features_category) %><% else %>feature articles<% end %> from each of the latest New Internationalist magazines.</p>
 	</div>
 </div>
@@ -243,7 +236,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>From the archives</h2>
+		<h2 class="home-section-title">From the archives</h2>
 		<p>A selection of articles from the New Internationalist magazine archives.</p>
 	</div>
 </div>
@@ -311,7 +304,7 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Social media</h2>
+		<h2 class="home-section-title">Social media</h2>
 		<p>Follow us on <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">Twitter</a>, <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">Facebook</a> &amp; <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>">Instagram</a></p>
 	</div>
 </div>
@@ -353,10 +346,10 @@
 		<hr />
 		<!-- Instagram -->
 		<% if @instagram_json %>
-			<% @instagram_json.first(2).each do |item| %>
+			<% @instagram_json.first(4).each do |item| %>
 				<div class="instagram">
 					<a href="<%= item["link"] %>"><img src="<%= item["images"]["standard_resolution"]["url"] %>" alt="<%= strip_tags(item["caption"]["text"]) %>" title="<%= strip_tags(item["caption"]["text"]) %>"></a>
-					<h4><a href="<%= item["link"] %>"><%= strip_tags(item["caption"]["text"]) %></a></h4>
+					<!-- <h4><a href="<%= item["link"] %>"><%= strip_tags(item["caption"]["text"]) %></a></h4> -->
 					<h5><%= DateTime.strptime(item["created_time"].to_s,'%s').try(:strftime,"#{DateTime.strptime(item["created_time"].to_s,'%s').day.ordinalize} %B %Y") %> by <%= link_to "#{ENV["INSTAGRAM_NAME"]}", "https://instagram.com/#{ENV["INSTAGRAM_NAME"]}" %></h5>
 				</div>
 			<% end %>

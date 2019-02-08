@@ -8,7 +8,7 @@
 	        <% else %>
 	          <%= truncate((simple_format remove_image_tags(article.body)), :escape => false, :length => 180) %>
 	        <% end %>
-					<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-default btn-xs' %></p>
+					<p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' %></p>
 				<% else %>
 					<!-- Can't read this article, so link to buy it -->
 					<h3><%= link_to article.title, new_issue_purchase_path(article.issue) %></h3>

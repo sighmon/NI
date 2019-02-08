@@ -42,7 +42,7 @@ class PurchasesController < ApplicationController
   end
 
   def new
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
     @purchase = @user.purchases.build(params[:issue])
     @express_token = params[:token]
     @express_payer_id = params[:PayerID]

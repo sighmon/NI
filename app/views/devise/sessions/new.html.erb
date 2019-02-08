@@ -10,7 +10,7 @@
   </div>
 
   <div class="actions">
-    <%= f.button :submit, "Sign in" %>
+    <%= f.button :submit, "Sign in", class: 'btn btn-secondary' %>
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
       <%= link_to "Forgot your password?", new_password_path(resource_name) %>
     <% end -%>

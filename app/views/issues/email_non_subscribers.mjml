@@ -19,10 +19,12 @@
 		<mj-section padding="0">
 			<mj-column vertical-align="top">
 				<mj-image 
-					width="250px"
-					alt="New Internationalist"
+					width="300"
+					alt="New Internationalist - The world unspun"
+					title="New Internationalist - The world unspun"
 					href="<%= root_url %>"
-					src="<%= root_url + "assets/new-internationalist@2x.png" %>">
+					padding="20px"
+					src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>">
 				</mj-image>
 			</mj-column>
 		</mj-section>
@@ -35,6 +37,7 @@
 				<mj-image 
 					padding="0"
 					alt="Read this month's keynote article: <%= @issue.title %>"
+					title="Read this month's keynote article: <%= @issue.title %>"
 					href="<%= issue_article_url(@issue, @issue.keynote) %>"
 					src="<%= @issue.keynote.first_image.data_url %>">
 				</mj-image>
@@ -97,6 +100,7 @@
 				<!-- Cover -->
 				<mj-image
 					alt="NI <%= @issue.number %> - <%= @issue.title %>"
+					title="NI <%= @issue.number %> - <%= @issue.title %>"
 					href="<%= issue_url(@issue) %>"
 					src="<%= @issue.cover_url(:home2x) %>">
 				</mj-image>
@@ -206,6 +210,7 @@
 			<% if article.first_image %>
 				<mj-image
 					alt="<%= article.title %>"
+					title="<%= article.title %>"
 					href="<%= issue_article_url(@issue,article) %>"
 					src="<%= article.first_image.data_url(:threehundred2x) %>">
 				</mj-image>
@@ -266,6 +271,7 @@
 			<% if article.first_image %>
 				<mj-image
 					alt="<%= article.title %>"
+					title="<%= article.title %>"
 					href="<%= issue_article_url(@issue,article) %>"
 					src="<%= article.first_image.data_url(:threehundred2x) %>">
 				</mj-image>
@@ -326,6 +332,7 @@
 			<% if article.first_image %>
 				<mj-image
 					alt="<%= article.title %>"
+					title="<%= article.title %>"
 					href="<%= issue_article_url(@issue,article) %>"
 					src="<%= article.first_image.data_url(:threehundred2x) %>">
 				</mj-image>
@@ -386,6 +393,7 @@
 			<% if article.first_image %>
 				<mj-image
 					alt="<%= article.title %>"
+					title="<%= article.title %>"
 					href="<%= issue_article_url(@issue,article) %>"
 					src="<%= article.first_image.data_url(:threehundred2x) %>">
 				</mj-image>
@@ -499,6 +507,7 @@
 				<!-- iOS -->
 				<mj-image
 					alt="Apple iOS application for iPhone, iPad and iPod Touch"
+					title="Apple iOS application for iPhone, iPad and iPod Touch"
 					href="<%= page_url("ios") %>"
 					src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-ios.jpg">
 				</mj-image>
@@ -515,6 +524,7 @@
 				<!-- Android -->
 				<mj-image
 					alt="Google Play application for Android tablets and phones"
+					title="Google Play application for Android tablets and phones"
 					href="<%= page_url("android") %>"
 					src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-android.jpg">
 				</mj-image>

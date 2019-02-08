@@ -3,8 +3,8 @@
 class ArticleImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
   # include Sprockets::Helpers::RailsHelper
@@ -39,10 +39,11 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
   process :store_geometry
   def store_geometry
     if @file
-      img = ::Magick::Image::read(@file.file).first
+      img = MiniMagick::Image.open(@file.file)
+      # byebug
       if model
-        model.width = img.columns
-        model.height = img.rows
+        model.width = img.width
+        model.height = img.height
       end
     end
   end

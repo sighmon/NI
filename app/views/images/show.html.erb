@@ -6,31 +6,31 @@
 <%= retina_image_tag @showimage.data_url(:sixhundred).to_s, :alt => "#{strip_tags(@showimage.caption)}", :title => "#{strip_tags(@showimage.caption)}", :width => "300" %>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:data) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:data) %>:</dt>
   <dd><%= @showimage.data %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:article_id) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:article_id) %>:</dt>
   <dd><%= link_to @showimage.article_id, issue_article_path(@issue,@article) %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:issue_id) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:issue_id) %>:</dt>
   <dd><%= link_to @issue.id, issue_path(@issue) %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:media_id) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:media_id) %>:</dt>
   <dd><%= @showimage.media_id ? @showimage.media_id : "none" %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:height) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:height) %>:</dt>
   <dd><%= @showimage.height %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:width) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:width) %>:</dt>
   <dd><%= @showimage.width %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:caption) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:caption) %>:</dt>
   <dd><%= @showimage.caption? ? @showimage.caption : '-' %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:credit) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:credit) %>:</dt>
   <dd><%= @showimage.credit? ? @showimage.credit : '-' %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:hidden) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:hidden) %>:</dt>
   <dd><%= @showimage.hidden ? 'hidden' : 'no' %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:position) %>:</strong></dt>
+  <dt><%= model_class.human_attribute_name(:position) %>:</dt>
   <dd><%= @showimage.position %></dd>
 </dl>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issue_article_images_path(@issue,@article), :class => 'btn btn-default'  %>
+              issue_article_images_path(@issue,@article), :class => 'btn btn-outline-secondary'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_issue_article_image_path(@issue, @article, @showimage), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

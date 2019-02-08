@@ -6,7 +6,7 @@ SecureHeaders::Configuration.default do |config|
       lax: true # mark all cookies as SameSite=lax
     }
   }
-  config.hsts = "max-age=#{20.years.to_i}; includeSubdomains; preload"
+  config.hsts = "max-age=#{1.week.to_i}; includeSubdomains; preload"
   config.x_frame_options = "DENY"
   config.x_content_type_options = "nosniff"
   config.x_xss_protection = "1; mode=block"
@@ -20,7 +20,7 @@ SecureHeaders::Configuration.default do |config|
 
     # directive values: these values will directly translate into source directives
     # default_src: %w(https: 'self'),
-    default_src: %w(https: 'self'),
+    default_src: %W(https: 'self'),
     base_uri: %w('self'),
     block_all_mixed_content: Rails.env.production?, # see http://www.w3.org/TR/mixed-content/
     child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.disqus.com disqus.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com), # if child-src isn't supported, the value for frame-src will be set.
@@ -29,7 +29,7 @@ SecureHeaders::Configuration.default do |config|
     # form_action: %w('self' github.com),
     form_action: %w('self' syndication.twitter.com *.paypal.com),
     frame_ancestors: %w('none'),
-    img_src: %W('self' data: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net public.tableau.com),
+    img_src: %W('self' data: https: *.newint.com.au *.fbcdn.net *.facebook.net *.facebook.com *.twimg.com *.doubleclick.net *.google-analytics.com *.twitter.com *.disqus.com *.disquscdn.com *.apple.com.edgekey.net *.thawte.com *.cdninstagram.com #{ENV['S3_BUCKET']}.s3.amazonaws.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net public.tableau.com),
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
@@ -40,7 +40,10 @@ SecureHeaders::Configuration.default do |config|
   }
   # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.
   config.csp_report_only = config.csp.merge({
-    img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
+    img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    font_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    script_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
+    style_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
     report_uri: %W(#{ENV["REPORT_URI_CSP_REPORT_ONLY"]})
   })
   # Disabling as it is being deprecated by Chrome.

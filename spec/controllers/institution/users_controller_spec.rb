@@ -52,7 +52,7 @@ describe Institution::UsersController, :type => :controller do
     describe "GET show" do
 
       it "assigns the requested user as @user" do
-        get :show, {:id => child.to_param}
+        get :show, params: {:id => child.to_param}
         expect(assigns(:user)).to eq(child)
       end
     end
@@ -67,7 +67,7 @@ describe Institution::UsersController, :type => :controller do
     describe "GET edit" do
 
       it "assigns the requested user as @user" do
-        get :edit, {:id => child.to_param}
+        get :edit, params: {:id => child.to_param}
         expect(assigns(:user)).to eq(child)
       end
     end
@@ -77,18 +77,18 @@ describe Institution::UsersController, :type => :controller do
         let(:attributes) { FactoryBot.attributes_for(:institution_user) }
         it "creates a new User" do
           expect {
-            post :create, {:user => attributes}
+            post :create, params: {:user => attributes}
           }.to change{parent.children.count}.by(1)
         end
 
         it "assigns a newly created user as @user" do
-          post :create, {:user => attributes}
+          post :create, params: {:user => attributes}
           expect(assigns(:user)).to be_a(User)
           expect(assigns(:user)).to be_persisted
         end
 
         it "redirects to the parent user page" do
-          post :create, {:user => attributes}
+          post :create, params: {:user => attributes}
           expect(response).to redirect_to(parent)
         end
       end
@@ -97,14 +97,14 @@ describe Institution::UsersController, :type => :controller do
         it "assigns a newly created but unsaved user as @user" do
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(User).to receive(:save).and_return(false)
-          post :create, {:user => {  }}
+          post :create, params: {:user => {  }}
           expect(assigns(:user)).to be_a_new(User)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(User).to receive(:save).and_return(false)
-          post :create, {:user => {  }}
+          post :create, params: {:user => {  }}
           expect(response).to render_template("new")
         end
       end
@@ -119,19 +119,22 @@ describe Institution::UsersController, :type => :controller do
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
           child_user_params = FactoryBot.attributes_for(:child_user)
-          expect_any_instance_of(User).to receive(:update_attributes).with(child_user_params)
-          put :update, {:id => user.to_param, :user => child_user_params}
+          # TOFIX: Ugly hack merging uk_id & uk_expiry to "" insetad of nil
+          child_user_action_params = ActionController::Parameters.new(child_user_params.merge({uk_id: "",uk_expiry: ""})).permit(:username, :email, :uk_id, :uk_expiry, :password, :password_confirmation)
+          # byebug
+          expect_any_instance_of(User).to receive(:update_attributes).with(child_user_action_params)
+          put :update, params: {:id => user.to_param, :user => child_user_params}
         end
 
         it "assigns the requested user as @user" do
           user = FactoryBot.create(:user)
-          put :update, {:id => user.to_param, :user => FactoryBot.attributes_for(:user)}
+          put :update, params: {:id => user.to_param, :user => FactoryBot.attributes_for(:user)}
           expect(assigns(:user)).to eq(user)
         end
 
         it "redirects to the parent" do
           user = child
-          put :update, {:id => user.to_param, :user => FactoryBot.attributes_for(:child_user)}
+          put :update, params: {:id => user.to_param, :user => FactoryBot.attributes_for(:child_user)}
           expect(response).to redirect_to(parent)
         end
       end
@@ -141,7 +144,7 @@ describe Institution::UsersController, :type => :controller do
           user = FactoryBot.create(:user)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(User).to receive(:save).and_return(false)
-          put :update, {:id => user.to_param, :user => {  }}
+          put :update, params: {:id => user.to_param, :user => {  }}
           expect(assigns(:user)).to eq(user)
         end
 
@@ -149,7 +152,7 @@ describe Institution::UsersController, :type => :controller do
           user = child
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(User).to receive(:save).and_return(false)
-          put :update, {:id => user.to_param, :user => {  }}
+          put :update, params: {:id => user.to_param, :user => {  }}
           expect(response).to render_template("edit")
         end
       end
@@ -159,13 +162,13 @@ describe Institution::UsersController, :type => :controller do
       it "destroys the requested institution_user" do
         user = child
         expect {
-          delete :destroy, {:id => user.to_param}
+          delete :destroy, params: {:id => user.to_param}
         }.to change(User, :count).by(-1)
       end
 
       it "redirects to the parent" do
         user = child
-        delete :destroy, {:id => user.to_param}
+        delete :destroy, params: {:id => user.to_param}
         expect(response).to redirect_to(parent)
       end
     end

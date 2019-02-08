@@ -1,0 +1,118 @@
+/* FONT-FACE DEFINITIONS */
+
+/* NI font - Bodega Sans Black */
+
+@font-face {
+    font-family: 'Bodega';
+    src:url('/assets/ni.eot');
+    src:url('/assets/ni.eot?#iefix') format('embedded-opentype'), url('/assets/ni.woff') format('woff'), url('/assets/ni.ttf') format('truetype'), url('/assets/ni.svg#Bodega') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* Fira Sans - Google fonts */
+// https://fonts.google.com/specimen/Fira+Sans
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('/assets/firasans-light-webfont.woff2') format("woff2"), url('/assets/firasans-light-webfont.woff') format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 300;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('/assets/firasans-lightitalic-webfont.woff2') format("woff2"), url('/assets/firasans-lightitalic-webfont.woff') format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('/assets/firasans-book-webfont.woff2') format("woff2"), url('/assets/firasans-book-webfont.woff') format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('/assets/firasans-bookitalic-webfont.woff2') format("woff2"), url('/assets/firasans-bookitalic-webfont.woff') format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('/assets/firasans-medium-webfont.woff2') format("woff2"), url('/assets/firasans-medium-webfont.woff') format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-weight: 600;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('/assets/firasans-mediumitalic-webfont.woff2') format("woff2"), url('/assets/firasans-mediumitalic-webfont.woff') format("woff")
+}
+
+/* NI font 2018 - League Gothic */
+
+/* Regular */
+@font-face {
+    font-family: 'League Gothic';
+    src: url('/assets/leaguegothic-regular-webfont.eot');
+    src: url('/assets/leaguegothic-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/leaguegothic-regular-webfont.woff') format('woff'),
+         url('/assets/leaguegothic-regular-webfont.ttf') format('truetype'),
+         url('/assets/leaguegothic-regular-webfont.svg#league_gothicregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* Italic */
+@font-face {
+    font-family: 'League Gothic';
+    src: url('/assets/leaguegothic-italic-webfont.eot');
+    src: url('/assets/leaguegothic-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/leaguegothic-italic-webfont.woff') format('woff'),
+         url('/assets/leaguegothic-italic-webfont.ttf') format('truetype'),
+         url('/assets/leaguegothic-italic-webfont.svg#league_gothic_italicregular') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+/* NI font 2018 - Libre Baskerville */
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Libre Baskerville Italic'), local('LibreBaskerville-Italic'), url('LibreBaskerville-Italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Libre Baskerville'), local('LibreBaskerville-Regular'), url('/assets/LibreBaskerville-Regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* NI font 2018 - Bagnard Regular */
+
+@font-face {
+    font-family: 'BagnardRegular';
+    src: url('/assets/BagnardRegular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}

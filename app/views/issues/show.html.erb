@@ -27,28 +27,28 @@
      <%= link_to 'Import Web Exclusives', issue_import_extra_path(@issue, article_type: "web-exclusive"), :class => 'btn btn-xs btn-warning',
       :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will import the web-exclusives from Bricolage.'))} %>
     <hr />
-    <%= link_to 'Email current subscriber', issue_email_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Email current subscriber', issue_email_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
      |
-    <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
     <hr />
-    <%= link_to 'Email non-subscriber', issue_email_non_subscribers_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Email non-subscriber', issue_email_non_subscribers_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
      |
-    <%= link_to 'Text non-subscriber', issue_email_non_subscribers_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Text non-subscriber', issue_email_non_subscribers_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
     <hr />
-    <%= link_to 'Email others', issue_email_others_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Email others', issue_email_others_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
      |
-    <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
     <hr />
-    <%= link_to 'Renew please', issue_email_renew_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Renew please', issue_email_renew_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
      |
-    <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
     <hr />
-    <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
      |
-    <%= link_to 'Text subscribe special', issue_email_special_path(@issue, :text), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Text subscribe special', issue_email_special_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
     <hr />
     <p><b>Create a zip file for the iOS app</b></p>
-    <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-default btn-xs' %>
+    <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-outline-secondary' %>
     <hr />
 
     <p><b>iOS &amp; Android Push Notification</b></p>
@@ -76,7 +76,7 @@
 <% if user_signed_in? and can? :update, @issue %>
   <% if not @issue.uncategorised.empty? %>
     <div class="articles-not-categorised-for-display">
-      <h3>Articles not displayed</h3>
+      <h3 class="issue-section-title">Articles not displayed</h3>
       <% @issue.uncategorised.each do |article| %>
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
           <%= render :partial => "article_uncategorised", :locals => { :article => article } %>
@@ -94,7 +94,7 @@
     <h2><%= render :partial => "share_links", :object => @issue %></h2>
 
     <% if cannot? :read, @issue.keynote %>
-      <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), :class => 'btn btn-default' %></p>
+      <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), :class => 'btn btn-outline-secondary' %></p>
     <% end %>
     <% if not current_user.try(:subscriber?) %>
       <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success' %></p>
@@ -125,15 +125,13 @@
   </div>
 </div>
 
-<div class="row issue-keynote">
+<div class="row issue-keynote" itemscope itemtype="http://schema.org/Article">
   <div class="col-sm-12 big-story">
-    <h3>The big story</h3>
+    <h3 class="issue-section-title">The big story</h3>
   </div>
-  <div itemscope itemtype="http://schema.org/Article">
-    <% if @issue.keynote %>
-      <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
-    <% end %>
-  </div>
+  <% if @issue.keynote %>
+    <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
+  <% end %>
 </div>
 
 <%= render :partial => "shared/account_sign_up" %>
@@ -145,7 +143,7 @@
     <h6>What's inside this magazine</h6>
     <ul class="breadcrumb">
     <% @categories.each do |category| %>
-      <li><%= link_to category.short_display_name, category_path(category), :class => 'label' %></li>
+      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
       <% if user_signed_in? and can? :manage, category %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
@@ -156,7 +154,7 @@
 
 <% if not @issue.features.empty? %>
 
-  <h3><%= @features_name %></h3>
+  <h3 class="issue-section-title"><%= @features_name %></h3>
 
   <div class="row">
     <% @issue.features.each_with_index do |article, index| %>
@@ -178,7 +176,7 @@
 
 <% if not @web_exclusives.empty? %>
 
-  <h3>Web exclusives</h3>
+  <h3 class="issue-section-title">Web exclusives</h3>
 
   <div class="row">
     <% @web_exclusives.each_with_index do |article, index| %>
@@ -193,6 +191,11 @@
       </div>
     <% end %>
   </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="more-button"><%= link_to 'Read more web-exclusives...', category_path(Category.find_by_name("/features/web-exclusive/")), :class => 'btn btn-outline-secondary' %></p>
+    </div>
+  </div>
 
   <hr />
 
@@ -200,7 +203,7 @@
 
 <% if not @issue.alternatives.empty? %>
 
-  <h3>Alternatives</h3>
+  <h3 class="issue-section-title">Alternatives</h3>
 
   <div class="row">
     <% @issue.alternatives.each_with_index do |article, index| %>
@@ -222,7 +225,7 @@
 
 <% if not @blogs.empty? %>
 
-  <h3>Blogs</h3>
+  <h3 class="issue-section-title">Blogs</h3>
 
   <div class="row">
     <% @blogs.each_with_index do |article, index| %>
@@ -237,6 +240,11 @@
       </div>
     <% end %>
   </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="more-button"><%= link_to 'Read more blogs...', category_path(Category.find_by_name("/blog/")), :class => 'btn btn-outline-secondary' %></p>
+    </div>
+  </div>
 
   <hr />
 
@@ -244,7 +252,7 @@
 
 <% if not @issue.opinion.empty? %>
 
-  <h3>Opinion</h3>
+  <h3 class="issue-section-title">Opinion</h3>
 
   <div class="row">
     <% @issue.opinion.each_with_index do |article, index| %>
@@ -266,7 +274,7 @@
 
 <% if not @issue.agendas.empty? %>
 
-  <h3>Agenda</h3>
+  <h3 class="issue-section-title">Agenda</h3>
 
   <div class="row">
     <% @issue.agendas.each_with_index do |article, index| %>
@@ -288,7 +296,7 @@
 
 <% if not @issue.currents.empty? %>
 
-  <h3>Currents</h3>
+  <h3 class="issue-section-title">Currents</h3>
 
   <div class="row">
     <% @issue.currents.each_with_index do |article, index| %>
@@ -310,7 +318,7 @@
 
 <% if not @issue.videos.empty? %>
 
-  <h3>Videos</h3>
+  <h3 class="issue-section-title">Videos</h3>
 
   <div class="row">
     <% @issue.videos.each_with_index do |article, index| %>
@@ -332,7 +340,7 @@
 
 <% if not @issue.regulars.empty? %>
 
-  <h3>Regulars</h3>
+  <h3 class="issue-section-title">Regulars</h3>
 
   <div class="row">
     <% @issue.regulars.each_with_index do |article, index| %>
@@ -354,7 +362,7 @@
 
 <% if not @issue.mixedmedia.empty? %>
 
-  <h3>Film, Book &amp; Music Reviews</h3>
+  <h3 class="issue-section-title">Film, Book &amp; Music Reviews</h3>
 
   <div class="row">
     <% @issue.mixedmedia.each_with_index do |article, index| %>
@@ -378,7 +386,7 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              issues_path, :class => 'btn btn-default' %>
+              issues_path, :class => 'btn btn-outline-secondary' %>
   <% if user_signed_in? and can? :create, Article %>
     <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %>
   <% end %>
