@@ -139,7 +139,7 @@
 	<!-- For subscribers -->
 	<% if current_user.try(:subscriber?) or current_user.try(:admin?) %>
 		<div class="col-sm-12">
-			<h2>Magazine archive</h2>
+			<h2 class="home-section-title">Magazine archive</h2>
 			<p>These are the most recent magazines we've published. See the <%= link_to "Magazine archive", issues_path %> for a full list of issues.</p>
 			<div class="home-cover-list">
 				<% if @issues %>
@@ -157,7 +157,7 @@
 	<% else %>
 	<!-- For guests (not logged in) or non-subscribers -->
 		<div class="col-sm-8">
-			<h2>Magazine archive</h2>
+			<h2 class="home-section-title">Magazine archive</h2>
 
 			<p>Here are the <%= link_to "most recent magazines", issues_path %> we've published.</p>
 			<div class="home-cover-list">
@@ -174,7 +174,7 @@
 			</div>
 		</div>
 		<div class="col-sm-4 home-free-issue">
-			<h2>Try it first</h2>
+			<h2 class="home-section-title">Try it first</h2>
 
 			<p>Read a full sample magazine..</p>
 
@@ -194,7 +194,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Latest blog and web-exclusive articles</h2>
+		<h2 class="home-section-title">Latest blog and web-exclusive articles</h2>
 		<p>New <% if @blog_category %><%= link_to 'blog posts', category_path(@blog_category) %><% else %>blog posts<% end %> and <% if @web_exclusive_category %><%= link_to 'web-exclusive articles', category_path(@web_exclusive_category) %><% else %>web-exclusive articles<% end %> from newint.org</p>
 	</div>
 </div>
@@ -215,7 +215,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Recent feature articles</h2>
+		<h2 class="home-section-title">Recent feature articles</h2>
 		<p>A selection of <% if @features_category %><%= link_to 'feature articles', category_path(@features_category) %><% else %>feature articles<% end %> from each of the latest New Internationalist magazines.</p>
 	</div>
 </div>
@@ -236,7 +236,7 @@
 <hr />
 <div class="row">
 	<div class="col-sm-12">
-		<h2>From the archives</h2>
+		<h2 class="home-section-title">From the archives</h2>
 		<p>A selection of articles from the New Internationalist magazine archives.</p>
 	</div>
 </div>
@@ -304,7 +304,7 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Social media</h2>
+		<h2 class="home-section-title">Social media</h2>
 		<p>Follow us on <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">Twitter</a>, <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">Facebook</a> &amp; <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>">Instagram</a></p>
 	</div>
 </div>

@@ -835,19 +835,17 @@ $homeCoverListMargin: 0.438em;
 
 .page-header h2 {
 	font-weight: normal;
+	margin-top: 1em;
+}
+
+.page-header h3 {
+	font-weight: normal;
 	font-family: $libre-baskerville !important;
 	font-style: italic;
 	font-size: 1.2em;
 	line-height: 1.6em !important;
 	color: $gray-light;
-	margin-top: 1em;
-}
-
-.page-header h3 {
-	font-size: 1em;
-	font-weight: normal;
-	line-height: 1.3em;
-	color: $gray;
+	margin-top: 1rem;
 }
 
 .page-header img {
@@ -1253,6 +1251,10 @@ $issueCoverListMargin: 0.8em;
 	margin-top: 0.5em;
 	font-weight: normal;
 	color: $gray-light;
+}
+
+.home-section-title, .issue-section-title {
+	font-size: 2.5rem;
 }
 
 .page-header .ios-issue-page, .ios-issue-page {
@@ -1667,7 +1669,7 @@ mark, .mark {
 	padding: 0.625em 0.938em;
 }
 
-.carousel-inner > .item > img {
+.carousel-inner > .item > a > img {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 100%;
