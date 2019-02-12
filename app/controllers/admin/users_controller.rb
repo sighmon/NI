@@ -214,7 +214,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			format.csv {
 				# response.headers['Content-Disposition'] = 'attachment; filename="' + csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + '.csv"'
-				send_data csv.value, type: Mime::CSV, disposition: 'attachment', filename: csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + ".csv"
+				send_data csv.value, type: Mime[:csv], disposition: 'attachment', filename: csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + ".csv"
 			}
 		end
 	end
