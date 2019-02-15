@@ -2,7 +2,6 @@
 	<h1>Admin section</h1>
 </div>
 
-<p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
 <p><%= link_to "List Users", admin_users_path, :class => 'btn btn-outline-secondary' %> A list of all <%= User.count %> user accounts and their expiry dates.</p>
 <p>
   <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
@@ -20,11 +19,14 @@
 		<%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
 	<% end %>
 </p>
-<p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
-<p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-outline-secondary' %> <%= GuestPass.count %> Guest passes.</p>
-<p><%= link_to "Push Registrations", admin_push_registrations_path, :class => 'btn btn-outline-secondary' %> <%= PushRegistration.count %> Mobile push registrations.</p>
-<p><%= link_to "Push Notifications", admin_push_notifications_path, :class => 'btn btn-outline-secondary' %> <%= Rpush::Notification.count %> total. <%= Rpush::Notification.where(delivered: false).count %> undelivered.</p>
-<p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush quick reads", admin_delete_cache_path(cache: "quick_reads"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
+<% if current_user and current_user.admin? %>
+  <p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
+  <p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
+  <p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-outline-secondary' %> <%= GuestPass.count %> Guest passes.</p>
+  <p><%= link_to "Push Registrations", admin_push_registrations_path, :class => 'btn btn-outline-secondary' %> <%= PushRegistration.count %> Mobile push registrations.</p>
+  <p><%= link_to "Push Notifications", admin_push_notifications_path, :class => 'btn btn-outline-secondary' %> <%= Rpush::Notification.count %> total. <%= Rpush::Notification.where(delivered: false).count %> undelivered.</p>
+  <p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush quick reads", admin_delete_cache_path(cache: "quick_reads"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
+<% end %>
 
 <hr />
 
@@ -40,7 +42,11 @@
 <p><%= link_to "Media subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'media'), :class => 'btn btn-outline-secondary' %> <%= link_to "Media subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'media'), :class => 'btn btn-outline-secondary' %></p>
 <p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-info' %></p>
 <p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-outline-secondary' %></p>
+<% if current_user and current_user.admin? %>
+  <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-outline-secondary' %></p>
+<% else %>
+  <p><%= link_to "Monthly email newsletters", issue_email_path(Issue.latest, format: 'mjml'), :class => 'btn btn-outline-secondary' %></p>
+<% end %>
 <p><%= link_to "Subscription special - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'special'), :class => 'btn btn-outline-secondary' %> <%= link_to "Subscription special - text", admin_subscription_email_path(format: 'text', subscription_type: 'special'), :class => 'btn btn-outline-secondary' %></p>
 <p><%= link_to "Admin email", admin_admin_email_path(format: 'mjml'), :class => 'btn btn-info' %></p>
 

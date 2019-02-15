@@ -304,6 +304,8 @@ class User < ActiveRecord::Base
     t = "Guest"
     if admin?
       t = "Admin"
+    elsif manager?
+      t = "Manager"
     elsif institution
       t = "Institution"
     elsif parent

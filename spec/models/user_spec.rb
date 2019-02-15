@@ -269,5 +269,55 @@ describe User, :type => :model do
 
   end
 
+  context "manager" do
+
+    let(:user) do
+      FactoryBot.create(:manager_user)
+    end
+
+    let(:ability) { Ability.new(user) }
+
+    it "should be able to read an article" do
+      article = FactoryBot.create(:article)
+      expect(ability).to be_able_to(:read, article)
+    end
+
+    it "should not be able to manage an article" do
+      article = FactoryBot.create(:article)
+      expect(ability).not_to be_able_to(:manage, article)
+    end
+
+    it "should not be able to manage a page" do
+      page = FactoryBot.create(:page)
+      expect(ability).not_to be_able_to(:manage, page)
+    end
+
+    it "should not be able to manage settings" do
+      settings = Settings.get_all
+      expect(ability).not_to be_able_to(:manage, settings)
+    end
+
+    it "should not be able to manage a push registration" do
+      push_registration = FactoryBot.create(:push_registration)
+      expect(ability).not_to be_able_to(:manage, push_registration)
+    end
+
+    it "should not be able to manage a payment notifications" do
+      payment_notification = FactoryBot.create(:payment_notification)
+      expect(ability).not_to be_able_to(:manage, payment_notification)
+    end
+
+    it "should be able to manage a user" do
+      general_user = FactoryBot.create(:user)
+      expect(ability).to be_able_to(:manage, general_user)
+    end
+
+    it "should be able to manage a subscription" do
+      subscription = FactoryBot.create(:subscription)
+      expect(ability).to be_able_to(:manage, subscription)
+    end
+
+  end
+
 end
 

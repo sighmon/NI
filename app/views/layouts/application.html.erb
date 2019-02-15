@@ -109,14 +109,14 @@
                 <%= link_to raw("<i class='fa fa-star'></i> Subscribe"), new_subscription_path, class: 'dropdown-item' %>
                 <div class="dropdown-divider"></div>
               <% end %>
-              <% if current_user.try(:admin?) %>
+              <% if current_user.try(:admin?) or current_user.try(:manager?) %>
                 <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_admin_user_path(current_user), class: 'dropdown-item' %>
               <% else %>
               <% if not current_user.parent and can? :manage, current_user %>
                 <%= link_to raw("<i class='fa fa-pencil'></i> Edit"), edit_user_registration_path(current_user), class: 'dropdown-item' %>
               <% end %>
               <% end %>
-              <% if current_user.try(:admin?) %>
+              <% if current_user.try(:admin?) or current_user.try(:manager?) %>
                 <%= link_to raw("<i class='fa fa-heart'></i> Admin"), admin_root_path, class: 'dropdown-item' %>
                 <% if Settings.admin_alert and Settings.admin_alert == 1 %>
                   <% flash[:alert] = ApplicationHelper.bad_ip_alert_text %>

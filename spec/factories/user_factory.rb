@@ -26,6 +26,12 @@ FactoryBot.define do
       admin { true }
     end
 
+    factory :manager_user do
+      sequence(:username) { |n| "manager#{n}" }
+      sequence(:email) { |n| "manager#{n}@example.com" }
+      manager { true }
+    end
+
     factory :child_user do
       sequence(:username) { |n| "child#{n}" }
       association :parent, factory: :institution_user, prefix: "parent"

@@ -73,6 +73,12 @@ class Ability
 
     cannot :read, Article, :published => false
 
+    if user.manager?
+        can :manage, User
+        can :manage, Subscription
+        can :read, Article
+    end
+
     if user.admin?
         can :manage, :all
     end
