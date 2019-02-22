@@ -406,7 +406,7 @@ class ArticlesController < ApplicationController
     if can? :read, @article or request_has_valid_itunes_receipt
       render layout: false
     else
-      render nothing: true, status: :forbidden
+      render body: nil, status: :forbidden
     end
   
   end
@@ -420,7 +420,7 @@ class ArticlesController < ApplicationController
       # Render the body template so we don't repeat code
       render :template => 'articles/body', layout: false
     else
-      render nothing: true, status: :forbidden
+      render body: nil, status: :forbidden
     end
 
   end
@@ -573,7 +573,7 @@ class ArticlesController < ApplicationController
         format.json { render json: @guest_pass }
       end
     else
-      render nothing: true, status: :forbidden
+      render body: nil, status: :forbidden
     end
   end
 
@@ -594,7 +594,7 @@ class ArticlesController < ApplicationController
         format.json { render json: @guest_pass }
       end
     else
-      render nothing: true, status: :forbidden
+      render body: nil, status: :forbidden
     end
   end
 
