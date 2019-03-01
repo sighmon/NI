@@ -301,6 +301,11 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hove
 
 a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
 
+.dl-horizontal dd:before, .dl-horizontal dd:after {
+	display: table;
+  content: " ";
+}
+
 .no-padding {
 	padding-left: 0;
 	padding-right: 0;
@@ -2704,6 +2709,19 @@ ul.ui-autocomplete {
  
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 48em) and (max-width: 61.938em) {
+	// Add back in dl-horizontal for Bootstrap 4
+	.dl-horizontal dt {
+		float: left;
+		width: 9em;
+		clear: left;
+		text-align: right;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.dl-horizontal dd {
+		margin-left: 10em;
+	}
 	.container {
 		max-width: 95% !important;
 	}
@@ -2747,6 +2765,19 @@ ul.ui-autocomplete {
  
 /* Large desktop */
 @media (min-width: 62em) {
+	// Add back in dl-horizontal for Bootstrap 4
+	.dl-horizontal dt {
+		float: left;
+		width: 9em;
+		clear: left;
+		text-align: right;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.dl-horizontal dd {
+		margin-left: 10em;
+	}
 	.container {
 		// .shadow;
 		border-radius: 0.188em;
