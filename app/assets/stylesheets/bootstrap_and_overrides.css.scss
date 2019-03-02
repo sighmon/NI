@@ -1566,11 +1566,19 @@ mark, .mark {
 }
 
 .share-highlight-btn {
-    position: absolute;
-    width: 18.75em;
-    top: 1.563em;
-    left: -1.875em;
-}      
+  position: absolute;
+  width: 18.75em;
+  top: 1.563em;
+  left: -1.875em;
+}
+
+.share-highlight-btn .btn-outline-secondary {
+	background-color: white;
+}
+
+.share-highlight-btn .btn-outline-secondary a:hover, .share-highlight-btn .btn-outline-secondary:hover {
+	background-color: white;
+}
 
 .save-pref-btn {
   width: 100%;
