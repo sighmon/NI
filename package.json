@@ -7,12 +7,8 @@
     "doc": "doc",
     "test": "test"
   },
-  "engines": {
-    "node": "11.x",
-    "npm": "6.x"
-  },
   "dependencies": {
-    "mjml": "~4.2.0"
+    "mjml": "4.x"
   },
   "repository": {
     "type": "git",
