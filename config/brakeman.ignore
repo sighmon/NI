@@ -1,0 +1,46 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "6483cca89c988a2de8a6aadc7dc0923470d4c7c2f1bf6872beae46e7237450f0",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/home_controller.rb",
+      "line": 482,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Issue.latest.cover_url)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HomeController",
+        "method": "latest_cover"
+      },
+      "user_input": "Issue.latest.cover_url",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "e88615c64a424da13dad08a81868338aba61e530f544ed632f377a7498318bbc",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/home_controller.rb",
+      "line": 484,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Issue.latest.cover_url(:thumb2x))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HomeController",
+        "method": "latest_cover"
+      },
+      "user_input": "Issue.latest.cover_url(:thumb2x)",
+      "confidence": "High",
+      "note": ""
+    }
+  ],
+  "updated": "2019-03-08 16:40:32 +1030",
+  "brakeman_version": "4.4.0"
+}
