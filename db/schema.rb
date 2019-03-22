@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_014039) do
+ActiveRecord::Schema.define(version: 2019_03_22_042532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,30 @@ ActiveRecord::Schema.define(version: 2019_02_15_014039) do
     t.string "uk_id", limit: 255
     t.datetime "uk_expiry"
     t.boolean "manager"
+    t.string "title"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "company_name"
+    t.string "address"
+    t.string "postal_code"
+    t.string "city"
+    t.string "region"
+    t.string "country"
+    t.string "phone"
+    t.string "postal_mailable"
+    t.datetime "postal_mailable_updated"
+    t.datetime "postal_address_updated"
+    t.string "email_opt_in"
+    t.datetime "email_opt_in_updated"
+    t.datetime "email_updated"
+    t.string "paper_renewals"
+    t.string "digital_renewals"
+    t.decimal "subscriptions_order_total"
+    t.datetime "most_recent_subscriptions_order"
+    t.decimal "products_order_total"
+    t.datetime "most_recent_products_order"
+    t.string "annuals_buyer"
+    t.text "comments"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

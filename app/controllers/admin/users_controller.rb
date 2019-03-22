@@ -63,11 +63,29 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:password)
 			params[:user].delete(:password_confirmation)
 		end
+
 		# Hacky way to save the ip_whitelist without having it in attribute_accessible
 		if params[:user].has_key?(:ip_whitelist)
 			@user.update_attribute(:ip_whitelist, params[:user][:ip_whitelist])
 			params[:user].delete(:ip_whitelist)
 		end
+
+		# Update @user details updated at fields
+		if not params[:user][:email] == @user.email
+			@user.email_updated = DateTime.now
+		end
+		if not params[:user][:postal_mailable] == @user.postal_mailable
+			@user.postal_mailable_updated = DateTime.now
+		end
+		address_changed = (not params[:user][:address] == @user.address)
+		postal_code_changed = (not params[:user][:postal_code] == @user.postal_code)
+		city_changed = (not params[:user][:city] == @user.city)
+		region_changed = (not params[:user][:region] == @user.region)
+		country_changed = (not params[:user][:country] == @user.country)
+		if address_changed or postal_code_changed or city_changed or region_changed or country_changed
+			@user.postal_address_updated = DateTime.now
+		end
+
 		if @user.update_attributes(user_params)
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
@@ -242,7 +260,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def user_params
-    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :title, :first_name, :last_name, :company_name, :address, :postal_code, :city, :region, :country, :phone, :postal_mailable, :email_opt_in, :paper_renewals, :digital_renewals, :subscriptions_order_total, :products_order_total, :annuals_buyer, :comments)
   end
 
 end

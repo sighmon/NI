@@ -1110,9 +1110,9 @@ a:active .shadow-sm {
 // Edit buttons
 
 @mixin edit-issue-buttons {
-	border: 0.063em dashed $gray-light;
 	background-color: $gray-lighter;
 	padding: 2em;
+	margin: 0 -2em 2em -2em;
 	margin-top: 1em;
 	position: relative;
 	z-index: 1000;
@@ -2790,6 +2790,12 @@ ul.ui-autocomplete {
 	}
 	.dl-horizontal dd {
 		margin-left: 10em;
+	}
+	.dl-horizontal.admin dt {
+		width: 16em;
+	}
+	.dl-horizontal.admin dd {
+		margin-left: 17em;
 	}
 	.container {
 		// .shadow;

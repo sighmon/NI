@@ -3,19 +3,60 @@
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
+
     <% if not @user.parent_id.nil? %>
-    	<%= f.input :ip_whitelist %>
-    	<div class="control-group"><div class="controls"><p><b>The format for the IP range can be</b>:<br />
-    	    		192.168.1.1-192.168.1.8<br />
-    	    		192.168.1.0/24<br />
-    	    		192.168.1.1<br />
-    	    		Or a comma seperated list of any of the above.
-    	    	</p></div></div>
+        <%= f.input :ip_whitelist %>
+        <div class="control-group">
+            <div class="controls">
+                <p><b>The format for the IP range can be</b>:<br />
+                192.168.1.1-192.168.1.8<br />
+                192.168.1.0/24<br />
+                192.168.1.1<br />
+                Or a comma seperated list of any of the above.</p>
+            </div>
+        </div>
+    <% end %>
+
+    <h3>Address details</h3>
+
+    <% if can? :update, @user %>
+        <%= f.input :title %>
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.input :company_name %>
+        <%= f.input :address %>
+        <%= f.input :postal_code %>
+        <%= f.input :city %>
+        <%= f.input :region %>
+        <%= f.input :country %>
+        <%= f.input :phone %>
+        <%= f.input :postal_mailable, collection: @user.postal_mailable_collection, include_blank: true %>
+        <%= f.label :postal_mailable_updated %>
+        <p><%= @user.postal_mailable_updated or '-' %></p>
+        <%= f.label :postal_address_updated %>
+        <p><%= @user.postal_address_updated or '-' %></p>
+        <%= f.input :email_opt_in, collection: @user.email_opt_in_collection, include_blank: true %>
+        <%= f.label :email_opt_in_updated %>
+        <p><%= @user.email_opt_in_updated or '-' %></p>
+        <%= f.label :email_updated %>
+        <p><%= @user.email_updated or '-' %></p>
+        <%= f.input :paper_renewals, collection: @user.paper_renewals_collection, include_blank: true %>
+        <%= f.input :digital_renewals, collection: @user.digital_renewals_collection, include_blank: true %>
+        <%= f.label :subscriptions_order_total %>
+        <p><%= @user.subscriptions_order_total or '-' %></p>
+        <%= f.label :most_recent_subscriptions_order %>
+        <p><%= @user.most_recent_subscriptions_order or '-' %></p>
+        <%= f.label :products_order_total %>
+        <p><%= number_to_currency(@user.products_order_total, :unit => '$') or '-' %></p>
+        <%= f.label :most_recent_products_order %>
+        <p><%= @user.most_recent_products_order or '-' %></p>
+        <%= f.input :annuals_buyer, collection: @user.annuals_buyer_collection, include_blank: true %>
+        <%= f.input :comments %>
     <% end %>
   
-  <div class="form-actions">
-    	<%= f.button :submit, :class => 'btn btn-success' %>
-	    <%= link_to "Cancel", :back, :class => 'btn btn-outline-secondary' %>
-  </div>
+    <div class="form-actions">
+        <%= f.button :submit, :class => 'btn btn-success' %>
+        <%= link_to "Cancel", :back, :class => 'btn btn-outline-secondary' %>
+    </div>
   
 <% end %>

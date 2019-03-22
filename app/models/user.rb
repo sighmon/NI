@@ -326,6 +326,31 @@ class User < ActiveRecord::Base
     return id.nil?
   end
 
+  def country_name
+    country = ISO3166::Country[self.country]
+    country.translations[I18n.locale.to_s] || country.name
+  end
+
+  def postal_mailable_collection
+    ['Y', 'R', 'N']
+  end
+
+  def email_opt_in_collection
+    ['Y', 'M', 'N', 'B', 'U', 'P']
+  end
+
+  def paper_renewals_collection
+    ['Y', 'N']
+  end
+
+  def digital_renewals_collection
+    ['Y', 'N']
+  end
+
+  def annuals_buyer_collection
+    ['Y', 'N']
+  end
+
   private
 
   def self.sorted_by(column, direction)
