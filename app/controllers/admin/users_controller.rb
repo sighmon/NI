@@ -74,15 +74,37 @@ class Admin::UsersController < Admin::BaseController
 		if not params[:user][:email] == @user.email
 			@user.email_updated = DateTime.now
 		end
-		if not params[:user][:postal_mailable] == @user.postal_mailable
+
+		def has_been_updated(param, field)
+			if field.nil? and not param.blank?
+				return true
+			elsif field.blank? and not param.blank?
+				return true
+			elsif field and not (field == param)
+				return true
+			else
+				return false
+			end
+		end
+
+		if has_been_updated(params[:user][:postal_mailable], @user.postal_mailable)
 			@user.postal_mailable_updated = DateTime.now
 		end
-		address_changed = (not params[:user][:address] == @user.address)
-		postal_code_changed = (not params[:user][:postal_code] == @user.postal_code)
-		city_changed = (not params[:user][:city] == @user.city)
-		region_changed = (not params[:user][:region] == @user.region)
-		country_changed = (not params[:user][:country] == @user.country)
-		if address_changed or postal_code_changed or city_changed or region_changed or country_changed
+
+		if has_been_updated(params[:user][:email_opt_in], @user.email_opt_in)
+			@user.email_opt_in_updated = DateTime.now
+		end
+
+		title_changed = has_been_updated(params[:user][:title], @user.title)
+		first_name_changed = has_been_updated(params[:user][:first_name], @user.first_name)
+		last_name_changed = has_been_updated(params[:user][:last_name], @user.last_name)
+		company_name_changed = has_been_updated(params[:user][:company_name], @user.company_name)
+		address_changed = has_been_updated(params[:user][:address], @user.address)
+		postal_code_changed = has_been_updated(params[:user][:postal_code], @user.postal_code)
+		city_changed = has_been_updated(params[:user][:city], @user.city)
+		region_changed = has_been_updated(params[:user][:region], @user.region)
+		country_changed = has_been_updated(params[:user][:country], @user.country)
+		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or region_changed or country_changed
 			@user.postal_address_updated = DateTime.now
 		end
 
