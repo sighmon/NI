@@ -1,3 +1,14 @@
+<script type="text/javascript">
+    window.onload = function() {
+      return CountryStateSelect({
+        chosen_ui: false,
+        country_id: "user_country",
+        state_id: "user_state",
+        state_place_holder: ""
+      });
+    };
+</script>
+
 <%= simple_form_for [:admin, @user], :html => {:class => 'form-horizontal' } do |f| %>
     <%= f.input :username %>
     <%= f.input :email %>
@@ -26,9 +37,9 @@
         <%= f.input :company_name %>
         <%= f.input :address %>
         <%= f.input :postal_code %>
-        <%= f.input :city %>
-        <%= f.input :region %>
-        <%= f.input :country %>
+        <%= f.input :city, label: 'Suburb or Town' %>
+        <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state } }) %>
+        <%= f.input :country, collection: CountryStateSelect.countries_collection %>
         <%= f.input :phone %>
         <%= f.input :postal_mailable, collection: @user.postal_mailable_collection, include_blank: true %>
         <%= f.label :postal_mailable_updated %>

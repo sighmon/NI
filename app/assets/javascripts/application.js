@@ -26,6 +26,7 @@
 //= require retina_image_tag
 //= require highlighter/jQuery.highlighter
 //= require URI
+//= require country_state_select
 
 window.setTimeout(function() { $(".alert").alert('close'); }, 10000);
 

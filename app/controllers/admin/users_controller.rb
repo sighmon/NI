@@ -102,9 +102,9 @@ class Admin::UsersController < Admin::BaseController
 		address_changed = has_been_updated(params[:user][:address], @user.address)
 		postal_code_changed = has_been_updated(params[:user][:postal_code], @user.postal_code)
 		city_changed = has_been_updated(params[:user][:city], @user.city)
-		region_changed = has_been_updated(params[:user][:region], @user.region)
+		state_changed = has_been_updated(params[:user][:state], @user.state)
 		country_changed = has_been_updated(params[:user][:country], @user.country)
-		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or region_changed or country_changed
+		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or state_changed or country_changed
 			@user.postal_address_updated = DateTime.now
 		end
 
@@ -282,7 +282,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def user_params
-    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :title, :first_name, :last_name, :company_name, :address, :postal_code, :city, :region, :country, :phone, :postal_mailable, :email_opt_in, :paper_renewals, :digital_renewals, :subscriptions_order_total, :products_order_total, :annuals_buyer, :comments)
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :title, :first_name, :last_name, :company_name, :address, :postal_code, :city, :state, :country, :phone, :postal_mailable, :email_opt_in, :paper_renewals, :digital_renewals, :subscriptions_order_total, :products_order_total, :annuals_buyer, :comments)
   end
 
 end
