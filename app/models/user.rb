@@ -464,4 +464,89 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.import_users_from_csv(url)
+    require 'csv'
+    logger.info "Downloading csv from: #{url}"
+    filename = File.basename(URI.parse(url).path)
+    tmp_csv_path = Rails.root.join('tmp', filename)
+    failed_created_users = []
+
+    begin
+      File.open(tmp_csv_path, 'wb') do |f|
+        f.write HTTParty.get(url).body
+      end
+      logger.info "Finished saving #{filename} to tmp."
+
+      # Import users from CSV
+      table = CSV.parse(File.open(tmp_csv_path).read(), headers: true)
+      table.each do |row|
+        if row['email']
+          user = User.where(email: row['email'].try(:downcase), username: row['username'].try(:downcase)).first_or_initialize
+
+          # Update user from CSV
+          user.username = row['username'].try(:downcase)
+          user.title = row['title'].try(:titleize)
+          user.first_name = row['first_name'].try(:capitalize)
+          user.last_name = row['last_name'].try(:capitalize)
+          user.company_name = row['company_name'].try(:titleize)
+          if not user.address.blank?
+            user.address = row['address'].humanize.gsub(/\b('?[a-z])/) { $1.capitalize }
+          end
+          user.postal_code = row['postal_code']
+          user.city = row['city'].try(:titleize)
+          user.state = row['state']
+          user.country = ISO3166::Country.find_country_by_name(row['country'].try(:titleize)).alpha2
+          user.phone = row['phone']
+          user.postal_mailable = row['postal_mailable']
+          user.postal_mailable_updated = date_string_to_datetime(row['postal_mailable_updated'])
+          user.postal_address_updated = date_string_to_datetime(row['postal_address_updated'])
+          user.email_opt_in = row['email_opt_in']
+          user.email_opt_in_updated = date_string_to_datetime(row['email_opt_in_updated'])
+          user.email_updated = date_string_to_datetime(row['email_updated'])
+          user.paper_renewals = row['paper_renewals']
+          user.digital_renewals = row['digital_renewals']
+          user.subscriptions_order_total = row['subscriptions_order_total']
+          user.most_recent_subscriptions_order = date_string_to_datetime(row['most_recent_subscriptions_order'])
+          user.products_order_total = row['products_order_total']
+          user.most_recent_products_order = date_string_to_datetime(row['most_recent_products_order'])
+          user.annuals_buyer = row['annuals_buyer']
+          user.comments = row['comments']
+
+          # TODO: create paper subscription
+          # user.paper_duration = row['paper_duration']
+          # user.paper_valid_from = date_string_to_datetime(row['paper_valid_from'])
+
+
+          if user.encrypted_password.blank?
+            # Generate a 24 character password
+            user.password = Devise.friendly_token.first(24)
+          end
+
+          if user.save
+            logger.info "Successfully saved user: #{user.id}"
+          else
+            failed_created_users << user
+          end
+          user.save
+        end
+      end
+    rescue Exception => e
+      logger.error "Error: #{e}"
+    end
+
+    if not failed_created_users.empty?
+      logger.error "Failed to create #{failed_created_users.size} users:"
+      failed_created_users.each do |user|
+        logger.error user.to_json
+      end
+    end
+
+    File.delete(tmp_csv_path)
+    logger.info "Deleted #{filename} from tmp."
+  end
+
+  def self.date_string_to_datetime(date_string)
+    return Date.parse(date_string).try(:to_datetime)
+  end
+
 end
