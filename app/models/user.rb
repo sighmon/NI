@@ -515,23 +515,6 @@ class User < ActiveRecord::Base
           user.annuals_buyer = row['annuals_buyer']
           user.comments = row['comments']
 
-          if ((not row['paper_duration'].blank?) and (not row['paper_valid_from'].blank?))
-            # Create a paper subscription
-            paper_subscription = Subscription.where(
-              :user_id => user.id,
-              :valid_from => (user.last_subscription.try(:expiry_date) or self.date_string_to_datetime(row['paper_valid_from'])),
-              :duration => row['paper_duration'],
-              :purchase_date => self.date_string_to_datetime(row['paper_valid_from']),
-              :price_paid => 0
-            ).first_or_initialize
-            if paper_subscription.save
-              logger.info "Successfully saved subscription: #{paper_subscription.id}"
-              successfully_saved_subscriptions += 1
-            else
-              failed_created_subscriptions << paper_subscription
-            end
-          end
-
           if user.encrypted_password.blank?
             # Generate a 24 character password
             user.password = Devise.friendly_token.first(24)
@@ -542,6 +525,25 @@ class User < ActiveRecord::Base
             successfully_saved_users += 1
           else
             failed_created_users << user
+          end
+
+          if ((not row['paper_duration'].blank?) and (not row['paper_valid_from'].blank?))
+            # Create a paper subscription
+            paper_subscription = Subscription.where(
+              user_id: user.id,
+              valid_from: self.date_string_to_datetime(row['paper_valid_from']),
+              duration: row['paper_duration'],
+              purchase_date: self.date_string_to_datetime(row['paper_valid_from']),
+              price_paid: 0,
+              paper_only: true,
+              paper_copy: true
+            ).first_or_initialize
+            if paper_subscription.save
+              logger.info "Successfully saved subscription: #{paper_subscription.id}"
+              successfully_saved_subscriptions += 1
+            else
+              failed_created_subscriptions << paper_subscription
+            end
           end
         end
       end
