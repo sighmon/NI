@@ -470,6 +470,9 @@ class User < ActiveRecord::Base
     filename = File.basename(URI.parse(url).path)
     tmp_csv_path = Rails.root.join('tmp', filename)
     failed_created_users = []
+    failed_created_subscriptions = []
+    successfully_saved_users = 0
+    successfully_saved_subscriptions = 0
 
     begin
       File.open(tmp_csv_path, 'wb') do |f|
@@ -512,10 +515,22 @@ class User < ActiveRecord::Base
           user.annuals_buyer = row['annuals_buyer']
           user.comments = row['comments']
 
-          # TODO: create paper subscription
-          # user.paper_duration = row['paper_duration']
-          # user.paper_valid_from = date_string_to_datetime(row['paper_valid_from'])
-
+          if ((not row['paper_duration'].blank?) and (not row['paper_valid_from'].blank?))
+            # Create a paper subscription
+            paper_subscription = Subscription.where(
+              :user_id => user.id,
+              :valid_from => (user.last_subscription.try(:expiry_date) or self.date_string_to_datetime(row['paper_valid_from'])),
+              :duration => row['paper_duration'],
+              :purchase_date => self.date_string_to_datetime(row['paper_valid_from']),
+              :price_paid => 0
+            ).first_or_initialize
+            if paper_subscription.save
+              logger.info "Successfully saved subscription: #{paper_subscription.id}"
+              successfully_saved_subscriptions += 1
+            else
+              failed_created_subscriptions << paper_subscription
+            end
+          end
 
           if user.encrypted_password.blank?
             # Generate a 24 character password
@@ -524,20 +539,30 @@ class User < ActiveRecord::Base
 
           if user.save
             logger.info "Successfully saved user: #{user.id}"
+            successfully_saved_users += 1
           else
             failed_created_users << user
           end
-          user.save
         end
       end
     rescue Exception => e
       logger.error "Error: #{e}"
     end
 
+    logger.info "Successfully saved #{successfully_saved_users} users."
+    logger.info "Successfully saved #{successfully_saved_subscriptions} subscriptions."
+
     if not failed_created_users.empty?
       logger.error "Failed to create #{failed_created_users.size} users:"
       failed_created_users.each do |user|
         logger.error user.to_json
+      end
+    end
+
+    if not failed_created_subscriptions.empty?
+      logger.error "Failed to create #{failed_created_subscriptions.size} users:"
+      failed_created_subscriptions.each do |subscription|
+        logger.error subscription.to_json
       end
     end
 
