@@ -492,7 +492,7 @@ class User < ActiveRecord::Base
           user.first_name = row['first_name'].try(:capitalize)
           user.last_name = row['last_name'].try(:capitalize)
           user.company_name = row['company_name'].try(:titleize)
-          if not user.address.blank?
+          if not row['address'].blank?
             user.address = row['address'].humanize.gsub(/\b('?[a-z])/) { $1.capitalize }
           end
           user.postal_code = row['postal_code']
