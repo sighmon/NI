@@ -44,7 +44,7 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def create
-		@user = User.new(params[:user])
+		@user = User.new(user_params)
 		if @user.save
 			flash[:notice] = "User has been created."
 			redirect_to admin_users_path
@@ -63,11 +63,51 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:password)
 			params[:user].delete(:password_confirmation)
 		end
+
 		# Hacky way to save the ip_whitelist without having it in attribute_accessible
 		if params[:user].has_key?(:ip_whitelist)
 			@user.update_attribute(:ip_whitelist, params[:user][:ip_whitelist])
 			params[:user].delete(:ip_whitelist)
 		end
+
+		# Update @user details updated at fields
+		if not params[:user][:email] == @user.email
+			@user.email_updated = DateTime.now
+		end
+
+		def has_been_updated(param, field)
+			if field.nil? and not param.blank?
+				return true
+			elsif field.blank? and not param.blank?
+				return true
+			elsif field and not (field == param)
+				return true
+			else
+				return false
+			end
+		end
+
+		if has_been_updated(params[:user][:postal_mailable], @user.postal_mailable)
+			@user.postal_mailable_updated = DateTime.now
+		end
+
+		if has_been_updated(params[:user][:email_opt_in], @user.email_opt_in)
+			@user.email_opt_in_updated = DateTime.now
+		end
+
+		title_changed = has_been_updated(params[:user][:title], @user.title)
+		first_name_changed = has_been_updated(params[:user][:first_name], @user.first_name)
+		last_name_changed = has_been_updated(params[:user][:last_name], @user.last_name)
+		company_name_changed = has_been_updated(params[:user][:company_name], @user.company_name)
+		address_changed = has_been_updated(params[:user][:address], @user.address)
+		postal_code_changed = has_been_updated(params[:user][:postal_code], @user.postal_code)
+		city_changed = has_been_updated(params[:user][:city], @user.city)
+		state_changed = has_been_updated(params[:user][:state], @user.state)
+		country_changed = has_been_updated(params[:user][:country], @user.country)
+		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or state_changed or country_changed
+			@user.postal_address_updated = DateTime.now
+		end
+
 		if @user.update_attributes(user_params)
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
@@ -242,7 +282,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def user_params
-    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me)
+    params.require(:user).permit(:issue_ids, :login, :username, :expirydate, :subscriber, :email, :password, :password_confirmation, :remember_me, :title, :first_name, :last_name, :company_name, :address, :postal_code, :city, :state, :country, :phone, :postal_mailable, :email_opt_in, :paper_renewals, :digital_renewals, :subscriptions_order_total, :products_order_total, :annuals_buyer, :comments)
   end
 
 end

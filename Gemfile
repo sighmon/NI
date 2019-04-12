@@ -234,6 +234,8 @@ gem 'jquery-ui-rails'
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
 gem 'simple_form'
+gem 'country_select'
+gem 'country_state_select'
 
 # RMagick for image editing
 gem 'rmagick', :require => false

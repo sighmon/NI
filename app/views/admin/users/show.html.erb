@@ -30,7 +30,7 @@
 	</div>
 <% end %>
 
-<dl class="dl-horizontal">
+<dl class="dl-horizontal admin">
 	<dt>Email address:</dt>
 	<dd><%= @user.email %></dd>
 	<dt>User type:</dt>
@@ -41,7 +41,11 @@
 	<% end %>
 	<dt>Login count:</dt>
 	<dd><%= @user.sign_in_count %> <span class="author-note">(<%= @user.current_sign_in_at.try(:strftime,"%d %b, %Y") %> - <%= @user.current_sign_in_ip %>)</span></dd>
-	<dt>Expiry date:</dt>
+	<% if @user.has_paper_only? or @user.had_paper_only? %>
+		<dt>Digital trial expires:</dt>
+	<% else %>
+		<dt>Expiry date:</dt>
+	<% end %>
 	<dd><%= user_expiry_as_string(@user) %><br />
 		<% if @user.is_recurring? and @user.has_paper_copy? and not @user.has_paper_only? %>
 			(Automatic debit, Digital + Paper edition)
@@ -55,7 +59,7 @@
 			(Paper only copy)
 		<% end %>
 	</dd>
-	<% if @user.has_paper_only? %>
+	<% if @user.has_paper_only? or @user.had_paper_only? %>
 		<!-- Paper only -->
 		<dt>Paper subscription:</dt>
 		<dd><% begin %>
@@ -92,6 +96,34 @@
 			<dd><%= @user.recurring_subscription.paypal_profile_id %>&nbsp;</dd>
 		<% end %>
 	<% end %>
+</dl>
+
+<h3>Extended details</h3>
+<dl class="dl-horizontal admin">
+  <dt>Title:</dt><dd><%= @user.title.blank? ? '-' : @user.title %></dd>
+  <dt>First name:</dt><dd><%= @user.first_name.blank? ? '-' : @user.first_name %></dd>
+  <dt>Last name:</dt><dd><%= @user.last_name.blank? ? '-' : @user.last_name %></dd>
+  <dt>Company name:</dt><dd><%= @user.company_name.blank? ? '-' : @user.company_name %></dd>
+  <dt>Address:</dt><dd><%= @user.address.blank? ? '-' : @user.address %></dd>
+  <dt>Postal code:</dt><dd><%= @user.postal_code.blank? ? '-' : @user.postal_code %></dd>
+  <dt>Suburb or Town:</dt><dd><%= @user.city.blank? ? '-' : @user.city %></dd>
+  <dt>State:</dt><dd><%= @user.state.blank? ? '-' : @user.state %></dd>
+  <dt>Country:</dt><dd><%= @user.country.blank? ? '-' : @user.country_name %></dd>
+  <dt>Phone:</dt><dd><%= @user.phone.blank? ? '-' : @user.phone %></dd>
+  <dt>Postal mailable:</dt><dd><%= @user.postal_mailable.blank? ? '-' : @user.postal_mailable %></dd>
+  <dt>Postal mailable updated:</dt><dd><%= @user.postal_mailable_updated.blank? ? '-' : @user.postal_mailable_updated %></dd>
+  <dt>Postal address updated:</dt><dd><%= @user.postal_address_updated.blank? ? '-' : @user.postal_address_updated %></dd>
+  <dt>Email opt in:</dt><dd><%= @user.email_opt_in.blank? ? '-' : @user.email_opt_in %></dd>
+  <dt>Email opt in_updated:</dt><dd><%= @user.email_opt_in_updated.blank? ? '-' : @user.email_opt_in_updated %></dd>
+  <dt>Email updated:</dt><dd><%= @user.email_updated.blank? ? '-' : @user.email_updated %></dd>
+  <dt>Paper renewals:</dt><dd><%= @user.paper_renewals.blank? ? '-' : @user.paper_renewals %></dd>
+  <dt>Digital renewals:</dt><dd><%= @user.digital_renewals.blank? ? '-' : @user.digital_renewals %></dd>
+  <dt>Subscriptions order total:</dt><dd><%= @user.subscriptions_order_total.blank? ? '-' : number_to_currency(@user.subscriptions_order_total, :unit => '$') %></dd>
+  <dt>Most recent subscriptions order:</dt><dd><%= @user.most_recent_subscriptions_order.blank? ? '-' : @user.most_recent_subscriptions_order %></dd>
+  <dt>Products order total:</dt><dd><%= @user.products_order_total.blank? ? '-' : number_to_currency(@user.products_order_total, :unit => '$') %></dd>
+  <dt>Most recent products order:</dt><dd><%= @user.most_recent_products_order.blank? ? '-' : @user.most_recent_products_order %></dd>
+  <dt>Annuals buyer:</dt><dd><%= @user.annuals_buyer.blank? ? '-' : @user.annuals_buyer %></dd>
+  <dt>Comments:</dt><dd><%= @user.comments.blank? ? '-' : @user.comments %></dd>
 </dl>
 
 <% if @user.institution %>

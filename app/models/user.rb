@@ -50,8 +50,9 @@ class User < ActiveRecord::Base
   # end
 
   def send_welcome_mail
+    importing_users = ActiveModel::Type::Boolean.new.cast(ENV['IMPORTING_USERS'])
     if uk_user?
-      if Rails.env.production?
+      if Rails.env.production? and not importing_users
         begin
           UserMailer.delay.user_signup_confirmation_uk(self)
           ApplicationHelper.start_delayed_jobs
@@ -62,7 +63,7 @@ class User < ActiveRecord::Base
         logger.info "SEND_WELCOME_MAIL UK user would happen on production."
       end
     else
-      if Rails.env.production?
+      if Rails.env.production? and not importing_users
         begin
           UserMailer.delay.user_signup_confirmation(self)
           ApplicationHelper.start_delayed_jobs
@@ -194,6 +195,10 @@ class User < ActiveRecord::Base
     return self.current_paper_subscriptions.collect{|s| s.paper_only}.include?(true)
   end
 
+  def had_paper_only?
+    return self.subscriptions.collect{|s| s.paper_only}.include?(true)
+  end
+
   def expiry_date
     if uk_user?
       # Check for local subscriptions
@@ -221,7 +226,7 @@ class User < ActiveRecord::Base
   end
 
   def expiry_date_paper_only
-    return self.current_paper_subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
+    return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
   end
 
   def expiry_date_including_ios(request)
@@ -324,6 +329,31 @@ class User < ActiveRecord::Base
 
   def guest?
     return id.nil?
+  end
+
+  def country_name
+    country = ISO3166::Country[self.country]
+    country.translations[I18n.locale.to_s] || country.name
+  end
+
+  def postal_mailable_collection
+    ['Y', 'R', 'N']
+  end
+
+  def email_opt_in_collection
+    ['Y', 'M', 'N', 'B', 'U', 'P']
+  end
+
+  def paper_renewals_collection
+    ['Y', 'N']
+  end
+
+  def digital_renewals_collection
+    ['Y', 'N']
+  end
+
+  def annuals_buyer_collection
+    ['Y', 'N']
   end
 
   private
@@ -435,6 +465,172 @@ class User < ActiveRecord::Base
       if not Settings.admin_alert or Settings.admin_alert == 0
         Settings.admin_alert = 1
       end
+      return nil
+    end
+  end
+
+  def self.import_users_from_csv(url)
+    require 'csv'
+    ENV['IMPORTING_USERS'] = 'true'
+    logger.info "Downloading csv from: #{url}"
+    filename = File.basename(URI.parse(url).path)
+    tmp_csv_path = Rails.root.join('tmp', filename)
+    failed_created_users = []
+    failed_created_subscriptions = []
+    updated_users = []
+    updated_subscriptions = []
+    successfully_created_users = 0
+    successfully_updated_users = 0
+    successfully_created_subscriptions = 0
+    successfully_updated_subscriptions = 0
+
+    begin
+      File.open(tmp_csv_path, 'wb') do |f|
+        f.write HTTParty.get(url).body
+      end
+      logger.info "Finished saving #{filename} to tmp."
+
+      # Import users from CSV
+      table = CSV.parse(File.open(tmp_csv_path).read(), headers: true)
+      table.each do |row|
+        if row['email']
+          new_user = false
+          user = User.where(email: row['email'].try(:downcase)).first_or_initialize
+
+          # Update user from CSV
+          if not user.username
+            user.username = row['username'].try(:downcase)
+          end
+          user.title = row['title'].try(:titleize)
+          user.first_name = row['first_name'].try(:capitalize)
+          user.last_name = row['last_name'].try(:capitalize)
+          user.company_name = row['company_name'].try(:titleize)
+          if not row['address'].blank?
+            user.address = row['address'].humanize.gsub(/\b('?[a-z])/) { $1.capitalize }
+          end
+          user.postal_code = row['postal_code']
+          user.city = row['city'].try(:titleize)
+          user.state = row['state']
+          user.country = ISO3166::Country.find_country_by_name(row['country'].try(:titleize)).try(:alpha2)
+          user.phone = row['phone']
+          user.postal_mailable = row['postal_mailable']
+          user.postal_mailable_updated = date_string_to_datetime(row['postal_mailable_updated'])
+          user.postal_address_updated = date_string_to_datetime(row['postal_address_updated'])
+          user.email_opt_in = row['email_opt_in']
+          user.email_opt_in_updated = date_string_to_datetime(row['email_opt_in_updated'])
+          user.email_updated = date_string_to_datetime(row['email_updated'])
+          user.paper_renewals = row['paper_renewals']
+          user.digital_renewals = row['digital_renewals']
+          user.subscriptions_order_total = row['subscriptions_order_total']
+          user.most_recent_subscriptions_order = date_string_to_datetime(row['most_recent_subscriptions_order'])
+          user.products_order_total = row['products_order_total']
+          user.most_recent_products_order = date_string_to_datetime(row['most_recent_products_order'])
+          user.annuals_buyer = row['annuals_buyer']
+          user.comments = row['comments']
+
+          if user.encrypted_password.blank?
+            # Generate a 24 character password
+            user.password = Devise.friendly_token.first(24)
+          end
+
+          if not user.id
+            new_user = true
+          end
+
+          if user.save
+            logger.info "Successfully saved user: #{user.id}"
+            if new_user
+              successfully_created_users += 1
+            else
+              successfully_updated_users += 1
+              updated_users << user
+            end
+          else
+            failed_created_users << user
+          end
+
+          if ((not row['paper_duration'].blank? and row['paper_duration'].to_i > 0) and (not row['paper_valid_from'].blank?))
+            # Create a paper subscription
+            new_subscription = false
+            paper_subscription = Subscription.where(
+              user_id: user.id,
+              valid_from: self.date_string_to_datetime(row['paper_valid_from']),
+              duration: row['paper_duration'].to_i,
+              purchase_date: self.date_string_to_datetime(row['paper_valid_from']),
+              price_paid: 0,
+              paper_only: true,
+              paper_copy: true
+            ).first_or_initialize
+            if not paper_subscription.id
+              new_subscription = true
+            end
+            if paper_subscription.save
+              logger.info "Successfully saved subscription: #{paper_subscription.id}"
+              if new_subscription
+                successfully_created_subscriptions += 1
+              else
+                successfully_updated_subscriptions += 1
+                updated_subscriptions << paper_subscription
+              end
+            else
+              failed_created_subscriptions << paper_subscription
+            end
+          end
+        end
+      end
+    rescue Exception => e
+      ENV['IMPORTING_USERS'] = 'false'
+      logger.error "Error: #{e}"
+    end
+
+    ENV['IMPORTING_USERS'] = 'false'
+
+    logger.info "Successfully created #{successfully_created_users} users."
+    logger.info "Successfully updated #{successfully_updated_users} users."
+    logger.info "Successfully created #{successfully_created_subscriptions} subscriptions."
+    logger.info "Successfully updated #{successfully_updated_subscriptions} subscriptions."
+
+    if not failed_created_users.empty?
+      logger.error "Failed to create #{failed_created_users.size} users:"
+      failed_created_users.each do |user|
+        logger.error user.to_json
+      end
+    end
+
+    if not failed_created_subscriptions.empty?
+      logger.error "Failed to create #{failed_created_subscriptions.size} subscriptions:"
+      failed_created_subscriptions.each do |subscription|
+        logger.error subscription.to_json
+      end
+    end
+
+    if not updated_users.empty?
+      logger.error "Updated #{updated_users.size} users:"
+      updated_users.each do |user|
+        logger.info user.to_json
+      end
+    end
+
+    if not updated_subscriptions.empty?
+      logger.error "Updated #{updated_subscriptions.size} subscriptions:"
+      updated_subscriptions.each do |subscription|
+        logger.info subscription.to_json
+      end
+    end
+
+    File.delete(tmp_csv_path)
+    logger.info "Deleted #{filename} from tmp."
+  end
+
+  def self.date_string_to_datetime(date_string)
+    begin
+      if date_string == '1901-01-01'
+        return nil
+      else
+        return Date.parse(date_string).try(:to_datetime)
+      end
+    rescue Exception => e
+      logger.error "Date conversion error: #{e}"
       return nil
     end
   end
