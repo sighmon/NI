@@ -477,6 +477,8 @@ class User < ActiveRecord::Base
     tmp_csv_path = Rails.root.join('tmp', filename)
     failed_created_users = []
     failed_created_subscriptions = []
+    updated_users = []
+    updated_subscriptions = []
     successfully_created_users = 0
     successfully_updated_users = 0
     successfully_created_subscriptions = 0
@@ -509,7 +511,7 @@ class User < ActiveRecord::Base
           user.postal_code = row['postal_code']
           user.city = row['city'].try(:titleize)
           user.state = row['state']
-          user.country = ISO3166::Country.find_country_by_name(row['country'].try(:titleize)).alpha2
+          user.country = ISO3166::Country.find_country_by_name(row['country'].try(:titleize)).try(:alpha2)
           user.phone = row['phone']
           user.postal_mailable = row['postal_mailable']
           user.postal_mailable_updated = date_string_to_datetime(row['postal_mailable_updated'])
@@ -541,6 +543,7 @@ class User < ActiveRecord::Base
               successfully_created_users += 1
             else
               successfully_updated_users += 1
+              updated_users << user
             end
           else
             failed_created_users << user
@@ -567,6 +570,7 @@ class User < ActiveRecord::Base
                 successfully_created_subscriptions += 1
               else
                 successfully_updated_subscriptions += 1
+                updated_subscriptions << paper_subscription
               end
             else
               failed_created_subscriptions << paper_subscription
@@ -594,9 +598,23 @@ class User < ActiveRecord::Base
     end
 
     if not failed_created_subscriptions.empty?
-      logger.error "Failed to create #{failed_created_subscriptions.size} users:"
+      logger.error "Failed to create #{failed_created_subscriptions.size} subscriptions:"
       failed_created_subscriptions.each do |subscription|
         logger.error subscription.to_json
+      end
+    end
+
+    if not updated_users.empty?
+      logger.error "Updated #{updated_users.size} users:"
+      updated_users.each do |user|
+        logger.info user.to_json
+      end
+    end
+
+    if not updated_subscriptions.empty?
+      logger.error "Updated #{updated_subscriptions.size} subscriptions:"
+      updated_subscriptions.each do |subscription|
+        logger.info subscription.to_json
       end
     end
 
