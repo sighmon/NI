@@ -549,13 +549,13 @@ class User < ActiveRecord::Base
             failed_created_users << user
           end
 
-          if ((not row['paper_duration'].blank?) and (not row['paper_valid_from'].blank?))
+          if ((not row['paper_duration'].blank? and row['paper_duration'].to_i > 0) and (not row['paper_valid_from'].blank?))
             # Create a paper subscription
             new_subscription = false
             paper_subscription = Subscription.where(
               user_id: user.id,
               valid_from: self.date_string_to_datetime(row['paper_valid_from']),
-              duration: row['paper_duration'],
+              duration: row['paper_duration'].to_i,
               purchase_date: self.date_string_to_datetime(row['paper_valid_from']),
               price_paid: 0,
               paper_only: true,
@@ -623,7 +623,16 @@ class User < ActiveRecord::Base
   end
 
   def self.date_string_to_datetime(date_string)
-    return Date.parse(date_string).try(:to_datetime)
+    begin
+      if date_string == '1901-01-01'
+        return nil
+      else
+        return Date.parse(date_string).try(:to_datetime)
+      end
+    rescue Exception => e
+      logger.error "Date conversion error: #{e}"
+      return nil
+    end
   end
 
 end
