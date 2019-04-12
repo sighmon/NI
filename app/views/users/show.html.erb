@@ -12,7 +12,7 @@
 	<dt>Account type:</dt>
 	<dd><%= @user.user_type %></dd>
 	<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
-		<% if @user.has_paper_only? %>
+		<% if @user.has_paper_only? or @user.had_paper_only? %>
 			<dt>Digital trial expires:</dt>
 		<% else %>
 			<dt>Expiry date:</dt>
@@ -54,7 +54,7 @@
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
 	<% end %>
-	<% if @user.has_paper_only? %>
+	<% if @user.has_paper_only? or @user.had_paper_only? %>
 		<!-- TODO: Add this into the tests above properly -->
 		<dt>Paper subscription:</dt>
 		<dd><% begin %>

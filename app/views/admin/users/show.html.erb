@@ -41,7 +41,11 @@
 	<% end %>
 	<dt>Login count:</dt>
 	<dd><%= @user.sign_in_count %> <span class="author-note">(<%= @user.current_sign_in_at.try(:strftime,"%d %b, %Y") %> - <%= @user.current_sign_in_ip %>)</span></dd>
-	<dt>Expiry date:</dt>
+	<% if @user.has_paper_only? or @user.had_paper_only? %>
+		<dt>Digital trial expires:</dt>
+	<% else %>
+		<dt>Expiry date:</dt>
+	<% end %>
 	<dd><%= user_expiry_as_string(@user) %><br />
 		<% if @user.is_recurring? and @user.has_paper_copy? and not @user.has_paper_only? %>
 			(Automatic debit, Digital + Paper edition)
@@ -55,7 +59,7 @@
 			(Paper only copy)
 		<% end %>
 	</dd>
-	<% if @user.has_paper_only? %>
+	<% if @user.has_paper_only? or @user.had_paper_only? %>
 		<!-- Paper only -->
 		<dt>Paper subscription:</dt>
 		<dd><% begin %>

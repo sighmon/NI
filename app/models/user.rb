@@ -195,6 +195,10 @@ class User < ActiveRecord::Base
     return self.current_paper_subscriptions.collect{|s| s.paper_only}.include?(true)
   end
 
+  def had_paper_only?
+    return self.subscriptions.collect{|s| s.paper_only}.include?(true)
+  end
+
   def expiry_date
     if uk_user?
       # Check for local subscriptions
@@ -222,7 +226,7 @@ class User < ActiveRecord::Base
   end
 
   def expiry_date_paper_only
-    return self.current_paper_subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
+    return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
   end
 
   def expiry_date_including_ios(request)
