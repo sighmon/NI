@@ -141,7 +141,10 @@ class Subscription < ActiveRecord::Base
         price += 17000
       end
     end
-    if paper_only
+    if paper_only and institution
+      # Paper only institutional price $108
+      price = Settings.subscription_price * duration * 108 / 72
+    elsif paper_only
       # Paper only price $88
       price = Settings.subscription_price * duration * 88 / 72
     end
