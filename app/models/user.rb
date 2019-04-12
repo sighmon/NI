@@ -543,7 +543,7 @@ class User < ActiveRecord::Base
               successfully_created_users += 1
             else
               successfully_updated_users += 1
-              updated_users << user
+              updated_users << user.id
             end
           else
             failed_created_users << user
@@ -570,7 +570,7 @@ class User < ActiveRecord::Base
                 successfully_created_subscriptions += 1
               else
                 successfully_updated_subscriptions += 1
-                updated_subscriptions << paper_subscription
+                updated_subscriptions << paper_subscription.id
               end
             else
               failed_created_subscriptions << paper_subscription
@@ -605,17 +605,13 @@ class User < ActiveRecord::Base
     end
 
     if not updated_users.empty?
-      logger.error "Updated #{updated_users.size} users:"
-      updated_users.each do |user|
-        logger.info user.to_json
-      end
+      logger.info "Updated #{updated_users.size} users:"
+      logger.info updated_users.to_s
     end
 
     if not updated_subscriptions.empty?
-      logger.error "Updated #{updated_subscriptions.size} subscriptions:"
-      updated_subscriptions.each do |subscription|
-        logger.info subscription.to_json
-      end
+      logger.info "Updated #{updated_subscriptions.size} subscriptions:"
+      logger.info updated_subscriptions.to_s
     end
 
     File.delete(tmp_csv_path)
