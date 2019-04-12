@@ -493,10 +493,12 @@ class User < ActiveRecord::Base
       table.each do |row|
         if row['email']
           new_user = false
-          user = User.where(email: row['email'].try(:downcase), username: row['username'].try(:downcase)).first_or_initialize
+          user = User.where(email: row['email'].try(:downcase)).first_or_initialize
 
           # Update user from CSV
-          user.username = row['username'].try(:downcase)
+          if not user.username
+            user.username = row['username'].try(:downcase)
+          end
           user.title = row['title'].try(:titleize)
           user.first_name = row['first_name'].try(:capitalize)
           user.last_name = row['last_name'].try(:capitalize)
