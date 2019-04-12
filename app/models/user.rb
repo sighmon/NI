@@ -50,8 +50,9 @@ class User < ActiveRecord::Base
   # end
 
   def send_welcome_mail
+    importing_users = ActiveModel::Type::Boolean.new.cast(ENV['IMPORTING_USERS'])
     if uk_user?
-      if Rails.env.production?
+      if Rails.env.production? and not importing_users
         begin
           UserMailer.delay.user_signup_confirmation_uk(self)
           ApplicationHelper.start_delayed_jobs
@@ -62,7 +63,7 @@ class User < ActiveRecord::Base
         logger.info "SEND_WELCOME_MAIL UK user would happen on production."
       end
     else
-      if Rails.env.production?
+      if Rails.env.production? and not importing_users
         begin
           UserMailer.delay.user_signup_confirmation(self)
           ApplicationHelper.start_delayed_jobs
@@ -466,13 +467,16 @@ class User < ActiveRecord::Base
 
   def self.import_users_from_csv(url)
     require 'csv'
+    ENV['IMPORTING_USERS'] = 'true'
     logger.info "Downloading csv from: #{url}"
     filename = File.basename(URI.parse(url).path)
     tmp_csv_path = Rails.root.join('tmp', filename)
     failed_created_users = []
     failed_created_subscriptions = []
-    successfully_saved_users = 0
-    successfully_saved_subscriptions = 0
+    successfully_created_users = 0
+    successfully_updated_users = 0
+    successfully_created_subscriptions = 0
+    successfully_updated_subscriptions = 0
 
     begin
       File.open(tmp_csv_path, 'wb') do |f|
@@ -484,6 +488,7 @@ class User < ActiveRecord::Base
       table = CSV.parse(File.open(tmp_csv_path).read(), headers: true)
       table.each do |row|
         if row['email']
+          new_user = false
           user = User.where(email: row['email'].try(:downcase), username: row['username'].try(:downcase)).first_or_initialize
 
           # Update user from CSV
@@ -520,15 +525,24 @@ class User < ActiveRecord::Base
             user.password = Devise.friendly_token.first(24)
           end
 
+          if not user.id
+            new_user = true
+          end
+
           if user.save
             logger.info "Successfully saved user: #{user.id}"
-            successfully_saved_users += 1
+            if new_user
+              successfully_created_users += 1
+            else
+              successfully_updated_users += 1
+            end
           else
             failed_created_users << user
           end
 
           if ((not row['paper_duration'].blank?) and (not row['paper_valid_from'].blank?))
             # Create a paper subscription
+            new_subscription = false
             paper_subscription = Subscription.where(
               user_id: user.id,
               valid_from: self.date_string_to_datetime(row['paper_valid_from']),
@@ -538,9 +552,16 @@ class User < ActiveRecord::Base
               paper_only: true,
               paper_copy: true
             ).first_or_initialize
+            if not paper_subscription.id
+              new_subscription = true
+            end
             if paper_subscription.save
               logger.info "Successfully saved subscription: #{paper_subscription.id}"
-              successfully_saved_subscriptions += 1
+              if new_subscription
+                successfully_created_subscriptions += 1
+              else
+                successfully_updated_subscriptions += 1
+              end
             else
               failed_created_subscriptions << paper_subscription
             end
@@ -548,11 +569,16 @@ class User < ActiveRecord::Base
         end
       end
     rescue Exception => e
+      ENV['IMPORTING_USERS'] = 'false'
       logger.error "Error: #{e}"
     end
 
-    logger.info "Successfully saved #{successfully_saved_users} users."
-    logger.info "Successfully saved #{successfully_saved_subscriptions} subscriptions."
+    ENV['IMPORTING_USERS'] = 'false'
+
+    logger.info "Successfully created #{successfully_created_users} users."
+    logger.info "Successfully updated #{successfully_updated_users} users."
+    logger.info "Successfully created #{successfully_created_subscriptions} subscriptions."
+    logger.info "Successfully updated #{successfully_updated_subscriptions} subscriptions."
 
     if not failed_created_users.empty?
       logger.error "Failed to create #{failed_created_users.size} users:"
