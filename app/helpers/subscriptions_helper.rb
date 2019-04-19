@@ -42,7 +42,13 @@ module SubscriptionsHelper
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: false, paper: true, paper_only: true})))
                 ) +
                 content_tag(:tr,
-                    content_tag(:td, "Institution automatic debit subscription payment") +
+                    content_tag(:td, "Institution subscription payment, Paper only") +
+                    content_tag(:td, "-") +
+                    content_tag(:td, "-") +
+                    content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: false, paper: true, paper_only: true, institution: true})))
+                ) +
+                content_tag(:tr,
+                    content_tag(:td, "Institution automatic debit subscription payment, Digital only") +
                     content_tag(:td, "-") +
                     content_tag(:td, "-") +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: true, institution: true})))
@@ -54,7 +60,7 @@ module SubscriptionsHelper
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: true, paper: true, institution: true})))
                 ) +
                 content_tag(:tr,
-                    content_tag(:td, "Institution once-off subscription payment") +
+                    content_tag(:td, "Institution once-off subscription payment, Digital only") +
                     content_tag(:td, "-") +
                     content_tag(:td, "-") +
                     content_tag(:td, "$" + cents_to_dollars(Subscription.calculate_subscription_price(12,{autodebit: false, institution: true})))
