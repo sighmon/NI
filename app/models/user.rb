@@ -321,7 +321,9 @@ class User < ActiveRecord::Base
     if uk_id
       t += " (UK)"
     end
-    if has_paper_only?
+    if has_paper_only? and institution
+      t += " Paper Subscriber"
+    elsif has_paper_only?
       t = "Paper Subscriber"
     end
     "#{t}"
