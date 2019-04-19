@@ -68,15 +68,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to "Help!", page_path("help"), class: 'dropdown-item' %>
-              <a href="https://www.newint.com.au/shop" class="dropdown-item">Shop - Fair Trade on-line shop</a>
               <a href="https://www.newint.com.au/blog" class="dropdown-item">Blog - Social Justice news</a>
-              <a href="https://www.newint.com.au" class="dropdown-item">Home - New Internationalist Australia home page</a>
+              <a href="https://www.newint.com.au" class="dropdown-item">Home - New Internationalist Australia</a>
               <div class="dropdown-divider"></div>
               <%= link_to "Quick reads", quick_reads_path, class: 'dropdown-item' %>
               <%= link_to "Popular articles", popular_path, class: 'dropdown-item' %>
-              <div class="dropdown-divider"></div>
-              <%= link_to "How to leak to New Internationalist", page_path("how-to-leak"), class: 'dropdown-item' %>
-              <%= link_to "SecureDrop server", page_path("securedrop"), class: 'dropdown-item' %>
               <% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
               <% else %>
                 <div class="dropdown-divider"></div>

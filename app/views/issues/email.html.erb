@@ -218,9 +218,7 @@
             <td class="hide w0" width="160" valign="top">
             <p id="street-address" align="right" class="footer-content-right">
                 <span>New Internationalist Publications</span>
-                <span>172 Gilles Street,</span><br>
-                <span>Adelaide, SA, 5000</span><br>
-                <span>AUSTRALIA</span><br><br>
+                <span><%= raw(ENV["STREET_ADDRESS"]) %></span><br><br>
                 <span><a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %></a></span><br>
                 <span><a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">twitter.com/<%= ENV["TWITTER_NAME"] %></a></span><br><br>
                 <span>ABN 11 005 523 124</span>

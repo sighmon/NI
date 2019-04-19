@@ -32,9 +32,6 @@
         <li><%= link_to "Mobile applications", page_path("apps") %></li>
         <li><%= link_to "Help", page_path("help") %></li>
         <li><%= link_to "RSS feed", rss_url(format: :xml) %></li>
-        <li><%= link_to "How to leak", page_path("how-to-leak") %></li>
-        <li><%= link_to "SecureDrop", page_path("securedrop") %></li>
-        <li><%= link_to "Warrant canary", "/canary.txt" %></li>
       </ul>
     </div>
     <div class="col-sm-4">
@@ -42,7 +39,6 @@
       <ul>
         <li>Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>">@<%= ENV["TWITTER_NAME"] %></a></li>
         <li>Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a></li>
-        <li>Google+: <a href="https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>">+<%= ENV["GOOGLE_PLUS_NAME"] %></a></li>
         <li>Instagram: <a href="https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>">@<%= ENV["INSTAGRAM_NAME"] %></a></li>
         <li>Youtube: <a href="https://www.youtube.com/user/<%= ENV["YOUTUBE_NAME"] %>/videos"><%= ENV["YOUTUBE_NAME"] %></a></li>
         <li>Apple: <a href="<%= ENV["ITUNES_APP_LINK"] %>">App Store</a></li>
@@ -50,10 +46,6 @@
       </ul>
       <h5>Contact us:</h5>
       <ul>
-        <li>Anonymously: <%= link_to "SecureDrop server", page_path("securedrop") %></li>
-        <li>Email: <a href="mailto:<%= ENV["DEVISE_EMAIL_ADDRESS"] %>?Subject=Question from digital.newint.com.au"><%= ENV["DEVISE_EMAIL_ADDRESS"] %></a></li>
-        <li>PGP Public Key and Fingerprint:<br /><%= link_to "#{ENV['PGP_PUBLIC_KEY_FINGERPRINT']}", "#{ENV['PGP_PUBLIC_KEY_LINK']}" %></li>
-        <li>Phone: <%= ENV["PHONE_NUMBER"] %></li>
         <li><%= raw(ENV["STREET_ADDRESS"]) %></li>
       </ul>
     </div>
