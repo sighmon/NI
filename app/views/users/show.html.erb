@@ -13,7 +13,7 @@
 	<dd><%= @user.user_type %></dd>
 	<% if @user.subscriber? || @user.subscription_lapsed? || @user.user_type == "Admin" %>
 		<% if @user.has_paper_only? or @user.had_paper_only? %>
-			<dt>Digital trial expires:</dt>
+			<dt>Digital expiry:</dt>
 		<% else %>
 			<dt>Expiry date:</dt>
 		<% end %>
@@ -56,7 +56,7 @@
 	<% end %>
 	<% if @user.has_paper_only? or @user.had_paper_only? %>
 		<!-- TODO: Add this into the tests above properly -->
-		<dt>Paper subscription:</dt>
+		<dt>Paper expiry:</dt>
 		<dd><% begin %>
 			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>

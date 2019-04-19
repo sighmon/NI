@@ -42,7 +42,7 @@
 	<dt>Login count:</dt>
 	<dd><%= @user.sign_in_count %> <span class="author-note">(<%= @user.current_sign_in_at.try(:strftime,"%d %b, %Y") %> - <%= @user.current_sign_in_ip %>)</span></dd>
 	<% if @user.has_paper_only? or @user.had_paper_only? %>
-		<dt>Digital trial expires:</dt>
+		<dt>Digital expiry:</dt>
 	<% else %>
 		<dt>Expiry date:</dt>
 	<% end %>
@@ -61,7 +61,7 @@
 	</dd>
 	<% if @user.has_paper_only? or @user.had_paper_only? %>
 		<!-- Paper only -->
-		<dt>Paper subscription:</dt>
+		<dt>Paper expiry:</dt>
 		<dd><% begin %>
 			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>
