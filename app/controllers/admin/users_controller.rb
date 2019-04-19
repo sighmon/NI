@@ -264,7 +264,7 @@ class Admin::UsersController < Admin::BaseController
 		if @query.blank?
 			@users = []
 		else
-			@users = User.where('email ~* :query or username ~* :query', { query: @query }).sorted_by(params[:sort], params[:direction])
+			@users = User.where('email ~* :query or username ~* :query or first_name ~* :query or last_name ~* :query or company_name ~* :query or address ~* :query', { query: @query }).sorted_by(params[:sort], params[:direction])
 		end
 		respond_to do |format|
 			format.html
