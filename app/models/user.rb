@@ -191,6 +191,10 @@ class User < ActiveRecord::Base
     return self.current_subscriptions.collect{|s| s.paper_copy}.include?(true)
   end
 
+  def had_paper_copy?
+    return self.subscriptions.collect{|s| s.paper_copy}.include?(true)
+  end
+
   def has_paper_only?
     return self.current_paper_subscriptions.collect{|s| s.paper_only}.include?(true)
   end

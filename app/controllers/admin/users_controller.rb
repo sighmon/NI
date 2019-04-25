@@ -70,6 +70,7 @@ class Admin::UsersController < Admin::BaseController
 			params[:user].delete(:ip_whitelist)
 		end
 
+		# NOTE: Duplicated in registrations_controller.rb
 		# Update @user details updated at fields
 		if not params[:user][:email] == @user.email
 			@user.email_updated = DateTime.now
@@ -94,9 +95,11 @@ class Admin::UsersController < Admin::BaseController
 		country_changed = ApplicationHelper.has_been_updated(params[:user][:country], @user.country)
 		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or state_changed or country_changed
 			@user.postal_address_updated = DateTime.now
-			@user.postal_mailable = "Y"
-			params[:user].delete :postal_mailable
-			@user.postal_mailable_updated = DateTime.now
+			if not @user.postal_mailable == "Y"
+        @user.postal_mailable = "Y"
+        params[:user].delete :postal_mailable
+        @user.postal_mailable_updated = DateTime.now
+      end
 		end
 
 		if @user.update_attributes(user_params)

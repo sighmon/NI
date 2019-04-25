@@ -9,6 +9,34 @@ class RegistrationsController < Devise::RegistrationsController
 
   prepend_before_action :check_captcha, only: [:create]
 
+  def update
+    # NOTE: Duplicated in admin/users_controller.rb
+    if not params[:user][:email] == @user.email
+      @user.email_updated = DateTime.now
+    end
+
+    title_changed = ApplicationHelper.has_been_updated(params[:user][:title], @user.title)
+    first_name_changed = ApplicationHelper.has_been_updated(params[:user][:first_name], @user.first_name)
+    last_name_changed = ApplicationHelper.has_been_updated(params[:user][:last_name], @user.last_name)
+    company_name_changed = ApplicationHelper.has_been_updated(params[:user][:company_name], @user.company_name)
+    address_changed = ApplicationHelper.has_been_updated(params[:user][:address], @user.address)
+    postal_code_changed = ApplicationHelper.has_been_updated(params[:user][:postal_code], @user.postal_code)
+    city_changed = ApplicationHelper.has_been_updated(params[:user][:city], @user.city)
+    state_changed = ApplicationHelper.has_been_updated(params[:user][:state], @user.state)
+    country_changed = ApplicationHelper.has_been_updated(params[:user][:country], @user.country)
+    if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or state_changed or country_changed
+      @user.postal_address_updated = DateTime.now
+      if not @user.postal_mailable == "Y"
+        @user.postal_mailable = "Y"
+        params[:user].delete :postal_mailable
+        @user.postal_mailable_updated = DateTime.now
+      end
+    end
+    @user.save
+
+    super
+  end
+
   protected
 
   def configure_permitted_parameters
@@ -26,7 +54,17 @@ class RegistrationsController < Devise::RegistrationsController
         :email,
         :current_password,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        :title,
+        :first_name,
+        :last_name,
+        :company_name,
+        :address,
+        :city,
+        :postal_code,
+        :state,
+        :country,
+        :phone
       )
     }
   end
@@ -44,7 +82,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_update_path_for(resource)
-    signed_in_root_path(resource)
+    user_path(resource)
   end
 
   private
