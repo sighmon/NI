@@ -1129,8 +1129,7 @@ a:active .shadow-sm {
 }
 
 .edit-issue-buttons hr {
-	margin: 0.625em 0em;
-	border: none;
+	margin: 1.5rem 0;
 }
 
 .actions {
@@ -2455,6 +2454,10 @@ ul.ui-autocomplete {
 
 .admin-free-sub .checkbox input {
 	margin-right: 0.5em;
+}
+
+.admin-free-sub fieldset, .admin-free-sub .form-group {
+	margin-right: 1rem;
 }
 
 .admin td {

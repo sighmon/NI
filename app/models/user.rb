@@ -315,16 +315,18 @@ class User < ActiveRecord::Base
       t = "Institution"
     elsif parent
       t = "Student"
-    elsif subscriber?
+    elsif subscriber? or has_paper_only?
       t = "Subscriber"
     end
     if uk_id
       t += " (UK)"
     end
-    if has_paper_only? and institution
-      t += " Paper Subscriber"
-    elsif has_paper_only?
-      t = "Paper Subscriber"
+    if has_paper_only?
+      t += " (Paper)"
+    elsif has_paper_copy? and not has_paper_only?
+      t += " (Digital & Paper)"
+    elsif subscriber? and not has_paper_copy? and not has_paper_only?
+      t += " (Digital)"
     end
     "#{t}"
   end
