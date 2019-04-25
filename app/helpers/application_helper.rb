@@ -380,4 +380,16 @@ module ApplicationHelper
         object_date > Time.new(2018, 8).to_datetime
     end
 
+    def self.has_been_updated(param, field)
+        if field.nil? and not param.blank?
+            return true
+        elsif field.blank? and not param.blank?
+            return true
+        elsif field and not (field == param)
+            return true
+        else
+            return false
+        end
+    end
+
 end

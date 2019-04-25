@@ -75,37 +75,28 @@ class Admin::UsersController < Admin::BaseController
 			@user.email_updated = DateTime.now
 		end
 
-		def has_been_updated(param, field)
-			if field.nil? and not param.blank?
-				return true
-			elsif field.blank? and not param.blank?
-				return true
-			elsif field and not (field == param)
-				return true
-			else
-				return false
-			end
-		end
-
-		if has_been_updated(params[:user][:postal_mailable], @user.postal_mailable)
+		if ApplicationHelper.has_been_updated(params[:user][:postal_mailable], @user.postal_mailable)
 			@user.postal_mailable_updated = DateTime.now
 		end
 
-		if has_been_updated(params[:user][:email_opt_in], @user.email_opt_in)
+		if ApplicationHelper.has_been_updated(params[:user][:email_opt_in], @user.email_opt_in)
 			@user.email_opt_in_updated = DateTime.now
 		end
 
-		title_changed = has_been_updated(params[:user][:title], @user.title)
-		first_name_changed = has_been_updated(params[:user][:first_name], @user.first_name)
-		last_name_changed = has_been_updated(params[:user][:last_name], @user.last_name)
-		company_name_changed = has_been_updated(params[:user][:company_name], @user.company_name)
-		address_changed = has_been_updated(params[:user][:address], @user.address)
-		postal_code_changed = has_been_updated(params[:user][:postal_code], @user.postal_code)
-		city_changed = has_been_updated(params[:user][:city], @user.city)
-		state_changed = has_been_updated(params[:user][:state], @user.state)
-		country_changed = has_been_updated(params[:user][:country], @user.country)
+		title_changed = ApplicationHelper.has_been_updated(params[:user][:title], @user.title)
+		first_name_changed = ApplicationHelper.has_been_updated(params[:user][:first_name], @user.first_name)
+		last_name_changed = ApplicationHelper.has_been_updated(params[:user][:last_name], @user.last_name)
+		company_name_changed = ApplicationHelper.has_been_updated(params[:user][:company_name], @user.company_name)
+		address_changed = ApplicationHelper.has_been_updated(params[:user][:address], @user.address)
+		postal_code_changed = ApplicationHelper.has_been_updated(params[:user][:postal_code], @user.postal_code)
+		city_changed = ApplicationHelper.has_been_updated(params[:user][:city], @user.city)
+		state_changed = ApplicationHelper.has_been_updated(params[:user][:state], @user.state)
+		country_changed = ApplicationHelper.has_been_updated(params[:user][:country], @user.country)
 		if title_changed or first_name_changed or last_name_changed or company_name_changed or address_changed or postal_code_changed or city_changed or state_changed or country_changed
 			@user.postal_address_updated = DateTime.now
+			@user.postal_mailable = "Y"
+			params[:user].delete :postal_mailable
+			@user.postal_mailable_updated = DateTime.now
 		end
 
 		if @user.update_attributes(user_params)

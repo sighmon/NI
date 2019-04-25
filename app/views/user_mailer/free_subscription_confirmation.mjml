@@ -1,6 +1,6 @@
 <mjml>
 	<mj-head>
-		<mj-preview>New Internationalist magazine - free subscription!</mj-preview>
+		<mj-preview>New Internationalist magazine subscription</mj-preview>
 	</mj-head>
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
@@ -40,7 +40,7 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
-					<%= link_to "Free subscription!", user_url(@user), style: 'color:inherit;' %>
+					<%= link_to "Thanks for subscribing", user_url(@user), style: 'color:inherit;' %>
 				</mj-text>
 
 				<mj-text
@@ -49,7 +49,7 @@
 					font-weight="300"
 					color="#787878">
 					<%= @greeting %> <%= @user.username %>,<br /><br />
-					Lucky you! You've been given a complimentary <%= @number_of_months %> month subscription to New Internationalist magazine.<br /><br />
+					Thanks for your subscription to the New Internationalist magazine.<br /><br />
 				
 					Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
 

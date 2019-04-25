@@ -95,7 +95,7 @@ class UserMailer < ActionMailer::Base
     @issues = Issue.where(published: true).last(8).reverse
     @number_of_months = number_of_months
     @subscription = user.subscriptions.last
-    mail(:to => user.email, :subject => "Complimentary New Internationalist Digital Subscription") do |format|
+    mail(:to => user.email, :subject => "New Internationalist Subscription") do |format|
       format.text
       format.mjml
     end
