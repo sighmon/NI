@@ -150,13 +150,13 @@ describe UserMailer, :type => :mailer do
       }
 
       it "renders the headers" do
-        expect(mail.subject).to eq("Complimentary New Internationalist Digital Subscription")
+        expect(mail.subject).to eq("New Internationalist Subscription")
         expect(mail.to).to eq([user.email])
         expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
       end
 
       it "renders the body" do
-        expect(mail.body.encoded).to match("Lucky you! You've been given a complimentary 12 month")
+        expect(mail.body.encoded).to match("Thanks for your subscription to the New Internationalist magazine")
         expect(mail.body.encoded).to match(user.username)
         # Check that the MJML > HTML renderer has worked
         expect(mail.body.encoded).not_to match("mj-body")

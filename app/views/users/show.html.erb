@@ -1,6 +1,7 @@
 <%- model_class = User -%>
 <div class="page-header">
 	<h1><%= @user %></h1>
+	<%= link_to "Edit my profile", edit_user_registration_path(@user), :class => 'btn btn-primary' %>
 </div>
 
 <dl class="dl-horizontal admin">
