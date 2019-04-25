@@ -376,6 +376,18 @@ class SubscriptionsController < ApplicationController
     @subscription.paypal_postal_code = session[:express_postal_code]
     @subscription.paper_copy = session[:express_paper]
     @subscription.paper_only = session[:express_paper_only]
+
+    # Add address details to @user model
+    if @user.address.blank?
+      @user.first_name = session[:express_first_name]
+      @user.last_name = session[:express_last_name]
+      @user.address = session[:express_street1]
+      @user.city = session[:express_city_name]
+      @user.postal_code = session[:express_postal_code]
+      @user.state = session[:express_state_or_province]
+      @user.country = ISO3166::Country.find_country_by_name(session[:express_country_name].try(:titleize)).try(:alpha2)
+      @user.save
+    end
   end
 
   def express_purchase_options
