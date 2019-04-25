@@ -1,50 +1,7 @@
 <div class="page-header">
 	<h1><%= @user %></h1>
+	<%= link_to "Edit subscriber", edit_admin_user_path(@user), :class => 'btn btn-primary' %>
 </div>
-
-<% if can? :update, @user %>
-	<div class="edit-issue-buttons">
-		<%= link_to 'Give a free 1yr Subscription', admin_user_free_subscription_path(@user), :class => 'btn btn-xs btn-warning', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'?"))} %>
-		<%= link_to '10yr Media Subscription', admin_user_media_subscription_path(@user), :class => 'btn btn-xs btn-warning', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 10 year media subscription to: '#{@user.username}'?"))} %>
-		<%= link_to 'Give a SILENT 1yr Subscription', admin_user_free_silent_subscription_path(@user, :number_of_months => 12, :send_email => 0), :class => 'btn btn-xs btn-success', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give a free 1 year subscription to: '#{@user.username}'? Also worth noting, they won't get an email confirming it."))} %>
-		<% if not @user.institution %>
-			<%= link_to 'Make this user an Institutional user', admin_user_make_institutional_path(@user), :class => 'btn btn-xs btn-success', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give Institutional powers to: '#{@user.username}'?"))} %>
-		<% end %>
-		<hr />
-		<h3>Digital subscription</h3>
-		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
-				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
-				<%= f.input :send_email, as: :boolean, default: false %>
-				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
-					Give free digital subscription
-				<% end %>
-		<% end %>
-		<hr />
-		<h3>Digital & Paper subscription</h3>
-		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
-				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
-				<%= f.input :send_email, as: :boolean, default: false %>
-				<%= f.hidden_field :paper_copy, value: true %>
-				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
-					Give free digital & paper subscription
-				<% end %>
-		<% end %>
-		<hr />
-		<h3>Paper only subscription</h3>
-		<%= simple_form_for admin_user_free_silent_subscription_path(@user), :url => admin_user_free_silent_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
-				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
-				<%= f.input :send_email, as: :boolean, default: false %>
-				<%= f.hidden_field :paper_copy, value: true %>
-				<%= f.hidden_field :paper_only, value: true %>
-				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
-					Give free paper only subscription
-				<% end %>
-		<% end %>
-		<hr />
-		<p>HTML and Text to re-send sign-up emails:</p>
-		<%= link_to "Sign-up confirmation html", user_path(@user,format: 'mjml'), class: 'btn btn-outline-secondary' %> <%= link_to "Sign-up confirmation text", user_path(@user,format: 'text'), class: 'btn btn-outline-secondary' %>
-	</div>
-<% end %>
 
 <dl class="dl-horizontal admin">
 	<dt>Email address:</dt>
@@ -113,6 +70,137 @@
 		<% end %>
 	<% end %>
 </dl>
+
+<% if can? :update, @user %>
+	<div class="edit-issue-buttons">
+		<h2>Add institutional subscriptions</h2>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12, institution: true))} - 1 year digital subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				institution: 1,
+				price_paid: Subscription.calculate_subscription_price(12, institution: true)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year institutional digital subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year institutional digital subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12, institution: true, paper: true))} - 1 year digital and paper subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				institution: 1,
+				paper_copy: 1,
+				price_paid: Subscription.calculate_subscription_price(12, institution: true, paper: true)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year institutional digital and paper subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year institutional digital and paper subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12, institution: true, paper: true, paper_only: true))} - 1 year paper subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				institution: 1,
+				paper_copy: 1,
+				paper_only: 1,
+				price_paid: Subscription.calculate_subscription_price(12, institution: true, paper: true, paper_only: true)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year institutional paper subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year institutional paper subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<hr />
+		<h2>Add personal subscriptions</h2>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12))} - 1 year digital subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				price_paid: Subscription.calculate_subscription_price(12)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year digital subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year digital subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12, paper: true))} - 1 year digital and paper subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				paper_copy: 1,
+				price_paid: Subscription.calculate_subscription_price(12, paper: true)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year digital and paper subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year digital and paper subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<%= link_to "$#{cents_to_dollars(Subscription.calculate_subscription_price(12, paper: true, paper_only: true))} - 1 year paper subscription",
+			admin_user_add_subscription_path(
+				@user,
+				number_of_months: 12,
+				send_email: 1,
+				paper_copy: 1,
+				paper_only: true,
+				price_paid: Subscription.calculate_subscription_price(12, paper: true, paper_only: true)
+			),
+			:class => 'btn btn-xs btn-warning',
+			:data => {
+				:confirm => t('.confirm', :default => t("Are you sure you want to give a 1 year paper subscription to: '#{@user.username}'?",
+				:default => "Are you sure you want to give a 1 year paper subscription to: '#{@user.username}'?"))
+			}
+		%>
+		<% if not @user.institution %>
+			<%= link_to 'Make this user an Institutional user', admin_user_make_institutional_path(@user), :class => 'btn btn-xs btn-success', :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Are you sure you want to give Institutional powers to: '#{@user.username}'?"))} %>
+		<% end %>
+		<hr />
+		<h3>Add digital subscription</h3>
+		<%= simple_form_for admin_user_add_subscription_path(@user), :url => admin_user_add_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
+				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
+				<%= f.input :send_email, as: :boolean, default: false %>
+				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
+					Give digital subscription
+				<% end %>
+		<% end %>
+		<hr />
+		<h3>Add digital & paper subscription</h3>
+		<%= simple_form_for admin_user_add_subscription_path(@user), :url => admin_user_add_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
+				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
+				<%= f.input :send_email, as: :boolean, default: false %>
+				<%= f.hidden_field :paper_copy, value: true %>
+				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
+					Give digital & paper subscription
+				<% end %>
+		<% end %>
+		<hr />
+		<h3>Add paper only subscription</h3>
+		<%= simple_form_for admin_user_add_subscription_path(@user), :url => admin_user_add_subscription_path(@user), :html => {:class => 'form-inline admin-free-sub' } do |f| %>
+				<%= f.input :number_of_months, :placeholder => 'Months', as: :integer, required: false, label: false %>
+				<%= f.input :send_email, as: :boolean, default: false %>
+				<%= f.hidden_field :paper_copy, value: true %>
+				<%= f.hidden_field :paper_only, value: true %>
+				<%= button_tag(type: 'submit', class: "btn btn-success btn-xs") do %>
+					Give paper only subscription
+				<% end %>
+		<% end %>
+		<hr />
+		<p>HTML and Text to re-send sign-up emails:</p>
+		<%= link_to "Sign-up confirmation html", user_path(@user,format: 'mjml'), class: 'btn btn-outline-secondary' %> <%= link_to "Sign-up confirmation text", user_path(@user,format: 'text'), class: 'btn btn-outline-secondary' %>
+	</div>
+<% end %>
 
 <h3>Extended details</h3>
 <dl class="dl-horizontal admin">

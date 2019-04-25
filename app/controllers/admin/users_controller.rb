@@ -207,20 +207,31 @@ class Admin::UsersController < Admin::BaseController
 		end
 	end
 
-	def free_silent_subscription
+	def add_subscription
 		# Give a free x month subscription
 		@user = User.find(params[:user_id])
 		@paper_copy = nil
 		@paper_only = nil
+		@institution = nil
+		@price_paid = nil
 		
 		if request.post?
-			@number_of_months = params["/admin/users/#{@user.id}/free_silent_subscription"][:number_of_months]
-			send_email = params["/admin/users/#{@user.id}/free_silent_subscription"][:send_email]
-			@paper_copy = params["/admin/users/#{@user.id}/free_silent_subscription"][:paper_copy]
-			@paper_only = params["/admin/users/#{@user.id}/free_silent_subscription"][:paper_only]
+			@number_of_months = params["/admin/users/#{@user.id}/add_subscription"][:number_of_months]
+			send_email = params["/admin/users/#{@user.id}/add_subscription"][:send_email]
+			@paper_copy = params["/admin/users/#{@user.id}/add_subscription"][:paper_copy]
+			@paper_only = params["/admin/users/#{@user.id}/add_subscription"][:paper_only]
 		else
 			@number_of_months = params[:number_of_months]
 			send_email = params[:send_email]
+			@institution = params[:institution]
+			@price_paid = params[:price_paid]
+			@paper_copy = params[:paper_copy]
+			@paper_only = params[:paper_only]
+		end
+
+		if @institution == "1"
+			@user.institution = true
+			@user.save
 		end
 
 		@free_subscription = Subscription.create(
@@ -228,7 +239,7 @@ class Admin::UsersController < Admin::BaseController
 			:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now),
 			:duration => @number_of_months,
 			:purchase_date => DateTime.now,
-			:price_paid => 0,
+			:price_paid => @price_paid,
 			:paper_copy => @paper_copy,
 			:paper_only => @paper_only
 		)

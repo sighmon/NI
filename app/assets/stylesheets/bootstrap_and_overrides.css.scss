@@ -299,7 +299,7 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hove
 
 // a.btn:visited { color: #333; }
 
-a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
+// a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
 
 .dl-horizontal dd:before, .dl-horizontal dd:after {
 	display: table;
@@ -853,7 +853,7 @@ $homeCoverListMargin: 0.438em;
 	margin-top: 1rem;
 }
 
-.page-header img {
+.page-header img, .page-header .btn {
 	@include pull-right;
 	margin-top: -2.5em;
 }
@@ -1130,6 +1130,10 @@ a:active .shadow-sm {
 
 .edit-issue-buttons hr {
 	margin: 1.5rem 0;
+}
+
+.edit-issue-buttons .btn {
+	margin: 0.5rem 0;
 }
 
 .actions {

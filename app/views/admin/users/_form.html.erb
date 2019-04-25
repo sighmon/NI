@@ -36,8 +36,8 @@
         <%= f.input :last_name %>
         <%= f.input :company_name %>
         <%= f.input :address %>
-        <%= f.input :postal_code %>
         <%= f.input :city, label: 'Suburb or Town' %>
+        <%= f.input :postal_code %>
         <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state } }) %>
         <%= f.input :country, collection: CountryStateSelect.countries_collection %>
         <%= f.input :phone %>
