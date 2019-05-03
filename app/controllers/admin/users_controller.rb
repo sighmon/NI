@@ -228,9 +228,16 @@ class Admin::UsersController < Admin::BaseController
 			@user.save
 		end
 
+		# Calculate valid_from correctly for paper_only subscriptions
+		if @paper_only == "1"
+			@valid_from = (@user.last_subscription.try(:expiry_date_paper_only) or DateTime.now)
+		else
+			@valid_from = (@user.last_subscription.try(:expiry_date) or DateTime.now)
+		end
+
 		@free_subscription = Subscription.create(
 			:user_id => @user.id,
-			:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now),
+			:valid_from => @valid_from,
 			:duration => @number_of_months,
 			:purchase_date => DateTime.now,
 			:price_paid => @price_paid,
