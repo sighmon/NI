@@ -57,6 +57,11 @@
               <meta itemprop="url" content="<%= image_url('section-view-from-america-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
+            <% elsif article.has_category('/columns/view-from-brazil/') %>
+              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue.png').to_s %>">
+              <meta itemprop="width" content="1890">
+              <meta itemprop="height" content="1063">
             <% else %>
               <%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
@@ -125,6 +130,11 @@
             <% elsif article.has_category('/columns/view-from-america/') %>
               <%= link_to retina_image_tag('section-view-from-america-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-america-issue.png').to_s %>">
+              <meta itemprop="width" content="1890">
+              <meta itemprop="height" content="1063">
+            <% elsif article.has_category('/columns/view-from-brazil/') %>
+              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% else %>
