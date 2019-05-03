@@ -297,6 +297,10 @@ h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, p a:hove
 	color: $niBlue2018Darker;
 }
 
+.actions .btn-success, .actions .btn-success:visited {
+	color: #fff;
+}
+
 // a.btn:visited { color: #333; }
 
 // a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warning:visited, a.btn-info:visited { color: #fff; }
