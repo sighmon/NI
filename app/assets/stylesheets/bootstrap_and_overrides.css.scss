@@ -1120,7 +1120,7 @@ a:active .shadow-sm {
 	margin-top: 1em;
 	position: relative;
 	z-index: 1000;
-	// margin: 1.25em inherit 1.25em inherit;
+	top: -1.5em;
 }
 
 .edit-issue-buttons {
@@ -1129,7 +1129,6 @@ a:active .shadow-sm {
 
 .edit-article-buttons {
 	@include edit-issue-buttons;
-	margin-left: 0.625em;
 }
 
 .edit-issue-buttons hr {
