@@ -31,6 +31,14 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def is_current_paper_copy?
+    if paper_copy and is_cancelled? and was_recurring? and refunded_on.nil?
+      return (expiry_date_paper_copy > DateTime.now)
+    elsif paper_copy
+      return (expiry_date_paper_copy > DateTime.now and (not is_cancelled?))
+    end
+  end
+
   def expiry_date
     if paper_only
       # Free 3 month trial for paper only subscribers
@@ -46,6 +54,12 @@ class Subscription < ActiveRecord::Base
 
   def expiry_date_paper_only
     if paper_only
+      return (valid_from + duration.months)
+    end
+  end
+
+  def expiry_date_paper_copy
+    if paper_copy
       return (valid_from + duration.months)
     end
   end

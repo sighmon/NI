@@ -55,11 +55,11 @@
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
 	<% end %>
-	<% if @user.has_paper_only? or @user.had_paper_only? %>
+	<% if @user.has_paper_copy? or @user.had_paper_copy? %>
 		<!-- TODO: Add this into the tests above properly -->
 		<dt>Paper expiry:</dt>
 		<dd><% begin %>
-			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+			<%= @user.expiry_date_paper_copy.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>

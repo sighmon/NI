@@ -160,6 +160,10 @@ class User < ActiveRecord::Base
     return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.is_current?}.include?(true)
   end
 
+  def digital_only_subscription_valid?
+    return self.subscriptions.select{|s| (s.paper_only? == false and s.paper_copy? == false)}.collect{|s| s.is_current?}.include?(true)
+  end
+
   def uk_user?
     not uk_id.nil?
   end
@@ -233,6 +237,10 @@ class User < ActiveRecord::Base
     return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.expiry_date_paper_only}.sort.last
   end
 
+  def expiry_date_paper_copy
+    return self.subscriptions.select{|s| s.paper_copy? == true}.collect{|s| s.expiry_date_paper_copy}.sort.last
+  end
+
   def expiry_date_including_ios(request)
     ios_expiry = request_has_valid_itunes_receipt(request)
     logger.info "iOS expiry: #{ios_expiry}"
@@ -282,6 +290,14 @@ class User < ActiveRecord::Base
     return self.current_subscriptions.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
   end
 
+  def last_paper_subscription
+    return self.current_paper_subscriptions.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
+  def last_paper_copy_subscription
+    return self.current_paper_copy_subscriptions.sort{|a,b| a.expiry_date <=> b.expiry_date}.last
+  end
+
   def last_subscription_including_cancelled
     return self.subscriptions.sort{|a,b| a.expiry_date_excluding_cancelled <=> b.expiry_date_excluding_cancelled}.last
   end
@@ -296,6 +312,10 @@ class User < ActiveRecord::Base
 
   def current_paper_subscriptions
     return self.subscriptions.select{|s| s.is_current_paper?}
+  end
+
+  def current_paper_copy_subscriptions
+    return self.subscriptions.select{|s| s.is_current_paper_copy?}
   end
 
   def refunds_due

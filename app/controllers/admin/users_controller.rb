@@ -229,8 +229,10 @@ class Admin::UsersController < Admin::BaseController
 		end
 
 		# Calculate valid_from correctly for paper_only subscriptions
-		if @paper_only == "1"
-			@valid_from = (@user.last_subscription.try(:expiry_date_paper_only) or DateTime.now)
+		if @paper_only == "1" or @paper_only == "true"
+			@valid_from = (@user.last_paper_subscription.try(:expiry_date_paper_only) or DateTime.now)
+		elsif @paper_copy == "1" or @paper_copy == "true"
+			@valid_from = (@user.last_paper_copy_subscription.try(:expiry_date_paper_copy) or DateTime.now)
 		else
 			@valid_from = (@user.last_subscription.try(:expiry_date) or DateTime.now)
 		end

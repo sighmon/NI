@@ -238,6 +238,8 @@ describe User, :type => :model do
           end
         end
         expect(user.subscriptions.first.valid_from + total_months.months).to eq(user.expiry_date)
+        expect(user.expiry_date_paper_only).to be_nil
+        expect(user.expiry_date_paper_copy).to be_nil
       end
     end
 
@@ -252,6 +254,8 @@ describe User, :type => :model do
         expect(user.subscriptions.count).to eq(2)
         # TODO: fix this in the subscription.rb model
         # expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date)
+        expect(user.expiry_date_paper_only).to be_nil
+        expect(user.expiry_date_paper_copy).to be_nil
       end
     end
 
@@ -264,6 +268,188 @@ describe User, :type => :model do
         user.subscriptions.last.expire_subscription
         expect(user.subscriptions.count).to eq(2)
         expect(user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months).to eq(user.expiry_date)
+        expect(user.expiry_date_paper_only).to be_nil
+        expect(user.expiry_date_paper_copy).to be_nil
+      end
+    end
+
+    it "with two subscriptions, the first digital, the second paper only, has the correct expiry date and paper expiry date" do
+      subscription.duration = 12
+      user.subscriptions.new(valid_from: DateTime.now, duration: 12, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(2)
+        expect(user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
+      end
+    end
+
+    it "with two subscriptions, the first an expired digital, the second paper only, has the correct expiry date and paper expiry date" do
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 18.months
+      subscription.purchase_date = DateTime.now - 18.months
+      subscription.save
+      user.subscriptions.new(valid_from: DateTime.now, duration: 12, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(2)
+        expect(user.subscriptions.last.purchase_date + 3.months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
+      end
+    end
+
+    it "with two subscriptions, the first a current digital, the second an expired paper only, has the correct expiry date and paper expiry date" do
+      subscription.duration = 12
+      subscription.save
+      user.subscriptions.new(valid_from: DateTime.now - 18.months, duration: 12, purchase_date: DateTime.now - 18.months, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(2)
+        expect(user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_falsey
+        expect(user.has_paper_only?).to be_falsey
+      end
+    end
+
+    it "with three subscriptions, expired digital, expired paper only, new paper_only, has the correct expiry date and paper expiry date" do
+      # Expired digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 18.months
+      subscription.purchase_date = DateTime.now - 18.months
+      subscription.save
+      # Expired paper only
+      user.subscriptions.new(valid_from: DateTime.now - 24.months, duration: 12, purchase_date: DateTime.now - 24.months, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper only
+      user.subscriptions.new(valid_from: DateTime.now, duration: 12, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.last.purchase_date + 3.months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
+      end
+    end
+
+    it "with three subscriptions, expired digital, expired paper only, new paper and digital, has the correct expiry date and paper expiry date" do
+      # Expired digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 18.months
+      subscription.purchase_date = DateTime.now - 18.months
+      subscription.save
+      # Expired paper only
+      user.subscriptions.new(valid_from: DateTime.now - 24.months, duration: 12, purchase_date: DateTime.now - 24.months, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper and digital
+      user.subscriptions.new(valid_from: DateTime.now, duration: 6, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.second.purchase_date + (user.subscriptions.second.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_falsey
+      end
+    end
+
+    it "with three subscriptions, current digital, expired paper only, new paper only, has the correct expiry date and paper expiry date" do
+      # Current digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now
+      subscription.purchase_date = DateTime.now
+      subscription.save
+      # Expired paper only
+      user.subscriptions.new(valid_from: DateTime.now - 24.months, duration: 12, purchase_date: DateTime.now - 24.months, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper only
+      user.subscriptions.new(valid_from: DateTime.now, duration: 6, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.purchase_date + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
+      end
+    end
+
+    it "with three subscriptions, current digital, expired paper only, new paper only, has the correct expiry date and paper expiry date" do
+      # Current digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now
+      subscription.purchase_date = DateTime.now
+      subscription.save
+      # Expired paper only
+      user.subscriptions.new(valid_from: DateTime.now - 24.months, duration: 12, purchase_date: DateTime.now - 24.months, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper and digital
+      user.subscriptions.new(valid_from: DateTime.now, duration: 6, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months).to eq(user.expiry_date)
+        # TODO: Should add the first digital current sub with the last digital and paper duration
+        # expect((user.subscriptions.first.purchase_date + (user.subscriptions.first.duration).months) + (user.subscriptions.last.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.second.purchase_date + (user.subscriptions.second.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_falsey
+      end
+    end
+
+    it "with three subscriptions, expired digital, current paper only, new paper only, has the correct expiry date and paper expiry date" do
+      # Expired digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 18.months
+      subscription.purchase_date = DateTime.now - 18.months
+      subscription.save
+      # Current paper only
+      user.subscriptions.new(valid_from: DateTime.now, duration: 12, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper only
+      user.subscriptions.new(valid_from: user.subscriptions.second.expiry_date_paper_only, duration: 6, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.last.valid_from + 3.months).to eq(user.expiry_date)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
+      end
+    end
+
+    it "with three subscriptions, expired digital, current paper only, new paper and digital, has the correct expiry date and paper expiry date" do
+      # Expired digital
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 18.months
+      subscription.purchase_date = DateTime.now - 18.months
+      subscription.save
+      # Current paper only
+      user.subscriptions.new(valid_from: DateTime.now, duration: 12, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1, paper_only: 1)
+      user.subscriptions.last.save
+      # New paper and digital
+      user.subscriptions.new(valid_from: user.subscriptions.second.expiry_date_paper_only, duration: 6, purchase_date: DateTime.now, paypal_payer_id: "aaa", paypal_profile_id: "bbb", price_paid: 91, paper_copy: 1)
+      user.subscriptions.last.save
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(3)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date)
+        expect(user.subscriptions.second.valid_from + (user.subscriptions.second.duration).months).to eq(user.expiry_date_paper_only)
+        expect(user.subscriptions.last.valid_from + (user.subscriptions.last.duration).months).to eq(user.expiry_date_paper_copy)
+        expect(user.has_paper_copy?).to be_truthy
+        expect(user.has_paper_only?).to be_truthy
       end
     end
 

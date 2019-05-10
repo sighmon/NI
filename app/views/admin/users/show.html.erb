@@ -28,15 +28,15 @@
 			(Automatic debit)
 		<% elsif @user.is_recurring? and @user.has_paper_only? %>
 			(Automatic debit paper only)
-		<% elsif @user.has_paper_only? %>
+		<% elsif @user.has_paper_only? and not @user.digital_only_subscription_valid? %>
 			(3 month digital trial with paper only subscription)
 		<% end %>
 	</dd>
-	<% if @user.has_paper_only? or @user.had_paper_only? %>
-		<!-- Paper only -->
+	<% if @user.has_paper_copy? or @user.had_paper_copy? %>
+		<!-- Paper copy -->
 		<dt>Paper expiry:</dt>
 		<dd><% begin %>
-			<%= @user.expiry_date_paper_only.strftime("%e %B, %Y") %>
+			<%= @user.expiry_date_paper_copy.strftime("%e %B, %Y") %>
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
