@@ -10,7 +10,7 @@
 					color="#606b75"
 					font-weight="300"
 					align="center">
-					<%= link_to "New Internationalist digital subscription", page_url("subscribe"), style: 'color:inherit;' %>
+					<%= link_to "New Internationalist subscription", page_url("subscribe"), style: 'color:inherit;' %>
 				</mj-text>
 			</mj-column>
 		</mj-section>
@@ -51,7 +51,7 @@
 					line-height="22px"
 					font-weight="300"
 					color="#787878">
-					Your digital subscription includes:
+					Your subscription includes:
 				</mj-text>
 
 			</mj-column>

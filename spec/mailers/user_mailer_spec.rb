@@ -53,7 +53,7 @@ describe UserMailer, :type => :mailer do
       }
 
       it "renders the headers" do
-        expect(mail.subject).to eq("New Internationalist Digital Subscription - Institution confirmation")
+        expect(mail.subject).to eq("New Internationalist Subscription - Institution confirmation")
         expect(mail.to).to eq([user.email])
         expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
       end
@@ -77,7 +77,7 @@ describe UserMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("New Internationalist Digital Subscription")
+      expect(mail.subject).to eq("New Internationalist Subscription")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
     end
@@ -98,7 +98,7 @@ describe UserMailer, :type => :mailer do
       }
 
       it "renders the headers" do
-        expect(mail.subject).to eq("Complimentary New Internationalist Digital Subscription - Media")
+        expect(mail.subject).to eq("Complimentary New Internationalist Subscription - Media")
         expect(mail.to).to eq([user.email])
         expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
       end
@@ -120,7 +120,7 @@ describe UserMailer, :type => :mailer do
       }
 
       it "renders the headers" do
-        expect(mail.subject).to eq("New Internationalist Digital Subscription")
+        expect(mail.subject).to eq("New Internationalist Subscription")
         expect(mail.to).to eq([user.email])
         expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
       end
@@ -174,7 +174,7 @@ describe UserMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Cancelled New Internationalist Digital Subscription")
+      expect(mail.subject).to eq("Cancelled New Internationalist Subscription")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
     end
@@ -197,7 +197,7 @@ describe UserMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Cancelled New Internationalist Digital Subscription")
+      expect(mail.subject).to eq("Cancelled New Internationalist Subscription")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
     end

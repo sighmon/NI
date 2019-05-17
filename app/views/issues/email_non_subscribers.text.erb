@@ -5,7 +5,7 @@
 
 Hi [salutation],
 
-Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you log in with your username: [username,fallback=] and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+Thanks very much for registering with our New Internationalist online subscription service. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you log in with your username: [username,fallback=] and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 
 [http://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
 
@@ -54,7 +54,7 @@ App: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
 ============================
 
 You're receiving this because you have a guest login to the 
-digital edition of the New Internationalist Magazine.
+online edition of the New Internationalist Magazine.
 
 Forward to a friend
 [forwardtoafriend]

@@ -57,7 +57,7 @@
 				<mj-button
 					background-color="#ED4E59"
 					href="<%= page_url('subscribe', :protocol => "https") %>">
-					Buy a New Internationalist digital subscription
+					Buy a New Internationalist subscription
 				</mj-button>
 
 				<mj-text

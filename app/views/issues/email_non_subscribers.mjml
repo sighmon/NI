@@ -114,7 +114,7 @@
 					padding="0px 25px"
 					color="#787878">
 					Hi [salutation],<br /><br />
-					Thanks very much for registering with our New Internationalist digital subscription service. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "log in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+					Thanks very much for registering with our New Internationalist online subscription service. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "log in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 				</mj-text>
 
 			<% if not @issue.email_text.blank? %>
