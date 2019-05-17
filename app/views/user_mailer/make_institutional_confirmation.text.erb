@@ -23,11 +23,15 @@ For future reference, your username is: <%= @user.username %>
 
 <% if @user.subscriber? and @user.is_recurring? %>
 Your next auto-debit will be on:
-<% elsif @user.subscriber? %>
+<% else %>
 Your subscription is due for renewal:
 <% end %>
-<% if @user.subscriber? %>
-<%= @user.last_subscription.expiry_date.strftime("%e %B, %Y") %>
+<% if @user.paper_only_subscription_valid? %>
+<%= @user.expiry_date_paper_only.try(:strftime, "%e %B, %Y") %>
+We've also given you a free 3-month trial to the digital edition, which will expire on:
+<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %>
+<% else %>
+<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %>
 
 <% end %>
 If you come across any problems, simply hit 'reply' to this

@@ -15,7 +15,7 @@ Your next auto-debit will be on:
 <% else %>
 Your subscription is due for renewal:
 <% end %>
-<% if @user.expiry_date_paper_only %>
+<% if @user.paper_only_subscription_valid? %>
 <%= @user.expiry_date_paper_only.try(:strftime, "%e %B, %Y") %>
 
 We've also given you a free 3-month trial to the digital edition, which will expire on:

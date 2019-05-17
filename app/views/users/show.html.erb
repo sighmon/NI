@@ -55,6 +55,10 @@
 			<dd>If you have a current UK subscription, you might need to logout and log back in to update your expiry date.</dd>
 		<% end %>
 	<% end %>
+	<% if @user.has_paper_only? and not @user.digital_only_subscription_valid? %>
+		<dt></dt>
+		<dd>(3 month digital trial with paper only subscription)</dd>
+	<% end %>
 	<% if @user.has_paper_copy? or @user.had_paper_copy? %>
 		<!-- TODO: Add this into the tests above properly -->
 		<dt>Paper expiry:</dt>
