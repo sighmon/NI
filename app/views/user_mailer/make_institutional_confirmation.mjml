@@ -77,9 +77,9 @@
 					<% if @user.paper_only_subscription_valid? %>
 						<%= @user.expiry_date_paper_only.try(:strftime, "%e %B, %Y") %><br /><br />
 						We've also given you a free 3-month trial to the digital edition, which will expire on:<br />
-						<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %>
+						<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %><br /><br />
 					<% else %>
-						<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %>
+						<%= @user.expiry_date.try(:strftime, "%e %B, %Y") %><br /><br />
 					<% end %>
 
 					If you come across any problems, simply hit 'reply' to this email and we'll reply as soon as we can.<br /><br />
