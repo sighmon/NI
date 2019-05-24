@@ -122,9 +122,6 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bonsai-elasticsearch-rails (7.0.1)
-      elasticsearch-model (< 8)
-      elasticsearch-rails (< 8)
     bootstrap (4.3.1)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
@@ -191,17 +188,17 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     dry-inflector (0.1.2)
-    elasticsearch (7.1.0)
-      elasticsearch-api (= 7.1.0)
-      elasticsearch-transport (= 7.1.0)
-    elasticsearch-api (7.1.0)
+    elasticsearch (7.0.0)
+      elasticsearch-api (= 7.0.0)
+      elasticsearch-transport (= 7.0.0)
+    elasticsearch-api (7.0.0)
       multi_json
     elasticsearch-model (6.0.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
     elasticsearch-rails (6.0.0)
-    elasticsearch-transport (7.1.0)
+    elasticsearch-transport (7.0.0)
       faraday
       multi_json
     erubi (1.8.0)
@@ -749,7 +746,6 @@ DEPENDENCIES
   asset_sync
   better_errors (= 1.1.0)
   binding_of_caller
-  bonsai-elasticsearch-rails
   bootstrap
   brakeman
   bundler-audit
@@ -765,6 +761,9 @@ DEPENDENCIES
   database_cleaner
   delayed_job_active_record
   devise
+  elasticsearch (= 7.0.0)
+  elasticsearch-model
+  elasticsearch-rails
   factory_bot_rails
   figaro
   flamegraph
