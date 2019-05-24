@@ -10,11 +10,19 @@ class Admin::BaseController < ApplicationController
 		else
 			@latest_csv_date = nil
 		end
+
 		current_digital_subscribers_csv = Settings.find_by_var('current_digital_subscribers_csv')
 		if current_digital_subscribers_csv
-			@latest_email_csv_date = current_digital_subscribers_csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S")
+			@latest_subscribers_csv_date = current_digital_subscribers_csv.updated_at.strftime("current_subscribers-%Y-%m-%d-%H:%M:%S")
 		else
-			@latest_email_csv_date = nil
+			@latest_subscribers_csv_date = nil
+		end
+
+		lapsed_digital_subscribers_csv = Settings.find_by_var('lapsed_digital_subscribers_csv')
+		if lapsed_digital_subscribers_csv
+			@latest_lapsed_csv_date = lapsed_digital_subscribers_csv.updated_at.strftime("lapsed_subscribers-%Y-%m-%d-%H:%M:%S")
+		else
+			@latest_lapsed_csv_date = nil
 		end
 	end
 

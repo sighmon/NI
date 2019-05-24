@@ -264,32 +264,42 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def update_csv
-		if params[:type] == 'admin'
+		if params[:type] == 'users_all'
 			begin
 				Settings.destroy('users_csv')
 			rescue
 				# Pass
 			end
 			User.delay.update_admin_users_csv
-		elsif params[:type] == 'email'
+		elsif params[:type] == 'users_current'
 			begin
 				Settings.destroy('current_digital_subscribers_csv')
 			rescue
 				# Pass
 			end
 			User.delay.update_current_digital_subscribers_csv
+		elsif params[:type] == 'users_lapsed'
+			begin
+				Settings.destroy('lapsed_digital_subscribers_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_lapsed_digital_subscribers_csv
 		end
 		view_context.start_delayed_jobs
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'
 	end
 
 	def download_csv
-		if params[:type] == 'admin'
+		if params[:type] == 'users_all'
 			csv = Settings.find_by_var('users_csv')
 			csv_name = 'digisub'
-		elsif params[:type] == 'email'
+		elsif params[:type] == 'users_current'
 			csv = Settings.find_by_var('current_digital_subscribers_csv')
 			csv_name = 'current_subscribers'
+		elsif params[:type] == 'users_lapsed'
+			csv = Settings.find_by_var('lapsed_digital_subscribers_csv')
+			csv_name = 'lapsed_subscribers'
 		end
 		respond_to do |format|
 			format.csv {

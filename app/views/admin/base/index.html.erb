@@ -12,17 +12,25 @@
   <% end %>
 </p>
 <p>
-	<%= link_to "Update CSV user list", admin_users_update_csv_path(type: 'admin'), :class => 'btn btn-primary' %>
+	<%= link_to "Update CSV all user", admin_users_update_csv_path(type: 'users_all'), :class => 'btn btn-primary' %>
 	<% if @latest_csv_date %>
-		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'admin'), :class => 'btn btn-info' %>
+		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_all'), :class => 'btn btn-info' %>
 	<% else %>
 		<%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
 	<% end %>
 </p>
 <p>
-  <%= link_to "Update CSV email list", admin_users_update_csv_path(type: 'email'), :class => 'btn btn-primary' %>
-  <% if @latest_email_csv_date %>
-    <%= link_to "Download email CSV (#{@latest_email_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'email'), :class => 'btn btn-info' %>
+  <%= link_to "Update CSV current subscribers", admin_users_update_csv_path(type: 'users_current'), :class => 'btn btn-primary' %>
+  <% if @latest_subscribers_csv_date %>
+    <%= link_to "Download CSV (#{@latest_subscribers_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_current'), :class => 'btn btn-info' %>
+  <% else %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+  <% end %>
+</p>
+<p>
+  <%= link_to "Update CSV lapsed subscribers", admin_users_update_csv_path(type: 'users_lapsed'), :class => 'btn btn-primary' %>
+  <% if @latest_lapsed_csv_date %>
+    <%= link_to "Download CSV (#{@latest_lapsed_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_lapsed'), :class => 'btn btn-info' %>
   <% else %>
     <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
   <% end %>

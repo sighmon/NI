@@ -498,6 +498,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.update_lapsed_digital_subscribers_csv
+    Settings.lapsed_digital_subscribers_csv = User.uncached do
+      User.order(:email).select{ |u|
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and (u.digital_renewals == 'Y') and (u.subscription_valid? == false) and not u.email.include?('dummy@newint.com.au')
+      }.to_comma(:current_digital_subscribers)
+    end
+  end
+
   def self.find_by_whitelist(ip)
     # sql one liner to handle both CIDR and IP ranges
     query = ActiveRecord::Base.send(:sanitize_sql_array, ["with ip as (select ?::inet as value) select * from (select *, regexp_split_to_table(ip_whitelist,E',') as pattern from users) as expanded, regexp_split_to_array(expanded.pattern,E'-') as range where (expanded.pattern <> '' and expanded.pattern !~ '-' and (select value from ip) <<= expanded.pattern::inet) or (expanded.pattern ~ '-' and ((select value from ip) between range[1]::inet and range[2]::inet)) limit 1", ip])
