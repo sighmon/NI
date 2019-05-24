@@ -38,25 +38,4 @@ SecureHeaders::Configuration.default do |config|
     upgrade_insecure_requests: Rails.env.production?, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
   }
-  # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.
-  config.csp_report_only = config.csp.merge({
-    img_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
-    font_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
-    script_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
-    style_src: %W(#{ENV['CLOUDFRONT_SERVER']}.cloudfront.net #{URI(ENV['NI_APP_HOST']).host}),
-    report_uri: %W(#{ENV["REPORT_URI_CSP_REPORT_ONLY"]})
-  })
-  # Disabling as it is being deprecated by Chrome.
-  # config.hpkp = {
-  #   report_only: false,
-  #   max_age: 30.days.to_i,
-  #   include_subdomains: true,
-  #   report_uri: "#{ENV["REPORT_URI_PKP"]}",
-  #   pins: [
-  #     {sha256: "#{ENV["HPKP_FINGERPRINT"]}"},
-  #     {sha256: "#{ENV["HPKP_FINGERPRINT_INTERMEDIATE"]}"},
-  #     {sha256: "#{ENV["HPKP_FINGERPRINT_ROOT"]}"},
-  #     {sha256: "#{ENV["HPKP_FINGERPRINT_CSR"]}"}
-  #   ]
-  # }
 end
