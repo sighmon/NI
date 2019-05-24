@@ -116,9 +116,6 @@ class HomeController < ApplicationController
 
     @world_beaters = @world_beaters.try(:sample)
 
-    # Now using legit Instagram API
-    @instagram_json = get_instagram_json
-
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
     @page_description = "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
@@ -166,28 +163,6 @@ class HomeController < ApplicationController
                     }
                   }
     
-  end
-
-  def get_instagram_json
-    Rails.cache.fetch("instagram_json", expires_in: 12.hours) do
-      begin
-        response = HTTParty.get("https://api.instagram.com/v1/users/self/media/recent/?access_token=#{ENV['INSTAGRAM_ACCESS_TOKEN']}")
-      rescue Exception => e
-        @instagram_error = e
-      end
-      
-      if not @instagram_error and response and response.code == 200
-        instagram_body = JSON.parse(response.body)
-        begin
-          return instagram_body["data"]
-        rescue Exception => e
-          @instagram_error = e
-          return nil
-        end
-      else
-        nil
-      end
-    end
   end
 
   def newsstand
