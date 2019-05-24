@@ -4,11 +4,17 @@ class Admin::BaseController < ApplicationController
 	before_action :verify_admin
 
 	def index
-		value = Settings.find_by_var('users_csv')
-		if value
-			@latest_csv_date = value.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S")
+		users_csv = Settings.find_by_var('users_csv')
+		if users_csv
+			@latest_csv_date = users_csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S")
 		else
 			@latest_csv_date = nil
+		end
+		current_digital_subscribers_csv = Settings.find_by_var('current_digital_subscribers_csv')
+		if current_digital_subscribers_csv
+			@latest_email_csv_date = current_digital_subscribers_csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S")
+		else
+			@latest_email_csv_date = nil
 		end
 	end
 

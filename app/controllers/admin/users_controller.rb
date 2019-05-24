@@ -264,22 +264,37 @@ class Admin::UsersController < Admin::BaseController
 	end
 
 	def update_csv
-		begin
-      Settings.destroy('users_csv')
-    rescue
-      
-    end
-		User.delay.update_admin_users_csv
+		if params[:type] == 'admin'
+			begin
+				Settings.destroy('users_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_admin_users_csv
+		elsif params[:type] == 'email'
+			begin
+				Settings.destroy('current_digital_subscribers_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_current_digital_subscribers_csv
+		end
 		view_context.start_delayed_jobs
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'
 	end
 
 	def download_csv
-		csv = Settings.find_by_var('users_csv')
+		if params[:type] == 'admin'
+			csv = Settings.find_by_var('users_csv')
+			csv_name = 'digisub'
+		elsif params[:type] == 'email'
+			csv = Settings.find_by_var('current_digital_subscribers_csv')
+			csv_name = 'current_subscribers'
+		end
 		respond_to do |format|
 			format.csv {
 				# response.headers['Content-Disposition'] = 'attachment; filename="' + csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + '.csv"'
-				send_data csv.value, type: Mime[:csv], disposition: 'attachment', filename: csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S") + ".csv"
+				send_data csv.value, type: Mime[:csv], disposition: 'attachment', filename: csv.updated_at.strftime("#{csv_name}-%Y-%m-%d-%H:%M:%S") + ".csv"
 			}
 		end
 	end

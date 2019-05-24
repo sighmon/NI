@@ -120,6 +120,14 @@ class User < ActiveRecord::Base
 
   end
 
+  # CSV exporting for new issue mailers
+  comma :current_digital_subscribers do
+
+    email
+    username
+
+  end
+
   #Override to_s to show user details instead of #string
   def to_s
     "#{username}"
@@ -479,6 +487,14 @@ class User < ActiveRecord::Base
   def self.update_admin_users_csv
     Settings.users_csv = User.uncached do
       User.order(:email).all.to_comma()
+    end
+  end
+
+  def self.update_current_digital_subscribers_csv
+    Settings.current_digital_subscribers_csv = User.uncached do
+      User.order(:email).select{ |u|
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and (u.subscription_valid? == true) and not u.email.include?('dummy@newint.com.au')
+      }.to_comma(:current_digital_subscribers)
     end
   end
 
