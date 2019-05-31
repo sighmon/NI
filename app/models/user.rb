@@ -389,7 +389,11 @@ class User < ActiveRecord::Base
 
   def country_name
     country = ISO3166::Country[self.country]
-    country.translations[I18n.locale.to_s] || country.name
+    if country
+      return country.translations[I18n.locale.to_s] || country.name
+    else
+      return nil
+    end
   end
 
   def postal_mailable_collection
