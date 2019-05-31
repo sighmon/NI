@@ -285,6 +285,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_lapsed_digital_subscribers_csv
+		elsif params[:type] == 'users_paper'
+			begin
+				Settings.destroy('current_paper_subscribers_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_current_paper_subscribers_csv
 		end
 		view_context.start_delayed_jobs
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'
@@ -300,6 +307,9 @@ class Admin::UsersController < Admin::BaseController
 		elsif params[:type] == 'users_lapsed'
 			csv = Settings.find_by_var('lapsed_digital_subscribers_csv')
 			csv_name = 'lapsed_subscribers'
+		elsif params[:type] == 'users_paper'
+			csv = Settings.find_by_var('current_paper_subscribers_csv')
+			csv_name = 'paper_subscribers'
 		end
 		respond_to do |format|
 			format.csv {

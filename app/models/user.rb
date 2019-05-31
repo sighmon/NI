@@ -128,7 +128,27 @@ class User < ActiveRecord::Base
 
   end
 
-  #Override to_s to show user details instead of #string
+  # CSV exporting for current paper subscribers
+  comma :current_paper_subscribers do
+
+    email
+    username
+    title
+    first_name
+    last_name
+    company_name
+    address
+    postal_code
+    city
+    state
+    country_name
+    expiry_date 'digital_expiry'
+    expiry_date_paper_copy 'paper_expiry'
+    last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
+
+  end
+
+  # Override to_s to show user details instead of #string
   def to_s
     "#{username}"
   end
@@ -493,7 +513,7 @@ class User < ActiveRecord::Base
   def self.update_current_digital_subscribers_csv
     Settings.current_digital_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and (u.subscription_valid? == true) and not u.email.include?('dummy@newint.com.au')
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.subscription_valid? == true) and not u.email.include?('dummy@newint.com.au')
       }.to_comma(:current_digital_subscribers)
     end
   end
@@ -501,8 +521,16 @@ class User < ActiveRecord::Base
   def self.update_lapsed_digital_subscribers_csv
     Settings.lapsed_digital_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and (u.digital_renewals == 'Y') and (u.subscription_valid? == false) and not u.email.include?('dummy@newint.com.au')
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.digital_renewals == 'Y') and (u.subscription_valid? == false) and not u.email.include?('dummy@newint.com.au')
       }.to_comma(:current_digital_subscribers)
+    end
+  end
+
+  def self.update_current_paper_subscribers_csv
+    Settings.current_paper_subscribers_csv = User.uncached do
+      User.order(:email).select{ |u|
+        (u.postal_mailable == 'Y') and (u.has_paper_copy? == true)
+      }.to_comma(:current_paper_subscribers)
     end
   end
 

@@ -526,9 +526,11 @@ describe User, :type => :model do
       it "should be able to download a current_digital_subscribers_csv" do
         u = Subscription.first.user
         u.email_opt_in = "Y"
+        u.postal_mailable = "Y"
         u.save
         u2 = Subscription.second.user
         u2.email_opt_in = "M"
+        u2.postal_mailable = "R"
         u2.save
 
         User.update_current_digital_subscribers_csv
@@ -543,10 +545,12 @@ describe User, :type => :model do
       it "should be able to download a lapsed_digital_subscribers_csv" do
         u = Subscription.first.user
         u.email_opt_in = "Y"
+        u.postal_mailable = "Y"
         u.digital_renewals = "Y"
         u.save
         u2 = Subscription.second.user
         u2.email_opt_in = "M"
+        u2.postal_mailable = "R"
         u2.digital_renewals = "N"
         u2.save
         u3 = Subscription.third.user
@@ -563,10 +567,46 @@ describe User, :type => :model do
 
         User.update_lapsed_digital_subscribers_csv
         lapsed_digital_subscribers_csv = CSV.parse(Settings.lapsed_digital_subscribers_csv)
+
         # 1 header, 2 expired subscriptions with 1 digital renewals
         expect(lapsed_digital_subscribers_csv.count).to eq(2)
         expect(Settings.lapsed_digital_subscribers_csv).to include(u.email)
+        expect(Settings.lapsed_digital_subscribers_csv).not_to include(u2.email)
         expect(Settings.lapsed_digital_subscribers_csv).not_to include(u3.email)
+      end
+
+      it "should be able to download a current_paper_subscribers_csv" do
+        u = Subscription.first.user
+        u.postal_mailable = "Y"
+        u.save
+        u2 = Subscription.second.user
+        u2.postal_mailable = "R"
+        u2.save
+        u3 = Subscription.third.user
+        u3.postal_mailable = "Y"
+        u3.save
+        s = Subscription.first
+        s.price_paid = 8800
+        s.paper_copy = true
+        s.paper_only = true
+        s.save
+        s2 = Subscription.second
+        s2.price_paid = 10000
+        s2.paper_copy = true
+        s2.save
+        s3 = Subscription.third
+        s3.price_paid = 10000
+        s3.paper_copy = true
+        s3.save
+
+        User.update_current_paper_subscribers_csv
+        current_paper_subscribers_csv = CSV.parse(Settings.current_paper_subscribers_csv)
+
+        # 1 header, 2 current paper subscriptions
+        expect(current_paper_subscribers_csv.count).to eq(3)
+        expect(Settings.current_paper_subscribers_csv).to include(u.email)
+        expect(Settings.current_paper_subscribers_csv).to_not include(u2.email)
+        expect(Settings.current_paper_subscribers_csv).to include(u3.email)
       end
 
     end
