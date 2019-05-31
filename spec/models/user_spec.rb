@@ -503,6 +503,74 @@ describe User, :type => :model do
       expect(ability).to be_able_to(:manage, subscription)
     end
 
+    context "with three subscribers" do
+
+      before(:each) do
+        FactoryBot.create(:subscription)
+        FactoryBot.create(:subscription)
+        FactoryBot.create(:subscription)
+        FactoryBot.create(:user)
+        FactoryBot.create(:user)
+        FactoryBot.create(:user)
+      end
+
+      it "should be able to download a users_csv" do
+        User.update_admin_users_csv
+        users_csv = CSV.parse(Settings.users_csv)
+        # 1 header, 3 subscribers, 3 users
+        expect(users_csv.count).to eq(7)
+        expect(Settings.users_csv).to include(User.first.email)
+        expect(Settings.users_csv).to include(User.last.email)
+      end
+
+      it "should be able to download a current_digital_subscribers_csv" do
+        u = Subscription.first.user
+        u.email_opt_in = "Y"
+        u.save
+        u2 = Subscription.second.user
+        u2.email_opt_in = "M"
+        u2.save
+
+        User.update_current_digital_subscribers_csv
+        current_digital_subscribers_csv = CSV.parse(Settings.current_digital_subscribers_csv)
+
+        # 1 header, 2 subscribers with email_opt_in Y or M
+        expect(current_digital_subscribers_csv.count).to eq(3)
+        expect(Settings.current_digital_subscribers_csv).to include(u.email)
+        expect(Settings.current_digital_subscribers_csv).to include(u2.email)
+      end
+
+      it "should be able to download a lapsed_digital_subscribers_csv" do
+        u = Subscription.first.user
+        u.email_opt_in = "Y"
+        u.digital_renewals = "Y"
+        u.save
+        u2 = Subscription.second.user
+        u2.email_opt_in = "M"
+        u2.digital_renewals = "N"
+        u2.save
+        u3 = Subscription.third.user
+        u3.email_opt_in = "Y"
+        u3.save
+        s = Subscription.first
+        s.price_paid = 8800
+        s.expire_subscription
+        s.save
+        s2 = Subscription.second
+        s2.price_paid = 8800
+        s2.expire_subscription
+        s2.save
+
+        User.update_lapsed_digital_subscribers_csv
+        lapsed_digital_subscribers_csv = CSV.parse(Settings.lapsed_digital_subscribers_csv)
+        # 1 header, 2 expired subscriptions with 1 digital renewals
+        expect(lapsed_digital_subscribers_csv.count).to eq(2)
+        expect(Settings.lapsed_digital_subscribers_csv).to include(u.email)
+        expect(Settings.lapsed_digital_subscribers_csv).not_to include(u3.email)
+      end
+
+    end
+
   end
 
 end
