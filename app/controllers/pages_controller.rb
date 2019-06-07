@@ -15,8 +15,6 @@ class PagesController < ApplicationController
     config.csp[:form_action] = %w('self')
     config.csp[:font_src] = %w('self')
     config.csp[:report_uri] = %w('self')
-    config.csp_report_only[:report_uri] = %w('self')
-    config.csp_report_only[:img_src] = %W('self' data: *.newint.com.au)
     config.referrer_policy = "no-referrer"
   end
   
