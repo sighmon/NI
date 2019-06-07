@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: May, 2019
+Period: June, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  2 May 2019
+  2 June 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlzLi3QACgkQtsnG2UL7
-GPn12Q/9Fte3Sw642gChg0u0Lsec9CWOJcL2oIXOVAijSea23RIOXtylHFYdKdhx
-kggnFtUq6Pe7RmmW9wyq43GdFk/DkG0owiFeCOPRtHqcxT09SImFzkPHMI5D09tN
-3/TIO5c4tX20GoUoFQkpHyqGn8EOOPbeiiIEurdlaAZe/JBEzyOcrzSJlyfBcV4h
-5tNKfq9i9M94WBpFM/K/j9X19DE9fE0Id6yprNCH1PYJJt390u/zF/tJ9wmuR7Ld
-s9v21F4eSZdRSeAwIEWwgqQFZ/Ny+jVs4UoPsDopz9YcnomR9mERdNEQMkIRHwbF
-SGvg8o00v3IQ6JplKI+uTmAG7WMyG7NCMiUhOCoqausIbiwiTyBrM8KNZFTol5lF
-BzwmN9kZ+uZPk9uM6p2+S9jf7q1KAGh/B9zTEDxS6ZwOGMoCWS0e0raBwpOZPRMw
-zZcCoOyCZewcYXfPWF8RuUsWlmOuszGEf1MlxVSgEP1Gm0aTTmfn/1RY4VsHKcR+
-l5rTTX5d8Ro8eMAN6337dmGVfm6ZGq+5Gf+nA5SJBijWHRPQkbd3pCS/FbcX+hrJ
-E/b7Oa33tF1D5wZcdoOaG3Bg7jDayRlZcsYKMMrG8WBcrtYp+ZSWwqtBuRCB9J8s
-sms0UcAGtA3FFLJpALqfk7YVYJLs5QwtikhsB1rOSGFzw4S1CTM=
-=i/zF
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlzzatEACgkQtsnG2UL7
+GPlPaBAAjfxTukGOVRqpF0txsSI0vswyRcw8iQyxBNmPbWjRDgi9QP06pUYbetob
++8VwUvWbcXTNFQsKSrecwdSPvQHaFVzMLpDFOwykS4Fgzt+izAf+Os71uhogpY9A
+NChj3l50b2KI8xqpKnaXJabQc8yFdBys5YqafeagF5OdiC01WYXkbbFv79o314kB
+QtcFIIXm6BBKInXX+IA51Y6b19Ft0vp7Ued+DQF/6LW2HuZ9MF/yBWBbr18q/4s4
+MVYAbuT2gA/GSmIaMAG4kGWYFixR8HlY2EK8mZPuHPZ2BdhUmk+EOmPoMm3a7B1V
+7vxZYUSby7D+TZ4pg1/lkEmQ4yCZEsSVlrzi4pnyDursqdQaty8jclSeEQYmamP/
++8GBK92FqnEJdqIVAnXK3naV8MFL20YLfPNiGVrdlXi42GYcCzOr0pi0aVrn73kh
+UFGnQpePfe2FPUs+x2woHRjy4S8HbGVcna1QAUb98midRJB4YOTIvideSrSZLFJ6
+5jF/vG2pHOJvD69gIowZLeo8r2bLXExlXuZiflv7u6BZuVfEZZaeaixTUZhPf7/M
+zr9iV++dBoHiO9bGn8PLq28UhKUumy0R/GJKzTbnGmraOfSk/UtWq3A2vExKH2+e
+eQMbO89m41Gf60kAER1VxNzlsBcV2/DRkSW/DSEoVWcWR7iIBdU=
+=szbR
 -----END PGP SIGNATURE-----
