@@ -574,7 +574,7 @@ class User < ActiveRecord::Base
   def self.update_lapsed_digital_subscribers_csv
     Settings.lapsed_digital_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.digital_renewals == 'Y') and (u.subscription_valid? == false) and not u.email.include?('dummy@newint.com.au')
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.digital_renewals == 'Y') and (u.subscription_valid? == false) and (u.paper_only_subscription_valid? == false) and not u.email.include?('dummy@newint.com.au')
       }.to_comma(:current_digital_subscribers)
     end
   end
