@@ -131,19 +131,21 @@ class User < ActiveRecord::Base
   # CSV exporting for current paper subscribers
   comma :current_paper_subscribers do
 
-    email
-    username
-    title
-    first_name
-    last_name
-    company_name
-    address
-    postal_code
-    city
-    state
-    country_name
+    email 'email'
+    username 'username'
+    full_name 'subscriber_name'
+    company_name 'company_name'
+    address 'address'
+    postal_code 'postal_code'
+    city 'city'
+    state 'state'
+    country_name 'company_name'
+    is_recurring? 'is_recurring'
+    subscription_type 'subscription_type'
     expiry_date 'digital_expiry' do |expiry_date| expiry_date.try(:strftime, '%Y-%m-%d') end
     expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
+    renew_soon_paper 'renew_soon'
+    renewing_paper 'renewing'
     last_subscription_including_cancelled cancellation_date: 'cancellation_date' do |cancellation_date| cancellation_date.try(:strftime, '%Y-%m-%d') end
 
   end
@@ -414,6 +416,34 @@ class User < ActiveRecord::Base
 
   def annuals_buyer_collection
     ['Y', 'N']
+  end
+
+  def full_name
+    "#{title} #{first_name} #{last_name}"
+  end
+
+  def subscription_type
+    if user_type == 'Institution'
+      return 'I'
+    else
+      return 'P'
+    end
+  end
+
+  def renew_soon_paper
+    if expiry_date_paper_copy < (DateTime.now() + 90.days)
+      return 'Your subscription expires soon. Please renew now.'
+    else
+      return nil
+    end
+  end
+
+  def renewing_paper
+    if last_subscription_including_cancelled.is_cancelled?
+      return 'false'
+    else
+      return 'true'
+    end
   end
 
   private
