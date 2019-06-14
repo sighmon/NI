@@ -563,7 +563,7 @@ class User < ActiveRecord::Base
   def self.update_current_paper_subscribers_csv
     Settings.current_paper_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        (u.postal_mailable == 'Y' or u.postal_mailable.nil?) and (u.has_paper_copy? == true)
+        (u.postal_mailable == 'Y' or u.postal_mailable.nil?) and (u.has_paper_copy? == true) and not u.email.include?('design+parent_id')
       }.to_comma(:current_paper_subscribers)
     end
   end
