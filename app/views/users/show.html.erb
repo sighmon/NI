@@ -37,16 +37,16 @@
 			<dt></dt>
 			<dd>(Automatic renewal)</dd>
 			<dt></dt>
-			<% if not @user.has_paper_only? %>
+			<% if not @user.has_paper_only? or not @user.has_paper_copy? %>
 				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
 			<% end %>
-		<% elsif @user.subscriber? and not @user.has_paper_only? %>
+		<% elsif @user.subscriber? and (not @user.has_paper_only? or not @user.has_paper_copy?) %>
 		<dt></dt>
 		<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
-		<% elsif @user.subscription_lapsed? %>
+		<% elsif @user.subscription_lapsed? and (not @user.had_paper_copy?) %>
 		<dt></dt>
 		<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
-		<% else %>
+		<% elsif not @user.had_paper_copy? %>
 		<dt></dt>
 		<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
 		<% end %>

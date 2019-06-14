@@ -142,9 +142,9 @@ class User < ActiveRecord::Base
     city
     state
     country_name
-    expiry_date 'digital_expiry'
-    expiry_date_paper_copy 'paper_expiry'
-    last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
+    expiry_date 'digital_expiry' do |expiry_date| expiry_date.try(:strftime, '%Y-%m-%d') end
+    expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
+    last_subscription_including_cancelled cancellation_date: 'cancellation_date' do |cancellation_date| cancellation_date.try(:strftime, '%Y-%m-%d') end
 
   end
 
@@ -533,7 +533,7 @@ class User < ActiveRecord::Base
   def self.update_current_paper_subscribers_csv
     Settings.current_paper_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        (u.postal_mailable == 'Y') and (u.has_paper_copy? == true)
+        (u.postal_mailable == 'Y' or u.postal_mailable.nil?) and (u.has_paper_copy? == true)
       }.to_comma(:current_paper_subscribers)
     end
   end

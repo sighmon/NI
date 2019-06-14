@@ -54,13 +54,21 @@ class Subscription < ActiveRecord::Base
 
   def expiry_date_paper_only
     if paper_only
-      return (valid_from + duration.months)
+      if not refunded_on.nil?
+        return refunded_on
+      else
+        return (cancellation_date or (valid_from + duration.months))
+      end
     end
   end
 
   def expiry_date_paper_copy
     if paper_copy
-      return (valid_from + duration.months)
+      if not refunded_on.nil?
+        return refunded_on
+      else
+        return (cancellation_date or (valid_from + duration.months))
+      end
     end
   end
 
