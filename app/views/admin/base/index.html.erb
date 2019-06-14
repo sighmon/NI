@@ -2,11 +2,6 @@
 	<h1>Admin section</h1>
 </div>
 
-<p><%= number_with_delimiter(@subscribers_total.count) %> total subscribers (<%= number_with_delimiter(@institutions.count) %> institutions, <%= number_with_delimiter(@students.count) %> students)</p>
-<p><%= number_with_delimiter(@subscribers_digital.count) %> Digital only subscribers</p>
-<p><%= number_with_delimiter(@subscribers_paper_only.count) %> Paper only subscribers</p>
-<p><%= number_with_delimiter(@subscribers_paper_digital.count) %> Digital & paper only subscribers</p>
-
 <p><%= link_to "List Users", admin_users_path, :class => 'btn btn-outline-secondary' %> A list of all <%= number_with_delimiter(User.count) %> user accounts and their expiry dates.</p>
 <p>
   <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
