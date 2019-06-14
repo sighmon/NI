@@ -118,6 +118,17 @@ class User < ActiveRecord::Base
     uk_id 'uk_id'
     uk_expiry 'uk_expiry'
 
+    address 'address'
+    postal_code 'postal_code'
+    city 'city'
+    state 'state'
+    country_name 'company_name'
+
+    subscription_type 'subscription_type'
+    expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
+    renew_soon_paper 'renew_soon'
+    renewing_paper 'renewing'
+
   end
 
   # CSV exporting for new issue mailers
@@ -431,18 +442,26 @@ class User < ActiveRecord::Base
   end
 
   def renew_soon_paper
-    if expiry_date_paper_copy < (DateTime.now() + 90.days)
-      return 'Your subscription expires soon. Please renew now.'
-    else
+    begin
+      if expiry_date_paper_copy < (DateTime.now() + 90.days)
+        return 'Your subscription expires soon. Please renew now.'
+      else
+        return nil
+      end
+    rescue Exception => e
       return nil
     end
   end
 
   def renewing_paper
-    if last_subscription_including_cancelled.is_cancelled?
-      return 'false'
-    else
-      return 'true'
+    begin
+      if last_subscription_including_cancelled.is_cancelled?
+        return 'false'
+      else
+        return 'true'
+      end
+    rescue Exception => e
+      return nil
     end
   end
 
