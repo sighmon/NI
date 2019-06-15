@@ -123,6 +123,7 @@ class User < ActiveRecord::Base
     city 'city'
     state 'state'
     country_name 'company_name'
+    postal_mailable 'postal_mailable'
 
     subscription_type 'subscription_type'
     expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
