@@ -104,7 +104,7 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     arel (9.0.0)
-    asset_sync (2.7.0)
+    asset_sync (2.8.0)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -133,7 +133,7 @@ GEM
       thor (~> 0.18)
     byebug (11.0.1)
     cancancan (3.0.1)
-    capybara (3.23.0)
+    capybara (3.24.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -172,7 +172,7 @@ GEM
     dalli (2.7.10)
     database_cleaner (1.7.0)
     debug_inspector (0.0.3)
-    delayed_job (4.1.5)
+    delayed_job (4.1.7)
       activesupport (>= 3.0, < 5.3)
     delayed_job_active_record (4.1.3)
       activerecord (>= 3.0, < 5.3)
@@ -439,7 +439,7 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     ipaddress (0.8.3)
-    jaro_winkler (1.5.2)
+    jaro_winkler (1.5.3)
     jquery-fileupload-rails (1.0.0)
       actionpack (>= 3.1)
       railties (>= 3.1)
@@ -601,7 +601,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (1.4.1)
-    rmagick (3.1.0)
+    rmagick (3.2.0)
     rpush (4.1.1)
       activesupport
       jwt (>= 1.5.6)
@@ -654,7 +654,7 @@ GEM
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
-    sassc-rails (2.1.1)
+    sassc-rails (2.1.2)
       railties (>= 4.0.0)
       sassc (>= 2.0)
       sprockets (> 3.0)
