@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: June, 2019
+Period: July, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  2 June 2019
+  4 July 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAlzzatEACgkQtsnG2UL7
-GPlPaBAAjfxTukGOVRqpF0txsSI0vswyRcw8iQyxBNmPbWjRDgi9QP06pUYbetob
-+8VwUvWbcXTNFQsKSrecwdSPvQHaFVzMLpDFOwykS4Fgzt+izAf+Os71uhogpY9A
-NChj3l50b2KI8xqpKnaXJabQc8yFdBys5YqafeagF5OdiC01WYXkbbFv79o314kB
-QtcFIIXm6BBKInXX+IA51Y6b19Ft0vp7Ued+DQF/6LW2HuZ9MF/yBWBbr18q/4s4
-MVYAbuT2gA/GSmIaMAG4kGWYFixR8HlY2EK8mZPuHPZ2BdhUmk+EOmPoMm3a7B1V
-7vxZYUSby7D+TZ4pg1/lkEmQ4yCZEsSVlrzi4pnyDursqdQaty8jclSeEQYmamP/
-+8GBK92FqnEJdqIVAnXK3naV8MFL20YLfPNiGVrdlXi42GYcCzOr0pi0aVrn73kh
-UFGnQpePfe2FPUs+x2woHRjy4S8HbGVcna1QAUb98midRJB4YOTIvideSrSZLFJ6
-5jF/vG2pHOJvD69gIowZLeo8r2bLXExlXuZiflv7u6BZuVfEZZaeaixTUZhPf7/M
-zr9iV++dBoHiO9bGn8PLq28UhKUumy0R/GJKzTbnGmraOfSk/UtWq3A2vExKH2+e
-eQMbO89m41Gf60kAER1VxNzlsBcV2/DRkSW/DSEoVWcWR7iIBdU=
-=szbR
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl0ctgcACgkQtsnG2UL7
+GPkhJxAAmUN8XQYrAEsQwKm0W0fmF5lxoWauR1bj7X1NWxeygNQqOFX14SvIDmVi
+TEVlrVW6mrSDpXN9ZMadB7dotVc3YYTOPs20Do7wNQxTFUWfUHubrxpjLg39ID5/
+AS3ylqSD6aprlkC35mwPSKhuDAOfFZAzbvwM1dsajekVU5AWE0rw1IeJaTD84WX3
+Ea62KbjY9ZF/zl0WHBHtdTjkQmxkX8XYcJSj8bEPaYgwTmfi8q7mEadwvuT8MT0k
+U9EZsxsSH6XgcSQ+W1YY977+bzE8XSOVdLRUqnWysFmVgAsBklXz0NMSYzvji6q9
+jh89sD3TXNCY814ihpF3+TUG+kBVNrcZyF8TMYi54Dko3KtBOngXZGrJkX1Hg/Dm
+SfoPmxDUPWj1HkbtC2VcONlw7SSTZbeBX/5SnrtuBnrrC2R1bMiAnDLdGuG9hra1
+oqQhcKd8FDwQ7PJfS1b4vEhN44CdnV8q0MBlG3Kn0pTE9HWK7lytdJf4KOALXNVt
+DhDbRV5z1JuiyQUqDHZZ4zr32ecRRKRMgmaCQFNgPEtYhqbVSZHYHXCZp1ZHQVVz
+q1zCfCmEii15Ic7j22s4ZloIqbMRVFVMOZd+oca30y3C8bAJy7KfKn+7E2FlXeKU
+QogPohClS5WeYWdtCryAImcng9nORTGBzZhWqErNUUgkhvA3ZPs=
+=Fap9
 -----END PGP SIGNATURE-----
