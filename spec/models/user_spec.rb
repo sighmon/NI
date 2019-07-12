@@ -453,6 +453,35 @@ describe User, :type => :model do
       end
     end
 
+    it "with a recurring subscription, returns is_recurring true" do
+      # Recurring digital subscription
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 6.months
+      subscription.purchase_date = DateTime.now - 6.months
+      subscription.paypal_profile_id = 'fake_payer_id'
+      subscription.save
+
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(1)
+        expect(user.is_recurring?).to be_truthy
+      end
+    end
+
+    it "with a recurring subscription and failed payment notification, returns is_recurring false" do
+      # Recurring digital subscription
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 6.months
+      subscription.purchase_date = DateTime.now - 6.months
+      subscription.paypal_profile_id = 'fake_payer_id'
+      subscription.save
+      user.payment_notifications.new(transaction_type: 'recurring_payment_suspended_due_to_max_failed_payment')
+
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(1)
+        expect(user.is_recurring?).to be_falsey
+      end
+    end
+
   end
 
   context "manager" do

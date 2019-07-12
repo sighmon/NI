@@ -218,7 +218,12 @@ class User < ActiveRecord::Base
 
   def is_recurring?
     # TODO: need to differentiate between the first recurring subscription and the paypal IPN recurrances.
-    return self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
+    recurring = self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
+    # Check for a failed payment notification (IPN from Paypal)
+    if recurring and self.payment_notifications.last.try(:transaction_type).try(:include?, 'suspended')
+      recurring = false
+    end
+    return recurring
   end
 
   def was_recurring?
