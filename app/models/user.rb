@@ -471,6 +471,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  def phone_number_add_leading_zero
+    # Add a leading zero if it's missing to numbers starting 2 3 4 7 or 8, that are 9 digits long
+    if self.phone
+      phone_number = self.phone.match(/^([23478])([0-9]{8})/)
+      if phone_number
+        phone_number = phone_number.to_s
+        phone_number.prepend('0')
+        logger.info "Updating phone number for #{self.id} from #{self.phone} to #{phone_number}"
+        self.update_attribute(:phone, phone_number)
+      end
+    end
+  end
+
   private
 
   def self.sorted_by(column, direction)
