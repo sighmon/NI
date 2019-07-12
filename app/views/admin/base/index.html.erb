@@ -14,12 +14,12 @@
 <p>
   <% if @subscriber_stats %>
     <dl class='dl-horizontal'>
-      <dt>Total subscribers</dt><dd><%= @subscriber_stats['subscribers_total'] %></dd>
-      <dt>Institutions</dt><dd><%= @subscriber_stats['institutions'] %></dd>
-      <dt>Students</dt><dd><%= @subscriber_stats['students'] %></dd>
-      <dt>Digital</dt><dd><%= @subscriber_stats['subscribers_digital'] %></dd>
-      <dt>Paper only</dt><dd><%= @subscriber_stats['subscribers_paper_only'] %></dd>
-      <dt>Digital & paper</dt><dd><%= @subscriber_stats['subscribers_paper_digital'] %></dd>
+      <dt>Total subscribers</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_total']) %></dd>
+      <dt>Institutions</dt><dd><%= number_with_delimiter(@subscriber_stats['institutions']) %></dd>
+      <dt>Students</dt><dd><%= number_with_delimiter(@subscriber_stats['students']) %></dd>
+      <dt>Digital</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_digital']) %></dd>
+      <dt>Paper only</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_paper_only']) %></dd>
+      <dt>Digital & paper</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_paper_digital']) %></dd>
     </dl>
   <% else %>
     <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
