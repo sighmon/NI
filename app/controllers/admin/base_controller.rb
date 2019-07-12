@@ -4,14 +4,6 @@ class Admin::BaseController < ApplicationController
 	before_action :verify_admin
 
 	def index
-		# TODO make this work at scale
-		# @subscribers_total = User.select{|s| s.subscriber? and not s.parent}
-		# @institutions = User.select{|s| s.subscriber? and s.institution}
-		# @students = User.select{|s| s.parent and s.subscriber?}
-		# @subscribers_digital = @subscribers_total.select{|s| not s.has_paper_copy?}
-		# @subscribers_paper_only = @subscribers_total.select{ |u| u.has_paper_only?}
-		# @subscribers_paper_digital = @subscribers_total.select{ |u| u.has_paper_copy? and not u.has_paper_only?}
-
 		users_csv = Settings.find_by_var('users_csv')
 		if users_csv
 			@latest_csv_date = users_csv.updated_at.strftime("digisub-%Y-%m-%d-%H:%M:%S")
@@ -38,6 +30,13 @@ class Admin::BaseController < ApplicationController
 			@latest_paper_csv_date = current_paper_subscribers_csv.updated_at.strftime("paper_subscribers-%Y-%m-%d-%H:%M:%S")
 		else
 			@latest_paper_csv_date = nil
+		end
+
+		subscriber_stats = Settings.find_by_var('subscriber_stats')
+		if subscriber_stats
+			@subscriber_stats = subscriber_stats.value
+		else
+			@subscriber_stats = nil
 		end
 	end
 

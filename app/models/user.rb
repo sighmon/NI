@@ -606,6 +606,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.update_subscriber_stats
+    Settings.subscriber_stats = User.uncached do
+      subscriber_stats = {}
+      @subscribers_total = User.select{|s| s.subscriber? and not s.parent}
+      subscriber_stats['subscribers_total'] = @subscribers_total.count
+      subscriber_stats['institutions'] = User.select{|s| s.subscriber? and s.institution}.count
+      subscriber_stats['students'] = User.select{|s| s.parent and s.subscriber?}.count
+      subscriber_stats['subscribers_digital'] = @subscribers_total.select{|s| not s.has_paper_copy?}.count
+      subscriber_stats['subscribers_paper_only'] = @subscribers_total.select{ |u| u.has_paper_only?}.count
+      subscriber_stats['subscribers_paper_digital'] = @subscribers_total.select{ |u| u.has_paper_copy? and not u.has_paper_only?}.count
+      subscriber_stats
+    end
+  end
+
   def self.find_by_whitelist(ip)
     # sql one liner to handle both CIDR and IP ranges
     query = ActiveRecord::Base.send(:sanitize_sql_array, ["with ip as (select ?::inet as value) select * from (select *, regexp_split_to_table(ip_whitelist,E',') as pattern from users) as expanded, regexp_split_to_array(expanded.pattern,E'-') as range where (expanded.pattern <> '' and expanded.pattern !~ '-' and (select value from ip) <<= expanded.pattern::inet) or (expanded.pattern ~ '-' and ((select value from ip) between range[1]::inet and range[2]::inet)) limit 1", ip])

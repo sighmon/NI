@@ -292,6 +292,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_current_paper_subscribers_csv
+		elsif params[:type] == 'subscriber_stats'
+			begin
+				Settings.destroy('subscriber_stats')
+			rescue
+				# Pass
+			end
+			User.delay.update_subscriber_stats
 		end
 		view_context.start_delayed_jobs
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'

@@ -12,6 +12,21 @@
   <% end %>
 </p>
 <p>
+  <% if @subscriber_stats %>
+    <dl class='dl-horizontal'>
+      <dt>Total subscribers</dt><dd><%= @subscriber_stats['subscribers_total'] %></dd>
+      <dt>Institutions</dt><dd><%= @subscriber_stats['institutions'] %></dd>
+      <dt>Students</dt><dd><%= @subscriber_stats['students'] %></dd>
+      <dt>Digital</dt><dd><%= @subscriber_stats['subscribers_digital'] %></dd>
+      <dt>Paper only</dt><dd><%= @subscriber_stats['subscribers_paper_only'] %></dd>
+      <dt>Digital & paper</dt><dd><%= @subscriber_stats['subscribers_paper_digital'] %></dd>
+    </dl>
+  <% else %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+  <% end %>
+  <%= link_to "Update subscriber stats", admin_users_update_csv_path(type: 'subscriber_stats'), :class => 'btn btn-primary' %>
+</p>
+<p>
 	<%= link_to "Update CSV all user", admin_users_update_csv_path(type: 'users_all'), :class => 'btn btn-primary' %>
 	<% if @latest_csv_date %>
 		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_all'), :class => 'btn btn-info' %>
