@@ -609,13 +609,14 @@ class User < ActiveRecord::Base
   def self.update_subscriber_stats
     Settings.subscriber_stats = User.uncached do
       subscriber_stats = {}
-      @subscribers_total = User.select{|u| u.subscriber? and not u.parent}
-      subscriber_stats['subscribers_total'] = @subscribers_total.count
+      @subscribers_digital = User.select{|u| u.subscriber? and not u.parent}
+      @subscribers_paper_only = User.select{ |u| u.paper_only_subscription_valid?}
+      subscriber_stats['subscribers_total'] = @subscribers_digital.count + @subscribers_paper_only.count
       subscriber_stats['institutions'] = User.select{|u| u.subscriber? and u.institution}.count
       subscriber_stats['students'] = User.select{|u| u.parent and u.subscriber?}.count
-      subscriber_stats['subscribers_digital'] = @subscribers_total.select{|u| not u.has_paper_copy?}.count
-      subscriber_stats['subscribers_paper_only'] = User.select{ |u| u.paper_only_subscription_valid?}.count
-      subscriber_stats['subscribers_paper_digital'] = @subscribers_total.select{ |u| u.has_paper_copy? and not u.has_paper_only?}.count
+      subscriber_stats['subscribers_digital'] = @subscribers_digital.select{|u| not u.has_paper_copy?}.count
+      subscriber_stats['subscribers_paper_only'] = @subscribers_paper_only.count
+      subscriber_stats['subscribers_paper_digital'] = @subscribers_digital.select{ |u| u.has_paper_copy? and not u.has_paper_only?}.count
       subscriber_stats
     end
   end
