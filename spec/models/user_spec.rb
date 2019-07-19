@@ -638,6 +638,23 @@ describe User, :type => :model do
         expect(Settings.current_paper_subscribers_csv).to include(u3.email)
       end
 
+      it "should be able to update subscriber stats" do
+        # With a paper_only subscription
+        FactoryBot.create(:paper_only_subscription)
+
+        User.update_subscriber_stats
+
+        expect(Settings.subscriber_stats).to be_truthy
+        # TODO: don't double count digital trial as digital sub
+        expect(Settings.subscriber_stats['subscribers_total']).to eq(5)
+        expect(Settings.subscriber_stats['institutions']).to eq(0)
+        expect(Settings.subscriber_stats['students']).to eq(0)
+        expect(Settings.subscriber_stats['subscribers_digital']).to eq(4)
+        expect(Settings.subscriber_stats['subscribers_paper_only']).to eq(1)
+        expect(Settings.subscriber_stats['subscribers_paper_digital']).to eq(0)
+        expect(Settings.subscriber_stats['last_updated']).to be_truthy
+      end
+
     end
 
   end

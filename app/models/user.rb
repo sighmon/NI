@@ -617,6 +617,7 @@ class User < ActiveRecord::Base
       subscriber_stats['subscribers_digital'] = @subscribers_digital.select{|u| not u.has_paper_copy?}.count
       subscriber_stats['subscribers_paper_only'] = @subscribers_paper_only.count
       subscriber_stats['subscribers_paper_digital'] = @subscribers_digital.select{ |u| u.has_paper_copy? and not u.has_paper_only?}.count
+      subscriber_stats['last_updated'] = DateTime.now.try(:strftime, '%A, %d %b %Y %l:%M %p')
       subscriber_stats
     end
   end

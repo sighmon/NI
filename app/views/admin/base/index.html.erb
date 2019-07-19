@@ -20,6 +20,7 @@
       <dt>Digital</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_digital']) %></dd>
       <dt>Paper only</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_paper_only']) %></dd>
       <dt>Digital & paper</dt><dd><%= number_with_delimiter(@subscriber_stats['subscribers_paper_digital']) %></dd>
+      <dt>Last updated</dt><dd><%= @subscriber_stats['last_updated'] or 'Never' %></dd>
     </dl>
   <% else %>
     <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
