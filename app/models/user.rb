@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
     postal_code 'postal_code'
     city 'city'
     state 'state'
-    country_name 'company_name'
+    country_name 'country_name'
     is_recurring? 'is_recurring'
     subscription_type 'subscription_type'
     expiry_date 'digital_expiry' do |expiry_date| expiry_date.try(:strftime, '%Y-%m-%d') end
@@ -609,12 +609,12 @@ class User < ActiveRecord::Base
   def self.update_subscriber_stats
     Settings.subscriber_stats = User.uncached do
       subscriber_stats = {}
-      @subscribers_total = User.select{|s| s.subscriber? and not s.parent}
+      @subscribers_total = User.select{|u| u.subscriber? and not u.parent}
       subscriber_stats['subscribers_total'] = @subscribers_total.count
-      subscriber_stats['institutions'] = User.select{|s| s.subscriber? and s.institution}.count
-      subscriber_stats['students'] = User.select{|s| s.parent and s.subscriber?}.count
-      subscriber_stats['subscribers_digital'] = @subscribers_total.select{|s| not s.has_paper_copy?}.count
-      subscriber_stats['subscribers_paper_only'] = @subscribers_total.select{ |u| u.has_paper_only?}.count
+      subscriber_stats['institutions'] = User.select{|u| u.subscriber? and u.institution}.count
+      subscriber_stats['students'] = User.select{|u| u.parent and u.subscriber?}.count
+      subscriber_stats['subscribers_digital'] = @subscribers_total.select{|u| not u.has_paper_copy?}.count
+      subscriber_stats['subscribers_paper_only'] = User.select{ |u| u.paper_only_subscription_valid?}.count
       subscriber_stats['subscribers_paper_digital'] = @subscribers_total.select{ |u| u.has_paper_copy? and not u.has_paper_only?}.count
       subscriber_stats
     end
