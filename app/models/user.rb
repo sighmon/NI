@@ -199,7 +199,7 @@ class User < ActiveRecord::Base
   end
 
   def paper_only_subscription_valid?
-    return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.is_current?}.include?(true)
+    return self.subscriptions.select{|s| s.paper_only? == true}.collect{|s| s.is_current_paper?}.include?(true)
   end
 
   def digital_only_subscription_valid?
