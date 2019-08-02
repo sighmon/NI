@@ -33,7 +33,6 @@
 						line-height="20px"
 						font-weight="300">
 						<forwardtoafriend>Forward to a friend</forwardtoafriend><br />
-						<preferences>Update your preferences</preferences><br />
 						<unsubscribe>Unsubscribe</unsubscribe>
 					</mj-text>
 				<% end %>

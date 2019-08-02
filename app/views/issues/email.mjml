@@ -75,7 +75,7 @@
 					font-weight="300"
 					padding="0px 25px"
 					color="#787878">
-					Hi [salutation],<br /><br />
+					Hi New Internationalist Subscriber,<br /><br />
 					The <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine is available now for you to read by <%= link_to "logging in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b>
 				</mj-text>
 
