@@ -610,7 +610,9 @@ class User < ActiveRecord::Base
     Settings.subscriber_stats = User.uncached do
       subscriber_stats = {}
       @subscribers_digital = User.select{|u| u.subscriber? and not u.parent}
-      @subscribers_paper_only = User.select{ |u| u.paper_only_subscription_valid?}
+      @subscribers_paper_only = User.select{ |u|
+        (u.postal_mailable == 'Y' or u.postal_mailable.nil?) and u.paper_only_subscription_valid?
+      }
       subscriber_stats['subscribers_total'] = @subscribers_digital.count + @subscribers_paper_only.count
       subscriber_stats['institutions'] = User.select{|u| u.subscriber? and u.institution}.count
       subscriber_stats['students'] = User.select{|u| u.parent and u.subscriber?}.count
