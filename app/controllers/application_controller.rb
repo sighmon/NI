@@ -48,17 +48,20 @@ class ApplicationController < ActionController::Base
   end
 
   def auto_signin_ip
- 
-    if !user_signed_in?
-      user = user_from_ip_whitelist(request.remote_ip)
-      logger.info user
-      if !user.nil?
-        sign_in(:user, user)
-        session[:auto_signin] = true
+    begin
+      if !user_signed_in?
+        user = user_from_ip_whitelist(request.remote_ip)
+        logger.info user
+        if !user.nil?
+          sign_in(:user, user)
+          session[:auto_signin] = true
+        end
       end
+    rescue Exception => e
+      logger.info 'Failed auto_signin_ip with error: ' + e.message
+      reset_session
     end
     return true
-
   end
 
   def current_ability
