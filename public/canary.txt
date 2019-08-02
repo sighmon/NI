@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: July, 2019
+Period: August, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  4 July 2019
+  4 August 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl0ctgcACgkQtsnG2UL7
-GPkhJxAAmUN8XQYrAEsQwKm0W0fmF5lxoWauR1bj7X1NWxeygNQqOFX14SvIDmVi
-TEVlrVW6mrSDpXN9ZMadB7dotVc3YYTOPs20Do7wNQxTFUWfUHubrxpjLg39ID5/
-AS3ylqSD6aprlkC35mwPSKhuDAOfFZAzbvwM1dsajekVU5AWE0rw1IeJaTD84WX3
-Ea62KbjY9ZF/zl0WHBHtdTjkQmxkX8XYcJSj8bEPaYgwTmfi8q7mEadwvuT8MT0k
-U9EZsxsSH6XgcSQ+W1YY977+bzE8XSOVdLRUqnWysFmVgAsBklXz0NMSYzvji6q9
-jh89sD3TXNCY814ihpF3+TUG+kBVNrcZyF8TMYi54Dko3KtBOngXZGrJkX1Hg/Dm
-SfoPmxDUPWj1HkbtC2VcONlw7SSTZbeBX/5SnrtuBnrrC2R1bMiAnDLdGuG9hra1
-oqQhcKd8FDwQ7PJfS1b4vEhN44CdnV8q0MBlG3Kn0pTE9HWK7lytdJf4KOALXNVt
-DhDbRV5z1JuiyQUqDHZZ4zr32ecRRKRMgmaCQFNgPEtYhqbVSZHYHXCZp1ZHQVVz
-q1zCfCmEii15Ic7j22s4ZloIqbMRVFVMOZd+oca30y3C8bAJy7KfKn+7E2FlXeKU
-QogPohClS5WeYWdtCryAImcng9nORTGBzZhWqErNUUgkhvA3ZPs=
-=Fap9
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl1DkCAACgkQtsnG2UL7
+GPkp8xAA0Gaycoz7mt01Le0N4aRKYsAFLCfcsN2dQbbHVx6WO0BDxdzVW5kIz99n
+T9FdfoAjv9bw4hKqZhDkgexZU4IWrrnH1vsM28zPfGQir3D3kL4lLu7VIiIxkcIx
+FCMzVZHTqspWQNNU+ALLrpc8Oogh/yNd2PWDh2oiZ52V4oyyolc/b/edG/vzlr43
+vGH/xHxX80AOXIA6xs8mYJsRWFJS5Y0t5uHrOpLUFEUdAklqFZTvNeGGu3/m59r7
+TATDApIYWrVIZFkdRSI61FgakGVeiZBL70QxZUSNPVWkwLyAJkccmjTguujYwRs4
+v3Um3nu/+i7eKcnVVQrgfdzfBr26HBnJfHLMXrSEbQlre8TkESmDt8S2DrJpuspY
+txThqM93KW0V9twAP3EKIbGQAIUM1jRzuMRCN8zlKSnLOi7zNGRFnd27rDyXvHNE
+E2Y/0gWDa/3y6gZaeQYE0iPAFPuINxSJQ+oIblExfHsjotgQy8oWSpDcQRGxdAG6
+11tUrGjLRjo9S5iQsPhgutuFogjqoEE5rvG+0Y4eyOj/iFRYgF0pAqsWZx8ugUCT
+SlpznTUVzmLerFPBwuRxUBCJCCe6+5uRZ7isXK62DsmCGvWpeZP/x/OL6h1M621m
+DClQVy/ES9Whtw3I+LolgkAvwDwkj4Dugd+/I7byALcm0f4rMRQ=
+=FULp
 -----END PGP SIGNATURE-----
