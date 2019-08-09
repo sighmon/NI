@@ -3,12 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title><%= ENV['APP_NAME'] %> - 503</title>
-    <!-- <%= javascript_include_tag 'modernizr' %> -->
-    <%= stylesheet_link_tag 'application', :media => 'all', :digest => false %>
+    <%= stylesheet_link_tag 'application', :media => 'all', integrity: true, crossorigin: 'anonymous' %>
   </head>
   <body class="fourohfour">
     <section id="error">
-      <p><a href="/"><img alt="New Internationalist" src="/assets/new-internationalist@2x.png" title="New Internationalist" width="200" style="margin-bottom: 2em;"></a></p>
+      <p><a href="/"><img alt="New Internationalist" src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>" title="New Internationalist" width="200" style="margin-bottom: 2em;"></a></p>
       <h1>503 Application busy/error!</h1>
       <p><a href="/" class="return">&larr; Return to the homepage</a></p>
       <p>Uh oh, the server is quite busy.. or perhaps b0rked.</p>
@@ -16,9 +15,6 @@
       <p>If you think it's just busy, you could try loading the page again by clicking in the URL bar and pressing enter.</p>
       <p>If you'd like to help out and <a href="mailto:design@newint.com.au?Subject=503">let us know how you got here</a>, that'd be lovely.</p>
     </section>
-    <!-- <script>
-      Modernizr.load("#{javascript_path 'application'}");
-    </script> -->
     <!-- Google Analytics tracking code -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

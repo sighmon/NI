@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title><%= ENV['APP_NAME'] %> - 404</title>
-    <%= stylesheet_link_tag 'application', :media => 'all', :digest => false %>
+    <%= stylesheet_link_tag 'application', :media => 'all', integrity: true, crossorigin: 'anonymous' %>
   </head>
   <body class="fourohfour">
     <section id="error">
-      <p><a href="/"><img alt="New Internationalist" src="/assets/new-internationalist@2x.png" title="New Internationalist" width="200" style="margin-bottom: 2em;"></a></p>
+      <p><a href="/"><img alt="New Internationalist" src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>" title="New Internationalist" width="200" style="margin-bottom: 2em;"></a></p>
       <h1>404 Page not found</h1>
       <p><a href="/" class="return">&larr; Return to the homepage</a></p>
       <p>Sorry folks, looks like that page is missing.</p>
