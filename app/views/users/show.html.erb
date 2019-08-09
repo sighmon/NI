@@ -112,7 +112,7 @@
 	<h3>Favourite articles:</h3>
 	<div class="row">
 		<% if not @favourites.try(:empty?) %>
-			<% @favourites.sort_by(&:created_at).reverse.each_with_index do |favourite, index| %>
+			<% @favourites.each_with_index do |favourite, index| %>
 				<% if index % 3 == 0 %>
 	</div>
 	<div class="row">
@@ -139,7 +139,7 @@
 	<h3>Shared articles:</h3>
 	<div class="row">
 		<% if not @guest_passes.try(:empty?) %>
-			<% @guest_passes.sort_by(&:created_at).reverse.each_with_index do |pass, index| %>
+			<% @guest_passes.each_with_index do |pass, index| %>
 				<% if index % 3 == 0 %>
 	</div>
 	<div class="row">
