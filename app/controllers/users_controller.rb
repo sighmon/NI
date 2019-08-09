@@ -17,6 +17,10 @@ class UsersController < ApplicationController
             @template = "user_mailer/user_signup_confirmation"
         end
 
+        @favourites = @user.favourites.page(params[:favourites_page]).per(9)
+
+        @guest_passes = @user.guest_passes.page(params[:shared_page]).per(9)
+
         respond_to do |format|
             format.html
             format.json {
