@@ -268,8 +268,8 @@ class SubscriptionsController < ApplicationController
           UserMailer.delay.subscription_confirmation(@subscription)
           ApplicationHelper.start_delayed_jobs
           if session[:express_institution]
-            # institutional subscription, so send admin an email
-            UserMailer.subscription_institution_tell_admin(@subscription.user).deliver
+            # TODO: institutional subscription, upgrade user and send institutional email...
+            # UserMailer.subscription_institution_tell_admin(@subscription.user).deliver
           end
         rescue Exception
           logger.error "500 - Email server is down..."
