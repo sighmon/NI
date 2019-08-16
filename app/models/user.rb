@@ -440,7 +440,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_type
-    if user_type == 'Institution'
+    if user_type.include?('Institution')
       return 'I'
     else
       return 'P'

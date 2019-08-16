@@ -627,15 +627,24 @@ describe User, :type => :model do
         s3.price_paid = 10000
         s3.paper_copy = true
         s3.save
+        s4 = FactoryBot.create(:paper_only_subscription)
+        s4.paper_copy = true
+        s4.save
+        u4 = s4.user
+        u4.institution = true
+        u4.postal_mailable = "Y"
+        u4.save
 
         User.update_current_paper_subscribers_csv
         current_paper_subscribers_csv = CSV.parse(Settings.current_paper_subscribers_csv)
 
-        # 1 header, 2 current paper subscriptions
-        expect(current_paper_subscribers_csv.count).to eq(3)
+        # 1 header, 3 current paper subscriptions, 1 institution
+        expect(current_paper_subscribers_csv.count).to eq(4)
         expect(Settings.current_paper_subscribers_csv).to include(u.email)
         expect(Settings.current_paper_subscribers_csv).to_not include(u2.email)
         expect(Settings.current_paper_subscribers_csv).to include(u3.email)
+        expect(Settings.current_paper_subscribers_csv).to include(u4.email)
+        expect(Settings.current_paper_subscribers_csv).to include(',I,')
       end
 
       it "should be able to update subscriber stats" do
