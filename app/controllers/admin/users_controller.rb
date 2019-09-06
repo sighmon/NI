@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::BaseController
 		else
 			users_per_page = Settings.users_pagination
 		end
-		@users = Kaminari.paginate_array(User.sorted_by(params[:sort], params[:direction])).page(params[:page]).per(users_per_page)
+		@pagy, @users = pagy(User.sorted_by(params[:sort], params[:direction]))
 		@total_users = User.count
 		@uk_users = User.select{|uk| uk.uk_user?}
 		@subscribers_total = User.select{|s| s.subscriber?}
