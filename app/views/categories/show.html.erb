@@ -31,7 +31,7 @@
       </div>
     <% end %>
     <div class="col-sm-12">
-      <%= paginate @articles %>
+      <%== pagy_bootstrap_nav(@pagy) %>
     </div>
   <% end %>
 </div>
@@ -58,7 +58,7 @@
   </tbody>
 </table>
 
-<%= paginate @articles %>
+<%== pagy_bootstrap_nav(@pagy) %>
 
 <div class="form-actions">
 

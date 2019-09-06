@@ -47,7 +47,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @articles = Kaminari.paginate_array(Category.cached_category_articles(@category.id).reverse).page(params[:page]).per(Settings.category_pagination)
+    @pagy, @articles = pagy_array(Category.cached_category_articles(@category.id).reverse)
 
     # Set meta tags
     @page_title = "#{@category.short_display_name} articles"
