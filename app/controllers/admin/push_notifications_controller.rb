@@ -16,7 +16,6 @@ class Admin::PushNotificationsController < ApplicationController
     @pn_total = Rpush::Notification.count
     @pn_undelivered = Rpush::Notification.where(delivered: false).count
 
-    # @push_notifications = Kaminari.paginate_array(Rpush::Notification.order(:updated_at).reverse_order.all).page(params[:page]).per(per_page)
     @pagy, @push_notifications = pagy(Rpush::Notification.order(:updated_at).reverse_order.all)
   end
 

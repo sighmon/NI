@@ -9,8 +9,6 @@ class Admin::PushRegistrationsController < ApplicationController
     else
       per_page = Settings.users_pagination
     end
-    # @push_registrations = PushRegistration.order(:updated_at).reverse_order.all
-    # @push_registrations = Kaminari.paginate_array(PushRegistration.order(:updated_at).reverse_order.all).page(params[:page]).per(per_page)
     @pagy, @push_registrations = pagy(PushRegistration.order(:updated_at).reverse_order.all)
   end
 
