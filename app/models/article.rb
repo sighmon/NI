@@ -20,25 +20,23 @@ class Article < ActiveRecord::Base
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  extend Pagy::Search
 
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
 
-  def self.search(params, show_unpublished = false)
+  def self.search(search_term, show_unpublished = false)
     results_per_page = Settings.article_pagination
-    clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
-    if params[:per_page] and (params[:per_page].to_i > 0)
-      results_per_page = params[:per_page].to_i
-    end
+    clean_query = search_term.try(:gsub, /[^0-9a-z "]/i, '')
     query_hash = {
       sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
     }
-    query_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
+    query_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if search_term
     # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
     query_hash.merge!({ post_filter: { term: { unpublished: false}} }) unless show_unpublished
 
-    __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
+    __elasticsearch__.search(query_hash).records
   end
 
   def score

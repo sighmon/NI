@@ -23,7 +23,8 @@ class ArticlesController < ApplicationController
   end
 
   def search
-    @articles = Article.search(params, current_user.try(:admin?))
+    records = Article.pagy_search(params[:query]).records
+    @pagy, @articles = pagy_elasticsearch_rails(records)
     @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
     @page_title = "Search for an article"
     if params[:query].present?
