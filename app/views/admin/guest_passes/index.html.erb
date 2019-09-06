@@ -2,7 +2,7 @@
 	<h1>Guest Passes</h1>
 </div>
 
-<%= paginate @guest_passes %>
+<%== pagy_bootstrap_nav(@pagy) %>
 
 <table class="table table-bordered">
 	<thead>
@@ -27,7 +27,7 @@
 	</tbody>
 </table>
 
-<%= paginate @guest_passes %>
+<%== pagy_bootstrap_nav(@pagy) %>
 
 <div class="form-actions">
 	<%= link_to "Back", admin_root_path, :class => 'btn btn-outline-secondary' %>
