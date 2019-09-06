@@ -261,6 +261,9 @@ gem 'highlighter-js', :git => 'https://github.com/sighmon/highlighter.js.git'
 gem 'kaminari'#, '~> 0.13.0'
 gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
 
+# Pagy for faster pagination
+gem 'pagy'
+
 # Elasticsearch for archive and article search
 # Note: pinned 24/5/2019 because of SSL error on heroku
 # ActionView::Template::Error (SSL_connect returned=1 errno=0 state=SSLv3/TLS write client hello: wrong version number):

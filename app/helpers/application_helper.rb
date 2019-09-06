@@ -1,4 +1,7 @@
 module ApplicationHelper
+
+    include Pagy::Frontend
+
     def issues_as_table(issues)
         if issues.try(:empty?)
             return "You haven't purchased any individual issues yet."

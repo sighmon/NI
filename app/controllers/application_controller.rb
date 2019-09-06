@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
   # Save this page location to session
   after_action :store_location
 
+  # Load Pagy backend
+  include Pagy::Backend
+
   protected
 
   def configure_permitted_parameters
