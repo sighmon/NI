@@ -88,7 +88,9 @@ describe UserMailer, :type => :mailer do
       expect(mail.body.encoded).to match(user.username)
       expect(mail.body.encoded).to match("Tax invoice: #NI#{subscription.user.id}SUB#{subscription.id}")
       expect(mail.body.encoded).to match("Subscription: 6 months")
-      expect(mail.body.encoded).to match("Amount: $36.00 (including GST $3.27)")
+      expect(mail.body.encoded).to match("including GST")
+      expect(mail.body.encoded).to match("36.00")
+      expect(mail.body.encoded).to match("3.27")
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
     end
@@ -230,6 +232,11 @@ describe UserMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("Thank you for purchasing a digital issue")
       expect(mail.body.encoded).to match(purchase.user.username)
+      expect(mail.body.encoded).to match("Tax invoice: #NI#{purchase.user.id}MAG#{purchase.id}")
+      expect(mail.body.encoded).to match("Magazine: ")
+      expect(mail.body.encoded).to match("including GST")
+      expect(mail.body.encoded).to match("7.50")
+      expect(mail.body.encoded).to match("0.68")
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
     end

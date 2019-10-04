@@ -115,7 +115,7 @@ class Admin::BaseController < ApplicationController
 	def magazine_purchase_email
 		@greeting = 'Hi'
 		@issues = Issue.where(published: true).last(8).reverse
-		@purchase = Purchase.first
+		@purchase = Purchase.last
 		@issue = @purchase.issue
 		@user = @purchase.user
 		@template = "user_mailer/issue_purchase"
