@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: September, 2019
+Period: October, 2019
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  4 September 2019
+  4 October 2019
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   172 Gilles Street, Adelaide 5000
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl1x4CgACgkQtsnG2UL7
-GPlRUg/8CvcFAtsAx9tFZEOrLbT7O8ZwprXNZdhpo83d/g1pIZqI/x8pa//3+Pks
-OOfbsyxxw9mlBUjxdwgJvzY2dG6Zsebpaw4wpluYtYXm5aXC01Iqiphy/bZgxdkC
-tjCR0w+xWTS7+EtIHUh0UGG8wPNzLoqaTnqYXr5Gtnsjct2GquhxhmeHmADBSdEu
-MFPVJOH8BGdJrxQUgkoQ5S+OM24etkB3w2Iu/QoDOmgN18deqVqDzWKMJm+KGa96
-VqiIG3Wvs81LkuIuChGmKSAUSJ1430FL2aa+Q+5Lm2RHgz1QP8pEV/mnfRIRQ2Dk
-3lSoAK43YpgOBgQekfIjVmFebRsSmCReSgGmRTvHJy1R76gXGwCHRHoa/tOK5tK5
-fOv5Wjdy9TEfgipTFGGt1dktbmBD+GPfGAWNqQIQdQDglcIy7nsITu+vjfMA22Vx
-Yr6CHllO9amVwyyuY8ESyIOqzLkQ1jco73WYs6j2vM9/0cWpqyYkOPSnAm5DXCcG
-vM9qrCqi8g4BGD4M6sqf7ZnH1NuwG78MB3wwzMYP15AFpnZpAGLyk3t9ZXCy/ylY
-myfiFCmGpuygNWB9gt0IShAIo6b/4FaeC8Cq0wNOqfVz7YuTizp76xu4x3szSIT8
-y+jeXbUL+nLV9BEDFAK+9EjxtDCPlyi8tcckcZ5fyNUvpPWY8iE=
-=O8YB
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl2Wj8MACgkQtsnG2UL7
+GPmvNg/8DNRTJAq0EKAiC7BRKCrzX+8A92RKEknoGxxKN3mj8dQBLHj12ZX3Prt3
+XyDa0ETmSAdyokVdQuj6QhdjyW02LEVybOQV9YoRvFcag6wxMUGLBbZu9lJ3ZTOU
+ipZn9yuo9m5dSA7cm1cZMFaiowOxIXUa6sE9G+wZBJkKm8Fezv9bKCvsIvoch0lr
+ngBZzbGS/jABuYOZXU9e25AeRWUv/ZBSilHeqNe+pPP512Jn1NTC8gQIWGjsWovM
+04KJVjH/fGSdb/JCkj/Hu1XFSWn1n+JwKGB76zR7I53UjsRglRZsQH3zyejb6Gyk
+uKwTFFz/Tv95ohg/zWnvQV7uYXy9BZuX38KwLMZ+ooE8W+yh8EGoP1plGjeCB9AM
+KZem7K6Vg/B1OS9613upEOuyWYfmCsHvSTHuWKJbOJw2oCNBfYtuuikb7z1LsJo3
++jcpqQX7fWZb5AqqiYSsYp0dks/tNZGW7wNWbNLUNwz87fLqTBd6JE7KxvIAz1Zo
+AHAyiVcDGDS61YO1e7DKO5opn467U4ObRuRvwcpw9jc0pe66yOtAMv3z0swOzJRt
+d0sXEzar/Q0UlJTar0gv7J7R119UgIpuZEtP7HbrDzKjKdKj6oplt/MBmRlyk9BS
+dqou8us44f4dwQ1D2FEaM3xdfmNPi0QjKZViVs6exDRfHGthxEY=
+=NshG
 -----END PGP SIGNATURE-----
