@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.5'
 
-gem 'rails', '5.2.3'
+gem 'rails', '6.0.0'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
@@ -13,7 +13,7 @@ gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
 
 # Rails 5
-gem 'record_tag_helper'
+# gem 'record_tag_helper'
 
 #### For heroku to serve static assets
 gem 'rails_serve_static_assets'
@@ -135,7 +135,7 @@ gem 'mjml-rails'#, '2.4.3'#, git: 'https://github.com/sighmon/mjml-rails.git', r
 gem 'rpush'
 # Temporary fix for rpush:
 # https://github.com/rpush/rpush/issues/306
-gem 'net-http-persistent', '~> 2.9.4'
+gem 'net-http-persistent'#, '~> 2.9.4'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
@@ -235,7 +235,8 @@ gem 'jquery-ui-rails'
 # https://github.com/plataformatec/simple_form
 gem 'simple_form'
 gem 'country_select'
-gem 'country_state_select'
+gem 'country_state_select', :git => 'https://github.com/sighmon/Country-State-Select.git', :branch => 'add/rails-6-support'
+# gem 'country_state_select', path: '../Country-State-Select/'
 
 # RMagick for image editing
 gem 'rmagick', :require => false
