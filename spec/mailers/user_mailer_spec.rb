@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ApplicationHelper
 
 describe UserMailer, :type => :mailer do
 
@@ -85,6 +86,9 @@ describe UserMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("Hi")
       expect(mail.body.encoded).to match(user.username)
+      expect(mail.body.encoded).to match("Tax invoice: #NI#{subscription.user.id}SUB#{subscription.id}")
+      expect(mail.body.encoded).to match("Subscription: 6 months")
+      expect(mail.body.encoded).to match("Amount: $36.00 (including GST $3.27)")
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
     end

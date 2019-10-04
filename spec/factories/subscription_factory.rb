@@ -4,6 +4,7 @@ FactoryBot.define do
     valid_from { DateTime.now }
     purchase_date { DateTime.now }
     duration { 6 }
+    price_paid { 3600 }
     user
 
     factory :media_subscription do

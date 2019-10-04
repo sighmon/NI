@@ -1,14 +1,14 @@
 New Internationalist Magazine - subscription
 ============================================
 
-Tax invoice #NIMAG<%= @subscription.id %>
-
 <%= @greeting %> <%= @user.username %>,
 
 Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.
 
+Tax invoice: <%= tax_invoice_number(@subscription) %>
+Subscription: <%= pluralize(@subscription.duration, 'month') %>
 Date of purchase: <%= purchase_date_as_string(@subscription.purchase_date) %>
-Amount: <%= number_to_currency(cents_to_dollars(@subscription.price_paid), :unit => '$') %>
+Amount: <%= number_to_currency(cents_to_dollars(@subscription.price_paid), :unit => '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@subscription.price_paid), :unit => '$') %>)
 
 Start reading now!
 <%= issues_url(:protocol => "https") %>

@@ -186,6 +186,29 @@ module ApplicationHelper
         return dollars
     end
 
+    def cents_to_dollars_gst(value)
+        begin
+            gst = cents_to_dollars(value).to_f / 11.0
+        rescue
+            return 0
+        end
+        return gst
+    end
+
+    def tax_invoice_number(purchase)
+        begin
+            if purchase.class.name == 'Purchase'
+                return "#NI#{purchase.user.id}MAG#{purchase.id}"
+            elsif purchase.class.name == 'Subscription'
+                return "#NI#{purchase.user.id}SUB#{purchase.id}"
+            else
+                return "#NI#{purchase.user.id}UNKNOWN#{purchase.id}"
+            end
+        rescue
+            return 'ERROR'
+        end
+    end
+
     def article_favourited?(article)
         if not current_user.nil? and not article.nil?
             return current_user.favourites.collect{|f| f.article_id}.include?(article.id)
