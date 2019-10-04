@@ -5,7 +5,7 @@ describe IssuesController, :type => :controller do
   setup do
     Issue.__elasticsearch__.index_name = 'ni-test'
     Issue.__elasticsearch__.create_index! force: true
-    # Issue.__elasticsearch__.import
+    # Issue.__elasticsearch__.import(force: true)
     # Issue.__elasticsearch__.refresh_index!
   end
 
@@ -17,7 +17,7 @@ describe IssuesController, :type => :controller do
       describe "GET issue list" do
 
         it "should show issue" do
-          Issue.__elasticsearch__.import
+          Issue.__elasticsearch__.import(force: true)
           Issue.__elasticsearch__.refresh_index!
           get :index, params: {:issue_id => issue.id}
           expect(response.status).to eq(200)
@@ -26,7 +26,7 @@ describe IssuesController, :type => :controller do
         end
 
         it "should show issue JSON" do
-          Issue.__elasticsearch__.import
+          Issue.__elasticsearch__.import(force: true)
           Issue.__elasticsearch__.refresh_index!
           get :index, params: {format: 'json', :issue_id => issue.id}
           expect(response.status).to eq(200)
