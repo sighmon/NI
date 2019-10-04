@@ -40,15 +40,6 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
-					Tax invoice <%= tax_invoice_number(@subscription) %>
-				</mj-text>
-
-				<mj-text
-					font-size="22px" 
-					color="#ED4E59" 
-					font-family="helvetica"
-					font-weight="bold"
-					align="center">
 					<%= link_to "Thanks for your subscription!", user_url(@user), style: 'color:inherit;' %>
 				</mj-text>
 
