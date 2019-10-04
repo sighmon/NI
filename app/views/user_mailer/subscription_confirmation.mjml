@@ -40,6 +40,15 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
+					Tax invoice #NISUB<%= @subscription.id %>
+				</mj-text>
+
+				<mj-text
+					font-size="22px" 
+					color="#ED4E59" 
+					font-family="helvetica"
+					font-weight="bold"
+					align="center">
 					<%= link_to "Thanks for your subscription!", user_url(@user), style: 'color:inherit;' %>
 				</mj-text>
 
@@ -50,6 +59,9 @@
 					color="#787878">
 					<%= @greeting %> <%= @user.username %>,<br /><br />
 					Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.<br /><br />
+
+					<b>Date of purchase</b>: <%= purchase_date_as_string(@subscription.purchase_date) %><br />
+					<b>Amount</b>: <%= number_to_currency(cents_to_dollars(@subscription.price_paid), :unit => '$') %><br /><br />
 				
 					Here's a link to your profile page: <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %><br /><br />
 

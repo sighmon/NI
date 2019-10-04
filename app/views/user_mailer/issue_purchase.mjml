@@ -43,6 +43,15 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
+					Tax invoice #NIMAG<%= @purchase.id %>
+				</mj-text>
+
+				<mj-text
+					font-size="22px" 
+					color="#ED4E59" 
+					font-family="helvetica"
+					font-weight="bold"
+					align="center">
 					<%= link_to "Thanks for your purchase!", issue_url(@purchase.issue), style: 'color:inherit;' %>
 				</mj-text>
 
@@ -52,8 +61,10 @@
 					font-weight="300"
 					color="#787878">
 					<%= @greeting %> <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
-					Thank you for purchasing a digital issue of New Internationalist magazine:<br />
-					<%= link_to "#{@purchase.issue.number} - #{@purchase.issue.title}", issue_url(@purchase.issue), style: 'color:inherit;' %>
+					Thank you for purchasing a digital issue of New Internationalist magazine:<br /><br />
+					<b>Magazine</b>: <%= link_to "#{@purchase.issue.number} - #{@purchase.issue.title}", issue_url(@purchase.issue), style: 'color:inherit;' %><br />
+					<b>Date of purchase</b>: <%= purchase_date_as_string(@purchase.purchase_date) %><br />
+					<b>Amount</b>: <%= number_to_currency(cents_to_dollars(@purchase.price_paid), :unit => '$') %><br /><br />
 				</mj-text>
 
 				<mj-button

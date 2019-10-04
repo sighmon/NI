@@ -173,8 +173,17 @@ module ApplicationHelper
         return (user.try(:expiry_date).try(:strftime, "%e %B, %Y") or "No current subscription.")
     end
 
+    def purchase_date_as_string(purchase_date)
+        return (purchase_date.try(:strftime, "%e %B, %Y") or "Unknown date")
+    end
+
     def cents_to_dollars(value)
-        return number_with_precision((value / 100.0), :precision => 2)
+        begin
+            dollars = number_with_precision((value / 100.0), :precision => 2)
+        rescue
+            return 0
+        end
+        return dollars
     end
 
     def article_favourited?(article)
