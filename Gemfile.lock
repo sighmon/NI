@@ -828,7 +828,7 @@ DEPENDENCIES
   simple_form
   simplecov
   sitemap_generator
-  sprockets (= 3.7.2)
+  sprockets (~> 3.7.2)
   stackprof
   thin
   timecop
