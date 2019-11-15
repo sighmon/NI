@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.6.3'
+ruby '2.6.5'
 
 gem 'rails', '5.2.3'
+
+# Pin to 3.7.2 to fix SRI bug
+# https://github.com/rails/sprockets-rails/issues/393
+gem 'sprockets', '~> 3.7.2'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
