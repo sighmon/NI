@@ -607,6 +607,8 @@ describe User, :type => :model do
       it "should be able to download a current_paper_subscribers_csv" do
         u = Subscription.first.user
         u.postal_mailable = "Y"
+        u.country = "JP"
+        u.state = "28"
         u.save
         u2 = Subscription.second.user
         u2.postal_mailable = "R"
@@ -645,6 +647,8 @@ describe User, :type => :model do
         expect(Settings.current_paper_subscribers_csv).to include(u3.email)
         expect(Settings.current_paper_subscribers_csv).to include(u4.email)
         expect(Settings.current_paper_subscribers_csv).to include(',I,')
+        expect(Settings.current_paper_subscribers_csv).to include(u.state_name)
+        expect(Settings.current_paper_subscribers_csv).to include(u.country_name)
       end
 
       it "should be able to update subscriber stats" do

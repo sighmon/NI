@@ -121,8 +121,8 @@ class User < ActiveRecord::Base
     address 'address'
     postal_code 'postal_code'
     city 'city'
-    state 'state'
-    country_name 'company_name'
+    state_name 'state'
+    country_name 'country_name'
     postal_mailable 'postal_mailable'
 
     subscription_type 'subscription_type'
@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
     address 'address'
     postal_code 'postal_code'
     city 'city'
-    state 'state'
+    state_name 'state'
     country_name 'country_name'
     is_recurring? 'is_recurring'
     subscription_type 'subscription_type'
@@ -404,6 +404,14 @@ class User < ActiveRecord::Base
 
   def guest?
     return id.nil?
+  end
+
+  def state_name
+    begin
+      CS.states(self.country)[:"#{self.state}"]
+    rescue
+      self.state
+    end
   end
 
   def country_name
