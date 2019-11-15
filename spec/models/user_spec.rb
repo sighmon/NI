@@ -102,6 +102,22 @@ describe User, :type => :model do
       expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 
+    it "should be able to show a purchase" do
+      purchase = FactoryBot.create(:purchase)
+      purchase.user = user
+      purchase.save
+      expect(ability).to be_able_to(:show, purchase)
+    end
+
+    it "should not be able to show another user's purchase" do
+      purchase = FactoryBot.create(:purchase)
+      user_two = FactoryBot.create(:user)
+      purchase.user = user_two
+      purchase.save
+      expect(ability).not_to be_able_to(:manage, purchase)
+      expect(ability).not_to be_able_to(:show, purchase)
+    end
+
     context "without a parent" do
       it "can update itself" do
         expect(ability).to be_able_to(:manage, user)
@@ -482,6 +498,20 @@ describe User, :type => :model do
       end
     end
 
+    it "should be able to show a subscription tax invoice" do
+      expect(ability).to be_able_to(:show, subscription)
+      expect(ability).to be_able_to(:manage, subscription)
+    end
+
+    it "should not be able to show another user's subscription tax invoice" do
+      subscription_two = FactoryBot.create(:subscription)
+      user_two = FactoryBot.create(:user)
+      subscription_two.user = user_two
+      subscription_two.save
+      expect(ability).not_to be_able_to(:manage, subscription_two)
+      expect(ability).not_to be_able_to(:show, subscription_two)
+    end
+
   end
 
   context "manager" do
@@ -530,6 +560,12 @@ describe User, :type => :model do
     it "should be able to manage a subscription" do
       subscription = FactoryBot.create(:subscription)
       expect(ability).to be_able_to(:manage, subscription)
+    end
+
+    it "should be able to show a purchase" do
+      purchase = FactoryBot.create(:purchase)
+      expect(ability).not_to be_able_to(:manage, purchase)
+      expect(ability).to be_able_to(:show, purchase)
     end
 
     context "with three subscribers" do

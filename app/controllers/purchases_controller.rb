@@ -10,7 +10,7 @@ class PurchasesController < ApplicationController
 
   def show
     @greeting = 'Hi'
-    @user = current_user
+    @user = @purchase.user
     @issue = @purchase.issue
     @issues = Issue.where(published: true).last(8).reverse
     @template = "user_mailer/issue_purchase"

@@ -1,7 +1,7 @@
 <%- model_class = User -%>
 <div class="page-header">
 	<h1><%= @user %></h1>
-	<% if not @user.parent %>
+	<% if not @user.parent and (can? :manage, @user) %>
 		<%= link_to "Edit my profile", edit_user_registration_path(@user), :class => 'btn btn-primary' %>
 	<% end %>
 </div>
@@ -25,6 +25,8 @@
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
+		<dt>Tax invoice: </dt>
+		<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
 	<% end %>
 	<% if not @user.parent %>
 		<% if not @user.has_paper_only? %>
@@ -70,6 +72,8 @@
 			<% rescue NoMethodError %>
 				No current subscription.
 			<% end %></dd>
+			<dt>Tax invoice: </dt>
+			<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
 			<% if @user.subscriber? and @user.is_recurring? %>
 				<dt></dt>
 				<dd>(Automatic renewal)</dd>
@@ -186,7 +190,7 @@
 						<%= render :partial => "issue_purchase", :locals => { :issue => purchase.issue } %>
 						<div class="issue-purchase-date">
 							<p>
-								Purchased on: <%= purchase.created_at.try(:strftime,"%d %b, %Y") %><br />
+								Purchased on:<br> <%= link_to purchase.created_at.try(:strftime,"%d %b, %Y"), issue_purchase_path(purchase.issue, purchase, format: 'mjml') %><br />
 								Price: $<%= purchase.price_paid ? cents_to_dollars(purchase.price_paid) : "Free" %>
 							</p>
 						</div>

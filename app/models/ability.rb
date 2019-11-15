@@ -72,10 +72,17 @@ class Ability
     end
 
     cannot :read, Article, :published => false
+    cannot :show, Purchase do |purchase|
+        not purchase.user == user
+    end
+    cannot :show, Subscription do |subscription|
+        not subscription.user == user
+    end
 
     if user.manager
         can :manage, User
         can :manage, Subscription
+        can :show, Purchase
         can :read, Article
     end
 
