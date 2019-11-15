@@ -179,20 +179,18 @@ module ApplicationHelper
 
     def cents_to_dollars(value)
         begin
-            dollars = number_with_precision((value / 100.0), :precision => 2)
+            return number_with_precision((value / 100.0), :precision => 2)
         rescue
             return 0
         end
-        return dollars
     end
 
     def cents_to_dollars_gst(value)
         begin
-            gst = cents_to_dollars(value).to_f / 11.0
+            return cents_to_dollars(value).to_f / 11.0
         rescue
             return 0
         end
-        return gst
     end
 
     def tax_invoice_number(purchase)
