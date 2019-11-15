@@ -72,8 +72,6 @@
 			<% rescue NoMethodError %>
 				No current subscription.
 			<% end %></dd>
-			<dt>Tax invoice: </dt>
-			<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
 			<% if @user.subscriber? and @user.is_recurring? %>
 				<dt></dt>
 				<dd>(Automatic renewal)</dd>
