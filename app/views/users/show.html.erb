@@ -25,8 +25,10 @@
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
-		<dt>Tax invoice: </dt>
-		<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
+		<% if @user.subscriptions.last %>
+			<dt>Tax invoice: </dt>
+			<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
+		<% end %>
 	<% end %>
 	<% if not @user.parent %>
 		<% if not @user.has_paper_only? %>
