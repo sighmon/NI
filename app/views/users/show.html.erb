@@ -25,9 +25,11 @@
 		<% rescue NoMethodError %>
 			No current subscription.
 		<% end %></dd>
-		<% if @user.subscriptions.last %>
-			<dt>Tax invoice: </dt>
-			<dd><%= link_to tax_invoice_number(@user.subscriptions.last), subscription_path(@user.subscriptions.last, format: 'mjml') %></dd>
+		<% if not @user.parent and @user.subscriptions.count > 0 %>
+			<dt>Tax invoices: </dt>
+			<dd><% @user.subscriptions.reverse_order.each do |subscription| %>
+				<%= link_to tax_invoice_number(subscription), subscription_path(subscription, format: 'mjml') %>  
+			<% end %></dd>
 		<% end %>
 	<% end %>
 	<% if not @user.parent %>
