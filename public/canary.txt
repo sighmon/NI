@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: December, 2019
+Period: January, 2020
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  4 December 2019
+  4 January 2020
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl3reggACgkQtsnG2UL7
-GPn4xQ//feKrl9iE2TPlUSoIP7IfLfkUgB0QrDXTwGM8fA/nzK9PIh0QU0iTkHkh
-e/Cd7eGgDCzC+jLzbjkP4mMc0Fgb12n9KEnh7FOlqGvr5pIfAMixRQJlPtN+COGX
-4c6//veeik1Nl6D6pnIE9pAuoRl2Qkip1QWkMM/FBKRt3y5O9oNPWU6dzscwVVcv
-kXDgXwJyYBs5QooYfbQZ/Xr1/oW44DnrQwOGhFvVbIUpCFlIqSMXkMpB7IlHf7dO
-pURsozz1TL1OuvVPrX2IUVA326Q4WzTtihX9/l9JP0Iy9xlZq13VSMCYMAHvPFXz
-1Ne4khA48Tn/GyG7q7KjFdHNLdrzhU5aNPyzWMGjYfZhKLIJSNvzeHMQmtts6Cfv
-7HG9R8nrcziIzM4UGif6lPisWmduS3KXPJDfFXPY8lnaOgFX54AQWqyQzDd0kyF3
-jtzYAuyfm7ErEqV8+laQcSR3pTeBwr8ksdxZh4U397TQJXV8iMGuIqHY/Kn+FS+D
-qu77UDDbrEfqas/yFHoQ8bQLQWlOyzRg1XzvtW+H2srF+YOuShizRNBc6E5CHZNA
-avNyVOtyJw72ljGUC4eOkFjCGY8h1otF9aLKgPzO7fTiB44NUzbsmWMCX9rNOmaP
-26IvkVPBhmXVFg3P/MHi3AcevzV0LsDnWpeLd0jnJzJ+yh9HEZc=
-=hThu
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl4NiccACgkQtsnG2UL7
+GPmwqhAAiTQc4YD/eFGwGS9feBGXUT/FbGStxXksKqoYH5I+I9Uj8c8UO1tnn5Ms
+OLExrur7OI6m0RMayNoD8Hcsaw2j34382Hmq/8zz+8R9VC4/f/15MFUdPQ55aGOr
+ISPOIJtdxaTBOFPb9cJGJJECkgD8zyX/D04V7r5PNEbtC9FkRA7BY7/WkDp3m5Uj
+qEC+2bi9whPBrVm4xipxcnKlFNUD2jQkgdCVgP+2+YWDk/1IcwrsRbc5s4y1F9B+
+Wqqy7COzb787Lsbnc/5L7yF9NcQsva5k5mUwTnOk1nVZ1NgE/5wGf2FLf+rLD0+T
+ihmcfQO3Nb9ikBqWHX4psQHPs3rXLd+HivXTYUWhTLVB4/IRkCE4jJFNS6XP4kNf
+hRXh2w4NzumK51IU7WTmYdBilTe0btxldeMcsHsU+2lob8LvBju/xkQVJQspogv9
+2fpIXHo4G33AstYpSQCl3MYzk4jSx9cMyaGJFhv7I1BH4FJRDXWrLZMZjQhafbW0
+3eBxdZWr0Xhi0wFVId7Q19EFGK/41F2Vmd4Kf02sKrKlKmaZcLwRbN3TCmad82cb
+ObxLPyTMZa2JzDnsn4bxGg4tTVjL87XpSDbXa9UQ8SnPaFenlE2c1zV6PJA8Wtg2
+jsaKCOkoV3BW5OAND+yHXNBVBBepY7JUHsXBKylAwRQx84QoMow=
+=A1iB
 -----END PGP SIGNATURE-----
