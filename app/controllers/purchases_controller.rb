@@ -16,6 +16,9 @@ class PurchasesController < ApplicationController
     @template = "user_mailer/issue_purchase"
 
     respond_to do |format|
+      format.html {
+        render @template
+      }
       format.mjml {
         render @template, :layout => false
       }

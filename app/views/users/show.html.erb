@@ -28,7 +28,7 @@
 		<% if not @user.parent and @user.subscriptions.count > 0 %>
 			<dt>Tax invoices: </dt>
 			<dd><% @user.subscriptions.reverse_order.each do |subscription| %>
-				<%= link_to tax_invoice_number(subscription), subscription_path(subscription, format: 'mjml') %>  
+				<%= link_to tax_invoice_number(subscription), subscription_path(subscription) %>
 			<% end %></dd>
 		<% end %>
 	<% end %>
@@ -192,7 +192,7 @@
 						<%= render :partial => "issue_purchase", :locals => { :issue => purchase.issue } %>
 						<div class="issue-purchase-date">
 							<p>
-								Purchased on:<br> <%= link_to purchase.created_at.try(:strftime,"%d %b, %Y"), issue_purchase_path(purchase.issue, purchase, format: 'mjml') %><br />
+								Purchased on:<br> <%= link_to purchase.created_at.try(:strftime,"%d %b, %Y"), issue_purchase_path(purchase.issue, purchase) %><br />
 								Price: $<%= purchase.price_paid ? cents_to_dollars(purchase.price_paid) : "Free" %>
 							</p>
 						</div>

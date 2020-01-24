@@ -32,6 +32,9 @@ class SubscriptionsController < ApplicationController
     end
 
     respond_to do |format|
+      format.html {
+        render @template
+      }
       format.mjml {
         render @template, :layout => false
       }
