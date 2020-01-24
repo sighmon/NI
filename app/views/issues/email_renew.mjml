@@ -121,7 +121,8 @@
 					color="#787878">
 	        To ensure your subscription always stays current - and to get the most economical deal - I highly recommend the 12 month auto renewal subscription <%= link_to "that you'll find here", page_url('seven-good-reasons-to-subscribe'), style: 'color:inherit;' %>. You'll be in full control of the automatic renewal; simply sign in to your PayPal account if you should ever wish to cancel it.<br /><br />
 
-					No PayPal account? No problem. Simply <%= link_to "subscribe here", page_url('subscribe'), style: 'color:inherit;' %> for 3 months, 6 months or 12 months with your Visa or Mastercard.
+					No PayPal account? No problem. Simply <%= link_to "subscribe here", page_url('subscribe'), style: 'color:inherit;' %> for 3 months, 6 months or 12 months with your Visa or Mastercard.<br /><br />
+					If you need assistance with subscribing, please <a href="https://www.newint.com.au/blog/magazine-subscriptions/" style="color:inherit;">read our blog</a> for helpful suggestions.
 				</mj-text>
 
 			<% if not @issue.email_text.blank? %>
