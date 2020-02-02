@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: January, 2020
+Period: February 2020
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  4 January 2020
+  4February 2020
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl4NiccACgkQtsnG2UL7
-GPmwqhAAiTQc4YD/eFGwGS9feBGXUT/FbGStxXksKqoYH5I+I9Uj8c8UO1tnn5Ms
-OLExrur7OI6m0RMayNoD8Hcsaw2j34382Hmq/8zz+8R9VC4/f/15MFUdPQ55aGOr
-ISPOIJtdxaTBOFPb9cJGJJECkgD8zyX/D04V7r5PNEbtC9FkRA7BY7/WkDp3m5Uj
-qEC+2bi9whPBrVm4xipxcnKlFNUD2jQkgdCVgP+2+YWDk/1IcwrsRbc5s4y1F9B+
-Wqqy7COzb787Lsbnc/5L7yF9NcQsva5k5mUwTnOk1nVZ1NgE/5wGf2FLf+rLD0+T
-ihmcfQO3Nb9ikBqWHX4psQHPs3rXLd+HivXTYUWhTLVB4/IRkCE4jJFNS6XP4kNf
-hRXh2w4NzumK51IU7WTmYdBilTe0btxldeMcsHsU+2lob8LvBju/xkQVJQspogv9
-2fpIXHo4G33AstYpSQCl3MYzk4jSx9cMyaGJFhv7I1BH4FJRDXWrLZMZjQhafbW0
-3eBxdZWr0Xhi0wFVId7Q19EFGK/41F2Vmd4Kf02sKrKlKmaZcLwRbN3TCmad82cb
-ObxLPyTMZa2JzDnsn4bxGg4tTVjL87XpSDbXa9UQ8SnPaFenlE2c1zV6PJA8Wtg2
-jsaKCOkoV3BW5OAND+yHXNBVBBepY7JUHsXBKylAwRQx84QoMow=
-=A1iB
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl42Dt4ACgkQtsnG2UL7
+GPl+uxAA07fQkbKYxLQhVh9Py3TZdmpsozFNXVYUh1BYVrudcmU50qg9H7vkENsk
+ZxuFKq5TPu4VSZgk44l9fqV9ZBtMr4Bim3CKYvDslamUlQBU1vKGeqVj2QvP8kn/
+aXUhkOo/3umSRoZYEWGPXMMKvWNRR4sdEOCDPfEM+EpHUHcz4G1x3cNAbzN9ob+N
+djACVPQIk5JawTYQTYYFiTDX/pyuxOaLZT67a8q3Gw1z0iSokqggRmZ5Na+jaByq
+2QpKq32BPgNhuvqV6Sxbr4xnFGTcmWbb/M95kqBF3Rxmh3MeJjyNiyrho31kPqna
+WKMt+YbHhqAmeIkhKfpykvoupuDMkjFqct/kA7cADmgfhyHuQhXqm/9XXUqQ4TDt
+w2/4hKZnMAQ4OmOOHL08yytMIui15Y86c6cRi2uRQoAM4q0ubBQedSL14w33xxjK
+QIN0dW3Gx5SxCxUr3fZfrNgeF30TqycsiyD7yVLsKWW1ExVc9xIltcW4YOvDBCQ+
+AzjDdxxjiquo2IDLolY21lyyDPcRIadmj/9LLq6zKdKL8MEgmnJ0SXL3uiF4ETQo
+a07hA/zut3x2N5fq8SsNSy/7IYJwd6SFnuknqojmzCF7e2ZuKStl7aT/2h8zdidN
+3UNSxEKGy55pNVAQgepAiD5p86rps3Qgfi6ZCx9/CZgu7h9l2Ck=
+=KpCl
 -----END PGP SIGNATURE-----
