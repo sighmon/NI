@@ -780,42 +780,7 @@ class ArticlesController < ApplicationController
       return false
     end
 
-    require 'google/api_client'
-    require 'google/api_client/client_secrets'
-    require 'google/api_client/auth/installed_app'
-    require 'google/api_client/auth/file_storage'
-
-    # Initialize the Google Play client.
-    client = Google::APIClient.new(
-      :application_name => ENV["APP_NAME"],
-      :application_version => '1.0.0'
-    )
-
-    # Get Client Authorization
-    # http://stackoverflow.com/questions/25828491/android-verify-iap-subscription-server-side-with-ruby
-    # NOTE: To setup permissions to use the API, you need to setup a Service Account in the Developer Console
-    # APIs & Auth > Credentials > Create new ClientID > Service Account
-    # Then in Google Play > Settings > API Access > Link & then give permission: View financial reports
-    # key = Google::APIClient::KeyUtils.load_from_pkcs12(IO.read(Rails.root + "config/google_play.p12"), ENV["GOOGLE_PLAY_P12_SECRET"])
-    # Downloaded the .p12 from Google Play, and then openssl it into a .pem
-    # Base64 that into an environment variable to keep it out of version control and Heroku happy.
-    key = Google::APIClient::KeyUtils.load_from_pem(Base64.decode64(ENV["GOOGLE_PLAY_PEM_BASE64"]), nil)
-    client.authorization = Signet::OAuth2::Client.new(
-      :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-      :audience => 'https://accounts.google.com/o/oauth2/token',
-      :scope => 'https://www.googleapis.com/auth/androidpublisher',
-      :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
-      :signing_key => key,
-      :access_type => 'offline'
-    )
-    client.authorization.fetch_access_token!
-
-    # Ruby doesn't like new lines in user_agent anymore.
-    # ArgumentError (header field value cannot include CR/LF):
-    client.user_agent = client.user_agent.squish
-
-    # Discover the API
-    publisher = client.discovered_api('androidpublisher', 'v2')
+    package_name = ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']
 
     # logger.info "Android raw_post: #{request.raw_post}"
     if !request.raw_post.empty?
@@ -829,22 +794,16 @@ class ArticlesController < ApplicationController
 
           if p["productId"].include?("#{@article.issue.number}single")
             # Receipt appears to be for this issue, so validate it
-            result = client.execute(
-              :api_method => publisher.purchases.products.get,
-              :parameters => {
-                'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
-                'productId' => p["productId"], 
-                'token' => p["purchaseToken"]
-              }
-            )
+            product_id = p["productId"]
+            purchase_token = p["purchaseToken"]
+            purchase = Services::GooglePlayVerification.new(package_name, product_id, purchase_token)
+            result = purchase.verify_product
 
-            result_json = JSON.parse(result.body)
-
-            if result_json["purchaseState"] == 0
-              logger.info "Google Play: Purchase valid. #{result.body}"
+            if result.purchase_state == 0
+              logger.info "Google Play: Purchase valid. #{result.order_id}"
               has_valid_receipt = true
             else
-              logger.info "Google Play: INVALID purchase: #{result.body}"
+              logger.info "Google Play: INVALID purchase: #{result}"
             end
           else
             # Receipt isn't for this issue..
@@ -853,21 +812,14 @@ class ArticlesController < ApplicationController
 
         elsif p["productId"].include?("month")
           # It's a subscription, validate it
-          result = client.execute(
-            :api_method => publisher.purchases.subscriptions.get,
-            :parameters => {
-            'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
-            'subscriptionId' => p["productId"], 
-            'token' => p["purchaseToken"]
-            }
-          )
+          product_id = p["productId"]
+          purchase_token = p["purchaseToken"]
+          purchase = Services::GooglePlayVerification.new(package_name, product_id, purchase_token)
+          result = purchase.verify_subscription
 
-          result_json = JSON.parse(result.body)
-          # logger.info "TODO: Google Play: It's a subscription - #{result.body}"
-
-          if result_json["kind"] == "androidpublisher#subscriptionPurchase"
+          if result.kind == "androidpublisher#subscriptionPurchase"
             # It's a subscription purchase, so test its expiryTimeMillis
-            google_play_subscription_expiry_date = DateTime.strptime((result_json["expiryTimeMillis"].to_i/1000).to_s, '%s').in_time_zone('Adelaide')
+            google_play_subscription_expiry_date = DateTime.strptime((result.expiry_time_millis.to_i/1000).to_s, '%s').in_time_zone('Adelaide')
             time_now_in_adelaide = DateTime.now.in_time_zone('Adelaide')
             if google_play_subscription_expiry_date > time_now_in_adelaide
               # Subscription is valid

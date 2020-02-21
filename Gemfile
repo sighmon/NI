@@ -126,7 +126,7 @@ gem 'rails_12factor', :group => :production
 gem 'httparty'
 
 # To talk to the Google Play API
-gem 'google-api-client', '0.8.6'
+gem 'google-api-client', '0.28.7'
 
 # mjml responsive email framework https://mjml.io
 # https://github.com/angelodlfrtr/mjml-ruby
