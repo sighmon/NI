@@ -607,7 +607,7 @@ GEM
       netrc (~> 0.8)
     retriable (3.1.2)
     rexml (3.2.4)
-    rmagick (4.0.0)
+    rmagick (4.1.1)
     rpush (5.0.0)
       activesupport (>= 5.0)
       jwt (>= 1.5.6)
@@ -813,7 +813,7 @@ DEPENDENCIES
   recaptcha
   record_tag_helper
   retina_image_tag!
-  rmagick (= 4.0.0)
+  rmagick
   rpush
   rspec-activemodel-mocks
   rspec-legacy_formatters
@@ -837,7 +837,7 @@ DEPENDENCIES
   zipruby
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   1.17.3
+   2.1.4

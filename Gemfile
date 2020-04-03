@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.5'
+ruby '2.7.1'
 
 gem 'rails', '5.2.4.2'
 
@@ -242,7 +242,7 @@ gem 'country_select'
 gem 'country_state_select'
 
 # RMagick for image editing
-gem 'rmagick', '4.0.0', :require => false
+gem 'rmagick', :require => false
 gem 'mini_magick'
 
 # CarrierWave for image uploading
