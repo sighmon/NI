@@ -293,7 +293,10 @@ class ArticlesController < ApplicationController
     @view_from_india = @article.categories.select{|c| c.name.include?("/columns/view-from-india/")}
     @view_from_america = @article.categories.select{|c| c.name.include?("/columns/view-from-america/")}
     @view_from_brazil = @article.categories.select{|c| c.name.include?("/columns/view-from-brazil/")}
-    @debate = @article.categories.select{|c| c.name.include?("/sections/argument/")}
+    @debate = @article.categories.select{|c| 
+      c.name.include?("/sections/argument/") or
+      c.name.include?("/columns/the-debate/")
+    }
     @temperature_check = @article.categories.select{|c| c.name.include?("/columns/temperature-check/")}
     # Push the single top image to the right for these categories
     @image_top_right = @article.categories.select{|c| 
