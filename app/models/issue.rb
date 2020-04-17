@@ -331,11 +331,9 @@ class Issue < ActiveRecord::Base
   end
 
   def request_json_from_newint_org(url, token)
-    request = HTTPI::Request.new
-    request.url = url
-    request.headers = { "Accept": "application/json", "X-CSRF-Token": token }
-    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-    response_from_newint_org = HTTPI.get(request)
+    headers = { "Accept": "application/json", "X-CSRF-Token": token }
+    auth = {username: ENV["NEWINT_ORG_REST_USERNAME"], password: ENV["NEWINT_ORG_REST_PASSWORD"]}
+    response_from_newint_org = HTTParty.get(url, basic_auth: auth, headers: headers)
     logger.info "Request to: #{url}"
     logger.info "Response: #{response_from_newint_org.code.to_s}"
     response_body = nil
@@ -351,14 +349,10 @@ class Issue < ActiveRecord::Base
 
   def csrf_token_from_newint_org
     # First get a token
-    request = HTTPI::Request.new
-    request.url = ENV["NEWINT_ORG_REST_TOKEN_URL"]
-    request.headers = { "Content-type": "text/plain" }
-    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-    response = HTTPI.get(request)
-    # byebug
+    auth = {username: ENV["NEWINT_ORG_REST_USERNAME"], password: ENV["NEWINT_ORG_REST_PASSWORD"]}
+    # Use SecureRandom hex to avoid strange newint.org cache bug
+    response = HTTParty.get(ENV["NEWINT_ORG_REST_TOKEN_URL"] + '?' + SecureRandom.hex, basic_auth: auth)
     logger.info "TOKEN RESPONSE: " + response.code.to_s
-    # logger.info response.headers
 
     xcsfr_token = nil
     if response.code >= 200 and response.code < 300
