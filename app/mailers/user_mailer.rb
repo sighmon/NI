@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   #   en.user_mailer.subscription_confirmation.subject
   #
   default :bcc => ENV["DEVISE_BCC_EMAIL_ADDRESSES"]
-  helper :application_helper
+  helper :application
   if Rails.env.development?
     default :bcc => ENV["DEVISE_BCC_EMAIL_ADDRESSES_DEV"]
   end
