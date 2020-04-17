@@ -118,6 +118,8 @@ class User < ActiveRecord::Base
     uk_id 'uk_id'
     uk_expiry 'uk_expiry'
 
+    first_name 'first_name'
+    last_name 'last_name'
     address 'address'
     postal_code 'postal_code'
     city 'city'
