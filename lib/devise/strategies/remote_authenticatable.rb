@@ -51,7 +51,7 @@ module Devise
           Rails.logger.debug "User found: #{resource.username}"
           # They do have an account, so lets sync it with the UK data.
           if uk_user_details["data"]["email"]
-            resource.email = uk_user_details["data"]["email"]
+            resource.email = uk_user_details["data"]["email"].downcase
           else
             resource.email = generate_uk_email_address(uk_user_details["data"]["id"])
           end
@@ -116,7 +116,7 @@ module Devise
       def build_user_from_uk_info(user, uk_info)
         if user and uk_info
           if uk_info["data"]["email"]
-            user.email = uk_info["data"]["email"]
+            user.email = uk_info["data"]["email"].downcase
           else
             user.email = generate_uk_email_address(uk_info["data"]["id"])
           end
