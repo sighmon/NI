@@ -120,7 +120,7 @@ module Devise
           else
             user.email = generate_uk_email_address(uk_info["data"]["id"])
           end
-          user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"]
+          user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"] + "_" + uk_info["data"]["id"]
           user.password = Devise.friendly_token
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
           user.uk_expiry = parse_expiry_from_uk_details(uk_info["data"]["expiry"])
