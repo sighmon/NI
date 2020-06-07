@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: May 2020
+Period: June 2020
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  3 May 2020
+  3 June 2020
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl6umTkACgkQtsnG2UL7
-GPlc9g/9FTCvyVgqe+h8ZG10GV9szvGPAyrh2bAgVYg4xXjovT5UZUbhGNdYQqdp
-7PiUpLQ4EcrvorjBqz8FkXFgp2VD0C6rXXa2fgnkZgMSFYPv+VQTiOJa8HNceRHI
-Ak/RAybvYjQfZIA7TjMcNIHyj21T8ad94WFwvk6KW9x1Jp9tLl2te0v2qr1AMYrE
-O+caiQ1wZIuKXI+am4i4VMvqwbRS07OgstjU0r4Za4r0ox0b5dVdgaruZOOvrOGO
-2yvmEqBljSmihOWBHjaU7p3HmJuqP4SGY2sQmitQNmejWhuRNhFLmIpKhGV5/6jw
-u3pidvyBmAZDpk/yh57UMpDF7j5Zf7pIP09jxwzIwpyvilrp9+eB3mxvot3RyDyg
-a4DC/AHxlDRrNodPdLDa0SHoeujLcQoqiBVDhlh9MVKS9nAylAp1GZbLR+T+JpRB
-uOjRLgrAAcFGvWO8Dtw1O/j3U1LUuREJrM8M8FWKuDfJ1XMOfY8fkzg2H5nFSsAd
-8A49bv+rDDDq6ptufMLWuoSfoAfn3s5guYcgneByh58Xm/oNOPHUx+HmkiPBndyx
-H70uM7BrLRN3m9kpCTqHkaE+MaBLfo8zUBPqnkOnZobmyD3d/80KNCaiOSTgkguU
-LWUYnQNeyYUcoZtl74OmKs/ijNbK2CKLjazUBw9uNu03sbVBoPw=
-=BdSV
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl7WNm0ACgkQtsnG2UL7
+GPmYXg//fbUSWQK/UF2ddjU1NVfW81hGCfQ0Qhq8GCMK2za52pZetscj8oesEoPU
+jPIHRK94pFvM/dgjOeFgVEeVM4/4oux3dobFWLSSoSirHpZv1jMbcFXwUacdpHJ+
+pXcp9qt+V9eEZVzMUAGmoGEdo2RjWDDXwhKNlkjqqe1x2j3DiVj2Z9xtMzIohjdc
+9MVSiBrs2y7kGXLMYKKCz2NQPlki67QakUl6VZM+wASg8EAGYGWS2EFmVc2V/a+/
+Mj2x4lYFjr0fGC57ecBBjgIaqg21WEq4YtUlKle+rOkAE9tQrdrWwRiI+4ZNpy+f
+SyJgggdahy1BAMpBLed4Ha2g09f5TKveTJusRjIKtCbNd01t9KrRt3wM2LxEIedn
+Yu4sosnMhis6bdGu0Qu3pO5jrrabqta67OUxOD/iPd9RGPRr+yvSZ6Yam2e8URn9
+RnALz9mlYOrklMrYUUFTyi7NCAZXfxj6rjRi1LLeJ3MjJco8CxoJSFCIsOYqURQx
++65UK7eU74Okrr/EWRl8HKcrJDdQU6yk4EaIFDNHDgoTLaKF7C+vqNfXOCLLRzzw
+xxJ0FKDOo0utEpA8IdxgFyG0X/EL+bm6Nm2Te1O1D0YxXx1+6z1beyXwuN6F8ut2
+2jGYg9pLeluInX27xJaTiIKSZGkkdyJiW+wLhk/Tuz2PqwipLJE=
+=jPOL
 -----END PGP SIGNATURE-----
