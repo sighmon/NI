@@ -580,12 +580,16 @@ describe User, :type => :model do
       end
 
       it "should be able to download a users_csv" do
+        user = User.first
+        user.company_name = "Some company"
+        user.save
         User.update_admin_users_csv
         users_csv = CSV.parse(Settings.users_csv)
         # 1 header, 3 subscribers, 3 users
         expect(users_csv.count).to eq(7)
         expect(Settings.users_csv).to include(User.first.email)
         expect(Settings.users_csv).to include(User.last.email)
+        expect(Settings.users_csv).to include(user.company_name)
       end
 
       it "should be able to download a current_digital_subscribers_csv" do
