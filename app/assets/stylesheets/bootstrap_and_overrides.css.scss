@@ -1950,7 +1950,7 @@ mark, .mark {
 	@include no-shadow;
 }
 
-blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
+blockquote.pull-right, blockquote.pull-left, blockquote.pull-, blockquote.pull-center {
 	border-right-style: none;
 	border-left-style: none;
 	// color: $niRed;
@@ -1959,7 +1959,7 @@ blockquote.pull-right, blockquote.pull-left, blockquote.pull- {
 	text-align: right;
 }
 
-blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
+blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p, blockquote.pull-center p {
 	margin-bottom: 0;
 	font-size: 1.5em;
 	font-family: "BagnardRegular", serif;
@@ -1987,6 +1987,17 @@ blockquote.block-quote {
 blockquote > .attribution {
 	font-size: 0.9em;
 	color: $gray-light;
+}
+
+blockquote footer {
+	text-align: center;
+	margin-top: 1em;
+	color: $gray-light;
+}
+
+blockquote.pull-center {
+	width: inherit;
+	margin: 1em 2em;
 }
 
 .footnotes {
