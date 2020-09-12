@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.1'
 
-gem 'rails', '5.2.4.3'
+gem 'rails', '5.2.4.4'
 
 # Pin to 3.7.2 to fix SRI bug
 # https://github.com/rails/sprockets-rails/issues/393
