@@ -96,7 +96,7 @@ gem 'sitemap_generator'
 gem 'unicorn'
 
 # New Relic for server information https://devcenter.heroku.com/articles/newrelic
-gem 'newrelic_rpm', '6.12.0.367'
+gem 'newrelic_rpm'#, '6.12.0.367'
 
 # rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
 # gem 'rubyzip'
