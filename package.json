@@ -8,7 +8,7 @@
     "test": "test"
   },
   "dependencies": {
-    "mjml": "~4.6.3"
+    "mjml": "~4.7.1"
   },
   "repository": {
     "type": "git",
