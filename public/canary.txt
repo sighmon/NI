@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: September 2020
+Period: October 2020
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  3 September 2020
+  3 October 2020
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl9Qoc8ACgkQtsnG2UL7
-GPlzgRAAsaQiuN4nv7AdehaSXUhjPC8cZH4o6WweZXogCOGTe1zgX4sXdbGsqJdF
-eca0Gx3hZulBptlYNHrj2ZRSodUouKB43FNQL7L4g17UN/dhh+ePZOZYRGuDmFDR
-SGfMKqbFyZKkgmy0lI+yeA3ivaNryY6D4nKmGZdSQm7u3ngkYCWoVCnunppcR1gb
-mI9D0HlmSWpOfe493tMkrnBg6xSCiW7rXxu1PvhvYPdkrumM3VsGHYRGOKBI38rA
-JA41Y8F27gXZ9RdBM4hStRNH2RwVYndW+PWYO8yVG5lX8o9nih2rRNy2LDI7yAZA
-z3qeJhaPd9dbmZtO5xN4XvQl2Dqztgwn2NW1y7nTwoC+89FJKo+RMrepC1v301V8
-b+OvI8OhrmZBreuvMgawFyhO/DUvfnvHZ4yhFkJen7YW46WLQbePJYhMiwucLQbU
-ADBrKOi6Kk0HAxXggGhICv/BybYBlNJ0zG+9pKCvdjrMHEDwCMLwKqUqLthKO1X5
-YTB2VjwLJsO11R75CN+Q3oo7eNgwEyY91C7PXvvbHEuaqdvnaAQI7FgQJ7UuR8YQ
-DkDYpba7DpHsAnj3ibZCWLZT/vSyGsZx9TnSf+nZy4H9i7zJpgFvnyne7mOtpHED
-A1NSoqEpfi7PFT98FD+46Y9/C590Pe9Qbje1ehFbfFpxD4sPBX4=
-=+g1s
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAl+I1joACgkQtsnG2UL7
+GPmpOBAAmEBqpnKzpMKdc67OTK4SEQNs//R6e3Id2M4v2SGvriK0/wI7prBtpP6B
+7H6HvMZTFtVbv6zZuychlEizMSIoIaa8IHzICT1VidPMSXDLrcBqgkK/AFPdT/HW
+nHaO4SgYnv1heUy9S80FDdJTLroVyFKPNSxneBEh/XVATEdJPypds1Mo4oYJxpCQ
+sbbue4OdCWGXFPhThOXk0+DL72BNAyZu3vo91++U1z6LnjpbYvXeRLNBSx36kKqz
+vBBHx+/zKZHF094jdE4Ui+ez51mPGlVLVK7C2BudtdgVYAsJ4eywVl9uoyXIyprF
++Mcbww4ZHe5j95F2gToxF7QNIv9hQpTXbC6FRNMyI6K0/50UYMjG9S6r5endOhWR
+jxCeJpUjX5TyuHcZCpCyaxz8Yhyen1OX42cz4pwiqjqHrs341+kSWDDQto3XfktR
+Rx5Z9aiKeB+EeXugN8zVQb0PLSxQs8/uCSVGzoSsGjivdM1z0NQcX4z+okTgeHos
+F5CdsNZe2gP97GmAguWzW+PEMM/mTJJgxKPHU+DZeThGaDjWhKO7LWwANkm7Ev1s
+oLydLHoay3HHan/SwnDyZJp9GxUeuUBBND0HHYHuhi7gkKW27iAahCt2u4Kh23C+
+KK/BI/N3/p4yiQrBc6EiRS759Ai0ypt4s35dcy2gctGw5X0BJPk=
+=loeX
 -----END PGP SIGNATURE-----
