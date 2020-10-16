@@ -132,6 +132,7 @@ class User < ActiveRecord::Base
     expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
     renew_soon_paper 'renew_soon'
     renewing_paper 'renewing'
+    email_opt_in 'email_opt_in'
 
   end
 
@@ -140,6 +141,7 @@ class User < ActiveRecord::Base
 
     email
     username
+    subscription_type 'subscription_type'
 
   end
 
