@@ -129,7 +129,7 @@ class IssuesController < ApplicationController
     end
   end
 
-  def email_non_subscribers
+  def email_non_subscribers_institutions
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
@@ -139,7 +139,7 @@ class IssuesController < ApplicationController
     end
   end
 
-  def email_others
+  def email_non_subscribers_others
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|

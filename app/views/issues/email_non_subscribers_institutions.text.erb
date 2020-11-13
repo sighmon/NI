@@ -1,0 +1,91 @@
+<% linkbody = "NI #{@issue.number} - #{@issue.title}" -%>
+<%= linkbody %>
+<%= "=" * linkbody.length %>
+<%= "[#{issue_url(@issue)}]" %>
+
+Hi [salutation],
+
+Thanks very much for your interest in the New Internationalist. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you sign up and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+
+We'd be delighted to have you subscribe so you don't miss out on this - and the important topics we'll cover in future months. There are two easy ways to subscribe:
+
+Option 1. Pay by EFT
+
+Make your payment to:
+- Account Name: New Internationalist Publications Pty Ltd
+- BSB: 633000 (Bendigo Bank, 80 Grenfell St, ADELAIDE SA 5000 Australia)
+- Account Number: 120933254
+- Reference: oops (Very important so we can credit your payment to your subscription.)
+
+- Payment amount for one year:
+Paper copy only $108 / Digital $220 / Paper + Digital Bundle $240
+
+The digital subscription for Institutions allows for an unlimited number of users on any one site or campus to read the magazine concurrently, such as for classroom or library use.
+
+Option 2. Pay by Visa, MasterCard or Paypal
+
+If you log in with your username: and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+
+[https://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
+
+<%= strip_tags @issue.email_text %><% end %>
+
+
+===============
+Keynote article
+===============
+
+<%= @issue.keynote.title %>
+
+<%= strip_tags @issue.keynote.teaser %>
+
+Read it on-line: <%= "[#{issue_article_url(@issue,@issue.keynote)}]" %>
+Read in our iOS or Android app: <%= "[#{app_link(issue_article_url(@issue,@issue.keynote))}]" %>
+
+
+======================
+A note from the editor
+======================
+
+<%= strip_tags @issue.editors_letter %>
+
+<%= @issue.editors_name %>
+for the New Internationalist co-operative.
+
+
+============================
+Other articles in this issue
+============================
+
+<% @issue.categorised_articles.each do |a| %>
+<%= a.title %><% if a.is_a_feature and not a.teaser.blank? %><%= "\n\n"+ strip_tags(a.teaser) %><% end %>
+
+Web: <%= "[#{issue_article_url(@issue,a)}]" %>
+App: <%= "[#{app_link(issue_article_url(@issue,a))}]" %>
+
+<% if not (@issue.categorised_articles.last == a) %>----------------------------<% end %>
+
+<% end %>
+
+<%= render :partial => "email_app_ad" %>
+
+
+============================
+
+You're receiving this because you have previously been 
+in contact with the New Internationalist.
+
+Forward to a friend
+[forwardtoafriend]
+
+Unsubscribe
+[unsubscribe]
+
+Tweet about this email:
+[tweet]
+
+Like this email on Facebook:
+[fblike]
+
+
+<%= render :partial => "email_footer" %>

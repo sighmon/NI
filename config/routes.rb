@@ -60,8 +60,8 @@ Rails.application.routes.draw do
     get :import_extra
     get :import_images
     get :email
-    get :email_non_subscribers
-    get :email_others
+    get :email_non_subscribers_institutions
+    get :email_non_subscribers_others
     get :email_renew
     get :email_special
     get :zip

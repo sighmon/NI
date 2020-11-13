@@ -27,10 +27,10 @@
     <p><b>Preview emails</b></p>
     <%= link_to 'Email current subscriber', issue_email_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
     <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Email non-subscriber', issue_email_non_subscribers_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text non-subscriber', issue_email_non_subscribers_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Email others', issue_email_others_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text others', issue_email_others_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Email non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Text non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Email non-subscribers others', issue_email_non_subscribers_others_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Text non-subscribers others', issue_email_non_subscribers_others_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
     <%= link_to 'Renew please', issue_email_renew_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
     <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
     <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>

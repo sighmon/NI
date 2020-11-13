@@ -7,7 +7,24 @@ Hi [salutation],
 
 Thanks very much for your interest in the New Internationalist. We've just published the <%= @issue.release.strftime("%B") %> issue of New Internationalist magazine. If you sign up and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
 
-[https://digital.newint.com.au/users/sign_up]<% if not @issue.email_text.blank? %>
+We'd be delighted to have you subscribe so you don't miss out on this - and the important topics we'll cover in future months. There are two easy ways to subscribe:
+
+Option 1. Pay by EFT
+
+Make your payment to:
+- Account Name: New Internationalist Publications Pty Ltd
+- BSB: 633000 (Bendigo Bank, 80 Grenfell St, ADELAIDE SA 5000 Australia)
+- Account Number: 120933254
+- Reference: oops (Very important so we can credit your payment to your subscription.)
+
+- Payment amount for one year:
+Paper copy only $88 / Digital $50 / Paper + Digital Bundle $110
+
+Option 2. Pay by Visa, MasterCard or Paypal
+
+If you log in with your username: and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+
+[https://digital.newint.com.au/users/sign_in?user&#91;login&#93;=[username]]<% if not @issue.email_text.blank? %>
 
 <%= strip_tags @issue.email_text %><% end %>
 
