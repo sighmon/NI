@@ -38,7 +38,7 @@
 					padding="0"
 					alt="Have you read '<%= @article.title %>' from the <%= @article.issue.release.strftime("%B %Y") %> issue of New Internationalist magazine?"
 					title="Have you read '<%= @article.title %>' from the <%= @article.issue.release.strftime("%B %Y") %> issue of New Internationalist magazine?"
-					href="<%= issue_article_url(@article.issue, @article.issue.keynote) %>"
+					href="<%= issue_article_url(@article.issue, @article) %>"
 					src="<%= @article.first_image.data_url %>">
 				</mj-image>
 			</mj-column>
