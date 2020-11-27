@@ -85,6 +85,7 @@ Rails.application.routes.draw do
         collection { post :sort }
       end
       post :send_push_notification
+      get :email
       # Customise Twitter & Facebook posts using selected text
       get :tweet
       get :wall_post

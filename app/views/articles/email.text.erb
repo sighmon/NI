@@ -1,0 +1,49 @@
+<% linkbody = "Have you read '#{@article.title}' from the #{@article.issue.release.strftime("%B %Y")} issue of New Internationalist magazine?" -%>
+<%= linkbody %>
+<%= "=" * linkbody.length %>
+<%= "[#{issue_article_url(@article.issue, @article)}]" %>
+
+=============
+Have you read
+=============
+
+<%= @article.title %>
+
+<%= strip_tags @article.teaser %>
+
+Read it on-line: <%= "[#{issue_article_url(@article.issue,@article)}]" %>
+Read in our iOS or Android app: <%= "[#{app_link(issue_article_url(@article.issue, @article))}]" %>
+
+
+================
+Recent magazines
+================
+
+<% @latest_issues.each do |issue| %>
+<%= issue.title %>
+<%= issue.number %>, <%= issue.release.strftime("%B %Y") %>
+<%= "[#{issue_url(issue)}]" %>
+
+
+<% end %>
+<%= render :partial => "issues/email_app_ad" %>
+
+
+============================
+
+You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.
+
+Forward to a friend
+[forwardtoafriend]
+
+Unsubscribe
+[unsubscribe]
+
+Tweet about this email:
+[tweet]
+
+Like this email on Facebook:
+[fblike]
+
+
+<%= render :partial => "issues/email_footer" %>

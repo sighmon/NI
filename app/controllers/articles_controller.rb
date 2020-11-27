@@ -714,6 +714,18 @@ class ArticlesController < ApplicationController
     redirect_to issue_article_images_path(@article.issue, @article), notice: 'Images successfully hidden.'
   end
 
+  def email
+    @article = Article.find(params[:article_id])
+
+    @latest_issues = Issue.where(published: true).order(:release).reverse_order.first(6)
+
+    respond_to do |format|
+      format.html { render :layout => 'email' }
+      format.text { render :layout => false }
+      format.mjml { render :layout => false }
+    end
+  end
+
   private
 
   def request_has_valid_itunes_receipt

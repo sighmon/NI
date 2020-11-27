@@ -1,0 +1,214 @@
+<mjml>
+	<mj-head>
+		<mj-preview><%= "Have you read #{@article.title} from the #{@article.issue.release.strftime("%B %Y")} issue of New Internationalist magazine?" %></mj-preview>
+	</mj-head>
+	<mj-body background-color="#E6E6E6">
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-text
+					font-size="11px"
+					color="#606b75"
+					font-weight="300"
+					padding="0px 25px"
+					align="center">
+					<%= link_to "#{@article.title} - #{@article.issue.release.strftime("%B %Y")}", issue_article_url(@article.issue, @article), style: 'color:inherit;' %>
+				</mj-text>
+			</mj-column>
+		</mj-section>
+
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-image 
+					width="250px"
+					alt="New Internationalist"
+					href="<%= root_url %>"
+					padding="20px"
+					src="<%= asset_url('new-internationalist-logo-300px@2x.png') %>">
+				</mj-image>
+			</mj-column>
+		</mj-section>
+
+		<!-- Add the '=' sign to render the banner -->
+		<% render :partial => 'issues/email_top_banner', :formats => [:html] %>
+
+		<% if @article.first_image %>
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-image 
+					padding="0"
+					alt="Have you read '<%= @article.title %>' from the <%= @article.issue.release.strftime("%B %Y") %> issue of New Internationalist magazine?"
+					title="Have you read '<%= @article.title %>' from the <%= @article.issue.release.strftime("%B %Y") %> issue of New Internationalist magazine?"
+					href="<%= issue_article_url(@article.issue, @article.issue.keynote) %>"
+					src="<%= @article.first_image.data_url %>">
+				</mj-image>
+			</mj-column>
+		</mj-section>
+		<% end %>
+
+		<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+			<mj-column vertical-align="top">
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="bold"
+					align="center"
+					color="#787878">
+					<span style="text-transform: uppercase;">Have you read</span>
+				</mj-text>
+				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF">
+			<mj-column vertical-align="top">
+				<!-- Featured article -->
+				<mj-text
+					font-size="22px" 
+					color="#ED4E59" 
+					font-family="helvetica"
+					font-weight="bold"
+					align="center">
+					<%= link_to @article.title, issue_article_url(@article.issue, @article), style: 'color:inherit;' %>
+				</mj-text>
+
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					padding="0px 25px"
+					color="#787878"
+					align="center">
+					<%= simple_format @article.teaser %>
+				</mj-text>
+
+				<mj-button
+					background-color="#ED4E59"
+					href="<%= issue_article_url(@article.issue, @article) %>"
+					align="center">
+					Read this article now
+				</mj-button>
+
+			</mj-column>
+		</mj-section>
+
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+				<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF">
+			<mj-column vertical-align="top">
+
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="bold"
+					align="center"
+					color="#787878">
+					<span style="text-transform: uppercase;">Recent magazines</span>
+				</mj-text>
+
+				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF" padding="0">
+			<% @latest_issues.each_with_index do |issue, index| %>
+				<% if index % 3 == 0 %>
+		</mj-section>
+		<mj-section background-color="#FFFFFF">
+				<% end %>
+				<mj-column vertical-align="top">
+				  <mj-image
+						alt="NI <%= issue.number %> - <%= issue.title %>"
+						title="NI <%= issue.number %> - <%= issue.title %>"
+						href="<%= issue_url(issue) %>"
+						src="<%= issue.cover_url(:home2x) %>">
+					</mj-image>
+				</mj-column>
+			<% end %>
+
+		</mj-section>
+
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+				<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+			<mj-column vertical-align="top">
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="bold"
+					align="center"
+					color="#787878">
+					<span style="text-transform: uppercase;">Mobile applications</span>
+				</mj-text>
+				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					color="#787878">
+					If you have access to an Android phone or tablet or an iPhone, iPad or iPod Touch you can read New Internationalist magazine in our native apps. Use the same login details you have for <%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>. Your username is: [username,fallback=oops]
+				</mj-text>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF" padding="0">
+			<mj-column vertical-align="top">
+				<!-- iOS -->
+				<mj-image
+					alt="Apple iOS application for iPhone, iPad and iPod Touch"
+					title="Apple iOS application for iPhone, iPad and iPod Touch"
+					href="<%= page_url("ios") %>"
+					src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-ios.jpg">
+				</mj-image>
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					padding="0px 25px"
+					color="#787878">
+					Read more about the <a href="<%= page_url("ios") %>" style="color:inherit;">Apple iOS app</a> in the App Store.
+				</mj-text>
+			</mj-column>
+			<mj-column vertical-align="top">
+				<!-- Android -->
+				<mj-image
+					alt="Google Play application for Android tablets and phones"
+					title="Google Play application for Android tablets and phones"
+					href="<%= page_url("android") %>"
+					src="https://<%= ENV['CLOUDFRONT_SERVER'] %>.cloudfront.net/uploads/apps-android.jpg">
+				</mj-image>
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					padding="0px 25px"
+					color="#787878">
+					Read more about the <a href="<%= page_url("android") %>" style="color:inherit;">Android app</a> in the Google Play Store.
+				</mj-text>
+			</mj-column>
+		</mj-section>
+
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-divider border-color="#FFFFFF" border-width="20px" padding="0"></mj-divider>
+				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+				<mj-divider border-color="#E6E6E6" border-width="20px" padding="0"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<%= render :partial => 'issues/email_fair_trade_shop', :formats => [:html] %>
+
+		<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you're a subscriber to the digital edition of the New Internationalist Magazine.", :unsubscribe_links => true } %>
+	</mj-body>
+</mjml>
