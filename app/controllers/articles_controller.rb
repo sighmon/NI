@@ -10,6 +10,9 @@ class ArticlesController < ApplicationController
   load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
+  newrelic_ignore :only => [:email]
+  # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
+
   def strip_tags(string)
     ActionController::Base.helpers.strip_tags(string)
   end
