@@ -981,8 +981,8 @@ class Issue < ActiveRecord::Base
           android_response = nil
           begin
             android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
-          rescue
-            logger.info "Failed to create Android push notifications..."
+          rescue Exception => exception
+            logger.info "Failed to create Android push notifications with error: #{exception}"
           end
           logger.info "Android push notifications response: #{android_response}"
         end
@@ -991,9 +991,9 @@ class Issue < ActiveRecord::Base
         logger.info "Creating #{android_tokens.count} Android push notifications."
         android_response = nil
         begin
-          android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
-        rescue
-          logger.info "Failed to create Android push notifications..."
+          android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        rescue Exception => exception
+          logger.info "Failed to create Android push notifications with error: #{exception}"
         end
         logger.info "Android push notifications response: #{android_response}"
       else
@@ -1005,8 +1005,8 @@ class Issue < ActiveRecord::Base
       PushRegistration.where(device: 'ios').each do |p|
         begin
           ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
-        rescue
-          logger.info "Failed to create an ios push notification for id: #{p.id} token: #{p.token}"
+        rescue Exception => exception
+          logger.info "Failed to create an ios push notification for id: #{p.id} token: #{p.token} exception: #{exception}"
         end
       end
       if not ios_responses.empty?
