@@ -292,15 +292,19 @@ module ApplicationHelper
     def self.rpush_register_ios_app
         # Set-up iOS push notifications
         if Rails.env.production?
-            app = Rpush::Apns::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
-            app.certificate = ENV.fetch("APPLE_PRODUCTION_PEM")
+            app = Rpush::Apnsp8::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
+            app.apn_key = ENV.fetch("APPLE_PRODUCTION_APN_KEY")
             app.environment = "production" # APNs environment.
-            app.password = ENV.fetch("APPLE_PRODUCTION_PEM_PASSSWORD")
+            app.apn_key_id = ENV.fetch("APPLE_PRODUCTION_APN_KEY_ID")
+            app.team_id = ENV.fetch("INAPP_TEAM_ID")
+            app.bundle_id = ENV.fetch("ITUNES_BUNDLE_ID")
         else
-            app = Rpush::Apns::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
-            app.certificate = ENV.fetch("APPLE_DEVELOPMENT_PEM")
+            app = Rpush::Apnsp8::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
+            app.apn_key = ENV.fetch("APPLE_DEVELOPMENT_APN_KEY")
             app.environment = "sandbox" # APNs environment.
-            app.password = ENV.fetch("APPLE_DEVELOPMENT_PEM_PASSSWORD")
+            app.apn_key_id = ENV.fetch("APPLE_DEVELOPMENT_APN_KEY_ID")
+            app.team_id = ENV.fetch("INAPP_TEAM_ID")
+            app.bundle_id = ENV.fetch("ITUNES_BUNDLE_ID")
         end
         app.connections = 1
         app.save!
@@ -308,11 +312,11 @@ module ApplicationHelper
 
     def self.rpush_create_ios_push_notification(token, data)
         # Create an iOS push notification (doesn't send, just creates) one at a time
-        n = Rpush::Apns::Notification.new
+        n = Rpush::Apnsp8::Notification.new
         if Rails.env.production?
-            n.app = Rpush::Apns::App.find_by_name(ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
+            n.app = Rpush::Apnsp8::App.find_by_name(ENV.fetch("RPUSH_APPLE_PRODUCTION_APP_NAME"))
         else
-            n.app = Rpush::Apns::App.find_by_name(ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
+            n.app = Rpush::Apnsp8::App.find_by_name(ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
         end
         data[:sound] = "new-issue.caf"
         n.sound = data[:sound]
