@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: March 2021
+Period: April 2021
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  5 March 2021
+  2 April 2021
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmBBVpIACgkQtsnG2UL7
-GPmvaBAAt1skaagqDDDeRW2QxHMgHIZ+qSTYSHk84ZSUC4NCMn4yotJ0PaSCDhib
-ntqMCamMAXbRAMH88mFMyBRi1Mh19RqC2QJrmHObXvHnORK6JrDob/BK9ycmd9G9
-YfQUGduSYyS9fYf5ukJwbyPMZVGwVxNsiXwqO7S0xTZoKGcNDhA2RaC6VsTy8Ywz
-RqsFnDD3l2pAeja6gcMUkdjOziNPLv3aSUI7lsI0WlLTyp71N2dw2jiOYqNUInFT
-DYo1mtJoLSs3I0uTSii8DZ2ocyd8BMdNr9DNwvwKLN44XIOgU2OOmMVlxUE7ITRd
-wYq/xcyUpB+H6vdUWtxzdvCZJxA2OC8IvJgS2bY7bYCAfAMRdueUdkp3TL4NnJly
-CxItTOH4adBsLFKWkaAd0WsKo177CLx1clMqBHvEuWYP1ytFCQ4GUO2IbvrfM/GV
-rgjrGRmfxCtZ1DeS4sB/sGNJv+dcQPiDfpynqTK1IC7UJW4axi0VQnSU9cPLu2nb
-fIK8KTFRiB1e1OdabSDU7for9eVCWN219BNAZ0WhcjGnQVEOfUGBLNQVEBm1oMXo
-kdgsqt4pnbZwDrU6DZypPN5QV/y7vyYTozTV7fwP8tWfOUHwiMkX7kPegI2704mz
-keiVaxCO34BqeG+5LwP/sWwr050uM62vjR3lZCKOzjyYY7nlqGk=
-=tMur
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmBmgK4ACgkQtsnG2UL7
+GPmu7g/+LclBmRCgkjNrVTui8B9kOcXgo/b/XUQmKEQ+4yhe7/oa5hThU77LMLPn
+1BYses4SS0OFw8T2HTgd2bY7PrS4hxKmOOWVx4rul/EvJkUtzer1Is2r5gsZd7Z2
+2Jq9JkhJA7Nc4+01zulOzygSGkxZxlzBsidoUNyCYAAGfECqUJlA4CrPZrvbkOhR
+rG07oD/TTO1V0RopJRPlGlWLEmqmABEIysveAfK5fPqLFGODDsZcazs01JHKbJIG
+kzJCT/Pjc2vkiYq//+0ZvWX/5UYLCbwHpmIbzBorLaMNiVxFV5zxvkb9xqSJcXPI
+/Wjaz3NWBR0bbrWHZRZQgKP+aXPBCRLS47odBGALVZDlpO/x5aAYMTemq0pbxfpw
+nkzENYI7CiClTssTOQZ2FMHfkErETqsnGKEP9hXOBKnK8CN2jKhomKTI24WXj8UK
+oeod1ZP+JLbL9VfP6T3mxsjxf5oNUSzDpjoOC9aPfeZzU+tFPfoTXpgyzwl49e40
+J8r+LjW9yak74V+t0za0Y8z4CnKSBNrb2HEDQYIuRr7dSe7TveGX4udur3gV4F6T
+iy0s2rUp/7tQmZUJWneGX+bd29Qp1t/vjDH78SWnlaZzxP6QcxEAag2KoBgeU8Jz
+pBiEHmM4rwLX2druweimYAfZqsuDTzOqSEliRrrm+I3s1CAqBs4=
+=YuoO
 -----END PGP SIGNATURE-----
