@@ -146,10 +146,12 @@ describe IssuesController, :type => :controller do
   context "as an admin" do
 
     before(:each) do
-      app = Rpush::Apns::App.new
-      app.name = ENV["RPUSH_APPLE_DEVELOPMENT_APP_NAME"]
-      app.certificate = ENV["APPLE_DEVELOPMENT_PEM"]
+      app = Rpush::Apnsp8::App.find_or_create_by(name: ENV.fetch("RPUSH_APPLE_DEVELOPMENT_APP_NAME"))
+      app.apn_key = ENV.fetch("APPLE_DEVELOPMENT_APN_KEY")
       app.environment = "sandbox" # APNs environment.
+      app.apn_key_id = ENV.fetch("APPLE_DEVELOPMENT_APN_KEY_ID")
+      app.team_id = ENV.fetch("INAPP_TEAM_ID")
+      app.bundle_id = ENV.fetch("ITUNES_BUNDLE_ID")
       app.connections = 1
       app.save!
       sign_in user
