@@ -133,6 +133,7 @@ class User < ActiveRecord::Base
     renew_soon_paper 'renew_soon'
     renewing_paper 'renewing'
     email_opt_in 'email_opt_in'
+    comments 'comments'
 
   end
 
