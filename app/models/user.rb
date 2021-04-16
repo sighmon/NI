@@ -146,21 +146,6 @@ class User < ActiveRecord::Base
 
   end
 
-  # CSV exporting for lapsed institution subscribers
-  comma :lapsed_institution_subscribers do
-
-    email
-    username
-    subscription_type 'subscription_type'
-    is_recurring? 'is_recurring'
-    was_recurring? 'was_recurring'
-    has_paper_copy? 'has_paper_copy'
-    has_paper_only? 'has_paper_only'
-    expiry_date 'digital_expiry' do |expiry_date| expiry_date.try(:strftime, '%Y-%m-%d') end
-    expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
-
-  end
-
   # CSV exporting for current paper subscribers
   comma :current_paper_subscribers do
 
@@ -630,8 +615,8 @@ class User < ActiveRecord::Base
   def self.update_lapsed_institution_subscribers_csv
     Settings.lapsed_institution_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
-        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.subscription_valid? == false) and (u.paper_only_subscription_valid? == false) and (u.institution == true) and not u.email.include?('dummy@newint.com.au')
-      }.to_comma(:lapsed_institution_subscribers)
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.subscription_valid? == false) and (u.institution == true) and not u.email.include?('dummy@newint.com.au')
+      }.to_comma()
     end
   end
 
