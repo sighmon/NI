@@ -644,6 +644,40 @@ describe User, :type => :model do
         expect(Settings.lapsed_digital_subscribers_csv).not_to include(u3.email)
       end
 
+      it "should be able to download a lapsed_institution_subscribers_csv" do
+        u = Subscription.first.user
+        u.email_opt_in = "Y"
+        u.postal_mailable = "Y"
+        u.institution = true
+        u.save
+        u2 = Subscription.second.user
+        u2.email_opt_in = "M"
+        u2.postal_mailable = "R"
+        u2.institution = true
+        u2.save
+        u3 = Subscription.third.user
+        u3.email_opt_in = "Y"
+        u3.institution = true
+        u3.save
+        s = Subscription.first
+        s.price_paid = 8800
+        s.expire_subscription
+        s.save
+        s2 = Subscription.second
+        s2.price_paid = 8800
+        s2.expire_subscription
+        s2.save
+
+        User.update_lapsed_institution_subscribers_csv
+        lapsed_institution_subscribers_csv = CSV.parse(Settings.lapsed_institution_subscribers_csv)
+
+        # 1 header, 2 expired subscriptions with 1 digital renewals
+        expect(lapsed_institution_subscribers_csv.count).to eq(3)
+        expect(Settings.lapsed_institution_subscribers_csv).to include(u.email)
+        expect(Settings.lapsed_institution_subscribers_csv).to include(u2.email)
+        expect(Settings.lapsed_institution_subscribers_csv).not_to include(u3.email)
+      end
+
       it "should be able to download a current_paper_subscribers_csv" do
         u = Subscription.first.user
         u.postal_mailable = "Y"
