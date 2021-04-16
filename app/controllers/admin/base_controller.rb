@@ -25,6 +25,13 @@ class Admin::BaseController < ApplicationController
 			@latest_lapsed_csv_date = nil
 		end
 
+		lapsed_institution_subscribers_csv = Settings.find_by_var('lapsed_institution_subscribers_csv')
+		if lapsed_institution_subscribers_csv
+			@latest_lapsed_institution_csv_date = lapsed_institution_subscribers_csv.updated_at.strftime("lapsed_institution_subscribers-%Y-%m-%d-%H:%M:%S")
+		else
+			@latest_lapsed_institution_csv_date = nil
+		end
+
 		current_paper_subscribers_csv = Settings.find_by_var('current_paper_subscribers_csv')
 		if current_paper_subscribers_csv
 			@latest_paper_csv_date = current_paper_subscribers_csv.updated_at.strftime("paper_subscribers-%Y-%m-%d-%H:%M:%S")

@@ -285,6 +285,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_lapsed_digital_subscribers_csv
+		elsif params[:type] == 'institutions_lapsed'
+			begin
+				Settings.destroy('lapsed_institution_subscribers_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_lapsed_institution_subscribers_csv
 		elsif params[:type] == 'users_paper'
 			begin
 				Settings.destroy('current_paper_subscribers_csv')
@@ -314,6 +321,9 @@ class Admin::UsersController < Admin::BaseController
 		elsif params[:type] == 'users_lapsed'
 			csv = Settings.find_by_var('lapsed_digital_subscribers_csv')
 			csv_name = 'lapsed_subscribers'
+		elsif params[:type] == 'institutions_lapsed'
+			csv = Settings.find_by_var('lapsed_institution_subscribers_csv')
+			csv_name = 'lapsed_institutions'
 		elsif params[:type] == 'users_paper'
 			csv = Settings.find_by_var('current_paper_subscribers_csv')
 			csv_name = 'paper_subscribers'

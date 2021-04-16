@@ -52,6 +52,14 @@
   <% end %>
 </p>
 <p>
+  <%= link_to "Update CSV lapsed instution subscribers", admin_users_update_csv_path(type: 'institutions_lapsed'), :class => 'btn btn-primary' %>
+  <% if @latest_lapsed_institution_csv_date %>
+    <%= link_to "Download CSV (#{@latest_lapsed_institution_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'institutions_lapsed'), :class => 'btn btn-info' %>
+  <% else %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+  <% end %>
+</p>
+<p>
   <%= link_to "Update CSV paper subscribers", admin_users_update_csv_path(type: 'users_paper'), :class => 'btn btn-primary' %>
   <% if @latest_paper_csv_date %>
     <%= link_to "Download CSV (#{@latest_paper_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_paper'), :class => 'btn btn-info' %>
