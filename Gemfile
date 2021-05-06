@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.3'
 
-gem 'rails', '5.2.5'
+gem 'rails', '5.2.6'
 
 gem 'sprockets'
 
@@ -202,7 +202,7 @@ end
 
 # gem 'twitter-bootstrap-rails'#, '2.1.6'
 # gem 'bootstrap-sass'
-gem 'bootstrap'#, '>= 4.3.1'
+gem 'bootstrap', '~> 4'#, '>= 4.3.1'
 # gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'mini_racer'
