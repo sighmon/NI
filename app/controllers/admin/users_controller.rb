@@ -299,6 +299,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_current_paper_subscribers_csv
+		elsif params[:type] == 'uk_export'
+			begin
+				Settings.destroy('uk_export_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_uk_export_csv
 		elsif params[:type] == 'subscriber_stats'
 			begin
 				Settings.destroy('subscriber_stats')
@@ -327,6 +334,9 @@ class Admin::UsersController < Admin::BaseController
 		elsif params[:type] == 'users_paper'
 			csv = Settings.find_by_var('current_paper_subscribers_csv')
 			csv_name = 'paper_subscribers'
+		elsif params[:type] == 'uk_export'
+			csv = Settings.find_by_var('uk_export_csv')
+			csv_name = 'uk_export'
 		end
 		respond_to do |format|
 			format.csv {

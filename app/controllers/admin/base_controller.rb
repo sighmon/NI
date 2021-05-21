@@ -39,6 +39,13 @@ class Admin::BaseController < ApplicationController
 			@latest_paper_csv_date = nil
 		end
 
+		uk_export_csv = Settings.find_by_var('uk_export_csv')
+		if uk_export_csv
+			@uk_export_csv_date = uk_export_csv.updated_at.strftime("uk_export-%Y-%m-%d-%H:%M:%S")
+		else
+			@uk_export_csv_date = nil
+		end
+
 		subscriber_stats = Settings.find_by_var('subscriber_stats')
 		if subscriber_stats
 			@subscriber_stats = subscriber_stats.value
