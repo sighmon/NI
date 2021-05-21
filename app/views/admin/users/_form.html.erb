@@ -39,7 +39,7 @@
         <%= f.input :city, label: 'Suburb or Town' %>
         <%= f.input :postal_code %>
         <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state } }) %>
-        <%= f.input :country, collection: CountryStateSelect.countries_collection %>
+        <%= f.input :country, collection: CountryStateSelect.countries_collection.sort_by{|a| a.first.downcase} %>
         <%= f.input :phone %>
         <%= f.input :postal_mailable, collection: @user.postal_mailable_collection, include_blank: true %>
         <%= f.label :postal_mailable_updated %>
