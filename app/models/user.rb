@@ -180,7 +180,7 @@ class User < ActiveRecord::Base
     expiry_date 'next_payment_date'
     last_subscription_including_cancelled valid_from: 'last_payment_date'
     expiry_date 'end_date'
-    last_subscription_including_cancelled duration: 'billing_period'
+    id? 'billing_period' do 'month' end
     last_subscription_including_cancelled duration: 'billing_interval'
     id? 'order_shipping' do '' end
     id? 'order_shipping_tax' do '' end
@@ -190,7 +190,7 @@ class User < ActiveRecord::Base
     last_subscription_including_cancelled price_paid: 'order_total' do |p| p ? p / 100 : 0 end
     id? 'order_currency' do 'AUD' end
     id? 'payment_method' do 'PayPal' end
-    id? 'payment_method_title' do 'PayPal' end
+    id? 'payment_method_title' do 'Credit Card' end
     id? 'payment_method_post_meta' do '' end
     id? 'payment_method_user_meta' do '' end
     id? 'shipping_method' do '' end
