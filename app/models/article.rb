@@ -73,7 +73,7 @@ class Article < ActiveRecord::Base
       # GuestPass.order(:use_count).reverse.first(12).to_a
 
       # Most popular 12 articles sorted by score
-      Article.all.sort_by(&:score).reverse.first(12)
+      Article.where('publication > ?', DateTime.now - 2.years).sort_by(&:score).reverse.first(24)
     end
   end
 
