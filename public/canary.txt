@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: May 2021
+Period: June 2021
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  2 May 2021
+  3 June 2021
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmCN/BwACgkQtsnG2UL7
-GPnldRAAlF8ZOWX45wVIl4jOzkCVaMiXAou/Nn9SAEPsFlqBkoyLXHv6V/8lUszN
-FYQaNHiiPPLmOZZrM7eDhD8v4yBr6U4n2n6m2SDSfOsmBNMnDE/gaJgVuM4ZrK7E
-4l6S3OkMDqF5OFBTfc5DqBxsgBV+E/qAOdwb8x8XR4Geu43DFl+c8lhOxlZWlLLj
-PfsvuvWNWK9RDOOjE6TcPTP/KP3FGDD+Mwhet/An88zaDLcVNEYLCgtDgBAPWllw
-uXxh8xPFfE75r0psLNlxX1O6zWn6csbIUJpFIqgAi78uowXryO3sAFmI7x8DL0U2
-QHG1SMc4gx5KlShAz1Roc/3CDztlUp8Trbn0oVuv2tfJjYj24mlLhzk4ExbWSD9e
-rgzk6X5F1RxxSIYN9xQ5V9Eg63RqFDJ++F3iUdk6rNCba7fjJwQAbMx6vMm1LnT7
-119dTAMrSiKgO3Z4l2lrAaZQxQULcRxNjReg9l217e+XoEI5481tPZStOaanstFP
-y67tzTMAih/E8UAKUNj4qTYTsHOBZnNd9FDF/oGlscd2mDWcqRlxMH4Fxes2NJDB
-Ey66eixxtIQkPWiMR///6enbQRQWaNiXJUseY76wykOTeTK2RaLa1Qs1dtOgGYZ1
-0AT2Gn6kX4g4NIcn1+M6kws93cUkatPDUCVfEgIE1rIbJuaHxHw=
-=l88F
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmC4kWcACgkQtsnG2UL7
+GPlJuhAAiAqmqbJtxduylp2ngsFDs0iA5phMzpQ2sxTDsx3sxc+hyvssHcPy1+fI
+y9qCC0Cw/06mITtXrFP3Iw7x4wjw+dh6AYW/E9VEpa6OTf8vFQ2eGUg/5OoHdFV1
+bqM2zyrlkJHU57yf8XyqqJfkSlT34DXu5BG2ssCsGz/3eo6ZXuNHsLxmMaaKF6Nm
+kxFwJsHnnxTjDdyCzBww34dV72KEMxn7joBCMTHqB3DvLYfl1KsGSjKUGbRoEuV2
+WGsNkQ9x0BlEQ4WbBOC+/APTKpfqIXb5Ahvrl38WpUqF176NPIgs4AphkqEywNOT
++FECOAI2mX5nKFaXeN0j+CNfML6QstR3tWSYFx/teLPCPH6ZSyF0xwFUuxFruCMt
+dwR+BHXBvaiWHeFJld+0T2FXYJW5r+McfEGaLPqeCgSS92fpBAXEJag4nua6/4VK
+hRsSgC9a3Sf7eGlQybPTYY9Gz1yCCP01ddesr2qQG0VSdG95HGQ/zeZTxEhOQiuG
+tTQnBCcm7fPDpmCpnc3AA95l3WUE9YyL0iF/Nztw3TQVXTll0q21TZoM7lgucKAZ
+jQ/lTvgMGKnGfdvfeP9ajvg9hj/GwVjnyFj2byGbbDPmaotwfFgQffK2t/yINpPT
+/8RoYC0qKR9Zm9ApwaobCbsAS2J1dipNjS+QU4DxGOwHeGjSe8c=
+=BpRi
 -----END PGP SIGNATURE-----
