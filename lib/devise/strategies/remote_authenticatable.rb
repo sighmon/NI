@@ -18,7 +18,7 @@ module Devise
         uk_user_details = remote_authentication_uk_user(auth_params)
 
         # Fail if the user doesn't exist
-        return fail!('Sorry, your digital subscription has expired.') unless (uk_user_details and uk_user_details["status"] == "success")
+        return fail!('Sorry, we couldn\'t find an account with those details.') unless (uk_user_details and uk_user_details["status"] == "success")
 
         #
         # mapping.to is a wrapper over the resource model
