@@ -18,7 +18,7 @@ module Devise
         uk_user_details = remote_authentication_uk_user(auth_params)
 
         # Fail if the user doesn't exist
-        return fail!('Invalid email or password.') unless (uk_user_details and uk_user_details["status"] == "success")
+        return fail!('Sorry, your digital subscription has expired.') unless (uk_user_details and uk_user_details["status"] == "success")
 
         #
         # mapping.to is a wrapper over the resource model
@@ -82,7 +82,7 @@ module Devise
         cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z ]/, '')
         cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z ]/, '')
 
-        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + URI::escape(cleaned_login) + "/" + URI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + CGI::escape(cleaned_login) + "/" + CGI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
 
         begin
           response = HTTParty.get(
