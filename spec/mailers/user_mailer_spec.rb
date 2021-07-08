@@ -111,7 +111,7 @@ describe UserMailer, :type => :mailer do
 
       it "renders the body" do
         expect(mail.body.encoded).to match("You've been given a complimentary 10 year media")
-        expect(mail.body.encoded).to match("<br>You've been given")
+        expect(mail.body.encoded).to match("<br>You've been")
         expect(mail.body.encoded).to match(user.username)
         # Check that the MJML > HTML renderer has worked
         expect(mail.body.encoded).not_to match("mj-body")
