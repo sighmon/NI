@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: June 2021
+Period: July 2021
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  3 June 2021
+  2 July 2021
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -31,17 +31,17 @@ This statement will continue to be updated monthly. Effectively, this means that
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmC4kWcACgkQtsnG2UL7
-GPlJuhAAiAqmqbJtxduylp2ngsFDs0iA5phMzpQ2sxTDsx3sxc+hyvssHcPy1+fI
-y9qCC0Cw/06mITtXrFP3Iw7x4wjw+dh6AYW/E9VEpa6OTf8vFQ2eGUg/5OoHdFV1
-bqM2zyrlkJHU57yf8XyqqJfkSlT34DXu5BG2ssCsGz/3eo6ZXuNHsLxmMaaKF6Nm
-kxFwJsHnnxTjDdyCzBww34dV72KEMxn7joBCMTHqB3DvLYfl1KsGSjKUGbRoEuV2
-WGsNkQ9x0BlEQ4WbBOC+/APTKpfqIXb5Ahvrl38WpUqF176NPIgs4AphkqEywNOT
-+FECOAI2mX5nKFaXeN0j+CNfML6QstR3tWSYFx/teLPCPH6ZSyF0xwFUuxFruCMt
-dwR+BHXBvaiWHeFJld+0T2FXYJW5r+McfEGaLPqeCgSS92fpBAXEJag4nua6/4VK
-hRsSgC9a3Sf7eGlQybPTYY9Gz1yCCP01ddesr2qQG0VSdG95HGQ/zeZTxEhOQiuG
-tTQnBCcm7fPDpmCpnc3AA95l3WUE9YyL0iF/Nztw3TQVXTll0q21TZoM7lgucKAZ
-jQ/lTvgMGKnGfdvfeP9ajvg9hj/GwVjnyFj2byGbbDPmaotwfFgQffK2t/yINpPT
-/8RoYC0qKR9Zm9ApwaobCbsAS2J1dipNjS+QU4DxGOwHeGjSe8c=
-=BpRi
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmDexOkACgkQtsnG2UL7
+GPlN0Q//dNZCD0WGaOazjbiR03z1TqWylMtRgpB09nGS0yWrWMChb1vPH8lsbtMy
+c41IIaDCx2luA5wPOBIZJjVd4JlOeXvhQyMSmuCFDR02zYHzKtqU2Nq7/Kv/8Ia2
+728eKBsBhv0kZEVk+X6curXeZue865m+e5SbPrMQfm3AoVLreLBmwVOSeCd3pJun
+grucGMwfOJSJuFlrbXprnnOny3+vCxtaepgSGgYPS4xbvavV3SynHWUVN0qUy60q
+MHhhGVt0gayf62V2ANrD3EpuNHQDZ4nkXzV40rTgnVTOCLQ5aBo0NcLgX9CZVO2T
+POcl4Iq1Qpw+xMXuY74O27VhxaB9Vlq2F3EeBaATjfbj7SVs/P4j0lAc/pfwOaZw
+QrZ/ci0RP159RopAqmvuiLUO2zhGb+XuL2GuS4swgTbtubE8DI6lWgVW23nHQ3zh
+1X4MAygx0QzDMqSIUW6oxL5m6hwpoCEguTKFRpKvRVOfGsHJ3oYol4Mz9F24A6cJ
+PFgi+kKWGmypiExShbod9hJH7bdmugP75FWw57NgV8FHtCKgJQAyUS4967MouvPF
+wLg9TWT6I2SU6iv2PrZ27eaEGb/ttW40MnNtwytF4o6oy/qKXLvcWEvWB8xojNMp
+O69wYlvC/dL7VyxTuijHKAP0MOAcn7Gc0WCNwxCii2Mq2FAFvQE=
+=ftX9
 -----END PGP SIGNATURE-----
