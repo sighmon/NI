@@ -31,9 +31,7 @@ gem 'platform-api'
 
 # gem 'sqlite3'
 
-# TOFIX: Un-stick to let it upgrade when v1.0.0 is compatible with Rails.
-# https://github.com/rails/rails/issues/31669
-gem 'pg', '0.21.0'
+gem 'pg'
 
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job

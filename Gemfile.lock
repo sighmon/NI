@@ -559,7 +559,7 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     paypal-recurring (1.1.0)
-    pg (0.21.0)
+    pg (1.2.3)
     platform-api (3.3.0)
       heroics (~> 0.1.1)
       moneta (~> 1.0.0)
@@ -847,7 +847,7 @@ DEPENDENCIES
   newrelic_rpm
   pagy
   paypal-recurring
-  pg (= 0.21.0)
+  pg
   platform-api
   rack-mini-profiler
   rails (= 6.1.4)
