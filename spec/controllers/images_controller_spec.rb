@@ -70,13 +70,13 @@ describe ImagesController, :type => :controller do
 
     describe "PUT update" do
       describe "with valid params" do
-        it "should not call update_attributes" do
+        it "should not call update" do
           image = FactoryBot.create(:image)
           # Assuming there are no other images in the database, this
           # specifies that the Image created on the previous line
-          # receives the :update_attributes message with whatever params are
+          # receives the :update message with whatever params are
           # submitted in the request.
-          expect_any_instance_of(Image).not_to receive(:update_attributes)
+          expect_any_instance_of(Image).not_to receive(:update)
           put :update, params: {:id => image.to_param, :image => { :these => "params" }, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 
@@ -204,9 +204,9 @@ describe ImagesController, :type => :controller do
           image_params = valid_attributes
           # Assuming there are no other images in the database, this
           # specifies that the Image created on the previous line
-          # receives the :update_attributes message with whatever params are
+          # receives the :update message with whatever params are
           # submitted in the request.
-          expect_any_instance_of(Image).to receive(:update_attributes).with(image_params)
+          expect_any_instance_of(Image).to receive(:update).with(image_params)
           put :update, params: {:id => image.to_param, :image => image_params, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 

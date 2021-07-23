@@ -333,7 +333,7 @@ class IssuesController < ApplicationController
     # @issue = Issue.find(params[:id])
 
     respond_to do |format|
-      if @issue.update_attributes(issue_params)
+      if @issue.update(issue_params)
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
         format.json { head :no_content }
       else

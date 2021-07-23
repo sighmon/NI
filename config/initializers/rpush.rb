@@ -122,7 +122,7 @@ Rpush.reflect do |on|
   on.gcm_canonical_id do |old_id, canonical_id|
     d = PushRegistration.find_by_token(old_id)
     if d.present?
-      d.update_attributes(token: canonical_id)
+      d.update(token: canonical_id)
     end
   end
 

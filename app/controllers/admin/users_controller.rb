@@ -102,7 +102,7 @@ class Admin::UsersController < Admin::BaseController
       end
 		end
 
-		if @user.update_attributes(user_params)
+		if @user.update(user_params)
 			# TODO: work out how to update subscription attributes intead of BUILD
 			# Can't do this since changing subscription to non-singleton
 			# @user.build_subscription(params[:subscription])

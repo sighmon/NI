@@ -83,7 +83,7 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
 
     respond_to do |format|
-      if @image.update_attributes(image_params)
+      if @image.update(image_params)
         format.html { redirect_to issue_article_image_url, notice: 'Image was successfully updated.' }
         format.json { head :no_content }
       else

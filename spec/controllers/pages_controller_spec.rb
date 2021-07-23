@@ -122,9 +122,9 @@ describe PagesController, :type => :controller do
         #page = Page.create! valid_attributes
         # Assuming there are no other pages in the database, this
         # specifies that the Page created on the previous line
-        # receives the :update_attributes message with whatever params are
+        # receives the :update message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Page).to receive(:update_attributes).with({ "title" => "MyString" })
+        expect_any_instance_of(Page).to receive(:update).with({ "title" => "MyString" })
         sign_in FactoryBot.create(:admin_user) 
         put :update, params: {:id => page.to_param, :page => { "title" => "MyString" }}
       end

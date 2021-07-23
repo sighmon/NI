@@ -24,7 +24,7 @@ describe "ImageUploads", :type => :feature do
       describe "GET /issue/:id/article/:id/images/new" do
         it "works! (now write some real specs)" do
           # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-          visit new_issue_article_image_path(article.issue.id,article.id)
+          visit new_issue_article_image_path(article.issue,article)
           #click_button("New")
           attach_file('image_data', Rails.root.join('spec/factories','test-image.jpg'))
           click_button("Create Image")

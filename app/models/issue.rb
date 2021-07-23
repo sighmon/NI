@@ -242,7 +242,7 @@ class Issue < ActiveRecord::Base
     if (article_created.title == nil) or (force_reimport_all == true)
       # It doesn't already exist, so import
       
-      article_created.update_attributes(
+      article_created.update(
         title: article_json["title"],
         teaser: (article_json["field_deck"].try(:[],"value").try(:gsub,/\n/, " ").try(:gsub,/<p>/, "").try(:gsub,/<\/p>/, "") unless article_json["field_deck"].empty?),
         publication: Time.at(article_json["created"].to_i).to_datetime,
@@ -258,7 +258,7 @@ class Issue < ActiveRecord::Base
       if article_info_response_from_newint_org
         article_info_json_from_newint_org = JSON.parse(article_info_response_from_newint_org)
         # Write name to article: article_info_json_from_newint_org["name"]
-        article_created.update_attributes(
+        article_created.update(
           author: article_info_json_from_newint_org["name"],
         )
       end
@@ -456,7 +456,7 @@ class Issue < ActiveRecord::Base
     story_id = element[:id].to_i
     # TODO: Allow for posibility that issue is nil.
     a = self.articles.where(story_id: story_id).first_or_create
-    a.update_attributes(
+    a.update(
       :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
       :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
       :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
