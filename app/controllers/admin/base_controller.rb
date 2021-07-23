@@ -25,11 +25,25 @@ class Admin::BaseController < ApplicationController
 			@latest_lapsed_csv_date = nil
 		end
 
+		lapsed_institution_subscribers_csv = Settings.find_by_var('lapsed_institution_subscribers_csv')
+		if lapsed_institution_subscribers_csv
+			@latest_lapsed_institution_csv_date = lapsed_institution_subscribers_csv.updated_at.strftime("lapsed_institution_subscribers-%Y-%m-%d-%H:%M:%S")
+		else
+			@latest_lapsed_institution_csv_date = nil
+		end
+
 		current_paper_subscribers_csv = Settings.find_by_var('current_paper_subscribers_csv')
 		if current_paper_subscribers_csv
 			@latest_paper_csv_date = current_paper_subscribers_csv.updated_at.strftime("paper_subscribers-%Y-%m-%d-%H:%M:%S")
 		else
 			@latest_paper_csv_date = nil
+		end
+
+		uk_export_csv = Settings.find_by_var('uk_export_csv')
+		if uk_export_csv
+			@uk_export_csv_date = uk_export_csv.updated_at.strftime("uk_export-%Y-%m-%d-%H:%M:%S")
+		else
+			@uk_export_csv_date = nil
 		end
 
 		subscriber_stats = Settings.find_by_var('subscriber_stats')
@@ -115,7 +129,7 @@ class Admin::BaseController < ApplicationController
 	def magazine_purchase_email
 		@greeting = 'Hi'
 		@issues = Issue.where(published: true).last(8).reverse
-		@purchase = Purchase.first
+		@purchase = Purchase.last
 		@issue = @purchase.issue
 		@user = @purchase.user
 		@template = "user_mailer/issue_purchase"

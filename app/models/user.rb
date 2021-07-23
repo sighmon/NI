@@ -118,17 +118,22 @@ class User < ActiveRecord::Base
     uk_id 'uk_id'
     uk_expiry 'uk_expiry'
 
+    first_name 'first_name'
+    last_name 'last_name'
+    company_name 'company_name'
     address 'address'
     postal_code 'postal_code'
     city 'city'
-    state 'state'
-    country_name 'company_name'
+    state_name 'state'
+    country_name 'country_name'
     postal_mailable 'postal_mailable'
 
     subscription_type 'subscription_type'
     expiry_date_paper_copy 'paper_expiry' do |expiry_date_paper_copy| expiry_date_paper_copy.try(:strftime, '%Y-%m-%d') end
     renew_soon_paper 'renew_soon'
     renewing_paper 'renewing'
+    email_opt_in 'email_opt_in'
+    comments 'comments'
 
   end
 
@@ -137,6 +142,7 @@ class User < ActiveRecord::Base
 
     email
     username
+    subscription_type 'subscription_type'
 
   end
 
@@ -150,7 +156,7 @@ class User < ActiveRecord::Base
     address 'address'
     postal_code 'postal_code'
     city 'city'
-    state 'state'
+    state_name 'state'
     country_name 'country_name'
     is_recurring? 'is_recurring'
     subscription_type 'subscription_type'
@@ -159,6 +165,62 @@ class User < ActiveRecord::Base
     renew_soon_paper 'renew_soon'
     renewing_paper 'renewing'
     last_subscription_including_cancelled cancellation_date: 'cancellation_date' do |cancellation_date| cancellation_date.try(:strftime, '%Y-%m-%d') end
+
+  end
+
+  # CSV export data for the UK office
+  comma :uk_export do
+
+    id 'customer_id'
+    username 'customer_username'
+    email 'customer_email'
+    subscriber? 'subscription_status' do |subscriber| (subscriber ? 'wc-active' : 'wc-cancelled') end
+    last_subscription_including_cancelled valid_from: 'start_date'
+    id? 'trial_end_date' do '' end
+    expiry_date 'next_payment_date'
+    last_subscription_including_cancelled valid_from: 'last_payment_date'
+    expiry_date 'end_date'
+    id? 'billing_period' do 'month' end
+    last_subscription_including_cancelled duration: 'billing_interval'
+    id? 'order_shipping' do '' end
+    id? 'order_shipping_tax' do '' end
+    id? 'order_tax' do '' end
+    id? 'cart_discount' do '' end
+    id? 'cart_discount_tax' do '' end
+    last_subscription_including_cancelled price_paid: 'order_total' do |p| p ? p / 100 : 0 end
+    id? 'order_currency' do 'AUD' end
+    id? 'payment_method' do 'PayPal' end
+    id? 'payment_method_title' do 'Credit Card' end
+    id? 'payment_method_post_meta' do '' end
+    id? 'payment_method_user_meta' do '' end
+    id? 'shipping_method' do '' end
+    first_name 'billing_first_name'
+    last_name 'billing_last_name'
+    email 'billing_email'
+    phone 'billing_phone'
+    address 'billing_address_1'
+    id? 'billing_address_2' do '' end
+    postal_code 'billing_postcode'
+    city 'billing_city'
+    state 'billing_state'
+    country 'billing_country'
+    company_name 'billing_company'
+    first_name 'shipping_first_name'
+    last_name 'shipping_last_name'
+    address 'shipping_address_1'
+    id? 'shipping_address_2' do '' end
+    postal_code 'shipping_postcode'
+    city 'shipping_city'
+    state 'shipping_state'
+    country 'shipping_country'
+    id? 'shipping_company' do '' end
+    id? 'customer_note' do '' end
+    id? 'order_items' do '' end
+    id? 'order_notes' do '' end
+    id? 'coupon_items' do '' end
+    id? 'fee_items' do '' end
+    id? 'tax_items' do '' end
+    id? 'download_permissions' do '' end
 
   end
 
@@ -406,6 +468,14 @@ class User < ActiveRecord::Base
     return id.nil?
   end
 
+  def state_name
+    begin
+      CS.states(self.country)[:"#{self.state}"]
+    rescue
+      self.state
+    end
+  end
+
   def country_name
     country = ISO3166::Country[self.country]
     if country
@@ -598,11 +668,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.update_lapsed_institution_subscribers_csv
+    Settings.lapsed_institution_subscribers_csv = User.uncached do
+      User.order(:email).select{ |u|
+        ((u.email_opt_in == 'Y') or (u.email_opt_in == 'M')) and ((u.postal_mailable == 'Y') or (u.postal_mailable == 'R')) and (u.subscription_valid? == false) and (u.institution == true) and not u.email.include?('dummy@newint.com.au')
+      }.to_comma()
+    end
+  end
+
   def self.update_current_paper_subscribers_csv
     Settings.current_paper_subscribers_csv = User.uncached do
       User.order(:email).select{ |u|
         (u.postal_mailable == 'Y' or u.postal_mailable.nil?) and (u.has_paper_copy? == true) and not u.email.include?('design+parent_id')
       }.to_comma(:current_paper_subscribers)
+    end
+  end
+
+  def self.update_uk_export_csv
+    Settings.uk_export_csv = User.uncached do
+      User.order(:email).all.to_comma(:uk_export)
     end
   end
 

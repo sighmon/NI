@@ -18,7 +18,7 @@ module Devise
         uk_user_details = remote_authentication_uk_user(auth_params)
 
         # Fail if the user doesn't exist
-        return fail!('Invalid email or password.') unless (uk_user_details and uk_user_details["status"] == "success")
+        return fail!('Sorry, we couldn\'t find an account with those details.') unless (uk_user_details and uk_user_details["status"] == "success")
 
         #
         # mapping.to is a wrapper over the resource model
@@ -32,7 +32,7 @@ module Devise
         if not resource
           Rails.logger.debug "NOT FOUND: No rails account for uk_id: #{uk_user_details["data"]["id"]}"
           # Try by email address to catch any UK users that already had a digital.newint.com.au account
-          resource = mapping.to.find_for_database_authentication(:email => uk_user_details["data"]["email"])
+          resource = mapping.to.find_for_database_authentication(:email => uk_user_details["data"]["email"].downcase)
         end
 
         if not resource
@@ -51,7 +51,7 @@ module Devise
           Rails.logger.debug "User found: #{resource.username}"
           # They do have an account, so lets sync it with the UK data.
           if uk_user_details["data"]["email"]
-            resource.email = uk_user_details["data"]["email"]
+            resource.email = uk_user_details["data"]["email"].downcase
           else
             resource.email = generate_uk_email_address(uk_user_details["data"]["id"])
           end
@@ -82,7 +82,7 @@ module Devise
         cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z ]/, '')
         cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z ]/, '')
 
-        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + URI::escape(cleaned_login) + "/" + URI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
+        api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + CGI::escape(cleaned_login) + "/" + CGI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
 
         begin
           response = HTTParty.get(
@@ -116,11 +116,11 @@ module Devise
       def build_user_from_uk_info(user, uk_info)
         if user and uk_info
           if uk_info["data"]["email"]
-            user.email = uk_info["data"]["email"]
+            user.email = uk_info["data"]["email"].downcase
           else
             user.email = generate_uk_email_address(uk_info["data"]["id"])
           end
-          user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"]
+          user.username = uk_info["data"]["fname"] + uk_info["data"]["lname"] + "_" + uk_info["data"]["id"]
           user.password = Devise.friendly_token
           user.password_confirmation = nil # So that Devise automatically encrypts the new password
           user.uk_expiry = parse_expiry_from_uk_details(uk_info["data"]["expiry"])

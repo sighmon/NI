@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       if !user_signed_in?
         user = user_from_ip_whitelist(request.remote_ip)
         logger.info user
-        if !user.nil?
+        if !user.nil? and user.subscriber?
           sign_in(:user, user)
           session[:auto_signin] = true
         end

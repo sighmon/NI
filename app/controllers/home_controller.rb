@@ -43,18 +43,6 @@ class HomeController < ApplicationController
 
     @keynotes = @keynotes.sample(6).sort_by(&:publication)
 
-    @blog_category = Category.find_by_name("/blog/")
-
-    @blog_latest = Rails.cache.fetch("home_blog_latest", expires_in: 12.hours) do
-      @blog_category.try(:articles).try(:order, :publication).try(:select, &:published).try(:last)
-    end
-
-    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
-
-    @web_exclusives = Rails.cache.fetch("home_web_exclusives", expires_in: 12.hours) do
-      @web_exclusive_category.try(:articles).try(:select, &:published).try(:last, 2).try(:reverse)
-    end
-
     @facts = Rails.cache.fetch("home_facts", expires_in: 12.hours) do
       Category.find_by_name("/sections/facts/").try(:first_articles, 10)
     end

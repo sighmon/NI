@@ -7,7 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     # can :read, Issue, :trialissue => true
     # can :index, Issue
-    can [:read, :email, :email_non_subscribers, :email_others, :email_renew, :email_special], Issue, :published => true
+    can [:read, :email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew, :email_special], Issue, :published => true
     can [:tweet_issue, :wall_post_issue, :email_issue], Issue
     # test to see if the user has purchased an issue (to read article)
     can :read, Article, :issue => { :id => user.issue_ids }
@@ -24,6 +24,7 @@ class Ability
     can :search, Article
     can :popular, Article
     can :quick_reads, Article
+    can :email, Article
     can :read, Page
     can :read, Category
     cannot :update_categories_colours, Category
@@ -72,10 +73,17 @@ class Ability
     end
 
     cannot :read, Article, :published => false
+    cannot :show, Purchase do |purchase|
+        not purchase.user == user
+    end
+    cannot :show, Subscription do |subscription|
+        not subscription.user == user
+    end
 
     if user.manager
         can :manage, User
         can :manage, Subscription
+        can :show, Purchase
         can :read, Article
     end
 

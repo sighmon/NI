@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '2.6.5'
+ruby '2.7.4'
 
-gem 'rails', '6.0.0'
+gem 'rails', '6.1.4'
+
+gem 'sprockets'
 
 #### Rails 4 upgrade
 # gem 'protected_attributes'
@@ -94,7 +96,7 @@ gem 'sitemap_generator'
 gem 'unicorn'
 
 # New Relic for server information https://devcenter.heroku.com/articles/newrelic
-gem 'newrelic_rpm'
+gem 'newrelic_rpm'#, '6.12.0.367'
 
 # rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
 # gem 'rubyzip'
@@ -122,7 +124,7 @@ gem 'rails_12factor', :group => :production
 gem 'httparty'
 
 # To talk to the Google Play API
-gem 'google-api-client', '0.8.6'
+gem 'google-api-client', '0.28.7'
 
 # mjml responsive email framework https://mjml.io
 # https://github.com/angelodlfrtr/mjml-ruby
@@ -200,7 +202,7 @@ end
 
 # gem 'twitter-bootstrap-rails'#, '2.1.6'
 # gem 'bootstrap-sass'
-gem 'bootstrap'#, '>= 4.3.1'
+gem 'bootstrap', '~> 4'#, '>= 4.3.1'
 # gem 'less-rails'
 gem 'libv8'#, '~> 3.11.8'
 gem 'mini_racer'

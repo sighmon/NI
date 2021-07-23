@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ApplicationHelper
 
 describe UserMailer, :type => :mailer do
 
@@ -85,6 +86,11 @@ describe UserMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("Hi")
       expect(mail.body.encoded).to match(user.username)
+      expect(mail.body.encoded).to match("Tax invoice: #NI#{subscription.user.id}SUB#{subscription.id}")
+      expect(mail.body.encoded).to match("Subscription: 6 months")
+      expect(mail.body.encoded).to match("including GST")
+      expect(mail.body.encoded).to match("36.00")
+      expect(mail.body.encoded).to match("3.27")
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
     end
@@ -105,7 +111,7 @@ describe UserMailer, :type => :mailer do
 
       it "renders the body" do
         expect(mail.body.encoded).to match("You've been given a complimentary 10 year media")
-        expect(mail.body.encoded).to match("<br>You've been given")
+        expect(mail.body.encoded).to match("<br>You've been")
         expect(mail.body.encoded).to match(user.username)
         # Check that the MJML > HTML renderer has worked
         expect(mail.body.encoded).not_to match("mj-body")
@@ -226,6 +232,11 @@ describe UserMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("Thank you for purchasing a digital issue")
       expect(mail.body.encoded).to match(purchase.user.username)
+      expect(mail.body.encoded).to match("Tax invoice: #NI#{purchase.user.id}MAG#{purchase.id}")
+      expect(mail.body.encoded).to match("Magazine: ")
+      expect(mail.body.encoded).to match("including GST")
+      expect(mail.body.encoded).to match("7.50")
+      expect(mail.body.encoded).to match("0.68")
       # Check that the MJML > HTML renderer has worked
       expect(mail.body.encoded).not_to match("mj-body")
     end

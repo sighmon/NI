@@ -52,14 +52,14 @@ class Article < ActiveRecord::Base
     # logger.info "Age: " + age_in_days.to_s
 
     # Article score algorithm
-    score_drop = 1000
-    maximum_score = 10.0
-    (score_drop / (age_in_days + (score_drop/maximum_score))) * (self.total_guest_passes_use_count/maximum_score)
+    # score_drop = 1000
+    # maximum_score = 10.0
+    # (score_drop / (age_in_days + (score_drop/maximum_score))) * (self.total_guest_passes_use_count/maximum_score)
 
     # Decay algorithm from https://github.com/clux/decay/blob/master/decay.js
-    # gravity = 1.8
-    # hourAge = (Time.now() - self.publication) / (1000 * 3600);
-    # return (self.total_guest_passes_use_count - 1) / ((hourAge + 2) ** gravity)
+    gravity = 1.1
+    hour_age = (Time.now() - self.publication) / (1000 * 3600);
+    return (self.total_guest_passes_use_count - 1) / ((hour_age + 2) ** gravity)
   end
 
   def total_guest_passes_use_count
@@ -68,12 +68,12 @@ class Article < ActiveRecord::Base
 
   def self.popular
     # Returns the 12 most popular articles shared via guest passes and sorted by score
-    Rails.cache.fetch("popular_guest_passes", expires_in: 1.hours) do
+    Rails.cache.fetch("popular_guest_passes", expires_in: 6.hours) do
       # Need .to_a here otherwise it caches the scope, not the result of the query
       # GuestPass.order(:use_count).reverse.first(12).to_a
 
       # Most popular 12 articles sorted by score
-      Article.all.sort_by(&:score).reverse.first(12)
+      Article.where('publication > ?', DateTime.now - 2.years).sort_by(&:score).reverse.first(24)
     end
   end
 

@@ -285,6 +285,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_lapsed_digital_subscribers_csv
+		elsif params[:type] == 'institutions_lapsed'
+			begin
+				Settings.destroy('lapsed_institution_subscribers_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_lapsed_institution_subscribers_csv
 		elsif params[:type] == 'users_paper'
 			begin
 				Settings.destroy('current_paper_subscribers_csv')
@@ -292,6 +299,13 @@ class Admin::UsersController < Admin::BaseController
 				# Pass
 			end
 			User.delay.update_current_paper_subscribers_csv
+		elsif params[:type] == 'uk_export'
+			begin
+				Settings.destroy('uk_export_csv')
+			rescue
+				# Pass
+			end
+			User.delay.update_uk_export_csv
 		elsif params[:type] == 'subscriber_stats'
 			begin
 				Settings.destroy('subscriber_stats')
@@ -314,9 +328,15 @@ class Admin::UsersController < Admin::BaseController
 		elsif params[:type] == 'users_lapsed'
 			csv = Settings.find_by_var('lapsed_digital_subscribers_csv')
 			csv_name = 'lapsed_subscribers'
+		elsif params[:type] == 'institutions_lapsed'
+			csv = Settings.find_by_var('lapsed_institution_subscribers_csv')
+			csv_name = 'lapsed_institutions'
 		elsif params[:type] == 'users_paper'
 			csv = Settings.find_by_var('current_paper_subscribers_csv')
 			csv_name = 'paper_subscribers'
+		elsif params[:type] == 'uk_export'
+			csv = Settings.find_by_var('uk_export_csv')
+			csv_name = 'uk_export'
 		end
 		respond_to do |format|
 			format.csv {
@@ -331,7 +351,7 @@ class Admin::UsersController < Admin::BaseController
 		if @query.blank?
 			@users = []
 		else
-			@users = User.where("email ~* :query or username ~* :query or first_name ~* :query or last_name ~* :query or CONCAT(first_name,' ', last_name) ~* :query or company_name ~* :query or address ~* :query or comments ~* :query", { query: @query }).sorted_by(params[:sort], params[:direction])
+			@users = User.where("email ~* :query or username ~* :query or first_name ~* :query or last_name ~* :query or CONCAT(first_name,' ', last_name) ~* :query or company_name ~* :query or address ~* :query or comments ~* :query or replace(phone, ' ', '') ~* :query or phone ~* :query", { query: @query }).sorted_by(params[:sort], params[:direction])
 		end
 		respond_to do |format|
 			format.html

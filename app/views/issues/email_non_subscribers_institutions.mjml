@@ -43,43 +43,6 @@
 			</mj-column>
 		</mj-section>
 
-		<mj-section background-color="#FFFFFF">
-			<mj-column vertical-align="top">
-
-				<mj-text
-					font-size="22px" 
-					color="#ED4E59" 
-					font-family="helvetica"
-					font-weight="bold"
-					align="center">
-					<%= link_to @issue.title, issue_article_url(@issue, @issue.keynote), style: 'color:inherit;' %>
-				</mj-text>
-
-				<mj-text
-					font-size="14px"
-					line-height="22px"
-					font-weight="300"
-					padding="0px 25px"
-					color="#787878">
-					<%= simple_format @issue.keynote.teaser %>
-				</mj-text>
-
-				<mj-button
-					background-color="#ED4E59"
-					href="<%= page_url('subscribe') %>">
-					Subscribe now
-				</mj-button>
-
-			</mj-column>
-		</mj-section>
-
-		<mj-section padding="0">
-			<mj-column vertical-align="top">
-				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
-				<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
-			</mj-column>
-		</mj-section>
-
 		<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
 			<mj-column vertical-align="top">
 				<mj-text
@@ -113,7 +76,8 @@
 					padding="0px 25px"
 					color="#787878">
 					Hi [salutation],<br /><br />
-					Thanks very much for your interest in the New Internationalist. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "sign up", new_user_registration_url, style: 'color:inherit;' %> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.
+					Thanks very much for your interest in the New Internationalist. We've just published the <%= link_to "#{@issue.release.strftime("%B")} issue", issue_url(@issue), style: 'color:inherit;' %> of New Internationalist magazine. If you <%= link_to "sign up", new_user_registration_url, style: 'color:inherit;' %> and take out a subscription you'll be able to read it right away. We're an independent publisher so we'd very much appreciate your support.<br /><br />
+					If you need assistance with subscribing, please <a href="https://www.newint.com.au/blog/magazine-subscriptions/" style="color:inherit;">read our blog</a> for helpful suggestions.
 				</mj-text>
 
 			<% if not @issue.email_text.blank? %>
@@ -127,6 +91,59 @@
 					<%= simple_format @issue.email_text %>
 				</mj-text>
 			<% end %>
+
+				<mj-button
+					align="left"
+					background-color="#ED4E59"
+					href="<%= page_url('subscribe') %>">
+					Subscribe now
+				</mj-button>
+
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF" padding="0 0 0 0">
+			<mj-column vertical-align="top">
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="bold"
+					align="center"
+					color="#787878">
+					<span style="text-transform: uppercase;">Subscription options</span>
+				</mj-text>
+				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF">
+			<mj-column vertical-align="top">
+
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					padding="0px 25px"
+					color="#787878">
+					<strong>Option 1. Pay by EFT</strong>
+					<br><br>
+					Make your payment to:
+					<br><br>
+					- <em>Account Name</em>: <strong>New Internationalist Publications Pty Ltd</strong><br>
+					- <em>BSB</em>: <strong>633000</strong> (Bendigo Bank, 80 Grenfell St, ADELAIDE SA 5000 Australia)<br>
+					- <em>Account Number</em>: <strong>120933254</strong><br>
+					- <em>Reference</em>: <strong>[username]</strong><br>
+					(Very important so we can credit your payment to your subscription.)
+					<br><br>
+					- <em>Payment amount for one year</em>:<br>
+					Paper copy only <strong>$108</strong> / Digital <strong>$220</strong> / Paper + Digital Bundle <strong>$240</strong>
+					<br><br>
+					<em>The digital subscription for Institutions allows for an unlimited number of users on any one site or campus to read the magazine concurrently, such as for classroom or library use.</em>
+					<br><br>
+					<strong>Option 2. Pay by Visa, MasterCard or Paypal</strong>
+					<br><br>
+					Use the red "Subscribe now" button to log in to our self-service website with your username: <strong>[username]</strong> and you'll get instant access to the magazine.
+				</mj-text>
 
 				<mj-button
 					align="left"
@@ -171,6 +188,51 @@
 					<%= simple_format strip_tags(@issue.editors_letter) %>
 					<strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br />
 					<%= link_to URI.parse(ENV['NI_APP_HOST']).host, root_url, style: 'color:inherit;' %>
+				</mj-text>
+
+			</mj-column>
+		</mj-section>
+
+		<mj-section padding="0">
+			<mj-column vertical-align="top">
+				<mj-divider border-color="#D9D9D9" border-width="2px" width="99%" padding="0"></mj-divider>
+				<mj-divider border-color="#E6E6E6" border-width="2px"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF" padding="20px 0 0 0">
+			<mj-column vertical-align="top">
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="bold"
+					align="center"
+					color="#787878">
+					<span style="text-transform: uppercase;">Keynote article</span>
+				</mj-text>
+				<mj-divider border-color="#b3b3b3" border-width="2px" width="150px"></mj-divider>
+			</mj-column>
+		</mj-section>
+
+		<mj-section background-color="#FFFFFF">
+			<mj-column vertical-align="top">
+
+				<mj-text
+					font-size="22px" 
+					color="#ED4E59" 
+					font-family="helvetica"
+					font-weight="bold"
+					align="center">
+					<%= link_to @issue.title, issue_article_url(@issue, @issue.keynote), style: 'color:inherit;' %>
+				</mj-text>
+
+				<mj-text
+					font-size="14px"
+					line-height="22px"
+					font-weight="300"
+					padding="0px 25px"
+					color="#787878">
+					<%= simple_format @issue.keynote.teaser %>
 				</mj-text>
 
 			</mj-column>

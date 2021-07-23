@@ -23,7 +23,7 @@ SecureHeaders::Configuration.default do |config|
     default_src: %W(https: 'self'),
     base_uri: %w('self'),
     block_all_mixed_content: Rails.env.production?, # see http://www.w3.org/TR/mixed-content/
-    child_src: %w('self' *.facebook.com *.facebook.net *.twitter.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com), # if child-src isn't supported, the value for frame-src will be set.
+    child_src: %w('self' *.recaptcha.net *.facebook.com *.facebook.net *.twitter.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com), # if child-src isn't supported, the value for frame-src will be set.
     connect_src: %w('self' wss: *.google-analytics.com),
     font_src: %W('self' data: *.gstatic.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # form_action: %w('self' github.com),

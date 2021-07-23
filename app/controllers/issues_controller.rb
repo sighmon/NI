@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
   # Cancan authorisation
   load_and_authorize_resource :except => [:index]
 
-  newrelic_ignore :only => [:email, :email_non_subscribers, :email_others, :email_renew, :email_special]
+  newrelic_ignore :only => [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew, :email_special]
   # newrelic_ignore_enduser :only => [:email, :email_non_subscribers, :email_others, :email_renew]
   # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
@@ -129,7 +129,7 @@ class IssuesController < ApplicationController
     end
   end
 
-  def email_non_subscribers
+  def email_non_subscribers_institutions
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
@@ -139,7 +139,7 @@ class IssuesController < ApplicationController
     end
   end
 
-  def email_others
+  def email_non_subscribers_others
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|

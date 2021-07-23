@@ -17,6 +17,7 @@
 					font-weight="300">
 					<%= raw(ENV["STREET_ADDRESS"]) %><br />
 					ABN 11 005 523 124<br />
+					ACN 005 523 124<br />
 					<a href="https://www.newint.com.au" style="color:inherit;">www.newint.com.au</a>
 				</mj-text>
 				<% unless local_assigns[:reason].nil? %>

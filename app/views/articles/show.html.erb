@@ -27,6 +27,14 @@
       </script>
     </div>
 
+    <hr />
+
+    <p><b>Preview emails</b></p>
+    <%= link_to 'Email article', issue_article_email_path(@issue, @article, :mjml), :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Text email article', issue_article_email_path(@issue, @article, :text), :class => 'btn btn-outline-secondary' %>
+
+    <hr />
+
     <p><b>iOS &amp; Android Push Notification</b></p>
 
     <% if not @article.issue.published? %>

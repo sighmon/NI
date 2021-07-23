@@ -211,7 +211,7 @@
   <dt>Address:</dt><dd><%= @user.address.blank? ? '-' : @user.address %></dd>
   <dt>Suburb or Town:</dt><dd><%= @user.city.blank? ? '-' : @user.city %></dd>
   <dt>Postal code:</dt><dd><%= @user.postal_code.blank? ? '-' : @user.postal_code %></dd>
-  <dt>State:</dt><dd><%= @user.state.blank? ? '-' : @user.state %></dd>
+  <dt>State:</dt><dd><%= @user.state.blank? ? '-' : @user.state_name %></dd>
   <dt>Country:</dt><dd><%= @user.country.blank? ? '-' : @user.country_name %></dd>
   <dt>Phone:</dt><dd><%= @user.phone.blank? ? '-' : @user.phone %></dd>
   <dt>Postal mailable:</dt><dd><%= @user.postal_mailable.blank? ? '-' : @user.postal_mailable %></dd>

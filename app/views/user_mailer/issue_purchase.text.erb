@@ -2,13 +2,19 @@ New Internationalist Magazine - digital issue
 =============================================
 
 <%= @greeting %> <%= @user.username %>,
+
 Thank you for purchasing a digital issue of 
 New Internationalist magazine:
 
-<%= @issue.number %> - <%= @issue.title %>
+<%= @purchase.issue.number %> - <%= @purchase.issue.title %>
+
+Tax invoice: <%= tax_invoice_number(@purchase) %>
+Magazine: <%= "#{@purchase.issue.number} - #{@purchase.issue.title}" %>
+Date of purchase: <%= purchase_date_as_string(@purchase.purchase_date) %>
+Amount: <%= number_to_currency(cents_to_dollars(@purchase.price_paid), :unit => '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@purchase.price_paid), :unit => '$') %>)
 
 Read it now at:
-<%= issue_url(@issue, :protocol => "https") %>
+<%= issue_url(@purchase.issue, :protocol => "https") %>
 
 Your username is: <%= @user.username %>
 Your user profile is: <%= user_url(@user, :protocol => "https") %>

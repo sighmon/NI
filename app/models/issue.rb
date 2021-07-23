@@ -331,11 +331,9 @@ class Issue < ActiveRecord::Base
   end
 
   def request_json_from_newint_org(url, token)
-    request = HTTPI::Request.new
-    request.url = url
-    request.headers = { "Accept": "application/json", "X-CSRF-Token": token }
-    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-    response_from_newint_org = HTTPI.get(request)
+    headers = { "Accept": "application/json", "X-CSRF-Token": token }
+    auth = {username: ENV["NEWINT_ORG_REST_USERNAME"], password: ENV["NEWINT_ORG_REST_PASSWORD"]}
+    response_from_newint_org = HTTParty.get(url, basic_auth: auth, headers: headers)
     logger.info "Request to: #{url}"
     logger.info "Response: #{response_from_newint_org.code.to_s}"
     response_body = nil
@@ -351,14 +349,10 @@ class Issue < ActiveRecord::Base
 
   def csrf_token_from_newint_org
     # First get a token
-    request = HTTPI::Request.new
-    request.url = ENV["NEWINT_ORG_REST_TOKEN_URL"]
-    request.headers = { "Content-type": "text/plain" }
-    request.auth.basic(ENV["NEWINT_ORG_REST_USERNAME"], ENV["NEWINT_ORG_REST_PASSWORD"])
-    response = HTTPI.get(request)
-    # byebug
+    auth = {username: ENV["NEWINT_ORG_REST_USERNAME"], password: ENV["NEWINT_ORG_REST_PASSWORD"]}
+    # Use SecureRandom hex to avoid strange newint.org cache bug
+    response = HTTParty.get(ENV["NEWINT_ORG_REST_TOKEN_URL"] + '?' + SecureRandom.hex, basic_auth: auth)
     logger.info "TOKEN RESPONSE: " + response.code.to_s
-    # logger.info response.headers
 
     xcsfr_token = nil
     if response.code >= 200 and response.code < 300
@@ -984,13 +978,23 @@ class Issue < ActiveRecord::Base
         android_tokens.each_slice(1000).to_a.each do |tokens|
           # Setup push notifications for Android devices
           logger.info "Creating #{tokens.count} Android push notifications."
-          android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+          android_response = nil
+          begin
+            android_response = ApplicationHelper.rpush_create_android_push_notification(tokens, data)
+          rescue Exception => exception
+            logger.info "Failed to create Android push notifications with error: #{exception}"
+          end
           logger.info "Android push notifications response: #{android_response}"
         end
       elsif not android_tokens.empty?
         # Setup push notifications for Android devices
         logger.info "Creating #{android_tokens.count} Android push notifications."
-        android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        android_response = nil
+        begin
+          android_response = ApplicationHelper.rpush_create_android_push_notification(android_tokens, data)
+        rescue Exception => exception
+          logger.info "Failed to create Android push notifications with error: #{exception}"
+        end
         logger.info "Android push notifications response: #{android_response}"
       else
         logger.warn "WARNING: No Android push notifications created."
@@ -999,7 +1003,11 @@ class Issue < ActiveRecord::Base
       # Loop through all iOS PushRegistration tokens and setup iOS messages
       ios_responses = []
       PushRegistration.where(device: 'ios').each do |p|
-        ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+        begin
+          ios_responses << ApplicationHelper.rpush_create_ios_push_notification(p.token, data)
+        rescue Exception => exception
+          logger.info "Failed to create an ios push notification for id: #{p.id} token: #{p.token} exception: #{exception}"
+        end
       end
       if not ios_responses.empty?
         logger.info "Creating #{ios_responses} iOS push notifications."

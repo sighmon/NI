@@ -102,6 +102,22 @@ describe User, :type => :model do
       expect(ability).not_to be_able_to(:manage, payment_notification)
     end
 
+    it "should be able to show a purchase" do
+      purchase = FactoryBot.create(:purchase)
+      purchase.user = user
+      purchase.save
+      expect(ability).to be_able_to(:show, purchase)
+    end
+
+    it "should not be able to show another user's purchase" do
+      purchase = FactoryBot.create(:purchase)
+      user_two = FactoryBot.create(:user)
+      purchase.user = user_two
+      purchase.save
+      expect(ability).not_to be_able_to(:manage, purchase)
+      expect(ability).not_to be_able_to(:show, purchase)
+    end
+
     context "without a parent" do
       it "can update itself" do
         expect(ability).to be_able_to(:manage, user)
@@ -482,6 +498,20 @@ describe User, :type => :model do
       end
     end
 
+    it "should be able to show a subscription tax invoice" do
+      expect(ability).to be_able_to(:show, subscription)
+      expect(ability).to be_able_to(:manage, subscription)
+    end
+
+    it "should not be able to show another user's subscription tax invoice" do
+      subscription_two = FactoryBot.create(:subscription)
+      user_two = FactoryBot.create(:user)
+      subscription_two.user = user_two
+      subscription_two.save
+      expect(ability).not_to be_able_to(:manage, subscription_two)
+      expect(ability).not_to be_able_to(:show, subscription_two)
+    end
+
   end
 
   context "manager" do
@@ -532,6 +562,12 @@ describe User, :type => :model do
       expect(ability).to be_able_to(:manage, subscription)
     end
 
+    it "should be able to show a purchase" do
+      purchase = FactoryBot.create(:purchase)
+      expect(ability).not_to be_able_to(:manage, purchase)
+      expect(ability).to be_able_to(:show, purchase)
+    end
+
     context "with three subscribers" do
 
       before(:each) do
@@ -544,12 +580,16 @@ describe User, :type => :model do
       end
 
       it "should be able to download a users_csv" do
+        user = User.first
+        user.company_name = "Some company"
+        user.save
         User.update_admin_users_csv
         users_csv = CSV.parse(Settings.users_csv)
         # 1 header, 3 subscribers, 3 users
         expect(users_csv.count).to eq(7)
         expect(Settings.users_csv).to include(User.first.email)
         expect(Settings.users_csv).to include(User.last.email)
+        expect(Settings.users_csv).to include(user.company_name)
       end
 
       it "should be able to download a current_digital_subscribers_csv" do
@@ -604,9 +644,45 @@ describe User, :type => :model do
         expect(Settings.lapsed_digital_subscribers_csv).not_to include(u3.email)
       end
 
+      it "should be able to download a lapsed_institution_subscribers_csv" do
+        u = Subscription.first.user
+        u.email_opt_in = "Y"
+        u.postal_mailable = "Y"
+        u.institution = true
+        u.save
+        u2 = Subscription.second.user
+        u2.email_opt_in = "M"
+        u2.postal_mailable = "R"
+        u2.institution = true
+        u2.save
+        u3 = Subscription.third.user
+        u3.email_opt_in = "Y"
+        u3.institution = true
+        u3.save
+        s = Subscription.first
+        s.price_paid = 8800
+        s.expire_subscription
+        s.save
+        s2 = Subscription.second
+        s2.price_paid = 8800
+        s2.expire_subscription
+        s2.save
+
+        User.update_lapsed_institution_subscribers_csv
+        lapsed_institution_subscribers_csv = CSV.parse(Settings.lapsed_institution_subscribers_csv)
+
+        # 1 header, 2 expired subscriptions with 1 digital renewals
+        expect(lapsed_institution_subscribers_csv.count).to eq(3)
+        expect(Settings.lapsed_institution_subscribers_csv).to include(u.email)
+        expect(Settings.lapsed_institution_subscribers_csv).to include(u2.email)
+        expect(Settings.lapsed_institution_subscribers_csv).not_to include(u3.email)
+      end
+
       it "should be able to download a current_paper_subscribers_csv" do
         u = Subscription.first.user
         u.postal_mailable = "Y"
+        u.country = "JP"
+        u.state = "28"
         u.save
         u2 = Subscription.second.user
         u2.postal_mailable = "R"
@@ -645,6 +721,8 @@ describe User, :type => :model do
         expect(Settings.current_paper_subscribers_csv).to include(u3.email)
         expect(Settings.current_paper_subscribers_csv).to include(u4.email)
         expect(Settings.current_paper_subscribers_csv).to include(',I,')
+        expect(Settings.current_paper_subscribers_csv).to include(u.state_name)
+        expect(Settings.current_paper_subscribers_csv).to include(u.country_name)
       end
 
       it "should be able to update subscriber stats" do

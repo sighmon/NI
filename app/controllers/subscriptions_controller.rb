@@ -15,7 +15,7 @@ class SubscriptionsController < ApplicationController
 
   def show
     @greeting = 'Hi'
-    @user = current_user
+    @user = @subscription.user
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
 
@@ -32,6 +32,9 @@ class SubscriptionsController < ApplicationController
     end
 
     respond_to do |format|
+      format.html {
+        render @template
+      }
       format.mjml {
         render @template, :layout => false
       }

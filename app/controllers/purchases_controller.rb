@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  # include ApplicationHelper
+  include ApplicationHelper
   # Cancan authorisation
   load_and_authorize_resource
 
@@ -10,12 +10,15 @@ class PurchasesController < ApplicationController
 
   def show
     @greeting = 'Hi'
-    @user = current_user
+    @user = @purchase.user
     @issue = @purchase.issue
     @issues = Issue.where(published: true).last(8).reverse
     @template = "user_mailer/issue_purchase"
 
     respond_to do |format|
+      format.html {
+        render @template
+      }
       format.mjml {
         render @template, :layout => false
       }
