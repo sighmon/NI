@@ -83,7 +83,7 @@ module NI
     config.assets.paths << "#{Rails.root}/app/assets/html"
 
     # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
-    config.cache_store = :dalli_store
+    config.cache_store = :mem_cache_store
 
     config.generators do |g|
       g.fixture_replacement :factory_girl

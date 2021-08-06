@@ -148,7 +148,7 @@ Rails.application.configure do
   #   :metastore    => client,
   #   :entitystore  => client
   # }
-  config.cache_store = :dalli_store#,
+  config.cache_store = :mem_cache_store#,
                     # (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
                     # {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
                     #  :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
