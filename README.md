@@ -40,7 +40,10 @@ Download the New Internationalist magazine app for Android from: <https://play.g
 
 ## CMS
 
-You can write articled directly into this Rails site with the basic built article writing tools or import them from the Bricolage CMS via SOAP.
+You can write articled directly into this Rails site with the basic built article writing tools or import them from:
+
+* Bricolage CMS via SOAP
+* Drupal CMS
 
 When writing directly, <p> and <br /> tags are added automatically (thanks simple_format), and it also lets you use basic <html> tags too.
 
