@@ -239,7 +239,7 @@ class ArticlesController < ApplicationController
     # end 
     # Added this check to be able to create an article without a category
     # if not extracted_categories_attributes.try(:fetch,:categories_attributes).nil?
-    #   @article.update_attributes(extracted_categories_attributes)
+    #   @article.update(extracted_categories_attributes)
     # end
     
     respond_to do |format|
@@ -264,7 +264,7 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       # byebug
-      if @article.update_attributes(article_params)
+      if @article.update(article_params)
         format.html { redirect_to issue_article_path, notice: 'Article was successfully updated.' }
         format.json { head :no_content }
       else

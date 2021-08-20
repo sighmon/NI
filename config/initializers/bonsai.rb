@@ -1,9 +1,10 @@
 # config/initializers/bonsai.rb
 
 ENV['ELASTICSEARCH_URL'] = ENV['BONSAI_URL']
+Elasticsearch::Model.client = Elasticsearch::Client.new url: ENV['BONSAI_URL']
 
 # Optional, but recommended: use a single index per application per environment
-app_name = Rails.application.class.parent_name.underscore.dasherize
+app_name = Rails.application.class.module_parent_name.underscore.dasherize
 app_env = Rails.env
 BONSAI_INDEX_NAME = "#{app_name}-#{app_env}"
 

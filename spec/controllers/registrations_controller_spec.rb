@@ -83,7 +83,7 @@ describe RegistrationsController do
         it "does not update the email" do
           newemail = "newemail@example.com"
           attributes = { username: user.username, email: newemail, current_password: user.password }
-          expect_any_instance_of(User).not_to receive(:update_attributes)
+          expect_any_instance_of(User).not_to receive(:update)
           put :update, params: { user: attributes }
         end
       end

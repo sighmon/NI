@@ -22,11 +22,6 @@ Rails.application.configure do
   # Default URL for helpers in models
   Rails.application.routes.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
 
-  # Force SSL for any Devise action
-  config.to_prepare { Devise::SessionsController.force_ssl }
-  config.to_prepare { Devise::RegistrationsController.force_ssl }
-  config.to_prepare { Devise::PasswordsController.force_ssl }
-
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   # Now using /config/application.yml figaro gem
@@ -148,7 +143,7 @@ Rails.application.configure do
   #   :metastore    => client,
   #   :entitystore  => client
   # }
-  config.cache_store = :dalli_store#,
+  config.cache_store = :mem_cache_store#,
                     # (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
                     # {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
                     #  :password => ENV["MEMCACHIER_ROSE_PASSWORD"],

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.4'
 
-gem 'rails', '5.2.6'
+gem 'rails', '6.1.4.1'
 
 gem 'sprockets'
 
@@ -15,7 +15,7 @@ gem 'activerecord-deprecated_finders'
 gem 'activerecord-session_store'
 
 # Rails 5
-gem 'record_tag_helper'
+# gem 'record_tag_helper'
 
 #### For heroku to serve static assets
 gem 'rails_serve_static_assets'
@@ -31,9 +31,7 @@ gem 'platform-api'
 
 # gem 'sqlite3'
 
-# TOFIX: Un-stick to let it upgrade when v1.0.0 is compatible with Rails.
-# https://github.com/rails/rails/issues/31669
-gem 'pg', '0.21.0'
+gem 'pg'
 
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
@@ -137,7 +135,7 @@ gem 'mjml-rails'#, '2.4.3'#, git: 'https://github.com/sighmon/mjml-rails.git', r
 gem 'rpush'
 # Temporary fix for rpush:
 # https://github.com/rpush/rpush/issues/306
-gem 'net-http-persistent', '~> 2.9.4'
+gem 'net-http-persistent'#, '~> 2.9.4'
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
