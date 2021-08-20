@@ -26,15 +26,6 @@ GIT
       activemodel (>= 4.2)
 
 GIT
-  remote: https://github.com/sighmon/Country-State-Select.git
-  revision: 4b0b62d2ff684e8f1a1ee296c6905be159be1ef0
-  branch: add/rails-6-support
-  specs:
-    country_state_select (3.0.4)
-      city-state
-      rails
-
-GIT
   remote: https://github.com/sighmon/highlighter.js.git
   revision: 2cef55d2c5c6c903a9dd5f347671373f451dd120
   specs:
@@ -192,6 +183,9 @@ GEM
     country_select (6.0.0)
       countries (~> 4.0)
       sort_alphabetical (~> 1.1)
+    country_state_select (3.1.5)
+      city-state
+      rails
     crass (1.0.6)
     curb (0.9.11)
     daemons (1.4.0)
@@ -810,7 +804,7 @@ DEPENDENCIES
   coffee-rails
   comma!
   country_select
-  country_state_select!
+  country_state_select
   curb
   dalli
   database_cleaner

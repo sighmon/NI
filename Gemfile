@@ -235,8 +235,7 @@ gem 'jquery-ui-rails'
 # https://github.com/plataformatec/simple_form
 gem 'simple_form'
 gem 'country_select'
-gem 'country_state_select', :git => 'https://github.com/sighmon/Country-State-Select.git', :branch => 'add/rails-6-support'
-# gem 'country_state_select', path: '../Country-State-Select/'
+gem 'country_state_select'
 
 # RMagick for image editing
 gem 'rmagick', :require => false
