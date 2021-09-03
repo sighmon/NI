@@ -43,7 +43,7 @@ client.p12
 
 # Ignore image files generated in public/uploads
 /public/uploads/**
-/public/assets/**
+# /public/assets/**
 /public/sitemaps/**
 
 /.sass-cache
