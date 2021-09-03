@@ -21,7 +21,7 @@ gem 'activerecord-session_store'
 gem 'rails_serve_static_assets'
 
 # So we can serve static assets via S3 and CloudFront CDN
-gem 'asset_sync'
+# gem 'asset_sync'
 
 # Heroku platform-api
 gem 'platform-api'

@@ -112,11 +112,7 @@ Rails.application.configure do
   config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  # config.assets.compile = false
-  #### Set for Rails4
-  # Rails 5
-  config.assets.compile = true
-  # config.assets.compile = false
+  config.assets.compile = false
 
   # Rails 5
   # Specifies the header that your server uses for sending files.

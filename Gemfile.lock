@@ -124,11 +124,6 @@ GEM
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
-    asset_sync (2.15.0)
-      activemodel (>= 4.1.0)
-      fog-core
-      mime-types (>= 2.99)
-      unf
     ast (2.4.2)
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
@@ -792,7 +787,6 @@ DEPENDENCIES
   activerecord-deprecated_finders
   activerecord-session_store
   acts_as_list
-  asset_sync
   better_errors (= 1.1.0)
   binding_of_caller
   bootstrap (~> 4)
