@@ -66,6 +66,9 @@ module NI
     #### Removed for Rails 4
     # config.active_record.whitelist_attributes = true
 
+    # For Rails 6.1
+    config.middleware.use Rack::Deflater
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

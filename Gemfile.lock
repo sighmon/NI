@@ -444,8 +444,6 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       webrick
-    heroku-deflater (0.6.3)
-      rack (>= 1.4.5)
     hkdf (0.3.0)
     http-2 (0.11.0)
     http-accept (1.7.0)
@@ -817,7 +815,6 @@ DEPENDENCIES
   google-tag-manager-rails
   growl
   guard-rspec
-  heroku-deflater
   highlighter-js!
   httparty
   jquery-fileupload-rails
