@@ -128,9 +128,10 @@ GEM
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
     bcrypt (3.1.16)
-    better_errors (1.1.0)
+    better_errors (2.9.1)
       coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     bootstrap (4.6.0)
@@ -701,12 +702,12 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 1.1.0)
       wasabi (~> 2.5.0)
-    secure_headers (6.3.2)
+    secure_headers (6.3.3)
     shellany (0.0.1)
     show_me_the_cookies (5.0.1)
       capybara (>= 2, < 4)
-    signet (0.15.0)
-      addressable (~> 2.3)
+    signet (0.16.0)
+      addressable (~> 2.8)
       faraday (>= 0.17.3, < 2.0)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
@@ -767,7 +768,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    xml-simple (1.1.8)
+    xml-simple (1.1.9)
+      rexml
     xmlrpc (0.3.2)
       webrick
     xpath (3.2.0)
@@ -785,7 +787,7 @@ DEPENDENCIES
   activerecord-deprecated_finders
   activerecord-session_store
   acts_as_list
-  better_errors (= 1.1.0)
+  better_errors
   binding_of_caller
   bootstrap (~> 4)
   brakeman

@@ -153,7 +153,7 @@ gem 'secure_headers'
 # For development
 group :development do
   # gem 'taps', :require => false
-  gem 'better_errors', '1.1.0'
+  gem 'better_errors'
   gem 'binding_of_caller'
   # gem 'sqlite3'
   # Profiling
