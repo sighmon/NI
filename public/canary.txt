@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: September 2021
+Period: October 2021
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,27 +21,26 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  3 September 2021
+  4 October 2021
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
   Christies Beach SA 5165
   newint.com.au
   digital.newint.com.au
-
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmExVnUACgkQtsnG2UL7
-GPnIoA/+NI3Y3LchpQl7gTOzs+yr3jnphtaZG5HJyY5wFGRWTrce4SAkS8cvpLTm
-Zc/zvWGvWecBt/lHBsTkeZ/rjdYgM0kTek1nZssHKmTWrav6tXmpJtmvTARsS1fG
-abO6YythXlROudmTj4pcgsKm/3G7SR7cMEL8pUZvkfikm3k37N+62ktTAto5D2zp
-jK92n566eMfoRHIDhdY81qmCtQSDHHN6llej5EhOzc/xHGfSAwj3RMLjsoxHgior
-8LJzETmOnfMS82JUw5O/dkbq+3sTq9GkWXftj93YdtuD8zSQAiCSr3WS3UxQg1jz
-JJfIw1cIskmk9CGjdCiZdIQaV5walJkeWJJ5rdhSmO6O6WTH2ghc0ypflg0Xtzzs
-IoK2FD5gX5k78btdag/t1PgsPJWgV5TsdnWPw235URdVWvyh6hnFsulyKwdcqtPA
-8vekRd3hh7vgEQg0Ufqiy0wBxa57NcEp4OiQ/Y4HuF6v7tryQGylkfo+J6Ew4TQG
-WYBo24CgMt30Fh+mYu9X0CE0j2B3w80MjvaP06x+RVLWppddzs00678AqR2hrwPg
-Pb2/1JEn5BgL4zR3FQlvl0J+mP0nH8eYpfObp60jKbJu+tYo0WDbhFb5KGGLu9mr
-sORapEOXaC7LR9GDBa3kmQlR9PPkyad3vngDXgIoXRSiiLlI5Lc=
-=hiKr
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmFaPT4ACgkQtsnG2UL7
+GPl4yhAAoORNSAnYbITRa3Y/VHj+KVv/W5EgUx483zLfUyOgEpOfBJtdwuTi5kaf
+VTEcBkXBZ7J19mYeVkYNrrnaJhuxR9fhhgPZxUmiUWy3a2gFcnn2ZnvCwxsdrAf1
+HQSSr7lpUaMwAPD4aR4zvVYo2MMD8uZYy5uV1Lu2B0D/o/IyLavbXLPh++//ugiX
+3XbXeNMNgV4ryxMMRu5yIMCpuiS3RdYInMupWDFwkWwrqnQmoH/16A0hVLTgHTO2
+hPHjyWxWIlEQKsq+bZcjbM3D1mZQooz2udCAj7AjzRD8YvzblLq+DxlGXs+4nbJO
+xwX2S6p3AY2Nwpe6c1QqXxWTUvuJgNDG1Mx4AyB6qsLF3hCYN9uOHsO2NI9fyl7s
+IdrfldrqXV6tgIDmNLBxyfQ6LxKqZDy61dbCLlNTMZJZKQZr9Cvfw3hreBPlXkQD
+DWvMrGBz97VBy/fEwwack/8ZIYB7mZ4iY3uL/V0mirANW6Rvn24oOtfGaw+TuZLs
+vk946XW16semJU5Dz6Cm00jLnh5kPD2kUGAgMtp5Euwbq5nRMbskXvlUPPI5WEay
+Gpioit9J0OT+67v0hGQGWm2E3U8zbo+2WrARoNWmQ+Q8jRnugvKEeYImTHrTaHli
+VvqHQvv878c+PjfiKQbi/1OfAzXDMgSg0kL9OwxxWyBMRXDCuUo=
+=dlbO
 -----END PGP SIGNATURE-----
