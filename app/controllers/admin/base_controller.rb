@@ -161,7 +161,7 @@ class Admin::BaseController < ApplicationController
 	def delete_cache
 		if params[:cache] == "all"
 			# Delete all cache
-			Rails.cache.dalli.flush_all
+			Rails.cache.clear
 			logger.info "CACHE: flush_all finished."
 		elsif params[:cache] == "blog"
 			# Flush timely posts on home page. home_blog_latest and home_web_exclusives
