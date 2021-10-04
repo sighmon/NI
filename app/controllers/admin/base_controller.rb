@@ -178,8 +178,7 @@ class Admin::BaseController < ApplicationController
 			# Flush quick reads cache
 			Rails.cache.delete("quick_reads")
 			logger.info "CACHE: flush quick_reads finished."
-		end
-		redirect_to :back, notice: "Cache cleared: #{params[:cache] || "None"}."
+		redirect_back fallback_location: root_path, notice: "Cache cleared: #{params[:cache] || "None"}."
 	end
 
 	private
