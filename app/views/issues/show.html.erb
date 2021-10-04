@@ -95,7 +95,7 @@
     <meta itemprop="brand" content="New Internationalist">
     <meta itemprop="logo" content="<%= asset_url("favicon-196x196.png") %>">
     <meta itemprop="releaseDate" content="<%= @issue.release.to_time.iso8601 %>">
-    <span itemscope itemtype="http://schema.org/Offer">
+    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
       <link itemprop="availability" href="http://schema.org/InStock">
       <meta itemprop="sku" content="<%= @issue.number %>">
       <meta itemprop="priceCurrency" content="AUD">
