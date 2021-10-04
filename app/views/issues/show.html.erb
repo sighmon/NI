@@ -100,6 +100,7 @@
       <meta itemprop="sku" content="<%= @issue.number %>">
       <meta itemprop="priceCurrency" content="AUD">
       <meta itemprop="price" content="<%= cents_to_dollars(Settings.issue_price) %>">
+      <meta itemprop="url" content="<%= issue_url(@issue) %>">
     </span>
     <% if @issue.editors_letter != "" %>
       <h3>A note from the editor</h3>
