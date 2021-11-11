@@ -493,7 +493,7 @@ GEM
     kaminari-core (1.2.1)
     kgio (2.11.4)
     libv8 (8.4.255.0)
-    libv8-node (16.10.0.0)
+    libv8-node (15.14.0.1)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -516,8 +516,8 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
-    mini_racer (0.5.0)
-      libv8-node (~> 16.10.0.0)
+    mini_racer (0.4.0)
+      libv8-node (~> 15.14.0.0)
     minitest (5.14.4)
     mjml-rails (4.6.1)
     moneta (1.0.0)
@@ -829,7 +829,7 @@ DEPENDENCIES
   memcachier
   meta-tags
   mini_magick
-  mini_racer
+  mini_racer (~> 0.4.0)
   mjml-rails
   net-http-persistent
   newrelic_rpm
