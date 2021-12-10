@@ -38,6 +38,9 @@ class Article < ActiveRecord::Base
     # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
     query_hash.merge!({ post_filter: { term: { unpublished: false}} }) unless show_unpublished
 
+    # Filter out future articles
+    query_hash.merge!({ query: { range: { publication: { lte: "now/d" }}}}) unless show_unpublished
+
     __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
   end
 
