@@ -34,12 +34,18 @@ class Article < ActiveRecord::Base
     query_hash = {
       sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
     }
-    query_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
+    query_hash.merge!({ query: { bool: { must: [{ query_string: { query: clean_query, default_operator: "AND" }}]}}}) if params[:query].present?
     # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
     query_hash.merge!({ post_filter: { term: { unpublished: false}} }) unless show_unpublished
 
     # Filter out future articles
-    query_hash.merge!({ query: { range: { publication: { lte: "now/d" }}}}) unless show_unpublished
+    if not show_unpublished
+      if params[:query].present?
+        query_hash[:query][:bool][:must].push({ range: { publication: { lte: "now/d" }}})
+      else
+        query_hash.merge!({ query: { bool: { must: [{ range: { publication: { lte: "now/d" }}}]}}})
+      end
+    end
 
     __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
   end
