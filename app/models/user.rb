@@ -765,7 +765,7 @@ class User < ActiveRecord::Base
           user.postal_code = row['postal_code']
           user.city = row['city'].try(:titleize)
           user.state = row['state']
-          user.country = ISO3166::Country.find_country_by_name(row['country'].try(:titleize)).try(:alpha2)
+          user.country = ISO3166::Country.find_country_by_iso_short_name(row['country'].try(:titleize)).try(:alpha2)
           user.phone = row['phone']
           user.postal_mailable = row['postal_mailable']
           user.postal_mailable_updated = date_string_to_datetime(row['postal_mailable_updated'])

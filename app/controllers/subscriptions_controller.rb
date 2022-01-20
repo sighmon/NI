@@ -388,7 +388,7 @@ class SubscriptionsController < ApplicationController
       @user.city = session[:express_city_name]
       @user.postal_code = session[:express_postal_code]
       @user.state = session[:express_state_or_province]
-      @user.country = ISO3166::Country.find_country_by_name(session[:express_country_name].try(:titleize)).try(:alpha2)
+      @user.country = ISO3166::Country.find_country_by_iso_short_name(session[:express_country_name].try(:titleize)).try(:alpha2)
       # Update postal/renewal flags
       @user.postal_mailable = 'Y'
       @user.email_opt_in = 'M'
