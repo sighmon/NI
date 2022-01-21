@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.4'
+ruby '2.7.5'
 
 gem 'rails', '6.1.4.4'
 
@@ -202,8 +202,7 @@ end
 # gem 'bootstrap-sass'
 gem 'bootstrap', '~> 4'#, '>= 4.3.1'
 # gem 'less-rails'
-gem 'libv8'#, '~> 3.11.8'
-gem 'mini_racer', '~> 0.4.0'
+gem 'mini_racer'
 gem 'font-awesome-rails'
 
 # Gems used only for assets and not required
