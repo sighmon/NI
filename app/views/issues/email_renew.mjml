@@ -102,7 +102,7 @@
 					font-weight="300"
 					padding="0px 25px"
 					color="#787878">
-					Hi,<br /><br />
+					Hi New Internationalist Supporter,<br /><br />
 					Thanks very much for supporting our New Internationalist online subscription service. Your subscription [wording]. Being an independent not-for-profit publisher, we're entirely dependent on support such as yours to enable us to continue our work for a fairer and more sustainable planet. If you <%= link_to "log in", new_user_session_url + "?user[login]=[username,fallback=oops]", style: 'color:inherit;' %> with your username: <b>[username,fallback=oops]</b> and renew your subscription, we'll be very grateful.
 				</mj-text>
 
