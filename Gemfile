@@ -292,3 +292,6 @@ gem 'comma',  :git => "https://github.com/crafterm/comma.git"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+# To avoid GitHub Dependabot error
+gem 'nokogiri', '>= 1.13.4'

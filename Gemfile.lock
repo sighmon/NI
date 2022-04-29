@@ -838,6 +838,7 @@ DEPENDENCIES
   mjml-rails
   net-http-persistent
   newrelic_rpm
+  nokogiri (>= 1.13.4)
   pagy
   paypal-recurring
   pg
