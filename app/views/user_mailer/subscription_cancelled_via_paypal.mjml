@@ -1,6 +1,6 @@
 <mjml>
 	<mj-head>
-		<mj-preview>Your New Internationalist subscription has been cancelled via PayPal.</mj-preview>
+		<mj-preview>Your New Internationalist automatic-renewal has been cancelled via PayPal.</mj-preview>
 	</mj-head>
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
@@ -40,7 +40,7 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
-					<%= link_to "Subscription cancelled via PayPal", user_url(@user), style: 'color:inherit;' %>
+					<%= link_to "Automatic-renewal cancelled via PayPal", user_url(@user), style: 'color:inherit;' %>
 				</mj-text>
 
 				<mj-text
@@ -51,7 +51,7 @@
 					<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
 					Your automatic-renewal has now been cancelled via PayPal.<br /><br />
 
-					In the meantime your subscription will continue until your most recent subscription payment runs out, so you can still read magazines: <%= link_to "Magazine archive", issues_url(:protocol => "https"), style: 'color:inherit;' %><br /><br />
+					In the meantime your subscription will continue until your subscription payment runs out, so you can still read magazines: <%= link_to "Magazine archive", issues_url(:protocol => "https"), style: 'color:inherit;' %><br /><br />
 
 					<% if @user.expiry_date %>
 					Your subscription expiry date is:<br />
