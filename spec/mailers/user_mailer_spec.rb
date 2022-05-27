@@ -204,7 +204,7 @@ describe UserMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Cancelled New Internationalist Subscription")
+      expect(mail.subject).to eq("Cancelled New Internationalist automatic-renewal")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq([ENV["DEVISE_EMAIL_ADDRESS"]])
     end

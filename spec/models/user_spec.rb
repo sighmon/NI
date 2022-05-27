@@ -498,6 +498,26 @@ describe User, :type => :model do
       end
     end
 
+    it "with a recurring subscription and cancelled automatic-debit payment notification, returns is_recurring false" do
+      # Recurring digital subscription
+      subscription.duration = 12
+      subscription.valid_from = DateTime.now - 6.months
+      subscription.purchase_date = DateTime.now - 6.months
+      subscription.paypal_profile_id = 'fake_payer_id'
+      subscription.save
+      user.payment_notifications.create(status: 'Completed', transaction_type: 'recurring_payment_profile_cancel', params: {})
+
+      Timecop.freeze(2012,1,10,0,0,0) do
+        expect(user.subscriptions.count).to eq(1)
+        expect(user.subscriber?).to be_truthy
+        expect(subscription.is_cancelled?).to be_falsey
+        expect(user.is_recurring?).to be_falsey
+        expect(user.was_recurring?).to be_truthy
+        expect(user.has_cancelled_recurring?).to be_truthy
+        expect(user.has_cancelled_paypal_profile?).to be_truthy
+      end
+    end
+
     it "should be able to show a subscription tax invoice" do
       expect(ability).to be_able_to(:show, subscription)
       expect(ability).to be_able_to(:manage, subscription)

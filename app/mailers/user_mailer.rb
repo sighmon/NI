@@ -65,7 +65,7 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Subscription") do |format|
+    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist automatic-renewal") do |format|
       format.text
       format.mjml
     end

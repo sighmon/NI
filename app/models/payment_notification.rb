@@ -72,9 +72,8 @@ class PaymentNotification < ActiveRecord::Base
 			elsif params["profile_status"] == "Cancelled" and transaction_type == "recurring_payment_profile_cancel"
 				# It's a recurring subscription cancellation.
 				if @user.subscription_valid?
-					expire_recurring_subscriptions(@user)
-					logger.info "Recurring subscriptions expired successfully."
-					# send a special email saying cancelled through paypal.
+					# previously we cancelled their subscriptions here, but let's not do that - they might want to let them run out and renew manually
+					# send an email saying cancelled through paypal.
 					begin
 						UserMailer.delay.subscription_cancelled_via_paypal(@user.subscriptions.last)
 						ApplicationHelper.start_delayed_jobs
@@ -96,16 +95,6 @@ class PaymentNotification < ActiveRecord::Base
 				logger.info "Unknown transaction."
 			end
 		end		
-	end
-
-	def expire_recurring_subscriptions(user)
-		all_subscriptions = user.recurring_subscriptions(params["recurring_payment_id"])
-		all_subscriptions.each do |s|
-			s.expire_subscription
-			s.save
-			logger.info "Refund for subscription id: #{s.id} is #{s.refund} cents."
-			logger.info "Expired Subscription id: #{s.id} - cancel date: #{s.cancellation_date}"
-		end
 	end
 
 	def renew_subscription(first_recurring_subscription)
