@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: May 2022
+Period: June 2022
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  May 2022
+  June 2022
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmJs4foACgkQtsnG2UL7
-GPnilRAAyY6ntlWhpA5v8pobIuI0e4nDQblOPNkrUhHy1OZpuKLkGuE7tNblzBEf
-m+2u5nCRCDxowpfBvg3N0Orltwc0dc+T953o9RuGE5lv7JjOPek2+vHoxh9hdwBw
-TiW/mNKVIqTt5CZeHoivGDPKc+vRdx48bEbnOURe8X0Ry7GXBv0htykMgMeTNiXr
-TaXyqwR1IqYPIlO/R7dDOdWKpoiKyQrxUqNBBpTkY3qjS89XcEplR1VAuKSjjHhp
-b2ks8kbQOBPkcKVKZm1O70ChTKUNu9gMtVER+9oyc6Bchd/hx4PiWV5qYEeIPlOk
-Xu2w2Z0VWi0MSAKbCwXAQD9G0xT33+ghlVphD1OpkGfg8hru5iOqrDoSiuuFCxFL
-LBI32Eu82LBEfpb18uzD2xCG3Esw8ndAZS3/0xUvxVGPD5QrZNZph7hUO3b/i8Yy
-Re5h5iTI2weXxwVKk96IUU4qnPfMvru8U9GkFMVqiG8Os6LADZCPGvCMKxot8s5g
-ZyfVpGz/Qhhnj0eEIKY9c7+/OZlH9VDBnFmhWqGO4Ay53ikCbeNIEh0eqbAsLPym
-/v+B1koztgeRza1bTumWzCyQuYgzag646HoPck+OUEibmR+Umh/HCtobUVaxzzQp
-rrvuKkHwGfjZzHPJLQWCRmXMHSqu+YNzOfysdNwRhqiKvHGhDMk=
-=ebtj
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmKapEcACgkQtsnG2UL7
+GPl2EhAAgU+qPij4CNv7l77LCfgIveEL1282MzJ11E45llVPy07P6JqI30tNGp9i
+fcSgFq83snmo7WfHG0bgY++BYHSjP6r8Q4Bw53QY12hrREXBadcL/7b8FASNhGqQ
+MOU6Ji0iE/r4CGrBe2aqVSerQrw1k4JU1hcoj0Xus4tnr2cL6/W4V1y0bStghVgk
+WYU9ZjdLaC7KwJqHVKutuTNR2fCPciy/H70QUtGI7ZeEsfKYUHAOVnrQ34t2JTW9
+cb5+FEeR/gsFv0fZcs4/hVuakPDC82Oskk9gjs66SIvHYsfZWMfQ5VU8ukEH3CNt
+oFXZ+GzhSRAlVa0rP4Ou8W+O/Kbm4PqhwkUCFH8rKd5VVq2qz9FxCKox/HanbycL
+WOihDCjnAeMJ1WBVqNlJaLDFFbTxHz+29QaxVe5cI07nj7CoaNh/WHMmfMSlm4Ii
+3jo9LaopFCS9E0NaTnyi3reVJQ9wKOwSW69rYsRs2IOGtJvyPgsfxKQ6oE/IjHgN
+gjZ+2RDxUH4WYScm+L3wVhzJg35VqDDHKastTgCI3a1a+zNlyy6subRZchAfEESh
+T3g0wo52ihRc6fJ9DUsL2CGWnl7Ohh1nQ8Wvle0XHc1AjBO6jKtW64CXKsjuyyhZ
+jJX0P6Eprasdcy0r4fg9LHbHWIXaBOC7va00pJNXt/QwQWywY2Q=
+=h3IP
 -----END PGP SIGNATURE-----
