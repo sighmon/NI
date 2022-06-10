@@ -106,7 +106,7 @@ class HomeController < ApplicationController
 
   	# Set meta tags
     @page_title_home = "New Internationalist Magazine Digital Edition"
-    @page_description = "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
+    @page_description = "The New Internationalist is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
 
     set_meta_tags :description => @page_description,
                   :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
@@ -394,7 +394,7 @@ class HomeController < ApplicationController
           xml.language "en-au"
           xml.link root_url
           xml['atom'].link(href: apple_news_url(:format => 'xml'), rel: 'self', type: 'application/rss+xml')
-          xml.description "The New Internationalist is an independent monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
+          xml.description "The New Internationalist is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
           @published_issues.each do |i|
             xml.item do
               xml.title ActionView::Base.full_sanitizer.sanitize(i.title)
