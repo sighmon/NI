@@ -13,6 +13,7 @@
           <%= f.input :username, :required => true, :label => false, :placeholder => 'Username' %>
           <%= f.input :password, :required => true, :label => false, :placeholder => 'Password' %>
           <%= f.input :password_confirmation, :required => true, :label => false, :placeholder => 'Confirm your password' %>
+          <%= recaptcha_tags %>
         </div>
 
         <div class="actions">
