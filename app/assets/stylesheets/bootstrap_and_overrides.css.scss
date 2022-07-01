@@ -1017,6 +1017,10 @@ textarea#article_body, textarea#issue_editors_letter, textarea#issue_email_text 
 	height: 30em;
 }
 
+#edit_user .alert, #new_user .alert {
+	margin-top: -2rem;
+}
+
 #new_user * .control-label {
 	margin-bottom: 0.5em;
 }

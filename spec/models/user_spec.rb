@@ -44,6 +44,21 @@ describe User, :type => :model do
       expect(user.username).not_to eq("")
     end
 
+    it "should be able to update its username" do
+      user.username = "Some-new-username123"
+      user.save
+      user.reload
+      expect(user.username).to eq("Some-new-username123")
+    end
+
+    it "should not be able to update its username to an invalid name" do
+      original_username = user.username
+      user.username = "$Invalid"
+      user.save
+      user.reload
+      expect(user.username).to eq(original_username)
+    end
+
     it "should not have a uk_id" do
       expect(user.uk_id).to be_nil
     end

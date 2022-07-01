@@ -17,9 +17,8 @@ class User < ActiveRecord::Base
     :uniqueness => {
       :case_sensitive => false
     }
-
-  # How to validate the format of username (not used)
-  # validates_format_of :username, :with => /^[-_a-z0-9]+$/, :message => "Your username can only include lower case letters and numbers."
+  validates :username, length: { maximum: 100 }
+  validates_format_of :username, :with => /\A[-_A-z0-9]+\z/, :message => "can only include letters and numbers."
 
   # join-model for purchases
   has_many :purchases
