@@ -137,8 +137,10 @@ gem 'rpush'
 # https://github.com/rpush/rpush/issues/306
 gem 'net-http-persistent'#, '~> 2.9.4'
 
-# After Ruby 3
-gem 'net-smtp'
+# After Ruby 3 these are needed before mail 2.8.0 is released
+gem 'net-smtp', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
