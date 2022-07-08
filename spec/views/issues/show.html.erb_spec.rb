@@ -18,6 +18,8 @@ describe "issues/show", :type => :view do
     issue.articles << keynote_article
     issue.articles << article
     issue.save
+    Settings.subscription_price = 600
+    Settings.issue_price = 750
   end
 
     it "should be able to read all articles" do
