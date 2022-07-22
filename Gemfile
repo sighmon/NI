@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 gem 'rails', '6.1.6.1'
 
@@ -61,7 +61,7 @@ gem 'paypal-recurring'
 # gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 # Now using a fork for Rails 4
-gem 'rails-settings-cached', '0.4.1'
+gem 'rails-settings-cached'
 
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
@@ -122,7 +122,7 @@ gem 'rails_12factor', :group => :production
 gem 'httparty'
 
 # To talk to the Google Play API
-gem 'google-api-client', '0.28.7'
+gem 'google-api-client', '0.53.0'
 
 # mjml responsive email framework https://mjml.io
 # https://github.com/angelodlfrtr/mjml-ruby
@@ -136,6 +136,11 @@ gem 'rpush'
 # Temporary fix for rpush:
 # https://github.com/rpush/rpush/issues/306
 gem 'net-http-persistent'#, '~> 2.9.4'
+
+# After Ruby 3 these are needed before mail 2.8.0 is released
+gem 'net-smtp', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
 
 # zipline for streaming S3 images to the zip
 # gem 'zipline'
@@ -264,8 +269,7 @@ gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some 
 gem 'pagy'
 
 # Elasticsearch for archive and article search
-# Note: pinned 24/5/2019 because of SSL error on heroku
-# ActionView::Template::Error (SSL_connect returned=1 errno=0 state=SSLv3/TLS write client hello: wrong version number):
+gem 'elasticsearch', '< 7.14'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
@@ -276,7 +280,7 @@ gem 'acts_as_list'
 # CSV exporting gem
 # https://github.com/crafterm/comma
 # gem 'comma', '~> 3.0'
-gem 'comma',  :git => "https://github.com/crafterm/comma.git"
+gem 'comma'#,  :git => "https://github.com/crafterm/comma.git"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -4,6 +4,10 @@ describe Subscription, :type => :model do
   
   context "paper only" do
 
+    before(:each) do
+      Settings.subscription_price = 600
+    end
+
     it "calculates the right subscription price" do
       options = {
         paper: true,

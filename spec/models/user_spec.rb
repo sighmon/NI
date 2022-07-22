@@ -573,7 +573,7 @@ describe User, :type => :model do
     end
 
     it "should not be able to manage settings" do
-      settings = Settings.get_all
+      settings = Settings.first
       expect(ability).not_to be_able_to(:manage, settings)
     end
 

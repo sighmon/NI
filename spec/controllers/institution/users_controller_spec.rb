@@ -59,7 +59,7 @@ describe Institution::UsersController, :type => :controller do
 
     describe "GET new" do
       it "assigns a new user as @user" do
-        get :new, {}
+        get :new
         expect(assigns(:user)).to be_a_new(User)
       end
     end
