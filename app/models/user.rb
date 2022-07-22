@@ -173,14 +173,14 @@ class User < ActiveRecord::Base
     id 'customer_id'
     username 'customer_username'
     email 'customer_email'
-    subscriber? 'subscription_status' do |subscriber| (subscriber ? 'wc-active' : 'wc-cancelled') end
+    subscriber? 'subscription_status' do |subscriber| (subscriber ? 'wc-pending-cancel' : 'wc-cancelled') end
     last_subscription_including_cancelled valid_from: 'start_date'
     id? 'trial_end_date' do '' end
-    expiry_date 'next_payment_date'
+    expiry_date 'next_payment_date' do |expiry_date| (expiry_date ? expiry_date - 1.week : '') end
     last_subscription_including_cancelled valid_from: 'last_payment_date'
     expiry_date 'end_date'
-    id? 'billing_period' do 'month' end
-    last_subscription_including_cancelled duration: 'billing_interval'
+    last_subscription_including_cancelled 'billing_period' do |s| (s ? s.duration % 12 == 0 ? 'year' : 'month' : '') end
+    last_subscription_including_cancelled 'billing_interval' do |s| (s ? s.duration % 12 == 0 ? s.duration / 12 : s.duration : '') end
     id? 'order_shipping' do '' end
     id? 'order_shipping_tax' do '' end
     id? 'order_tax' do '' end
@@ -188,11 +188,11 @@ class User < ActiveRecord::Base
     id? 'cart_discount_tax' do '' end
     last_subscription_including_cancelled price_paid: 'order_total' do |p| p ? p / 100 : 0 end
     id? 'order_currency' do 'AUD' end
-    id? 'payment_method' do 'PayPal' end
-    id? 'payment_method_title' do 'Credit Card' end
+    id? 'payment_method' do 'manual renewal' end
+    id? 'payment_method_title' do 'Paypal: Credit Card' end
     id? 'payment_method_post_meta' do '' end
     id? 'payment_method_user_meta' do '' end
-    id? 'shipping_method' do '' end
+    id? 'shipping_method' do 'Free shipping' end
     first_name 'billing_first_name'
     last_name 'billing_last_name'
     email 'billing_email'
@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
     id? 'billing_address_2' do '' end
     postal_code 'billing_postcode'
     city 'billing_city'
-    state 'billing_state'
+    state_name 'billing_state'
     country 'billing_country'
     company_name 'billing_company'
     first_name 'shipping_first_name'
@@ -210,11 +210,11 @@ class User < ActiveRecord::Base
     id? 'shipping_address_2' do '' end
     postal_code 'shipping_postcode'
     city 'shipping_city'
-    state 'shipping_state'
+    state_name 'shipping_state'
     country 'shipping_country'
     id? 'shipping_company' do '' end
     id? 'customer_note' do '' end
-    id? 'order_items' do '' end
+    uk_order_items 'order_items'
     id? 'order_notes' do '' end
     id? 'coupon_items' do '' end
     id? 'fee_items' do '' end
@@ -275,6 +275,65 @@ class User < ActiveRecord::Base
     if uk_expiry > DateTime.now or subscription_valid?
       return true
     end
+  end
+
+  def uk_order_items
+    order_items = []
+    subscription_type = ''
+    subscription_plan = ''
+    price = 0
+    product_id = ''
+    last_sub = self.last_subscription_including_cancelled
+    if last_sub
+      if last_sub.paper_only
+        subscription_type = 'Print'
+      elsif last_sub.paper_copy
+        subscription_type = 'Print and Digital'
+      else
+        subscription_type = 'Digital'
+      end
+      if last_sub.duration == 3
+        subscription_plan = 'Credit card(quarterly)'
+      elsif last_sub.duration == 12
+        subscription_plan = 'Credit card(annual)'
+      end
+      if last_sub.price_paid
+        price = last_sub.price_paid / 100
+      end
+
+      if last_sub.paper_only
+        if last_sub.duration == 3
+          product_id = '5622'
+        elsif last_sub.duration == 12
+          product_id = '5621'
+        end
+      elsif last_sub.paper_copy
+        if last_sub.duration == 3
+          product_id = '5679'
+        elsif last_sub.duration == 12
+          product_id = '5678'
+        end
+      else
+        if last_sub.duration == 3
+          product_id = '5668'
+        elsif last_sub.duration == 12
+          product_id = '5670'
+        end
+      end
+    end
+
+    if product_id != ''
+      order_items << "product_id:#{product_id}"
+      order_items << "name:#{subscription_type}"
+      order_items << "sku:TODO"
+      order_items << "total:#{price}"
+      order_items << "sub_total:#{price}"
+      order_items << "country:#{self.country}"
+      order_items << "subscription_plan:#{subscription_plan}"
+      order_items << "_variation_id:#{product_id}"
+    end
+
+    return order_items.join('|')
   end
 
   def has_cancelled_paypal_profile?
