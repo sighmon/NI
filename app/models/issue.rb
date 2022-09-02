@@ -567,11 +567,11 @@ class Issue < ActiveRecord::Base
     Zip::Archive.open(zip_file_path, Zip::CREATE) do |zipfile|
 
       if Rails.env.production?
-        cover_to_add = open(self.cover.png.to_s)
-        editors_photo_to_add = open(self.editors_photo_url)
+        cover_to_add = URI.open(self.cover.png.to_s)
+        editors_photo_to_add = URI.open(self.editors_photo_url)
       else
-        cover_to_add = open(self.cover.png.path)
-        editors_photo_to_add = open(self.editors_photo.path)
+        cover_to_add = URI.open(self.cover.png.path)
+        editors_photo_to_add = URI.open(self.editors_photo.path)
       end
       zipfile.add_buffer(File.basename(self.cover.png.to_s), cover_to_add.read)
       zipfile.add_buffer(File.basename(self.editors_photo.to_s), editors_photo_to_add.read)
@@ -605,9 +605,9 @@ class Issue < ActiveRecord::Base
         # Add featured image
         if a.featured_image.to_s != ""
           if Rails.env.production?
-            featured_image_to_add = open(a.featured_image_url)
+            featured_image_to_add = URI.open(a.featured_image_url)
           else
-            featured_image_to_add = open(a.featured_image.path)
+            featured_image_to_add = URI.open(a.featured_image.path)
           end
           zipfile.add_buffer("#{a.id}/#{File.basename(a.featured_image.to_s)}", featured_image_to_add.read)
         end
@@ -617,9 +617,9 @@ class Issue < ActiveRecord::Base
           if Rails.env.production?
             # Do article images need to be pngs?
             # No, we want to transfer smallest files possible - make PNGs on the iOS side.
-            image_to_add = open(i.data_url)
+            image_to_add = URI.open(i.data_url)
           else
-            image_to_add = open(i.data.path)
+            image_to_add = URI.open(i.data.path)
           end
           zipfile.add_buffer("#{a.id}/#{File.basename(i.data.to_s)}", image_to_add.read)
         end
