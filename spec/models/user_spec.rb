@@ -195,6 +195,25 @@ describe User, :type => :model do
     it "should not be a subscriber" do
       expect(user.subscriber?).to be_falsey
     end
+
+    it "should be able to generate a valid username" do
+      data = {
+        "data": {
+          "id": "60000000000",
+          "fname": "Person Friend",
+          "lname": "van Lastname",
+          "email": "person@newint.com.au",
+          "expiry": "3131-12-31",
+          "sales-source": "BUND",
+          "sku": "9164",
+          "order-status": "",
+          "woo-status": "active",
+        }
+      }.to_json
+      devise = Devise::Strategies::RemoteAuthenticatable.new(nil)
+      devise.send(:build_user_from_uk_info, user, JSON.parse(data))
+      expect(user.username).to eq("PersonFriendvanLastname_60000000000")
+    end
   end
 
   context "subscriber" do
