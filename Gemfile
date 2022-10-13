@@ -242,7 +242,7 @@ gem 'country_select'
 gem 'country_state_select'
 
 # RMagick for image editing
-gem 'rmagick', :require => false
+# gem 'rmagick', :require => false
 gem 'mini_magick'
 
 # CarrierWave for image uploading
