@@ -80,7 +80,7 @@ module Devise
         # Returns a hash with the result
 
         cleaned_login = authentication_hash[:login].gsub(/[^0-9A-Za-z ]/, '')
-        cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z ]/, '')
+        cleaned_password = authentication_hash[:password].gsub(/[^0-9A-Za-z -]/, '')
 
         api_endpoint = ENV["NI_UK_SUBSCRIBER_API"] + CGI::escape(cleaned_login) + "/" + CGI::escape(cleaned_password) + "/" + ENV["NI_UK_SUBSCRIBER_API_SECRET"]
 
