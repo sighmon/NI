@@ -97,7 +97,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def check_captcha
-    success = verify_recaptcha(action: 'registration', minimum_score: 10.5, secret_key: ENV['RECAPTCHA_SECRET_KEY_V3'])
+    success = verify_recaptcha(action: 'registration', minimum_score: 0.5, secret_key: ENV['RECAPTCHA_SECRET_KEY_V3'])
     checkbox_success = verify_recaptcha unless success
     if success || checkbox_success
       # Perform action
