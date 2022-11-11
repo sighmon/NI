@@ -97,12 +97,24 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def check_captcha
-    unless verify_recaptcha
+    success = verify_recaptcha(action: 'registration', minimum_score: 10.5, secret_key: ENV['RECAPTCHA_SECRET_KEY_V3'])
+    checkbox_success = verify_recaptcha unless success
+    if success || checkbox_success
+      # Perform action
+    else
+      if !success
+        @show_checkbox_recaptcha = true
+      end
+      configure_permitted_parameters
       self.resource = resource_class.new sign_up_params
       resource.validate # Look for any other validation errors besides Recaptcha
       set_minimum_password_length
-      respond_with resource
-    end 
+
+      respond_with_navigational(resource) do
+        flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
+        render :new
+      end
+    end
   end
 
 end

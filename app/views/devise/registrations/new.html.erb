@@ -10,7 +10,11 @@
     <%= f.input :username, :required => true %>
     <%= f.input :password, :required => true %>
     <%= f.input :password_confirmation, :required => true %>
-    <%= recaptcha_tags %>
+    <% if @show_checkbox_recaptcha %>
+      <%= recaptcha_tags %>
+    <% else %>
+      <%= recaptcha_v3(action: 'registration', site_key: ENV['RECAPTCHA_SITE_KEY_V3']) %>
+    <% end %>
   </div>
 
   <div class="actions">
