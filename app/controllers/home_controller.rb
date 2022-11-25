@@ -353,7 +353,7 @@ class HomeController < ApplicationController
               xml['g'].id "digitalapp#{i.number}"
               xml['g'].condition "new"
               xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), :precision => 2)} AUD"
-              xml['g'].availability "in stock"
+              xml['g'].availability "in_stock"
               xml['g'].image_link { xml.cdata i.cover_url.to_s }
               xml['g'].google_product_category "Media &gt; Magazines &amp; Newspapers"
               xml['g'].product_type "Magazine &gt; Digital edition"
@@ -363,6 +363,7 @@ class HomeController < ApplicationController
               xml['g'].shipping do
                 xml['g'].service "Digital"
                 xml['g'].price "0.00 AUD"
+                xml['g'].country "AU"
               end
             end
           end
