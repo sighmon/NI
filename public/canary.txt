@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: November 2022
+Period: December 2022
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  November 2022
+  December 2022
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmNbgFQACgkQtsnG2UL7
-GPlkDQ//RCo6iA2dIUBDlK28cWy4+xFhjDqughlZH29kba/UcB/rmevoZk0MxF48
-l1ocX4R1tB29WrE26mOoqS7qxGgb19dzjj4XwiiuGyeG+HzSDuPfBIbPKQ1gpJCs
-rKqoqVmW2DrEsXT+lTRtlRbjaFQB46AfciD3AuOgxkxb4LEUVZgA8AE/PLtwfAVY
-YOeYKfilT5KllSfJbvvszFcvz5n+Tig81IBZvkLX+O/llwZdsltdcv2D5SjyFlOQ
-pNNrtf8HV70ke6ID8MINqvNjubhMzgMnkKkHJxh6uStf2oW8upSIaGr/plWSM/9c
-zqu4CzJC/g1Aj9OOd9hxl1v+0hci6pinFIV1Epdx/NJvlpTVwealnZs3fzw4E89O
-2tp3u864fVLxrFMf2f4K4hTBMb+2QttwuFt+lYOzhKUWZZaRjfU65X4hist3fpiF
-6A0JR+j9h8R1bxzLUguLxAskAYlso/6m8VZyrtx7Q65QNtAXBalnzGg96ZNDNMSp
-9e4h5jeHx0Ag2e63BGjwAGjxEWra4Zw/lKBSLSznCxaFNLSuGJWvanPtf/hGd3hq
-N7LZZDGwFh+g9mADojgPYqjI+mBKewJpWSWVO0dRAsrY2bS5rhejswl9h+dJDPTV
-QbAhfuJDGjnV8zjBn47S1R0fbo5Eo1vZRLG/h28uqBAVqpfB8sc=
-=Chz3
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmOK7okACgkQtsnG2UL7
+GPlpwg/+Kc+6mvp8BZlGRgNwMuqWv4LlgAOoe+EOesZnXcqP4X1gKRxO8zL1mkyd
+DRpP498ic/t3NesRuteApDDF2zg/TE9FEU2YBWTxokqJSoVlYk9sbD6y8xQr/A5G
+s32W+gfrqFjRO7EiYp/ku4tzccrCa7JHga3bWlX2DGzpobn6l4pPze0cJEh7GTUZ
+1Nq5FYuefCkZv5oFUvtK6Hyu6IXhL3J8NEI/7En2RqEu6NbQxoVJwSAJMUcWmRqD
+v5dSwTfK+OTEffPTdrwlXHo07qr/RhwwXowRXFsRYzyk1BmdMqw850+ZR9ZX7FUo
+Y5kUVBOuNuUQxqm0exGLvolZlzOlXnmPFkAk8YBx/8XKrne+GbUZOIx6tOk8pd5U
+0j7HHmc7dwlwAuQ9vxncyEXcDruuD6jEMYmDlNVHmJxz2NGlVyClLU1XW+Xj5zhz
+2zYzHaTD764HCsJZI1tcwowyvyREzmbP5lD4Q131IRn5tk2FIyAH9xHZ/Oc4S8wM
+QFJEvCfF3BHfB0UyT6ewHvqVXZ0AiSyb1lLeQbzYRswH5n9n0CmH4mo0d0gKjb0G
+Gd/D4e4pxYHTQAn/t6guvLWtGBQGYyeVxRCgj4ZKs9FawCrPv8m5pVwbqOmDCFwk
+LUNXJf9eBvC9x7BnkC3fjwSLZieCAByY6ssUVJLV1/IreaXmyC8=
+=7ClW
 -----END PGP SIGNATURE-----
