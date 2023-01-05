@@ -266,49 +266,49 @@ class Admin::UsersController < Admin::BaseController
 	def update_csv
 		if params[:type] == 'users_all'
 			begin
-				Settings.destroy('users_csv')
+				Settings.find_by_var('users_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_admin_users_csv
 		elsif params[:type] == 'users_current'
 			begin
-				Settings.destroy('current_digital_subscribers_csv')
+				Settings.find_by_var('current_digital_subscribers_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_current_digital_subscribers_csv
 		elsif params[:type] == 'users_lapsed'
 			begin
-				Settings.destroy('lapsed_digital_subscribers_csv')
+				Settings.find_by_var('lapsed_digital_subscribers_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_lapsed_digital_subscribers_csv
 		elsif params[:type] == 'institutions_lapsed'
 			begin
-				Settings.destroy('lapsed_institution_subscribers_csv')
+				Settings.find_by_var('lapsed_institution_subscribers_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_lapsed_institution_subscribers_csv
 		elsif params[:type] == 'users_paper'
 			begin
-				Settings.destroy('current_paper_subscribers_csv')
+				Settings.find_by_var('current_paper_subscribers_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_current_paper_subscribers_csv
 		elsif params[:type] == 'uk_export'
 			begin
-				Settings.destroy('uk_export_csv')
+				Settings.find_by_var('uk_export_csv').destroy
 			rescue
 				# Pass
 			end
 			User.delay.update_uk_export_csv
 		elsif params[:type] == 'subscriber_stats'
 			begin
-				Settings.destroy('subscriber_stats')
+				Settings.find_by_var('subscriber_stats').destroy
 			rescue
 				# Pass
 			end
