@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: January 2023
+Period: February 2023
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  January 2023
+  February 2023
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmOzq6oACgkQtsnG2UL7
-GPkTjw//TgRTgO6OKwtNueBd+OQ6ZbF7rYfpHKlVv2lXP8k+QIc1izf9D7ucIl+I
-a6NMSJc2pf+VYqdYJH/gMPkqNnTAq11f/k5PnDvON4lmKatxZsalbywWlUEzNoZY
-l6GA41p/ZHAwXFGvB8qA9c+01KHEfnI8s5HIwYCHsdRJNfEatfXa3FJrEdFKveEv
-ZdhfgmgE+BQ0Ro6ao37sXHerptXCsRwfsFKJQM5aDZ8qF5x72Eku0jSerywxuIyg
-/O5V0n0b3EO8wq2n0mFB7ozmUTtJYy9P2vOAmq4Kg/SSyDbTYuZU/BlqNHyoHZZd
-BlX3KvbjLlaIBHM8QuSwYRzEvFhYheJ8YYWEoIyXrjwRwAZCFpbCxZY0CCQ7mCmz
-X4UUE0OP6OyYCopjgDNNL8algeUcO3U/dY5Hbd3XTaj/ocsOtHwKWbyd4CqleUYS
-+itVnE+0dlO/I3HEh9/tmU+N2FTvF+jYNhJKvUIAOp5JR0VetYxi1YYaqnbHPxFl
-BF0WRaEaYPDXfJ2JC9LrLuWdDohJsxR+Up+0KJCHjTa+o8sugaXMwkrTuKsHpTHV
-SoEMWjxcTDMVH4lSUQmBKv+CkTXGxhmvCr9MMr0yuIOK8asiGoo7CV/kvRhiheS4
-mRSZ0PiS0ju3GqbK82bfKXSphUh3r69aJsTr7DQTJXzvizuTOwU=
-=Z/1v
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmPZk20ACgkQtsnG2UL7
+GPliWhAAmjgmo0JGdqzVF6SSW4KJbWP2iyR23TPG2qC5btQPzpob4JQB8HDraFSZ
+wDxhOrKtlRV4uteagYxDZEGeenMjVj5rRRjVibbhjOyFd9ABt59pn8z26Zz+cIZl
+rE2e7Jj50VsK+dul2T/enILHG1qyhTNpH6BjPe7Yxk4RmCmTdklzC1jW/q0mAWEa
+FoOpCrdzS7bEToTYhdafYGD1XYzE89UgNRtcPjTDd4oK38+wgG5Askce/Ts16DVs
+xyLgB8+r22Gmwm1GuIuTS5+QgRW43a5vLGxo+zeE5JW+vDEb77/m7P8q+FphQ8zv
+b1bhV6C34OhK+oz6lqNU+rUfnz+YziIJXgxe0xC+LLCb8uvTwzKdZPFw/uiVy0fw
+mQnpgHEq5qk9lao2nHhXDjp4GQXV7eSPXYvX0xsoVHtZqS6vixRkp/9E2/VoHfB0
+UBASLG55fU91r1r8l2q7O1VvCToaWW0Y9ohRS9e08YzvHKLNsw9G70JpGBFrcsNl
+maKLBDbOYJzEsvWkWGqvKV4IFwy/tLPL7NAHQzTthBNJhBjAr8SYWSW+hb7tp4/L
+yGU74XX7WNq97B27OElfZs+203yfcY8VKBw6+gbnOAdAXjRuwnY+sZdqqkMImgUN
+EeYhe4Lmsr/Ak6h1Wn3MDzN8hcVsvFs6eZ7hREedIPlleMql/vc=
+=PFJX
 -----END PGP SIGNATURE-----
