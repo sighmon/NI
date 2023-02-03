@@ -90,7 +90,6 @@ module NI
 
     # Rails 7 - can be set to this after upgrade
     # config.load_defaults 7.0
-    # config.load_defaults 6.1
     config.active_support.cache_format_version = 6.1
 
     # Rails 7
