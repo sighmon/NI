@@ -88,13 +88,6 @@ module NI
     # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
     config.cache_store = :mem_cache_store
 
-    # Rails 7 - can be set to this after upgrade
-    # config.load_defaults 7.0
-    config.active_support.cache_format_version = 6.1
-
-    # Rails 7
-    config.active_record.legacy_connection_handling = false
-
     config.generators do |g|
       g.fixture_replacement :factory_girl
     end
