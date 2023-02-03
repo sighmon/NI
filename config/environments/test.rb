@@ -54,4 +54,10 @@ Rails.application.configure do
   # Raise an exception on unpermitted params
   config.action_controller.action_on_unpermitted_parameters = :raise
 
+  # Raise exceptions for disallowed deprecations.
+  # config.active_support.disallowed_deprecation = :raise
+
+  # Tell Active Support which deprecation messages to disallow.
+  # config.active_support.disallowed_deprecation_warnings = []
+
 end

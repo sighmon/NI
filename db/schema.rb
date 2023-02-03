@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_06_000950) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_02_03_034804) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,19 +18,19 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.integer "article_id"
     t.integer "category_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "articles", id: :serial, force: :cascade do |t|
     t.string "title", limit: 255
     t.text "teaser"
     t.string "author", limit: 255
-    t.datetime "publication"
+    t.datetime "publication", precision: nil
     t.text "body"
     t.integer "issue_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "trialarticle"
     t.boolean "keynote"
     t.text "source"
@@ -39,15 +38,15 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.text "featured_image_caption"
     t.boolean "hide_author_name"
     t.integer "story_id"
-    t.datetime "notification_sent"
+    t.datetime "notification_sent", precision: nil
     t.boolean "unpublished"
     t.index ["issue_id"], name: "index_articles_on_issue_id"
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "display_name", limit: 255
     t.integer "colour"
   end
@@ -57,13 +56,13 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
@@ -71,17 +70,17 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.integer "user_id"
     t.integer "article_id"
     t.integer "issue_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "guest_passes", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "article_id"
     t.string "key", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "last_used"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "last_used", precision: nil
     t.integer "use_count", default: 0
     t.index ["article_id"], name: "index_guest_passes_on_article_id"
     t.index ["user_id"], name: "index_guest_passes_on_user_id"
@@ -90,8 +89,8 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
   create_table "images", id: :serial, force: :cascade do |t|
     t.string "data", limit: 255
     t.integer "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "media_id"
     t.integer "height"
     t.integer "width"
@@ -105,9 +104,9 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
   create_table "issues", id: :serial, force: :cascade do |t|
     t.string "title", limit: 255
     t.integer "number"
-    t.datetime "release"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "release", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "trialissue"
     t.string "cover", limit: 255
     t.text "editors_letter"
@@ -116,7 +115,7 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.boolean "published"
     t.text "email_text"
     t.string "zip", limit: 255
-    t.datetime "notification_sent"
+    t.datetime "notification_sent", precision: nil
     t.boolean "digital_exclusive"
   end
 
@@ -124,8 +123,8 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.string "title", limit: 255
     t.string "permalink", limit: 255
     t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "teaser"
     t.index ["permalink"], name: "index_pages_on_permalink"
   end
@@ -135,17 +134,17 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.string "transaction_id", limit: 255
     t.string "transaction_type", limit: 255
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "purchases", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "issue_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "price_paid"
-    t.datetime "purchase_date"
+    t.datetime "purchase_date", precision: nil
     t.string "paypal_payer_id", limit: 255
     t.string "paypal_first_name", limit: 255
     t.string "paypal_last_name", limit: 255
@@ -154,8 +153,8 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
   create_table "push_registrations", id: :serial, force: :cascade do |t|
     t.text "token"
     t.string "device"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "rpush_apps", id: :serial, force: :cascade do |t|
@@ -164,14 +163,14 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.text "certificate"
     t.string "password"
     t.integer "connections", default: 1, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "type", null: false
     t.string "auth_key"
     t.string "client_id"
     t.string "client_secret"
     t.string "access_token"
-    t.datetime "access_token_expiration"
+    t.datetime "access_token_expiration", precision: nil
     t.text "apn_key"
     t.string "apn_key_id"
     t.string "team_id"
@@ -181,9 +180,9 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
 
   create_table "rpush_feedback", id: :serial, force: :cascade do |t|
     t.string "device_token"
-    t.datetime "failed_at", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "failed_at", precision: nil, null: false
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "app_id"
     t.index ["device_token"], name: "index_rpush_feedback_on_device_token"
   end
@@ -196,14 +195,14 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.text "data"
     t.integer "expiry", default: 86400
     t.boolean "delivered", default: false, null: false
-    t.datetime "delivered_at"
+    t.datetime "delivered_at", precision: nil
     t.boolean "failed", default: false, null: false
-    t.datetime "failed_at"
+    t.datetime "failed_at", precision: nil
     t.integer "error_code"
     t.text "error_description"
-    t.datetime "deliver_after"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "deliver_after", precision: nil
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "alert_is_json", default: false, null: false
     t.string "type", null: false
     t.string "collapse_key"
@@ -212,7 +211,7 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.integer "app_id", null: false
     t.integer "retries", default: 0
     t.string "uri"
-    t.datetime "fail_after"
+    t.datetime "fail_after", precision: nil
     t.boolean "processing", default: false, null: false
     t.integer "priority"
     t.text "url_args"
@@ -230,8 +229,8 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
   create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", limit: 255, null: false
     t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["session_id"], name: "index_sessions_on_session_id"
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
@@ -241,15 +240,15 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.text "value"
     t.integer "thing_id"
     t.string "thing_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
   end
 
   create_table "subscriptions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "paypal_payer_id", limit: 255
     t.string "paypal_profile_id", limit: 255
     t.string "paypal_first_name", limit: 255
@@ -257,11 +256,11 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.integer "refund"
     t.string "paypal_email", limit: 255
     t.integer "price_paid"
-    t.datetime "purchase_date"
-    t.datetime "cancellation_date"
-    t.datetime "valid_from"
+    t.datetime "purchase_date", precision: nil
+    t.datetime "cancellation_date", precision: nil
+    t.datetime "valid_from", precision: nil
     t.integer "duration"
-    t.datetime "refunded_on"
+    t.datetime "refunded_on", precision: nil
     t.string "paypal_street1", limit: 255
     t.string "paypal_street2", limit: 255
     t.string "paypal_city_name", limit: 255
@@ -278,22 +277,22 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.string "email", limit: 255, default: "", null: false
     t.string "encrypted_password", limit: 255, default: "", null: false
     t.string "reset_password_token", limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip", limit: 255
     t.string "last_sign_in_ip", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "username", limit: 255
     t.boolean "admin"
     t.boolean "institution"
     t.integer "parent_id"
     t.string "ip_whitelist", limit: 255
     t.string "uk_id", limit: 255
-    t.datetime "uk_expiry"
+    t.datetime "uk_expiry", precision: nil
     t.boolean "manager"
     t.string "title"
     t.string "first_name"
@@ -306,17 +305,17 @@ ActiveRecord::Schema.define(version: 2020_03_06_000950) do
     t.string "country"
     t.string "phone"
     t.string "postal_mailable"
-    t.datetime "postal_mailable_updated"
-    t.datetime "postal_address_updated"
+    t.datetime "postal_mailable_updated", precision: nil
+    t.datetime "postal_address_updated", precision: nil
     t.string "email_opt_in"
-    t.datetime "email_opt_in_updated"
-    t.datetime "email_updated"
+    t.datetime "email_opt_in_updated", precision: nil
+    t.datetime "email_updated", precision: nil
     t.string "paper_renewals"
     t.string "digital_renewals"
     t.decimal "subscriptions_order_total"
-    t.datetime "most_recent_subscriptions_order"
+    t.datetime "most_recent_subscriptions_order", precision: nil
     t.decimal "products_order_total"
-    t.datetime "most_recent_products_order"
+    t.datetime "most_recent_products_order", precision: nil
     t.string "annuals_buyer"
     t.text "comments"
     t.index ["email"], name: "index_users_on_email", unique: true
