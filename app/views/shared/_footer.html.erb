@@ -10,7 +10,6 @@
         <p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, our contact details are in the footer. Enjoy reading the magazine.</p>
       <% else %>
         <p>The <b>New Internationalist</b> is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all.</p>
-        <% if not request.format.symbol == :amp %>
         <div class="home-donate">
           <p>If you like the magazine and support what we do, perhaps you'd like to donate some money to help us reach a wider audience?</p>
           <p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -19,7 +18,6 @@
             <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate using PayPal</button>
           </form></p>
         </div>
-        <% end %>
       <% end %>
     </div>
     <div class="col-sm-4">
