@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: February 2023
+Period: March 2023
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  February 2023
+  March 2023
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmPZk20ACgkQtsnG2UL7
-GPliWhAAmjgmo0JGdqzVF6SSW4KJbWP2iyR23TPG2qC5btQPzpob4JQB8HDraFSZ
-wDxhOrKtlRV4uteagYxDZEGeenMjVj5rRRjVibbhjOyFd9ABt59pn8z26Zz+cIZl
-rE2e7Jj50VsK+dul2T/enILHG1qyhTNpH6BjPe7Yxk4RmCmTdklzC1jW/q0mAWEa
-FoOpCrdzS7bEToTYhdafYGD1XYzE89UgNRtcPjTDd4oK38+wgG5Askce/Ts16DVs
-xyLgB8+r22Gmwm1GuIuTS5+QgRW43a5vLGxo+zeE5JW+vDEb77/m7P8q+FphQ8zv
-b1bhV6C34OhK+oz6lqNU+rUfnz+YziIJXgxe0xC+LLCb8uvTwzKdZPFw/uiVy0fw
-mQnpgHEq5qk9lao2nHhXDjp4GQXV7eSPXYvX0xsoVHtZqS6vixRkp/9E2/VoHfB0
-UBASLG55fU91r1r8l2q7O1VvCToaWW0Y9ohRS9e08YzvHKLNsw9G70JpGBFrcsNl
-maKLBDbOYJzEsvWkWGqvKV4IFwy/tLPL7NAHQzTthBNJhBjAr8SYWSW+hb7tp4/L
-yGU74XX7WNq97B27OElfZs+203yfcY8VKBw6+gbnOAdAXjRuwnY+sZdqqkMImgUN
-EeYhe4Lmsr/Ak6h1Wn3MDzN8hcVsvFs6eZ7hREedIPlleMql/vc=
-=PFJX
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmQBI+QACgkQtsnG2UL7
+GPnVhQ//RzJZJT/DXKO7XqY9+gDzEHJtYOkIX6zc7WFk8aUCPp9qKvJi4t8ZKv+y
+XELNccRBHGG71HP4CHDm/EpTD4OVZXeZzBN5Tn7Ku3CrdJn5FqI1EQSlECZ4nCK6
++zBrq1ecyunbxcfQ37T7XZF0Wl4zNlaclMpjl7pAN29sy3XDVoArlEWBTQJ9xO2z
+RhdX0E2zC4yWryAZK1i9R8vuQxjgkPUE4t5J840LVlN8O3Mpea2zCvtZ1hOTkfkw
+YWV8QrVpZsgOPY3Mfl9UfHAsw0hzeuf1n/+vagHbohqky/Pb1Gk/M6SuFznyCc0o
+BY5pvViqcrtBz+eHQiuHwydRCcWR6WytzKSPY3JhgAGolXm7bzSQDqba4jEaXaQ8
+4s1SLnDhV9Rlu97/PySAri85kswbr3jIxG6yu9wNbPtJJVS+Uu4OWYAq4Yefmzdj
+DbBg513t9NBy+OGwuoPjV2weEWx6FvEmphPETKvR2rUrj4mHOZFGtAeOl47jrk7X
+5zA0PdZXLTuotBjj0c++GpsNPv3z39fHHbToAL/HYMeh9doOXUqDmZF/p2shJyFk
+5fgnaznzMZTQeBav2L3f4unQIvDCZ8c8d/neaJV4AQNYpXB35AwHDgeyqVRHZ5S1
+T1dyif2uZGc7Yv3fIn8FxXKHTu3jk99cJOZygH3MTyE996BFl3U=
+=xuzF
 -----END PGP SIGNATURE-----
