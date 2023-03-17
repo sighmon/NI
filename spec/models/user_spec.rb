@@ -160,6 +160,8 @@ describe User, :type => :model do
     context "with a child" do
       before(:each) do
         child = FactoryBot.create(:user)
+        child.ip_whitelist = '192.0.1.1'
+        child.save
         user.children << child
       end
       it "can manage child" do
@@ -168,6 +170,22 @@ describe User, :type => :model do
       it "cannot manage a non-child user" do
         sibling = FactoryBot.create(:user)
         expect(ability).not_to be_able_to(:manage, sibling)
+      end
+      it "has its child ip address lookup cached" do
+        child = user.children.first
+        child_lookup = User.find_by_whitelist('192.0.1.1').first
+        expect(child_lookup).to eq(child)
+        child.ip_whitelist = nil
+        child.save
+
+        # Cached lookup
+        child_lookup = User.find_by_whitelist('192.0.1.1').first
+        expect(child_lookup).to eq(child)
+
+        # Flush cache
+        Rails.cache.clear
+        child_lookup = User.find_by_whitelist('192.0.1.1').first
+        expect(child_lookup).to eq(nil)
       end
     end
 
