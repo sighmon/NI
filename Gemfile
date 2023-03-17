@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.1.3'
+ruby '3.2.1'
 
 gem 'rails', '7.0.4.3'
 
@@ -251,7 +251,7 @@ gem 'carrierwave'
 
 # Using Fog for Amazon S3 image storage so it works with Heroku
 # https://github.com/jnicklas/carrierwave (see S3 section)
-gem 'fog'#, '~> 1.3.1'
+gem 'fog-aws'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
