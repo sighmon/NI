@@ -775,17 +775,23 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_whitelist(ip)
-    # sql one liner to handle both CIDR and IP ranges
-    query = ActiveRecord::Base.send(:sanitize_sql_array, ["with ip as (select ?::inet as value) select * from (select *, regexp_split_to_table(ip_whitelist,E',') as pattern from users) as expanded, regexp_split_to_array(expanded.pattern,E'-') as range where (expanded.pattern <> '' and expanded.pattern !~ '-' and (select value from ip) <<= expanded.pattern::inet) or (expanded.pattern ~ '-' and ((select value from ip) between range[1]::inet and range[2]::inet)) limit 1", ip])
-    begin
-      self.find_by_sql(query)
-    rescue
-      alert_text = ApplicationHelper.bad_ip_alert_text
-      logger.error alert_text
-      if not Settings.admin_alert or Settings.admin_alert == 0
-        Settings.admin_alert = 1
+    # Generate a cache key based on the IP address
+    cache_key = "user_whitelist_#{ip}"
+
+    # Fetch the cached result or execute the block if the cache key is not present
+    Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      # sql one liner to handle both CIDR and IP ranges
+      query = ActiveRecord::Base.send(:sanitize_sql_array, ["with ip as (select ?::inet as value) select * from (select *, regexp_split_to_table(ip_whitelist,E',') as pattern from users) as expanded, regexp_split_to_array(expanded.pattern,E'-') as range where (expanded.pattern <> '' and expanded.pattern !~ '-' and (select value from ip) <<= expanded.pattern::inet) or (expanded.pattern ~ '-' and ((select value from ip) between range[1]::inet and range[2]::inet)) limit 1", ip])
+      begin
+        self.find_by_sql(query)
+      rescue
+        alert_text = ApplicationHelper.bad_ip_alert_text
+        logger.error alert_text
+        if not Settings.admin_alert or Settings.admin_alert == 0
+          Settings.admin_alert = 1
+        end
+        return nil
       end
-      return nil
     end
   end
 
