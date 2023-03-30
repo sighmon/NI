@@ -33,6 +33,13 @@ GIT
       railties (>= 3.1)
       rmagick (>= 2.13.1)
 
+GIT
+  remote: https://github.com/thecodecrate/city-state
+  revision: d299a2f65041c7f580596d98e9374fcfaeb2923c
+  specs:
+    city-state (0.1.0)
+      rubyzip (>= 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -158,8 +165,6 @@ GEM
       marcel (~> 1.0.0)
       mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
-    city-state (0.1.0)
-      rubyzip (>= 1.1)
     coderay (1.1.3)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -673,6 +678,7 @@ DEPENDENCIES
   byebug
   cancancan
   carrierwave
+  city-state!
   coffee-rails
   comma
   country_select
