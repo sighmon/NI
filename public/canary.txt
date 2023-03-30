@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: March 2023
+Period: April 2023
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  March 2023
+  April 2023
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmQBI+QACgkQtsnG2UL7
-GPnVhQ//RzJZJT/DXKO7XqY9+gDzEHJtYOkIX6zc7WFk8aUCPp9qKvJi4t8ZKv+y
-XELNccRBHGG71HP4CHDm/EpTD4OVZXeZzBN5Tn7Ku3CrdJn5FqI1EQSlECZ4nCK6
-+zBrq1ecyunbxcfQ37T7XZF0Wl4zNlaclMpjl7pAN29sy3XDVoArlEWBTQJ9xO2z
-RhdX0E2zC4yWryAZK1i9R8vuQxjgkPUE4t5J840LVlN8O3Mpea2zCvtZ1hOTkfkw
-YWV8QrVpZsgOPY3Mfl9UfHAsw0hzeuf1n/+vagHbohqky/Pb1Gk/M6SuFznyCc0o
-BY5pvViqcrtBz+eHQiuHwydRCcWR6WytzKSPY3JhgAGolXm7bzSQDqba4jEaXaQ8
-4s1SLnDhV9Rlu97/PySAri85kswbr3jIxG6yu9wNbPtJJVS+Uu4OWYAq4Yefmzdj
-DbBg513t9NBy+OGwuoPjV2weEWx6FvEmphPETKvR2rUrj4mHOZFGtAeOl47jrk7X
-5zA0PdZXLTuotBjj0c++GpsNPv3z39fHHbToAL/HYMeh9doOXUqDmZF/p2shJyFk
-5fgnaznzMZTQeBav2L3f4unQIvDCZ8c8d/neaJV4AQNYpXB35AwHDgeyqVRHZ5S1
-T1dyif2uZGc7Yv3fIn8FxXKHTu3jk99cJOZygH3MTyE996BFl3U=
-=xuzF
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmQmBpIACgkQtsnG2UL7
+GPnARxAAuKlilkAS25PluALfqrY26zY8yEkg51f+YXTa7e8AN6THuZLgBQPLT37p
+14OCrS61OHknUsxlvMH4gTERoB/vyPb23aB6L8TG2GGxcwQZ5IDyWCUojTr8CTNg
+9ciBrRttxCJmtCWOTcZeeOuVKq04G5n1jh7DfYDRV+lLzJ/i6k6XBeTEhfHBnHWu
+nqyP88BljYHQi48LNsby+XOMpdDPYJfsiOe2OQIilxXTv+DrYArA2SNN8CfXrxja
+c4/PivGIo/SM4QBNc4g8sbILvvRstRLkmJgh6Bu3RKBU8xvmfSL/2z9NUkxru1qh
+lhWVArhfvNTIoja6XOORtF5Tyj9Hlwj6Mre51HTnDOZR17O/N6WFqpzI0/XgmRqk
+syjXMfzQp2KoGUcHK8yHnFaWKJcZgUUzdJJjZFrKzarAbgFucC2t4Gdc61EPeK8t
+BsCMvmRmx4fMAJpR9dldovNLiDGF5B/hNEhn5yjptX1c327+ahwykKYBDu4+35Ue
+VvVgecIhQ5ZZVYTBB5nZ/t/AhPZ2tVxzaQHthVKkx1wbD48ZRxh/2lFafvN75ie+
+UHRmvrzI0K9/I1+mrj292taeUY7K5bXv0bwHUn8BdPEtblkj5R+yApKoGuW/HBeX
+n7A9TYsg3OKy0siYP2b0cti7kLlKz0d/KV70zVJPOPyJ2e405TM=
+=PU5A
 -----END PGP SIGNATURE-----
