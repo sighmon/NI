@@ -351,13 +351,17 @@ class HomeController < ApplicationController
               xml.mobile_link { xml.cdata issue_url(i) }
               xml.description { xml.cdata ActionView::Base.full_sanitizer.sanitize(i.keynote.try(:teaser)) }
               xml['g'].id "digitalapp#{i.number}"
+              xml['g'].title i.title
+              xml['g'].link issue_url(i)
               xml['g'].condition "new"
+              xml['g'].adult "no"
               xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), :precision => 2)} AUD"
               xml['g'].availability "in_stock"
               xml['g'].image_link { xml.cdata i.cover_url.to_s }
               xml['g'].google_product_category "Media &gt; Magazines &amp; Newspapers"
               xml['g'].product_type "Magazine &gt; Digital edition"
               # xml['g'].gtin i.number
+              xml['g'].mpn "newint#{i.number}"
               xml['g'].identifier_exists "FALSE"
               xml['g'].brand "New Internationalist"
               xml['g'].shipping do
