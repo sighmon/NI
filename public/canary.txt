@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: April 2023
+Period: May 2023
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  April 2023
+  May 2023
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmQmBpIACgkQtsnG2UL7
-GPnARxAAuKlilkAS25PluALfqrY26zY8yEkg51f+YXTa7e8AN6THuZLgBQPLT37p
-14OCrS61OHknUsxlvMH4gTERoB/vyPb23aB6L8TG2GGxcwQZ5IDyWCUojTr8CTNg
-9ciBrRttxCJmtCWOTcZeeOuVKq04G5n1jh7DfYDRV+lLzJ/i6k6XBeTEhfHBnHWu
-nqyP88BljYHQi48LNsby+XOMpdDPYJfsiOe2OQIilxXTv+DrYArA2SNN8CfXrxja
-c4/PivGIo/SM4QBNc4g8sbILvvRstRLkmJgh6Bu3RKBU8xvmfSL/2z9NUkxru1qh
-lhWVArhfvNTIoja6XOORtF5Tyj9Hlwj6Mre51HTnDOZR17O/N6WFqpzI0/XgmRqk
-syjXMfzQp2KoGUcHK8yHnFaWKJcZgUUzdJJjZFrKzarAbgFucC2t4Gdc61EPeK8t
-BsCMvmRmx4fMAJpR9dldovNLiDGF5B/hNEhn5yjptX1c327+ahwykKYBDu4+35Ue
-VvVgecIhQ5ZZVYTBB5nZ/t/AhPZ2tVxzaQHthVKkx1wbD48ZRxh/2lFafvN75ie+
-UHRmvrzI0K9/I1+mrj292taeUY7K5bXv0bwHUn8BdPEtblkj5R+yApKoGuW/HBeX
-n7A9TYsg3OKy0siYP2b0cti7kLlKz0d/KV70zVJPOPyJ2e405TM=
-=PU5A
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmRLcMwACgkQtsnG2UL7
+GPm3uBAAnU7APDa9Rtk/SsX3Coqji9qGfAj/6vOs5ukesijqldXt3PufFoq074CI
+Ff+RKJYSWJW2sgxshe47GXeRRC0ND0Dpkz1QIy8euRnMmzjKEdSa+0fR51EDQfIO
+6iq+igQj/jI4vb2Afij12U1O53EzEJQ+mp+1VRgsscz4yNGrbknc8naW5Noj0hYQ
+M2lToqJABIxgPkEb0gTAFy+XZPDUWzp3NkRJRtJyD9OxS5lQ8/JAvindlChxghwv
+sNIqurOLI9jV0kZDWeDya5WGhPkrvmwvpuH0IsJTzDajKIcqaEB9Z+1gvfYjGc0a
+9xIQNZBR320s0G1mjlUBDJjP8ySevVEQTI8Vw/95ihXGOy5V4663olH/7tGZTqLq
+G2lg9i23fO55wZIDDLQjErCCcU9Q2x8cXnCSvC4DvZCvjcK/1DJ/BvBU00XNeShz
+Cu4fXRg7NpRmDGLsq6WvozfBy+TBL6POdw/nJxgQ3qasj79HfAd/LGAKoURNpLSP
+U19DxEpskOqsrL1KlzHPM13Mp2L5srp5o/ITyKGmDr388S6fZp58vS/DZ0Y/9M9l
+sy15b0Ibhi/s2EP5MRAWkCqmPWsAiXb9+sF8ucfSlmPQxCp5JgnvBJmsnNPrw9ZD
+tPaEYKzwxvMSJOoxi6nwcYlqio/AgdGHOSJs1Elk4AnhAmRiS+8=
+=H93k
 -----END PGP SIGNATURE-----
