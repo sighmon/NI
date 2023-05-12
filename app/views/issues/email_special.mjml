@@ -10,7 +10,7 @@
 					color="#606b75"
 					font-weight="300"
 					align="center">
-					<%= link_to "New Internationalist subscription", page_url("subscribe"), style: 'color:inherit;' %>
+					<%= link_to "New Internationalist Solidarity Fund", "https://newint.org/give", style: 'color:inherit;' %>
 				</mj-text>
 			</mj-column>
 		</mj-section>
