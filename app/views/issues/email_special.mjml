@@ -1,6 +1,6 @@
 <mjml>
 	<mj-head>
-		<mj-preview>New Internationalist - under-reported stories delivered to your pocket.</mj-preview>
+		<mj-preview>New Internationalist - The gift that keeps on giving.</mj-preview>
 	</mj-head>
 	<mj-body background-color="#E6E6E6">
 		<mj-section padding="0">
@@ -18,10 +18,10 @@
 			<mj-column>
 				<mj-image 
 					padding="0"
-					alt="New Internationalist - under-reported stories delivered to your pocket."
-					title="New Internationalist - under-reported stories delivered to your pocket."
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('600x600-email-header@2x.gif') %>">
+					alt="New Internationalist - The gift that keeps on giving. Photo: Janine Wiedel Photolibrary/Alamy"
+					title="New Internationalist - The gift that keeps on giving. Photo: Janine Wiedel Photolibrary/Alamy"
+					href="https://newint.org/give"
+					src="<%= asset_url('600x600-email-header@2x.jpg') %>">
 				</mj-image>
 			</mj-column>
 		</mj-section>
@@ -29,78 +29,61 @@
 			<mj-column>
 
 				<mj-text
-					font-size="14px"
-					line-height="22px"
+					font-size="12px"
+					font-weight="300"
+					color="#787878"
+					align="center"
+					padding="0">
+					Photo: Janine Wiedel Photolibrary/Alamy
+				</mj-text>
+
+				<mj-text
+					font-size="16px"
+					line-height="26px"
 					font-weight="300"
 					color="#787878">
-					Each monthly <em>New Internationalist</em> magazine covers a topic in-depth. Local writers will update you on previously under-reported stories that shine a light on today's big issues - inequality, climate justice and human rights - from every corner of the world.<br /><br />
+					Dear supporter,<br /><br />
 
-					<em>New Internationalist</em>’s multi-award-winning analysis helps make sense of world events, giving you the background information you need to feel empowered and hopeful for the future.<br /><br />
+					<strong>For 50 years, readers of New Internationalist – from decolonization campaigners to teenage climate strikers – have been inspired to take action by our campaigning journalism.</strong> Now we need to grow its audience, in order to equip a new generation of readers with the tools for change found in every issue of the magazine.<br /><br />
 
-					Subscribe today from just <b>&#36;<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true)) %> for 3 months</b>. You’ll be supporting independent media, and you’ll be able to engage in conversations with friends on interesting and challenging social justice topics you might otherwise avoid.
+					So we’re launching a new Solidarity Fund, which will get magazine subscriptions to schools, campaign groups and young activists. If you have ideas about who might benefit the most from receiving one, please let us know.<br /><br />
+
+					<strong>We’d like to ask for your support in launching this project.</strong> If you choose to make a regular donation to New Internationalist, you will be contributing to the Solidarity Fund as well as our award-winning independent journalism.
 				</mj-text>
 
 				<mj-button
+					font-size="18px"
 					background-color="#ED4E59"
-					href="<%= page_url('subscribe') %>">
-					Subscribe now!
+					href="https://newint.org/give">
+					Give monthly
 				</mj-button>
 
 				<mj-text
-					font-size="14px"
-					line-height="22px"
+					font-size="16px"
+					line-height="26px"
 					font-weight="300"
 					color="#787878">
-					Your subscription includes:
+					If you’ve ever been inspired or educated by something you’ve read in New Internationalist, <strong>imagine the impact a subscription could have on a class discussion about climate change or austerity</strong>, or on a young campaigner looking for guidance on how to shape the world. <strong>Your regular donation will make this a reality</strong>.
 				</mj-text>
 
-			</mj-column>
-		</mj-section>
-		<mj-section background-color="#FFFFFF" padding="0">
-			<mj-column>
-				<mj-image 
-					padding="0px 30px 0px 30px"
-					alt="Apple devices"
-					title="Apple devices"
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('email-devices-apple.gif') %>">
-				</mj-image>
-			</mj-column>
-			<mj-column>
-				<mj-image 
-					padding="0px 30px 0px 30px"
-					alt="Android devices"
-					title="Android devices"
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('email-devices-android.gif') %>">
-				</mj-image>
-			</mj-column>
-			<mj-column>
-				<mj-image 
-					padding="0px 30px 0px 30px"
-					alt="Apple and Android tablets"
-					title="Apple and Android tablets"
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('email-devices-tablet.gif') %>">
-				</mj-image>
-			</mj-column>
-			<mj-column>
-				<mj-image 
-					padding="0px 30px 0px 30px"
-					alt="On-line website access"
-					title="On-line website access"
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('email-devices-www.gif') %>">
-				</mj-image>
-			</mj-column>
-			<mj-column>
-				<mj-image 
-					padding="0px 30px 0px 30px"
-					alt="Access at anytime."
-					title="Access at anytime."
-					href="<%= page_url("subscribe") %>"
-					src="<%= asset_url('email-devices-24x7.gif') %>">
-				</mj-image>
+				<mj-button
+					font-size="18px"
+					background-color="#ED4E59"
+					href="https://newint.org/give">
+					Give monthly
+				</mj-button>
+
+				<mj-text
+					font-size="16px"
+					line-height="26px"
+					font-weight="300"
+					color="#787878">
+					In solidarity,<br /><br />
+
+					<strong>Conrad Landin</strong><br />
+					Co-editor, New Internationalist	
+				</mj-text>
+
 			</mj-column>
 		</mj-section>
 
