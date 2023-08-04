@@ -245,7 +245,7 @@ gem 'country_state_select'
 gem 'city-state', git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
-gem 'rmagick', '~> 4.3.0', :require => false
+gem 'rmagick', :require => false
 gem 'mini_magick'
 
 # CarrierWave for image uploading
