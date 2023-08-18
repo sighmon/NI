@@ -240,9 +240,7 @@ gem 'jquery-ui-rails'
 gem 'simple_form'
 gem 'country_select'
 gem 'country_state_select'
-# TODO: remove after the gem is updated
-# See: https://github.com/thecodecrate/city-state/issues/54
-gem 'city-state', git: 'https://github.com/thecodecrate/city-state'
+gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
 gem 'rmagick', '~> 4.3.0', :require => false
