@@ -174,13 +174,13 @@ class User < ActiveRecord::Base
     username 'customer_username'
     email 'customer_email'
     subscriber? 'subscription_status' do |subscriber| (subscriber ? 'wc-pending-cancel' : 'wc-cancelled') end
-    last_subscription_including_cancelled valid_from: 'start_date'
+    uk_start_date 'start_date'
     id? 'trial_end_date' do '' end
     expiry_date 'next_payment_date' do |expiry_date| (expiry_date ? expiry_date - 1.week : '') end
     last_subscription_including_cancelled valid_from: 'last_payment_date'
-    expiry_date 'end_date'
-    last_subscription_including_cancelled 'billing_period' do |s| (s ? s.duration % 12 == 0 ? 'year' : 'month' : '') end
-    last_subscription_including_cancelled 'billing_interval' do |s| (s ? s.duration % 12 == 0 ? s.duration / 12 : s.duration : '') end
+    uk_end_date 'end_date'
+    last_subscription_including_cancelled 'billing_period' do |s| (s ? s.duration % 12 == 0 ? 'year' : 'month' : 'year') end
+    last_subscription_including_cancelled 'billing_interval' do |s| (s ? s.duration % 12 == 0 ? s.duration / 12 : s.duration : '1') end
     id? 'order_shipping' do '' end
     id? 'order_shipping_tax' do '' end
     id? 'order_tax' do '' end
@@ -220,6 +220,7 @@ class User < ActiveRecord::Base
     id? 'fee_items' do '' end
     id? 'tax_items' do '' end
     id? 'download_permissions' do '' end
+    uk_user? 'uk_account'
 
   end
 
@@ -334,6 +335,14 @@ class User < ActiveRecord::Base
     end
 
     return order_items.join('|')
+  end
+
+  def uk_start_date
+    return (self.last_subscription_including_cancelled.try(:valid_from) or self.created_at)
+  end
+
+  def uk_end_date
+    return (self.expiry_date or self.created_at)
   end
 
   def has_cancelled_paypal_profile?
