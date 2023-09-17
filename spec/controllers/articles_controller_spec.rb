@@ -248,7 +248,7 @@ describe ArticlesController, :type => :controller do
             ##ArticlesController.any_instance.stub(:create) {|*args| ArticlesController.create(*args)}
             #ArticlesController.any_instance.should_receive(:create)
             post :create, params: {:article => @article_attributes.merge({ :categories_attributes => { "0" => @new_category_attributes }}), :issue_id => @issue.id}
-            expect(@issue.articles.last.categories.first.name).to eq(@new_category_attributes[:name])
+            expect(@issue.reload.articles.last.categories.first.name).to eq(@new_category_attributes[:name])
           end
 
         end
@@ -262,7 +262,7 @@ describe ArticlesController, :type => :controller do
             expect {
               post :create, params: {:article => @article_attributes.merge({ :categories_attributes => { "0" => @category_attributes }}), :issue_id => @issue.id}
             }.to change(Article, :count).by(1)
-            expect(@issue.articles.last.categories).to eq([@category])
+            expect(@issue.reload.articles.last.categories).to eq([@category])
           end
 
         end

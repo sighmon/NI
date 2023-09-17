@@ -28,22 +28,33 @@ class Article < ActiveRecord::Base
   def self.search(params, show_unpublished = false)
     results_per_page = Settings.article_pagination
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
+
     if params[:per_page] and (params[:per_page].to_i > 0)
       results_per_page = params[:per_page].to_i
     end
+
     query_hash = {
       sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
     }
-    query_hash.merge!({ query: { bool: { must: [{ query_string: { query: clean_query, default_operator: "AND" }}]}}}) if params[:query].present?
-    # TOFIX: Elasticsearch 5 won't post_filter on published, so using unpubilshed, which doesn't take into account unpublished issues.
-    query_hash.merge!({ post_filter: { term: { unpublished: false}} }) unless show_unpublished
 
-    # Filter out future articles
-    if not show_unpublished
+    query_hash.merge!({ query: { bool: { must: [{ query_string: { query: clean_query, default_operator: "AND" }}]}}}) if params[:query].present?
+
+    unless show_unpublished
+      must_conditions = [
+        { term: { unpublished: false } },
+        { term: { published: true } }
+      ]
+
       if params[:query].present?
-        query_hash[:query][:bool][:must].push({ range: { publication: { lte: "now/d" }}})
+        query_hash[:query][:bool][:must].concat(must_conditions)
       else
-        query_hash.merge!({ query: { bool: { must: [{ range: { publication: { lte: "now/d" }}}]}}})
+        query_hash.merge!({
+          query: {
+            bool: {
+              must: must_conditions
+            }
+          }
+        })
       end
     end
 
@@ -173,6 +184,12 @@ class Article < ActiveRecord::Base
   def published
     # issue.published and not unpublished
     (not unpublished) and issue.published
+  end
+
+  def as_indexed_json(options = {})
+    self.as_json(
+      methods: [:published]
+    )
   end
 
   def self.published_articles
