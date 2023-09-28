@@ -10,7 +10,7 @@ class Issue < ActiveRecord::Base
   # If versions need reprocssing
   # after_update :reprocess_image
 
-  after_commit :flush_cache
+  after_commit :flush_cache, :reindex_articles
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -69,6 +69,12 @@ class Issue < ActiveRecord::Base
 
   def flush_cache
     Rails.cache.delete([self.class.name, id])
+  end
+
+  def reindex_articles
+    articles.each do |article|
+      article.__elasticsearch__.index_document
+    end
   end
 
   def features
