@@ -233,7 +233,7 @@ gem 'jquery-rails'
 
 # Adding jquery-ui-rails because of an update that removed ui
 # http://stackoverflow.com/questions/17830313/couldnt-find-file-jquery-ui
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '>= 7.0.0', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails'
 
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
