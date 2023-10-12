@@ -163,6 +163,7 @@ describe User, :type => :model do
         child.ip_whitelist = '192.0.1.1'
         child.save
         user.children << child
+        Rails.cache.clear
       end
       it "can manage child" do
         expect(ability).to be_able_to(:manage, user.children.first)
