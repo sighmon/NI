@@ -231,6 +231,10 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
 
+  # Devise 4.9.3
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
+
   # Warden configuration for UK users
   require "devise/strategies/remote_authenticatable"
   require "devise/models/remote_authenticatable"
