@@ -256,7 +256,7 @@ gem 'fog-aws'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-gem 'retina_image_tag', :git => 'https://github.com/sighmon/retina_image_tag.git', branch: 'fix/1-rmagick5'
+gem 'retina_image_tag', :git => 'https://github.com/sighmon/retina_image_tag.git'
 
 # Highlighter.js for highlighting text
 gem 'highlighter-js', :git => 'https://github.com/sighmon/highlighter.js.git'
