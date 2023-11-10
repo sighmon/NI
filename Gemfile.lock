@@ -464,6 +464,7 @@ GEM
       racc
     paypal-recurring (1.1.0)
     pg (1.5.4)
+    pkg-config (1.5.5)
     platform-api (3.5.0)
       heroics (~> 0.1.1)
       moneta (~> 1.0.0)
@@ -549,7 +550,8 @@ GEM
       railties (>= 5.2)
     retriable (3.1.2)
     rexml (3.2.6)
-    rmagick (4.3.0)
+    rmagick (5.3.0)
+      pkg-config (~> 1.4)
     rouge (4.2.0)
     rpush (7.0.1)
       activesupport (>= 5.2)
@@ -774,7 +776,7 @@ DEPENDENCIES
   rb-inotify
   recaptcha
   retina_image_tag!
-  rmagick (~> 4.3.0)
+  rmagick
   rpush
   rspec-activemodel-mocks
   rspec-legacy_formatters
