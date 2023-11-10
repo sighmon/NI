@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: https://github.com/sighmon/retina_image_tag.git
-  revision: 7fad00b8f012206d664568dee1ee4f90e2e8a5a9
+  revision: 34b20df6f5be583aac9613f2f74a9de4aea03a40
   specs:
     retina_image_tag (1.0.3)
       railties (>= 3.1)
