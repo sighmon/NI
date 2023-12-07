@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: November 2023
+Period: December 2023
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  November 2023
+  December 2023
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmVMMzEACgkQtsnG2UL7
-GPlymA/+PM3lZkpvWYlUOMtV20P38xysRxOZq/6GRbG31xZkU14o5G6Cu+RPMWXK
-8WWj07f8iyc8IVLYtrnygtCspmHcOsdGheG6K6Y4TWE+2Ums8ESj6HBYFIy8/F/9
-HM1h/3W7Q4dNn7XhNk+pOVgOUuGR443IJ7Ye+selpBC1oLreMHYxEcnuow0nMR8G
-8EOBo/F1vOnV1Er1WIUjvj2QxMsR0DBlcnDjTpFMIxHd6qhMzQ7S2KUhUtLUYt7j
-X0XcG1NpDUuzFv7MdZvycrG1YZXfb11HiS/v1sXjgIa8jDwX7Ck3DLXJzYOQfsW7
-7BJZoIoZv4y/cu6eJhU68m94+J2/3CdNg6R4LPzEONFsDwQ4nXR0tgbh+tk4BFgd
-WyErG/y1d/I3W3J5ixNrT6iY9qj9gBNiVNzfQnx/H1NdzXEdudJGuoOJUX+iz67b
-FCzf6Kh+0y9H8+CPmst9PkQFtOjET+TE2KZ1b2Ue/IpXRRWY4wIdNX6HFCSBhq+7
-Oez06feetZafMPzPpNOzWTt6Pcck38r2NL7BerF8gONF01n4JXOS1OhE+6CwNyxu
-C4owrbH8AAV2YvgnHotniogcMGLgXqlRc2l8iCxXGY4pj/23RMgAhqnWJHlOafWM
-VEtwrgbJSTAVY6utimFuhy75MNdhBPShHAgpdFcFNIeGp1Y5hiI=
-=orKj
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmVtGvkACgkQtsnG2UL7
+GPkmrg/+OjKmF3B7uvLk+IMdcod6J8ifckS3pRsb7FQx2KO55IGKg8W/+q382NZi
+Poa+bn/1ycsAm0qhM1uPc98/oPqGLV0Bwa7AmqvrFYq+jRB61HRvJX/DeCqhrI7A
+KMv7coDQv43AwoJXdwcVwOZ24W7/iW1bZ+JikCxyRrxtl6q80hLxOCuBPZ73GRCs
+3UWE7W9y+pliEgiUY9bnQ3mmicPFWBYXEnmR4y8Bc1hf+IG5HEkAsN7zGTW/zYNG
+ASA7qeIZug3xpzuqPqL22cjJoY1AFIyxhJP+8s9G3BLvR25ilyX3pYWbvNv5Af6D
+0NHkO7qfvdBIiexDyxTrBqgbcLtmGBgH2goPzbRfFzBxGorCDvcXSorZUjCEWN+G
+5/gxhBNjY9c4r0wzQsFMNkuyAT5DgDY2e8PsPJ1tncUpqSjaHEFfUGwEyeDmQzaV
+t7dUUmqrpNxpm8Oy254U10eTP1Nxlve261uNBZv7rOCYusouCbhE4o+8zWYIoBRL
+58bI0iBkIaZBLEiSAHNc61/DGMdp0Vn26UTg9cUUtCg8rICke/xY+35IoyQZDFSx
+jV0JUHvXBaaH4fLw5E5HOdx4Fi8yzaJ3R1ELJRj9y1bfFOiDQPvXd2BR6Psv0spI
+2OvN17IEGOCBCnkdCxOt5SfVDorXKL3K6j8Llas1PLpV/iIAdUQ=
+=JMA5
 -----END PGP SIGNATURE-----
