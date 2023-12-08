@@ -19,9 +19,6 @@
 
 <div class="page-header<% if @page.permalink == "four-good-reasons-to-subscribe" %> page-header-center<% end %>">
   <h1><%= @page.title %></h1>
-  <% if @page.permalink == "subscribe" %>
-    <%= retina_image_tag 'paypal.png', :alt => 'Secure payments by PayPal', :title => 'Secure payments by PayPal', :size => "200x51", :class => 'subscribe-image' %>
-  <% end %>
   <% if not @page.teaser.blank? %>
     <h3><%= simple_format @page.teaser %></h3>
   <% end %>

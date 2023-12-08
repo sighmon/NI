@@ -15,10 +15,7 @@
 					font-size="12px"
 					line-height="20px"
 					font-weight="300">
-					<%= raw(ENV["STREET_ADDRESS"]) %><br />
-					ABN 11 005 523 124<br />
-					ACN 005 523 124<br />
-					<a href="https://www.newint.com.au" style="color:inherit;">www.newint.com.au</a>
+					<a href="https://newint.org/contact" style="color:inherit;">newint.org/contact</a>
 				</mj-text>
 				<% unless local_assigns[:reason].nil? %>
 					<mj-text
@@ -45,8 +42,8 @@
 					font-size="12px"
 					line-height="20px"
 					font-weight="300">
-					<strong>Don't forget our</strong>:<br />
-					Blog: <a href="http://www.newint.com.au/blog" style="color:inherit;">newint.com.au/blog</a><br /><br />
+					<strong>Contact us</strong>:<br />
+					<a href="https://newint.org/contact" style="color:inherit;">newint.org/contact</a><br /><br />
 					<strong>On social media</strong>:<br />
 					Twitter: <a href="https://twitter.com/<%= ENV["TWITTER_NAME"] %>" style="color:inherit;">@<%= ENV["TWITTER_NAME"] %></a><br />
 					Facebook: <a href="https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>" style="color:inherit;">@<%= ENV["FACEBOOK_PAGE_NAME"] %></a><br />

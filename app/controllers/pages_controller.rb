@@ -3,20 +3,6 @@ class PagesController < ApplicationController
   # Cancan authorisation
   load_resource :find_by => :permalink # will use find_by_permalink!(params[:id])
   authorize_resource
-
-  # override default configuration for no_tracking pages
-  SecureHeaders::Configuration.override(:no_tracking) do |config|
-    config.csp[:child_src] = %w('self')
-    config.csp[:img_src] = %W('self' data: *.newint.com.au)
-    config.csp[:script_src] = %W('self')
-    config.csp[:style_src] = %W('self' 'unsafe-inline')
-    config.csp[:object_src] = %w('self')
-    config.csp[:connect_src] = %w('self')
-    config.csp[:form_action] = %w('self')
-    config.csp[:font_src] = %w('self')
-    config.csp[:report_uri] = %w('self')
-    config.referrer_policy = "no-referrer"
-  end
   
   # GET /pages
   # GET /pages.json
@@ -39,7 +25,6 @@ class PagesController < ApplicationController
     if @no_tracking
       # logger.info "No tracking for page #{@page.title}"
       NewRelic::Agent.ignore_transaction
-      use_secure_headers_override(:no_tracking)
     end
     @current_issue = Issue.all.sort_by(&:release).last
     @first_image = ""
