@@ -2,28 +2,17 @@
 
   <div class="row">
     <div class="col-sm-4">
-      <!-- <div class="home-image">
-        <%= link_to retina_image_tag('utne-winner.png', :alt => 'Awards New Internationalist magazine has won', :title => 'Awards New Internationalist magazine has won', :width => 75, :height => 96), page_path("awards") %>
-      </div> -->
       <%= link_to retina_image_tag("new-internationalist-logo-300px.png", :alt => "New Internationalist - The world unspun", :title => "New Internationalist - The world unspun", width: 150, class: "brand"), root_path %>
       <% if user_signed_in? and current_user.try(:subscriber?) or current_user.try(:admin?) %>
         <p>Welcome back to the New Internationalist digital edition. Thanks for subscribing, we really appreciate it. If you have any feedback or suggestions for new features we can add, our contact details are in the footer. Enjoy reading the magazine.</p>
       <% else %>
         <p>The <b>New Internationalist</b> is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all.</p>
-        <div class="home-donate">
-          <p>If you like the magazine and support what we do, perhaps you'd like to donate some money to help us reach a wider audience?</p>
-          <p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="GSMBBM2JT2W28">
-            <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate using PayPal</button>
-          </form></p>
-        </div>
       <% end %>
     </div>
     <div class="col-sm-4">
       <h5>Site map:</h5>
       <ul>
-        <li><% if current_user.nil? %><%= link_to "Subscribe", page_path("subscribe") %><% else %><%= link_to "Subscribe", new_subscription_path %><% end %></li>
+        <li><a href="https://subscribe.newint.org">Subscribe</a></li>
         <li><%= link_to "Magazine archive", issues_path %></li>
         <li><%= link_to "Search", search_path %></li>
         <li><%= link_to "Categories", categories_path %></li>
@@ -44,7 +33,7 @@
       </ul>
       <h5>Contact us:</h5>
       <ul>
-        <li><%= raw(ENV["STREET_ADDRESS"]) %></li>
+        <li><a href="https://newint.org/contact">newint.org/contact</a></li>
       </ul>
     </div>
   </div>

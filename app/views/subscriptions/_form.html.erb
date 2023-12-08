@@ -37,111 +37,14 @@
 	  </div>
 	<% end %>
 
-<% elsif @has_token %>
-
-	<%= javascript_tag do %>
-		window.purchaseID = 'user<%= try(:current_user).try(:id) %>sub<%= session[:express_purchase_subscription_duration] %><%= session[:express_autodebit] ? 'auto' : '' %>';
-		window.subscriptionPrice = <%= cents_to_dollars(session[:express_purchase_price]) %>;
-		window.subscriptionType = "<%= session[:express_purchase_subscription_duration] %> month <%= session[:express_autodebit] ? 'autodebit' : 'subscription' %>"
-		window.subscriptionNumber = "<%= session[:express_purchase_subscription_duration] %><%= session[:express_autodebit] ? 'auto' : '' %>"
-	<% end %>
-
-	<%= simple_form_for(@subscription) do |f| %>
-
-	  <dl class="dl-horizontal">
-	  	<dt>Name:</dt>
-	  	<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
-		<% if session[:express_autodebit] %>
-			<dt>Debit every:</dt>
-			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
-			<dt>Debit amount:</dt>
-			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
-		<% else %>
-			<dt>Subscription:</dt>
-			<dd><%= session[:express_purchase_subscription_duration] %> months</dd>
-			<dt>Amount:</dt>
-			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
-		<% end %>
-	  </dl>
-	  
-	  <div class="form-actions">
-	  	<%= f.button :submit, "Complete your purchase", :class => 'btn-success', :onclick => "sendSubscription();" %>
-	  	<% link_to 'Cancel', user_path(@user), :class => 'btn btn-outline-secondary' %>
-	  </div>
-	<% end %>
-
-	<!-- START Google Code for Digital Subscription App Conversion Page -->
-	<script type="text/javascript">
-	/* <![CDATA[ */
-	var google_conversion_id = <%= ENV["GOOGLE_CONVERSION_ID"] %>;
-	var google_conversion_language = "en";
-	var google_conversion_format = "3";
-	var google_conversion_color = "ffffff";
-	var google_conversion_label = "<%= ENV['GOOGLE_CONVERSION_LABEL'] %>";
-	var google_conversion_value = <%= cents_to_dollars(session[:express_purchase_price]) %>;
-	var google_remarketing_only = false;
-	/* ]]> */
-	</script>
-	<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-	</script>
-	<noscript>
-	<div style="display:inline;">
-	<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=<%= cents_to_dollars(session[:express_purchase_price]) %>&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
-	</div>
-	</noscript>
-	<!-- END Google Code for Digital Subscription App Conversion Page -->
-
 <% else %>
-
-	<div class="subscription-top-image">
-		<%= retina_image_tag 'devices-paper.png', :alt => 'Subscription options', :title => 'Subscription options', :size => "272x105" %>
-	</div>
-
-	<%= subscription_price_table %>
 
 	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
 	  <hr />
-	  <h2>Please select the subscription duration you'd like</h2>
-	  <dl class="dl-horizontal subscribe-options">
-	  	<dt><%= radio_button_tag 'duration', '3', 'false' %></dt>
-	  	<dd>3 Month Subscription</dd>
-	  	<dt><%= radio_button_tag 'duration', '6', 'false' %></dt>
-	  	<dd>6 Month Subscription</dd>
-	  	<dt><%= radio_button_tag 'duration', '12', 'true' %></dt>
-	  	<dd>12 Month Subscription</dd>
-	  </dl>
-	  <hr />
-	  <h2>Automatic debit?</h2>
-	  <p>Would you like NI to automatically debit your PayPal account until you tell us to stop?</p>
-	  <p>The debits will occur every 3, 6 or 12 months, depending on the option you chose above.</p>
-	  <dl class="dl-horizontal subscribe-options">
-	  	<dt><%= radio_button_tag 'autodebit', '1', 'false' %></dt>
-	  	<dd>Yes please!</dd>
-	  	<dt><%= radio_button_tag 'autodebit', '0', 'true' %></dt>
-	  	<dd>No thanks, just a single debit this time.</dd>
-	  </dl>
-	  <hr />
-	  <h2>Paper edition?</h2>
-	  <dl class="dl-horizontal subscribe-options">
-	  	<dt><%= radio_button_tag 'paper', '1', 'false' %></dt>
-	  	<dd>Paper and digital editions.</dd>
-	  	<dt><%= radio_button_tag 'paper', '2', 'false' %></dt>
-	  	<dd>Paper edition only.</dd>
-	  	<dt><%= radio_button_tag 'paper', '0', 'true' %></dt>
-	  	<dd>Digital edition only.</dd>
-	  </dl>
-	  <hr />
-	  <h2>Institution</h2>
-	  <p>Are you a school or institution?</p>
-	  <dl class="dl-horizontal subscribe-options">
-	  	<dt><%= radio_button_tag 'institution', '1', 'false' %></dt>
-	  	<dd>Yes, I'm ordering for a school or institution.</dd>
-	  	<dt><%= radio_button_tag 'institution', '0', 'true' %></dt>
-	  	<dd>No, this is a personal subscription.</dd>
-	  </dl>
+	  <p>Redirecting you to <a href="https://subscribe.newint.org"><strong>newint.org</strong></a> now...</p>
+	  <meta http-equiv="refresh" content="0; url=https://subscribe.newint.org" />
 
 	  <div class="form-actions">
-			<%= f.button :submit, 'Pay with PayPal Express', :class => 'btn-success', :onclick => "sendPreSubscription();" %>
 	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn btn-outline-secondary' %>
 	  </div>
 	<% end %>
