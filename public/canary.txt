@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: December 2023
+Period: January 2024
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  December 2023
+  January 2024
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmVtGvkACgkQtsnG2UL7
-GPkmrg/+OjKmF3B7uvLk+IMdcod6J8ifckS3pRsb7FQx2KO55IGKg8W/+q382NZi
-Poa+bn/1ycsAm0qhM1uPc98/oPqGLV0Bwa7AmqvrFYq+jRB61HRvJX/DeCqhrI7A
-KMv7coDQv43AwoJXdwcVwOZ24W7/iW1bZ+JikCxyRrxtl6q80hLxOCuBPZ73GRCs
-3UWE7W9y+pliEgiUY9bnQ3mmicPFWBYXEnmR4y8Bc1hf+IG5HEkAsN7zGTW/zYNG
-ASA7qeIZug3xpzuqPqL22cjJoY1AFIyxhJP+8s9G3BLvR25ilyX3pYWbvNv5Af6D
-0NHkO7qfvdBIiexDyxTrBqgbcLtmGBgH2goPzbRfFzBxGorCDvcXSorZUjCEWN+G
-5/gxhBNjY9c4r0wzQsFMNkuyAT5DgDY2e8PsPJ1tncUpqSjaHEFfUGwEyeDmQzaV
-t7dUUmqrpNxpm8Oy254U10eTP1Nxlve261uNBZv7rOCYusouCbhE4o+8zWYIoBRL
-58bI0iBkIaZBLEiSAHNc61/DGMdp0Vn26UTg9cUUtCg8rICke/xY+35IoyQZDFSx
-jV0JUHvXBaaH4fLw5E5HOdx4Fi8yzaJ3R1ELJRj9y1bfFOiDQPvXd2BR6Psv0spI
-2OvN17IEGOCBCnkdCxOt5SfVDorXKL3K6j8Llas1PLpV/iIAdUQ=
-=JMA5
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmWXPu8ACgkQtsnG2UL7
+GPkUhw//fPnKPIud3l9PGK0as5dwtd7T7et1r95uypc2V80LeFmiDKwR237H2xiH
+xDGEwBtN1oP2uWEwYQx/ht+dEENAFWkh5DT+EFmK42RnLz6GUN92xvbe90OL1xs/
+8LcgMGCtV0jNEqP69mSUQApuLbYBqsTlcgAhUkG61zQiPanKp8WxQTuqiMOEs1hL
+K6co3U5I0G/odz6tIwR5gMqCRZqAbeYxiF+qKnW2ob/AkBoXT0RWjvTH7KBiyVkh
+fr8fiwDHb9Dd8act7VbFOV3c3MiH6UV0mbSBUaOXrEhZhb4WRgGlGpoxVV5fmpw/
+HGJEPNkwZ8dCqIqX/pxotXPKpWzNn/a1IlwB31xRwDmneFxwUbqRSzlAun3B34Mp
+pK/s8+R5YIHEalhbXxbnUfrkjVU3xGCwKqMH0flUlzkBV6RmMzA409R8KSFNyutC
+kroNUnjwnTGUdD/ir4grkS03zP7SgT234vOgLi0MEkOGv8kZEFyNUdr59xAA5siH
+dh3w2EyDK+Ajcd/W6cXqDxSZ9xLIwcZfBmDz7dniQJpaV7sff6rJP9wbuzMfJa4u
+zn811exvDXvt933UvqHnFfz1YrQz2kQP/4jjl2LaM46mLEoD4EybUxJhHmAHJ7mN
+nI+xXGaOLla47TicO23FePa5qeghgopvOiqE2+m3SYJMOh2GItk=
+=XodX
 -----END PGP SIGNATURE-----
