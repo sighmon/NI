@@ -221,6 +221,8 @@ class User < ActiveRecord::Base
     id? 'tax_items' do '' end
     id? 'download_permissions' do '' end
     uk_user? 'uk_account'
+    institution?
+    parent
 
   end
 
