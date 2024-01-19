@@ -25,16 +25,17 @@
 
     <% if current_user and (current_user.has_paper_copy? or current_user.had_paper_copy?) %>
       <h3>Paper subscription address details</h3>
-      <%= f.input :title %>
-      <%= f.input :first_name %>
-      <%= f.input :last_name %>
-      <%= f.input :company_name %>
-      <%= f.input :address %>
-      <%= f.input :city, label: 'Suburb or Town' %>
-      <%= f.input :postal_code %>
-      <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state } }) %>
-      <%= f.input :country, collection: CountryStateSelect.countries_collection.sort_by{|a| a.first.downcase} %>
-      <%= f.input :phone %>
+      <p>Please contact the <a href="https://subscribe.newint.org/contact-us/">UK office</a> to update your address details.</p>
+      <%= f.input :title, readonly: true %>
+      <%= f.input :first_name, readonly: true %>
+      <%= f.input :last_name, readonly: true %>
+      <%= f.input :company_name, readonly: true %>
+      <%= f.input :address, readonly: true %>
+      <%= f.input :city, label: 'Suburb or Town', readonly: true %>
+      <%= f.input :postal_code, readonly: true %>
+      <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state }, readonly: true, disabled: true }) %>
+      <%= f.input :country, collection: CountryStateSelect.countries_collection.sort_by{|a| a.first.downcase}, readonly: true, disabled: true %>
+      <%= f.input :phone, readonly: true %>
     <% end %>
   </div>
 
