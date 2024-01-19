@@ -222,6 +222,7 @@ class User < ActiveRecord::Base
     id? 'download_permissions' do '' end
     uk_user? 'uk_account'
     user_type 'user_type'
+    is_recurring? 'is_recurring'
     parent_id 'parent_id'
 
   end
