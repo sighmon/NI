@@ -167,6 +167,10 @@
     <div class="article-image article-image-small no-shadow"><%= retina_image_tag('section-letters.png', alt: 'Letters icon.', title: 'Letters icon.') %></div>
   <% end %>
 
+  <% if @briefly and not @briefly.empty? %>
+    <div class="article-image article-image-small no-shadow"><%= retina_image_tag('section-briefly.png', alt: 'Briefly icon.', title: 'Briefly icon.') %></div>
+  <% end %>
+
   <% if @article.images and @article.images.empty? and @temperature_check and not @temperature_check.empty? %>
     <div class="article-image article-image-small no-shadow"><%= retina_image_tag('section-temperature-check.png', alt: 'Temperature check icon.', title: 'Temperature check icon.') %></div>
   <% end %>

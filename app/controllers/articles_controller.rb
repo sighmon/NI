@@ -292,6 +292,7 @@ class ArticlesController < ApplicationController
     #@article.is_valid_guest_pass(params[:utm_source])
     @newimage = Image.new
     @letters = @article.categories.select{|c| c.name.include?("/letters/")}
+    @briefly = @article.categories.select{|c| c.name.include?("/briefly/")}
     @view_from_africa = @article.categories.select{|c| c.name.include?("/columns/view-from-africa/")}
     @view_from_india = @article.categories.select{|c| c.name.include?("/columns/view-from-india/")}
     @view_from_america = @article.categories.select{|c| c.name.include?("/columns/view-from-america/")}
