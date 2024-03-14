@@ -18,6 +18,7 @@ Mjml.setup do |config|
   # config.mjml_binary_version_supported = "4.0."
   # config.validation_level = "soft"
   # config.use_mrml = true
+  # config.fonts = {}
 end
 # Uncomment this line to discover a different binary version
 # Mjml::BIN = Mjml.discover_mjml_bin
