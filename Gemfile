@@ -243,8 +243,9 @@ gem 'country_state_select'
 gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
-gem 'rmagick', :require => false
-gem 'mini_magick'
+# Migrated to :vips with Rails 7
+# gem 'rmagick', :require => false
+# gem 'mini_magick'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave

@@ -758,7 +758,6 @@ DEPENDENCIES
   kaminari-bootstrap
   memcachier
   meta-tags
-  mini_magick
   mini_racer
   mjml-rails
   net-http-persistent
@@ -782,7 +781,6 @@ DEPENDENCIES
   rb-inotify
   recaptcha
   retina_image_tag!
-  rmagick
   rpush
   rspec-activemodel-mocks
   rspec-legacy_formatters
