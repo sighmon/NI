@@ -90,7 +90,7 @@ module NI
 
     # Rails 7 - can be set to this after upgrade
     # config.load_defaults 7.0
-    config.active_support.cache_format_version = 6.1
+    config.active_support.cache_format_version = 7.0
 
     config.generators do |g|
       g.fixture_replacement :factory_girl
