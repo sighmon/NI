@@ -227,18 +227,18 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.0)
     drb (2.2.1)
-    elasticsearch (7.13.3)
-      elasticsearch-api (= 7.13.3)
-      elasticsearch-transport (= 7.13.3)
-    elasticsearch-api (7.13.3)
+    elasticsearch (7.17.10)
+      elasticsearch-api (= 7.17.10)
+      elasticsearch-transport (= 7.17.10)
+    elasticsearch-api (7.17.10)
       multi_json
     elasticsearch-model (7.2.1)
       activesupport (> 3)
       elasticsearch (~> 7)
       hashie
     elasticsearch-rails (7.2.1)
-    elasticsearch-transport (7.13.3)
-      faraday (~> 1)
+    elasticsearch-transport (7.17.10)
+      faraday (>= 1, < 3)
       multi_json
     erubi (1.12.0)
     erubis (2.7.0)
@@ -380,7 +380,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    json (2.7.1)
+    json (2.7.2)
     jwt (2.8.1)
       base64
     kaminari (1.2.2)
@@ -446,9 +446,9 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.5.0)
       net-protocol
-    newrelic_rpm (9.7.1)
+    newrelic_rpm (9.8.0)
     nio4r (2.7.1)
     nokogiri (1.16.3-x86_64-darwin)
       racc (~> 1.4)
@@ -461,7 +461,7 @@ GEM
     observer (0.1.2)
     orm_adapter (0.5.0)
     os (1.1.4)
-    pagy (7.0.11)
+    pagy (8.0.1)
     parallel (1.24.0)
     parser (3.3.0.5)
       ast (~> 2.4.1)
@@ -479,7 +479,7 @@ GEM
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.4)
+    public_suffix (5.0.5)
     racc (1.7.3)
     rack (2.2.9)
     rack-mini-profiler (3.3.1)
@@ -534,7 +534,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     raindrops (0.20.1)
-    rake (13.1.0)
+    rake (13.2.0)
     rate_throttle_client (0.1.2)
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
@@ -612,10 +612,13 @@ GEM
       rubocop (~> 1.41)
     rubocop-factory_bot (2.25.1)
       rubocop (~> 1.41)
-    rubocop-rspec (2.27.1)
+    rubocop-rspec (2.29.1)
       rubocop (~> 1.40)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
+      rubocop-rspec_rails (~> 2.28)
+    rubocop-rspec_rails (2.28.2)
+      rubocop (~> 1.40)
     ruby-prof (1.7.0)
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.1)
@@ -735,10 +738,11 @@ DEPENDENCIES
   database_cleaner
   delayed_job_active_record
   devise
-  elasticsearch (< 7.14)
+  elasticsearch
   elasticsearch-model
   elasticsearch-rails
   factory_bot_rails
+  faraday (< 2)
   figaro
   flamegraph
   fog-aws
