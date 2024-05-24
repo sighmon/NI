@@ -243,7 +243,11 @@
 
 <% if not @issue.opinion.empty? %>
 
-  <h3 class="issue-section-title">Opinion</h3>
+  <% if @issue.release.year > 2023 %>
+    <h3 class="issue-section-title">Comment</h3>
+  <% else %>
+    <h3 class="issue-section-title">Opinion</h3>
+  <% end %>
 
   <div class="row">
     <% @issue.opinion.each_with_index do |article, index| %>
