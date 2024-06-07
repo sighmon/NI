@@ -26,12 +26,7 @@ class Article < ActiveRecord::Base
 
 
   def self.search(params, show_unpublished = false)
-    results_per_page = Settings.article_pagination
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
-
-    if params[:per_page] and (params[:per_page].to_i > 0)
-      results_per_page = params[:per_page].to_i
-    end
 
     query_hash = {
       sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
@@ -58,7 +53,7 @@ class Article < ActiveRecord::Base
       end
     end
 
-    __elasticsearch__.search(query_hash).page(params[:page]).per(results_per_page).records
+    __elasticsearch__.search(query_hash).records
   end
 
   def score

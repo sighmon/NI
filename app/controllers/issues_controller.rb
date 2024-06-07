@@ -46,15 +46,19 @@ class IssuesController < ApplicationController
   end
 
   def index
-    # @issues = Issue.all
-    # Pagination
-    # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2)
-    # Search
-    # @issues = Issue.search(params)
-    # TOFIX: TODO: Search + pagination?
-    # @issues = Issue.order("release").reverse_order.page(params[:page]).per(2).search(params)
+    @issues = Issue.where(published: true)
+    pagination = Settings.issue_pagination
 
-    @issues = Issue.search(params, current_user.try(:admin?))
+    if current_user.try(:admin?)
+      pagination = 200
+      @issues = Issue.all
+    end
+
+    if not params[:query].blank?
+      @issues = @issues.search(params, current_user.try(:admin?))
+    end
+
+    @pagy, @issues = pagy_array(@issues.order("release").reverse_order, items: pagination)
 
     # Set meta tags
     @page_title = "Magazine archive"

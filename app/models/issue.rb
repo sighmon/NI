@@ -27,18 +27,14 @@ class Issue < ActiveRecord::Base
   index_name BONSAI_INDEX_NAME
 
   def self.search(params, admin = false)
-    pagination = Settings.issue_pagination
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
-    if admin
-      pagination = 200
-    end
     search_hash = {
       sort: [{ release: {order: "desc", "unmapped_type": "long"}}]
     }
     search_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin
 
-    __elasticsearch__.search(search_hash).page(params[:page]).per(pagination).records
+    __elasticsearch__.search(search_hash).records
   end
 
   def self.latest

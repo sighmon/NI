@@ -2,18 +2,10 @@ require 'rails_helper'
 
 describe Article, :type => :model do
   describe '.search' do
-    let(:query_params) { { query: 'test', per_page: 5, page: 1 } }
+    let(:query_params) { { query: 'test', page: 1 } }
 
     it 'calls __elasticsearch__.search with the expected query string' do
       expect(Article.__elasticsearch__).to receive(:search).with(hash_including(:query)).and_call_original
-      Article.search(query_params)
-    end
-
-    it 'respects the per_page parameter' do
-      mock_search_result = double("SearchResult").as_null_object
-      expect(mock_search_result).to receive(:per).with(5)
-
-      allow(Article.__elasticsearch__).to receive(:search).and_return(mock_search_result)
       Article.search(query_params)
     end
 

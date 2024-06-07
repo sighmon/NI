@@ -157,30 +157,75 @@ describe ArticlesController, :type => :controller do
 
       context "with an article" do
 
-        let(:article) { FactoryBot.create(:article) }
+        let!(:issue) { FactoryBot.create(:published_issue) }
+        let!(:article) { FactoryBot.create(:article, issue: issue, unpublished: false) }
 
-        let(:issue) { FactoryBot.create(:published_issue) }
 
-        it "can search the article" do
-          article.issue_id = issue.id
-          # TODO: Article.import no longer works as of elasticsearch 7.0.0 gem.
-          # Article.__elasticsearch__.import
+        before do
+          Article.import
           Article.__elasticsearch__.refresh_index!
-          get :search# , format: 'json'
-          expect(response.status).to eq(200)
-          # TOFIX: work out why assigns is empty. self.search() post_filter seems to be the problem
-          # expect(assigns(:articles).records).to include(article)
         end
 
-        it "can search the article JSON" do
-          article.issue_id = issue.id
-          # TODO: Article.import no longer works as of elasticsearch 7.0.0 gem.
-          # Article.__elasticsearch__.import
-          Article.__elasticsearch__.refresh_index!
-          get :search, format: 'json'
+        it "returns 200 and includes the article in the search results" do
+          get :search
           expect(response.status).to eq(200)
-          # TOFIX: work out why response is nil
-          # expect(JSON.parse(response.body).first['title']).to eq(article.title)
+          expect(assigns(:articles)).to include(article)
+        end
+
+        it "does not include unrelated articles in the search results" do
+          get :search, params: { query: 'hello' }
+          expect(response.status).to eq(200)
+          expect(assigns(:articles)).not_to include(article)
+        end
+
+        it "includes the article in the search results when searched by title" do
+          get :search, params: { query: article.title }
+          expect(response.status).to eq(200)
+          expect(assigns(:articles)).to include(article)
+        end
+
+        it "doesn't include an unpublished article in the search results when searched by title" do
+          article.unpublished = true
+          article.save
+          Article.import
+          Article.__elasticsearch__.refresh_index!
+          get :search, params: { query: article.title }
+          expect(response.status).to eq(200)
+          expect(assigns(:articles)).not_to include(article)
+        end
+
+        it "doesn't include an unpublished issue in the search results when searched by title" do
+          issue.published = false
+          issue.save
+          Article.import
+          Article.__elasticsearch__.refresh_index!
+          get :search, params: { query: article.title }
+          expect(response.status).to eq(200)
+          expect(assigns(:articles)).not_to include(article)
+        end
+
+        it "returns 200 and includes the article in JSON response" do
+          get :search, format: :json
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).first['title']).to eq(article.title)
+        end
+
+        it "returns 200 and includes the article in JSON response" do
+          get :search, format: :json
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).first['title']).to eq(article.title)
+        end
+
+        it "does not include unrelated articles in the JSON response" do
+          get :search, params: { query: 'hello' }, format: :json
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body)).to eq([])
+        end
+
+        it "includes the article in the JSON results when searched by title" do
+          get :search, params: { query: article.title }, format: :json
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).first['title']).to eq(article.title)
         end
 
       end

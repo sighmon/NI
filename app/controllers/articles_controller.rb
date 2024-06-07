@@ -26,20 +26,22 @@ class ArticlesController < ApplicationController
   end
 
   def search
-    @articles = Article.search(params, current_user.try(:admin?))
     @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
     @page_title = "Search for an article"
+    @articles = Article.joins(:issue).where(issues: {published: true}).where(unpublished: [false, nil])
+    pagination = Settings.article_pagination
+
+    if current_user.try(:admin?)
+      pagination = 100
+      @articles = Article.all
+    end
+
     if params[:query].present?
+      @articles = @articles.search(params, current_user.try(:admin?))
       @page_title = "Search results for: " + params[:query]
     end
 
-    # if params[:query].present?
-    #     @articles = Article.search(params[:query], load: true, :page => params[:page], :per_page => Settings.article_pagination)
-    # else
-    #     @articles = Article.order("publication").reverse_order.page(params[:page]).per(Settings.article_pagination)
-    # end
-    # @articles = Article.search(params)
-    # @articles = Article.all
+    @pagy, @articles = pagy_array(@articles, items: pagination)
 
     # Set meta tags
     set_meta_tags :site => 'New Internationalist',
