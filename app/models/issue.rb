@@ -29,7 +29,8 @@ class Issue < ActiveRecord::Base
   def self.search(params, admin = false)
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
     search_hash = {
-      sort: [{ release: {order: "desc", "unmapped_type": "long"}}]
+      sort: [{ release: {order: "desc", "unmapped_type": "long"}}],
+      size: 100,
     }
     search_hash.merge!({query: { query_string: { query: clean_query, default_operator: "AND" }}}) if params[:query].present?
     search_hash.merge!({ post_filter: { term: { published: true}} }) unless admin

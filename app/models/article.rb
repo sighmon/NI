@@ -29,7 +29,8 @@ class Article < ActiveRecord::Base
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
 
     query_hash = {
-      sort: [{ publication: { order: "desc", "unmapped_type": "long"} }]
+      sort: [{ publication: { order: "desc", "unmapped_type": "long"} }],
+      size: 100,
     }
 
     query_hash.merge!({ query: { bool: { must: [{ query_string: { query: clean_query, default_operator: "AND" }}]}}}) if params[:query].present?
