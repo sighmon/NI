@@ -28,7 +28,7 @@ class ArticlesController < ApplicationController
   def search
     @query_array = params[:query].try(:gsub, /[^0-9a-z ]/i, '').try(:split, ' ')
     @page_title = "Search for an article"
-    @articles = Article.joins(:issue).where(issues: {published: true}).where(unpublished: [false, nil])
+    @articles = Article.joins(:issue).where(issues: {published: true}).where(unpublished: [false, nil]).order("publication").reverse_order
     pagination = Settings.article_pagination
 
     if current_user.try(:admin?)
