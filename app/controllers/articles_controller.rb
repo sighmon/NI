@@ -41,7 +41,7 @@ class ArticlesController < ApplicationController
       @page_title = "Search results for: " + params[:query]
     end
 
-    @pagy, @articles = pagy_array(@articles, items: pagination)
+    @pagy, @articles = pagy_array(@articles, limit: pagination)
 
     # Set meta tags
     set_meta_tags :site => 'New Internationalist',

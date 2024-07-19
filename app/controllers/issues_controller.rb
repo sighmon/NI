@@ -58,7 +58,7 @@ class IssuesController < ApplicationController
       @issues = @issues.search(params, current_user.try(:admin?))
     end
 
-    @pagy, @issues = pagy_array(@issues.order("release").reverse_order, items: pagination)
+    @pagy, @issues = pagy_array(@issues.order("release").reverse_order, limit: pagination)
 
     # Set meta tags
     @page_title = "Magazine archive"
