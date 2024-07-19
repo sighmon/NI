@@ -24,6 +24,8 @@ class Article < ActiveRecord::Base
   # Index name for Heroku Bonzai/elasticsearch
   index_name BONSAI_INDEX_NAME
 
+  after_commit :flush_categories_cache
+
 
   def self.search(params, show_unpublished = false)
     clean_query = params[:query].try(:gsub, /[^0-9a-z "]/i, '')
@@ -229,6 +231,12 @@ class Article < ActiveRecord::Base
       return related_media << related_media_graphic
     else 
       return related_media
+    end
+  end
+
+  def flush_categories_cache
+    self.categories.each do |c|
+      Rails.cache.delete([c.class.name, c.id])
     end
   end
 

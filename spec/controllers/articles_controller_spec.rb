@@ -338,7 +338,7 @@ describe ArticlesController, :type => :controller do
             # familiar ID error
             #put :update, params: {:article => {:categories_attributes => { "0" => @category.attributes.slice("id","name") }}, :issue_id => @article.issue.id, :id => @article.id}
 
-            expect(@article.categories.collect(&:name)).to eq([Category.new(@category_attributes).name])
+            expect(@article.categories.all.collect(&:name)).to eq([Category.new(@category_attributes).name])
           end
 
           context "which has already been added to the article" do

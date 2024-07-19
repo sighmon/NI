@@ -1103,6 +1103,10 @@ a:active .shadow-sm {
 	box-shadow: $shadowSizeActive $shadowColour;
 }
 
+.shadow-sm.issue-unpublished {
+	border: 1px solid $niRed;
+}
+
 .shadow-light {
 	$shadowColour: #333333;
 	$shadowSizeNormal: 0em 0.063em 0.188em;

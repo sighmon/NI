@@ -66,6 +66,12 @@ class Issue < ActiveRecord::Base
 
   def flush_cache
     Rails.cache.delete([self.class.name, id])
+    # Also flush each article's categories cache
+    self.articles.each do |a|
+      a.categories.each do |c|
+        Rails.cache.delete([c.class.name, c.id])
+      end
+    end
   end
 
   def reindex_articles
