@@ -303,7 +303,6 @@ GEM
     gems (1.2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-analytics-rails (1.1.1)
     google-api-client (0.53.0)
       google-apis-core (~> 0.1)
       google-apis-generator (~> 0.1)
@@ -325,8 +324,6 @@ GEM
       thor (>= 0.20, < 2.a)
     google-cloud-env (2.1.1)
       faraday (>= 1.0, < 3.a)
-    google-tag-manager-rails (0.1.3)
-      rails (>= 3.0.0)
     googleauth (1.11.0)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.1)
@@ -750,9 +747,7 @@ DEPENDENCIES
   fog-aws
   font-awesome-rails
   formtastic
-  google-analytics-rails
   google-api-client (= 0.53.0)
-  google-tag-manager-rails
   growl
   guard-rspec
   highlighter-js!

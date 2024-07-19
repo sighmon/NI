@@ -57,12 +57,6 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
 
-  # Google Analytics setup
-  GA.tracker = ENV["GOOGLE_ANALYTICS_PRODUCTION"]
-
-  # Google Tag Manager
-  GoogleTagManager.gtm_id = ENV["GOOGLE_TAG_MANAGER"]
-
   # Active Merchant Gateway
 
   config.after_initialize do
