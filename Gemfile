@@ -201,6 +201,7 @@ end
 # gem 'twitter-bootstrap-rails'#, '2.1.6'
 # gem 'bootstrap-sass'
 gem 'bootstrap', '~> 4'#, '>= 4.3.1'
+gem 'dartsass-sprockets'
 # gem 'less-rails'
 gem 'mini_racer'
 gem 'font-awesome-rails'
