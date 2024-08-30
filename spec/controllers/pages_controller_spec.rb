@@ -124,7 +124,7 @@ describe PagesController, :type => :controller do
         # specifies that the Page created on the previous line
         # receives the :update message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Page).to receive(:update).with({ "title" => "MyString" })
+        expect_any_instance_of(Page).to receive(:update).with(ActionController::Parameters.new({"title" => "MyString"}).permit!)
         sign_in FactoryBot.create(:admin_user) 
         put :update, params: {:id => page.to_param, :page => { "title" => "MyString" }}
       end

@@ -32,6 +32,7 @@
 # Ignore application configuration
 /config/application*.yml
 /config/secrets.yml
+/config/credentials.yml
 
 # Ignore Google Play secrets
 client_secret.json

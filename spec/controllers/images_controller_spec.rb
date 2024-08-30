@@ -206,7 +206,7 @@ describe ImagesController, :type => :controller do
           # specifies that the Image created on the previous line
           # receives the :update message with whatever params are
           # submitted in the request.
-          expect_any_instance_of(Image).to receive(:update).with(image_params)
+          expect_any_instance_of(Image).to receive(:update).with(ActionController::Parameters.new(image_params).permit!)
           put :update, params: {:id => image.to_param, :image => image_params, :article_id => image.article.id, :issue_id => image.article.issue.id}
         end
 
