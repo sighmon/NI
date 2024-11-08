@@ -95,6 +95,10 @@ module NI
     # Rails 7 - move from mini_magick to vips
     config.active_storage.variant_processor = :vips
 
+    # Rails 8
+    config.autoload_lib(ignore: %w[assets tasks])
+    
+
     config.generators do |g|
       g.fixture_replacement :factory_girl
     end

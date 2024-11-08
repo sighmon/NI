@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '3.3.6'
 
-gem 'rails', '7.2.2'
+gem 'rails', '8.0.0'
 
 gem 'sprockets'
 gem 'sprockets-rails'
@@ -37,7 +37,7 @@ gem 'pg'
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
 # To run jobs locally $ rake jobs:work
-gem 'delayed_job_active_record'
+# gem 'delayed'
 
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
@@ -234,9 +234,9 @@ gem 'jquery-ui-rails', '>= 7.0.0', git: 'https://github.com/jquery-ui-rails/jque
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
 gem 'simple_form'
-gem 'country_select'
-gem 'country_state_select'
-gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
+# gem 'country_select'
+# gem 'country_state_select'
+# gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
 # Migrated to :vips with Rails 7
@@ -245,7 +245,7 @@ gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave
-gem 'carrierwave'
+# gem 'carrierwave'
 
 # Using Fog for Amazon S3 image storage so it works with Heroku
 # https://github.com/jnicklas/carrierwave (see S3 section)
