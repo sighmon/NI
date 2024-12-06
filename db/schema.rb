@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_03_034804) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_05_223349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -176,6 +176,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_034804) do
     t.string "team_id"
     t.string "bundle_id"
     t.boolean "feedback_enabled", default: true
+    t.string "firebase_project_id"
+    t.text "json_key"
   end
 
   create_table "rpush_feedback", id: :serial, force: :cascade do |t|
@@ -321,5 +323,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_034804) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
 end

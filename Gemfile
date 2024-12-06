@@ -127,7 +127,7 @@ gem 'mjml-rails'#, '2.4.3'#, git: 'https://github.com/sighmon/mjml-rails.git', r
 # gem 'mjml-rails', path: '../mjml-rails/'#, require: 'mjml'
 
 # RPush for push notifications migrating away from Parse
-gem 'rpush'
+gem 'rpush', '~> 7.0'
 # Temporary fix for rpush:
 # https://github.com/rpush/rpush/issues/306
 gem 'net-http-persistent'#, '~> 2.9.4'
