@@ -1,0 +1,20 @@
+# New Internationalist
+
+> New Internationalist (NI) is an international publisher and left-wing magazine based in Oxford, England, owned by a multi-stakeholder co-operative and run day to day as a worker-run co-operative with a non-hierarchical structure. Known for its strong editorial and environmental policies, and its bi-monthly independent magazine, it describes itself as existing to "cover stories the mainstream media sidestep and provide alternative perspectives on today's global critical issues." It covers social and environmental issues through its magazine, books and digital platforms.
+
+## New Internationalist magazine
+
+New Internationalist magazine has existed for more than 40 years and as of 2018 was the largest magazine of its type in circulation in the United Kingdom. It has won the Utne Independent Press Award for "Best International Coverage" eight times, most recently in 2013 and an Amnesty International UK Media Awards 2012 award in the consumer magazine category as well as being recognised by the United Nations for its "outstanding contribution to world peace and development".
+
+## New Internationalist magazine digital platforms
+
+- [New Internationalist magazine digital edition](https://digital.newint.com.au): An online subscription system written in Ruby on Rails
+- [New Internationalist for iOS](https://itunes.apple.com/au/app/new-internationalist-magazine/id711254931?mt=8&uo=4): A subscription application for Apple iOS on the Apple App Store
+- [New Internationalist for Android](https://play.google.com/store/apps/details?id=au.com.newint.newinternationalist): A subscription application for Android on the Google Play Store
+
+## Examples
+
+- [Free sample magazine](https://digital.newint.com.au/issues/129): Clampdown! Criminalizing dissent - resisting the squeeze on public space
+- [Full magazine archive](https://digital.newint.com.au/issues): An archive from 2008 - present
+- [Magazine search](https://digital.newint.com.au/search): Search for an article in New Internationalist magazines
+- [Browse article categories](https://digital.newint.com.au/categories): A list of categories and themes covered by articles in New Internationalist magazine
