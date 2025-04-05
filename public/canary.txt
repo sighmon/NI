@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: March 2025
+Period: April 2025
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  March 2025
+  April 2025
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmfBUIcACgkQtsnG2UL7
-GPkxuRAArR0YytJtYigJKnLXklOrgsBNUrd6MgRlJ3wWecDztRGOpPFCXsNILimX
-/k6sFcvwvgsFiat7/G6GrEITCD+6MsXsv5ntNC/QKQ910ygbwdsack/GH64cW+/U
-VJrZp+9FejEdNziuiM2XPLlMw5I0kBfbE+fjrj2E2Yq3rj02AOkuLjTVo4Nvxh89
-0oByu7N5MyxuPwdW2jb7mLyubu7sZQL7oe4ks733r+QGnIJ2bchWeVn3YSmw33Pa
-PMFocbw4kRiROU/tzjCGAbm+2JctcbPFnVc9CUMqcQ5v1frfY1LzfdRWN4Kty49B
-pkMdz9yRnTnJ+9xgCkbaw50V3tD1dq8Y23sd8vNYa8/UR8C3k0OhabowRBWPFyMo
-QsDJwE4hx5yOlHOPUAGFmFFdQe8Gwc8yPDW6xqthZecfDs3bN0KBdnibvQtkTfan
-bF+RH0hizPvNs8+kDYaS1WDz6Zl9ZKtd9VbRCwDypt5H+VJHZEiRpJNol+QnFUjv
-iP2rufCQS9nop08oj0SoUJ7+h8Wu3sDYrEXzy92xHGlyPslitaHyckcMeuziXH47
-/E+71Y28lWGXc/Q6wkkhK5SPmA+MXsqX4/oxjUM3PKClTJ0fC4El5ku50hB/7TTc
-yEnpk3ESFbP7uf1bJwxgvqYTtQge7IToBaGZL5EfW309NsDtOAU=
-=2GbW
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmfwotEACgkQtsnG2UL7
+GPl/vg//Zzf9n/i1FYwdOcQzRS1CamJneqAJvu4pLtzFQh6UOEl2mKm0rpdQvOKk
+S69JSbdvhSOnx6+VWN8AkPpHcRG8X+ApuWr4qNL1krW22VQcJa1seR80H0xV299a
+oBgvCUbeHO/IOp/YSb4uKacXv72kljG3zmb7w72bjzlk+obxpeEaX0GTjWYOQIkA
+OjiSeQ92V/E+VFYKC4Zh45wt5qdqak+s9sC48GcxA4pfKdpoZskxrR1v5uuvQ4mI
+UVb0Lk1F41643yMwp5PxeiEo/smrQeYjFe7mV2id9hJEXYJahziR6zkJ1YR0NGaz
+XwV9EaoZ1luF5C+GkcFCgOYp6OvhPQlkpO8OXTHv4CBVJB7an7f2CvrVsXQm798E
+9cINZOCadB0kiUXbRcK954fDrcS2aUC5g/oeiRpSI+WVCnhQ0Eazyf+TkB5koJzk
+tGV+wLpXusanafwEYW24vr2KxBnsgQct83fbWeou9ro2pVQ3yGWIwLETrHBhtVvf
+v59t780LuvL7DDxA++i4zhab+66ivBcDdTRMtzhQ6RxE0ZaKETLui5PSmditwOM2
+2pJ1izzBhIc0sACk56bNutnl56e8lh1ddRyiXeJ5v+73UXOI0gd35UmAyYeKyRRC
+2Hi3WWMwId+iOtpJ4ckcxW/Fgxm2dELRNQqBnZSfPv0VtSbw6jQ=
+=WLZC
 -----END PGP SIGNATURE-----
