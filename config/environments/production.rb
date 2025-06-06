@@ -223,4 +223,7 @@ Rails.application.configure do
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
+
+  # Rails 8
+  config.active_record.attributes_for_inspect = [ :id ]
 end
