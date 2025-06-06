@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '3.4.4'
 
-gem 'rails', '8.0.0'
+gem 'rails', '8.0.2'
 
 gem 'sprockets'
 gem 'sprockets-rails'
@@ -234,9 +234,9 @@ gem 'jquery-ui-rails', '>= 7.0.0', git: 'https://github.com/jquery-ui-rails/jque
 # For forms to work with Bootstrap for twitter
 # https://github.com/plataformatec/simple_form
 gem 'simple_form'
-# gem 'country_select'
-# gem 'country_state_select'
-# gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
+gem 'country_select'
+gem 'country_state_select', git: 'https://github.com/sighmon/Country-State-Select.git', branch: 'add/rails-8-support'
+gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
 # Migrated to :vips with Rails 7
@@ -245,7 +245,7 @@ gem 'simple_form'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave
-# gem 'carrierwave'
+gem 'carrierwave'
 
 # Using Fog for Amazon S3 image storage so it works with Heroku
 # https://github.com/jnicklas/carrierwave (see S3 section)
