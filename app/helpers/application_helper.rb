@@ -331,6 +331,7 @@ module ApplicationHelper
 
     def self.rpush_register_android_app
         # Set-up Android push notifications
+        # TODO: Update this to Firebase
         app = Rpush::Gcm::App.new
         if Rails.env.production?
             app = Rpush::Gcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))

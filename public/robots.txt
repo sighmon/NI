@@ -9,6 +9,8 @@
 User-Agent: *
 Disallow: /*email_issue
 Disallow: /*email_article
+Disallow: /*wall_post
+Disallow: /*tweet
 Disallow: /ads.txt
 
 Sitemap: https://digital.newint.com.au/sitemap.xml
