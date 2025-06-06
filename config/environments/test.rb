@@ -34,6 +34,10 @@ Rails.application.configure do
   config.cache_store = :null_store
   config.active_storage.service = :test
   config.action_controller.raise_on_missing_callback_actions = true
+  # turn caching ON for specs that rely on it
+  config.action_controller.perform_caching = true
+  # use an in-process store that survives for the whole example
+  config.cache_store = :memory_store, { size: 64.megabytes }
 
   # Raise exceptions instead of rendering exception templates
   # config.action_dispatch.show_exceptions = false
