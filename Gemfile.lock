@@ -223,6 +223,9 @@ GEM
     date (3.4.1)
     debug_inspector (1.2.0)
     declarative (0.0.20)
+    delayed (1.0.0)
+      activerecord (>= 5.2)
+      concurrent-ruby
     devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -831,6 +834,7 @@ DEPENDENCIES
   dalli
   dartsass-sprockets
   database_cleaner
+  delayed
   devise
   elasticsearch (< 7.14)
   elasticsearch-model

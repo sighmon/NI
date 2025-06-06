@@ -37,7 +37,7 @@ gem 'pg'
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
 # To run jobs locally $ rake jobs:work
-# gem 'delayed'
+gem 'delayed'
 
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
