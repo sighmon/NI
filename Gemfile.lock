@@ -833,6 +833,7 @@ DEPENDENCIES
   country_select
   country_state_select!
   curb
+  daemons
   dalli
   dartsass-sprockets
   database_cleaner
