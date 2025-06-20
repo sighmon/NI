@@ -281,9 +281,16 @@ module ApplicationHelper
 
     def self.start_delayed_jobs
         if Rails.env.production?
-            PlatformAPI.connect_oauth(ENV.fetch("HEROKU_OAUTH")).dyno.create(ENV.fetch("HEROKU_OAUTH_APP_NAME"),{command: 'rake jobs:workoff'})
+            PlatformAPI
+                .connect_oauth(ENV.fetch("HEROKU_OAUTH"))
+                .dyno
+                .create(
+                    ENV.fetch("HEROKU_OAUTH_APP_NAME"),
+                    command: "bundle exec bin/delayed_job run --exit-on-complete"
+                )
         else
-            Delayed::Worker.new({:exit_on_complete => true}).start
+            Delayed::Worker.exit_on_complete = true
+            Delayed::Worker.new.start
         end
     end
 
