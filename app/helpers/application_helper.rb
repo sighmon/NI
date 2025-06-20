@@ -1,7 +1,6 @@
 module ApplicationHelper
 
     include Pagy::Frontend
-    require 'daemons'
 
     def issues_as_table(issues)
         if issues.try(:empty?)
