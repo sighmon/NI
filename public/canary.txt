@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: June 2025
+Period: July 2025
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  June 2025
+  July 2025
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmhCGo0ACgkQtsnG2UL7
-GPnbMA//XL/f8wO1vOuXE1TcOBNC8q8RNR3iu/Jx7pX02AWhgQskOD4Y5JoJ9/aG
-OuPDF0i12pERy4tpQAYrmR8IzM3f3UaQ+9swD7gboOuU3soCY+FChqlpHP6s3wPB
-gFkMqP0b6WpIM0fxWHNr/okEAF0mgE9sHjBhRXICGtLwFqmZMW5ucwj0/Yhyrb2O
-K0NqXjxBiCXC5omBkWKX7nbAgGgGRTvo5hEeZOJMRWJxKXu++PUmvX07zl+wn8of
-1ZoLS1OZStIvOeiIKtviYbtPgakIqHaz2+RVhytcicx+nGQLgh1rDEb6qi1fYWyN
-OW7STjs+hziCPWM3e7b5tKA/qCqXt41NDJd2cVRWPJbxlR2aHa7MZYZGfYhob9ei
-vh7qSs1dTFqs5wgI7cY/pKkP+a4juit8C4X1DVNtAShnmK9ZEviYLGQx0K+xxGFi
-Q1Wqxo/Iz44D9gcZtButqR74UubUov92YbBCfu7ouaU/NEB6j5VJrSAWVaU3TjPf
-Ov4nNH+AeHp9hPH3421ZTtJr24scQqXSUJoVyF0HiYsrC34R7e7YfIg2V2umPG0X
-OYJJrDdKXawJkkEN3LQSL0J4NrkBVy4Hol/McdjU0cv7LKmyEoyimFYaki3L6hoE
-SJ9X3XP8wrVzbbiDBr3wM6cxFUupiP34oGlyDyyBKNAFlxIifUs=
-=gLtx
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmhnD2sACgkQtsnG2UL7
+GPmUXg//VUrjnyF+AWammUcc4em/9D6jzgK3vifxyWVdkgT3mWApADkuC5kXMmEm
+PcPJDlLydxqmTjHeOo9LUz1KQonUEh2CMQWUC5HQOLvLxEkvdqNVaRcpfl0l3gnq
+Rgwhp/rPzAFxMXJFgM47fm5AuZCRWpOliXAPKawKLw2IOd2+lzJ2H9qHzvgwvtvh
+HDEgLVE1scO1Cl+/+m9IhjOssu6wab8NL44gl/15K3ry+dBvXw2Vuglp2aCH1XIN
+vOApq+bB6v+LkvzoRkTvkUYqkRe9oo98PLK6bk4/ygDFXiJgdSzcIYDA6/J9EPIB
+8D9qebxY+AmQIm11umcWBO7l51agusfiNIUGtGICv2JsXoDNHxZFJnxz3/EqpE2e
+m4fTvuuZJD1oXlnPTV5yz1qJEkbUvaIYmPbCeL2BiWx754oh/fUuxFeecxKUb/tp
+WWZhgIQNkMLzpAFqFdu2TeaMWVgovJ0j6kFPIn6W0L3IowrFTXrF1MG9NCfQnw5/
+gd5reP/yLPJxBMdVlaGTANx0WlSM4TNNOG6hl5Ekyu5vS0au1NCn2gvbkF6dp9Pp
+4iNnm5tSOa7w74HfPwv2zbWKPQZ+eCXusiKFJnkXy188ZXAqJpylD9dlSWjdbwO7
+ELxNdu7i9FkeDGvojBo4SJ/T4aucqHRQAHId29rIZrJ1z5MHnw8=
+=CR32
 -----END PGP SIGNATURE-----
