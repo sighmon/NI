@@ -186,7 +186,13 @@
   <% end %>
 
   <% if @view_from_india and not @view_from_india.empty? %>
-    <div class="article-image no-shadow"><%= image_tag('section-view-from-india.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %></div>
+    <div class="article-image no-shadow">
+      <% if @article.publication.year > 2024 and @article.publication.month > 8 %>
+        <%= image_tag('section-view-from-india-2025.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %>
+      <% else %>
+        <%= image_tag('section-view-from-india.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %>
+      <% end %>
+    </div>
   <% end %>
 
   <% if @view_from_america and not @view_from_america.empty? %>

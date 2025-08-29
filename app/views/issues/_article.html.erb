@@ -53,8 +53,13 @@
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-india/') %>
-              <%= link_to retina_image_tag('section-view-from-india-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
-              <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
+              <% if article.publication.year > 2024 and article.publication.month > 8 %>
+                <%= link_to retina_image_tag('section-view-from-india-issue-2025.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <meta itemprop="url" content="<%= image_url('section-view-from-india-issue-2025.png').to_s %>">
+              <% else %>
+                <%= link_to retina_image_tag('section-view-from-india-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
+              <% end %>
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/hall-of-infamy/') %>
