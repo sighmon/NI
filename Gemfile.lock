@@ -154,7 +154,7 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
       rouge (>= 1.0.0)
-    bigdecimal (3.2.3)
+    bigdecimal (3.3.0)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
     bootstrap (4.6.2.1)
@@ -250,7 +250,7 @@ GEM
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
-    erb (5.0.2)
+    erb (5.0.3)
     erubi (1.13.1)
     erubis (2.7.0)
     eventmachine (1.2.7)
@@ -402,7 +402,7 @@ GEM
       webrick
     hkdf (0.3.0)
     http-2 (1.1.1)
-    httparty (0.23.1)
+    httparty (0.23.2)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -428,7 +428,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    json (2.15.0)
+    json (2.15.1)
     jwt (2.10.2)
       base64
     kaminari (1.2.2)
@@ -496,7 +496,7 @@ GEM
       connection_pool (~> 2.2, >= 2.2.4)
     net-http2 (0.19.0)
       http-2 (>= 1.0)
-    net-imap (0.5.10)
+    net-imap (0.5.12)
       date
       net-protocol
     net-pop (0.1.2)
@@ -505,7 +505,7 @@ GEM
       timeout
     net-smtp (0.5.1)
       net-protocol
-    newrelic_rpm (9.21.0)
+    newrelic_rpm (9.22.0)
     nio4r (2.7.4)
     nokogiri (1.18.10-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -550,7 +550,7 @@ GEM
       moneta (~> 1.0.0)
       rate_throttle_client (~> 0.1.0)
     popper_js (1.16.1)
-    pp (0.6.2)
+    pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
     prism (1.5.1)
@@ -562,7 +562,7 @@ GEM
       stringio
     public_suffix (6.0.2)
     racc (1.8.1)
-    rack (3.2.1)
+    rack (3.2.2)
     rack-mini-profiler (4.0.1)
       rack (>= 1.2.0)
     rack-session (2.1.1)
@@ -621,9 +621,10 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     recaptcha (5.21.1)
     regexp_parser (2.11.3)
     reline (0.6.2)
@@ -678,7 +679,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
-    rubocop (1.81.0)
+    rubocop (1.81.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -702,7 +703,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (3.1.0)
+    rubyzip (3.1.1)
     sass-embedded (1.93.2-aarch64-linux-gnu)
       google-protobuf (~> 4.31)
     sass-embedded (1.93.2-aarch64-linux-musl)
@@ -786,7 +787,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (1.0.3)
+    uri (1.0.4)
     uri-js-rails (1.15.2)
     useragent (0.16.11)
     warden (1.2.9)
