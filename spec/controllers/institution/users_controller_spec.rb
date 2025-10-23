@@ -119,10 +119,14 @@ describe Institution::UsersController, :type => :controller do
           # receives the :update message with whatever params are
           # submitted in the request.
           child_user_params = FactoryBot.attributes_for(:child_user)
-          # TOFIX: Ugly hack merging uk_id & uk_expiry to "" insetad of nil
-          child_user_action_params = ActionController::Parameters.new(child_user_params.merge({uk_id: "",uk_expiry: ""})).permit(:username, :email, :uk_id, :uk_expiry, :password, :password_confirmation)
-          # byebug
-          expect_any_instance_of(User).to receive(:update).with(child_user_action_params)
+          permitted = ActionController::Parameters
+            .new(child_user_params)
+            .permit(:username, :email, :uk_id, :uk_expiry, :password, :password_confirmation)
+
+          # Normalize blanks to nil (Rails 8.1 behaviour)
+          permitted[:uk_id] = nil if permitted[:uk_id].blank?
+          permitted[:uk_expiry] = nil if permitted[:uk_expiry].blank?
+          expect_any_instance_of(User).to receive(:update).with(permitted)
           put :update, params: {:id => user.to_param, :user => child_user_params}
         end
 
