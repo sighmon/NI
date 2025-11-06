@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '3.4.7'
 
-gem 'rails', '8.1.0'
+gem 'rails', '8.1.1'
 
 gem 'sprockets'
 gem 'sprockets-rails'
@@ -266,7 +266,7 @@ gem 'kaminari'#, '~> 0.13.0'
 gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some reason.
 
 # Pagy for faster pagination
-gem 'pagy'
+gem 'pagy', '< 43'
 
 # Elasticsearch for archive and article search
 gem 'elasticsearch', '< 7.14'
