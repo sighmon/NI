@@ -408,7 +408,14 @@ class HomeController < ApplicationController
               xml.source( url: apple_news_url(:format => 'xml') ) do
                 xml.text "New Internationalist magazine"
               end
-              xml.description { xml.cdata (ActionController::Base.helpers.image_tag(i.cover_url(:home2x).to_s, alt: i.title, title: i.title, size: '283x400', style: 'float:right;') + ActionView::Base.full_sanitizer.sanitize(i.editors_letter)) }
+              xml.description { xml.cdata (
+                ActionController::Base.helpers.image_tag(i.cover_url(:home2x).to_s, alt: i.title, title: i.title, size: '283x400', style: 'float:right; max-width:283px;') +
+                ActionController::Base.helpers.sanitize(
+                  i.editors_letter.gsub(/<(\/?)h[1-6][^>]*>/i) { |m| "<#{$1}p>" },
+                  tags: %w[p br strong em b i ul ol li blockquote h1 h2 h3 h4 h5 h6 img],
+                  attributes: %w[src alt title width height style]
+                )
+              ) }
               xml.pubDate i.release.to_datetime.rfc822
             end
           end
