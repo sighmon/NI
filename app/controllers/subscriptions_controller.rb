@@ -7,9 +7,9 @@ class SubscriptionsController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     session[:user_return_to] = request.referer
     if not current_user
-      redirect_to new_user_session_path, :alert => "You need to be logged in to buy a subscription."
+      redirect_to new_user_session_path, alert: "You need to be logged in to buy a subscription."
     else
-      redirect_to (session[:user_return_to] or issues_path), :alert => exception.message
+      redirect_to (session[:user_return_to] or issues_path), alert: exception.message
     end
   end
 
@@ -36,10 +36,10 @@ class SubscriptionsController < ApplicationController
         render @template
       }
       format.mjml {
-        render @template, :layout => false
+        render @template, layout: false
       }
       format.text {
-        render @template, :layout => false
+        render @template, layout: false
       }
     end
   end
@@ -113,11 +113,11 @@ class SubscriptionsController < ApplicationController
       session[:express_purchase_description] = payment_description
 
       ppr = PayPal::Recurring.new({
-        :return_url   => new_subscription_url,
-        :cancel_url   => new_subscription_url,
-        :description  => payment_description,
-        :amount       => (session[:express_purchase_price] / 100),
-        :currency     => 'AUD'
+        return_url: new_subscription_url,
+        cancel_url: new_subscription_url,
+        description: payment_description,
+        amount: (session[:express_purchase_price] / 100),
+        currency: 'AUD'
       })
       response = ppr.checkout
       redirect_to response.checkout_url if response.valid?
@@ -147,12 +147,12 @@ class SubscriptionsController < ApplicationController
       session[:express_purchase_description] = payment_description
 
       response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-        :ip                 => request.remote_ip,
-        :return_url         => new_subscription_url,
-        :cancel_return_url  => new_subscription_url,
-        :allow_note         => true,
-        :items              => [{:name => "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", :quantity => 1, :description => payment_description, :amount => session[:express_purchase_price]}],
-        :currency           => 'AUD'
+        ip: request.remote_ip,
+        return_url: new_subscription_url,
+        cancel_return_url: new_subscription_url,
+        allow_note: true,
+        items: [{name: "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", quantity: 1, description: payment_description, amount: session[:express_purchase_price]}],
+        currency: 'AUD'
       )
       redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
     end
@@ -187,18 +187,18 @@ class SubscriptionsController < ApplicationController
     payment_complete = false
     notice_message_for_user = "Something went wrong, sorry!"
     @user = current_user
-    @subscription = @user.subscriptions.build(:valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => session[:express_purchase_subscription_duration], :purchase_date => DateTime.now)
+    @subscription = @user.subscriptions.build(valid_from: (@user.last_subscription.try(:expiry_date) or DateTime.now), duration: session[:express_purchase_subscription_duration], purchase_date: DateTime.now)
 
     if session[:express_autodebit]
       # It's an autodebit, so set that up
       # 1. setup autodebit by requesting payment
       ppr = PayPal::Recurring.new({
-        :token       => session[:express_token],
-        :payer_id    => session[:express_payer_id],
-        :amount      => (session[:express_purchase_price] / 100),
-        :ipn_url     => "#{payment_notifications_url}",
-        :currency    => 'AUD',
-        :description => session[:express_purchase_description]
+        token: session[:express_token],
+        payer_id: session[:express_payer_id],
+        amount: (session[:express_purchase_price] / 100),
+        ipn_url: "#{payment_notifications_url}",
+        currency: 'AUD',
+        description: session[:express_purchase_description]
       })
       response_request = ppr.request_payment
 
@@ -206,18 +206,18 @@ class SubscriptionsController < ApplicationController
         # 2. create profile & save recurring profile token
         # Set :period to :daily and :frequency to 1 for testing IPN every minute
         ppr = PayPal::Recurring.new({
-          :token       => session[:express_token],
-          :payer_id    => session[:express_payer_id],
-          :amount      => (session[:express_purchase_price] / 100),
-          :currency    => 'AUD',
-          :description => session[:express_purchase_description],
-          :frequency   => session[:express_purchase_subscription_duration], # 1,
-          :period      => :monthly, # :daily,
-          :reference   => "#{current_user.id}",
-          :ipn_url     => "#{payment_notifications_url}",
-          :start_at    => (@subscription.valid_from + session[:express_purchase_subscription_duration].months), # Time.now
-          :failed      => 1,
-          :outstanding => :next_billing
+          token: session[:express_token],
+          payer_id: session[:express_payer_id],
+          amount: (session[:express_purchase_price] / 100),
+          currency: 'AUD',
+          description: session[:express_purchase_description],
+          frequency: session[:express_purchase_subscription_duration], # 1,
+          period: :monthly, # :daily,
+          reference: "#{current_user.id}",
+          ipn_url: "#{payment_notifications_url}",
+          start_at: (@subscription.valid_from + session[:express_purchase_subscription_duration].months), # Time.now
+          failed: 1,
+          outstanding: :next_billing
         })
 
         response_create = ppr.create_recurring_profile
@@ -351,7 +351,7 @@ class SubscriptionsController < ApplicationController
   private
 
   def cancel_recurring_subscription
-    ppr = PayPal::Recurring.new(:profile_id => @subscription.paypal_profile_id)
+    ppr = PayPal::Recurring.new(profile_id: @subscription.paypal_profile_id)
     response = ppr.cancel
     if response.success?
       # Don't nil out paypal recurring profile.
@@ -400,11 +400,11 @@ class SubscriptionsController < ApplicationController
 
   def express_purchase_options
     {
-    :ip         => request.remote_ip,
-    :token      => session[:express_token],
-    :payer_id   => session[:express_payer_id],
-    :items      => [{:name => "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", :quantity => 1, :description => "New Internationalist Magazine - subscription to the digital edition", :amount => session[:express_purchase_price]}],
-    :currency   => 'AUD'
+    ip: request.remote_ip,
+    token: session[:express_token],
+    payer_id: session[:express_payer_id],
+    items: [{name: "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", quantity: 1, description: "New Internationalist Magazine - subscription to the digital edition", amount: session[:express_purchase_price]}],
+    currency: 'AUD'
     }
   end
 

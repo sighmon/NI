@@ -1,4 +1,4 @@
-<% cache(category, :expires_in => 1.day) do %>
+<% cache(category, expires_in: 1.day) do %>
   <% if category.latest_published_article %>
   <tr>
     <!-- <td><%= link_to category.id, category_path(category) %></td> -->

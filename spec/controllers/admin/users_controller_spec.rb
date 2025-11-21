@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Admin::UsersController, :type => :controller do
+describe Admin::UsersController, type: :controller do
 
   context "as an admin user" do
     before :each do

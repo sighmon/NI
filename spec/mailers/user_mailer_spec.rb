@@ -1,7 +1,7 @@
 require 'rails_helper'
 include ApplicationHelper
 
-describe UserMailer, :type => :mailer do
+describe UserMailer, type: :mailer do
 
   describe "user_signup_confirmation" do
     let(:user) { FactoryBot.create(:user) }

@@ -3,14 +3,14 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
 
-  skip_before_action :verify_authenticity_token, :only => [:body, :body_android, :ios_share, :android_share, :popular]
+  skip_before_action :verify_authenticity_token, only: [:body, :body_android, :ios_share, :android_share, :popular]
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
-  load_and_authorize_resource :except => [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
+  load_and_authorize_resource except: [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
-  newrelic_ignore :only => [:email]
+  newrelic_ignore only: [:email]
   # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
   def strip_tags(string)
@@ -19,7 +19,7 @@ class ArticlesController < ApplicationController
 
   rescue_from CanCan::AccessDenied do |exception|
     if @article
-      redirect_to new_issue_purchase_path(@article.issue), :alert => "You need to purchase this issue or subscribe to read this article."
+      redirect_to new_issue_purchase_path(@article.issue), alert: "You need to purchase this issue or subscribe to read this article."
     else
       redirect_to root_path
     end
@@ -44,30 +44,30 @@ class ArticlesController < ApplicationController
     @pagy, @articles = pagy_array(@articles, limit: pagination)
 
     # Set meta tags
-    set_meta_tags :site => 'New Internationalist',
-            :title => @page_title,
-            :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
-            :keywords => "new, internationalist, magazine, digital, edition, search",
-            :canonical => search_url,
-            :fb => {
-              :app_id => ENV["FACEBOOK_APP_ID"]
+    set_meta_tags site: 'New Internationalist',
+            title: @page_title,
+            description: "Find an article by keyword from the New Internationalist magazine digital archive.",
+            keywords: "new, internationalist, magazine, digital, edition, search",
+            canonical: search_url,
+            fb: {
+              app_id: ENV["FACEBOOK_APP_ID"]
             },
-            :open_graph => {
-              :title => @page_title,
-              :description => "Find an article by keyword from the New Internationalist magazine digital archive.",
-              #:type  => :magazine,
-              :url   => search_url,
-              :site_name => "New Internationalist Magazine Digital Edition"
+            open_graph: {
+              title: @page_title,
+              description: "Find an article by keyword from the New Internationalist magazine digital archive.",
+              #type: :magazine,
+              url: search_url,
+              site_name: "New Internationalist Magazine Digital Edition"
             }
     respond_to do |format|
       format.html # show.html.erb
       
       format.json { render json: @articles.to_json(
       # Don't show :body here
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id],
-        :include => {
-          :images => {},
-          :categories => { :only => [:name, :colour, :id] }
+      only: [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id],
+        include: {
+          images: {},
+          categories: { only: [:name, :colour, :id] }
         }
       ) }
     end
@@ -79,47 +79,47 @@ class ArticlesController < ApplicationController
     @page_description = "Articles from New Internationalist magazine that our readers have shared the most."
 
     # Set meta tags
-    set_meta_tags :site => 'New Internationalist',
-            :title => @page_title,
-            :description => @page_description,
-            :keywords => "new, internationalist, magazine, digital, edition, popular, readers, ordered",
-            :canonical => popular_url,
-            :alternate => [
-              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
-              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
-              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags site: 'New Internationalist',
+            title: @page_title,
+            description: @page_description,
+            keywords: "new, internationalist, magazine, digital, edition, popular, readers, ordered",
+            canonical: popular_url,
+            alternate: [
+              {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
             ],
-            :fb => {
-              :app_id => ENV["FACEBOOK_APP_ID"]
+            fb: {
+              app_id: ENV["FACEBOOK_APP_ID"]
             },
-            :open_graph => {
-              :title => @page_title,
-              :description => @page_description,
-              :url   => popular_url,
-              :image => @popular_articles.first.try(:first_image).try(:data_url).to_s,
-              :site_name => "New Internationalist Magazine Digital Edition"
+            open_graph: {
+              title: @page_title,
+              description: @page_description,
+              url: popular_url,
+              image: @popular_articles.first.try(:first_image).try(:data_url).to_s,
+              site_name: "New Internationalist Magazine Digital Edition"
             },
-            :twitter => {
-              :card => "summary_large_image",
-              :site => "@#{ENV["TWITTER_NAME"]}",
-              :creator => "@#{ENV["TWITTER_NAME"]}",
-              :title => @page_title,
-              :description => @page_description,
-              :image => {
-                :src => @popular_articles.first.try(:first_image).try(:data_url).to_s
+            twitter: {
+              card: "summary_large_image",
+              site: "@#{ENV["TWITTER_NAME"]}",
+              creator: "@#{ENV["TWITTER_NAME"]}",
+              title: @page_title,
+              description: @page_description,
+              image: {
+                src: @popular_articles.first.try(:first_image).try(:data_url).to_s
               },
-              :app => {
-                :name => {
-                :iphone => ENV["ITUNES_APP_NAME"],
-                :ipad => ENV["ITUNES_APP_NAME"]
+              app: {
+                name: {
+                iphone: ENV["ITUNES_APP_NAME"],
+                ipad: ENV["ITUNES_APP_NAME"]
                 },
-                :id => {
-                :iphone => ENV["ITUNES_APP_ID"],
-                :ipad => ENV["ITUNES_APP_ID"]
+                id: {
+                iphone: ENV["ITUNES_APP_ID"],
+                ipad: ENV["ITUNES_APP_ID"]
                 },
-                :url => {
-                :iphone => "newint://",
-                :ipad => "newint://"
+                url: {
+                iphone: "newint://",
+                ipad: "newint://"
                 }
               }
             }
@@ -127,12 +127,12 @@ class ArticlesController < ApplicationController
       format.html # show.html.erb
       
       format.json { render json: @popular_articles.to_json(
-      :only => [:title, :teaser, :keynote, :id, :issue_id],
-        # :include => {
-        #   :images => {},
-        #   :categories => { :only => [:name, :colour, :id] }
+      only: [:title, :teaser, :keynote, :id, :issue_id],
+        # include: {
+        #   images: {},
+        #   categories: { only: [:name, :colour, :id] }
         # },
-        :methods => [:total_guest_passes_use_count, :popular_guest_pass_key, :first_image]
+        methods: [:total_guest_passes_use_count, :popular_guest_pass_key, :first_image]
       ), callback: params[:callback] }
     end
   end
@@ -145,56 +145,55 @@ class ArticlesController < ApplicationController
     @page_description = "Three articles selected for you today from New Internationalist magazine."
 
     # Set meta tags
-    set_meta_tags :site => 'New Internationalist',
-            :title => @page_title,
-            :description => @page_description,
-            :keywords => "new, internationalist, magazine, quick reads, quick, reads, daily, selection, digital, edition",
-            :canonical => quick_reads_url,
-            :alternate => [
-              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
-              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
-              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags site: 'New Internationalist',
+            title: @page_title,
+            description: @page_description,
+            keywords: "new, internationalist, magazine, quick reads, quick, reads, daily, selection, digital, edition",
+            canonical: quick_reads_url,
+            alternate: [
+              {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+              {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+              {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
             ],
-            :fb => {
-              :app_id => ENV["FACEBOOK_APP_ID"]
+            fb: {
+              app_id: ENV["FACEBOOK_APP_ID"]
             },
-            :open_graph => {
-              :title => @page_title,
-              :description => @page_description,
-              :url   => quick_reads_url,
-              :image => @quick_reads.first.try(:first_image).try(:data_url).to_s,
-              :site_name => "New Internationalist Magazine Digital Edition"
+            open_graph: {
+              title: @page_title,
+              description: @page_description,
+              url: quick_reads_url,
+              image: @quick_reads.first.try(:first_image).try(:data_url).to_s,
+              site_name: "New Internationalist Magazine Digital Edition"
             },
-            :twitter => {
-              :card => "summary_large_image",
-              :site => "@#{ENV["TWITTER_NAME"]}",
-              :creator => "@#{ENV["TWITTER_NAME"]}",
-              :title => @page_title,
-              :description => @page_description,
-              :image => {
-                :src => @quick_reads.first.try(:first_image).try(:data_url).to_s
+            twitter: {
+              card: "summary_large_image",
+              site: "@#{ENV["TWITTER_NAME"]}",
+              creator: "@#{ENV["TWITTER_NAME"]}",
+              title: @page_title,
+              description: @page_description,
+              image: {
+                src: @quick_reads.first.try(:first_image).try(:data_url).to_s
               },
-              :app => {
-                :name => {
-                :iphone => ENV["ITUNES_APP_NAME"],
-                :ipad => ENV["ITUNES_APP_NAME"]
+              app: {
+                name: {
+                iphone: ENV["ITUNES_APP_NAME"],
+                ipad: ENV["ITUNES_APP_NAME"]
                 },
-                :id => {
-                :iphone => ENV["ITUNES_APP_ID"],
-                :ipad => ENV["ITUNES_APP_ID"]
+                id: {
+                iphone: ENV["ITUNES_APP_ID"],
+                ipad: ENV["ITUNES_APP_ID"]
                 },
-                :url => {
-                :iphone => "newint://",
-                :ipad => "newint://"
+                url: {
+                iphone: "newint://",
+                ipad: "newint://"
                 }
               }
             }
     respond_to do |format|
-      format.html# { render :layout => false }
+      format.html# { render layout: false }
       
       format.json { render json: @quick_reads.to_json(
-      :only => 
-        # Don't show article :body here
+      only: # Don't show article :body here
         [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :issue_id]
       ) }
     end
@@ -340,7 +339,7 @@ class ArticlesController < ApplicationController
       @image_css_string = ""
     end
     #@images = @article.images.all
-    # @article.source_to_body(:debug => current_user.try(:admin?))
+    # @article.source_to_body(debug: current_user.try(:admin?))
 
     article_category_themes = @article.categories.each.select{|c| c.name.include?("/themes/")}
     # logger.info article_category_themes
@@ -354,49 +353,49 @@ class ArticlesController < ApplicationController
     first_image_for_meta_data = @article.first_image.try(:data).to_s
 
     # Set meta tags
-    set_meta_tags :site => 'New Internationalist',
-            :title => @article.title,
-            :description => strip_tags(@article.teaser),
-            :keywords => "new, internationalist, magazine, digital, edition, #{@article.title}",
-            :canonical => issue_article_url(@issue, @article),
-            # :amphtml => issue_article_url(@issue, @article, format: :amp),
-            :alternate => [
-              {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, 
-              {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"},
-              {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags site: 'New Internationalist',
+            title: @article.title,
+            description: strip_tags(@article.teaser),
+            keywords: "new, internationalist, magazine, digital, edition, #{@article.title}",
+            canonical: issue_article_url(@issue, @article),
+            # amphtml: issue_article_url(@issue, @article, format: :amp),
+            alternate: [
+              {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}/articles/#{@article.id}"}, 
+              {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}/articles/#{@article.id}"},
+              {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
             ],
-            :fb => {
-              :app_id => ENV["FACEBOOK_APP_ID"]
+            fb: {
+              app_id: ENV["FACEBOOK_APP_ID"]
             },
-            :open_graph => {
-              :title => @article.title,
-              :description => strip_tags(@article.teaser),
-              #:type  => :magazine,
-              :url   => issue_article_url(@issue, @article),
-              :image => first_image_for_meta_data,
-              :site_name => "New Internationalist Magazine Digital Edition"
+            open_graph: {
+              title: @article.title,
+              description: strip_tags(@article.teaser),
+              #type: :magazine,
+              url: issue_article_url(@issue, @article),
+              image: first_image_for_meta_data,
+              site_name: "New Internationalist Magazine Digital Edition"
             },
-            :twitter => {
-              :card => "summary_large_image",
-              :site => "@#{ENV["TWITTER_NAME"]}",
-              :creator => "@#{ENV["TWITTER_NAME"]}",
-              :title => @article.title,
-              :description => strip_tags(@article.teaser),
-              :image => {
-                :src => first_image_for_meta_data
+            twitter: {
+              card: "summary_large_image",
+              site: "@#{ENV["TWITTER_NAME"]}",
+              creator: "@#{ENV["TWITTER_NAME"]}",
+              title: @article.title,
+              description: strip_tags(@article.teaser),
+              image: {
+                src: first_image_for_meta_data
               },
-              :app => {
-                :name => {
-                :iphone => ENV["ITUNES_APP_NAME"],
-                :ipad => ENV["ITUNES_APP_NAME"]
+              app: {
+                name: {
+                iphone: ENV["ITUNES_APP_NAME"],
+                ipad: ENV["ITUNES_APP_NAME"]
                 },
-                :id => {
-                :iphone => ENV["ITUNES_APP_ID"],
-                :ipad => ENV["ITUNES_APP_ID"]
+                id: {
+                iphone: ENV["ITUNES_APP_ID"],
+                ipad: ENV["ITUNES_APP_ID"]
                 },
-                :url => {
-                :iphone => "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
-                :ipad => "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
+                url: {
+                iphone: "newint://issues/#{@article.issue.id}/articles/#{@article.id}",
+                ipad: "newint://issues/#{@article.issue.id}/articles/#{@article.id}"
                 }
               }
             }
@@ -428,7 +427,7 @@ class ArticlesController < ApplicationController
 
     if can? :read, @article or request_has_valid_google_play_receipt
       # Render the body template so we don't repeat code
-      render :template => 'articles/body', layout: false
+      render template: 'articles/body', layout: false
     else
       render body: nil, status: :forbidden
     end
@@ -441,7 +440,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     # Moved to _form.html.erb
     # if @article.body.blank?
-    #     @article.body = source_to_body(@article, :debug => current_user.try(:admin?))
+    #     @article.body = source_to_body(@article, debug: current_user.try(:admin?))
     # end
   end
 
@@ -512,15 +511,15 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:article_id])
     if current_user
       @user = User.find(current_user.id)
-      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(user_id: @user.id, article_id: @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_tweet"
     end
     twitter_params = {
-      :url => @guest_pass,
-      :text => params[:text],
-      :via => "#{ENV["TWITTER_NAME"]}"
-      #:related => "#{ENV["TWITTER_NAME"]}"
+      url: @guest_pass,
+      text: params[:text],
+      via: "#{ENV["TWITTER_NAME"]}"
+      #related: "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
@@ -529,7 +528,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:article_id])
     if current_user
       @user = User.find(current_user.id)
-      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(user_id: @user.id, article_id: @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_wall_post"
     end
@@ -539,14 +538,14 @@ class ArticlesController < ApplicationController
       preview_picture = @article.try(:images).try(:first).try(:data).to_s
     end
     facebook_params = {
-      :link => @guest_pass,
-      :app_id => ENV["FACEBOOK_APP_ID"],
-      :picture => preview_picture, #request.protocol + request.host_with_port + preview_picture,
-      :name => @article.title,
-      :caption => strip_tags(@article.teaser),
-      :description => "New Internationalist magazine, #{@article.issue.release.strftime("%B, %Y")}",
-      :redirect_uri => @guest_pass
-      #:redirect_uri => "http://digital.newint.com.au"
+      link: @guest_pass,
+      app_id: ENV["FACEBOOK_APP_ID"],
+      picture: preview_picture, #request.protocol + request.host_with_port + preview_picture,
+      name: @article.title,
+      caption: strip_tags(@article.teaser),
+      description: "New Internationalist magazine, #{@article.issue.release.strftime("%B, %Y")}",
+      redirect_uri: @guest_pass
+      #redirect_uri: "http://digital.newint.com.au"
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
@@ -555,13 +554,13 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:article_id])
     if current_user
       @user = User.find(current_user.id)
-      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create)
+      @guest_pass = view_context.generate_guest_pass_link_string(GuestPass.where(user_id: @user.id, article_id: @article.id).first_or_create)
     else
       @guest_pass = issue_article_url(@article.issue, @article).to_s+"?utm_source=digital_email"
     end
     email_params = {
-      :body => @guest_pass,
-      :subject => "#{@article.title} - New Internationalist Magazine"
+      body: @guest_pass,
+      subject: "#{@article.title} - New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"
   end
@@ -577,7 +576,7 @@ class ArticlesController < ApplicationController
         # If a user has an iTunes subscription, attach the guest pass to 'subscriber'
         @user = User.find_by_username("subscriber")
       end
-      @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+      @guest_pass = GuestPass.where(user_id: @user.id, article_id: @article.id).first_or_create
 
       respond_to do |format|
         format.json { render json: @guest_pass }
@@ -598,7 +597,7 @@ class ArticlesController < ApplicationController
         # If a user has an Google Play subscription, attach the guest pass to 'subscriber'
         @user = User.find_by_username("subscriber")
       end
-      @guest_pass = GuestPass.where(:user_id => @user.id, :article_id => @article.id).first_or_create
+      @guest_pass = GuestPass.where(user_id: @user.id, article_id: @article.id).first_or_create
 
       respond_to do |format|
         format.json { render json: @guest_pass }
@@ -726,9 +725,9 @@ class ArticlesController < ApplicationController
     @latest_issues = Issue.where(published: true).order(:release).reverse_order.first(6)
 
     respond_to do |format|
-      format.html { render :layout => 'email' }
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.html { render layout: 'email' }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 

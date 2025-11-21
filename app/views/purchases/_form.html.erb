@@ -1,5 +1,5 @@
 <div class="purchase-issue">
-	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :size => "141x200") %>
+	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", title: "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "141x200") %>
 	<h3><%= @issue.title %></h3>
 	<h4>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h4>
 	<% if not @has_token %>
@@ -15,7 +15,7 @@
 		<h3>Or you could subscribe!</h3>
 		<h4>And read our entire archive...</h4>
 		<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to our archive of New Internationalist magazines.</p>
-		<%= link_to "Subscription information...", new_subscription_path, :class => 'btn btn-info' %>
+		<%= link_to "Subscription information...", new_subscription_path, class: 'btn btn-info' %>
 	</div>
 <% end %>
 
@@ -37,7 +37,7 @@
 			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
 		</dl>
 	  <div class="form-actions">
-		<%= f.button :submit, "Complete your purchase", :onclick => "sendPurchase();", :class => 'btn btn-success' %>
+		<%= f.button :submit, "Complete your purchase", onclick: "sendPurchase();", class: 'btn btn-success' %>
 	  </div>
 	<% end %>
 
@@ -64,7 +64,7 @@
 
 <% else %>
 	<div class="form-actions">
-		<%= link_to 'Purchase this issue with PayPal', express_new_issue_purchase_path, :class => 'btn btn-success', :onclick => "sendPrePurchase(#{@issue.number},#{cents_to_dollars(Settings.issue_price)});" %>
-		<%= link_to 'Cancel', issue_path(@issue), :class => 'btn btn-outline-secondary' %>
+		<%= link_to 'Purchase this issue with PayPal', express_new_issue_purchase_path, class: 'btn btn-success', onclick: "sendPrePurchase(#{@issue.number},#{cents_to_dollars(Settings.issue_price)});" %>
+		<%= link_to 'Cancel', issue_path(@issue), class: 'btn btn-outline-secondary' %>
 	</div>
 <% end %>

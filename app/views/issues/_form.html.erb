@@ -1,4 +1,4 @@
-<%= simple_form_for @issue, :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
+<%= simple_form_for @issue, html: { class: 'form-horizontal' }, html: {multipart: true} do |f| %>
 
   <%= f.input :title %>
   <%= f.input :number, as: :integer %>
@@ -13,7 +13,7 @@
   <%= f.input :digital_exclusive, as: :boolean %>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn btn-outline-secondary' %>
+    <%= f.submit nil, class: 'btn btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")), :back, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>

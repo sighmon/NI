@@ -4,9 +4,9 @@
 
 <% if can? :update, @user %>
 	<div class="edit-issue-buttons">
-		<%= link_to 'Download a CSV file', admin_users_path(:format => :csv), :class => 'btn btn-warning' %>
-		<%= link_to 'Try the new way', admin_root_path, :class => 'btn btn-outline-secondary' %>
-		<%= link_to 'List all users on this page', admin_users_path(users_per_page: 10000), :class => 'btn btn-outline-secondary' %>
+		<%= link_to 'Download a CSV file', admin_users_path(format: :csv), class: 'btn btn-warning' %>
+		<%= link_to 'Try the new way', admin_root_path, class: 'btn btn-outline-secondary' %>
+		<%= link_to 'List all users on this page', admin_users_path(users_per_page: 10000), class: 'btn btn-outline-secondary' %>
 	</div>
 <% end %>
 
@@ -16,11 +16,11 @@
 
 <%== pagy_bootstrap_nav(@pagy) %>
 
-<%= render :partial => "users_table", :locals => { :users => @users } %>
+<%= render partial: "users_table", locals: { users: @users } %>
 
 <%== pagy_bootstrap_nav(@pagy) %>
 
 <div class="form-actions">
-	<%= link_to "New User", new_admin_user_path, :class => 'btn btn-success' %>
-	<%= link_to "Back", admin_root_path, :class => 'btn btn-outline-secondary' %>
+	<%= link_to "New User", new_admin_user_path, class: 'btn btn-success' %>
+	<%= link_to "Back", admin_root_path, class: 'btn btn-outline-secondary' %>
 </div>

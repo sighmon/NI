@@ -2,19 +2,19 @@
   <h2>Change your password</h2>
 </div>
 
-<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => 'form-horizontal' }) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :reset_password_token, :as => :hidden %>
+  <%= f.input :reset_password_token, as: :hidden %>
   <%= f.full_error :reset_password_token %>
 
   <div class="inputs">
-    <%= f.input :password, :label => "New password", :required => true %>
-    <%= f.input :password_confirmation, :label => "Confirm your new password", :required => true %>
+    <%= f.input :password, label: "New password", required: true %>
+    <%= f.input :password_confirmation, label: "Confirm your new password", required: true %>
   </div>
 
   <div class="actions">
     <%= f.button :submit, "Change my password", class: 'btn btn-secondary' %>
-    <%= render :partial => "devise/shared/links" %>
+    <%= render partial: "devise/shared/links" %>
   </div>
 <% end %>

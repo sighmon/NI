@@ -1,10 +1,10 @@
 <%- model_class = Issue -%>
 
 <div class="issue-search">
-  <%= form_tag issues_path, :class => 'form-search form-inline', method: :get do %>
+  <%= form_tag issues_path, class: 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Magazine theme', :class => "search-query form-control" %>
-        <%= submit_tag "Search", name: nil, :class => 'btn btn-outline-secondary' %>
+        <%= text_field_tag :query, params[:query], placeholder: 'Magazine theme', class: "search-query form-control" %>
+        <%= submit_tag "Search", name: nil, class: 'btn btn-outline-secondary' %>
       </div>
   <% end %>
 </div>
@@ -17,7 +17,7 @@
 <div class="issue-cover-list">
   <% @issues.each do |issue| %>
     <div class="issue-information" itemscope itemtype="http://schema.org/CreativeWork">
-      <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :class => "shadow-sm#{unpublished(issue)}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :size => "141x200", :itemprop => "image"), issue_path(issue), :itemprop => "url" %>
+      <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, alt: "#{issue.title} - #{issue.release.strftime("%B, %Y")}", class: "shadow-sm#{unpublished(issue)}", title: "#{issue.title} - #{issue.release.strftime("%B, %Y")}", size: "141x200", itemprop: "image"), issue_path(issue), itemprop: "url" %>
       <meta itemprop="name" content="<%= issue.title %>">
       <meta itemprop="editor" content="<%= issue.editors_name %>">
       <meta itemprop="dateCreated" content="<%= issue.release.strftime("%e %B %Y") %>">
@@ -37,7 +37,7 @@
       <th>Date of publication</th>
       <!-- <th><%= model_class.human_attribute_name(:trialissue) %></th> -->
       <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
-      <% if can? :update, @issue %><th><%=t '.actions', :default => t("helpers.actions") %></th><% end %>
+      <% if can? :update, @issue %><th><%=t '.actions', default: t("helpers.actions") %></th><% end %>
     </tr>
   </thead>
   <tbody>
@@ -51,14 +51,14 @@
         <!-- <td><%=l issue.created_at %></td> -->
         <% if can? :update, @issue %>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_issue_path(issue), :class => 'btn btn-outline-secondary' %>
+          <%= link_to t('.edit', default: t("helpers.links.edit")),
+                      edit_issue_path(issue), class: 'btn btn-outline-secondary' %>
           <% if can? :destroy, @issue %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                       issue_path(issue),
-                      :method => :delete,
-                      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
-                      :class => 'btn btn-xs btn-danger' %>
+                      method: :delete,
+                      data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?'))},
+                      class: 'btn btn-xs btn-danger' %>
           <% end %>
         </td>
         <% end %>
@@ -69,8 +69,8 @@
 
 <% if can? :create, Issue %>
   <div class="form-actions">
-  	<%= link_to t('.new', :default => t("helpers.links.new")),
+  	<%= link_to t('.new', default: t("helpers.links.new")),
 	            new_issue_path,
-	            :class => 'btn btn-primary' %>
+	            class: 'btn btn-primary' %>
   </div>
 <% end %>

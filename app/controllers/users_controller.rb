@@ -4,10 +4,10 @@ class UsersController < ApplicationController
 
     rescue_from CanCan::AccessDenied do |exception|
         session[:user_return_to] = request.referer
-        redirect_to new_user_session_path, :alert => "You need to be logged in to view your profile."
+        redirect_to new_user_session_path, alert: "You need to be logged in to view your profile."
     end
 
-    skip_before_action :verify_authenticity_token, :only => [:show]
+    skip_before_action :verify_authenticity_token, only: [:show]
 
     def show
 
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
                 end
                 @issue = Issue.latest
                 @issues = Issue.where(published: true).last(8).reverse
-                render @template, :layout => false
+                render @template, layout: false
             }
             format.text {
                 @greeting = 'Hi'
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
                 end
                 @issue = Issue.latest
                 @issues = Issue.where(published: true).last(8).reverse
-                render @template, :layout => false
+                render @template, layout: false
             }
         end
     end
@@ -58,36 +58,36 @@ class UsersController < ApplicationController
         # Build up an array of (int) issue numbers that have been purchased for the iOS & Android apps
         purchases = []
         user.purchases.each do |purchase|
-            # purchases << {:purchase_date => purchase.purchase_date, :issue_id => purchase.issue_id, :issue_number => purchase.issue.number}
+            # purchases << {purchase_date: purchase.purchase_date, issue_id: purchase.issue_id, issue_number: purchase.issue.number}
             purchases << purchase.issue.number
         end
         favourites = []
         user.favourites.order(:created_at).reverse_order.limit(20).each do |favourite|
             favourites << {
-                :id => favourite.id,
-                :issue_id => favourite.issue_id,
-                :article_id => favourite.article_id,
-                :created_at => favourite.created_at
+                id: favourite.id,
+                issue_id: favourite.issue_id,
+                article_id: favourite.article_id,
+                created_at: favourite.created_at
             }
         end
         guest_passes = []
         user.guest_passes.order(:created_at).reverse_order.limit(20).each do |guest_pass|
             guest_passes << {
-                :id => guest_pass.id,
-                :issue_id => guest_pass.article.issue_id,
-                :article_id => guest_pass.article_id,
-                :created_at => guest_pass.created_at,
-                :use_count => guest_pass.use_count,
-                :key => guest_pass.key
+                id: guest_pass.id,
+                issue_id: guest_pass.article.issue_id,
+                article_id: guest_pass.article_id,
+                created_at: guest_pass.created_at,
+                use_count: guest_pass.use_count,
+                key: guest_pass.key
             }
         end
         hash = {
-            :username => user.username,
-            :id => user.id,
-            :expiry => expiry,
-            :purchases => purchases,
-            :favourites => favourites,
-            :guest_passes => guest_passes
+            username: user.username,
+            id: user.id,
+            expiry: expiry,
+            purchases: purchases,
+            favourites: favourites,
+            guest_passes: guest_passes
         }
     end
 

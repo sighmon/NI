@@ -61,10 +61,10 @@ class Admin::BaseController < ApplicationController
     
     respond_to do |format|
       format.mjml {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 			format.text {
-				render @template, :layout => false
+				render @template, layout: false
 			}
     end
 	end
@@ -83,10 +83,10 @@ class Admin::BaseController < ApplicationController
 
 		respond_to do |format|
 			format.mjml {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 			format.text {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 		end
 	end
@@ -118,10 +118,10 @@ class Admin::BaseController < ApplicationController
 
 		respond_to do |format|
 			format.mjml {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 			format.text {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 		end
 	end
@@ -136,10 +136,10 @@ class Admin::BaseController < ApplicationController
 
 		respond_to do |format|
 			format.mjml {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 			format.text {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 		end
 	end
@@ -153,7 +153,7 @@ class Admin::BaseController < ApplicationController
 		
 		respond_to do |format|
 			format.mjml {
-				render @template, :layout => false
+				render @template, layout: false
 			}
 		end
 	end

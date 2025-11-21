@@ -2,7 +2,7 @@ class Image < ActiveRecord::Base
 
   belongs_to :article
   mount_uploader :data, ArticleImageUploader
-  # validates :media_id, :uniqueness => true
+  # validates :media_id, uniqueness: true
 
   # So we can sort images on the article pages via acts as list gem
   acts_as_list
@@ -18,7 +18,7 @@ class Image < ActiveRecord::Base
     sio.original_filename = file_element.at_xpath("./assets:name",'assets' => assets ).try(:text)
     sio.content_type = file_element.at_xpath("./assets:media_type",'assets' => assets ).try(:text)
 
-    image = article.images.where(:media_id => media_id).first_or_create
+    image = article.images.where(media_id: media_id).first_or_create
     image.caption = image.extract_caption_from_article
     image.credit = image.extract_credit_from_article
     image.data = sio
@@ -50,10 +50,10 @@ class Image < ActiveRecord::Base
 
       if image_media_id
         # It's a header image, so check if it already exists
-        image = article.images.where(:media_id => image_media_id).first_or_create
+        image = article.images.where(media_id: image_media_id).first_or_create
       else
         # Try and find it by filename?
-        image = article.images.where(:data => uri.split("/").last).first_or_create
+        image = article.images.where(data: uri.split("/").last).first_or_create
         image.hidden = true
       end
       image.caption = image_alt_text

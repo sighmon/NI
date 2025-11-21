@@ -96,7 +96,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you have previously had a subscription with the New Internationalist.", :unsubscribe_links => true } %>
+		<%= render partial: 'issues/email_footer', formats: [:html], locals: { reason: "You're receiving this because you have previously had a subscription with the New Internationalist.", unsubscribe_links: true } %>
 
 	</mj-body>
 </mjml>

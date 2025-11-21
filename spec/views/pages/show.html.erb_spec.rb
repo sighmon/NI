@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe "pages/show", :type => :view do
+describe "pages/show", type: :view do
   before(:each) do
     @page = assign(:page, stub_model(Page,
-      :title => "Title",
-      :permalink => "Permalink",
-      :body => "MyText",
-      :created_at => DateTime.now
+      title: "Title",
+      permalink: "Permalink",
+      body: "MyText",
+      created_at: DateTime.now
     ))
   end
 

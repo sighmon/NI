@@ -1,11 +1,11 @@
 <div class="edit-issue-buttons">
   <p><%= link_to "Run delayed jobs", admin_push_notifications_run_delayed_jobs_path,
-          :method => 'post',
-          :class => 'btn btn-primary' %></p>
+          method: 'post',
+          class: 'btn btn-primary' %></p>
   <p><%= link_to "Send push notifications", admin_push_notifications_send_notifications_path,
-          :method => 'post',
-          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you are ready to send them?'))},
-          :class => 'btn btn-warning' %></p>
+          method: 'post',
+          data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure you are ready to send them?'))},
+          class: 'btn btn-warning' %></p>
   <p>This will send all notifications!</p>
   <p>To do it from the command line:<br />
   $ Rpush.push<br />
@@ -59,10 +59,10 @@
       <% end %>
       <td><%= pn.updated_at.strftime("%d-%m-%Y %H:%M:%S") %></td>
       <td><%= link_to "Delete", admin_push_notification_path(id: pn.id), 
-              :method => 'delete', 
-              :class => 'btn btn-xs btn-danger article-favourite', 
-              :alt => 'Delete this push registration', :title => 'Delete this push registration',
-              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))} %></td>
+              method: 'delete', 
+              class: 'btn btn-xs btn-danger article-favourite', 
+              alt: 'Delete this push registration', title: 'Delete this push registration',
+              data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))} %></td>
     </tr>
   <% end %>
   </tbody>
@@ -71,5 +71,5 @@
 <%== pagy_bootstrap_nav(@pagy) %>
 
 <div class="form-actions">
-  <%= link_to "Back", admin_root_path, :class => 'btn btn-outline-secondary' %>
+  <%= link_to "Back", admin_root_path, class: 'btn btn-outline-secondary' %>
 </div>

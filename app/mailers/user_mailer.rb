@@ -1,16 +1,16 @@
 class UserMailer < ActionMailer::Base
   # set this to subscribe@newint.com.au for production
-  default :from => ENV["DEVISE_EMAIL_ADDRESS"]
+  default from: ENV["DEVISE_EMAIL_ADDRESS"]
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.user_mailer.subscription_confirmation.subject
   #
-  default :bcc => ENV["DEVISE_BCC_EMAIL_ADDRESSES"]
+  default bcc: ENV["DEVISE_BCC_EMAIL_ADDRESSES"]
   helper :application
   if Rails.env.development?
-    default :bcc => ENV["DEVISE_BCC_EMAIL_ADDRESSES_DEV"]
+    default bcc: ENV["DEVISE_BCC_EMAIL_ADDRESSES_DEV"]
   end
 
   def user_signup_confirmation(user)
@@ -18,7 +18,7 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hello"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist - Welcome!") do |format|
+    mail(to: user.email, subject: "New Internationalist - Welcome!") do |format|
       format.text
       format.mjml
     end
@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hello"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist - Welcome!") do |format|
+    mail(to: user.email, subject: "New Internationalist - Welcome!") do |format|
       format.text
       format.mjml
     end
@@ -41,7 +41,7 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "New Internationalist Subscription") do |format|
+    mail(to: subscription.user.email, subject: "New Internationalist Subscription") do |format|
       format.text
       format.mjml
     end
@@ -53,7 +53,7 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist Subscription") do |format|
+    mail(to: subscription.user.email, subject: "Cancelled New Internationalist Subscription") do |format|
       format.text
       format.mjml
     end
@@ -65,7 +65,7 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = subscription
-    mail(:to => subscription.user.email, :subject => "Cancelled New Internationalist automatic-renewal") do |format|
+    mail(to: subscription.user.email, subject: "Cancelled New Internationalist automatic-renewal") do |format|
       format.text
       format.mjml
     end
@@ -74,7 +74,7 @@ class UserMailer < ActionMailer::Base
   def subscription_recurring_payment_outstanding_payment(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "recurring_payment_outstanding_payment - New Internationalist Subscription")
+    mail(to: ENV["DEVISE_EMAIL_ADDRESS"], subject: "recurring_payment_outstanding_payment - New Internationalist Subscription")
   end
 
   def issue_purchase(purchase)
@@ -83,7 +83,7 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi"
     @issues = Issue.where(published: true).last(8).reverse
     @purchase = purchase
-    mail(:to => purchase.user.email, :subject => "New Internationalist Purchase - #{purchase.issue.number} - #{purchase.issue.title}") do |format|
+    mail(to: purchase.user.email, subject: "New Internationalist Purchase - #{purchase.issue.number} - #{purchase.issue.title}") do |format|
       format.text
       format.mjml
     end
@@ -96,7 +96,7 @@ class UserMailer < ActionMailer::Base
     @issues = Issue.where(published: true).last(8).reverse
     @number_of_months = number_of_months
     @subscription = user.subscriptions.last
-    mail(:to => user.email, :subject => "New Internationalist Subscription") do |format|
+    mail(to: user.email, subject: "New Internationalist Subscription") do |format|
       format.text
       format.mjml
     end
@@ -106,7 +106,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @number_of_months = number_of_months
     @greeting = "Hi"
-    mail(:to => user.email, :subject => "Crowdfunding reward - New Internationalist Subscription")
+    mail(to: user.email, subject: "Crowdfunding reward - New Internationalist Subscription")
   end
 
   def media_subscription_confirmation(user)
@@ -115,7 +115,7 @@ class UserMailer < ActionMailer::Base
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
     @subscription = user.subscriptions.last
-    mail(:to => user.email, :subject => "Complimentary New Internationalist Subscription - Media") do |format|
+    mail(to: user.email, subject: "Complimentary New Internationalist Subscription - Media") do |format|
       format.text
       format.mjml
     end
@@ -126,7 +126,7 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hi"
     @issue = Issue.latest
     @issues = Issue.where(published: true).last(8).reverse
-    mail(:to => user.email, :subject => "New Internationalist Subscription - Institution confirmation") do |format|
+    mail(to: user.email, subject: "New Internationalist Subscription - Institution confirmation") do |format|
       format.text
       format.mjml
     end
@@ -137,14 +137,14 @@ class UserMailer < ActionMailer::Base
     @greeting = "Hello"
     @subject = subject
     @body_text = body_text
-    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => subject) do |format|
+    mail(to: ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], bcc: "", subject: subject) do |format|
       format.mjml
     end
   end
 
   def uk_server_error(error)
     @error = error
-    mail(:to => ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], :bcc => "", :subject => "digital.newint.com.au UK login SSL server error") do |format|
+    mail(to: ENV["DEVISE_SERVER_ERROR_EMAIL_ADDRESS"], bcc: "", subject: "digital.newint.com.au UK login SSL server error") do |format|
       format.text
     end
   end
@@ -152,7 +152,7 @@ class UserMailer < ActionMailer::Base
   def subscription_institution_tell_admin(user)
     @user = user
     @greeting = "Hi"
-    mail(:to => ENV["DEVISE_EMAIL_ADDRESS"], :subject => "Possible Institutional Order - New Internationalist Subscription") do |format|
+    mail(to: ENV["DEVISE_EMAIL_ADDRESS"], subject: "Possible Institutional Order - New Internationalist Subscription") do |format|
       format.text
     end
   end

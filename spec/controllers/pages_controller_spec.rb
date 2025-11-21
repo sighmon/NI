@@ -18,7 +18,7 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe PagesController, :type => :controller do
+describe PagesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Page. As you add validations to Page, be sure to
@@ -51,7 +51,7 @@ describe PagesController, :type => :controller do
     it "assigns the requested page as @page" do
       page = Page.create! valid_attributes
       sign_in FactoryBot.create(:user)
-      get :show, params: {:id => page.to_param}
+      get :show, params: {id: page.to_param}
       expect(assigns(:page)).to eq(page)
     end
   end
@@ -68,7 +68,7 @@ describe PagesController, :type => :controller do
     it "assigns the requested page as @page" do
       page = Page.create! valid_attributes
       sign_in FactoryBot.create(:user)
-      get :edit, params: {:id => page.to_param}
+      get :edit, params: {id: page.to_param}
       expect(assigns(:page)).to eq(page)
     end
   end
@@ -78,20 +78,20 @@ describe PagesController, :type => :controller do
       it "creates a new Page" do
         expect {
           sign_in FactoryBot.create(:admin_user) 
-          post :create, params: {:page => valid_attributes}
+          post :create, params: {page: valid_attributes}
         }.to change(Page, :count).by(1)
       end
 
       it "assigns a newly created page as @page" do
         sign_in FactoryBot.create(:admin_user) 
-        post :create, params: {:page => valid_attributes}
+        post :create, params: {page: valid_attributes}
         expect(assigns(:page)).to be_a(Page)
         expect(assigns(:page)).to be_persisted
       end
 
       it "redirects to the created page" do
         sign_in FactoryBot.create(:admin_user) 
-        post :create, params: {:page => valid_attributes}
+        post :create, params: {page: valid_attributes}
         expect(response).to redirect_to(Page.last)
       end
     end
@@ -101,7 +101,7 @@ describe PagesController, :type => :controller do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Page).to receive(:save).and_return(false)
         sign_in FactoryBot.create(:admin_user) 
-        post :create, params: {:page => { "title" => "invalid value" }}
+        post :create, params: {page: { "title" => "invalid value" }}
         expect(assigns(:page)).to be_a_new(Page)
       end
 
@@ -109,7 +109,7 @@ describe PagesController, :type => :controller do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Page).to receive(:save).and_return(false)
         sign_in FactoryBot.create(:admin_user) 
-        post :create, params: {:page => { "title" => "invalid value" }}
+        post :create, params: {page: { "title" => "invalid value" }}
         expect(response).to render_template("new")
       end
     end
@@ -126,20 +126,20 @@ describe PagesController, :type => :controller do
         # submitted in the request.
         expect_any_instance_of(Page).to receive(:update).with(ActionController::Parameters.new({"title" => "MyString"}).permit!)
         sign_in FactoryBot.create(:admin_user) 
-        put :update, params: {:id => page.to_param, :page => { "title" => "MyString" }}
+        put :update, params: {id: page.to_param, page: { "title" => "MyString" }}
       end
 
       it "assigns the requested page as @page" do
         page = Page.create! valid_attributes
         sign_in FactoryBot.create(:admin_user) 
-        put :update, params: {:id => page.to_param, :page => valid_attributes_from_page(page)}
+        put :update, params: {id: page.to_param, page: valid_attributes_from_page(page)}
         expect(assigns(:page)).to eq(page)
       end
 
       it "redirects to the page" do
         page = Page.create! valid_attributes
         sign_in FactoryBot.create(:admin_user) 
-        put :update, params: {:id => page.to_param, :page => valid_attributes_from_page(page)}
+        put :update, params: {id: page.to_param, page: valid_attributes_from_page(page)}
         expect(response).to redirect_to(page)
       end
     end
@@ -152,7 +152,7 @@ describe PagesController, :type => :controller do
         allow_any_instance_of(Page).to receive(:save).and_return(false)
         sign_in FactoryBot.create(:admin_user) 
         
-        put :update, params: {:id => page.to_param, :page => { "title" => "invalid value" }}
+        put :update, params: {id: page.to_param, page: { "title" => "invalid value" }}
         expect(assigns(:page)).to eq(page)
       end
 
@@ -163,7 +163,7 @@ describe PagesController, :type => :controller do
         allow_any_instance_of(Page).to receive(:save).and_return(false)
         sign_in FactoryBot.create(:admin_user) 
 
-        put :update, params: {:id => page.to_param, :page => { "title" => "invalid value" }}
+        put :update, params: {id: page.to_param, page: { "title" => "invalid value" }}
         expect(response).to render_template("edit")
       end
     end
@@ -175,14 +175,14 @@ describe PagesController, :type => :controller do
 
       expect {
         sign_in FactoryBot.create(:admin_user) 
-        delete :destroy, params: {:id => page.to_param}
+        delete :destroy, params: {id: page.to_param}
       }.to change(Page, :count).by(-1)
     end
 
     it "redirects to the pages list" do
       page = Page.create! valid_attributes
       sign_in FactoryBot.create(:admin_user) 
-      delete :destroy, params: {:id => page.to_param}
+      delete :destroy, params: {id: page.to_param}
       expect(response).to redirect_to(pages_url)
     end
   end

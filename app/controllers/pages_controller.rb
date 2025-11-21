@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
   # Cancan authorisation
-  load_resource :find_by => :permalink # will use find_by_permalink!(params[:id])
+  load_resource find_by: :permalink # will use find_by_permalink!(params[:id])
   authorize_resource
   
   # GET /pages
@@ -41,28 +41,28 @@ class PagesController < ApplicationController
       @first_image = ENV["DEFAULT_PAGE_META_IMAGE"]
     end
 
-    set_meta_tags :title => @page.title,
-                  :description => @page.teaser,
-                  :keywords => "new, internationalist, magazine, digital, edition, #{@page.title}",
-                  :fb => {
-                    :app_id => ENV["FACEBOOK_APP_ID"]
+    set_meta_tags title: @page.title,
+                  description: @page.teaser,
+                  keywords: "new, internationalist, magazine, digital, edition, #{@page.title}",
+                  fb: {
+                    app_id: ENV["FACEBOOK_APP_ID"]
                   },
-                  :open_graph => {
-                    :title => @page.title,
-                    :description => @page.teaser,
-                    #:type  => :magazine,
-                    :url   => page_url(@page.permalink),
-                    :image => @first_image,
-                    :site_name => "New Internationalist Magazine Digital Edition"
+                  open_graph: {
+                    title: @page.title,
+                    description: @page.teaser,
+                    #type: :magazine,
+                    url: page_url(@page.permalink),
+                    image: @first_image,
+                    site_name: "New Internationalist Magazine Digital Edition"
                   },
-                  :twitter => {
-                    :card => "summary",
-                    :site => "@#{ENV["TWITTER_NAME"]}",
-                    :creator => "@#{ENV["TWITTER_NAME"]}",
-                    :title => @page.title,
-                    :description => @page.teaser,
-                    :image => {
-                      :src => @first_image
+                  twitter: {
+                    card: "summary",
+                    site: "@#{ENV["TWITTER_NAME"]}",
+                    creator: "@#{ENV["TWITTER_NAME"]}",
+                    title: @page.title,
+                    description: @page.teaser,
+                    image: {
+                      src: @first_image
                     }
                   }
 

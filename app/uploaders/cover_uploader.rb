@@ -29,7 +29,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process scale: [200, 300]
   #
   # def scale(width, height)
   #   # do something
@@ -37,16 +37,16 @@ class CoverUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   # version :thumb do
-  #   process :scale => [50, 50]
+  #   process scale: [50, 50]
   # end
   # Use RMagick
   version :thumb do
-    process :resize_to_limit => [200, 200]
+    process resize_to_limit: [200, 200]
   end
 
   # Retina display :thumb @2x version
   version :thumb2x do
-    process :resize_to_limit => [400,400]
+    process resize_to_limit: [400,400]
     def full_filename (for_file = model.cover.file) 
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
@@ -54,31 +54,31 @@ class CoverUploader < CarrierWave::Uploader::Base
 
   # Make a PNG version for NewsStand
   version :png do
-    process :convert => 'png'
+    process convert: 'png'
     def full_filename (for_file = model.cover.file)
       "#{for_file.chomp(File.extname(for_file))}.png"
     end
   end
 
   version :tiny do
-    process :resize_to_limit => [75, 75]
+    process resize_to_limit: [75, 75]
   end
 
   # Retina display :tiny @2x version
   version :tiny2x do
-    process :resize_to_limit => [150, 150]
+    process resize_to_limit: [150, 150]
     def full_filename (for_file = model.cover.file) 
       "tiny_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
   version :home do
-    process :resize_to_limit => [400, 400]
+    process resize_to_limit: [400, 400]
   end
 
   # Retina display :tiny @2x version
   version :home2x do
-    process :resize_to_limit => [800, 800]
+    process resize_to_limit: [800, 800]
     def full_filename (for_file = model.cover.file) 
       "home_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

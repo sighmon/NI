@@ -48,7 +48,7 @@
 					line-height="22px"
 					font-weight="300"
 					color="#787878">
-					<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
+					<%= @greeting %> <%= link_to @user.username, user_url(@user, protocol: "https"), style: 'color:inherit;' %>,<br /><br />
 					You've now been made an Institutional user. This means you have the power to create 'student' user accounts which will share your subscription.<br /><br />
 
 					Feel free to create a couple of accounts, perhaps one for staff and one for students.<br /><br />
@@ -58,7 +58,7 @@
 					
 				<mj-button
 					background-color="#ED4E59"
-					href="<%= user_url(@user, :protocol => "https") %>">
+					href="<%= user_url(@user, protocol: "https") %>">
 					Create a student account
 				</mj-button>
 
@@ -210,7 +210,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render partial: 'issues/email_footer', formats: [:html] %>
 
 	</mj-body>
 </mjml>

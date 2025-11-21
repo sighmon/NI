@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PaymentNotificationsController, :type => :controller do
+describe PaymentNotificationsController, type: :controller do
   context "with a recurring subscribed user" do
     let(:user) do
       FactoryBot.create(:subscription, paypal_profile_id: "RECURRING_PAYMENT_ID").user

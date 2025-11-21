@@ -2,21 +2,21 @@
 
 <% if can? :update, @category %>
 <div class="edit-issue-buttons">
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_category_path(@category), :class => 'btn btn-primary btn-xs' %>
+  <%= link_to t('.edit', default: t("helpers.links.edit")),
+                edit_category_path(@category), class: 'btn btn-primary btn-xs' %>
   <% if can? :destroy, @category %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+    <%= link_to t('.destroy', default: t("helpers.links.destroy")),
           category_path(@category),
-          :method => 'delete',
-          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
-          :class => 'btn btn-xs btn-danger' %>
+          method: 'delete',
+          data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?'))},
+          class: 'btn btn-xs btn-danger' %>
   <% end %>
 </div>
 <% end %>
 
 <div class="page-header">
   <h1><%= @category.display_name.gsub('>', '/') %></h1>
-  <h3>Articles about <%= @category.short_display_name %>, ordered by date. <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open '#{@category.short_display_name}' in the New Internationalist magazine app for Android or iOS mobile devices.", :title => "Open '#{@category.short_display_name}' in the New Internationalist magazine app for Android or iOS mobile devices.", :size => "14x24", :class => 'ios-issue-page'), app_link(category_path(@category)) %></h3>
+  <h3>Articles about <%= @category.short_display_name %>, ordered by date. <%= link_to retina_image_tag("iphone-dark.png", alt: "Open '#{@category.short_display_name}' in the New Internationalist magazine app for Android or iOS mobile devices.", title: "Open '#{@category.short_display_name}' in the New Internationalist magazine app for Android or iOS mobile devices.", size: "14x24", class: 'ios-issue-page'), app_link(category_path(@category)) %></h3>
 </div>
 
 <div class="row">
@@ -27,7 +27,7 @@
 <div class="row">
       <% end %>
       <div class="col-sm-4">
-        <%= render :partial => "category_article", :locals => { :article => article } %>
+        <%= render partial: "category_article", locals: { article: article } %>
       </div>
     <% end %>
     <div class="col-sm-12">
@@ -50,7 +50,7 @@
   <tbody>
     <% @articles.each do |article| %>
       <tr itemscope itemtype="http://schema.org/Article">
-        <td itemprop="name"><%= link_to article.title, issue_article_path(article.issue,article), :itemprop => "url" %></td>
+        <td itemprop="name"><%= link_to article.title, issue_article_path(article.issue,article), itemprop: "url" %></td>
         <td><%= link_to article.issue.title, issue_path(article.issue) %></td>
         <td itemprop="dateCreated"><%= article.publication.strftime("%B, %Y") %></td>
       </tr>
@@ -70,6 +70,6 @@
     </ul>
   </nav>
 
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              categories_path, :class => 'btn btn-outline-secondary'  %>
+  <%= link_to t('.back', default: t("helpers.links.back")),
+              categories_path, class: 'btn btn-outline-secondary'  %>
 </div>

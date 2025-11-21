@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "issues/show", :type => :view do
+describe "issues/show", type: :view do
   let(:article) { FactoryBot.create(:article) }
   let(:keynote_article) { FactoryBot.create(:article) }
   let(:issue) { FactoryBot.create(:published_trial_issue) }

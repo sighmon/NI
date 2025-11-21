@@ -18,50 +18,50 @@ SitemapGenerator::Sitemap.create do
   # Usage: add(path, options={})
   #        (default options are used if you don't specify)
   #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.now, :host => default_host
+  # Defaults: priority: 0.5, changefreq: 'weekly',
+  #           lastmod: Time.now, host: default_host
   #
   # Examples:
   #
   # Add '/articles'
   #
-  #   add articles_path, :priority => 0.7, :changefreq => 'daily'
+  #   add articles_path, priority: 0.7, changefreq: 'daily'
   #
   # Add all articles:
   #
   #   Article.find_each do |article|
-  #     add article_path(article), :lastmod => article.updated_at
+  #     add article_path(article), lastmod: article.updated_at
   #   end
 
-  add('/', :alternates => [{
-    :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
+  add('/', alternates: [{
+    href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
   }, {
-    :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
+    href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
   }])
 
   # Add '/issues'
-  add issues_path, :priority => 0.7, :changefreq => 'daily', :alternates => [{
-    :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"
+  add issues_path, priority: 0.7, changefreq: 'daily', alternates: [{
+    href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"
   }, {
-    :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"
+    href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"
   }]
 
   # Add all issues:
   Issue.find_each do |issue|
     if issue.published?
-      add issue_path(issue), :lastmod => issue.updated_at, :alternates => [{
-        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}"
+      add issue_path(issue), lastmod: issue.updated_at, alternates: [{
+        href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}"
       }, {
-        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}"
+        href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}"
       }]
 
       # Add articles if it's a trial issue or trial article
       issue.articles.each do |article|
         if issue.trialissue? or article.trialarticle?
-          add issue_article_path(issue,article), :lastmod => article.updated_at, :alternates => [{
-            :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}/articles/#{article.id}"
+          add issue_article_path(issue,article), lastmod: article.updated_at, alternates: [{
+            href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }, {
-            :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}/articles/#{article.id}"
+            href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }]
         end
       end
@@ -72,15 +72,15 @@ SitemapGenerator::Sitemap.create do
       #   article.categories.each do |category|
       #     categories_list = categories_list + ", " + category.short_display_name
       #   end
-      #   add(issue_article_path(issue,article), :news => {
-      #       :publication_name => "New Internationalist",
-      #       :publication_language => "en",
-      #       :title => article.title,
-      #       :keywords => categories_list,
-      #       # :stock_tickers => "SAO:PETR3",
-      #       :publication_date => article.created_at,
-      #       :access => "Subscription"
-      #       # :genres => "PressRelease"
+      #   add(issue_article_path(issue,article), news: {
+      #       publication_name: "New Internationalist",
+      #       publication_language: "en",
+      #       title: article.title,
+      #       keywords: categories_list,
+      #       # stock_tickers: "SAO:PETR3",
+      #       publication_date: article.created_at,
+      #       access: "Subscription"
+      #       # genres: "PressRelease"
       #   })
       # end
     end
@@ -88,19 +88,19 @@ SitemapGenerator::Sitemap.create do
 
   # Add categories:
   Category.find_each do |category|
-    add category_path(category), :priority => 0.4, :lastmod => category.updated_at, :alternates => [{
-        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"
+    add category_path(category), priority: 0.4, lastmod: category.updated_at, alternates: [{
+        href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/categories"
       }, {
-        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"
+        href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/categories"
       }]
   end
 
   # Add pages:
   Page.find_each do |page|
-    add page_path(page), :priority => 0.4, :lastmod => page.updated_at, :alternates => [{
-        :href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
+    add page_path(page), priority: 0.4, lastmod: page.updated_at, alternates: [{
+        href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint"
       }, {
-        :href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
+        href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"
       }]
   end
 

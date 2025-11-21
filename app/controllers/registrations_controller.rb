@@ -3,7 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
   # load_and_authorize_resource
 
   # TOFIX: Allow users to register, but authorize all users with a parent.
-  before_action :can_update, :only => [:edit, :update]
+  before_action :can_update, only: [:edit, :update]
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 include Warden::Test::Helpers
 
-describe "Institution::Users", :type => :request do
+describe "Institution::Users", type: :request do
   context "as an institution"
   let(:child) { FactoryBot.create(:child_user) }
   before(:each) do

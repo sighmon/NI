@@ -8,13 +8,13 @@ Thank you for subscribing to New Internationalist magazine. We're a proudly inde
 Tax invoice: <%= tax_invoice_number(@subscription) %>
 Subscription: <%= pluralize(@subscription.duration, 'month') %>
 Date of purchase: <%= purchase_date_as_string(@subscription.purchase_date) %>
-Amount: <%= number_to_currency(cents_to_dollars(@subscription.price_paid), :unit => '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@subscription.price_paid), :unit => '$') %>)
+Amount: <%= number_to_currency(cents_to_dollars(@subscription.price_paid), unit: '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@subscription.price_paid), unit: '$') %>)
 
 Start reading now!
-<%= issues_url(:protocol => "https") %>
+<%= issues_url(protocol: "https") %>
 
 Your username is: <%= @user.username %>
-Your user profile is: <%= user_url(@user, :protocol => "https") %>
+Your user profile is: <%= user_url(@user, protocol: "https") %>
 
 <% if @user.subscriber? and @user.is_recurring? %>
 Your next auto-debit will be on:
@@ -46,4 +46,4 @@ email and we'll reply as soon as we can.
 Thanks again for subscribing.
 Cheers, the NI team.
 
-<%= render :partial => "user_mailer/footer" %>
+<%= render partial: "user_mailer/footer" %>

@@ -1,11 +1,11 @@
-<%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for @page, html: { class: 'form-horizontal' } do |f| %>
   <%= f.input :title %>
   <%= f.input :permalink %>
   <%= f.input :teaser %>
   <%= f.input :body %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                pages_path, :class => 'btn btn-outline-secondary' %>
+    <%= f.button :submit, class: 'btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                pages_path, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>

@@ -28,7 +28,7 @@ gem 'rails_serve_static_assets'
 gem 'platform-api'
 
 # Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# gem 'rails', git: 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3'
 
@@ -54,14 +54,14 @@ gem 'cancancan'
 gem 'formtastic'
 
 # Active Merchant for purchasing https://github.com/Shopify/active_merchant
-gem 'activemerchant', :require => 'active_merchant'
+gem 'activemerchant', require: 'active_merchant'
 
 # PayPal recurring billing https://github.com/fnando/paypal-recurring
 gem 'paypal-recurring'
 
 # Rails settings file for prices & general settings
 # Specifying 1.x as version 2 works very differently
-# gem 'ledermann-rails-settings', :require => 'rails-settings'
+# gem 'ledermann-rails-settings', require: 'rails-settings'
 
 # Now using a fork for Rails 4
 gem 'rails-settings-cached'
@@ -76,7 +76,7 @@ gem 'savon', '~>1.2.0'
 gem 'curb'
 
 # Using meta-tags for head meta https://github.com/kpumuk/meta-tags
-gem 'meta-tags', :require => 'meta_tags'
+gem 'meta-tags', require: 'meta_tags'
 
 # BugHerd gem for bug reporting https://github.com/BugHerd/bugherd-ruby
 # gem 'bugherd'
@@ -107,13 +107,13 @@ gem 'dalli'
 gem 'memcachier'
 
 # Rack deflate https://github.com/romanbsd/heroku-deflater
-# gem 'heroku-deflater', :group => :production
+# gem 'heroku-deflater', group: :production
 
 # Trying another gzip deflater https://github.com/mattolson/heroku_rails_deflate
 # gem 'heroku_rails_deflate'
 
 # Get rid of heroku plugin warnings
-gem 'rails_12factor', :group => :production
+gem 'rails_12factor', group: :production
 
 # HTTParty for talking to the UK server
 gem 'httparty'
@@ -154,7 +154,7 @@ gem 'secure_headers'
 
 # For development
 group :development do
-  # gem 'taps', :require => false
+  # gem 'taps', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   # gem 'sqlite3'
@@ -163,7 +163,7 @@ group :development do
   gem 'flamegraph'
   gem 'stackprof'
   # Run brakeman to check for security problems in your code.
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false
   # Run bundle-audit to check for Ruby/Rails vulnerabilities
   gem 'bundler-audit'
   gem 'ruby-prof'
@@ -180,11 +180,11 @@ end
 
 group :test do
   # i don't THINK we use cucumber anymore
-  #gem 'cucumber-rails', :require => false
+  #gem 'cucumber-rails', require: false
   #gem 'capybara'
   #gem 'capybara-webkit'
   gem 'database_cleaner'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'timecop'
   gem 'rubocop-rspec'
   # NOTE: to update rspec and fix the bundle update, comment out Guard gem below
@@ -193,9 +193,9 @@ group :test do
   gem 'rspec-legacy_formatters'
   # Guard automatic test notifications
   # Heroku doesn't like RUBY_PLATFORM, so not using these for now.
-  gem 'rb-inotify', :require => false#, '~> 0.8.8', :require => false # if RUBY_PLATFORM =~ /linux/i
-  gem 'rb-fsevent', :require => false#, '~> 0.9.1', :require => false # if RUBY_PLATFORM =~ /darwin/i
-  gem 'growl', :require => false # if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-inotify', require: false#, '~> 0.8.8', require: false # if RUBY_PLATFORM =~ /linux/i
+  gem 'rb-fsevent', require: false#, '~> 0.9.1', require: false # if RUBY_PLATFORM =~ /darwin/i
+  gem 'growl', require: false # if RUBY_PLATFORM =~ /darwin/i
   # Rails 5
   gem 'rails-controller-testing'
 end
@@ -215,7 +215,7 @@ gem 'sassc'
 gem 'coffee-rails'#, '~> 3.2.1'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', :platform => :ruby
+# gem 'therubyracer', platform: :ruby
 
 gem 'uglifier', '>= 1.0.3'
 # Twitter Bootstrap for styling https://github.com/seyhunak/twitter-bootstrap-rails
@@ -242,7 +242,7 @@ gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
 # RMagick for image editing
 # Migrated to :vips with Rails 7
-# gem 'rmagick', :require => false
+# gem 'rmagick', require: false
 # gem 'mini_magick'
 
 # CarrierWave for image uploading
@@ -255,10 +255,10 @@ gem 'fog-aws'#, '~> 1.3.1'
 
 # RetinaImageTag for retina display support
 # https://github.com/ffaerber/retina_image_tag
-gem 'retina_image_tag', :git => 'https://github.com/sighmon/retina_image_tag.git'
+gem 'retina_image_tag', git: 'https://github.com/sighmon/retina_image_tag.git'
 
 # Highlighter.js for highlighting text
-gem 'highlighter-js', :git => 'https://github.com/sighmon/highlighter.js.git'
+gem 'highlighter-js', git: 'https://github.com/sighmon/highlighter.js.git'
 
 # Kaminari for pagination http://railscasts.com/episodes/254-pagination-with-kaminari
 # Fixed broken layout http://stackoverflow.com/questions/12282240/kaminari-pagination-layout-is-broken
@@ -281,7 +281,7 @@ gem 'acts_as_list'
 # CSV exporting gem
 # https://github.com/crafterm/comma
 # gem 'comma', '~> 3.0'
-gem 'comma'#,  :git => "https://github.com/crafterm/comma.git"
+gem 'comma'#,  git: "https://github.com/crafterm/comma.git"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -296,7 +296,7 @@ gem 'comma'#,  :git => "https://github.com/crafterm/comma.git"
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+# gem 'ruby-debug19', require: 'ruby-debug'
 
 # To avoid GitHub Dependabot error
 gem 'nokogiri', '>= 1.13.4'

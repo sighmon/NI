@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Issue, :type => :model do
+describe Issue, type: :model do
   describe 'callbacks' do
     context 'after_commit' do
       let(:article) { FactoryBot.create(:article) }

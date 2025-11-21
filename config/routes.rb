@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   # Routes for the categories breadcrumbs
-  resources :categories, :only => [:index, :show, :edit, :update]
+  resources :categories, only: [:index, :show, :edit, :update]
   get 'update_categories_colours' => 'categories#colours'
 
   get "guest_passes/index"
@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   get "settings/update"
 
   # Sitemap redirects to S3
-  # match "/sitemap_index.xml", :controller => "sitemap", :action => "index"
-  get "/sitemap.xml", :controller => "sitemap", :action => "index"
+  # match "/sitemap_index.xml", controller: "sitemap", action: "index"
+  get "/sitemap.xml", controller: "sitemap", action: "index"
 
   # created by the admin/users controller creation
   # get "users/index"
@@ -30,17 +30,17 @@ Rails.application.routes.draw do
   # hack to sign in when on a pre-authenticated ip
   get "users/re_sign_in"
 
-  devise_for :users, :controllers => { :registrations => "registrations", :sessions => "sessions", :passwords => "passwords" } #, :path_names => { :sign_up => "subscribe" }
-  # devise_for :users, :controllers => { :sessions => "sessions" } #, :path_names => { :sign_up => "subscribe" }
+  devise_for :users, controllers: { registrations: "registrations", sessions: "sessions", passwords: "passwords" } #, path_names: { sign_up: "subscribe" }
+  # devise_for :users, controllers: { sessions: "sessions" } #, path_names: { sign_up: "subscribe" }
 
   devise_scope :user do
     get "/uk_login" => "devise/sessions#new_uk"
   end
 
   # Create a route for users profile page
-  # match 'users/:id' => 'users#show', :as => @user
-  post "users/:id(.:format)", :to => 'users#show', :as => :user
-  resources :users, :only => [:show]
+  # match 'users/:id' => 'users#show', as: @user
+  post "users/:id(.:format)", to: 'users#show', as: :user
+  resources :users, only: [:show]
 
   resources :subscriptions do
     get :show
@@ -49,10 +49,10 @@ Rails.application.routes.draw do
     end
   end
   # hack to create /subscriptions route
-  # resources :subscriptions, :only => [:create]
+  # resources :subscriptions, only: [:create]
 
   # For iOS to post
-  post "issues/:id(.:format)", :to => 'issues#show', :as => :issue
+  post "issues/:id(.:format)", to: 'issues#show', as: :issue
 
   resources :issues do
     # Route for importing articles from bricolage to an issue
@@ -70,8 +70,8 @@ Rails.application.routes.draw do
     get :wall_post_issue
     get :email_issue
     resources :articles do
-      resources :favourites, :only => [:create, :destroy]
-      resources :guest_passes, :only => [:create, :destroy]
+      resources :favourites, only: [:create, :destroy]
+      resources :guest_passes, only: [:create, :destroy]
       # get version is used for logged in sessions
       get :body
       # the post version is for the iTunes appStore receipt
@@ -96,7 +96,7 @@ Rails.application.routes.draw do
       post :android_share
       get :hide_images
     end
-    resources :purchases, :only => [:new, :create, :show] do
+    resources :purchases, only: [:new, :create, :show] do
       new do
         get :express
       end
@@ -109,13 +109,13 @@ Rails.application.routes.draw do
 
   # PayPal payment notification IPN
   # get "payment_notifications/create"
-  resource :payment_notifications, :only => [:create]
+  resource :payment_notifications, only: [:create]
 
   # PushRegistrations controller
   resource :push_registrations, only: [:create, :destroy]
 
   namespace :admin do
-    root :to => "base#index"
+    root to: "base#index"
     get "welcome_email" => "base#welcome_email"
     get "reset_password_instructions_email" => "base#reset_password_instructions_email"
     get "subscription_email" => "base#subscription_email"
@@ -134,14 +134,14 @@ Rails.application.routes.draw do
       post :add_subscription
       get :become
     end
-    resources :subscriptions, :only => [:update]
-    resources :settings, :only => [:index, :update], :constraints => { :id => /[a-z_]+/ }
-    resources :guest_passes, :only => [:index]
-    resources :push_registrations, :only => [:index]
+    resources :subscriptions, only: [:update]
+    resources :settings, only: [:index, :update], constraints: { id: /[a-z_]+/ }
+    resources :guest_passes, only: [:index]
+    resources :push_registrations, only: [:index]
     namespace :push_registrations do
       get :import
     end
-    resources :push_notifications, :only => [:index, :destroy]
+    resources :push_notifications, only: [:index, :destroy]
     namespace :push_notifications do
       post :run_delayed_jobs
       post :send_notifications
@@ -149,7 +149,7 @@ Rails.application.routes.draw do
   end
 
   namespace :institution do
-    root :to => "base#index"
+    root to: "base#index"
     resources :users
   end
 
@@ -168,12 +168,12 @@ Rails.application.routes.draw do
 
   # Change the page logged in users are directed to
   # authenticated :user do
-  #   root :to => 'issues#index'
+  #   root to: 'issues#index'
   # end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root to: 'home#index'
 
   # Pretty SEO permalink match for articles
   get '/perma_article/:id' => 'articles#show'
@@ -195,8 +195,8 @@ Rails.application.routes.draw do
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  #   match 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # This route can be invoked with purchase_url(id: product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -223,7 +223,7 @@ Rails.application.routes.draw do
   #   resources :products do
   #     resources :comments
   #     resources :sales do
-  #       get 'recent', :on => :collection
+  #       get 'recent', on: :collection
   #     end
   #   end
 

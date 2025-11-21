@@ -5,10 +5,10 @@
 </div>
 
 <div class="article-search">
-  <%= form_tag search_path, :class => 'form-search form-inline', method: :get do %>
+  <%= form_tag search_path, class: 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Article search', :class => "span2 search-query form-control" %>
-        <%= submit_tag "Search", name: nil, :class => 'btn btn-outline-secondary' %>
+        <%= text_field_tag :query, params[:query], placeholder: 'Article search', class: "span2 search-query form-control" %>
+        <%= submit_tag "Search", name: nil, class: 'btn btn-outline-secondary' %>
       </div>
   <% end %>
   <p>You might also like to <%= link_to 'browse articles by category', categories_path %>.<br />
@@ -25,7 +25,7 @@
 <div class="row">
       <% end %>
       <div class="col-sm-4">
-        <%= render :partial => "articles/search_article", :locals => { :article => article } %>
+        <%= render partial: "articles/search_article", locals: { article: article } %>
       </div>
     <% end %>
   <% end %>
@@ -63,12 +63,12 @@
         <!-- <td><%=l article.created_at %></td> -->
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' unless article.issue.nil? %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), class: 'btn btn-outline-secondary' unless article.issue.nil? %>
           <% else %>
-            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' unless article.issue.nil? %>
+            <%= link_to 'Buy', new_issue_purchase_path(article.issue), class: 'btn btn-xs btn-primary' unless article.issue.nil? %>
           <% end %>
-          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-xs' unless article.issue.nil? %><% end %>
-          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' unless article.issue.nil? %><% end %>
+          <% if can? :update, article %><%= link_to 'Edit', edit_issue_article_path(article.issue,article), class: 'btn btn-primary btn-xs' unless article.issue.nil? %><% end %>
+          <% if can? :destroy, article %><%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, class: 'btn btn-xs btn-danger' unless article.issue.nil? %><% end %>
         </td>
       </tr>
     <% end %>

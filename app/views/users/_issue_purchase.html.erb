@@ -1,6 +1,6 @@
 				<div class="home-keynote">
 					<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			  		<%= link_to retina_image_tag(issue.cover_url(:home).to_s, :class => 'article-thumb', :alt => "#{strip_tags(issue.title)}", :title => "#{strip_tags(issue.title)}", :width => 400, :itemprop => "image"), issue_path(issue) %>
+			  		<%= link_to retina_image_tag(issue.cover_url(:home).to_s, class: 'article-thumb', alt: "#{strip_tags(issue.title)}", title: "#{strip_tags(issue.title)}", width: 400, itemprop: "image"), issue_path(issue) %>
 				    <meta itemprop="url" content="<%= issue.cover_url.to_s %>">
 				    <meta itemprop="width" content="1000">
 				    <meta itemprop="height" content="1414">

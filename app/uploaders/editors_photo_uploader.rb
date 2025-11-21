@@ -27,7 +27,7 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process scale: [200, 300]
   #
   # def scale(width, height)
   #   # do something
@@ -35,16 +35,16 @@ class EditorsPhotoUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   # version :thumb do
-  #   process :scale => [50, 50]
+  #   process scale: [50, 50]
   # end
   # Use RMagick
   version :thumb do
-    process :resize_to_limit => [100, nil]
+    process resize_to_limit: [100, nil]
   end
 
   # Retina display :thumb @2x version
   version :thumb2x do
-    process :resize_to_limit => [200, nil]
+    process resize_to_limit: [200, nil]
     def full_filename (for_file = model.editors_photo.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

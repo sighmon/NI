@@ -224,7 +224,7 @@ module ArticlesHelper
         end
         if media_url
           tag_method = method(:retina_image_tag)
-          image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+          image_options = {alt: "#{strip_tags(image.caption)}", title: "#{strip_tags(image.caption)}", size: "#{image_width}x#{image_width * image.height / image.width}"}
           if options.include?("full") or options.include?("half")
             tag_method = method(:image_tag)
           end
@@ -278,7 +278,7 @@ module ArticlesHelper
 
         if cover_url
           tag_method = method(:retina_image_tag)
-          image_options = {:alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :size => "#{image_width}x#{image_width * 1000 / 1414}"}
+          image_options = {alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", size: "#{image_width}x#{image_width * 1000 / 1414}"}
           if options.include?("full")
             tag_method = method(:image_tag)
           end

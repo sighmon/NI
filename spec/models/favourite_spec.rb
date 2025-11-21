@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-describe Favourite, :type => :model do
+describe Favourite, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

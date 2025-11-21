@@ -5,39 +5,39 @@ class User < ActiveRecord::Base
   extend ActiveModel::Callbacks #required to define callbacks
   extend Devise::Models
   define_model_callbacks :validation #required by Devise
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :remote_authenticatable, :authentication_keys => [:login]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :remote_authenticatable, authentication_keys: [:login]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
 
   # Validate username
-  validates :username, :presence => true
+  validates :username, presence: true
   validates :username,
-    :uniqueness => {
-      :case_sensitive => false
+    uniqueness: {
+      case_sensitive: false
     }
   validates :username, length: { maximum: 100 }
-  validates_format_of :username, :with => /\A[-_A-z0-9]+\z/, :message => "can only include letters and numbers."
+  validates_format_of :username, with: /\A[-_A-z0-9]+\z/, message: "can only include letters and numbers."
 
   # join-model for purchases
   has_many :purchases
-  has_many :issues, :through => :purchases
+  has_many :issues, through: :purchases
 
-  has_many :guest_passes, :dependent => :destroy
-  has_many :articles, :through => :guest_passes
+  has_many :guest_passes, dependent: :destroy
+  has_many :articles, through: :guest_passes
 
   # join-model for favourites
-  has_many :favourites, :dependent => :destroy
-  has_many :articles, :through => :favourites
+  has_many :favourites, dependent: :destroy
+  has_many :articles, through: :favourites
 
   # association for subscriptions
   has_many :subscriptions
   has_many :payment_notifications
 
   # parent-child relationships for institutional accounts
-  belongs_to :parent, :class_name => 'User', :foreign_key => 'parent_id', optional: true
-  has_many :children, :class_name => 'User', :foreign_key => 'parent_id', :dependent => :destroy
+  belongs_to :parent, class_name: 'User', foreign_key: 'parent_id', optional: true
+  has_many :children, class_name: 'User', foreign_key: 'parent_id', dependent: :destroy
 
   # Send a welcome email after a user is created
   after_create :send_welcome_mail
@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
     else
       where(conditions.to_hash).first
     end
@@ -101,18 +101,18 @@ class User < ActiveRecord::Base
     has_paper_only? 'has_paper_only'
     institution?
 
-    last_subscription_including_cancelled :paypal_first_name => 'paypal_first_name'
-    last_subscription_including_cancelled :paypal_last_name => 'paypal_last_name'
-    last_subscription_including_cancelled :paypal_email => 'paypal_email'
-    last_subscription_including_cancelled :paper_copy => 'paper_copy'
-    last_subscription_including_cancelled :paper_only => 'paper_only'
-    last_subscription_including_cancelled :purchase_date => 'purchase_date'
-    last_subscription_including_cancelled :valid_from => 'valid_from'
+    last_subscription_including_cancelled paypal_first_name: 'paypal_first_name'
+    last_subscription_including_cancelled paypal_last_name: 'paypal_last_name'
+    last_subscription_including_cancelled paypal_email: 'paypal_email'
+    last_subscription_including_cancelled paper_copy: 'paper_copy'
+    last_subscription_including_cancelled paper_only: 'paper_only'
+    last_subscription_including_cancelled purchase_date: 'purchase_date'
+    last_subscription_including_cancelled valid_from: 'valid_from'
     last_subscription_including_cancelled :duration
-    last_subscription_including_cancelled :cancellation_date => 'cancellation_date'
-    last_subscription_including_cancelled :refunded_on => 'refunded_on'
-    last_subscription_including_cancelled :paypal_country_code => 'paypal_country_code'
-    last_subscription_including_cancelled :paypal_country_name => 'paypal_country_name'
+    last_subscription_including_cancelled cancellation_date: 'cancellation_date'
+    last_subscription_including_cancelled refunded_on: 'refunded_on'
+    last_subscription_including_cancelled paypal_country_code: 'paypal_country_code'
+    last_subscription_including_cancelled paypal_country_name: 'paypal_country_name'
 
     uk_id 'uk_id'
     uk_expiry 'uk_expiry'

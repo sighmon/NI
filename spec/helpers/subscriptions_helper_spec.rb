@@ -10,6 +10,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-describe SubscriptionsHelper, :type => :helper do
+describe SubscriptionsHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

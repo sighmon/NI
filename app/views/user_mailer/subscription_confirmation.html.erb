@@ -1,7 +1,7 @@
 <div class="tax-invoice">
   <div class="page-header article-title">
     <h1>New Internationalist Publications Pty Ltd</h1>
-    <%= link_to retina_image_tag(@issue.cover_url(:home).to_s, :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => "150px"), issue_path(@issue) %>
+    <%= link_to retina_image_tag(@issue.cover_url(:home).to_s, alt: "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", title: "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", rel: "tooltip", width: "150px"), issue_path(@issue) %>
     <h2><%= raw(ENV["STREET_ADDRESS"]) %></h2>
     <p>
       ABN 11 005 523 124<br />
@@ -20,7 +20,7 @@
     <dt>Description:</dt>
     <dd><%= pluralize(@subscription.duration, 'month') %> subscription to New Internationalist Magazine</dd>
     <dt>Amount:</dt>
-    <dd><%= number_to_currency(cents_to_dollars(@subscription.price_paid), :unit => '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@subscription.price_paid), :unit => '$') %>)</dd>
+    <dd><%= number_to_currency(cents_to_dollars(@subscription.price_paid), unit: '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@subscription.price_paid), unit: '$') %>)</dd>
   </dl>
 
   <p>Thank you for subscribing to New Internationalist magazine. We're a proudly independent non-for-profit publisher funded solely by subscribers, so we really appreciate your support.</p>

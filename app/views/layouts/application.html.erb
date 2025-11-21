@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
-  <%= display_meta_tags :site => ENV['APP_NAME'], :reverse => true %>
+  <%= display_meta_tags site: ENV['APP_NAME'], reverse: true %>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
   <![endif]-->
-  <%= stylesheet_link_tag "application", :media => "all", integrity: true, crossorigin: 'anonymous' %>
+  <%= stylesheet_link_tag "application", media: "all", integrity: true, crossorigin: 'anonymous' %>
   <%= javascript_include_tag "application", integrity: true, crossorigin: 'anonymous' %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +13,19 @@
   <!-- Google Analytics tracking code -->
   <% if not @no_tracking %>
     <% log_fb_event(ENV['FACEBOOK_PAGEVIEW'], ENV['FACEBOOK_PAGEVIEW_VALUE']) %>
-    <%= render :partial => "shared/ga_events" %>
-    <%= render :partial => "shared/fb_events" %>
+    <%= render partial: "shared/ga_events" %>
+    <%= render partial: "shared/fb_events" %>
   <% end %>
 </head>
 <body>
 
   <% if not @no_tracking %>
-    <%= render :partial => "shared/ga4" %>
+    <%= render partial: "shared/ga4" %>
   <% end %>
 
   <nav class="navbar navbar-expand-md fixed-top bg-menu-ni">
     <div class="container">
-      <%= link_to retina_image_tag("new-internationalist-logo-300px.png", :alt => "New Internationalist - The world unspun", :title => "New Internationalist - The world unspun", width: 150, class: "navbar-brand brand"), root_path %>
+      <%= link_to retina_image_tag("new-internationalist-logo-300px.png", alt: "New Internationalist - The world unspun", title: "New Internationalist - The world unspun", width: 150, class: "navbar-brand brand"), root_path %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -89,7 +89,7 @@
 
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <% if user_signed_in? %>
-          <%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, :class => 'btn btn-success nav-item' %>
+          <%= link_to raw("<i class='fa fa-user'></i><span class='nav-username'> #{current_user.username}</span>"), current_user, class: 'btn btn-success nav-item' %>
 
           <div class="btn-group" role="group">
             <button id="user-nav-dropdown" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -120,13 +120,13 @@
               <% if session[:auto_signin] %>
                 <%= link_to "Sign out", users_re_sign_in_path, class: 'dropdown-item' %>
               <% else %>
-                <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
+                <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               <% end %>
             </div>
           </div>
 
           <% else %>
-            <%= link_to raw("<span>Sign in</span>"), new_user_session_path, :class => 'btn btn-outline-success' %> <%= link_to raw("<span>Sign up</span>"), new_user_registration_path, :class => 'btn btn-outline-success' %>
+            <%= link_to raw("<span>Sign in</span>"), new_user_session_path, class: 'btn btn-outline-success' %> <%= link_to raw("<span>Sign up</span>"), new_user_registration_path, class: 'btn btn-outline-success' %>
           <% end %>
 
         </div>
@@ -142,14 +142,14 @@
       <% if msg.is_a?(String) %>
         <div class="alert fade show alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
         </div>
       <% end %>
     <% end %>
 
 		<%= yield %>
 
-		<%= render :partial => "shared/footer" %>
+		<%= render partial: "shared/footer" %>
 
 	</div>
 

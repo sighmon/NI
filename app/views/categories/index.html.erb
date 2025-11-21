@@ -2,13 +2,13 @@
 
 <% if can? :update, @category %>
 <div class="edit-issue-buttons">
-  <%= link_to 'Update colours', update_categories_colours_path, :class => 'btn btn-xs btn-success' %>
+  <%= link_to 'Update colours', update_categories_colours_path, class: 'btn btn-xs btn-success' %>
 </div>
 <% end %>
 
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
-  <h3>A list of categories and themes covered by articles in New Internationalist magazine. <%= link_to retina_image_tag("iphone-dark.png", :alt => "Open these categories in the New Internationalist magazine app for Android or iOS mobile devices.", :title => "Open these categories in the New Internationalist magazine app for Android or iOS mobile devices.", :size => "14x24", :class => 'ios-issue-page'), app_link(categories_path) %></h3>
+  <h1><%=t '.title', default: model_class.model_name.human.pluralize %></h1>
+  <h3>A list of categories and themes covered by articles in New Internationalist magazine. <%= link_to retina_image_tag("iphone-dark.png", alt: "Open these categories in the New Internationalist magazine app for Android or iOS mobile devices.", title: "Open these categories in the New Internationalist magazine app for Android or iOS mobile devices.", size: "14x24", class: 'ios-issue-page'), app_link(categories_path) %></h3>
 </div>
 <table class="table table-striped categories-table">
   <thead>
@@ -21,6 +21,6 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => "category", :collection => @categories %>
+    <%= render partial: "category", collection: @categories %>
   </tbody>
 </table>

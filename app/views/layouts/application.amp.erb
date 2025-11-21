@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ⚡>
 <head>
-  <%= display_meta_tags :site => ENV['APP_NAME'], :reverse => true %>
+  <%= display_meta_tags site: ENV['APP_NAME'], reverse: true %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag %>
   <meta charset="utf-8">
@@ -101,8 +101,8 @@
 <body>
   <div class="container">
     <%= yield %>
-    <%= render :partial => "shared/footer.html.erb" %>
-    <%= render :partial => "shared/amp_analytics", :locals => { :page => @article } %>
+    <%= render partial: "shared/footer.html.erb" %>
+    <%= render partial: "shared/amp_analytics", locals: { page: @article } %>
   </div>
 </body>
 </html>

@@ -13,7 +13,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: user.username, email: user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, params: {:user => attributes}
+            post :create, params: {user: attributes}
           }.to change(User, :count).by(1)
         end
       end
@@ -23,7 +23,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: "", email: user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, params: {:user => attributes}
+            post :create, params: {user: attributes}
           }.to change(User, :count).by(0)
         end
       end
@@ -33,7 +33,7 @@ describe RegistrationsController do
           user = FactoryBot.build(:user)
           attributes = { username: user.username, email: "", password: "password", password_confirmation: "password" }
           expect {
-            post :create, params: {:user => attributes}
+            post :create, params: {user: attributes}
           }.to change(User, :count).by(0)
         end
       end
@@ -51,7 +51,7 @@ describe RegistrationsController do
           new_user = FactoryBot.build(:user)
           attributes = { username: new_user.username, email: new_user.email, password: "password", password_confirmation: "password" }
           expect {
-            post :create, params: {:user => attributes}
+            post :create, params: {user: attributes}
           }.to change(User, :count).by(0)
         end
       end

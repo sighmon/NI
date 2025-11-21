@@ -25,7 +25,7 @@ class Admin::UsersController < Admin::BaseController
 		respond_to do |format|
 			format.html
 			# CSV information that's included is in the User model under comma
-			format.csv { render :csv => User.order(:email).all, :filename => DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
+			format.csv { render csv: User.order(:email).all, filename: DateTime.now.strftime("digisub-%Y-%m-%d-%H:%M:%S") }
 		end
 	end
 
@@ -50,7 +50,7 @@ class Admin::UsersController < Admin::BaseController
 			redirect_to admin_users_path
 		else
 			flash[:alert] = "User has not been created!"
-			render :action => "new"
+			render action: "new"
 		end
 	end
 
@@ -111,7 +111,7 @@ class Admin::UsersController < Admin::BaseController
 			redirect_to admin_user_path
 		else
 			flash[:alert] = "User has not been updated."
-			render :action => "edit"
+			render action: "edit"
 		end
 	end
 
@@ -129,7 +129,7 @@ class Admin::UsersController < Admin::BaseController
 	def free_subscription
 		# Give a user a free 1 year subscription
 		@user = User.find(params[:user_id])
-		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => 12, :purchase_date => DateTime.now, :price_paid => 0)
+		@free_subscription = Subscription.create(user_id: @user.id, valid_from: (@user.last_subscription.try(:expiry_date) or DateTime.now), duration: 12, purchase_date: DateTime.now, price_paid: 0)
 
 		respond_to do |format|
 			if @free_subscription.save
@@ -149,7 +149,7 @@ class Admin::UsersController < Admin::BaseController
 		# Give a user a free subscription for donating to our crowdfunding campaign
 		@user = User.find(params[:user_id])
 		@number_of_months = params[:number_of_months]
-		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => @number_of_months, :purchase_date => DateTime.now, :price_paid => 0)
+		@free_subscription = Subscription.create(user_id: @user.id, valid_from: (@user.last_subscription.try(:expiry_date) or DateTime.now), duration: @number_of_months, purchase_date: DateTime.now, price_paid: 0)
 
 		respond_to do |format|
 			if @free_subscription.save
@@ -167,7 +167,7 @@ class Admin::UsersController < Admin::BaseController
 	def media_subscription
 		# Give a user a free 10 year subscription
 		@user = User.find(params[:user_id])
-		@free_subscription = Subscription.create(:user_id => @user.id, :valid_from => (@user.last_subscription.try(:expiry_date) or DateTime.now), :duration => 120, :purchase_date => DateTime.now, :price_paid => 0)
+		@free_subscription = Subscription.create(user_id: @user.id, valid_from: (@user.last_subscription.try(:expiry_date) or DateTime.now), duration: 120, purchase_date: DateTime.now, price_paid: 0)
 
 		respond_to do |format|
 			if @free_subscription.save
@@ -238,13 +238,13 @@ class Admin::UsersController < Admin::BaseController
 		end
 
 		@free_subscription = Subscription.create(
-			:user_id => @user.id,
-			:valid_from => @valid_from,
-			:duration => @number_of_months,
-			:purchase_date => DateTime.now,
-			:price_paid => @price_paid,
-			:paper_copy => @paper_copy,
-			:paper_only => @paper_only
+			user_id: @user.id,
+			valid_from: @valid_from,
+			duration: @number_of_months,
+			purchase_date: DateTime.now,
+			price_paid: @price_paid,
+			paper_copy: @paper_copy,
+			paper_only: @paper_only
 		)
 
 		respond_to do |format|

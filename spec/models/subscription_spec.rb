@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Subscription, :type => :model do
+describe Subscription, type: :model do
   
   context "paper only" do
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "articles/show", :type => :view do
+describe "articles/show", type: :view do
   let(:article) { FactoryBot.create(:article) }
 
   it "shows the article" do

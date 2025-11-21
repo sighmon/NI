@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PaymentNotification, :type => :model do
+describe PaymentNotification, type: :model do
 
 	context "with a subscriber" do
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Admin::SettingsController, :type => :controller do
+describe Admin::SettingsController, type: :controller do
 
   context "as an admin user" do
     describe "GET 'index'" do

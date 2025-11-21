@@ -2,7 +2,7 @@
 #     def __find_records_by_ids(klass, ids)
 #         #@options[:load] === true ? klass.find(ids) : klass.find(ids, @options[:load])
 #         # FIXME: not quite sure what the second (nil? false?) argument to klass.find would be doing...
-#         #klass.where(:id => ids)
-#         klass.where({:id => ids}).select{|a|!a.nil?}
+#         #klass.where(id: ids)
+#         klass.where({id: ids}).select{|a|!a.nil?}
 #     end
 # end

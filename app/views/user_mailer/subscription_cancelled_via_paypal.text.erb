@@ -5,7 +5,7 @@ New Internationalist Subscription - Automatic-renewal cancelled
 Your automatic-renewal has now been cancelled via PayPal.
 
 In the meantime your subscription will continue until your subscription payment runs out, so you can still read magazines at:
-<%= issues_url(:protocol => "https") %>
+<%= issues_url(protocol: "https") %>
 
 <% if @user.expiry_date %>
 Your subscription expiry date is:
@@ -16,4 +16,4 @@ Cheers, the NI team.
 
 PS Was there something wrong with our site or magazine? Could we improve our service? We'd love to hear the reasons why you cancelled
 
-<%= render :partial => "user_mailer/footer" %>
+<%= render partial: "user_mailer/footer" %>

@@ -2,12 +2,12 @@
 	<h1>Admin section</h1>
 </div>
 
-<p><%= link_to "List Users", admin_users_path, :class => 'btn btn-outline-secondary' %> A list of all <%= number_with_delimiter(User.count) %> user accounts and their expiry dates.</p>
+<p><%= link_to "List Users", admin_users_path, class: 'btn btn-outline-secondary' %> A list of all <%= number_with_delimiter(User.count) %> user accounts and their expiry dates.</p>
 <p>
-  <%= form_tag admin_users_search_path, :class => 'form-search form-inline', method: :get do %>
+  <%= form_tag admin_users_search_path, class: 'form-search form-inline', method: :get do %>
       <div class="input-append">
-        <%= text_field_tag :query, params[:query], :placeholder => 'Search for a user', :class => "span2 search-query form-control" %>
-        <%= submit_tag "Search", name: nil, :class => 'btn btn-outline-secondary' %>
+        <%= text_field_tag :query, params[:query], placeholder: 'Search for a user', class: "span2 search-query form-control" %>
+        <%= submit_tag "Search", name: nil, class: 'btn btn-outline-secondary' %>
       </div>
   <% end %>
 </p>
@@ -23,65 +23,65 @@
       <dt>Last updated</dt><dd><%= @subscriber_stats['last_updated'] or 'Never' %></dd>
     </dl>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
-  <%= link_to "Update subscriber stats", admin_users_update_csv_path(type: 'subscriber_stats'), :class => 'btn btn-primary' %>
+  <%= link_to "Update subscriber stats", admin_users_update_csv_path(type: 'subscriber_stats'), class: 'btn btn-primary' %>
 </p>
 <p>
-	<%= link_to "Update CSV all user", admin_users_update_csv_path(type: 'users_all'), :class => 'btn btn-primary' %>
+	<%= link_to "Update CSV all user", admin_users_update_csv_path(type: 'users_all'), class: 'btn btn-primary' %>
 	<% if @latest_csv_date %>
-		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_all'), :class => 'btn btn-info' %>
+		<%= link_to "Download CSV (#{@latest_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_all'), class: 'btn btn-info' %>
 	<% else %>
-		<%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+		<%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
 	<% end %>
 </p>
 <p>
-  <%= link_to "Update CSV current subscribers", admin_users_update_csv_path(type: 'users_current'), :class => 'btn btn-primary' %>
+  <%= link_to "Update CSV current subscribers", admin_users_update_csv_path(type: 'users_current'), class: 'btn btn-primary' %>
   <% if @latest_subscribers_csv_date %>
-    <%= link_to "Download CSV (#{@latest_subscribers_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_current'), :class => 'btn btn-info' %>
+    <%= link_to "Download CSV (#{@latest_subscribers_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_current'), class: 'btn btn-info' %>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
 </p>
 <p>
-  <%= link_to "Update CSV lapsed subscribers", admin_users_update_csv_path(type: 'users_lapsed'), :class => 'btn btn-primary' %>
+  <%= link_to "Update CSV lapsed subscribers", admin_users_update_csv_path(type: 'users_lapsed'), class: 'btn btn-primary' %>
   <% if @latest_lapsed_csv_date %>
-    <%= link_to "Download CSV (#{@latest_lapsed_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_lapsed'), :class => 'btn btn-info' %>
+    <%= link_to "Download CSV (#{@latest_lapsed_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_lapsed'), class: 'btn btn-info' %>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
 </p>
 <p>
-  <%= link_to "Update CSV lapsed institution subscribers", admin_users_update_csv_path(type: 'institutions_lapsed'), :class => 'btn btn-primary' %>
+  <%= link_to "Update CSV lapsed institution subscribers", admin_users_update_csv_path(type: 'institutions_lapsed'), class: 'btn btn-primary' %>
   <% if @latest_lapsed_institution_csv_date %>
-    <%= link_to "Download CSV (#{@latest_lapsed_institution_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'institutions_lapsed'), :class => 'btn btn-info' %>
+    <%= link_to "Download CSV (#{@latest_lapsed_institution_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'institutions_lapsed'), class: 'btn btn-info' %>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
 </p>
 <p>
-  <%= link_to "Update CSV paper subscribers", admin_users_update_csv_path(type: 'users_paper'), :class => 'btn btn-primary' %>
+  <%= link_to "Update CSV paper subscribers", admin_users_update_csv_path(type: 'users_paper'), class: 'btn btn-primary' %>
   <% if @latest_paper_csv_date %>
-    <%= link_to "Download CSV (#{@latest_paper_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_paper'), :class => 'btn btn-info' %>
+    <%= link_to "Download CSV (#{@latest_paper_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'users_paper'), class: 'btn btn-info' %>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
 </p>
 <p>
-  <%= link_to "Update CSV for UK export", admin_users_update_csv_path(type: 'uk_export'), :class => 'btn btn-primary' %>
+  <%= link_to "Update CSV for UK export", admin_users_update_csv_path(type: 'uk_export'), class: 'btn btn-primary' %>
   <% if @uk_export_csv_date %>
-    <%= link_to "Download CSV (#{@uk_export_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'uk_export'), :class => 'btn btn-info' %>
+    <%= link_to "Download CSV (#{@uk_export_csv_date}.csv)", admin_users_download_csv_path(format: 'csv', type: 'uk_export'), class: 'btn btn-info' %>
   <% else %>
-    <%= link_to "Generating... (click to reload)", admin_root_path, :class => 'btn btn-outline-secondary' %>
+    <%= link_to "Generating... (click to reload)", admin_root_path, class: 'btn btn-outline-secondary' %>
   <% end %>
 </p>
 <% if current_user and current_user.admin? %>
-  <p><%= link_to "Settings", admin_settings_path, :class => 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
-  <p><%= link_to "Create a page", new_page_path, :class => 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
-  <p><%= link_to "Guest Passes", admin_guest_passes_path, :class => 'btn btn-outline-secondary' %> <%= number_with_delimiter(GuestPass.count) %> Guest passes.</p>
-  <p><%= link_to "Push Registrations", admin_push_registrations_path, :class => 'btn btn-outline-secondary' %> <%= number_with_delimiter(PushRegistration.count) %> Mobile push registrations.</p>
-  <p><%= link_to "Push Notifications", admin_push_notifications_path, :class => 'btn btn-outline-secondary' %> <%= number_with_delimiter(Rpush::Notification.count) %> total. <%= number_with_delimiter(Rpush::Notification.where(delivered: false).count) %> undelivered.</p>
-  <p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), :class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush quick reads", admin_delete_cache_path(cache: "quick_reads"), :class => 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
+  <p><%= link_to "Settings", admin_settings_path, class: 'btn btn-warning' %> Set the pagination on search pages and change prices.</p>
+  <p><%= link_to "Create a page", new_page_path, class: 'btn btn-success' %> A static page (help, about, privacy etc..). <%= link_to "All pages", pages_path %></p>
+  <p><%= link_to "Guest Passes", admin_guest_passes_path, class: 'btn btn-outline-secondary' %> <%= number_with_delimiter(GuestPass.count) %> Guest passes.</p>
+  <p><%= link_to "Push Registrations", admin_push_registrations_path, class: 'btn btn-outline-secondary' %> <%= number_with_delimiter(PushRegistration.count) %> Mobile push registrations.</p>
+  <p><%= link_to "Push Notifications", admin_push_notifications_path, class: 'btn btn-outline-secondary' %> <%= number_with_delimiter(Rpush::Notification.count) %> total. <%= number_with_delimiter(Rpush::Notification.where(delivered: false).count) %> undelivered.</p>
+  <p><%= link_to "Flush cache", admin_delete_cache_path(cache: "all"), class: 'btn btn-danger', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush blog/web exclusives cache", admin_delete_cache_path(cache: "blog"), class: 'btn btn-warning', data: { confirm: 'Are you sure?'} %> <%= link_to "Flush quick reads", admin_delete_cache_path(cache: "quick_reads"), class: 'btn btn-warning', data: { confirm: 'Are you sure?'} %></p>
 <% end %>
 
 <hr />
@@ -89,23 +89,23 @@
 <h4>Preview system emails</h4>
 <p>The blue templates are automatically sent by our system.</p><br />
 
-<p><%= link_to "User signup - html", admin_welcome_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "User signup - text", admin_welcome_email_path(format: 'text'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Password reset - html", admin_reset_password_instructions_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "Password reset - text", admin_reset_password_instructions_email_path(format: 'text'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Institutional account - html", admin_welcome_email_path(format: 'mjml', user_type: 'institution'), :class => 'btn btn-outline-secondary' %> <%= link_to "Institutional account - text", admin_welcome_email_path(format: 'text', user_type: 'institution'), :class => 'btn btn-outline-secondary' %></p>
-<p><%= link_to "Magazine purchase - html", admin_magazine_purchase_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "Magazine purchase - text", admin_magazine_purchase_email_path(format: 'text'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Subscription purchase - html", admin_subscription_email_path(format: 'mjml'), :class => 'btn btn-info' %> <%= link_to "Subscription purchase - text", admin_subscription_email_path(format: 'text'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Free subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'free'), :class => 'btn btn-outline-secondary' %> <%= link_to "Free subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'free'), :class => 'btn btn-outline-secondary' %></p>
-<p><%= link_to "Media subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'media'), :class => 'btn btn-outline-secondary' %> <%= link_to "Media subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'media'), :class => 'btn btn-outline-secondary' %></p>
-<p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), :class => 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), :class => 'btn btn-info' %></p>
-<p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), :class => 'btn btn-info' %></p>
+<p><%= link_to "User signup - html", admin_welcome_email_path(format: 'mjml'), class: 'btn btn-info' %> <%= link_to "User signup - text", admin_welcome_email_path(format: 'text'), class: 'btn btn-info' %></p>
+<p><%= link_to "Password reset - html", admin_reset_password_instructions_email_path(format: 'mjml'), class: 'btn btn-info' %> <%= link_to "Password reset - text", admin_reset_password_instructions_email_path(format: 'text'), class: 'btn btn-info' %></p>
+<p><%= link_to "Institutional account - html", admin_welcome_email_path(format: 'mjml', user_type: 'institution'), class: 'btn btn-outline-secondary' %> <%= link_to "Institutional account - text", admin_welcome_email_path(format: 'text', user_type: 'institution'), class: 'btn btn-outline-secondary' %></p>
+<p><%= link_to "Magazine purchase - html", admin_magazine_purchase_email_path(format: 'mjml'), class: 'btn btn-info' %> <%= link_to "Magazine purchase - text", admin_magazine_purchase_email_path(format: 'text'), class: 'btn btn-info' %></p>
+<p><%= link_to "Subscription purchase - html", admin_subscription_email_path(format: 'mjml'), class: 'btn btn-info' %> <%= link_to "Subscription purchase - text", admin_subscription_email_path(format: 'text'), class: 'btn btn-info' %></p>
+<p><%= link_to "Free subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'free'), class: 'btn btn-outline-secondary' %> <%= link_to "Free subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'free'), class: 'btn btn-outline-secondary' %></p>
+<p><%= link_to "Media subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'media'), class: 'btn btn-outline-secondary' %> <%= link_to "Media subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'media'), class: 'btn btn-outline-secondary' %></p>
+<p><%= link_to "Cancelled subscription - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled'), class: 'btn btn-info' %> <%= link_to "Cancelled subscription - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled'), class: 'btn btn-info' %></p>
+<p><%= link_to "Cancelled via Paypal - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'cancelled_paypal'), class: 'btn btn-info' %> <%= link_to "Cancelled via Paypal - text", admin_subscription_email_path(format: 'text', subscription_type: 'cancelled_paypal'), class: 'btn btn-info' %></p>
 <% if current_user and current_user.admin? %>
-  <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), :class => 'btn btn-outline-secondary' %></p>
+  <p><%= link_to "Monthly email newsletters", issue_path(Issue.latest), class: 'btn btn-outline-secondary' %></p>
 <% else %>
-  <p><%= link_to "Monthly email newsletters", issue_email_path(Issue.latest, format: 'mjml'), :class => 'btn btn-outline-secondary' %></p>
+  <p><%= link_to "Monthly email newsletters", issue_email_path(Issue.latest, format: 'mjml'), class: 'btn btn-outline-secondary' %></p>
 <% end %>
-<p><%= link_to "Subscription special - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'special'), :class => 'btn btn-outline-secondary' %> <%= link_to "Subscription special - text", admin_subscription_email_path(format: 'text', subscription_type: 'special'), :class => 'btn btn-outline-secondary' %></p>
-<p><%= link_to "Admin email", admin_admin_email_path(format: 'mjml'), :class => 'btn btn-info' %></p>
+<p><%= link_to "Subscription special - html", admin_subscription_email_path(format: 'mjml', subscription_type: 'special'), class: 'btn btn-outline-secondary' %> <%= link_to "Subscription special - text", admin_subscription_email_path(format: 'text', subscription_type: 'special'), class: 'btn btn-outline-secondary' %></p>
+<p><%= link_to "Admin email", admin_admin_email_path(format: 'mjml'), class: 'btn btn-info' %></p>
 
 <div class="form-actions">
-	<%= link_to 'Back', root_path, :class => 'btn btn-outline-secondary' %>
+	<%= link_to 'Back', root_path, class: 'btn btn-outline-secondary' %>
 </div>

@@ -1,7 +1,7 @@
 <% if not article_email.featured_image.blank? %>
-  <%= link_to retina_image_tag(article_email.featured_image_url(:thumb).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article_email.featured_image_caption)}", :title => "#{strip_tags(article_email.featured_image_caption)}", :size => "80x80"), issue_article_path(@issue,article_email) %>
+  <%= link_to retina_image_tag(article_email.featured_image_url(:thumb).to_s, class: 'article-thumb', alt: "#{strip_tags(article_email.featured_image_caption)}", title: "#{strip_tags(article_email.featured_image_caption)}", size: "80x80"), issue_article_path(@issue,article_email) %>
 <% elsif not article_email.images.first.blank? %>
-  <%= link_to retina_image_tag(article_email.images.first.data_url(:thumb).to_s, :class => 'article-thumb', :alt => "", :title => "", :size => "80x80"), issue_article_path(@issue,article_email) %>
+  <%= link_to retina_image_tag(article_email.images.first.data_url(:thumb).to_s, class: 'article-thumb', alt: "", title: "", size: "80x80"), issue_article_path(@issue,article_email) %>
 <% end %>
 <h4><%= link_to article_email.title, issue_article_path(@issue,article_email) %></h4>
 <p><%= simple_format article_email.teaser %></p>

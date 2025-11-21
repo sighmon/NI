@@ -3,14 +3,14 @@ class Category < ActiveRecord::Base
   validates_uniqueness_of :name
 
   has_many :article_categorisations
-  has_many :articles, :through => :article_categorisations
+  has_many :articles, through: :article_categorisations
 
   after_commit :flush_cache
 
   def self.create_from_element(article,element)
     assets = 'http://bricolage.sourceforge.net/assets.xsd'
     c = nil
-    if Category.where(:name => element).empty?
+    if Category.where(name: element).empty?
       # Try a looser search
       loose_search = Category.where("name ilike ?", "%#{element.parameterize}%")
       if not loose_search.empty?
@@ -21,7 +21,7 @@ class Category < ActiveRecord::Base
 
     if c.nil?
       # Fallback to first_or_create
-      c = Category.where(:name => element).first_or_create
+      c = Category.where(name: element).first_or_create
     end
     article.categories << c unless article.categories.include?(c)
     return c

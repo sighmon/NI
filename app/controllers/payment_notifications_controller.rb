@@ -1,6 +1,6 @@
 class PaymentNotificationsController < ApplicationController
 	
-	protect_from_forgery :except => [:create]
+	protect_from_forgery except: [:create]
 
 	def create
 		# logger.info params
@@ -12,7 +12,7 @@ class PaymentNotificationsController < ApplicationController
 
 		# TODO: using activemerchant to validate the IPN: https://go.developer.ebay.com/developers/community/blogs/saranyan/paypal-ipn-using-rails-3.1-and-active-merchant
 
-		PaymentNotification.create!(:params => params, :user_id => params[:rp_invoice_id], :status => params[:payment_status], :transaction_id => params[:txn_id], :transaction_type => params[:txn_type] )
+		PaymentNotification.create!(params: params, user_id: params[:rp_invoice_id], status: params[:payment_status], transaction_id: params[:txn_id], transaction_type: params[:txn_type] )
 		render json: {success: true}
 	end
 

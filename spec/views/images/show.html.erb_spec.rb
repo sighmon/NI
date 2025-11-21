@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "images/show", :type => :view do
+describe "images/show", type: :view do
   before(:each) do
     @showimage = FactoryBot.create(:image)
     @article = @showimage.article

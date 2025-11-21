@@ -48,10 +48,10 @@
 					line-height="22px"
 					font-weight="300"
 					color="#787878">
-					<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
+					<%= @greeting %> <%= link_to @user.username, user_url(@user, protocol: "https"), style: 'color:inherit;' %>,<br /><br />
 					Your automatic-renewal has now been cancelled via PayPal.<br /><br />
 
-					In the meantime your subscription will continue until your subscription payment runs out, so you can still read magazines: <%= link_to "Magazine archive", issues_url(:protocol => "https"), style: 'color:inherit;' %><br /><br />
+					In the meantime your subscription will continue until your subscription payment runs out, so you can still read magazines: <%= link_to "Magazine archive", issues_url(protocol: "https"), style: 'color:inherit;' %><br /><br />
 
 					<% if @user.expiry_date %>
 					Your subscription expiry date is:<br />
@@ -123,7 +123,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render partial: 'issues/email_footer', formats: [:html] %>
 
 	</mj-body>
 </mjml>

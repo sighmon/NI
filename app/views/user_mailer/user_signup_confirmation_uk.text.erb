@@ -5,9 +5,9 @@ Hello <%= @user.username %>
 Thank you for registering an account with your UK subscription details. You will now be able to access New Internationalist on your iOS device, and have expanded your subscription to issues from 2008 onwards.
 
 Your username is: <%= @user.username %>
-Your user profile is: <%= user_url(@user, :protocol => "https") %>
+Your user profile is: <%= user_url(@user, protocol: "https") %>
 
-Login to your account here: <%= uk_login_url(:protocol => "https") %>
+Login to your account here: <%= uk_login_url(protocol: "https") %>
 
 Use your user profile to see your subscription details, your favourite and shared articles, as well as single issues purchased.
 

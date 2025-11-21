@@ -48,7 +48,7 @@
 					line-height="22px"
 					font-weight="300"
 					color="#787878">
-					<%= @greeting %> <%= link_to @user.username, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
+					<%= @greeting %> <%= link_to @user.username, user_url(@user, protocol: "https"), style: 'color:inherit;' %>,<br /><br />
 					Your subscription is now cancelled. Sorry things didn't work out, but thank you very much for your previous support, we really appreciate it.<br /><br />
 
 					Cheers, the <b>NI</b> team.<br /><br />
@@ -116,7 +116,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render partial: 'issues/email_footer', formats: [:html] %>
 
 	</mj-body>
 </mjml>
