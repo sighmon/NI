@@ -41,6 +41,9 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+# No longer be part of the default gems starting from Ruby 3.5.0
+gem 'benchmark'
+
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
 
