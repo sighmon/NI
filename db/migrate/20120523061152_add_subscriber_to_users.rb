@@ -1,6 +1,6 @@
 class AddSubscriberToUsers < ActiveRecord::Migration
   def self.up
-    add_column :users, :subscriber, :boolean, :default => false
+    add_column :users, :subscriber, :boolean, default: false
   end
 
   def self.down

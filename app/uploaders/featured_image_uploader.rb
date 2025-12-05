@@ -29,7 +29,7 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process scale: [200, 300]
   #
   # def scale(width, height)
   #   # do something
@@ -37,30 +37,30 @@ class FeaturedImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   # version :thumb do
-  #   process :scale => [50, 50]
+  #   process scale: [50, 50]
   # end
 
   # Use RMagick
   version :fullwidth do
-    # process :resize_to_limit => [945, 400]
-    process :resize_to_fill => [1050, 445]
+    # process resize_to_limit: [945, 400]
+    process resize_to_fill: [1050, 445]
   end
 
   # Retina display @2x version
   version :fullwidth2x do
-    process :resize_to_fill => [2100, 890]
+    process resize_to_fill: [2100, 890]
     def full_filename (for_file = model.featured_image.file)
       "fullwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
   version :thumb do
-    process :resize_to_fill => [80, 80]
+    process resize_to_fill: [80, 80]
   end
 
   # Retina display @2x version
   version :thumb2x do
-    process :resize_to_fill => [160, 160]
+    process resize_to_fill: [160, 160]
     def full_filename (for_file = model.featured_image.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

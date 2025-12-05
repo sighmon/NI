@@ -1,1 +1,1 @@
-$("textarea#article_body").val("<%= escape_javascript(source_to_body(@article, :debug => current_user.try(:admin?)).html_safe) %>")
+$("textarea#article_body").val("<%= escape_javascript(source_to_body(@article, debug: current_user.try(:admin?)).html_safe) %>")

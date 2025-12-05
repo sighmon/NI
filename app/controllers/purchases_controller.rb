@@ -5,7 +5,7 @@ class PurchasesController < ApplicationController
 
   rescue_from CanCan::AccessDenied do |exception|
     session[:user_return_to] = request.referer
-    redirect_to new_user_session_path, :alert => "You need to be logged in to read or purchase articles in this magazine."
+    redirect_to new_user_session_path, alert: "You need to be logged in to read or purchase articles in this magazine."
   end
 
   def show
@@ -20,10 +20,10 @@ class PurchasesController < ApplicationController
         render @template
       }
       format.mjml {
-        render @template, :layout => false
+        render @template, layout: false
       }
       format.text {
-        render @template, :layout => false
+        render @template, layout: false
       }
     end
   end
@@ -34,12 +34,12 @@ class PurchasesController < ApplicationController
     @express_purchase_price = @issue.price
     session[:express_purchase_price] = @express_purchase_price
     response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-      :ip                 => request.remote_ip,
-      :return_url         => new_issue_purchase_url(@issue),
-      :cancel_return_url  => new_issue_purchase_url(@issue),
-      :allow_note         => true,
-      :items              => [{:name => "NI #{@issue.number} - #{@issue.title}", :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => @express_purchase_price}],
-      :currency           => 'AUD'
+      ip: request.remote_ip,
+      return_url: new_issue_purchase_url(@issue),
+      cancel_return_url: new_issue_purchase_url(@issue),
+      allow_note: true,
+      items: [{name: "NI #{@issue.number} - #{@issue.title}", quantity: 1, description: "New Internationalist Magazine - digital edition", amount: @express_purchase_price}],
+      currency: 'AUD'
     )
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   end
@@ -76,7 +76,7 @@ class PurchasesController < ApplicationController
     response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
     if response.success?
       # FIXME: Work out how to simplify this call.
-      @purchase = Purchase.new(:user_id => @user.id, :issue_id => @issue.id)
+      @purchase = Purchase.new(user_id: @user.id, issue_id: @issue.id)
       # Write purchase date & price to purchase object
       @purchase.price_paid = session[:express_purchase_price]
       @purchase.purchase_date = DateTime.now
@@ -109,11 +109,11 @@ class PurchasesController < ApplicationController
 
   def express_purchase_options
     {
-    :ip         => request.remote_ip,
-    :token      => session[:express_token],
-    :payer_id   => session[:express_payer_id],
-    :items      => [{:name => "NI #{@issue.number} - #{@issue.title}", :quantity => 1, :description => "New Internationalist Magazine - digital edition", :amount => session[:express_purchase_price]}],
-    :currency   => 'AUD'
+    ip: request.remote_ip,
+    token: session[:express_token],
+    payer_id: session[:express_payer_id],
+    items: [{name: "NI #{@issue.number} - #{@issue.title}", quantity: 1, description: "New Internationalist Magazine - digital edition", amount: session[:express_purchase_price]}],
+    currency: 'AUD'
     }
   end
 

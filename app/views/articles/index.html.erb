@@ -1,6 +1,6 @@
 <%- model_class = Article -%>
 <div class="page-header">
-  <h1>All <%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1>All <%=t '.title', default: model_class.model_name.human.pluralize %></h1>
   <h3>From the issue <%= link_to @issue.title, issue_path(@issue) %></h3>
 </div>
 <table class="table table-striped">
@@ -19,7 +19,7 @@
         <th><%= model_class.human_attribute_name(:trialarticle) %></th>
         <th><%= model_class.human_attribute_name(:created_at) %></th>
       <% end %>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th><%=t '.actions', default: t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
@@ -40,15 +40,15 @@
         <% end %>
         <td>
           <% if can? :read, article %>
-            <%= link_to 'Read', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' %>
+            <%= link_to 'Read', issue_article_path(article.issue,article), class: 'btn btn-outline-secondary' %>
           <% else %>
-            <%= link_to 'Buy', new_issue_purchase_path(article.issue), :class => 'btn btn-xs btn-primary' %>
+            <%= link_to 'Buy', new_issue_purchase_path(article.issue), class: 'btn btn-xs btn-primary' %>
           <% end %>
           <% if can? :update, article %>
-            <%= link_to 'Edit', edit_issue_article_path(article.issue,article), :class => 'btn btn-primary btn-xs' %>
+            <%= link_to 'Edit', edit_issue_article_path(article.issue,article), class: 'btn btn-primary btn-xs' %>
           <% end %>
           <% if can? :destroy, article %>
-            <%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, :class => 'btn btn-xs btn-danger' %>
+            <%= link_to 'Destroy', issue_article_path(article.issue,article), confirm: 'Are you sure?', method: :delete, class: 'btn btn-xs btn-danger' %>
           <% end %>
         </td>
       </tr>

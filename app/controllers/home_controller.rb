@@ -108,45 +108,45 @@ class HomeController < ApplicationController
     @page_title_home = "New Internationalist Magazine Digital Edition"
     @page_description = "The New Internationalist is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
 
-    set_meta_tags :description => @page_description,
-                  :keywords => "new, internationalist, magazine, archive, digital, edition, australia",
-                  :canonical => root_url,
-                  :alternate => [
-                    {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, 
-                    {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint"},
-                    {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags description: @page_description,
+                  keywords: "new, internationalist, magazine, archive, digital, edition, australia",
+                  canonical: root_url,
+                  alternate: [
+                    {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint"}, 
+                    {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint"},
+                    {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
                   ],
-                  :fb => {
-                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  fb: {
+                    app_id: ENV["FACEBOOK_APP_ID"]
                   },
-                  :open_graph => {
-                    :title => @page_title_home,
-                    :description => @page_description,
-                    :url   => root_url,
-                    :image => @latest_issue.try(:cover_url, :thumb2x).to_s,
-                    :site_name => "New Internationalist Magazine Digital Edition"
+                  open_graph: {
+                    title: @page_title_home,
+                    description: @page_description,
+                    url: root_url,
+                    image: @latest_issue.try(:cover_url, :thumb2x).to_s,
+                    site_name: "New Internationalist Magazine Digital Edition"
                   },
-                  :twitter => {
-                    :card => "summary",
-                    :site => "@#{ENV["TWITTER_NAME"]}",
-                    :creator => "@#{ENV["TWITTER_NAME"]}",
-                    :title => @page_title_home,
-                    :description => @page_description,
-                    :image => {
-                      :src => @latest_issue.try(:cover_url, :thumb2x).to_s
+                  twitter: {
+                    card: "summary",
+                    site: "@#{ENV["TWITTER_NAME"]}",
+                    creator: "@#{ENV["TWITTER_NAME"]}",
+                    title: @page_title_home,
+                    description: @page_description,
+                    image: {
+                      src: @latest_issue.try(:cover_url, :thumb2x).to_s
                     },
-                    :app => {
-                      :name => {
-                        :iphone => ENV["ITUNES_APP_NAME"],
-                        :ipad => ENV["ITUNES_APP_NAME"]
+                    app: {
+                      name: {
+                        iphone: ENV["ITUNES_APP_NAME"],
+                        ipad: ENV["ITUNES_APP_NAME"]
                       },
-                      :id => {
-                        :iphone => ENV["ITUNES_APP_ID"],
-                        :ipad => ENV["ITUNES_APP_ID"]
+                      id: {
+                        iphone: ENV["ITUNES_APP_ID"],
+                        ipad: ENV["ITUNES_APP_ID"]
                       },
-                      :url => {
-                        :iphone => "newint://",
-                        :ipad => "newint://"
+                      url: {
+                        iphone: "newint://",
+                        ipad: "newint://"
                       }
                     }
                   }
@@ -160,7 +160,7 @@ class HomeController < ApplicationController
 
     @published_issues = Issue.where(published: true)
 
-    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+    builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') { |xml|
       xml.feed('xmlns' => 'http://www.w3.org/2005/Atom', 'xmlns:news' => 'http://itunes.apple.com/2011/Newsstand') do
         xml.updated DateTime.now.rfc3339
         @published_issues.sort_by(&:number).reverse.each do |i|
@@ -199,7 +199,7 @@ class HomeController < ApplicationController
 
   def inapp
 
-    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+    builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') { |xml|
       xml.package('xmlns' => 'http://apple.com/itunes/importer', 'version' => 'software5.0') do
         xml.provider ENV['INAPP_PROVIDER']
         xml.team_id ENV['INAPP_TEAM_ID']
@@ -320,7 +320,7 @@ class HomeController < ApplicationController
       if current_user.try(:admin?)
         format.xml { render xml: builder.to_xml }
         # CSV information that's included is in the Issue model under comma
-        format.csv { render :csv => Issue.all.sort_by(&:number).reverse, :filename => DateTime.now.strftime("google-play-%Y-%m-%d-%H:%M:%S"), :write_headers => false }
+        format.csv { render csv: Issue.all.sort_by(&:number).reverse, filename: DateTime.now.strftime("google-play-%Y-%m-%d-%H:%M:%S"), write_headers: false }
       else
         format.xml { redirect_to root_url }
         format.csv { redirect_to root_url }
@@ -338,7 +338,7 @@ class HomeController < ApplicationController
       @published_issues.pop
     end
 
-    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+    builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') { |xml|
       xml.rss('xmlns:g' => 'http://base.google.com/ns/1.0', 'version' => '2.0') do
         xml.channel do
           xml.title "New Internationalist magazine digital edition"
@@ -355,7 +355,7 @@ class HomeController < ApplicationController
               xml['g'].link issue_url(i)
               xml['g'].condition "new"
               xml['g'].adult "no"
-              xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), :precision => 2)} AUD"
+              xml['g'].price "#{number_with_precision((Settings.issue_price / 100.0), precision: 2)} AUD"
               xml['g'].availability "in_stock"
               xml['g'].image_link { xml.cdata i.cover_url.to_s }
               xml['g'].google_product_category "Media &gt; Magazines &amp; Newspapers"
@@ -392,20 +392,20 @@ class HomeController < ApplicationController
     end
 
     # OLD Apple News format.. new one is JSON
-    builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
+    builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') { |xml|
       xml.rss('version' => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom') do
         xml.channel do
           xml.title "New Internationalist magazine"
           xml.language "en-au"
           xml.link root_url
-          xml['atom'].link(href: apple_news_url(:format => 'xml'), rel: 'self', type: 'application/rss+xml')
+          xml['atom'].link(href: apple_news_url(format: 'xml'), rel: 'self', type: 'application/rss+xml')
           xml.description "The New Internationalist is an independent bi-monthly not-for-profit magazine that reports on action for global justice. We believe in putting people before profit, in climate justice, tax justice, equality, social responsibility and human rights for all."
           @published_issues.each do |i|
             xml.item do
               xml.title ActionView::Base.full_sanitizer.sanitize(i.title)
               xml.link issue_url(i)
               xml.guid issue_url(i)
-              xml.source( url: apple_news_url(:format => 'xml') ) do
+              xml.source( url: apple_news_url(format: 'xml') ) do
                 xml.text "New Internationalist magazine"
               end
               xml.description { xml.cdata (
@@ -462,31 +462,31 @@ class HomeController < ApplicationController
 
   def tweet_url
     twitter_params = {
-      :url => params[:url],
-      :text => params[:text],
-      :via => "#{ENV["TWITTER_NAME"]}"
-      #:related => "#{ENV["TWITTER_NAME"]}"
+      url: params[:url],
+      text: params[:text],
+      via: "#{ENV["TWITTER_NAME"]}"
+      #related: "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
 
   def wall_post_url
     facebook_params = {
-      :app_id => ENV["FACEBOOK_APP_ID"],
-      :link => params[:url],
-      # :picture => latest_cover.to_s,
-      :name => "New Internationalist Magazine",
-      :caption => params[:text],
-      :description => params[:text],
-      :redirect_uri => params[:url]
+      app_id: ENV["FACEBOOK_APP_ID"],
+      link: params[:url],
+      # picture: latest_cover.to_s,
+      name: "New Internationalist Magazine",
+      caption: params[:text],
+      description: params[:text],
+      redirect_uri: params[:url]
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
 
   def email_url
     email_params = {
-      :body => params[:url],
-      :subject => "New Internationalist Magazine"
+      body: params[:url],
+      subject: "New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"
   end

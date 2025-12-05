@@ -1,6 +1,6 @@
 class PushRegistrationsController < ApplicationController
 
-  protect_from_forgery :except => [:create]
+  protect_from_forgery except: [:create]
 
   def create
     # byebug

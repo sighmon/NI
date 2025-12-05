@@ -47,9 +47,9 @@
 </div>
 
 <% if @article.body.blank? %>
-  <%= simple_format expand_image_tags(source_to_body(@article, :debug => current_user.try(:admin?)), :debug => "amp") %>
+  <%= simple_format expand_image_tags(source_to_body(@article, debug: current_user.try(:admin?)), debug: "amp") %>
 <% else %>
-  <%= simple_format expand_image_tags(@article.body, :debug => "amp") %>
+  <%= simple_format expand_image_tags(@article.body, debug: "amp") %>
 <% end %>
 
 <hr />

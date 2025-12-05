@@ -99,17 +99,17 @@ class PaymentNotification < ActiveRecord::Base
 
 	def renew_subscription(first_recurring_subscription)
 		@subscription = Subscription.create(
-			:paypal_profile_id => params["recurring_payment_id"],
-			:paypal_payer_id => params["payer_id"],
-			:paypal_email => params["payer_email"],
-			:paypal_first_name => params["first_name"],
-			:paypal_last_name => params["last_name"],
-			:price_paid => (params["mc_gross"].to_i * 100), 
-			:user_id => @user.id, 
-			:valid_from => (@user.last_subscription.try("expiry_date") or DateTime.now), 
-			:duration => first_recurring_subscription.duration,
-			:paper_copy => first_recurring_subscription.paper_copy,
-			:purchase_date => DateTime.now
+			paypal_profile_id: params["recurring_payment_id"],
+			paypal_payer_id: params["payer_id"],
+			paypal_email: params["payer_email"],
+			paypal_first_name: params["first_name"],
+			paypal_last_name: params["last_name"],
+			price_paid: (params["mc_gross"].to_i * 100), 
+			user_id: @user.id, 
+			valid_from: (@user.last_subscription.try("expiry_date") or DateTime.now), 
+			duration: first_recurring_subscription.duration,
+			paper_copy: first_recurring_subscription.paper_copy,
+			purchase_date: DateTime.now
 		)
 		if @subscription.save
 			logger.info "subscription save successful"

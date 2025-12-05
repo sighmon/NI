@@ -11,13 +11,13 @@ staff and one for students.
 
 To do this, follow the link below and then on your user-page click the button that says 
 'Create a new student account':
-<%= user_url(@user, :protocol => "https") %>
+<%= user_url(@user, protocol: "https") %>
 
 Now you can share the username and password of the
 student account you created with the school.
 
 Great, now you can start reading!
-<%= issues_url(:protocol => "https") %>
+<%= issues_url(protocol: "https") %>
 
 For future reference, your username is: <%= @user.username %>
 
@@ -42,4 +42,4 @@ anyone, as they can then edit your details.
 
 Cheers, the NI team.
 
-<%= render :partial => "user_mailer/footer" %>
+<%= render partial: "user_mailer/footer" %>

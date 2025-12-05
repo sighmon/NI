@@ -4,7 +4,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 
-describe "ImageUploads", :type => :feature do
+describe "ImageUploads", type: :feature do
 
   #before(:each) do
   #end
@@ -41,7 +41,7 @@ describe "ImageUploads", :type => :feature do
         end
 
         # TODO: Get pix to fix upload test.. maybe.. it's not critical.
-        # it "can add upload files", :js => true do
+        # it "can add upload files", js: true do
 
         #   #def wait_until
         #   #  require "timeout"

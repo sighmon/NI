@@ -1,11 +1,11 @@
 require 'rails_helper'
 require 'cancan/matchers'
 
-describe User, :type => :model do
+describe User, type: :model do
 
   context "institution" do
     let(:user) do
-      FactoryBot.create(:user, :institution => true)
+      FactoryBot.create(:user, institution: true)
     end
 
     let(:ability) { Ability.new(user) }
@@ -77,7 +77,7 @@ describe User, :type => :model do
     end
 
     it "should be able to read an issue" do
-      issue = FactoryBot.create(:issue, :published => true)
+      issue = FactoryBot.create(:issue, published: true)
       expect(ability).to be_able_to(:read, issue)
     end
 
@@ -92,12 +92,12 @@ describe User, :type => :model do
     end
 
     it "should not be able to read an unpublished article" do
-      article = FactoryBot.create(:article, :unpublished => true)
+      article = FactoryBot.create(:article, unpublished: true)
       expect(ability).not_to be_able_to(:read, article)
     end
 
     it "should be able to read a trial article" do
-      article = FactoryBot.create(:article, :trialarticle => true)
+      article = FactoryBot.create(:article, trialarticle: true)
       expect(ability).to be_able_to(:read, article)
     end
 

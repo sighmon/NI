@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Admin::GuestPassesController, :type => :controller do
+describe Admin::GuestPassesController, type: :controller do
 
   describe "GET 'index'" do
     context "as a unauthorized user" do

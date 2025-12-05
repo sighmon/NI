@@ -51,17 +51,17 @@
 					line-height="22px"
 					font-weight="300"
 					color="#787878">
-					<%= @greeting %> <%= link_to @user, user_url(@user, :protocol => "https"), style: 'color:inherit;' %>,<br /><br />
+					<%= @greeting %> <%= link_to @user, user_url(@user, protocol: "https"), style: 'color:inherit;' %>,<br /><br />
 					Thank you for purchasing a digital issue of New Internationalist magazine:<br /><br />
 					<b>Tax invoice</b>: <%= tax_invoice_number(@purchase) %><br />
 					<b>Magazine</b>: <%= link_to "#{@purchase.issue.number} - #{@purchase.issue.title}", issue_url(@purchase.issue), style: 'color:inherit;' %><br />
 					<b>Date of purchase</b>: <%= purchase_date_as_string(@purchase.purchase_date) %><br />
-					<b>Amount</b>: <%= number_to_currency(cents_to_dollars(@purchase.price_paid), :unit => '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@purchase.price_paid), :unit => '$') %>)<br /><br />
+					<b>Amount</b>: <%= number_to_currency(cents_to_dollars(@purchase.price_paid), unit: '$') %> (including GST <%= number_to_currency(cents_to_dollars_gst(@purchase.price_paid), unit: '$') %>)<br /><br />
 				</mj-text>
 
 				<mj-button
 					background-color="#ED4E59"
-					href="<%= issue_url(@purchase.issue, :protocol => "https") %>">
+					href="<%= issue_url(@purchase.issue, protocol: "https") %>">
 					Read it now!
 				</mj-button>
 
@@ -198,7 +198,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render partial: 'issues/email_footer', formats: [:html] %>
 
 	</mj-body>
 </mjml>

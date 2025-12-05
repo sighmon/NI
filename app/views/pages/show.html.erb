@@ -2,17 +2,17 @@
 
 <% if can? :update, @page %>
   <div class="edit-article-buttons">
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_page_path(@page), :class => 'btn btn-primary btn-xs' %>
+    <%= link_to t('.edit', default: t("helpers.links.edit")),
+                  edit_page_path(@page), class: 'btn btn-primary btn-xs' %>
     <% if can? :destroy, @page %>
-      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+      <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                   page_path(@page),
-                :method => 'delete',
-                :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
-                  :class => 'btn btn-xs btn-danger' %> |
+                method: 'delete',
+                data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?'))},
+                  class: 'btn btn-xs btn-danger' %> |
       <%= link_to 'New Page',
             new_page_path,
-            :class => 'btn btn-xs btn-success' %>
+            class: 'btn btn-xs btn-success' %>
     <% end %>
   </div>
 <% end %>
@@ -30,7 +30,7 @@
       <% if @issues %>
         <% @issues.each do |issue| %>
         <span itemscope itemtype="http://schema.org/CreativeWork">
-          <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 141, :height => 200), issue_path(issue) %>
+          <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200), issue_path(issue) %>
           <span class="hide-meta" itemprop="name"><%= issue.title %></span>
           <span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
           <span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -40,14 +40,14 @@
     </div>
   <% end %>
   <% if @page.permalink == "seven-good-reasons-to-subscribe" %>
-    <%= retina_image_tag(@current_issue.cover_url(:thumb).to_s, :alt => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :title => "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", :size => "141x200", :class => 'subscribe-current-issue') %>
+    <%= retina_image_tag(@current_issue.cover_url(:thumb).to_s, alt: "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", title: "#{@current_issue.title} - #{@current_issue.release.strftime("%B, %Y")}", size: "141x200", class: 'subscribe-current-issue') %>
   <% end %>
   <% if @page.permalink == "four-good-reasons-to-subscribe" %>
     <div class="row"> 
       <div class="col-md-6"> 
         <div class="subscription-offer-two overlapping-covers">
           <% Issue.where(published: true).last(3).each do |issue| %>
-            <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, :alt => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :title => "#{issue.title} - #{issue.release.strftime("%B, %Y")}", :class => "shadow"), issue_path(issue) %>
+            <%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, alt: "#{issue.title} - #{issue.release.strftime("%B, %Y")}", title: "#{issue.title} - #{issue.release.strftime("%B, %Y")}", class: "shadow"), issue_path(issue) %>
           <% end %>
         </div> 
       </div> 
@@ -67,21 +67,21 @@
 
 <div class="form-actions">
   <% if not @page.permalink == "securedrop" %>
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-              :back, :class => 'btn btn-default'  %>
+    <%= link_to t('.back', default: t("helpers.links.back")),
+              :back, class: 'btn btn-default'  %>
   <% end %>
   <% if can? :update, @page %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_page_path(@page), :class => 'btn btn-primary' %>
+    <%= link_to t('.edit', default: t("helpers.links.edit")),
+              edit_page_path(@page), class: 'btn btn-primary' %>
   <% end %>
   <% if can? :destroy, @page %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+    <%= link_to t('.destroy', default: t("helpers.links.destroy")),
               page_path(@page),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+              method: 'delete',
+              data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+              class: 'btn btn-danger' %>
   <% end %>
 </div>
 <% if @page.permalink == "subscribe" or @page.permalink == "seven-good-reasons-to-subscribe" %>
-  <%= render :partial => "shared/privacy" %>
+  <%= render partial: "shared/privacy" %>
 <% end %>

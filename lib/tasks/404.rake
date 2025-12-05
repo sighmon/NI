@@ -27,9 +27,9 @@ namespace :assets do
         env,
         target,
         ['404.html', '500.html', '503.html', 'error.html', 'maintenance.html'],
-        :manifest_path => config.assets.manifest,
-        :digest => false,
-        :manifest => false
+        manifest_path: config.assets.manifest,
+        digest: false,
+        manifest: false
       )
 
       compiler.compile
@@ -39,7 +39,7 @@ namespace :assets do
       ruby_rake_task('assets:precompile_static_html:primary', false)
     end
 
-    task :primary => ['assets:environment', 'tmp:cache:clear'] do
+    task primary: ['assets:environment', 'tmp:cache:clear'] do
       internal_precompile_static_html
     end
   end

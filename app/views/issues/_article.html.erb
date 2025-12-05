@@ -3,82 +3,82 @@
             <!-- Can read this article, so link to it -->
             <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
             <% if not article.featured_image.blank? %>
-              <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, class: 'article-thumb', alt: "#{strip_tags(article.featured_image_caption)}", title: "#{strip_tags(article.featured_image_caption)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="800">
             <% elsif article.has_category('/columns/media/books/') %>
-              <%= link_to retina_image_tag('section-mixed-media-books-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-books-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-books-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/media/film/') %>
-              <%= link_to retina_image_tag('section-mixed-media-film-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-film-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-film-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/media/music/') %>
-              <%= link_to retina_image_tag('section-mixed-media-music-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-music-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-music-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/agony-uncle/') %>
-              <%= link_to retina_image_tag('section-agony-uncle-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-agony-uncle-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-agony-uncle-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.first_image %>
-              <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", :title => "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, class: 'article-thumb', alt: "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", title: "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
               <meta itemprop="width" content="<%= article.first_image.width %>">
               <meta itemprop="height" content="<%= article.first_image.height %>">
             <% elsif article.has_category('/columns/letters/') %>
-              <%= link_to retina_image_tag('section-letters-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-letters-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-letters-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/themes/briefly/') %>
-              <%= link_to retina_image_tag('section-briefly-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-briefly-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-briefly-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-africa/') %>
               <% if article.publication.year > 2022 %>
-                <%= link_to retina_image_tag('section-view-from-africa-issue-2023.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <%= link_to retina_image_tag('section-view-from-africa-issue-2023.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue-2023.jpg').to_s %>">
               <% else %>
-                <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue.jpg').to_s %>">
               <% end %>
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-india/') %>
               <% if article.publication.year > 2024 and article.publication.month > 8 %>
-                <%= link_to retina_image_tag('section-view-from-india-issue-2025.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <%= link_to retina_image_tag('section-view-from-india-issue-2025.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-india-issue-2025.png').to_s %>">
               <% else %>
-                <%= link_to retina_image_tag('section-view-from-india-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+                <%= link_to retina_image_tag('section-view-from-india-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
               <% end %>
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/hall-of-infamy/') %>
-              <%= link_to retina_image_tag('section-hall-of-infamy-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-hall-of-infamy-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-hall-of-infamy-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-america/') %>
-              <%= link_to retina_image_tag('section-view-from-america-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-america-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-america-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-brazil/') %>
-              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% else %>
-              <%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
@@ -86,74 +86,74 @@
             </div>
             <div class="home-keynote-text">
               <h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
-              <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+              <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render partial: "home/home_share_links", locals: { article: article } %></h5>
               <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
-              <p><%= link_to 'Read this article', issue_article_path(article.issue,article), :class => 'btn btn-outline-secondary' %><!-- no p yet -->
+              <p><%= link_to 'Read this article', issue_article_path(article.issue,article), class: 'btn btn-outline-secondary' %><!-- no p yet -->
           <% else %>
             <!-- Can't read this article, so link to buy it -->
             <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
             <% if not article.featured_image.blank? %>
-              <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, :class => 'article-thumb', :alt => "#{strip_tags(article.featured_image_caption)}", :title => "#{strip_tags(article.featured_image_caption)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+              <%= link_to retina_image_tag(article.featured_image_url(:fullwidth).to_s, class: 'article-thumb', alt: "#{strip_tags(article.featured_image_caption)}", title: "#{strip_tags(article.featured_image_caption)}", width: 300, itemprop: "image"), new_issue_purchase_path(article.issue) %>
               <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="800">
             <% elsif article.has_category('/columns/media/books/') %>
-              <%= link_to retina_image_tag('section-mixed-media-books-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-books-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-books-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/media/film/') %>
-              <%= link_to retina_image_tag('section-mixed-media-film-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-film-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-film-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/media/music/') %>
-              <%= link_to retina_image_tag('section-mixed-media-music-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-mixed-media-music-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-mixed-media-music-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/agony-uncle/') %>
-              <%= link_to retina_image_tag('section-agony-uncle-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-agony-uncle-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-agony-uncle-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.first_image %>
-              <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, :class => 'article-thumb', :alt => "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", :title => "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+              <%= link_to retina_image_tag(article.first_image.data_url(:threehundred).to_s, class: 'article-thumb', alt: "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", title: "#{strip_tags((article.first_image.try('caption') ? article.first_image.caption : article.title + ' ') + (article.first_image.try('credit') ? article.first_image.credit : ''))}", width: 300, itemprop: "image"), new_issue_purchase_path(article.issue) %>
               <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
               <meta itemprop="width" content="<%= article.first_image.width %>">
               <meta itemprop="height" content="<%= article.first_image.height %>">
             <% elsif article.has_category('/columns/letters/') %>
-              <%= link_to retina_image_tag('section-letters-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-letters-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-letters-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-africa/') %>
-              <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue.jpg').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-india/') %>
-              <%= link_to retina_image_tag('section-view-from-india-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-india-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/hall-of-infamy/') %>
-              <%= link_to retina_image_tag('section-hall-of-infamy-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-hall-of-infamy-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-hall-of-infamy-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-america/') %>
-              <%= link_to retina_image_tag('section-view-from-america-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-america-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-america-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-brazil/') %>
-              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), issue_article_path(article.issue,article) %>
+              <%= link_to retina_image_tag('section-view-from-brazil-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), issue_article_path(article.issue,article) %>
               <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue.png').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% else %>
-              <%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', :class => 'article-thumb', :alt => "#{strip_tags(article.title)}", :title => "#{strip_tags(article.title)}", :width => 300, :itemprop => "image"), new_issue_purchase_path(article.issue) %>
+              <%= link_to retina_image_tag('fallback/threehundred_no_image.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image"), new_issue_purchase_path(article.issue) %>
               <meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
@@ -161,12 +161,12 @@
             </div>
             <div class="home-keynote-text">
               <h3><%= link_to highlight(article.title, @query_array), new_issue_purchase_path(article.issue) %></h3>
-              <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render :partial => "home/home_share_links", :locals => { :article => article } %></h5>
+              <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render partial: "home/home_share_links", locals: { article: article } %></h5>
               <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
-              <p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), :class => 'btn btn-success btn-xs' %><!-- no p yet -->
+              <p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), class: 'btn btn-success btn-xs' %><!-- no p yet -->
           <% end %>
               <% if can? :manage, Article %>
-                <%= link_to 'Edit', edit_issue_article_path(@issue,article), :class => 'btn btn-primary btn-xs' %>
+                <%= link_to 'Edit', edit_issue_article_path(@issue,article), class: 'btn btn-primary btn-xs' %>
                 <%= link_to 'Destroy', issue_article_path(@issue,article), data: { confirm: 'Are you sure?'}, method: :delete, class: 'btn btn-xs btn-danger' %></p>
                 <ul class="list-unstyled">
                 <% article.categories.each do |category| %>

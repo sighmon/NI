@@ -57,7 +57,7 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html] %>
+		<%= render partial: 'issues/email_footer', formats: [:html] %>
 
 	</mj-body>
 </mjml>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Image, :type => :model do
+describe Image, type: :model do
 
   context "article" do 
 

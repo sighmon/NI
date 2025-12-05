@@ -1,12 +1,12 @@
-<%= simple_form_for [@issue, @article, @showimage], :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+<%= simple_form_for [@issue, @article, @showimage], html: { class: 'form-horizontal', multipart: true } do |f| %>
   <%= f.input :data %>
   <%= f.input :caption %>
   <%= f.input :credit %>
   <%= f.input :hidden %>
   <%= f.input :position %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                issue_article_images_path(@issue,@article), :class => 'btn btn-outline-secondary' %>
+    <%= f.button :submit, class: 'btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                issue_article_images_path(@issue,@article), class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>

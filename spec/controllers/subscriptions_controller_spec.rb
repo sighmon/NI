@@ -24,7 +24,7 @@ class FakeGateway
   end
 end
 
-describe SubscriptionsController, :type => :controller do
+describe SubscriptionsController, type: :controller do
 
   context "as a user" do
 
@@ -56,7 +56,7 @@ describe SubscriptionsController, :type => :controller do
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(true)
             $VERBOSE = warn_level
             expect {
-              post :create, params: {:user_id => user.id}
+              post :create, params: {user_id: user.id}
             }.to change(Subscription, :count).by(1)
           end
         end
@@ -69,7 +69,7 @@ describe SubscriptionsController, :type => :controller do
             SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(false)
             $VERBOSE = warn_level
             expect {
-              post :create, params: {:user_id => user.id}
+              post :create, params: {user_id: user.id}
             }.to change(Subscription, :count).by(0)
           end
 

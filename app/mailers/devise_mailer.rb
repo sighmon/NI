@@ -5,10 +5,10 @@ class DeviseMailer < Devise::Mailer
     @token = token
     @resource = record
     mail(
-      :template_path => 'devise/mailer',
-      :from => ENV["DEVISE_EMAIL_ADDRESS"], 
-      :to => record.email, 
-      :subject => "New Internationalist - Reset password"
+      template_path: 'devise/mailer',
+      from: ENV["DEVISE_EMAIL_ADDRESS"], 
+      to: record.email, 
+      subject: "New Internationalist - Reset password"
     ) do |format|
       format.mjml
       format.text

@@ -5,9 +5,9 @@ class FavouritesController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     session[:user_return_to] = request.referer
     if not current_user
-      redirect_to new_user_session_path, :alert => "You need to be logged in to add this article to your favourites."
+      redirect_to new_user_session_path, alert: "You need to be logged in to add this article to your favourites."
     else
-      redirect_to (session[:user_return_to] or issues_path), :alert => exception.message
+      redirect_to (session[:user_return_to] or issues_path), alert: exception.message
     end
   end
 
@@ -15,7 +15,7 @@ class FavouritesController < ApplicationController
     @user = User.find(current_user.id)
     @issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:article_id])
-    @favourite = Favourite.create(:user_id => @user.id, :issue_id => @issue.id, :article_id => @article.id)
+    @favourite = Favourite.create(user_id: @user.id, issue_id: @issue.id, article_id: @article.id)
     @favourite.created_at = DateTime.now
 
     respond_to do |format|

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe GuestPass, :type => :model do
+describe GuestPass, type: :model do
 
   it "has an article" do
     gp = FactoryBot.create(:guest_pass)

@@ -32,20 +32,20 @@
 	  	<dd>No, I'm not really sure.</dd>
 	  
 	  <div class="form-actions">
-	  	<%= f.button :submit, :class => 'btn-danger' %>
-	  	<%= link_to "Back", user_path(@user), :class => 'btn btn-outline-secondary' %>
+	  	<%= f.button :submit, class: 'btn-danger' %>
+	  	<%= link_to "Back", user_path(@user), class: 'btn btn-outline-secondary' %>
 	  </div>
 	<% end %>
 
 <% else %>
 
-	<%= simple_form_for(@subscription, :url => { :action => "express" }, :method => :get) do |f| %>
+	<%= simple_form_for(@subscription, url: { action: "express" }, method: :get) do |f| %>
 	  <hr />
 	  <p>Redirecting you to <a href="https://subscribe.newint.org"><strong>newint.org</strong></a> now...</p>
 	  <meta http-equiv="refresh" content="0; url=https://subscribe.newint.org" />
 
 	  <div class="form-actions">
-	  	<%= link_to 'Cancel', user_path(@user), :class => 'btn btn-outline-secondary' %>
+	  	<%= link_to 'Cancel', user_path(@user), class: 'btn btn-outline-secondary' %>
 	  </div>
 	<% end %>
 

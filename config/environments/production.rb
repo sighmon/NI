@@ -16,11 +16,11 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Default URL for Devise
-  config.action_mailer.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
+  config.action_mailer.default_url_options = { host: URI.parse(ENV['NI_APP_HOST']).host, protocol: 'https' }
   config.action_mailer.asset_host = ENV['NI_APP_HOST']
 
   # Default URL for helpers in models
-  Rails.application.routes.default_url_options = { :host => URI.parse(ENV['NI_APP_HOST']).host, :protocol => 'https' }
+  Rails.application.routes.default_url_options = { host: URI.parse(ENV['NI_APP_HOST']).host, protocol: 'https' }
 
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
@@ -28,7 +28,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.default charset: "utf-8"
 
   # Set logger level so Unicorn on Heroku is more verbose
   # http://help.papertrailapp.com/kb/configuration/unicorn
@@ -37,24 +37,24 @@ Rails.application.configure do
   
   # GMAIL SETTINGS
   # config.action_mailer.smtp_settings = {
-  #   :address => "smtp.gmail.com",
-  #   :port => 587,
-  #   # :domain => ENV["GMAIL_USER_NAME"],
-  #   :authentication => :plain,
-  #   :enable_starttls_auto => true,
-  #   :user_name => ENV["GMAIL_USER_NAME"],
-  #   :password => ENV["GMAIL_PASSWORD"]
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   # domain: ENV["GMAIL_USER_NAME"],
+  #   authentication: :plain,
+  #   enable_starttls_auto: true,
+  #   user_name: ENV["GMAIL_USER_NAME"],
+  #   password: ENV["GMAIL_PASSWORD"]
   # }
 
   # SendGrid settings for Heroku
   config.action_mailer.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => 'apikey',
-    :password       => ENV['SENDGRID_API_KEY'],
-    :domain         => 'heroku.com',
-    :enable_starttls_auto => true
+    address: 'smtp.sendgrid.net',
+    port: '587',
+    authentication: :plain,
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'heroku.com',
+    enable_starttls_auto: true
   }
 
   # Active Merchant Gateway
@@ -67,9 +67,9 @@ Rails.application.configure do
     # Now using /config/application.yml figaro gem
 
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => ENV["PAYPAL_LOGIN"],
-      :password => ENV["PAYPAL_PASSWORD"],
-      :signature => ENV["PAYPAL_SIGNATURE"]
+      login: ENV["PAYPAL_LOGIN"],
+      password: ENV["PAYPAL_PASSWORD"],
+      signature: ENV["PAYPAL_SIGNATURE"]
     )
 
     PayPal::Recurring.configure do |config|
@@ -123,23 +123,23 @@ Rails.application.configure do
 
   # Memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
   # client = Dalli::Client.new((ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
-  #                            :username => ENV["MEMCACHIER_ROSE_USERNAME"],
-  #                            :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
-  #                            :failover => true,
-  #                            :socket_timeout => 1.5,
-  #                            :socket_failure_delay => 0.2,
-  #                            :value_max_bytes => 10485760)
+  #                            username: ENV["MEMCACHIER_ROSE_USERNAME"],
+  #                            password: ENV["MEMCACHIER_ROSE_PASSWORD"],
+  #                            failover: true,
+  #                            socket_timeout: 1.5,
+  #                            socket_failure_delay: 0.2,
+  #                            value_max_bytes: 10485760)
   # config.action_dispatch.rack_cache = {
-  #   :metastore    => client,
-  #   :entitystore  => client
+  #   metastore: client,
+  #   entitystore: client
   # }
   config.cache_store = :mem_cache_store#,
                     # (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
-                    # {:username => ENV["MEMCACHIER_ROSE_USERNAME"],
-                    #  :password => ENV["MEMCACHIER_ROSE_PASSWORD"],
-                    #  :failover => true,
-                    #  :socket_timeout => 1.5,
-                    #  :socket_failure_delay => 0.2
+                    # {username: ENV["MEMCACHIER_ROSE_USERNAME"],
+                    #  password: ENV["MEMCACHIER_ROSE_PASSWORD"],
+                    #  failover: true,
+                    #  socket_timeout: 1.5,
+                    #  socket_failure_delay: 0.2
                     # }
   config.static_cache_control = "public, max-age=2592000"
 

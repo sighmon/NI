@@ -99,25 +99,25 @@ Rails.application.configure do
   config.assets.debug = true
 
   # Default URL for Devise
-  config.action_mailer.default_url_options = { :host => 'localhost', :port => 3000, :protocol => 'http' }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000, protocol: 'http' }
   config.action_mailer.asset_host = 'http://localhost:3000'
   config.action_mailer.perform_caching = false
 
   # Default URL for helpers in models
-  Rails.application.routes.default_url_options = { :host => 'localhost:3000', :protocol => 'http' }
+  Rails.application.routes.default_url_options = { host: 'localhost:3000', protocol: 'http' }
 
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   # Now using /config/application.yml figaro gem
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => 587,
-    # :domain => "ppp250-143.static.internode.on.net",
-    :authentication => :plain,
-    :enable_starttls_auto => true,
-    :user_name => ENV["GMAIL_USER_NAME"],
-    :password => ENV["GMAIL_PASSWORD"]
+    address: "smtp.gmail.com",
+    port: 587,
+    # domain: "ppp250-143.static.internode.on.net",
+    authentication: :plain,
+    enable_starttls_auto: true,
+    user_name: ENV["GMAIL_USER_NAME"],
+    password: ENV["GMAIL_PASSWORD"]
   }
 
   # Active Merchant Gateway
@@ -130,9 +130,9 @@ Rails.application.configure do
     # Now using /config/application.yml figaro gem
 
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => ENV["PAYPAL_SANDBOX_LOGIN"],
-      :password => ENV["PAYPAL_SANDBOX_PASSWORD"],
-      :signature => ENV["PAYPAL_SANDBOX_SIGNATURE"]
+      login: ENV["PAYPAL_SANDBOX_LOGIN"],
+      password: ENV["PAYPAL_SANDBOX_PASSWORD"],
+      signature: ENV["PAYPAL_SANDBOX_SIGNATURE"]
     )
 
     PayPal::Recurring.configure do |config|

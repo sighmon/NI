@@ -1,7 +1,7 @@
 module SubscriptionsHelper	
 
     def subscription_price_table
-    	content_tag :table, :class => 'table table-striped subscription-price-table' do
+    	content_tag :table, class: 'table table-striped subscription-price-table' do
     		content_tag(:thead,
     			content_tag(:tr,
     				content_tag(:th, "Subscription options") +

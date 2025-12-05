@@ -2,7 +2,7 @@
 <div class="page-header">
 	<h1><%= @user %></h1>
 	<% if not @user.parent and (can? :manage, @user) %>
-		<%= link_to "Edit my profile", edit_user_registration_path(@user), :class => 'btn btn-primary' %>
+		<%= link_to "Edit my profile", edit_user_registration_path(@user), class: 'btn btn-primary' %>
 	<% end %>
 </div>
 
@@ -38,7 +38,7 @@
 				<dt></dt>
 				<dd>(Automatic renewal, Digital + Paper copy)</dd>
 				<dt></dt>
-				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), class: 'btn btn-danger' %></dd>
 			<% elsif @user.subscriber? and @user.was_recurring? and @user.has_cancelled_recurring? %>
 				<dt></dt>
 				<dd>(Automatic renewal cancelled)</dd>
@@ -47,17 +47,17 @@
 				<dd>(Automatic renewal)</dd>
 				<dt></dt>
 				<% if not @user.has_paper_only? or not @user.has_paper_copy? %>
-					<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+					<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), class: 'btn btn-danger' %></dd>
 				<% end %>
 			<% elsif @user.subscriber? and (not @user.has_paper_only? or not @user.has_paper_copy?) %>
 			<dt></dt>
-			<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
+			<dd><%= link_to "Extend my subscription", new_subscription_path, class: 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), class: 'btn btn-danger' unless @user.uk_user? %></dd>
 			<% elsif @user.subscription_lapsed? and (not @user.had_paper_copy?) %>
 			<dt></dt>
-			<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
+			<dd><%= link_to "Renew my subscription", new_subscription_path, class: 'btn btn-success' %></dd>
 			<% elsif not @user.had_paper_copy? %>
 			<dt></dt>
-			<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
+			<dd><%= link_to "Subscribe", new_subscription_path, class: 'btn btn-success' %></dd>
 			<% end %>
 			<% if @user.uk_user? and not @user.subscriber? %>
 				<dt>Note:</dt>
@@ -80,16 +80,16 @@
 				<dt></dt>
 				<dd>(Automatic renewal)</dd>
 				<dt></dt>
-				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), :class => 'btn btn-danger' %></dd>
+				<dd><%= link_to "Cancel my subscription", edit_subscription_path(@user.recurring_subscription), class: 'btn btn-danger' %></dd>
 			<% elsif @user.subscriber? %>
 				<dt></dt>
-				<dd><%= link_to "Extend my subscription", new_subscription_path, :class => 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), :class => 'btn btn-danger' unless @user.uk_user? %></dd>
+				<dd><%= link_to "Extend my subscription", new_subscription_path, class: 'btn btn-outline-secondary' %> <%= link_to "Cancel my subscription", edit_subscription_path(@user.last_subscription), class: 'btn btn-danger' unless @user.uk_user? %></dd>
 			<% elsif @user.subscription_lapsed? %>
 				<dt></dt>
-				<dd><%= link_to "Renew my subscription", new_subscription_path, :class => 'btn btn-success' %></dd>
+				<dd><%= link_to "Renew my subscription", new_subscription_path, class: 'btn btn-success' %></dd>
 				<% else %>
 				<dt></dt>
-				<dd><%= link_to "Subscribe", new_subscription_path, :class => 'btn btn-success' %></dd>
+				<dd><%= link_to "Subscribe", new_subscription_path, class: 'btn btn-success' %></dd>
 			<% end %>
 		<% end %>
 	<% end %>
@@ -98,7 +98,7 @@
 
 <% if (@user == current_user) and current_user.institution %>
 	<h3>Student accounts: </h3>
-	<p><%= link_to 'Create a new student account', new_institution_user_path, :class => 'btn btn-success' %></p>
+	<p><%= link_to 'Create a new student account', new_institution_user_path, class: 'btn btn-success' %></p>
 	<%= children_as_table(@user.children) %>
 <% end %>
 
@@ -128,7 +128,7 @@
 	<div class="row">
 				<% end %>
 				<div class="col-sm-4">
-					<%= render :partial => "home/home_article", :locals => { :article => favourite.article } %>
+					<%= render partial: "home/home_article", locals: { article: favourite.article } %>
 					<p class="favourited-date">Favourited on: <%= favourite.created_at.try(:strftime,"%d %B, %Y") %></p>
 				</div>
 			<% end %>
@@ -155,7 +155,7 @@
 	<div class="row">
 				<% end %>
 				<div class="col-sm-4">
-					<%= render :partial => "home/home_article", :locals => { :article => pass.article } %>
+					<%= render partial: "home/home_article", locals: { article: pass.article } %>
 					<div class="favourited-date">
 						<p>
 							Shared on: <%= pass.created_at.try(:strftime,"%d %B, %Y") %>
@@ -189,7 +189,7 @@
 		<div class="row">
 					<% end %>
 					<div class="col-sm-3">
-						<%= render :partial => "issue_purchase", :locals => { :issue => purchase.issue } %>
+						<%= render partial: "issue_purchase", locals: { issue: purchase.issue } %>
 						<div class="issue-purchase-date">
 							<p>
 								Purchased on:<br> <%= link_to purchase.created_at.try(:strftime,"%d %b, %Y"), issue_purchase_path(purchase.issue, purchase) %><br />
@@ -208,12 +208,12 @@
 <% end %>
 
 <div class="form-actions">
-	<%= link_to "Back", issues_path, :class => 'btn btn-outline-secondary' %>
+	<%= link_to "Back", issues_path, class: 'btn btn-outline-secondary' %>
 	<% if not @user.parent %>
 		<% if current_user.admin? %>
-			<%= link_to "Edit User", edit_admin_user_path(@user), :class => 'btn btn-primary' %>
+			<%= link_to "Edit User", edit_admin_user_path(@user), class: 'btn btn-primary' %>
 		<% elsif (current_user == @user) and (not @user.parent) and (can? :manage, @user) %>
-			<%= link_to "Edit my profile", edit_user_registration_path(@user), :class => 'btn btn-primary' %>
+			<%= link_to "Edit my profile", edit_user_registration_path(@user), class: 'btn btn-primary' %>
 		<% end %>
 	<% end %>
 </div>

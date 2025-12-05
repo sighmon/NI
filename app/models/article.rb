@@ -5,16 +5,16 @@ class Article < ActiveRecord::Base
   mount_uploader :featured_image, FeaturedImageUploader
 
   # join-model for favourites
-  has_many :favourites, :dependent => :destroy
-  has_many :users, :through => :favourites
+  has_many :favourites, dependent: :destroy
+  has_many :users, through: :favourites
 
   has_many :images
 
-  has_many :guest_passes, :dependent => :destroy
-  has_many :users, :through => :guest_passes
+  has_many :guest_passes, dependent: :destroy
+  has_many :users, through: :guest_passes
 
   has_many :article_categorisations
-  has_many :categories, :through => :article_categorisations
+  has_many :categories, through: :article_categorisations
   accepts_nested_attributes_for :categories, allow_destroy: true, reject_if: :category_exists
   accepts_nested_attributes_for :images, allow_destroy: true
 
@@ -97,7 +97,7 @@ class Article < ActiveRecord::Base
 
   def popular_guest_pass
     # Find or create a guest pass for the user 'popular' so that popular gets the guest_pass clicks and uses rather than corrupting the actual guest_pass clicks
-    GuestPass.find_or_create_by(:user_id => User.find_by_username("popular").id, :article_id => self.id)
+    GuestPass.find_or_create_by(user_id: User.find_by_username("popular").id, article_id: self.id)
   end
 
   def popular_guest_pass_key
@@ -203,7 +203,7 @@ class Article < ActiveRecord::Base
   # Guest pass checking
   def is_valid_guest_pass(key)
     if key
-      pass = self.guest_passes.where(:key => key).first
+      pass = self.guest_passes.where(key: key).first
       if pass
         pass.last_used = DateTime.now
         pass.use_count += 1

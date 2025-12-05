@@ -21,7 +21,7 @@ module ApplicationHelper
         else
             table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Title</th><th>Release date</th><th>Purchase date</th><th>Price</th></tr></thead><tbody>"
             for purchase in purchases.sort_by {|x| x.issue.release} do
-                purchase_price = purchase.price_paid ? "$#{number_with_precision((purchase.price_paid / 100.0), :precision => 2)}" : "Free"
+                purchase_price = purchase.price_paid ? "$#{number_with_precision((purchase.price_paid / 100.0), precision: 2)}" : "Free"
                 table += "<tr><td>#{link_to purchase.issue.title, issue_path(purchase.issue)}</td>"
                 table += "<td>#{purchase.issue.release.strftime("%B, %Y")}</td>"
                 table += "<td>#{purchase.purchase_date.try(:strftime,"%d %B, %Y")}</td>"
@@ -38,7 +38,7 @@ module ApplicationHelper
         else
             table = "<table class='table table-bordered purchases_as_table'><thead><tr><th>Purchase date</th><th>Valid from</th><th>Duration</th><th>Cancellation date</th><th>Autodebit?</th><th>Paper copy?</th><th>Paper only?</th><th>Price paid</th><th>Refund due</th><th>Refund paid?</th></tr></thead><tbody>"
             for subscription in subscriptions.sort_by {|x| x.purchase_date} do
-                subscription_price = subscription.price_paid ? "$#{number_with_precision((subscription.price_paid / 100), :precision => 2)}" : "Free"
+                subscription_price = subscription.price_paid ? "$#{number_with_precision((subscription.price_paid / 100), precision: 2)}" : "Free"
                 table += "<tr><td>#{subscription.purchase_date.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.valid_from.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{subscription.duration}</td>"
@@ -48,7 +48,7 @@ module ApplicationHelper
                 table += "<td>#{subscription.paper_only? ? "Yes" : "No"}</td>"
                 table += "<td>#{link_to subscription_price, subscription_path(subscription, format: 'mjml')}</td>"
                 table += "<td>#{subscription.refund ? "$#{cents_to_dollars(subscription.refund)}" : ""}</td>"
-                table += "<td>#{subscription.refunded_on ? "#{subscription.refunded_on.try(:strftime,"%d %B, %Y")} #{link_to('Undo?', admin_subscription_path(subscription), :method => :put, :class => 'btn btn-mini btn-success', :confirm => 'Are you sure you want to undo marking it refunded?')}" : "#{link_to('Refunded', admin_subscription_path(subscription), :method => :put, :class => 'btn btn-mini btn-danger', :confirm => 'Are you sure you want to mark this refund as paid?')}" }</td></tr>"
+                table += "<td>#{subscription.refunded_on ? "#{subscription.refunded_on.try(:strftime,"%d %B, %Y")} #{link_to('Undo?', admin_subscription_path(subscription), method: :put, class: 'btn btn-mini btn-success', confirm: 'Are you sure you want to undo marking it refunded?')}" : "#{link_to('Refunded', admin_subscription_path(subscription), method: :put, class: 'btn btn-mini btn-danger', confirm: 'Are you sure you want to mark this refund as paid?')}" }</td></tr>"
             end
             table += "</tbody></table>"
             return raw table
@@ -66,7 +66,7 @@ module ApplicationHelper
                 table += "<td>#{link_to favourite.article.issue.title, issue_path(favourite.issue_id)}</td>"
                 table += "<td>#{favourite.created_at.try(:strftime,"%d %B, %Y")}</td>"
                 if current_user.try(:admin?)
-                    table += "<td>#{link_to 'Delete', issue_article_favourite_path(favourite.issue_id, favourite.article_id, favourite.id), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"
+                    table += "<td>#{link_to 'Delete', issue_article_favourite_path(favourite.issue_id, favourite.article_id, favourite.id), method: 'delete', class: 'btn btn-mini btn-danger'}</td>"
                 end
                 table += "</tr>"
             end
@@ -92,7 +92,7 @@ module ApplicationHelper
                 end
                 table += "<td>#{guest_pass.created_at.try(:strftime,"%d %B, %Y")}</td>"
                 if current_user.try(:admin?)
-                    table += "<td>#{link_to 'Delete', issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), :method => 'delete', :class => 'btn btn-mini btn-danger'}</td>"
+                    table += "<td>#{link_to 'Delete', issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), method: 'delete', class: 'btn btn-mini btn-danger'}</td>"
                 end
                 table += "</tr>"
             end
@@ -111,7 +111,7 @@ module ApplicationHelper
                 table += "<td>#{child.created_at.try(:strftime,"%d %B, %Y")}</td>"
                 table += "<td>#{child.sign_in_count} <span class='author-note'>(#{child.current_sign_in_at.try(:strftime,"%d %b, %Y")} - #{child.current_sign_in_ip})</span></td>"
                 if current_user.institution
-                    table += "<td>#{link_to "Edit", edit_institution_user_path(child), :class => 'btn btn-mini'} #{link_to "Delete", institution_user_path(child), :method => 'delete', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'}</td>"
+                    table += "<td>#{link_to "Edit", edit_institution_user_path(child), class: 'btn btn-mini'} #{link_to "Delete", institution_user_path(child), method: 'delete', data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-mini btn-danger'}</td>"
                 end
                 table += "</tr>"
             end
@@ -133,13 +133,13 @@ module ApplicationHelper
                 first_image = guest_pass.article.first_image
                 table += "<tr>"
                 if first_image
-                    table += "<td>#{link_to retina_image_tag(first_image.data_url(:thumb).to_s, :class => 'shadow-sm', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "150x150"), generate_guest_pass_link_string(guest_pass)}</td>"
+                    table += "<td>#{link_to retina_image_tag(first_image.data_url(:thumb).to_s, class: 'shadow-sm', alt: ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), title: ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), size: "150x150"), generate_guest_pass_link_string(guest_pass)}</td>"
                 else
-                    table += "<td>#{link_to retina_image_tag("fallback/default_article_image.jpg", :width => "200", :class => "shadow"), generate_guest_pass_link_string(guest_pass)}</td>"
+                    table += "<td>#{link_to retina_image_tag("fallback/default_article_image.jpg", width: "200", class: "shadow"), generate_guest_pass_link_string(guest_pass)}</td>"
                 end
                 table += "<td><h4>#{link_to guest_pass.article.title, generate_guest_pass_link_string(guest_pass)}</h4><p>#{guest_pass.article.teaser}</p></td>"
                 table += "<td>#{guest_pass.article.issue.release.strftime("%B, %Y")}</td>"
-                table += "<td>#{link_to retina_image_tag(guest_pass.article.issue.cover_url(:thumb).to_s, :class => 'shadow-sm', :alt => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :title => ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), :size => "141x200"), issue_path(guest_pass.article.issue)}</td>"
+                table += "<td>#{link_to retina_image_tag(guest_pass.article.issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), title: ('NI' + guest_pass.article.issue.number.to_s + ' - ' + guest_pass.article.issue.title + ' - ' + guest_pass.article.issue.release.strftime("%B, %Y")), size: "141x200"), issue_path(guest_pass.article.issue)}</td>"
                 table += "<td>#{guest_pass.use_count}</td>"
                 table += "</tr>"
             end
@@ -181,7 +181,7 @@ module ApplicationHelper
 
     def cents_to_dollars(value)
         begin
-            return number_with_precision((value / 100.0), :precision => 2)
+            return number_with_precision((value / 100.0), precision: 2)
         rescue
             return 0
         end
@@ -234,7 +234,7 @@ module ApplicationHelper
     end
 
     def generate_guest_pass_link_to(guest_pass)
-        return link_to "Guest pass link", issue_article_url(guest_pass.article.issue, guest_pass.article, :utm_source => "#{guest_pass.key}")
+        return link_to "Guest pass link", issue_article_url(guest_pass.article.issue, guest_pass.article, utm_source: "#{guest_pass.key}")
     end
 
     def generate_guest_pass_link_string(guest_pass)
@@ -272,7 +272,7 @@ module ApplicationHelper
       title ||= column.titleize
       css_class = column == sort_column ? "current #{sort_direction}" : nil
       direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-      link_to title, {:sort => column, :direction => direction}, {:class => css_class}
+      link_to title, {sort: column, direction: direction}, {class: css_class}
     end
 
     def start_delayed_jobs
@@ -414,13 +414,13 @@ module ApplicationHelper
     def log_event(category, action, label)
         # Log a google analytics event to limit ad spending
         session[:events] ||= Array.new
-        session[:events] << {:category => category, :action => action, :label => label}
+        session[:events] << {category: category, action: action, label: label}
     end
 
     def log_fb_event(action, amount)
         # Log an event with Facebook to limit ad spending
         session[:fb_events] ||= Array.new
-        session[:fb_events] << {:action => action, :amount => amount}
+        session[:fb_events] << {action: action, amount: amount}
     end
 
     def self.redesigned?(object_date)

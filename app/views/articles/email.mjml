@@ -29,7 +29,7 @@
 		</mj-section>
 
 		<!-- Add the '=' sign to render the banner -->
-		<% render :partial => 'issues/email_top_banner', :formats => [:html] %>
+		<% render partial: 'issues/email_top_banner', formats: [:html] %>
 
 		<% if @article.first_image %>
 		<mj-section padding="0">
@@ -207,8 +207,8 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_fair_trade_shop', :formats => [:html] %>
+		<%= render partial: 'issues/email_fair_trade_shop', formats: [:html] %>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you have a guest login to the digital edition of the New Internationalist Magazine.", :unsubscribe_links => true } %>
+		<%= render partial: 'issues/email_footer', formats: [:html], locals: { reason: "You're receiving this because you have a guest login to the digital edition of the New Internationalist Magazine.", unsubscribe_links: true } %>
 	</mj-body>
 </mjml>

@@ -5,10 +5,10 @@ New Internationalist Magazine subscription
 Thanks for your subscription to the New Internationalist magazine.
 
 Start reading now!
-<%= issues_url(:protocol => "https") %>
+<%= issues_url(protocol: "https") %>
 
 Your username is: <%= @user.username %>
-Your user profile is: <%= user_url(@user, :protocol => "https") %>
+Your user profile is: <%= user_url(@user, protocol: "https") %>
 
 <% if @user.subscriber? and @user.is_recurring? %>
 Your next auto-debit will be on:
@@ -28,4 +28,4 @@ email and we'll reply as soon as we can.
 
 Cheers, the NI team.
 
-<%= render :partial => "user_mailer/footer" %>
+<%= render partial: "user_mailer/footer" %>

@@ -23,7 +23,7 @@
 			<td><%= link_to guest_pass.key, generate_guest_pass_link_string(guest_pass) %></td>
 			<td><%= guest_pass.use_count %></td>
 			<td><%= number_with_precision(guest_pass.article.score, precision: 3) %></td>
-			<td><%= link_to "Delete", issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), :method => 'delete', :class => 'btn btn-xs btn-danger article-favourite', :alt => 'Delete this guest pass', :title => 'Delete this guest pass' %></td>
+			<td><%= link_to "Delete", issue_article_guest_pass_path(guest_pass.article.issue, guest_pass.article, guest_pass), method: 'delete', class: 'btn btn-xs btn-danger article-favourite', alt: 'Delete this guest pass', title: 'Delete this guest pass' %></td>
 		</tr>
 	<% end %>
 	</tbody>
@@ -32,5 +32,5 @@
 <%== pagy_bootstrap_nav(@pagy) %>
 
 <div class="form-actions">
-	<%= link_to "Back", admin_root_path, :class => 'btn btn-outline-secondary' %>
+	<%= link_to "Back", admin_root_path, class: 'btn btn-outline-secondary' %>
 </div>

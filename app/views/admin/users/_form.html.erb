@@ -9,7 +9,7 @@
     };
 </script>
 
-<%= simple_form_for [:admin, @user], :html => {:class => 'form-horizontal' } do |f| %>
+<%= simple_form_for [:admin, @user], html: {class: 'form-horizontal' } do |f| %>
     <%= f.input :username %>
     <%= f.input :email %>
     <%= f.input :password %>
@@ -39,7 +39,7 @@
         <%= f.input :address %>
         <%= f.input :city, label: 'Suburb or Town' %>
         <%= f.input :postal_code %>
-        <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { :country => :country, :state => :state } }) %>
+        <%= f.input :state, CountryStateSelect.state_options({ form: f, field_names: { country: :country, state: :state } }) %>
         <%= f.input :country, collection: CountryStateSelect.countries_collection.sort_by{|a| a.first.downcase} %>
         <%= f.input :phone %>
         <%= f.input :postal_mailable, collection: @user.postal_mailable_collection, include_blank: true %>
@@ -59,7 +59,7 @@
         <%= f.label :most_recent_subscriptions_order %>
         <p><%= @user.most_recent_subscriptions_order or '-' %></p>
         <%= f.label :products_order_total %>
-        <p><%= number_to_currency(@user.products_order_total, :unit => '$') or '-' %></p>
+        <p><%= number_to_currency(@user.products_order_total, unit: '$') or '-' %></p>
         <%= f.label :most_recent_products_order %>
         <p><%= @user.most_recent_products_order or '-' %></p>
         <%= f.input :annuals_buyer, collection: @user.annuals_buyer_collection, include_blank: true %>
@@ -67,8 +67,8 @@
     <% end %>
   
     <div class="form-actions">
-        <%= f.button :submit, :class => 'btn btn-success' %>
-        <%= link_to "Cancel", :back, :class => 'btn btn-outline-secondary' %>
+        <%= f.button :submit, class: 'btn btn-success' %>
+        <%= link_to "Cancel", :back, class: 'btn btn-outline-secondary' %>
     </div>
   
 <% end %>

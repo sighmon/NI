@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Article, :type => :model do
+describe Article, type: :model do
   describe '.search' do
     let(:query_params) { { query: 'test', page: 1 } }
 

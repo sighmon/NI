@@ -24,7 +24,7 @@ class PushRegistration < ActiveRecord::Base
         "limit": limit,
         "skip": i * limit
       }
-      response = HTTParty.get(ENV['PARSE_INSTALLATIONS_API_ENDPOINT'], :headers => headers, :query => query)
+      response = HTTParty.get(ENV['PARSE_INSTALLATIONS_API_ENDPOINT'], headers: headers, query: query)
       if response and response.success?
         # byebug
         # Find or create the registrations

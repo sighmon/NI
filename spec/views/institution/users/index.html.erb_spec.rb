@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "institution/users/index", :type => :view do
+describe "institution/users/index", type: :view do
   before(:each) do
     assign(:users, [
       @child = FactoryBot.create(:child_user),

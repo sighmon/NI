@@ -1,4 +1,4 @@
-<%= simple_form_for [@issue, @article], :html => { :class => 'form-horizontal' }, :html => {:multipart => true} do |f| %>
+<%= simple_form_for [@issue, @article], html: { class: 'form-horizontal' }, html: {multipart: true} do |f| %>
 
   <%= f.input :title %>
   <%= f.input :teaser %>
@@ -28,7 +28,7 @@
   <p>To add an image, first upload it, note it's :id and then insert it with [File:xx] or [File:xx|full] or [File:xx|left] to remove the float or [File:xx|cartoon] or [File:xx|small] or [File:xx|centre] you can also add |ns to remove the shadow. [File:xx|ns] or [File:xx|cartoon|ns]</p>
   <p>To add a cover linked back to that issue, use [Cover:xx] where xx is the rails issue_id. [Cover:xx|small|left|ns] also work.</p>
   <% if not @article.id.nil? %>
-    <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, :format => 'js'), :remote => true, :id => 'generate_from_source', :data => {:confirm => "Are you sure? You will lose any changes you have made to the body."}, :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Generate from source', issue_article_generate_from_source_path(@issue,@article, format: 'js'), remote: true, id: 'generate_from_source', data: {confirm: "Are you sure? You will lose any changes you have made to the body."}, class: 'btn btn-outline-secondary' %>
   <% end %>
   <%= f.input :body, label: false %>
 
@@ -37,8 +37,8 @@
   <%= f.input :unpublished, as: :boolean %>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                :back, :class => 'btn btn-outline-secondary' %>
+    <%= f.submit nil, class: 'btn btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                :back, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>

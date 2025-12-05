@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "IP Whitelist", :type => :request do
+describe "IP Whitelist", type: :request do
 
   let(:parent) { FactoryBot.create(:subscription).user }
   let(:child) { FactoryBot.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
@@ -16,7 +16,7 @@ describe "IP Whitelist", :type => :request do
 
 end
 
-describe "Not in IP Whitelist", :type => :request do
+describe "Not in IP Whitelist", type: :request do
 
   let(:parent) { FactoryBot.create(:subscription).user }
   let(:child) { FactoryBot.create(:user, ip_whitelist: "1.2.3.4", parent: parent) }
@@ -34,7 +34,7 @@ describe "Not in IP Whitelist", :type => :request do
 
 end
 
-describe "No IP Whitelist entry", :type => :request do
+describe "No IP Whitelist entry", type: :request do
 
   let(:parent) { FactoryBot.create(:subscription).user }
   let(:child) { FactoryBot.create(:user, ip_whitelist: "", parent: parent) }

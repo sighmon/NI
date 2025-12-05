@@ -5,20 +5,20 @@
     <div class="col-sm-12 social-networks">
       <span class="social-media"><i class="fa fa-envelope"></i></span>
       <h4>Join our monthly email list, create a free account</h4>
-      <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= f.error_notification %>
 
         <div class="inputs shared-sign-up">
-          <%= f.input :email, :required => true, :label => false, :placeholder => 'Email address' %>
-          <%= f.input :username, :required => true, :label => false, :placeholder => 'Username' %>
-          <%= f.input :password, :required => true, :label => false, :placeholder => 'Password' %>
-          <%= f.input :password_confirmation, :required => true, :label => false, :placeholder => 'Confirm your password' %>
+          <%= f.input :email, required: true, label: false, placeholder: 'Email address' %>
+          <%= f.input :username, required: true, label: false, placeholder: 'Username' %>
+          <%= f.input :password, required: true, label: false, placeholder: 'Password' %>
+          <%= f.input :password_confirmation, required: true, label: false, placeholder: 'Confirm your password' %>
           <%= recaptcha_tags %>
         </div>
 
         <div class="actions">
           <%= f.button :submit, "Sign up", class: 'btn btn-secondary' %>
-          <%= render :partial => "shared/privacy" %>
+          <%= render partial: "shared/privacy" %>
         </div>
       <% end %>
     </div>

@@ -2,42 +2,42 @@
 
 <% if user_signed_in? and can? :update, @issue %>
 <div class="edit-issue-buttons">
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_issue_path(@issue), :class => 'btn btn-primary btn-xs' %>
+  <%= link_to t('.edit', default: t("helpers.links.edit")),
+                edit_issue_path(@issue), class: 'btn btn-primary btn-xs' %>
   <% if user_signed_in? and can? :destroy, @issue %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+    <%= link_to t('.destroy', default: t("helpers.links.destroy")),
           issue_path(@issue),
-          :method => 'delete',
-          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))},
-          :class => 'btn btn-xs btn-danger' %>
+          method: 'delete',
+          data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? Becuase if you delete this Issue, it will also delete all of the Articles and any purchases of this Issue. Are you really sure?'))},
+          class: 'btn btn-xs btn-danger' %>
   <% end %>
    | 
   <% if user_signed_in? and can? :create, Article %>
-    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-xs btn-success' %>
+    <%= link_to 'New Article', new_issue_article_path(@issue), class: 'btn btn-xs btn-success' %>
      |
-    <%= link_to 'Import Articles', issue_import_path(@issue), :class => 'btn btn-xs btn-warning',
-      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? Because this will try and import all the articles from Bricolage.'))} %>
-    <%= link_to 'Import Images', issue_import_images_path(@issue), :class => 'btn btn-xs btn-warning',
-      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will try and import all the images for each article listed here.'))} %>
-    <%= link_to 'Import Blogs', issue_import_extra_path(@issue, article_type: "blog"), :class => 'btn btn-xs btn-warning',
-      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will import the blogs from Bricolage.'))} %>
-     <%= link_to 'Import Web Exclusives', issue_import_extra_path(@issue, article_type: "web-exclusive"), :class => 'btn btn-xs btn-warning',
-      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will import the web-exclusives from Bricolage.'))} %>
+    <%= link_to 'Import Articles', issue_import_path(@issue), class: 'btn btn-xs btn-warning',
+      data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? Because this will try and import all the articles from Bricolage.'))} %>
+    <%= link_to 'Import Images', issue_import_images_path(@issue), class: 'btn btn-xs btn-warning',
+      data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? This will try and import all the images for each article listed here.'))} %>
+    <%= link_to 'Import Blogs', issue_import_extra_path(@issue, article_type: "blog"), class: 'btn btn-xs btn-warning',
+      data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? This will import the blogs from Bricolage.'))} %>
+     <%= link_to 'Import Web Exclusives', issue_import_extra_path(@issue, article_type: "web-exclusive"), class: 'btn btn-xs btn-warning',
+      data: {confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure? This will import the web-exclusives from Bricolage.'))} %>
     <hr />
     <p><b>Preview emails</b></p>
-    <%= link_to 'Email current subscriber', issue_email_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Email non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Email non-subscribers others', issue_email_non_subscribers_others_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text non-subscribers others', issue_email_non_subscribers_others_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Renew please', issue_email_renew_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), :class => 'btn btn-outline-secondary' %><br>
-    <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), :class => 'btn btn-outline-secondary' %>
-    <%= link_to 'Text subscribe special', issue_email_special_path(@issue, :text), :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Email current subscriber', issue_email_path(@issue, :mjml), class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Text current subscriber', issue_email_path(@issue, :text), class: 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Email non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :mjml), class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Text non-subscribers institutions', issue_email_non_subscribers_institutions_path(@issue, :text), class: 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Email non-subscribers others', issue_email_non_subscribers_others_path(@issue, :mjml), class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Text non-subscribers others', issue_email_non_subscribers_others_path(@issue, :text), class: 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Renew please', issue_email_renew_path(@issue, :mjml), class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Text renew please', issue_email_renew_path(@issue, :text), class: 'btn btn-outline-secondary' %><br>
+    <%= link_to 'Subscribe special', issue_email_special_path(@issue, :mjml), class: 'btn btn-outline-secondary' %>
+    <%= link_to 'Text subscribe special', issue_email_special_path(@issue, :text), class: 'btn btn-outline-secondary' %>
     <hr />
     <p><b>Create a zip file for the iOS app</b></p>
-    <%= link_to 'Zip up this issue', issue_zip_path(@issue), :class => 'btn btn-outline-secondary' %>
+    <%= link_to 'Zip up this issue', issue_zip_path(@issue), class: 'btn btn-outline-secondary' %>
     <hr />
 
     <p><b>iOS &amp; Android Push Notification</b></p>
@@ -47,11 +47,11 @@
     <% elsif @issue.notification_sent %>
       <p><b>Sent</b>: <%= @issue.notification_sent.in_time_zone("Australia/Adelaide").strftime("%d/%m/%Y at %I:%M%p") %><br />(<%= @issue.notification_sent.strftime("%d/%m/%Y at %I:%M%p GMT") %>)</p>
     <% else %>
-      <%= simple_form_for issue_setup_push_notification_path(@issue), :url => issue_setup_push_notification_path(@issue) do |f| %>
+      <%= simple_form_for issue_setup_push_notification_path(@issue), url: issue_setup_push_notification_path(@issue) do |f| %>
         <%= f.input :scheduled_datetime, as: :datetime, required: false, label: 'Scheduled for: (UTC, GMT timezone)' %>
-        <%= f.input :device_id, :placeholder => 'Push to single user device_id', required: false %>
+        <%= f.input :device_id, placeholder: 'Push to single user device_id', required: false %>
         <%= f.input :test_device_android, as: :boolean %>
-        <%= f.input :alert_text, :placeholder => 'Message', required: false %>
+        <%= f.input :alert_text, placeholder: 'Message', required: false %>
         <%= button_tag(type: 'submit', class: "btn btn-warning", data: {confirm: "Are you sure? Check the spelling again!\n\nIt automatically includes: #{@issue.push_notification_text}"}) do %>
           Setup Push notifications
         <% end %>
@@ -68,7 +68,7 @@
       <h3 class="issue-section-title">Articles not displayed</h3>
       <% @issue.uncategorised.each do |article| %>
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article_uncategorised", :locals => { :article => article } %>
+          <%= render partial: "article_uncategorised", locals: { article: article } %>
         </div>
       <% end %>
     </div>
@@ -78,15 +78,15 @@
 <div class="row issue-top-box" itemscope itemtype="http://schema.org/Product">
   <div class="col-sm-4 issue-title">
     <!-- Magazine cover -->
-    <%= retina_image_tag(@issue.cover_url(:home).to_s, :class => 'shadow home-latest-cover', :alt => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :itemprop => "image", :title => "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", :rel => "tooltip", :width => 282, :height => 400) %>
+    <%= retina_image_tag(@issue.cover_url(:home).to_s, class: 'shadow home-latest-cover', alt: "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", itemprop: "image", title: "NI #{@issue.number} - #{@issue.title} - #{@issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 282, height: 400) %>
     <!-- Share links -->
-    <h2><%= render :partial => "share_links", :object => @issue %></h2>
+    <h2><%= render partial: "share_links", object: @issue %></h2>
 
     <% if cannot? :read, @issue.keynote %>
-      <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), :class => 'btn btn-outline-secondary' %></p>
+      <p><%= link_to "Buy this issue $#{cents_to_dollars(Settings.issue_price)}", new_issue_purchase_path(@issue), class: 'btn btn-outline-secondary' %></p>
     <% end %>
     <% if not current_user.try(:subscriber?) %>
-      <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), :class => 'btn btn-success' %></p>
+      <p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), class: 'btn btn-success' %></p>
     <% end %>
   </div>
   <div class="col-sm-8">
@@ -106,7 +106,7 @@
       <h3>A note from the editor</h3>
       <div class="table-of-contents-editors-letter">
         <div class="home-editors-photo-container">
-          <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, :class => 'home-editors-photo', :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100" %>
+          <%= retina_image_tag @issue.editors_photo_url(:thumb).to_s, class: 'home-editors-photo', alt: "#{@issue.editors_name}", title: "#{@issue.editors_name}", width: "100" %>
         </div>
         <%= simple_format @issue.editors_letter %>
         <p><strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br /><a href="http://www.newint.org">www.newint.org</a></p>
@@ -120,12 +120,12 @@
     <h3 class="issue-section-title">The big story</h3>
   </div>
   <% if @issue.keynote %>
-    <%= render :partial => "article_keynote", :locals => { :article => @issue.keynote } %>
+    <%= render partial: "article_keynote", locals: { article: @issue.keynote } %>
   <% end %>
 </div>
 
 <!-- Removed home page sign-up to avoid spam -->
-<% render :partial => "shared/account_sign_up" %>
+<% render partial: "shared/account_sign_up" %>
 
 <hr />
 
@@ -134,7 +134,7 @@
     <h6>What's inside this magazine</h6>
     <ul class="breadcrumb">
     <% @categories.each do |category| %>
-      <li><%= link_to category.short_display_name, category_path(category), :class => 'badge badge-secondary' %></li>
+      <li><%= link_to category.short_display_name, category_path(category), class: 'badge badge-secondary' %></li>
       <% if user_signed_in? and can? :manage, category %><li><%= category.name %></li><% end %>
     <% end %>
     </ul>
@@ -155,7 +155,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -177,14 +177,14 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <p class="more-button"><%= link_to 'Read more web-exclusives...', category_path(Category.find_by_name("/features/web-exclusive/")), :class => 'btn btn-outline-secondary' %></p>
+      <p class="more-button"><%= link_to 'Read more web-exclusives...', category_path(Category.find_by_name("/features/web-exclusive/")), class: 'btn btn-outline-secondary' %></p>
     </div>
   </div>
 
@@ -204,7 +204,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -226,14 +226,14 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <p class="more-button"><%= link_to 'Read more blogs...', category_path(Category.find_by_name("/blog/")), :class => 'btn btn-outline-secondary' %></p>
+      <p class="more-button"><%= link_to 'Read more blogs...', category_path(Category.find_by_name("/blog/")), class: 'btn btn-outline-secondary' %></p>
     </div>
   </div>
 
@@ -257,7 +257,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -279,7 +279,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -301,7 +301,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -323,7 +323,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -345,7 +345,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -367,7 +367,7 @@
       <% end %>
       <div class="col-sm-4">
         <div class="issue-article" itemscope itemtype="http://schema.org/Article">
-          <%= render :partial => "article", :locals => { :article => article } %>
+          <%= render partial: "article", locals: { article: article } %>
         </div>
       </div>
     <% end %>
@@ -380,9 +380,9 @@
 <div class="clearfix"></div>
 
 <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              issues_path, :class => 'btn btn-outline-secondary' %>
+  <%= link_to t('.back', default: t("helpers.links.back")),
+              issues_path, class: 'btn btn-outline-secondary' %>
   <% if user_signed_in? and can? :create, Article %>
-    <%= link_to 'New Article', new_issue_article_path(@issue), :class => 'btn btn-primary' %>
+    <%= link_to 'New Article', new_issue_article_path(@issue), class: 'btn btn-primary' %>
   <% end %>
 </div>

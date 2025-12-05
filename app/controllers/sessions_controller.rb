@@ -36,7 +36,7 @@ class SessionsController < Devise::SessionsController
     # Failed iOS & Android login attempts hit this on fail.
     # TODO: Work out why that is. But for now..
     logger.info "iOS/Android login incorrect."
-    respond_with(nil, :status => 401, :location => nil)
+    respond_with(nil, status: 401, location: nil)
   end
 
   private

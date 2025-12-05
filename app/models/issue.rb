@@ -1,9 +1,9 @@
 class Issue < ActiveRecord::Base
   
-  has_many :articles, -> { where(unpublished: [false, nil]) }, :dependent => :destroy
-  has_many :all_articles, :class_name => "Article"
+  has_many :articles, -> { where(unpublished: [false, nil]) }, dependent: :destroy
+  has_many :all_articles, class_name: "Article"
   has_many :purchases
-  has_many :users, :through => :purchases
+  has_many :users, through: :purchases
   mount_uploader :cover, CoverUploader
   mount_uploader :editors_photo, EditorsPhotoUploader
   mount_uploader :zip, ZipUploader
@@ -165,7 +165,7 @@ class Issue < ActiveRecord::Base
   end
 
   # if params[:query].present?
-    #     @issues = Issue.search(load: true, :page => params[:page], :per_page => Settings.issue_pagination) do
+    #     @issues = Issue.search(load: true, page: params[:page], per_page: Settings.issue_pagination) do
     #       query { string(params[:query]) }
     #     end
     # else
@@ -466,12 +466,12 @@ class Issue < ActiveRecord::Base
     # TODO: Allow for posibility that issue is nil.
     a = self.articles.where(story_id: story_id).first_or_create
     a.update(
-      :title => element.at_xpath("./assets:name",'assets' => assets ).try(:text),
-      :teaser => element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
-      :author => element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
-      :publication => DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
-      :source => element.to_xml,
-      :unpublished => options[:unpublished]
+      title: element.at_xpath("./assets:name",'assets' => assets ).try(:text),
+      teaser: element.at_xpath('./assets:elements/assets:field[@type="teaser"]','assets' => assets).try(:text).try(:gsub,/\n/, " "),
+      author: element.xpath('./assets:contributors/assets:contributor','assets'=>assets).collect{|n| ['fname','mname','lname'].collect{|t| n.at_xpath("./assets:#{t}",'assets'=>assets).try(:text) }.select{|n|!n.empty?}.join(" ")}.join(","),
+      publication: DateTime.parse(element.at_xpath('./assets:cover_date','assets'=>assets).try(:text) ),
+      source: element.to_xml,
+      unpublished: options[:unpublished]
     )
     category_list = element.xpath(".//assets:category",'assets' => assets)
     category_list.collect do |cat|
@@ -596,7 +596,7 @@ class Issue < ActiveRecord::Base
         if a.body and not a.body.empty?
           body_to_zip = simple_format(a.body)
         else
-          body_to_zip = simple_format(source_to_body(a, :debug => false))
+          body_to_zip = simple_format(source_to_body(a, debug: false))
         end
 
         # Add the css for iOS
@@ -638,7 +638,7 @@ class Issue < ActiveRecord::Base
     # Send zip file
     File.open(zip_file_path, 'r') do |f|
       # Uncomment to download the zip file for checking locally also
-      # send_data f.read, :type => "application/zip", :filename => "#{self.id}.zip", :x_sendfile => true
+      # send_data f.read, type: "application/zip", filename: "#{self.id}.zip", x_sendfile: true
       # Upload with carrierwave ZipUploader
       self.zip = f
       self.save
@@ -664,17 +664,17 @@ class Issue < ActiveRecord::Base
   def self.issues_index_to_json(issues)
     issues.to_json(
       # Q: do we need :editors_letter here? it can be quite large.
-      :only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-      :methods => [:editors_letter_html]
+      only: [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+      methods: [:editors_letter_html]
     )
   end
 
   def self.article_information_to_include_in_json_hash
     { 
-      :only => [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :publication],
-      :include => {
-        :images => {},
-        :categories => { :only => [:name, :colour, :id] }
+      only: [:title, :teaser, :keynote, :featured_image, :featured_image_caption, :id, :publication],
+      include: {
+        images: {},
+        categories: { only: [:name, :colour, :id] }
       }
     }
   end
@@ -683,10 +683,10 @@ class Issue < ActiveRecord::Base
     editors_letter = ActionController::Base.helpers.strip_tags(self.editors_letter).gsub("\r\n\r\n", "\n\n")
     apple_news_hash = {
       title: self.title,
-      subtitle: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+      subtitle: ActionController::Base.helpers.truncate(editors_letter, length: 100),
       metadata: {
         thumbnailURL: self.cover_url(:home2x).to_s,
-        excerpt: ActionController::Base.helpers.truncate(editors_letter, :length => 100),
+        excerpt: ActionController::Base.helpers.truncate(editors_letter, length: 100),
         canonicalURL: Rails.application.routes.url_helpers.issue_url(self),
         datePublished: self.release.to_datetime.iso8601,
         dateModified: self.release.to_datetime.iso8601,
@@ -926,7 +926,7 @@ class Issue < ActiveRecord::Base
 
     number
     title
-    keynote :teaser => 'Keynote'
+    keynote teaser: 'Keynote'
     release { |release| release.strftime("%B %Y")}
 
     # These bits for google_play_store - no longer actually used.

@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  protect_from_forgery :with => :exception
+  protect_from_forgery with: :exception
 
   # Send the access denied pages to root with a nice message
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to issues_path, :alert => exception.message
+    redirect_to issues_path, alert: exception.message
   end
 
   # Save this page location to session
@@ -30,13 +30,13 @@ class ApplicationController < ActionController::Base
   def log_event(category, action, label)
     # Log a google analytics event to limit ad spending
     session[:events] ||= Array.new
-    session[:events] << {:category => category, :action => action, :label => label}
+    session[:events] << {category: category, action: action, label: label}
   end
 
   def log_fb_event(action, amount)
     # Log an event with Facebook to limit ad spending
     session[:fb_events] ||= Array.new
-    session[:fb_events] << {:action => action, :amount => amount}
+    session[:fb_events] << {action: action, amount: amount}
   end
 
   private
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
   def retrieve_paypal_express_details(token, options = {})
     autodebit = options[:autodebit] or false
     if autodebit
-      ppr = PayPal::Recurring.new(:token => token)
+      ppr = PayPal::Recurring.new(token: token)
       details = ppr.checkout_details
       session[:express_payer_id] = details.payer_id
       session[:express_email] = details.email

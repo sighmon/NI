@@ -1,9 +1,9 @@
 <%- model_class = Image -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %> <%= @showimage.id %></h1>
+  <h1><%=t '.title', default: model_class.model_name.human %> <%= @showimage.id %></h1>
 </div>
 
-<%= retina_image_tag @showimage.data_url(:sixhundred).to_s, :alt => "#{strip_tags(@showimage.caption)}", :title => "#{strip_tags(@showimage.caption)}", :width => "300" %>
+<%= retina_image_tag @showimage.data_url(:sixhundred).to_s, alt: "#{strip_tags(@showimage.caption)}", title: "#{strip_tags(@showimage.caption)}", width: "300" %>
 
 <dl class="dl-horizontal">
   <dt><%= model_class.human_attribute_name(:data) %>:</dt>
@@ -29,13 +29,13 @@
 </dl>
 
 <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              issue_article_images_path(@issue,@article), :class => 'btn btn-outline-secondary'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_issue_article_image_path(@issue, @article, @showimage), :class => 'btn btn-primary' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+  <%= link_to t('.back', default: t("helpers.links.back")),
+              issue_article_images_path(@issue,@article), class: 'btn btn-outline-secondary'  %>
+  <%= link_to t('.edit', default: t("helpers.links.edit")),
+              edit_issue_article_image_path(@issue, @article, @showimage), class: 'btn btn-primary' %>
+  <%= link_to t('.destroy', default: t("helpers.links.destroy")),
               issue_article_image_path(@issue,@article,@showimage),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+              method: 'delete',
+              data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+              class: 'btn btn-danger' %>
 </div>

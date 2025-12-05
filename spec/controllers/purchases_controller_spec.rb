@@ -18,7 +18,7 @@ class FakeGateway
   end
 end
 
-describe PurchasesController, :type => :controller do
+describe PurchasesController, type: :controller do
 
   context "as a user and with an issue" do
 
@@ -46,7 +46,7 @@ describe PurchasesController, :type => :controller do
            PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(true)
            $VERBOSE = warn_level
            expect {
-             post :create, params: {:issue_id => issue.id}
+             post :create, params: {issue_id: issue.id}
            }.to change(Purchase, :count).by(1)
          end
        end
@@ -59,7 +59,7 @@ describe PurchasesController, :type => :controller do
            PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(false)
            $VERBOSE = warn_level
            expect {
-             post :create, params: {:issue_id => issue.id}
+             post :create, params: {issue_id: issue.id}
            }.to change(Purchase, :count).by(0)
          end
 

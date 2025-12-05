@@ -35,7 +35,7 @@ class AddRpush < ActiveRecord::Migration[5.0]
     migrations.reverse.each do |m|
       begin
         m.down
-      rescue ActiveRecord::StatementInvalid => e
+      rescue ActiveRecord:StatementInvalid: e
         p e
       end
     end

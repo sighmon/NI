@@ -19,7 +19,7 @@ class GuestPass < ActiveRecord::Base
 
       return false if (attempts_remaining-=1)<=0
 
-    end while GuestPass.where(:key => key).exists?
+    end while GuestPass.where(key: key).exists?
     self.key = key
   end
 

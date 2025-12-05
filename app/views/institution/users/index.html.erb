@@ -8,7 +8,7 @@
       <th><%= model_class.human_attribute_name(:username) %></th>
       <th>Managed by</th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th><%=t '.actions', default: t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
@@ -18,13 +18,13 @@
         <td><%= user.parent.username %></td>
         <td><%= user.created_at.strftime("%d %B, %Y") %></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_institution_user_path(user), :class => 'btn btn-outline-secondary' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to t('.edit', default: t("helpers.links.edit")),
+                      edit_institution_user_path(user), class: 'btn btn-outline-secondary' %>
+          <%= link_to t('.destroy', default: t("helpers.links.destroy")),
                       institution_user_path(user),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
+                      method: :delete,
+                      data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                      class: 'btn btn-xs btn-danger' %>
         </td>
       </tr>
     <% end %>
@@ -32,7 +32,7 @@
 </table>
 
 <div class="form-actions">
-  <%= link_to t('.new', :default => t("helpers.links.new")),
+  <%= link_to t('.new', default: t("helpers.links.new")),
             new_institution_user_path,
-            :class => 'btn btn-primary' %>
+            class: 'btn btn-primary' %>
 </div>

@@ -29,7 +29,7 @@
 		</mj-section>
 
 		<!-- Add the '=' sign to render the banner -->
-		<% render :partial => 'issues/email_top_banner', :formats => [:html] %>
+		<% render partial: 'issues/email_top_banner', formats: [:html] %>
 
 		<mj-section padding="0">
 			<mj-column vertical-align="top">
@@ -181,7 +181,7 @@
 					padding="0px 25px"
 					color="#787878">
 					<div style="float:right;width:100px;height:100px;border-radius:50%;overflow:hidden;">
-						<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, :alt => "#{@issue.editors_name}", :title => "#{@issue.editors_name}", :width => "100px", :height => "100px", :style => "margin-top:-10px;"), issue_url(@issue) %>
+						<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, alt: "#{@issue.editors_name}", title: "#{@issue.editors_name}", width: "100px", height: "100px", style: "margin-top:-10px;"), issue_url(@issue) %>
 					</div>
 					<%= simple_format strip_tags(@issue.editors_letter) %>
 					<strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br />
@@ -606,9 +606,9 @@
 			</mj-column>
 		</mj-section>
 
-		<%= render :partial => 'issues/email_fair_trade_shop', :formats => [:html] %>
+		<%= render partial: 'issues/email_fair_trade_shop', formats: [:html] %>
 
-		<%= render :partial => 'issues/email_footer', :formats => [:html], :locals => { :reason => "You're receiving this because you have previously been in contact with the New Internationalist.", :unsubscribe_links => true } %>
+		<%= render partial: 'issues/email_footer', formats: [:html], locals: { reason: "You're receiving this because you have previously been in contact with the New Internationalist.", unsubscribe_links: true } %>
 
 	</mj-body>
 </mjml>

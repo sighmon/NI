@@ -25,14 +25,14 @@ module Devise
         #
         
         # A UK user exists, so first try and find if they already have a local rails account
-        resource = mapping.to.find_for_database_authentication(:uk_id => uk_user_details["data"]["id"])
+        resource = mapping.to.find_for_database_authentication(uk_id: uk_user_details["data"]["id"])
         
         # Rails.logger.debug "Resource pre-build: #{resource.to_json}"
 
         if not resource
           Rails.logger.debug "NOT FOUND: No rails account for uk_id: #{uk_user_details["data"]["id"]}"
           # Try by email address to catch any UK users that already had a digital.newint.com.au account
-          resource = mapping.to.find_for_database_authentication(:email => uk_user_details["data"]["email"].downcase)
+          resource = mapping.to.find_for_database_authentication(email: uk_user_details["data"]["email"].downcase)
         end
 
         if not resource

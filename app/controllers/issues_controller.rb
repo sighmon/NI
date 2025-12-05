@@ -1,17 +1,17 @@
 class IssuesController < ApplicationController
 
   # Cancan authorisation
-  load_and_authorize_resource :except => [:index]
+  load_and_authorize_resource except: [:index]
 
-  newrelic_ignore :only => [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew, :email_special]
-  # newrelic_ignore_enduser :only => [:email, :email_non_subscribers, :email_others, :email_renew]
+  newrelic_ignore only: [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew, :email_special]
+  # newrelic_ignore_enduser only: [:email, :email_non_subscribers, :email_others, :email_renew]
   # NOTE: if setting up another email, don't forget to add it to ability.rb too :-)
 
   # :show So that iOS can post, :index so that issues.json jquery works
-  skip_before_action :verify_authenticity_token, :only => [:show, :index]
+  skip_before_action :verify_authenticity_token, only: [:show, :index]
 
   # Devise authorisation
-  # before_action :authenticate_user!, :except => [:show, :index]
+  # before_action :authenticate_user!, except: [:show, :index]
 
   # GET /issues
   # GET /issues.json
@@ -64,47 +64,47 @@ class IssuesController < ApplicationController
     @page_title = "Magazine archive"
     @page_description = "An archive of all the New Internationalist magazines available as digital editions."
 
-    set_meta_tags :title => @page_title,
-                  :description => @page_description,
-                  :keywords => "new, internationalist, magazine, archive, digital, edition",
-                  :canonical => issues_url,
-                  :alternate => [
-                    {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
-                    {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
-                    {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags title: @page_title,
+                  description: @page_description,
+                  keywords: "new, internationalist, magazine, archive, digital, edition",
+                  canonical: issues_url,
+                  alternate: [
+                    {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues"}, 
+                    {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues"},
+                    {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
                   ],
-                  :fb => {
-                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  fb: {
+                    app_id: ENV["FACEBOOK_APP_ID"]
                   },
-                  :open_graph => {
-                    :title => @page_title,
-                    :description => @page_description,
-                    #:type  => :magazine,
-                    :url   => issues_url,
-                    :image => Issue.latest.try(:cover_url).to_s,
-                    :site_name => "New Internationalist Magazine Digital Edition"
+                  open_graph: {
+                    title: @page_title,
+                    description: @page_description,
+                    #type: :magazine,
+                    url: issues_url,
+                    image: Issue.latest.try(:cover_url).to_s,
+                    site_name: "New Internationalist Magazine Digital Edition"
                   },
-                  :twitter => {
-                    :card => "summary",
-                    :site => "@#{ENV["TWITTER_NAME"]}",
-                    :creator => "@#{ENV["TWITTER_NAME"]}",
-                    :title => @page_title,
-                    :description => @page_description,
-                    :image => {
-                      :src => Issue.latest.try(:cover_url).to_s
+                  twitter: {
+                    card: "summary",
+                    site: "@#{ENV["TWITTER_NAME"]}",
+                    creator: "@#{ENV["TWITTER_NAME"]}",
+                    title: @page_title,
+                    description: @page_description,
+                    image: {
+                      src: Issue.latest.try(:cover_url).to_s
                     },
-                    :app => {
-                      :name => {
-                        :iphone => ENV["ITUNES_APP_NAME"],
-                        :ipad => ENV["ITUNES_APP_NAME"]
+                    app: {
+                      name: {
+                        iphone: ENV["ITUNES_APP_NAME"],
+                        ipad: ENV["ITUNES_APP_NAME"]
                       },
-                      :id => {
-                        :iphone => ENV["ITUNES_APP_ID"],
-                        :ipad => ENV["ITUNES_APP_ID"]
+                      id: {
+                        iphone: ENV["ITUNES_APP_ID"],
+                        ipad: ENV["ITUNES_APP_ID"]
                       },
-                      :url => {
-                        :iphone => "newint://issues",
-                        :ipad => "newint://issues"
+                      url: {
+                        iphone: "newint://issues",
+                        ipad: "newint://issues"
                       }
                     }
                   }
@@ -127,9 +127,9 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
-      format.html { render :layout => 'email' }
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.html { render layout: 'email' }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 
@@ -137,9 +137,9 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
-      format.html { render :layout => 'email' }
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.html { render layout: 'email' }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 
@@ -147,9 +147,9 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
-      format.html { render :layout => 'email' }
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.html { render layout: 'email' }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 
@@ -157,16 +157,16 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
 
     respond_to do |format|
-      format.html { render :layout => 'email' }
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.html { render layout: 'email' }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 
   def email_special
     respond_to do |format|
-      format.text { render :layout => false }
-      format.mjml { render :layout => false }
+      format.text { render layout: false }
+      format.mjml { render layout: false }
     end
   end
 
@@ -216,48 +216,48 @@ class IssuesController < ApplicationController
     @page_title = @issue.title
     @page_description = "#{@issue.release.strftime("%B, %Y")} - #{ActionView::Base.full_sanitizer.sanitize(@issue.keynote.try(:teaser))}"
 
-    set_meta_tags :site => 'New Internationalist',
-                  :title => @page_title,
-                  :description => @page_description,
-                  :keywords => "new, internationalist, magazine, digital, edition, #{@issue.title}",
-                  :canonical => issue_url(@issue),
-                  :alternate => [
-                    {:href => "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}"}, 
-                    {:href => "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}"},
-                    {:href => rss_url(format: :xml), :type => 'application/rss+xml', :title => 'RSS'}
+    set_meta_tags site: 'New Internationalist',
+                  title: @page_title,
+                  description: @page_description,
+                  keywords: "new, internationalist, magazine, digital, edition, #{@issue.title}",
+                  canonical: issue_url(@issue),
+                  alternate: [
+                    {href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{@issue.id}"}, 
+                    {href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{@issue.id}"},
+                    {href: rss_url(format: :xml), type: 'application/rss+xml', title: 'RSS'}
                   ],
-                  :fb => {
-                    :app_id => ENV["FACEBOOK_APP_ID"]
+                  fb: {
+                    app_id: ENV["FACEBOOK_APP_ID"]
                   },
-                  :open_graph => {
-                    :title => @page_title,
-                    :description => @page_description,
-                    #:type  => :magazine,
-                    :url   => issue_url(@issue),
-                    :image => @issue.cover_url.to_s,
-                    :site_name => "New Internationalist Magazine Digital Edition"
+                  open_graph: {
+                    title: @page_title,
+                    description: @page_description,
+                    #type: :magazine,
+                    url: issue_url(@issue),
+                    image: @issue.cover_url.to_s,
+                    site_name: "New Internationalist Magazine Digital Edition"
                   },
-                  :twitter => {
-                    :card => "summary",
-                    :site => "@#{ENV["TWITTER_NAME"]}",
-                    :creator => "@#{ENV["TWITTER_NAME"]}",
-                    :title => @page_title,
-                    :description => @page_description,
-                    :image => {
-                      :src => @issue.cover_url.to_s
+                  twitter: {
+                    card: "summary",
+                    site: "@#{ENV["TWITTER_NAME"]}",
+                    creator: "@#{ENV["TWITTER_NAME"]}",
+                    title: @page_title,
+                    description: @page_description,
+                    image: {
+                      src: @issue.cover_url.to_s
                     },
-                    :app => {
-                      :name => {
-                        :iphone => ENV["ITUNES_APP_NAME"],
-                        :ipad => ENV["ITUNES_APP_NAME"]
+                    app: {
+                      name: {
+                        iphone: ENV["ITUNES_APP_NAME"],
+                        ipad: ENV["ITUNES_APP_NAME"]
                       },
-                      :id => {
-                        :iphone => ENV["ITUNES_APP_ID"],
-                        :ipad => ENV["ITUNES_APP_ID"]
+                      id: {
+                        iphone: ENV["ITUNES_APP_ID"],
+                        ipad: ENV["ITUNES_APP_ID"]
                       },
-                      :url => {
-                        :iphone => "newint://issues/#{@issue.id}",
-                        :ipad => "newint://issues/#{@issue.id}"
+                      url: {
+                        iphone: "newint://issues/#{@issue.id}",
+                        ipad: "newint://issues/#{@issue.id}"
                       }
                     }
                   }
@@ -270,7 +270,7 @@ class IssuesController < ApplicationController
           if Rails.env.development?
             zip_url_for_json = "#{request.protocol}#{request.host_with_port}#{@issue.zip.url}"
           end
-          format.json { render json: { :id => @issue.id, :name => @issue.number, :publication => @issue.release, :zipURL => zip_url_for_json } }
+          format.json { render json: { id: @issue.id, name: @issue.number, publication: @issue.release, zipURL: zip_url_for_json } }
         else
           format.json { render body: nil, status: :forbidden }
         end
@@ -286,11 +286,11 @@ class IssuesController < ApplicationController
       # this is everything you should see about an issue without purchasing/subscribing
       # hoping that the only pay-walled content is :body
       # this isn't used by the app - we get it from the issues.json
-      #:only => [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
-      #:methods => [:editors_letter_html],
-      :only => [],
-      :include => { 
-        :articles => Issue.article_information_to_include_in_json_hash,
+      #only: [:title, :id, :number, :editors_name, :editors_photo, :release, :cover],
+      #methods: [:editors_letter_html],
+      only: [],
+      include: { 
+        articles: Issue.article_information_to_include_in_json_hash,
       } 
     )
   end
@@ -312,7 +312,7 @@ class IssuesController < ApplicationController
     # Use cancan to check for individual authorisation
     # authorize! :update, @issue
 
-    set_meta_tags :title => "Edit this Issue"
+    set_meta_tags title: "Edit this Issue"
   end
 
   # POST /issues
@@ -364,10 +364,10 @@ class IssuesController < ApplicationController
   def tweet_issue
     @issue = Issue.find(params[:issue_id])
     twitter_params = {
-      :url => issue_url(@issue),
-      :text => "I'm reading '#{@issue.title}'",
-      :via => "#{ENV["TWITTER_NAME"]}"
-      #:related => "#{ENV["TWITTER_NAME"]}"
+      url: issue_url(@issue),
+      text: "I'm reading '#{@issue.title}'",
+      via: "#{ENV["TWITTER_NAME"]}"
+      #related: "#{ENV["TWITTER_NAME"]}"
     }
     redirect_to "https://twitter.com/share?#{twitter_params.to_query}"
   end
@@ -375,13 +375,13 @@ class IssuesController < ApplicationController
   def wall_post_issue
     @issue = Issue.find(params[:issue_id])
     facebook_params = {
-      :app_id => ENV["FACEBOOK_APP_ID"],
-      :link => issue_url(@issue),
-      :picture => @issue.cover_url.to_s,
-      :name => @issue.title,
-      :caption => ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
-      :description => "New Internationalist magazine, #{@issue.release.strftime("%B, %Y")}",
-      :redirect_uri => issue_url(@issue)
+      app_id: ENV["FACEBOOK_APP_ID"],
+      link: issue_url(@issue),
+      picture: @issue.cover_url.to_s,
+      name: @issue.title,
+      caption: ActionController::Base.helpers.strip_tags(@issue.try(:keynote).try(:teaser)),
+      description: "New Internationalist magazine, #{@issue.release.strftime("%B, %Y")}",
+      redirect_uri: issue_url(@issue)
     }
     redirect_to "https://www.facebook.com/dialog/feed?#{facebook_params.to_query}"
   end
@@ -389,8 +389,8 @@ class IssuesController < ApplicationController
   def email_issue
     @issue = Issue.find(params[:issue_id])
     email_params = {
-      :body => issue_url(@issue),
-      :subject => "#{@issue.title} - New Internationalist Magazine"
+      body: issue_url(@issue),
+      subject: "#{@issue.title} - New Internationalist Magazine"
     }
     redirect_to "mailto:?#{email_params.to_query}"
   end
@@ -559,8 +559,8 @@ class IssuesController < ApplicationController
 
     # Initialize the Google Play client.
     client = Google::APIClient.new(
-      :application_name => ENV["APP_NAME"],
-      :application_version => '1.0.0'
+      application_name: ENV["APP_NAME"],
+      application_version: '1.0.0'
     )
 
     # Get Client Authorization
@@ -573,12 +573,12 @@ class IssuesController < ApplicationController
     # Base64 that into an environment variable to keep it out of version control and Heroku happy.
     key = Google::APIClient::KeyUtils.load_from_pem(Base64.decode64(ENV["GOOGLE_PLAY_PEM_BASE64"]), nil)
     client.authorization = Signet::OAuth2::Client.new(
-      :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-      :audience => 'https://accounts.google.com/o/oauth2/token',
-      :scope => 'https://www.googleapis.com/auth/androidpublisher',
-      :issuer => ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
-      :signing_key => key,
-      :access_type => 'offline'
+      token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+      audience: 'https://accounts.google.com/o/oauth2/token',
+      scope: 'https://www.googleapis.com/auth/androidpublisher',
+      issuer: ENV["GOOGLE_PLAY_SERVICE_EMAIL"],
+      signing_key: key,
+      access_type: 'offline'
     )
     client.authorization.fetch_access_token!
 
@@ -602,8 +602,8 @@ class IssuesController < ApplicationController
           if p["productId"].include?("#{@issue.number}single")
             # Receipt appears to be for this issue, so validate it
             result = client.execute(
-              :api_method => publisher.purchases.products.get,
-              :parameters => {
+              api_method: publisher.purchases.products.get,
+              parameters: {
                 'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
                 'productId' => p["productId"], 
                 'token' => p["purchaseToken"]
@@ -626,8 +626,8 @@ class IssuesController < ApplicationController
         elsif p["productId"].include?("month")
           # It's a subscription, validate it
           result = client.execute(
-            :api_method => publisher.purchases.subscriptions.get,
-            :parameters => {
+            api_method: publisher.purchases.subscriptions.get,
+            parameters: {
               'packageName' => ENV["GOOGLE_PLAY_APP_PACKAGE_NAME"], 
               'subscriptionId' => p["productId"], 
               'token' => p["purchaseToken"]

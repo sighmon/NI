@@ -28,7 +28,7 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process scale: [200, 300]
   #
   # def scale(width, height)
   #   # do something
@@ -48,51 +48,51 @@ class ArticleImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   # version :thumb do
-  #   process :scale => [50, 50]
+  #   process scale: [50, 50]
   # end
 
   # Use RMagick
   version :halfwidth do
-    process :resize_to_limit => [340, nil]
-    # process :resize_to_fill => [945, 400]
+    process resize_to_limit: [340, nil]
+    # process resize_to_fill: [945, 400]
   end
 
   version :threehundred do
-    process :resize_to_limit => [300, nil] # was 400
+    process resize_to_limit: [300, nil] # was 400
   end
 
   version :sixhundred do
-    process :resize_to_limit => [600, nil]
+    process resize_to_limit: [600, nil]
   end
 
   version :thumb do
-    process :resize_to_fill => [80, 80]
+    process resize_to_fill: [80, 80]
   end
 
   # Retina display @2x version
   version :halfwidth2x do
-    process :resize_to_limit => [680, nil]
+    process resize_to_limit: [680, nil]
     def full_filename (for_file = model.article_image.file)
       "halfwidth_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
   version :threehundred2x do
-    process :resize_to_limit => [600, nil] # was 800
+    process resize_to_limit: [600, nil] # was 800
     def full_filename (for_file = model.article_image.file)
       "threehundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
   version :sixhundred2x do
-    process :resize_to_limit => [1200, nil]
+    process resize_to_limit: [1200, nil]
     def full_filename (for_file = model.article_image.file)
       "sixhundred_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end
   end
 
   version :thumb2x do
-    process :resize_to_fill => [160, 160]
+    process resize_to_fill: [160, 160]
     def full_filename (for_file = model.article_image.file)
       "thumb_#{for_file.chomp(File.extname(for_file))}@2x#{File.extname(for_file)}"
     end

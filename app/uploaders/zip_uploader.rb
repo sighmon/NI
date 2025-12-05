@@ -18,10 +18,10 @@ class ZipUploader < CarrierWave::Uploader::Base
 
     # TOFIX? Are these supposed to be here? Are they set in config/initializers/carrierwave.rb already?
     self.fog_credentials = {
-      :provider               => 'AWS',
-      :aws_access_key_id      => ENV['S3_KEY'],
-      :aws_secret_access_key  => ENV['S3_SECRET'],
-      :region                 => ENV['S3_REGION']
+      provider: 'AWS',
+      aws_access_key_id: ENV['S3_KEY'],
+      aws_secret_access_key: ENV['S3_SECRET'],
+      region: ENV['S3_REGION']
     }
 
     self.fog_directory = ENV['S3_ZIP_BUCKET']

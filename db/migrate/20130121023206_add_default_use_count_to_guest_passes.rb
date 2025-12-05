@@ -1,6 +1,6 @@
 class AddDefaultUseCountToGuestPasses < ActiveRecord::Migration
   def self.up
-    change_column :guest_passes, :use_count, :integer, :default => 0
+    change_column :guest_passes, :use_count, :integer, default: 0
   end
 
   def self.down
