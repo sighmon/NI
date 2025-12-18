@@ -221,8 +221,11 @@ class ArticlesController < ApplicationController
   end
 
   def new
-  @issue = Issue.find(params[:issue_id])
-  @article = @issue.articles.build
+    @issue = Issue.find(params[:issue_id])
+    @article = @issue.articles.build
+
+    # Default publication to the issue release date (only if blank)
+    @article.publication ||= @issue.release
   end
 
   def create

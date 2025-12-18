@@ -1,7 +1,9 @@
 class Article < ActiveRecord::Base
 
   belongs_to :issue
-  
+
+  before_validation :default_publication_from_issue, on: :create
+
   mount_uploader :featured_image, FeaturedImageUploader
 
   # join-model for favourites
@@ -242,6 +244,10 @@ class Article < ActiveRecord::Base
 
   # TODO: make private
   # private
+
+  def default_publication_from_issue
+    self.publication = issue&.release if publication.blank?
+  end
 
   def import_media_from_bricolage(opts = {})
     # media_ids = self.extract_media_ids_from_source, force = false

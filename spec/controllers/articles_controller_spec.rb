@@ -269,6 +269,42 @@ describe ArticlesController, type: :controller do
     end
 
     describe "POST create" do
+
+      # it "defaults publication to the issue release date when not provided" do
+      #   issue = FactoryBot.create(:issue, release: Time.utc(2020, 6, 1, 12, 0, 0))
+
+      #   attrs = FactoryBot.attributes_for(:article)
+      #   attrs.delete(:publication) # important: simulate the form not sending it
+
+      #   post :create, params: { issue_id: issue.id, article: attrs }
+
+      #   created = issue.reload.articles.order(:id).last
+      #   expect(created.publication).to eq(issue.release)
+      # end
+
+      # it "does not override publication when provided" do
+      #   issue = FactoryBot.create(:issue, release: Time.utc(2020, 6, 1, 12, 0, 0))
+      #   explicit_pub = Time.utc(2020, 6, 2, 9, 30, 0)
+
+      #   attrs = FactoryBot.attributes_for(:article, publication: explicit_pub)
+
+      #   post :create, params: { issue_id: issue.id, article: attrs }
+
+      #   created = issue.reload.articles.order(:id).last
+      #   expect(created.publication).to eq(explicit_pub)
+      # end
+
+      # it "defaults publication when publication is blank" do
+      #   issue = FactoryBot.create(:issue, release: Time.utc(2020, 6, 1, 12, 0, 0))
+
+      #   attrs = FactoryBot.attributes_for(:article).merge(publication: "")
+
+      #   post :create, params: { issue_id: issue.id, article: attrs }
+
+      #   created = issue.reload.articles.order(:id).last
+      #   expect(created.publication).to eq(issue.release)
+      # end
+
       context "with valid params" do
 
         before(:each) do
