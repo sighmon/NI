@@ -133,7 +133,7 @@ Rails.application.configure do
   #   metastore: client,
   #   entitystore: client
   # }
-  config.cache_store = :mem_cache_store#,
+  # config.cache_store = :mem_cache_store,
                     # (ENV["MEMCACHIER_ROSE_SERVERS"] || "").split(","),
                     # {username: ENV["MEMCACHIER_ROSE_USERNAME"],
                     #  password: ENV["MEMCACHIER_ROSE_PASSWORD"],
@@ -141,6 +141,15 @@ Rails.application.configure do
                     #  socket_timeout: 1.5,
                     #  socket_failure_delay: 0.2
                     # }
+  servers = (ENV["MEMCACHIER_SERVERS"] || "").split(",")
+  config.cache_store = :mem_cache_store, servers, {
+    username: ENV["MEMCACHIER_USERNAME"],
+    password: ENV["MEMCACHIER_PASSWORD"],
+    failover: true,
+    socket_timeout: 1.5,
+    socket_failure_delay: 0.2,
+    pool: false
+  }
   config.static_cache_control = "public, max-age=2592000"
 
   # Defaults to Rails.root.join("public/assets")
