@@ -26,9 +26,18 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ni_test
     steps:
       - uses: actions/checkout@v4
+      - name: Detect Ruby version
+        id: ruby-version
+        run: |
+          version=$(grep -E "^ruby ['\"]" Gemfile | head -n1 | sed -E "s/.*ruby ['\"]([^'\"]+)['\"].*/\\1/")
+          if [ -z "$version" ]; then
+            echo "Ruby version not found in Gemfile" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: ${{ steps.ruby-version.outputs.version }}
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rake db:create db:schema:load
