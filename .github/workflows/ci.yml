@@ -38,6 +38,8 @@ jobs:
       APPLE_DEVELOPMENT_APN_KEY_ID: test-apn-key-id
       INAPP_TEAM_ID: test-team-id
       ITUNES_BUNDLE_ID: com.example.ni
+      BONSAI_URL: http://localhost:9200
+      ELASTICSEARCH_URL: http://localhost:9200
     steps:
       - uses: actions/checkout@v4
       - name: Install system dependencies
