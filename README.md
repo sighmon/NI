@@ -3,6 +3,8 @@ New Internationalist magazine digital subscription
 
 A digital subscription backend for a magazine reader web app, iPhone app & Android app.
 
+[![CI](https://github.com/sighmon/NI/actions/workflows/ci.yml/badge.svg)](https://github.com/sighmon/NI/actions/workflows/ci.yml)
+
 ![New Internationalist Magazine for Android.](https://nirailsapp.s3.amazonaws.com/uploads/digital.newint.com.au.jpg)
 
 See the live site at [digital.newint.com.au](https://digital.newint.com.au)

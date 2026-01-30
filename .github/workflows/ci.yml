@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ni_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d ni_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/ni_test
+      NI_APP_HOST: https://example.test
+      DEVISE_EMAIL_ADDRESS: noreply@example.test
+      DEVISE_BCC_EMAIL_ADDRESSES: bcc@example.test
+      DEVISE_BCC_EMAIL_ADDRESSES_DEV: bcc-dev@example.test
+      DEVISE_SERVER_ERROR_EMAIL_ADDRESS: errors@example.test
+      DEVISE_SECRET_KEY: test-secret-key
+      RPUSH_APPLE_DEVELOPMENT_APP_NAME: ni-ios-dev
+      RPUSH_APPLE_PRODUCTION_APP_NAME: ni-ios-prod
+      RPUSH_ANDROID_DEVELOPMENT_APP_NAME: ni-android-dev
+      RPUSH_ANDROID_PRODUCTION_APP_NAME: ni-android-prod
+      APPLE_DEVELOPMENT_APN_KEY: test-apn-key
+      APPLE_DEVELOPMENT_APN_KEY_ID: test-apn-key-id
+      INAPP_TEAM_ID: test-team-id
+      ITUNES_BUNDLE_ID: com.example.ni
+      BONSAI_URL: http://localhost:9200
+      ELASTICSEARCH_URL: http://localhost:9200
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev imagemagick
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install mjml
+        run: npm install -g mjml
+      - name: Detect Elasticsearch version
+        id: es-version
+        run: |
+          version=$(grep -E "^\\s*elasticsearch \\([0-9]+\\.[0-9]+\\.[0-9]+\\)" Gemfile.lock | head -n1 | sed -E "s/.*\\(([0-9]+\\.[0-9]+\\.[0-9]+)\\).*/\\1/")
+          if [ -z "$version" ]; then
+            echo "Elasticsearch version not found in Gemfile.lock" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Start Elasticsearch
+        run: |
+          version="${{ steps.es-version.outputs.version }}"
+          docker run -d --name elasticsearch -p 9200:9200 \
+            -e "discovery.type=single-node" \
+            -e "xpack.security.enabled=false" \
+            -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+            "docker.elastic.co/elasticsearch/elasticsearch:${version}"
+          for i in {1..30}; do
+            if curl -s http://localhost:9200 >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs elasticsearch
+          exit 1
+      - name: Detect Ruby version
+        id: ruby-version
+        run: |
+          version=$(grep -E "^ruby ['\"]" Gemfile | head -n1 | sed -E "s/.*ruby ['\"]([^'\"]+)['\"].*/\\1/")
+          if [ -z "$version" ]; then
+            echo "Ruby version not found in Gemfile" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby-version.outputs.version }}
+          bundler-cache: true
+      - name: Prepare database
+        run: bundle exec rake db:create db:schema:load
+      - name: Run specs
+        run: bundle exec rake spec

@@ -272,9 +272,9 @@ gem 'kaminari-bootstrap'#, '0.1.2' # '~> 0.1.2' # 0.1.3 breaks locally for some 
 gem 'pagy', '< 43'
 
 # Elasticsearch for archive and article search
-gem 'elasticsearch', '< 7.14'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+gem 'elasticsearch', '~> 7.2.0'
+gem 'elasticsearch-model', '~> 7.2.0'
+gem 'elasticsearch-rails', '~> 7.2.0'
 gem 'faraday', '< 2'
 
 # Acts as list for sortable lists
