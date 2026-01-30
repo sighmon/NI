@@ -21,6 +21,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.16
+        env:
+          discovery.type: single-node
+          ES_JAVA_OPTS: -Xms512m -Xmx512m
+          xpack.security.enabled: "false"
+        ports:
+          - 9200:9200
+        options: >-
+          --health-cmd "curl -s http://localhost:9200/_cluster/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ni_test
@@ -30,6 +43,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install mjml
+        run: npm install -g mjml
       - name: Detect Ruby version
         id: ruby-version
         run: |
