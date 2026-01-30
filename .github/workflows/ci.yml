@@ -34,6 +34,10 @@ jobs:
       RPUSH_APPLE_PRODUCTION_APP_NAME: ni-ios-prod
       RPUSH_ANDROID_DEVELOPMENT_APP_NAME: ni-android-dev
       RPUSH_ANDROID_PRODUCTION_APP_NAME: ni-android-prod
+      APPLE_DEVELOPMENT_APN_KEY: test-apn-key
+      APPLE_DEVELOPMENT_APN_KEY_ID: test-apn-key-id
+      INAPP_TEAM_ID: test-team-id
+      ITUNES_BUNDLE_ID: com.example.ni
     steps:
       - uses: actions/checkout@v4
       - name: Install system dependencies
