@@ -24,12 +24,22 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ni_test
+      NI_APP_HOST: https://example.test
+      DEVISE_EMAIL_ADDRESS: noreply@example.test
+      DEVISE_BCC_EMAIL_ADDRESSES: bcc@example.test
+      DEVISE_BCC_EMAIL_ADDRESSES_DEV: bcc-dev@example.test
+      DEVISE_SERVER_ERROR_EMAIL_ADDRESS: errors@example.test
+      DEVISE_SECRET_KEY: test-secret-key
+      RPUSH_APPLE_DEVELOPMENT_APP_NAME: ni-ios-dev
+      RPUSH_APPLE_PRODUCTION_APP_NAME: ni-ios-prod
+      RPUSH_ANDROID_DEVELOPMENT_APP_NAME: ni-android-dev
+      RPUSH_ANDROID_PRODUCTION_APP_NAME: ni-android-prod
     steps:
       - uses: actions/checkout@v4
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev
+          sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev imagemagick
       - uses: actions/setup-node@v4
         with:
           node-version: 20

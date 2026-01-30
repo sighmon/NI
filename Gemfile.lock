@@ -163,7 +163,7 @@ GEM
     bootstrap (4.6.2.1)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.16.1, < 2)
-    brakeman (8.0.0)
+    brakeman (8.0.1)
       racc
     builder (3.3.0)
     bundler-audit (0.9.3)
@@ -244,18 +244,18 @@ GEM
     diff-lcs (1.6.2)
     docile (1.4.1)
     drb (2.2.3)
-    elasticsearch (7.13.3)
-      elasticsearch-api (= 7.13.3)
-      elasticsearch-transport (= 7.13.3)
-    elasticsearch-api (7.13.3)
+    elasticsearch (7.2.1)
+      elasticsearch-api (= 7.2.1)
+      elasticsearch-transport (= 7.2.1)
+    elasticsearch-api (7.2.1)
       multi_json
     elasticsearch-model (7.2.1)
       activesupport (> 3)
       elasticsearch (~> 7)
       hashie
-    elasticsearch-rails (8.0.1)
-    elasticsearch-transport (7.13.3)
-      faraday (~> 1)
+    elasticsearch-rails (7.2.1)
+    elasticsearch-transport (7.2.1)
+      faraday
       multi_json
     erb (6.0.1)
     erubi (1.13.1)
@@ -863,9 +863,9 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   devise
-  elasticsearch (< 7.14)
-  elasticsearch-model
-  elasticsearch-rails
+  elasticsearch (~> 7.2.0)
+  elasticsearch-model (~> 7.2.0)
+  elasticsearch-rails (~> 7.2.0)
   factory_bot_rails
   faraday (< 2)
   figaro
