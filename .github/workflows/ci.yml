@@ -21,19 +21,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-      elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.16
-        env:
-          discovery.type: single-node
-          ES_JAVA_OPTS: -Xms512m -Xmx512m
-          xpack.security.enabled: "false"
-        ports:
-          - 9200:9200
-        options: >-
-          --health-cmd "curl -s http://localhost:9200/_cluster/health || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 20
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/ni_test
@@ -48,6 +35,31 @@ jobs:
           node-version: 20
       - name: Install mjml
         run: npm install -g mjml
+      - name: Detect Elasticsearch version
+        id: es-version
+        run: |
+          version=$(grep -E "^\\s*elasticsearch \\([0-9]+\\.[0-9]+\\.[0-9]+\\)" Gemfile.lock | head -n1 | sed -E "s/.*\\(([0-9]+\\.[0-9]+\\.[0-9]+)\\).*/\\1/")
+          if [ -z "$version" ]; then
+            echo "Elasticsearch version not found in Gemfile.lock" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Start Elasticsearch
+        run: |
+          version="${{ steps.es-version.outputs.version }}"
+          docker run -d --name elasticsearch -p 9200:9200 \
+            -e "discovery.type=single-node" \
+            -e "xpack.security.enabled=false" \
+            -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+            "docker.elastic.co/elasticsearch/elasticsearch:${version}"
+          for i in {1..30}; do
+            if curl -s http://localhost:9200 >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs elasticsearch
+          exit 1
       - name: Detect Ruby version
         id: ruby-version
         run: |
