@@ -275,7 +275,7 @@ gem 'pagy', '< 43'
 gem 'elasticsearch', '~> 7.2.0'
 gem 'elasticsearch-model', '~> 7.2.0'
 gem 'elasticsearch-rails', '~> 7.2.0'
-gem 'faraday', '< 2'
+gem 'faraday'
 
 # Acts as list for sortable lists
 # http://railscasts.com/episodes/147-sortable-lists-revised?view=asciicast

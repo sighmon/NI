@@ -2,7 +2,10 @@
 
 bonsai_url = ENV['BONSAI_URL'] || ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200'
 ENV['ELASTICSEARCH_URL'] ||= bonsai_url
-Elasticsearch::Model.client = Elasticsearch::Client.new(url: bonsai_url)
+Elasticsearch::Model.client = Elasticsearch::Client.new(
+  url: bonsai_url,
+  adapter: :net_http
+)
 
 # Optional, but recommended: use a single index per application per environment
 app_name = Rails.application.class.module_parent_name.underscore.dasherize
