@@ -105,7 +105,7 @@ gem 'zipruby'
 
 # Rack Cache and memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
 # gem 'rack-cache'
-gem 'dalli'
+gem 'dalli', '< 5'
 # gem 'kgio'
 gem 'memcachier'
 

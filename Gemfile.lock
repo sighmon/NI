@@ -211,7 +211,7 @@ GEM
     csv (3.3.5)
     curb (1.2.2)
     daemons (1.4.1)
-    dalli (5.0.0)
+    dalli (4.3.2)
       logger
     dartsass-sprockets (3.2.1)
       railties (>= 4.0.0)
@@ -841,7 +841,7 @@ DEPENDENCIES
   country_state_select!
   curb
   daemons
-  dalli
+  dalli (< 5)
   dartsass-sprockets
   database_cleaner
   delayed_job
