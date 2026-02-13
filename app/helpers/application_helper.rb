@@ -439,4 +439,17 @@ module ApplicationHelper
         end
     end
 
+    def asset_precompiled?(logical_path)
+        manifest = Rails.application.assets_manifest
+        return manifest.assets.key?(logical_path) if manifest&.assets.present?
+
+        if Rails.application.assets
+            return Rails.application.assets.find_asset(logical_path).present?
+        end
+
+        false
+    rescue
+        false
+    end
+
 end
