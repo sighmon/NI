@@ -11,3 +11,10 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.paths << "#{Rails.root}/app/assets/html"
 Rails.application.config.assets.precompile += %w(404.html 500.html 503.html error.html maintenance.html)
+
+# Precompile per-controller JavaScript manifests so layouts can include them selectively.
+controller_js_assets = Dir.glob(Rails.root.join("app/assets/javascripts/**/*.{js,coffee,js.coffee}")).map do |file|
+  relative = Pathname(file).relative_path_from(Rails.root.join("app/assets/javascripts")).to_s
+  relative.sub(/\.js\.coffee\z/, ".js").sub(/\.coffee\z/, ".js")
+end
+Rails.application.config.assets.precompile += controller_js_assets.uniq

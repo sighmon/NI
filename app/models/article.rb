@@ -89,11 +89,19 @@ class Article < ActiveRecord::Base
   def self.popular
     # Returns the 12 most popular articles shared via guest passes and sorted by score
     Rails.cache.fetch("popular_guest_passes", expires_in: 6.hours) do
-      # Need .to_a here otherwise it caches the scope, not the result of the query
-      # GuestPass.order(:use_count).reverse.first(12).to_a
-
-      # Most popular 12 articles sorted by score
-      Article.where('publication > ?', DateTime.now - 2.years).sort_by(&:score).reverse.first(24)
+      # Limit candidates in SQL, then compute score in Ruby.
+      Article.joins(:issue)
+             .includes(:guest_passes, :issue, :images)
+             .where("articles.publication > ?", 2.years.ago)
+             .where(issues: { published: true })
+             .where(unpublished: [false, nil])
+             .where.not(publication: nil)
+             .order(publication: :desc)
+             .limit(500)
+             .to_a
+             .sort_by(&:score)
+             .reverse
+             .first(24)
     end
   end
 
@@ -157,11 +165,12 @@ class Article < ActiveRecord::Base
   end
 
   def first_image
-    image = self.images.order("position").first
-    if not image.blank?
-      return image
-    else
-      return nil
+    @first_image ||= begin
+      if images.loaded?
+        images.min_by { |image| image.position || Float::INFINITY }
+      else
+        images.order(:position).first
+      end
     end
   end
 
@@ -193,13 +202,10 @@ class Article < ActiveRecord::Base
   end
 
   def self.published_articles
-    all_published_articles = []
-    Article.find_each do |a|
-      if a.published
-        all_published_articles << a
-      end
-    end
-    all_published_articles
+    joins(:issue)
+      .where(issues: { published: true })
+      .where(unpublished: [false, nil])
+      .where.not(publication: nil)
   end
 
   # Guest pass checking
@@ -221,8 +227,13 @@ class Article < ActiveRecord::Base
 
   def self.quick_reads
     Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
-      # Need .to_a here otherwise it caches the scope, not the result of the query
-      self.published_articles.sample(3).sort_by{|a| a.publication}.reverse.to_a
+      published_articles
+        .includes(:issue, :images)
+        .order(Arel.sql("RANDOM()"))
+        .limit(3)
+        .to_a
+        .sort_by(&:publication)
+        .reverse
     end
   end
 

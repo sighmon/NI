@@ -22,7 +22,6 @@
 // require bootstrap // to avoid errors
 //= require bootstrap-sprockets
 
-//= require_tree .
 //= require retina_image_tag
 //= require highlighter/jQuery.highlighter
 //= require URI
@@ -59,6 +58,5 @@ jQuery(document).ready(function() {
 	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
 });
-
 
 

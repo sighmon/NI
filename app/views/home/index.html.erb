@@ -26,9 +26,9 @@
     <div class="carousel-inner">
       <div class="item active" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
       	<% if user_signed_in? and can? :read, @latest_issue.keynote %>
-	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
+	        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050", loading: "eager", fetchpriority: "high", decoding: "async"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
 	      <% else %>
-					<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050"), new_issue_purchase_path(@latest_issue) %>
+					<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050", loading: "eager", fetchpriority: "high", decoding: "async"), new_issue_purchase_path(@latest_issue) %>
 	      <% end %>
         <meta itemprop="url" content="<%= @latest_issue.keynote.first_image.data_url.to_s %>">
         <meta itemprop="width" content="2100">
@@ -48,7 +48,7 @@
 	</div>
 	<div class="col-sm-4 home-latest-issue">
 		<!-- Latest cover -->
-		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, class: 'shadow-sm home-latest-cover', alt: "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", itemprop: "image", title: "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 282, height: 400), issue_path(@latest_issue), itemprop: "url" %>
+		<%= link_to retina_image_tag(@latest_issue.cover_url(:home).to_s, class: 'shadow-sm home-latest-cover', alt: "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", itemprop: "image", title: "NI #{@latest_issue.number} - #{@latest_issue.title} - #{@latest_issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 282, height: 400, loading: "eager", fetchpriority: "high", decoding: "async"), issue_path(@latest_issue), itemprop: "url" %>
 		<% if user_signed_in? and can? :read, @latest_issue.keynote %>
 			<p><%= link_to "Read this issue", issue_path(@latest_issue), class: 'btn btn-outline-secondary btn-lg' %></p>
 		<% else %>
@@ -57,13 +57,13 @@
 		<% if not user_signed_in? or not current_user.try(:subscriber?) %>
 	  	<p><%= link_to "Subscribe from $#{cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: true))}", page_path("subscribe"), class: 'btn btn-success btn-lg' %></p>
 		<% end %>
-  	<p class="ios-home-ad"><%= link_to retina_image_tag('app-store.png', alt: 'Download the New Internationalist magazine app for iPad and iPhone.', title: 'Download the New Internationalist magazine app for iPad and iPhone.'), "#{ENV["ITUNES_APP_LINK"]}" %></p><p class="ios-home-ad"><%= link_to retina_image_tag('google-play.png', alt: 'Get New Internationalist magazine app on Google Play', title: 'Get New Internationalist magazine app on Google Play'), "#{ENV["GOOGLE_PLAY_APP_LINK"]}" %></p>
+  	<p class="ios-home-ad"><%= link_to retina_image_tag('app-store.png', alt: 'Download the New Internationalist magazine app for iPad and iPhone.', title: 'Download the New Internationalist magazine app for iPad and iPhone.', loading: "lazy", decoding: "async"), "#{ENV["ITUNES_APP_LINK"]}" %></p><p class="ios-home-ad"><%= link_to retina_image_tag('google-play.png', alt: 'Get New Internationalist magazine app on Google Play', title: 'Get New Internationalist magazine app on Google Play', loading: "lazy", decoding: "async"), "#{ENV["GOOGLE_PLAY_APP_LINK"]}" %></p>
 	</div>
 	<div class="col-sm-4 home-editor-note">
 		<h4>A note from the editor</h4>
 		<h3><%= @latest_issue.editors_name %></h3>
 		<div class="home-editors-photo-container">
-			<%= retina_image_tag @latest_issue.editors_photo_url(:thumb).to_s, class: 'home-editors-photo', alt: "#{@latest_issue.editors_name}", title: "#{@latest_issue.editors_name}", width: "100" %>
+			<%= retina_image_tag @latest_issue.editors_photo_url(:thumb).to_s, class: 'home-editors-photo', alt: "#{@latest_issue.editors_name}", title: "#{@latest_issue.editors_name}", width: "100", loading: "eager", decoding: "async" %>
 		</div>
 		<div class="home-editor-letter"><p><%= simple_format truncate(@latest_issue.editors_letter, length: 350, escape: false) %></p></div>
 		<p><%= link_to 'Read more...', issue_path(@latest_issue), class: 'btn btn-outline-secondary' %></p>
@@ -146,7 +146,7 @@
 				<% if @issues %>
 					<% @issues.sort_by(&:release).reverse.first(5).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", itemprop: "image", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200), issue_path(issue), itemprop: "url" %>
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", itemprop: "image", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200, loading: "lazy", decoding: "async"), issue_path(issue), itemprop: "url" %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -165,7 +165,7 @@
 				<% if @issues %>
 					<% @issues.sort_by(&:release).reverse.first(3).each do |issue| %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200), issue_path(issue) %>
+						<%= link_to retina_image_tag(issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", title: "NI #{issue.number} - #{issue.title} - #{issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200, loading: "lazy", decoding: "async"), issue_path(issue) %>
 						<span class="hide-meta" itemprop="name"><%= issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= issue.release.strftime("%e %B %Y") %></span>
@@ -182,7 +182,7 @@
 			<div class="home-cover-list">
 				<% if @latest_free_issue %>
 					<span itemscope itemtype="http://schema.org/CreativeWork">
-						<%= link_to retina_image_tag(@latest_free_issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", title: "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200), issue_path(@latest_free_issue) %>
+						<%= link_to retina_image_tag(@latest_free_issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", title: "NI #{@latest_free_issue.number} - #{@latest_free_issue.title} - #{@latest_free_issue.release.strftime("%B, %Y")}", rel: "tooltip", width: 141, height: 200, loading: "lazy", decoding: "async"), issue_path(@latest_free_issue) %>
 						<span class="hide-meta" itemprop="name"><%= @latest_free_issue.title %></span>
 						<span class="hide-meta" itemprop="editor"><%= @latest_free_issue.editors_name %></span>
 						<span class="hide-meta" itemprop="dateCreated"><%= @latest_free_issue.release.strftime("%e %B %Y") %></span>
