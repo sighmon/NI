@@ -33,6 +33,7 @@ gem 'platform-api'
 # gem 'sqlite3'
 
 gem 'pg'
+gem 'puma', '~> 6.0'
 
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
