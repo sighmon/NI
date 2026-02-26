@@ -41,7 +41,7 @@ production:
   adapter: postgresql
   encoding: unicode
   database: ni_production
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 3) %>
   username:
   password:
 
@@ -52,4 +52,3 @@ test:
   pool: 5
   username:
   password:
-

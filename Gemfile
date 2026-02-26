@@ -33,7 +33,7 @@ gem 'platform-api'
 # gem 'sqlite3'
 
 gem 'pg'
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 7.0'
 
 # Delayed Job for background CSV generation
 # https://devcenter.heroku.com/articles/delayed-job
@@ -91,8 +91,7 @@ gem 'sitemap_generator'
 # Heroku gem
 # gem 'heroku'
 
-# Unicorn gem for adding Concurrency to Rails Apps on heroku
-gem 'unicorn'
+# Puma handles production web serving on Heroku
 
 # New Relic for server information https://devcenter.heroku.com/articles/newrelic
 gem 'newrelic_rpm'#, '6.12.0.367'

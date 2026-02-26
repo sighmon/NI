@@ -440,7 +440,6 @@ GEM
       kaminari (>= 0.13.0)
       rails
     kaminari-core (1.2.2)
-    kgio (2.11.4)
     language_server-protocol (3.17.0.5)
     libv8-node (24.12.0.1)
     libv8-node (24.12.0.1-aarch64-linux)
@@ -565,7 +564,7 @@ GEM
       date
       stringio
     public_suffix (7.0.2)
-    puma (6.6.1)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.5)
@@ -621,7 +620,6 @@ GEM
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    raindrops (0.20.1)
     rake (13.3.1)
     rate_throttle_client (0.1.2)
     rb-fsevent (0.11.2)
@@ -792,9 +790,6 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     uri (1.1.1)
     uri-js-rails (1.15.2)
     useragent (0.16.11)
@@ -893,7 +888,7 @@ DEPENDENCIES
   paypal-recurring
   pg
   platform-api
-  puma (~> 6.0)
+  puma (~> 7.0)
   rack-mini-profiler
   rails (= 8.1.2)
   rails-controller-testing
@@ -924,7 +919,6 @@ DEPENDENCIES
   thin
   timecop
   uglifier (>= 1.0.3)
-  unicorn
   uri-js-rails
   zipruby
 
