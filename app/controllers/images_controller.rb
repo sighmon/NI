@@ -61,7 +61,11 @@ class ImagesController < ApplicationController
       image_params[:data] = data.first
     end
 
-    @newimage = @article.images.create(image_params.try(:merge,{ position: (@article.images.collect{|i|i.position or 0}.max or 0)+1 }))
+    defaulted_image_params = image_params.to_h.symbolize_keys
+    defaulted_image_params[:hidden] = true if defaulted_image_params[:hidden].nil?
+    defaulted_image_params[:position] = (@article.images.collect { |i| i.position || 0 }.max || 0) + 1
+
+    @newimage = @article.images.create(defaulted_image_params)
 
     respond_to do |format|
       if @newimage.save
