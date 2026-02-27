@@ -142,13 +142,15 @@ Rails.application.configure do
                     #  socket_failure_delay: 0.2
                     # }
   servers = (ENV["MEMCACHIER_SERVERS"] || "").split(",")
+  cache_pool_size = ENV.fetch("RAILS_MAX_THREADS", 3).to_i
   config.cache_store = :mem_cache_store, servers, {
     username: ENV["MEMCACHIER_USERNAME"],
     password: ENV["MEMCACHIER_PASSWORD"],
     failover: true,
     socket_timeout: 1.5,
     socket_failure_delay: 0.2,
-    pool: false
+    namespace: "#{ENV.fetch('APP_NAME', 'ni')}:#{Rails.env}",
+    pool: { size: cache_pool_size, timeout: 1 }
   }
   config.static_cache_control = "public, max-age=2592000"
 
