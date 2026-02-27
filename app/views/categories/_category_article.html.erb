@@ -13,7 +13,7 @@
 							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
 							<p><%= link_to 'Read this article', issue_article_path(article.issue,article), class: 'btn btn-outline-secondary' %></p>
 							<div class="category-article-issue">
-								<%= link_to retina_image_tag(article.issue.cover_url(:tiny).to_s, class: 'issue-cover', alt: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", title: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "53x75"), issue_path(article.issue) %>
+								<%= link_to retina_image_tag(article.issue.cover_url(:tiny).to_s, class: 'issue-cover', alt: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", title: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "53x75", loading: "lazy", decoding: "async"), issue_path(article.issue) %>
 								<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %><br /><%= render partial: "home/home_share_links", locals: { article: article } %></h5>
 							</div>
 					  </div>
@@ -31,7 +31,7 @@
 							<h4><%= simple_format highlight(article.teaser, @query_array) %></h4>
 							<p><%= link_to 'Buy this magazine', new_issue_purchase_path(article.issue), class: 'btn btn-success btn-xs' %></p>
 							<div class="category-article-issue">
-								<%= link_to retina_image_tag(article.issue.cover_url(:tiny).to_s, class: 'issue-cover', alt: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", title: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "53x75"), issue_path(article.issue) %>
+								<%= link_to retina_image_tag(article.issue.cover_url(:tiny).to_s, class: 'issue-cover', alt: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", title: "NI #{article.issue.number} - #{article.issue.title} - #{article.issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "53x75", loading: "lazy", decoding: "async"), issue_path(article.issue) %>
 								<h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %><br /><%= render partial: "home/home_share_links", locals: { article: article } %></h5>
 							</div>
 					  </div>
