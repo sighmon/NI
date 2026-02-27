@@ -1,4 +1,6 @@
 class Issue < ActiveRecord::Base
+  KEYNOTE_CACHE_OPTIONS = { expires_in: 6.hours, race_condition_ttl: 30.seconds }.freeze
+  CATEGORIES_CACHE_OPTIONS = { expires_in: 12.hours, race_condition_ttl: 30.seconds }.freeze
   
   has_many :articles, -> { where(unpublished: [false, nil]) }, dependent: :destroy
   has_many :all_articles, class_name: "Article"
@@ -61,7 +63,7 @@ class Issue < ActiveRecord::Base
   end
 
   def self.cached_keynote_for_issue(id)
-    Rails.cache.fetch([name, id]) { find(id).articles.find_by_keynote(true) }
+    Rails.cache.fetch([name, id], KEYNOTE_CACHE_OPTIONS) { find(id).articles.find_by_keynote(true) }
   end
 
   def flush_cache
@@ -528,7 +530,7 @@ class Issue < ActiveRecord::Base
   end
 
   def all_articles_categories
-    Rails.cache.fetch("#{cache_key}/all_articles_categories", expires_in: 12.hours) do
+    Rails.cache.fetch("#{cache_key}/all_articles_categories", CATEGORIES_CACHE_OPTIONS) do
       categories = []
       self.articles.each do |article|
         categories = categories | article.categories

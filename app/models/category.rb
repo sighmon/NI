@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
+  CATEGORY_ARTICLES_CACHE_OPTIONS = { expires_in: 12.hours, race_condition_ttl: 30.seconds }.freeze
 
   validates_uniqueness_of :name
 
@@ -36,7 +37,7 @@ class Category < ActiveRecord::Base
   end
 
   def self.cached_category_articles(id)
-    Rails.cache.fetch([name, id]) { find(id).articles.select(&:published).sort_by(&:publication) }
+    Rails.cache.fetch([name, id], CATEGORY_ARTICLES_CACHE_OPTIONS) { find(id).articles.select(&:published).sort_by(&:publication) }
   end
 
   def flush_cache

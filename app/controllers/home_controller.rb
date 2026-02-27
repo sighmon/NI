@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
   include ActionView::Helpers::NumberHelper
+  HOME_CACHE_OPTIONS = { expires_in: 12.hours, race_condition_ttl: 30.seconds }.freeze
 
   def free
     latest_free_issue = Issue.select{|issue| issue.trialissue and not issue.digital_exclusive}.sort_by(&:release).reverse.first
@@ -22,7 +23,7 @@ class HomeController < ApplicationController
 
     @popular = Article.popular.first(3)
 
-    @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", expires_in: 12.hours) do
+    @latest_issue_categories = Rails.cache.fetch("home_latest_issue_categories", HOME_CACHE_OPTIONS) do
       latest_issue_categories = []
       @latest_issue.try(:articles).try(:each) do |article|
         latest_issue_categories |= article.categories
@@ -30,75 +31,75 @@ class HomeController < ApplicationController
       latest_issue_categories.sort_by(&:short_display_name)
     end
 
-    @latest_free_issue = Rails.cache.fetch("home_latest_free_issue", expires_in: 12.hours) do
+    @latest_free_issue = Rails.cache.fetch("home_latest_free_issue", HOME_CACHE_OPTIONS) do
       Issue.latest_free
     end
 
     @features_category = Category.find_by_name("/features/")
 
     # compact removes the nil elements which fool the "if @keynotes" test in the view
-    @keynotes = Rails.cache.fetch("home_keynotes", expires_in: 12.hours) do
+    @keynotes = Rails.cache.fetch("home_keynotes", HOME_CACHE_OPTIONS) do
       @issues.order(:release).reverse_order.first(24).collect{|i| i.keynote}.compact
     end
 
     @keynotes = @keynotes.sample(6).sort_by(&:publication)
 
-    @facts = Rails.cache.fetch("home_facts", expires_in: 12.hours) do
+    @facts = Rails.cache.fetch("home_facts", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/sections/facts/").try(:first_articles, 10)
     end
 
     @facts = @facts.try(:sample)
 
-    @country_profile = Rails.cache.fetch("home_country_profile", expires_in: 12.hours) do
+    @country_profile = Rails.cache.fetch("home_country_profile", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/country/").try(:first_articles, 10)
     end
 
     @country_profile = @country_profile.try(:sample)
 
-    @cartoon = Rails.cache.fetch("home_cartoon", expires_in: 12.hours) do
+    @cartoon = Rails.cache.fetch("home_cartoon", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/cartoon/").try(:first_articles, 10)
     end
 
     @cartoon = @cartoon.try(:sample)
 
-    @agendas = Rails.cache.fetch("home_agendas", expires_in: 12.hours) do
+    @agendas = Rails.cache.fetch("home_agendas", HOME_CACHE_OPTIONS) do
       # @issues.sort_by(&:release).reverse.first(24).each.collect{|i| i.agendas}.flatten!.try(:compact)
       Category.find_by_name("/sections/agenda/").try(:first_articles, 100)
     end
 
     @agendas = @agendas.try(:sample, 3)
 
-    @film = Rails.cache.fetch("home_film", expires_in: 12.hours) do
+    @film = Rails.cache.fetch("home_film", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/media/film/").try(:first_articles, 10)
     end
 
     @film = @film.try(:sample)
 
-    @book = Rails.cache.fetch("home_book", expires_in: 12.hours) do
+    @book = Rails.cache.fetch("home_book", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/media/books/").try(:first_articles, 10)
     end
 
     @book = @book.try(:sample)
 
-    @music = Rails.cache.fetch("home_music", expires_in: 12.hours) do
+    @music = Rails.cache.fetch("home_music", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/media/music/").try(:first_articles, 10)
     end
 
     @music = @music.try(:sample)
 
-    @letters_from = Rails.cache.fetch("home_letters_from", expires_in: 12.hours) do
+    @letters_from = Rails.cache.fetch("home_letters_from", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/letters-from/").try(:first_articles, 10)
     end
 
     @letters_from = @letters_from.try(:sample)
 
-    @making_waves = Rails.cache.fetch("home_making_waves", expires_in: 12.hours) do
+    @making_waves = Rails.cache.fetch("home_making_waves", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/makingwaves/").try(:first_articles, 10)
     end
 
     @making_waves = @making_waves.try(:sample)
 
-    @world_beaters = Rails.cache.fetch("home_world_beaters", expires_in: 12.hours) do
+    @world_beaters = Rails.cache.fetch("home_world_beaters", HOME_CACHE_OPTIONS) do
       Category.find_by_name("/columns/worldbeaters/").try(:first_articles, 10)
     end
 

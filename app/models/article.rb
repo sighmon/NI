@@ -88,7 +88,7 @@ class Article < ActiveRecord::Base
 
   def self.popular
     # Returns the 12 most popular articles shared via guest passes and sorted by score
-    Rails.cache.fetch("popular_guest_passes", expires_in: 6.hours) do
+    Rails.cache.fetch("popular_guest_passes", expires_in: 6.hours, race_condition_ttl: 30.seconds) do
       # Need .to_a here otherwise it caches the scope, not the result of the query
       # GuestPass.order(:use_count).reverse.first(12).to_a
 
@@ -220,7 +220,7 @@ class Article < ActiveRecord::Base
   end
 
   def self.quick_reads
-    Rails.cache.fetch("quick_reads", expires_in: 24.hours) do
+    Rails.cache.fetch("quick_reads", expires_in: 24.hours, race_condition_ttl: 1.minute) do
       # Need .to_a here otherwise it caches the scope, not the result of the query
       self.published_articles.sample(3).sort_by{|a| a.publication}.reverse.to_a
     end
