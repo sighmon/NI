@@ -73,6 +73,7 @@ class SubscriptionsController < ApplicationController
     @user = current_user
     option = selected_subscription_option!
     capture = paypal_client.capture_order(params.require(:paypal_order_id))
+    validate_captured_subscription_order!(capture, option)
     @subscription = build_subscription_for(option)
 
     assign_subscription_buyer_details(
@@ -172,6 +173,7 @@ class SubscriptionsController < ApplicationController
 
     option = selected_subscription_option!
     details = paypal_client.show_subscription(params.require(:paypal_subscription_id))
+    validate_approved_subscription!(details, option)
     @user = current_user
     valid_from = (@user.last_subscription.try(:expiry_date) || DateTime.now)
     @subscription = @user.subscriptions.find_or_initialize_by(paypal_profile_id: details.fetch("id"))
@@ -366,5 +368,34 @@ class SubscriptionsController < ApplicationController
     parts = full_name.to_s.split
     [parts.first, parts[1..].to_a.join(" ")]
   end
-  
+
+  def validate_captured_subscription_order!(capture, option)
+    purchase_unit = capture.fetch("purchase_units", []).first || {}
+    capture_amount = purchase_unit.dig("payments", "captures", 0, "amount")
+
+    raise PaypalRest::Error, "PayPal order did not match the selected subscription." unless purchase_unit["custom_id"] == expected_subscription_custom_id(option)
+    raise PaypalRest::Error, "PayPal order did not match the selected subscription." unless paypal_amount_matches?(purchase_unit["amount"], option.price_cents)
+    if capture_amount.present?
+      raise PaypalRest::Error, "PayPal order did not match the selected subscription." unless paypal_amount_matches?(capture_amount, option.price_cents)
+    end
+  end
+
+  def validate_approved_subscription!(details, option)
+    expected_plan_id = PaypalRest::PlanCatalog.new(client: paypal_client).ensure_plan!(option).fetch("id")
+
+    raise PaypalRest::Error, "PayPal subscription did not match the selected subscription." unless details["custom_id"] == expected_subscription_custom_id(option)
+    raise PaypalRest::Error, "PayPal subscription did not match the selected subscription." unless details["plan_id"] == expected_plan_id
+  end
+
+  def expected_subscription_custom_id(option)
+    "subscription-#{option.key}-user-#{current_user.id}"
+  end
+
+  def paypal_amount_matches?(amount_hash, expected_cents)
+    return false unless amount_hash.is_a?(Hash)
+    return false unless amount_hash["currency_code"] == "AUD"
+
+    amount_hash["value"].to_d == (expected_cents.to_d / 100)
+  end
+
 end

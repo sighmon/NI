@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe PurchasesController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
   let(:issue) { FactoryBot.create(:issue) }
+  let(:other_issue) { FactoryBot.create(:issue) }
   let(:paypal_client) { instance_double(PaypalRest::Client) }
 
   before do
@@ -30,7 +31,21 @@ RSpec.describe PurchasesController, type: :controller do
             'payer_id' => 'PAYER-123',
             'email_address' => user.email,
             'name' => { 'given_name' => 'Jane', 'surname' => 'Reader' }
-          }
+          },
+          'purchase_units' => [
+            {
+              'custom_id' => "issue-#{issue.id}-user-#{user.id}",
+              'amount' => { 'currency_code' => 'AUD', 'value' => '7.50' },
+              'payments' => {
+                'captures' => [
+                  {
+                    'status' => 'COMPLETED',
+                    'amount' => { 'currency_code' => 'AUD', 'value' => '7.50' }
+                  }
+                ]
+              }
+            }
+          ]
         }
       )
 
@@ -40,6 +55,27 @@ RSpec.describe PurchasesController, type: :controller do
 
       expect(response).to have_http_status(:created)
       expect(Purchase.last.paypal_payer_id).to eq('PAYER-123')
+    end
+
+    it 'rejects a captured order for a different issue' do
+      allow(paypal_client).to receive(:capture_order).and_return(
+        {
+          'status' => 'COMPLETED',
+          'purchase_units' => [
+            {
+              'custom_id' => "issue-#{other_issue.id}-user-#{user.id}",
+              'amount' => { 'currency_code' => 'AUD', 'value' => '7.50' }
+            }
+          ]
+        }
+      )
+
+      expect {
+        post :create, params: { issue_id: issue.id, paypal_order_id: 'ORDER-123' }, format: :json
+      }.not_to change(Purchase, :count)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(JSON.parse(response.body)).to eq('error' => 'PayPal order did not match the selected issue.')
     end
   end
 end

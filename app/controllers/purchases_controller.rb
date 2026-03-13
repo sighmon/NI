@@ -95,6 +95,7 @@ class PurchasesController < ApplicationController
     @issue = Issue.find(params[:issue_id])
     @user = User.find(current_user.id)
     capture = paypal_client.capture_order(params.require(:paypal_order_id))
+    validate_captured_issue_order!(capture, @issue)
 
     @purchase = Purchase.new(user_id: @user.id, issue_id: @issue.id)
     @purchase.price_paid = @issue.price
@@ -139,6 +140,28 @@ class PurchasesController < ApplicationController
   def capture_completed?(capture)
     capture.dig("status") == "COMPLETED" ||
       capture.dig("purchase_units", 0, "payments", "captures", 0, "status") == "COMPLETED"
+  end
+
+  def validate_captured_issue_order!(capture, issue)
+    purchase_unit = capture.fetch("purchase_units", []).first || {}
+    capture_amount = purchase_unit.dig("payments", "captures", 0, "amount")
+
+    raise PaypalRest::Error, "PayPal order did not match the selected issue." unless purchase_unit["custom_id"] == expected_issue_custom_id(issue)
+    raise PaypalRest::Error, "PayPal order did not match the selected issue." unless paypal_amount_matches?(purchase_unit["amount"], issue.price)
+    if capture_amount.present?
+      raise PaypalRest::Error, "PayPal order did not match the selected issue." unless paypal_amount_matches?(capture_amount, issue.price)
+    end
+  end
+
+  def expected_issue_custom_id(issue)
+    "issue-#{issue.id}-user-#{current_user.id}"
+  end
+
+  def paypal_amount_matches?(amount_hash, expected_cents)
+    return false unless amount_hash.is_a?(Hash)
+    return false unless amount_hash["currency_code"] == "AUD"
+
+    amount_hash["value"].to_d == (expected_cents.to_d / 100)
   end
 
 end
