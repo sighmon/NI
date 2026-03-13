@@ -55,7 +55,7 @@ class Institution::UsersController < Institution::BaseController
         format.json { render json: [:institution, @user], status: :created, location: @user }
       else
         format.html { render action: "new", notice: "Sorry, user couldn't be created. Contact us for help." }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end
@@ -75,7 +75,7 @@ class Institution::UsersController < Institution::BaseController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end

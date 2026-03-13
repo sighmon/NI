@@ -66,7 +66,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create, params: { duration: 12, autodebit: 0, paypal_order_id: 'ORDER-123' }, format: :json
       }.not_to change(Subscription, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(JSON.parse(response.body)).to eq('error' => 'PayPal order did not match the selected subscription.')
     end
   end
@@ -123,7 +123,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :paypal_subscription_approval, params: { duration: 12, autodebit: 1, paypal_subscription_id: 'I-SUBSCRIPTION' }, format: :json
       }.not_to change(Subscription, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(JSON.parse(response.body)).to eq('error' => 'PayPal subscription did not match the selected subscription.')
     end
 
@@ -145,7 +145,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :paypal_subscription_approval, params: { duration: 12, autodebit: 1, paypal_subscription_id: 'I-SUBSCRIPTION' }, format: :json
       }.not_to change(Subscription, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(JSON.parse(response.body)).to eq('error' => 'PayPal subscription did not match the selected subscription.')
     end
   end

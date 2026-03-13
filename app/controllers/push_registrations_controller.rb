@@ -17,7 +17,7 @@ class PushRegistrationsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to admin_push_registrations_path, notice: "Sorry, couldn't destroy this push registration. Error: #{@push_registration.errors}" }
-        format.json { render json: @push_registration.errors, status: :unprocessable_entity }
+        format.json { render json: @push_registration.errors, status: :unprocessable_content }
       end
     end
   end

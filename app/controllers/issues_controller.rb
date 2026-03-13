@@ -326,7 +326,7 @@ class IssuesController < ApplicationController
         format.json { render json: @issue, status: :created, location: @issue }
       else
         format.html { render action: "new" }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        format.json { render json: @issue.errors, status: :unprocessable_content }
       end
     end
   end
@@ -342,7 +342,7 @@ class IssuesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        format.json { render json: @issue.errors, status: :unprocessable_content }
       end
     end
   end

@@ -88,7 +88,7 @@ class PurchasesController < ApplicationController
 
     render json: { id: order.fetch("id") }
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def create
@@ -120,11 +120,11 @@ class PurchasesController < ApplicationController
         format.json { render json: { redirect_url: issue_path(@issue) }, status: :created }
       else
         format.html { redirect_to issue_path(@issue), notice: "Couldn't purchase this issue." }
-        format.json { render json: { error: "Could not complete this PayPal order." }, status: :unprocessable_entity }
+        format.json { render json: { error: "Could not complete this PayPal order." }, status: :unprocessable_content }
       end
     end
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   private

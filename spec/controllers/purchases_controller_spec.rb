@@ -74,7 +74,7 @@ RSpec.describe PurchasesController, type: :controller do
         post :create, params: { issue_id: issue.id, paypal_order_id: 'ORDER-123' }, format: :json
       }.not_to change(Purchase, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(JSON.parse(response.body)).to eq('error' => 'PayPal order did not match the selected issue.')
     end
   end

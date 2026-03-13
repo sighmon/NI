@@ -24,7 +24,7 @@ class FavouritesController < ApplicationController
         format.json { render json: @favourite, status: :created, location: @favourite }
       else
         format.html { redirect_to issue_article_path(@issue, @article), notice: "Sorry, couldn't favourite this article." }
-        format.json { render json: @favourite.errors, status: :unprocessable_entity }
+        format.json { render json: @favourite.errors, status: :unprocessable_content }
       end
     end
   end
@@ -41,7 +41,7 @@ class FavouritesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to user_path(@user), notice: "Sorry, couldn't remove this favourite." }
-        format.json { render json: @favourite.errors, status: :unprocessable_entity }
+        format.json { render json: @favourite.errors, status: :unprocessable_content }
       end
     end
   end

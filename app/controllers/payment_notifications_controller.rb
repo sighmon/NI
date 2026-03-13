@@ -7,7 +7,7 @@ class PaymentNotificationsController < ApplicationController
 		verifier = PaypalRest::WebhookVerifier.new(headers: request.headers, payload: payload)
 
 		unless verifier.valid?
-			render json: { success: false }, status: :unprocessable_entity
+			render json: { success: false }, status: :unprocessable_content
 			return
 		end
 
@@ -17,7 +17,7 @@ class PaymentNotificationsController < ApplicationController
 		render json: { success: false }, status: :bad_request
 	rescue PaypalConfiguration::ConfigurationError, PaypalRest::Error => e
 		logger.warn "PayPal webhook rejected: #{e.message}"
-		render json: { success: false }, status: :unprocessable_entity
+		render json: { success: false }, status: :unprocessable_content
 	end
 
 	private

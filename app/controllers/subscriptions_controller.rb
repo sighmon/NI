@@ -89,11 +89,11 @@ class SubscriptionsController < ApplicationController
         format.json { render json: { redirect_url: user_path(current_user) }, status: :created }
       else
         format.html { redirect_to user_path(current_user), alert: 'Something went wrong, sorry.' }
-        format.json { render json: { error: 'Could not complete this PayPal order.' }, status: :unprocessable_entity }
+        format.json { render json: { error: 'Could not complete this PayPal order.' }, status: :unprocessable_content }
       end
     end
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def paypal_order
@@ -140,7 +140,7 @@ class SubscriptionsController < ApplicationController
 
     render json: { id: order.fetch("id") }
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def paypal_subscription
@@ -165,7 +165,7 @@ class SubscriptionsController < ApplicationController
 
     render json: { id: subscription.fetch("id") }
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def paypal_subscription_approval
@@ -194,10 +194,10 @@ class SubscriptionsController < ApplicationController
       log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (option.price_cents / 100.0))
       render json: { redirect_url: user_path(current_user) }, status: :created
     else
-      render json: { error: @subscription.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { error: @subscription.errors.full_messages.to_sentence }, status: :unprocessable_content
     end
   rescue PaypalRest::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_content
   end
 
   def update
@@ -255,7 +255,7 @@ class SubscriptionsController < ApplicationController
     #         format.json { render json: @subscription, status: :created, location: @subscription }
     #     else
     #         format.html { redirect_to user_path(@user), notice: "Something went wrong in the last step, sorry." }
-    #         format.json { render json: @subscription.errors, status: :unprocessable_entity }
+    #         format.json { render json: @subscription.errors, status: :unprocessable_content }
     #     end
     # end
   end

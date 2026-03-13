@@ -140,7 +140,7 @@ class Admin::UsersController < Admin::BaseController
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
 				format.html { redirect_to admin_user_path(@user), notice: "Couldn't add a free subscription, sorry." }
-				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+				format.json { render json: @free_subscription.errors, status: :unprocessable_content }
 			end
 		end
 	end
@@ -159,7 +159,7 @@ class Admin::UsersController < Admin::BaseController
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
 				format.html { redirect_to admin_user_path(@user), notice: "Couldn't add the crowdfunding free subscription, sorry." }
-				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+				format.json { render json: @free_subscription.errors, status: :unprocessable_content }
 			end
 		end
 	end
@@ -178,7 +178,7 @@ class Admin::UsersController < Admin::BaseController
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
 				format.html { redirect_to admin_user_path(@user), notice: "Couldn't add a media subscription, sorry." }
-				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+				format.json { render json: @free_subscription.errors, status: :unprocessable_content }
 			end
 		end
 	end
@@ -196,7 +196,7 @@ class Admin::UsersController < Admin::BaseController
 				format.json { render json: @user, status: :created, location: @user }
 			else
 				format.html { redirect_to admin_user_path(@user), notice: "Couldn't make this user an institutional user, sorry." }
-				format.json { render json: @user.errors, status: :unprocessable_entity }
+				format.json { render json: @user.errors, status: :unprocessable_content }
 			end
 		end
 	end
@@ -258,7 +258,7 @@ class Admin::UsersController < Admin::BaseController
 				format.json { render json: @free_subscription, status: :created, location: @free_subscription }
 			else
 				format.html { redirect_to admin_user_path(@user), notice: "Couldn't create the free subscription, sorry." }
-				format.json { render json: @free_subscription.errors, status: :unprocessable_entity }
+				format.json { render json: @free_subscription.errors, status: :unprocessable_content }
 			end
 		end
 	end

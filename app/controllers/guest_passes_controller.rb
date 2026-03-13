@@ -25,7 +25,7 @@ class GuestPassesController < ApplicationController
         format.json { render json: @guest_pass, status: :created, location: @guest_pass }
       else
         format.html { redirect_to issue_article_path(@issue, @article), notice: "Sorry, couldn't share this article." }
-        format.json { render json: @guest_pass.errors, status: :unprocessable_entity }
+        format.json { render json: @guest_pass.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,7 +42,7 @@ class GuestPassesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to user_path(@user), notice: "Sorry, couldn't destroy this guest_pass." }
-        format.json { render json: @guest_pass.errors, status: :unprocessable_entity }
+        format.json { render json: @guest_pass.errors, status: :unprocessable_content }
       end
     end
   end

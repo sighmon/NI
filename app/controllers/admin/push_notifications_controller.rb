@@ -28,7 +28,7 @@ class Admin::PushNotificationsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to admin_push_notifications_path, notice: "Sorry, couldn't destroy this push notification. Error: #{@push_notification.errors}" }
-        format.json { render json: @push_notification.errors, status: :unprocessable_entity }
+        format.json { render json: @push_notification.errors, status: :unprocessable_content }
       end
     end
   end
