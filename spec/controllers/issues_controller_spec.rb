@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe IssuesController, type: :controller do
-
   setup do
     Issue.__elasticsearch__.index_name = 'ni-test'
     Issue.__elasticsearch__.create_index! force: true
@@ -13,6 +12,17 @@ describe IssuesController, type: :controller do
    
     context "with an issue" do
       let(:issue) { FactoryBot.create(:published_issue) }
+      let!(:keynote_article) { FactoryBot.create(:article, issue: issue, title: "Keynote Title", teaser: "Keynote teaser", keynote: true) }
+      let!(:feature_article) { FactoryBot.create(:article, issue: issue, title: "Feature Title", teaser: "Feature teaser") }
+      let!(:current_article) { FactoryBot.create(:article, issue: issue, title: "Current Title", teaser: "Current teaser") }
+      let!(:keynote_image) { FactoryBot.create(:image, article: keynote_article) }
+      let!(:feature_category) { FactoryBot.create(:category, name: "/features/") }
+      let!(:currents_category) { FactoryBot.create(:category, name: "/columns/currents/") }
+
+      before do
+        feature_article.categories << feature_category
+        current_article.categories << currents_category
+      end
 
       describe "GET issue list" do
 
@@ -36,10 +46,27 @@ describe IssuesController, type: :controller do
       end
 
       describe "GET email" do
+        render_views
 
         it "works" do
           get :email, params: {issue_id: issue.id}
           expect(response.status).to eq(200)
+        end
+
+        it "renders mjml using the precomputed email sections" do
+          get :email, params: {issue_id: issue.id, format: :mjml}
+
+          expect(response.status).to eq(200)
+          expect(response.body).to include("Feature Title")
+          expect(response.body).to include("Current Title")
+        end
+
+        it "renders text using the shared keynote assignment" do
+          get :email, params: {issue_id: issue.id, format: :text}
+
+          expect(response.status).to eq(200)
+          expect(response.body).to include("Keynote Title")
+          expect(response.body).to include("Keynote teaser")
         end
 
       end
@@ -180,4 +207,3 @@ describe IssuesController, type: :controller do
   end
 
 end
-

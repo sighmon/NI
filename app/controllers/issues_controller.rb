@@ -1,7 +1,7 @@
 class IssuesController < ApplicationController
 
   # Cancan authorisation
-  load_and_authorize_resource except: [:index]
+  load_and_authorize_resource except: [:index, :show]
 
   newrelic_ignore only: [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew, :email_special]
   # newrelic_ignore_enduser only: [:email, :email_non_subscribers, :email_others, :email_renew]
@@ -9,6 +9,9 @@ class IssuesController < ApplicationController
 
   # :show So that iOS can post, :index so that issues.json jquery works
   skip_before_action :verify_authenticity_token, only: [:show, :index]
+  before_action :load_issue_for_show, only: :show
+  before_action :load_issue_for_email, only: [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew]
+  before_action :prepare_issue_email_content, only: [:email, :email_non_subscribers_institutions, :email_non_subscribers_others, :email_renew]
 
   # Devise authorisation
   # before_action :authenticate_user!, except: [:show, :index]
@@ -124,8 +127,6 @@ class IssuesController < ApplicationController
   end
 
   def email
-    @issue = Issue.find(params[:issue_id])
-
     respond_to do |format|
       format.html { render layout: 'email' }
       format.text { render layout: false }
@@ -134,8 +135,6 @@ class IssuesController < ApplicationController
   end
 
   def email_non_subscribers_institutions
-    @issue = Issue.find(params[:issue_id])
-
     respond_to do |format|
       format.html { render layout: 'email' }
       format.text { render layout: false }
@@ -144,8 +143,6 @@ class IssuesController < ApplicationController
   end
 
   def email_non_subscribers_others
-    @issue = Issue.find(params[:issue_id])
-
     respond_to do |format|
       format.html { render layout: 'email' }
       format.text { render layout: false }
@@ -154,8 +151,6 @@ class IssuesController < ApplicationController
   end
 
   def email_renew
-    @issue = Issue.find(params[:issue_id])
-
     respond_to do |format|
       format.html { render layout: 'email' }
       format.text { render layout: false }
@@ -196,14 +191,26 @@ class IssuesController < ApplicationController
     #moved to the model
 
     # Limit showing just last six web exclusives & two blogs unless you're an admin
-    @blogs = @issue.blogs.last(2)
-    @web_exclusives = @issue.web_exclusive.last(6)
-    if current_user and current_user.admin?
-      @blogs = @issue.blogs
-      @web_exclusives = @issue.web_exclusive
-    end
+    @keynote = @issue.keynote
+    @sections = @issue.display_sections
+    @features = @sections[:features]
+    @alternatives = @sections[:alternatives]
+    @opinion = @sections[:opinion]
+    @agendas = @sections[:agendas]
+    @currents = @sections[:currents]
+    @videos = @sections[:videos]
+    @regulars = @sections[:regulars]
+    @mixedmedia = @sections[:mixedmedia]
+
+    admin_user = current_user&.admin?
+
+    @blogs = admin_user ? @sections[:blogs] : @sections[:blogs].last(2)
+    @web_exclusives = admin_user ? @sections[:web_exclusive] : @sections[:web_exclusive].last(6)
+    @uncategorised_articles = admin_user ? @issue.uncategorised : []
 
     @categories = @issue.all_articles_categories
+    @web_exclusive_category = Category.find_by_name("/features/web-exclusive/")
+    @blog_category = Category.find_by_name("/blog/")
 
     redesigned = ApplicationHelper.redesigned?(@issue.release)
 
@@ -214,7 +221,7 @@ class IssuesController < ApplicationController
     
     # Set meta tags
     @page_title = @issue.title
-    @page_description = "#{@issue.release.strftime("%B, %Y")} - #{ActionView::Base.full_sanitizer.sanitize(@issue.keynote.try(:teaser))}"
+    @page_description = "#{@issue.release.strftime("%B, %Y")} - #{ActionView::Base.full_sanitizer.sanitize(@keynote.try(:teaser))}"
 
     set_meta_tags site: 'New Internationalist',
                   title: @page_title,
@@ -278,6 +285,28 @@ class IssuesController < ApplicationController
         format.json { render json: issue_show_to_json(@issue) }
       end
     end
+  end
+
+  private def load_issue_for_show
+    issue_preloads = { articles: [:categories, :images] }
+    issue_preloads[:all_articles] = [:categories, :images] if current_user&.admin?
+
+    @issue = Issue.preload(issue_preloads).find(params[:id])
+    authorize! :show, @issue
+  end
+
+  private def load_issue_for_email
+    @issue = Issue.preload(articles: [:categories, :images]).find(params[:issue_id])
+  end
+
+  private def prepare_issue_email_content
+    @keynote = @issue.keynote
+    @sections = @issue.display_sections
+    @features = @sections[:features]
+    @regulars = @sections[:regulars]
+    @mixedmedia = @sections[:mixedmedia]
+    @opinion = @sections[:opinion]
+    @currents = @sections[:currents]
   end
 
   def issue_show_to_json(issue)

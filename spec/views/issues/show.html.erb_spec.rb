@@ -23,11 +23,22 @@ describe "issues/show", type: :view do
   end
 
     it "should be able to read all articles" do
-      # # assign(:article, article)
       assign(:issue, issue)
+      assign(:keynote, keynote_article)
+      assign(:uncategorised_articles, [])
       assign(:categories, [category, category_two])
+      assign(:features_name, "Features")
+      assign(:page_description, "Test description")
+      assign(:features, [])
+      assign(:alternatives, [])
       assign(:web_exclusives, [])
       assign(:blogs, [])
+      assign(:opinion, [])
+      assign(:agendas, [])
+      assign(:currents, [article])
+      assign(:videos, [])
+      assign(:regulars, [])
+      assign(:mixedmedia, [])
 
       render
 

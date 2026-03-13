@@ -1,5 +1,7 @@
+        <% readable = can?(:read, article) %>
+        <% first_image = article.first_image %>
         <div class="col-sm-8 home-keynote">
-        <% if can? :read, article %>
+        <% if readable %>
           <!-- Can read this article, so link to it -->
           <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
           <% if not article.featured_image.blank? %>
@@ -7,11 +9,11 @@
             <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
             <meta itemprop="width" content="1890">
             <meta itemprop="height" content="800">
-          <% elsif article.first_image %>
-            <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, class: 'article-thumb', alt: "#{strip_tags(article.first_image.caption)} #{strip_tags(article.first_image.credit)}", title: "#{strip_tags(article.first_image.caption)} #{strip_tags(article.first_image.credit)}", width: 600, itemprop: "image"), issue_article_path(article.issue,article) %>
-            <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
-            <meta itemprop="width" content="<%= article.first_image.width %>">
-            <meta itemprop="height" content="<%= article.first_image.height %>">
+          <% elsif first_image %>
+            <%= link_to retina_image_tag(first_image.data_url(:sixhundred).to_s, class: 'article-thumb', alt: "#{strip_tags(first_image.caption)} #{strip_tags(first_image.credit)}", title: "#{strip_tags(first_image.caption)} #{strip_tags(first_image.credit)}", width: 600, itemprop: "image"), issue_article_path(article.issue,article) %>
+            <meta itemprop="url" content="<%= first_image.data_url.to_s %>">
+            <meta itemprop="width" content="<%= first_image.width %>">
+            <meta itemprop="height" content="<%= first_image.height %>">
           <% else %>
             <%= link_to retina_image_tag('fallback/sixhundred_no_image.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 600, itemprop: "image"), issue_article_path(article.issue,article) %>
             <meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
@@ -28,11 +30,11 @@
             <meta itemprop="url" content="<%= article.featured_image_url(:fullwidth).to_s %>">
             <meta itemprop="width" content="1890">
             <meta itemprop="height" content="800">
-          <% elsif article.first_image %>
-            <%= link_to retina_image_tag(article.first_image.data_url(:sixhundred).to_s, class: 'article-thumb', alt: "#{strip_tags(article.first_image.caption)} #{strip_tags(article.first_image.credit)}", title: "#{strip_tags(article.first_image.caption)} #{strip_tags(article.first_image.credit)}", width: 600, itemprop: "image"), new_issue_purchase_path(article.issue) %>
-            <meta itemprop="url" content="<%= article.first_image.data_url.to_s %>">
-            <meta itemprop="width" content="<%= article.first_image.width %>">
-            <meta itemprop="height" content="<%= article.first_image.height %>">
+          <% elsif first_image %>
+            <%= link_to retina_image_tag(first_image.data_url(:sixhundred).to_s, class: 'article-thumb', alt: "#{strip_tags(first_image.caption)} #{strip_tags(first_image.credit)}", title: "#{strip_tags(first_image.caption)} #{strip_tags(first_image.credit)}", width: 600, itemprop: "image"), new_issue_purchase_path(article.issue) %>
+            <meta itemprop="url" content="<%= first_image.data_url.to_s %>">
+            <meta itemprop="width" content="<%= first_image.width %>">
+            <meta itemprop="height" content="<%= first_image.height %>">
           <% else %>
             <%= link_to retina_image_tag('fallback/sixhundred_no_image.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 600, itemprop: "image"), new_issue_purchase_path(article.issue) %>
             <meta itemprop="url" content="<%= image_url('fallback/no_image.jpg').to_s %>">
@@ -61,17 +63,17 @@
             <meta itemprop="name" content="<%= article.author %>">
           </div>
 
-        <% if article.first_image %>
+        <% if first_image %>
           <div class="new-image-caption">
-            <p><%= simple_format article.first_image.caption %></p>
+            <p><%= simple_format first_image.caption %></p>
           </div>
           <div class="new-image-credit">
-            <p><%= simple_format article.first_image.credit %></p>
+            <p><%= simple_format first_image.credit %></p>
           </div>
         <% end %>
         </div> <!-- END col-sm-8 -->
         <div class="col-sm-4 home-keynote issue-keynote-text">
-        <% if can? :read, article %>
+        <% if readable %>
           <h3><%= link_to highlight(article.title, @query_array), issue_article_path(article.issue,article) %></h3>
           <h5 class="breadcrumb"><%= link_to "#{article.issue.number} - #{article.issue.release.strftime("%B, %Y")}", issue_path(article.issue) %> <%= render partial: "home/home_share_links", locals: { article: article } %></h5>
           <h4><%= simple_format highlight(article.teaser, @query_array) %></h4>

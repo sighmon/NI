@@ -1,6 +1,26 @@
 class Issue < ActiveRecord::Base
   KEYNOTE_CACHE_OPTIONS = { expires_in: 6.hours, race_condition_ttl: 30.seconds }.freeze
   CATEGORIES_CACHE_OPTIONS = { expires_in: 12.hours, race_condition_ttl: 30.seconds }.freeze
+  OPINION_CATEGORY_NAMES = [
+    "/argument/",
+    "/columns/viewfrom/",
+    "/columns/mark-engler/",
+    "/columns/steve-parry/",
+    "/columns/kate-smurthwaite/",
+    "/columns/omar-hamdi/",
+    "/columns/chris-coltrane/"
+  ].freeze
+  REGULARS_EXCLUDED_CATEGORY_NAMES = [
+    "/columns/currents/",
+    "/columns/media/",
+    "/columns/viewfrom/",
+    "/columns/mark-engler/",
+    "/columns/steve-parry/",
+    "/columns/kate-smurthwaite/",
+    "/columns/omar-hamdi/",
+    "/columns/chris-coltrane/",
+    "/video/"
+  ].freeze
   
   has_many :articles, -> { where(unpublished: [false, nil]) }, dependent: :destroy
   has_many :all_articles, class_name: "Article"
@@ -59,7 +79,13 @@ class Issue < ActiveRecord::Base
   end
 
   def keynote
-    Issue.cached_keynote_for_issue(self.id)
+    @keynote ||= begin
+      if association(:articles).loaded?
+        articles.find(&:keynote)
+      else
+        Issue.cached_keynote_for_issue(self.id)
+      end
+    end
   end
 
   def self.cached_keynote_for_issue(id)
@@ -83,74 +109,51 @@ class Issue < ActiveRecord::Base
   end
 
   def features
-    (articles_of_category("/features/") -
-      articles_of_category("/features/web-exclusive/")
-      ).sort_by(&:publication)
+    display_sections[:features]
   end
 
   def web_exclusive
-    (articles_of_category("/features/web-exclusive/") -
-      articles_of_category("/video/")
-      ).sort_by(&:publication)
+    display_sections[:web_exclusive]
   end
 
   def videos
-    articles_of_category("/video/").sort_by(&:publication)
+    display_sections[:videos]
   end
 
   def agendas
-    articles_of_category("/sections/agenda/").sort_by(&:publication)
+    display_sections[:agendas]
   end
 
   def currents
-    articles_of_category("/columns/currents/").sort_by(&:publication)
+    display_sections[:currents]
   end
 
   def opinion
-    (articles_of_category("/argument/") +
-      articles_of_category("/columns/viewfrom/") +
-      articles_of_category("/columns/mark-engler/") +
-      articles_of_category("/columns/steve-parry/") + 
-      articles_of_category("/columns/kate-smurthwaite/") + 
-      articles_of_category("/columns/omar-hamdi/") + 
-      articles_of_category("/columns/chris-coltrane/")
-      ).sort_by(&:publication)
+    display_sections[:opinion]
   end
 
   def alternatives
-    articles_of_category("/alternatives/").sort_by(&:publication)
+    display_sections[:alternatives]
   end
 
   def regulars
-    (articles_of_category("/columns/") - 
-      articles_of_category("/columns/currents/") - 
-      articles_of_category("/columns/media/") - 
-      articles_of_category("/columns/viewfrom/") - 
-      articles_of_category("/columns/mark-engler/") -
-      articles_of_category("/columns/steve-parry/") - 
-      articles_of_category("/columns/kate-smurthwaite/") -
-      articles_of_category("/columns/omar-hamdi/") -
-      articles_of_category("/columns/chris-coltrane/") -
-      articles_of_category("/video/")
-      ).sort_by(&:publication)
+    display_sections[:regulars]
   end
 
   def mixedmedia
-    articles_of_category("/columns/media/").sort_by(&:publication)
+    display_sections[:mixedmedia]
   end
 
   def blogs
-    (articles_of_category("/blog/") -
-      articles_of_category("/features/")
-      ).sort_by(&:publication)
+    display_sections[:blogs]
   end
 
   def categorised_articles
-    features + web_exclusive + videos + agendas + currents + opinion + regulars + alternatives + mixedmedia + blogs
+    display_sections.values.flatten
   end
 
   def uncategorised
-    all_articles - categorised_articles - [keynote]
+    uncategorised_articles_for_display
   end
 
   def ordered_articles
@@ -519,29 +522,23 @@ class Issue < ActiveRecord::Base
   end
 
   def articles_of_category(category_name)
-    arts = self.articles.select{|a| not a.keynote}
-    g = []
-    arts.each do |article|
-      if not article.categories.select{|c| c.name.include?(category_name)}.empty?
-        g << article
-      end
+    visible_articles_for_display.select do |article|
+      article_category_names(article).any? { |name| name.include?(category_name) }
     end
-    return g
   end
 
   def all_articles_categories
     Rails.cache.fetch("#{cache_key}/all_articles_categories", CATEGORIES_CACHE_OPTIONS) do
-      categories = []
-      self.articles.each do |article|
-        categories = categories | article.categories
-      end
-      categories.sort_by(&:short_display_name)
+      articles_for_display
+        .flat_map(&:categories)
+        .uniq
+        .sort_by(&:short_display_name)
     end
   end
 
   def all_category_names
     n = []
-    self.articles.each do |article|
+    articles_for_display.each do |article|
       article.categories.each do |category|
         if not category.name.include?("/themes/")
           n << category.name
@@ -549,6 +546,73 @@ class Issue < ActiveRecord::Base
       end
     end
     return n
+  end
+
+  def display_sections
+    @display_sections ||= begin
+      sections = {
+        features: [],
+        web_exclusive: [],
+        videos: [],
+        agendas: [],
+        currents: [],
+        opinion: [],
+        alternatives: [],
+        regulars: [],
+        mixedmedia: [],
+        blogs: []
+      }
+
+      visible_articles_for_display.each do |article|
+        category_names = article_category_names(article)
+
+        in_features = category_names.any? { |name| name.include?("/features/") }
+        in_web_exclusive = category_names.any? { |name| name.include?("/features/web-exclusive/") }
+        in_videos = category_names.any? { |name| name.include?("/video/") }
+        in_agendas = category_names.any? { |name| name.include?("/sections/agenda/") }
+        in_currents = category_names.any? { |name| name.include?("/columns/currents/") }
+        in_opinion = OPINION_CATEGORY_NAMES.any? { |category_name| category_names.any? { |name| name.include?(category_name) } }
+        in_alternatives = category_names.any? { |name| name.include?("/alternatives/") }
+        in_columns = category_names.any? { |name| name.include?("/columns/") }
+        in_mixedmedia = category_names.any? { |name| name.include?("/columns/media/") }
+        in_blogs = category_names.any? { |name| name.include?("/blog/") }
+
+        sections[:features] << article if in_features && !in_web_exclusive
+        sections[:web_exclusive] << article if in_web_exclusive && !in_videos
+        sections[:videos] << article if in_videos
+        sections[:agendas] << article if in_agendas
+        sections[:currents] << article if in_currents
+        sections[:opinion] << article if in_opinion
+        sections[:alternatives] << article if in_alternatives
+        sections[:regulars] << article if in_columns && REGULARS_EXCLUDED_CATEGORY_NAMES.none? { |category_name| category_names.any? { |name| name.include?(category_name) } }
+        sections[:mixedmedia] << article if in_mixedmedia
+        sections[:blogs] << article if in_blogs && !in_features
+      end
+
+      sections.transform_values { |articles| articles.sort_by(&:publication) }
+    end
+  end
+
+  def articles_for_display
+    @articles_for_display ||= begin
+      if association(:articles).loaded?
+        articles.to_a
+      else
+        articles.includes(:categories, :images).to_a
+      end
+    end
+  end
+
+  def uncategorised_articles_for_display
+    @uncategorised_articles_for_display ||= begin
+      articles = if association(:all_articles).loaded?
+        all_articles.to_a
+      else
+        all_articles.includes(:categories, :images).to_a
+      end
+
+      articles - categorised_articles - [keynote]
+    end
   end
 
   def zip_for_ios
@@ -655,11 +719,19 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def article_json_file_location(article_id)
+  private def visible_articles_for_display
+    @visible_articles_for_display ||= articles_for_display.reject(&:keynote)
+  end
+
+  private def article_category_names(article)
+    article.categories.map(&:name)
+  end
+
+  private def article_json_file_location(article_id)
     "#{Rails.root}/tmp/article#{article_id}.json"
   end
 
-  def article_body_file_location(article_id)
+  private def article_body_file_location(article_id)
     "#{Rails.root}/tmp/article#{article_id}.html"
   end
 

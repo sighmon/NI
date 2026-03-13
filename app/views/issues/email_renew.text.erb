@@ -22,12 +22,12 @@ No PayPal account? No problem. Simply subscribe here for 3 months, 6 months or 1
 Keynote article
 ===============
 
-<%= @issue.keynote.title %>
+<%= @keynote.title %>
 
-<%= strip_tags @issue.keynote.teaser %>
+<%= strip_tags @keynote.teaser %>
 
-Read it on-line: <%= "[#{issue_article_url(@issue,@issue.keynote)}]" %>
-Read in our iOS or Android app: <%= "[#{app_link(issue_article_url(@issue,@issue.keynote))}]" %>
+Read it on-line: <%= "[#{issue_article_url(@issue, @keynote)}]" %>
+Read in our iOS or Android app: <%= "[#{app_link(issue_article_url(@issue, @keynote))}]" %>
 
 
 ======================

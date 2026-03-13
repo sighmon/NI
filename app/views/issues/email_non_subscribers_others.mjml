@@ -37,8 +37,8 @@
 					padding="0"
 					alt="Read this month's keynote article: <%= @issue.title %>"
 					title="Read this month's keynote article: <%= @issue.title %>"
-					href="<%= issue_article_url(@issue, @issue.keynote) %>"
-					src="<%= @issue.keynote.first_image.data_url %>">
+					href="<%= issue_article_url(@issue, @keynote) %>"
+					src="<%= @keynote.first_image.data_url %>">
 				</mj-image>
 			</mj-column>
 		</mj-section>
@@ -181,7 +181,7 @@
 					padding="0px 25px"
 					color="#787878">
 					<div style="float:right;width:100px;height:100px;border-radius:50%;overflow:hidden;">
-						<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, alt: "#{@issue.editors_name}", title: "#{@issue.editors_name}", width: "100px", height: "100px", style: "margin-top:-10px;"), issue_url(@issue) %>
+						<%= link_to image_tag(@issue.editors_photo_url(:thumb2x).to_s, alt: "#{@issue.editors_name}", title: "#{@issue.editors_name}", width: "100px", height: "100px", style: "margin-top:-10px;", skip_pipeline: true), issue_url(@issue) %>
 					</div>
 					<%= simple_format strip_tags(@issue.editors_letter) %>
 					<strong><%= @issue.editors_name %></strong> for the New Internationalist co-operative.<br />
@@ -221,7 +221,7 @@
 					font-family="helvetica"
 					font-weight="bold"
 					align="center">
-					<%= link_to @issue.title, issue_article_url(@issue, @issue.keynote), style: 'color:inherit;' %>
+					<%= link_to @issue.title, issue_article_url(@issue, @keynote), style: 'color:inherit;' %>
 				</mj-text>
 
 				<mj-text
@@ -230,7 +230,7 @@
 					font-weight="300"
 					padding="0px 25px"
 					color="#787878">
-					<%= simple_format @issue.keynote.teaser %>
+					<%= simple_format @keynote.teaser %>
 				</mj-text>
 
 			</mj-column>
@@ -257,9 +257,9 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.features.empty? %>
+	<% if not @features.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.features.each_with_index do |article,index| %>
+		<% @features.each_with_index do |article,index| %>
 			<% if index % 2 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
@@ -318,9 +318,9 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.regulars.empty? %>
+	<% if not @regulars.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.regulars.each_with_index do |article,index| %>
+		<% @regulars.each_with_index do |article,index| %>
 			<% if index % 3 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
@@ -379,9 +379,9 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.mixedmedia.empty? %>
+	<% if not @mixedmedia.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.mixedmedia.each_with_index do |article,index| %>
+		<% @mixedmedia.each_with_index do |article,index| %>
 			<% if index % 3 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
@@ -440,9 +440,9 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.opinion.empty? %>
+	<% if not @opinion.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.opinion.each_with_index do |article,index| %>
+		<% @opinion.each_with_index do |article,index| %>
 			<% if index % 3 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
@@ -501,9 +501,9 @@
 			</mj-column>
 		</mj-section>
 
-	<% if not @issue.currents.empty? %>
+	<% if not @currents.empty? %>
 		<mj-section background-color="#FFFFFF" padding="0">
-		<% @issue.currents.each_with_index do |article,index| %>
+		<% @currents.each_with_index do |article,index| %>
 			<% if index % 3 == 0 %>
 		</mj-section>
 		<mj-section background-color="#FFFFFF" padding="0">
