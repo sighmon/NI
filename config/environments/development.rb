@@ -106,6 +106,9 @@ Rails.application.configure do
   # Default URL for helpers in models
   Rails.application.routes.default_url_options = { host: 'localhost:3000', protocol: 'http' }
 
+  # Testing hosts
+  config.hosts << /.*\.ngrok-free\.app/
+
   # Change mail delvery to either :smtp, :sendmail, :file, :test
   # gmail_auth = YAML.load_file("#{Rails.root}/config/environments/gmail_auth.yml")
   # Now using /config/application.yml figaro gem
@@ -119,29 +122,5 @@ Rails.application.configure do
     user_name: ENV["GMAIL_USER_NAME"],
     password: ENV["GMAIL_PASSWORD"]
   }
-
-  # Active Merchant Gateway
-
-  config.after_initialize do
-
-    ActiveMerchant::Billing::Base.mode = :test
-
-    # paypal_auth = YAML.load_file("#{Rails.root}/config/environments/paypal_auth.yml")
-    # Now using /config/application.yml figaro gem
-
-    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      login: ENV["PAYPAL_SANDBOX_LOGIN"],
-      password: ENV["PAYPAL_SANDBOX_PASSWORD"],
-      signature: ENV["PAYPAL_SANDBOX_SIGNATURE"]
-    )
-
-    PayPal::Recurring.configure do |config|
-      config.sandbox = true
-      config.username = ENV["PAYPAL_SANDBOX_LOGIN"]
-      config.password = ENV["PAYPAL_SANDBOX_PASSWORD"]
-      config.signature = ENV["PAYPAL_SANDBOX_SIGNATURE"]
-    end
-
-  end
 
 end

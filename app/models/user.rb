@@ -349,14 +349,16 @@ class User < ActiveRecord::Base
   end
 
   def has_cancelled_paypal_profile?
-    return self.payment_notifications.last.try(:transaction_type).try(:include?, 'recurring_payment_profile_cancel')
+    last_type = self.payment_notifications.last.try(:transaction_type).to_s
+    return last_type.include?('recurring_payment_profile_cancel') || last_type == 'BILLING.SUBSCRIPTION.CANCELLED'
   end
 
   def is_recurring?
     # TODO: need to differentiate between the first recurring subscription and the paypal IPN recurrances.
     recurring = self.subscriptions.collect{|s| s.is_recurring?}.include?(true)
     # Check for a failed payment notification (IPN from Paypal)
-    if recurring and self.payment_notifications.last.try(:transaction_type).try(:include?, 'suspended')
+    last_type = self.payment_notifications.last.try(:transaction_type).to_s
+    if recurring and (last_type.try(:include?, 'suspended') || last_type == 'BILLING.SUBSCRIPTION.SUSPENDED')
       recurring = false
     end
     # Check for a cancelled payment notification IPN from Paypal

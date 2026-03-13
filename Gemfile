@@ -57,12 +57,6 @@ gem 'cancancan'
 # Form rendering via Formtastic https://github.com/justinfrench/formtastic
 gem 'formtastic'
 
-# Active Merchant for purchasing https://github.com/Shopify/active_merchant
-gem 'activemerchant', require: 'active_merchant'
-
-# PayPal recurring billing https://github.com/fnando/paypal-recurring
-gem 'paypal-recurring'
-
 # Rails settings file for prices & general settings
 # Specifying 1.x as version 2 works very differently
 # gem 'ledermann-rails-settings', require: 'rails-settings'
@@ -75,6 +69,7 @@ gem 'figaro'
 
 # SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
 gem 'savon', '~>1.2.0'
+gem 'rexml'
 
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'

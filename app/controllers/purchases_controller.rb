@@ -29,38 +29,14 @@ class PurchasesController < ApplicationController
   end
 
   def express
-    @issue = Issue.find(params[:issue_id])
-    # Issue price moved to Settings.issue_price
-    @express_purchase_price = @issue.price
-    session[:express_purchase_price] = @express_purchase_price
-    response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-      ip: request.remote_ip,
-      return_url: new_issue_purchase_url(@issue),
-      cancel_return_url: new_issue_purchase_url(@issue),
-      allow_note: true,
-      items: [{name: "NI #{@issue.number} - #{@issue.title}", quantity: 1, description: "New Internationalist Magazine - digital edition", amount: @express_purchase_price}],
-      currency: 'AUD'
-    )
-    redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
+    redirect_to new_issue_purchase_path(params[:issue_id])
   end
 
   def new
     @user = User.find(current_user.id)
     @purchase = @user.purchases.build(params[:issue])
-    @express_token = params[:token]
-    @express_payer_id = params[:PayerID]
-
-    @has_token = not(@express_token.blank? or @express_payer_id.blank?)
-
-    if @has_token
-      @issue = Issue.find(session[:issue_id_being_purchased])
-      retrieve_paypal_express_details(@express_token)
-      session[:express_token] = @express_token
-      session[:express_payer_id] = @express_payer_id
-    else
-      @issue = Issue.find(params[:issue_id])
-      session[:issue_id_being_purchased] = @issue.id
-    end
+    @issue = Issue.find(params[:issue_id])
+    @paypal_sdk_url = PaypalConfiguration.javascript_sdk_src(currency: 'AUD')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -68,26 +44,69 @@ class PurchasesController < ApplicationController
     end
   end
 
-  def create
-    @issue = Issue.find(session[:issue_id_being_purchased])
-    @user = User.find(current_user.id)
+  def paypal_order
+    authorize! :create, Purchase
 
-    # Make the PayPal purchase
-    response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
-    if response.success?
-      # FIXME: Work out how to simplify this call.
-      @purchase = Purchase.new(user_id: @user.id, issue_id: @issue.id)
-      # Write purchase date & price to purchase object
-      @purchase.price_paid = session[:express_purchase_price]
-      @purchase.purchase_date = DateTime.now
-      # Save the paypal data to the purchase model
-      @purchase.paypal_payer_id = session[:express_payer_id]
-      @purchase.paypal_first_name = session[:express_first_name]
-      @purchase.paypal_last_name = session[:express_last_name]
-    end
+    issue = Issue.find(params[:issue_id])
+    order = paypal_client.create_order(
+      {
+        intent: "CAPTURE",
+        application_context: {
+          brand_name: ENV["APP_NAME"],
+          shipping_preference: "NO_SHIPPING",
+          user_action: "PAY_NOW"
+        },
+        purchase_units: [
+          {
+            custom_id: "issue-#{issue.id}-user-#{current_user.id}",
+            description: "NI #{issue.number} - #{issue.title}",
+            amount: {
+              currency_code: "AUD",
+              value: format("%.2f", issue.price / 100.0),
+              breakdown: {
+                item_total: {
+                  currency_code: "AUD",
+                  value: format("%.2f", issue.price / 100.0)
+                }
+              }
+            },
+            items: [
+              {
+                name: "NI #{issue.number} - #{issue.title}",
+                description: "New Internationalist Magazine - digital edition",
+                quantity: "1",
+                unit_amount: {
+                  currency_code: "AUD",
+                  value: format("%.2f", issue.price / 100.0)
+                }
+              }
+            ]
+          }
+        ]
+      }
+    )
+
+    render json: { id: order.fetch("id") }
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def create
+    @issue = Issue.find(params[:issue_id])
+    @user = User.find(current_user.id)
+    capture = paypal_client.capture_order(params.require(:paypal_order_id))
+
+    @purchase = Purchase.new(user_id: @user.id, issue_id: @issue.id)
+    @purchase.price_paid = @issue.price
+    @purchase.purchase_date = DateTime.now
+    @purchase.paypal_payer_id = capture.dig("payer", "payer_id")
+    @purchase.paypal_first_name = capture.dig("payer", "name", "given_name")
+    @purchase.paypal_last_name = capture.dig("payer", "name", "surname")
+
+    payment_complete = capture_completed?(capture)
 
     respond_to do |format|
-      if response.success? and @purchase.save
+      if payment_complete && @purchase.save
         # Email the user a confirmation
         begin
           UserMailer.delay.issue_purchase(@purchase)
@@ -95,30 +114,31 @@ class PurchasesController < ApplicationController
         rescue Exception
           logger.error "500 - Email server is down..."
         end
-        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (session[:express_purchase_price] / 100.0))
+        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (@issue.price / 100.0))
         format.html { redirect_to issue_path(@issue), notice: 'Issue was successfully purchased.' }
-        format.json { render json: @purchase, status: :created, location: @purchase }
+        format.json { render json: { redirect_url: issue_path(@issue) }, status: :created }
       else
         format.html { redirect_to issue_path(@issue), notice: "Couldn't purchase this issue." }
-        format.json { render json: @purchase.errors, status: :unprocessable_entity }
+        format.json { render json: { error: "Could not complete this PayPal order." }, status: :unprocessable_entity }
       end
     end
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private
 
-  def express_purchase_options
-    {
-    ip: request.remote_ip,
-    token: session[:express_token],
-    payer_id: session[:express_payer_id],
-    items: [{name: "NI #{@issue.number} - #{@issue.title}", quantity: 1, description: "New Internationalist Magazine - digital edition", amount: session[:express_purchase_price]}],
-    currency: 'AUD'
-    }
-  end
-
   def purchase_params
     params.fetch(:purchase, {}).permit(:user_id, :issue_id, :created_at)
+  end
+
+  def paypal_client
+    @paypal_client ||= PaypalRest::Client.new
+  end
+
+  def capture_completed?(capture)
+    capture.dig("status") == "COMPLETED" ||
+      capture.dig("purchase_units", 0, "payments", "captures", 0, "status") == "COMPLETED"
   end
 
 end

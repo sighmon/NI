@@ -2,69 +2,33 @@
 	<%= retina_image_tag(@issue.cover_url(:thumb).to_s, class: 'shadow-sm', alt: "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", title: "#{@issue.title} - #{@issue.release.strftime("%B, %Y")}", rel: "tooltip", size: "141x200") %>
 	<h3><%= @issue.title %></h3>
 	<h4>NI <%= @issue.number %> - <%= @issue.release.strftime("%B, %Y") %></h4>
-	<% if not @has_token %>
-		<dl class="dl-horizontal">
-			<dt>Price:</dt>
-			<dd>$<%= cents_to_dollars(Settings.issue_price) %></dd>
-		</dl>
-	<% end %>
+	<dl class="dl-horizontal">
+		<dt>Price:</dt>
+		<dd>$<%= cents_to_dollars(Settings.issue_price) %></dd>
+	</dl>
 </div>
 
-<% if not @has_token %>
-	<div class="marketing-subscribe">
-		<h3>Or you could subscribe!</h3>
-		<h4>And read our entire archive...</h4>
-		<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to our archive of New Internationalist magazines.</p>
-		<%= link_to "Subscription information...", new_subscription_path, class: 'btn btn-info' %>
-	</div>
-<% end %>
+<div class="marketing-subscribe">
+	<h3>Or you could subscribe!</h3>
+	<h4>And read our entire archive...</h4>
+	<p>From just $<%= cents_to_dollars(Subscription.calculate_subscription_price(3,autodebit: false)) %> for a 3 month subscription you'll have access to our archive of New Internationalist magazines.</p>
+	<%= link_to "Subscription information...", new_subscription_path, class: 'btn btn-info' %>
+</div>
 
-<% if @has_token %>
+<div class="form-actions"
+	data-paypal-issue-purchase
+	data-create-order-url="<%= paypal_order_issue_purchases_path(@issue) %>"
+	data-capture-url="<%= issue_purchases_path(@issue) %>"
+	data-success-url="<%= issue_path(@issue) %>"
+	data-issue-number="<%= @issue.number %>"
+	data-issue-title="<%= @issue.title %>"
+	data-purchase-id="user<%= current_user.id %>issue<%= @issue.id %>"
+	data-issue-price="<%= cents_to_dollars(@issue.price) %>">
+	<div id="paypal-issue-purchase-button"></div>
+	<p class="alert alert-danger mt-3 d-none" data-paypal-error></p>
+	<%= link_to 'Cancel', issue_path(@issue), class: 'btn btn-outline-secondary mt-3' %>
+</div>
 
-	<%= javascript_tag do %>
-		window.issueNumber = '<%= @issue.number %>';
-		window.issueTitle = '<%= @issue.title %>';
-		window.purchaseID = 'user<%= try(:current_user).try(:id) %>issue<%= @issue.id %>';
-		window.issuePrice = <%= cents_to_dollars(session[:express_purchase_price]) %>;
-	<% end %>
-
-	<%= simple_form_for [@issue, @purchase] do |f| %>
-		
-		<dl class="dl-horizontal">
-			<dt>Name:</dt>
-			<dd><%= session[:express_first_name] %> <%= session[:express_last_name] %></dd>
-			<dt>Purchase amount:</dt>
-			<dd>$<%= cents_to_dollars(session[:express_purchase_price]) %></dd>
-		</dl>
-	  <div class="form-actions">
-		<%= f.button :submit, "Complete your purchase", onclick: "sendPurchase();", class: 'btn btn-success' %>
-	  </div>
-	<% end %>
-
-	<!-- START Google Code for Digital Subscription App Conversion Page -->
-	<script type="text/javascript">
-	/* <![CDATA[ */
-	var google_conversion_id = <%= ENV["GOOGLE_CONVERSION_ID"] %>;
-	var google_conversion_language = "en";
-	var google_conversion_format = "3";
-	var google_conversion_color = "ffffff";
-	var google_conversion_label = "<%= ENV['GOOGLE_CONVERSION_LABEL'] %>";
-	var google_conversion_value = <%= cents_to_dollars(session[:express_purchase_price]) %>;
-	var google_remarketing_only = false;
-	/* ]]> */
-	</script>
-	<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-	</script>
-	<noscript>
-	<div style="display:inline;">
-	<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/<%= ENV["GOOGLE_CONVERSION_ID"] %>/?value=<%= cents_to_dollars(session[:express_purchase_price]) %>&amp;label=<%= ENV["GOOGLE_CONVERSION_LABEL"] %>&amp;guid=ON&amp;script=0"/>
-	</div>
-	</noscript>
-	<!-- END Google Code for Digital Subscription App Conversion Page -->
-
-<% else %>
-	<div class="form-actions">
-		<%= link_to 'Purchase this issue with PayPal', express_new_issue_purchase_path, class: 'btn btn-success', onclick: "sendPrePurchase(#{@issue.number},#{cents_to_dollars(Settings.issue_price)});" %>
-		<%= link_to 'Cancel', issue_path(@issue), class: 'btn btn-outline-secondary' %>
-	</div>
+<% content_for :head do %>
+	<script src="<%= @paypal_sdk_url %>"></script>
 <% end %>

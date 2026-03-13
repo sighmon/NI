@@ -1,74 +1,45 @@
 require 'rails_helper'
 
-class FakeResponse
-  def initialize(result)
-    @result = result
-  end
-  def success?
-    return @result
-  end
-end
+RSpec.describe PurchasesController, type: :controller do
+  let(:user) { FactoryBot.create(:user) }
+  let(:issue) { FactoryBot.create(:issue) }
+  let(:paypal_client) { instance_double(PaypalRest::Client) }
 
-class FakeGateway
-  def initialize(result)
-    @result = result
-  end
-  def purchase(*bla)
-    return FakeResponse.new(@result)
-  end
-end
-
-describe PurchasesController, type: :controller do
-
-  context "as a user and with an issue" do
-
-   let(:user) { FactoryBot.create(:user) }
-   let(:issue) { FactoryBot.create(:issue) }
-
-   before(:each) do
-     sign_in user
-   end
-
-   describe "POST create" do
-
-     context "with valid session" do
-
-       before(:each) do
-         session[:issue_id_being_purchased] = issue.id
-         session[:express_purchase_price] = 7.50
-       end
-
-       context "and stubbed success" do
-
-         it "should create a purchase" do
-           warn_level = $VERBOSE
-           $VERBOSE = nil
-           PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(true)
-           $VERBOSE = warn_level
-           expect {
-             post :create, params: {issue_id: issue.id}
-           }.to change(Purchase, :count).by(1)
-         end
-       end
-
-       context "and stubbed failure" do
-
-         it "should not a purchase" do
-           warn_level = $VERBOSE
-           $VERBOSE = nil
-           PurchasesController::EXPRESS_GATEWAY=FakeGateway.new(false)
-           $VERBOSE = warn_level
-           expect {
-             post :create, params: {issue_id: issue.id}
-           }.to change(Purchase, :count).by(0)
-         end
-
-       end
-
-     end
-
-   end  
-
+  before do
+    sign_in user
+    allow(PaypalRest::Client).to receive(:new).and_return(paypal_client)
   end
 
+  describe 'POST paypal_order' do
+    it 'creates a paypal order' do
+      allow(paypal_client).to receive(:create_order).and_return({ 'id' => 'ORDER-123' })
+
+      post :paypal_order, params: { issue_id: issue.id }, format: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('id' => 'ORDER-123')
+    end
+  end
+
+  describe 'POST create' do
+    it 'captures an order and creates a purchase' do
+      allow(paypal_client).to receive(:capture_order).and_return(
+        {
+          'status' => 'COMPLETED',
+          'payer' => {
+            'payer_id' => 'PAYER-123',
+            'email_address' => user.email,
+            'name' => { 'given_name' => 'Jane', 'surname' => 'Reader' }
+          }
+        }
+      )
+
+      expect {
+        post :create, params: { issue_id: issue.id, paypal_order_id: 'ORDER-123' }, format: :json
+      }.to change(Purchase, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+      expect(Purchase.last.paypal_payer_id).to eq('PAYER-123')
+    end
+  end
 end

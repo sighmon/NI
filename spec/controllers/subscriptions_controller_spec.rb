@@ -1,84 +1,66 @@
 require 'rails_helper'
 
-class FakeResponse
-  def initialize(result)
-    @result = result
-  end
-  def success?
-    return @result
-  end
-  def params
-    return ["Fake params"]
-  end
-  def message
-    return "Fake message"
-  end
-end
+RSpec.describe SubscriptionsController, type: :controller do
+  let(:user) { FactoryBot.create(:user) }
+  let(:paypal_client) { instance_double(PaypalRest::Client) }
 
-class FakeGateway
-  def initialize(result)
-    @result = result
+  before do
+    sign_in user
+    allow(PaypalRest::Client).to receive(:new).and_return(paypal_client)
   end
-  def purchase(*bla)
-    return FakeResponse.new(@result)
-  end
-end
 
-describe SubscriptionsController, type: :controller do
+  describe 'POST create' do
+    it 'creates a once-off subscription from a captured order' do
+      allow(paypal_client).to receive(:capture_order).and_return(
+        {
+          'status' => 'COMPLETED',
+          'payer' => {
+            'payer_id' => 'PAYER-123',
+            'email_address' => user.email,
+            'name' => { 'given_name' => 'Jane', 'surname' => 'Reader' }
+          },
+          'purchase_units' => [{ 'shipping' => { 'address' => { 'country_code' => 'AU' } } }]
+        }
+      )
 
-  context "as a user" do
+      expect {
+        post :create, params: { duration: 12, autodebit: 0, paypal_order_id: 'ORDER-123' }, format: :json
+      }.to change(Subscription, :count).by(1)
 
-    let(:user) { FactoryBot.create(:user) }
-
-    before(:each) do
-      sign_in user
+      expect(response).to have_http_status(:created)
+      expect(Subscription.last.price_paid).to eq(Subscription.calculate_subscription_price(12, autodebit: false))
     end
-
-    describe "POST create" do
-
-      context "with valid session" do
-
-        before(:each) do
-          session[:express_purchase_subscription_duration] = 12
-          session[:express_purchase_price] = 6000
-          # session[:express_token] = "xxx"
-          # session[:express_payer_id] = user.id
-          # session[:express_email] = user.email
-          # session[:express_paper] = 0
-          # session[:express_autodebit] = false
-        end
-
-        context "and stubbed success" do
-
-          it "should create a subscription" do
-            warn_level = $VERBOSE
-            $VERBOSE = nil
-            SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(true)
-            $VERBOSE = warn_level
-            expect {
-              post :create, params: {user_id: user.id}
-            }.to change(Subscription, :count).by(1)
-          end
-        end
-
-        context "and stubbed failure" do
-
-          it "should not create a subscription" do
-            warn_level = $VERBOSE
-            $VERBOSE = nil
-            SubscriptionsController::EXPRESS_GATEWAY = FakeGateway.new(false)
-            $VERBOSE = warn_level
-            expect {
-              post :create, params: {user_id: user.id}
-            }.to change(Subscription, :count).by(0)
-          end
-
-        end
-
-      end
-
-    end
-
   end
 
+  describe 'POST paypal_subscription_approval' do
+    it 'creates an automatic renewal subscription from paypal subscription details' do
+      allow(paypal_client).to receive(:show_subscription).and_return(
+        {
+          'id' => 'I-SUBSCRIPTION',
+          'subscriber' => {
+            'payer_id' => 'PAYER-456',
+            'email_address' => user.email,
+            'name' => { 'given_name' => 'Sam', 'surname' => 'Subscriber' },
+            'shipping_address' => {
+              'name' => { 'full_name' => 'Sam Subscriber' },
+              'address' => {
+                'address_line_1' => '1 Main St',
+                'admin_area_2' => 'Adelaide',
+                'admin_area_1' => 'SA',
+                'postal_code' => '5000',
+                'country_code' => 'AU'
+              }
+            }
+          }
+        }
+      )
+
+      expect {
+        post :paypal_subscription_approval, params: { duration: 12, autodebit: 1, paypal_subscription_id: 'I-SUBSCRIPTION' }, format: :json
+      }.to change(Subscription, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+      expect(Subscription.last.paypal_profile_id).to eq('I-SUBSCRIPTION')
+    end
+  end
 end

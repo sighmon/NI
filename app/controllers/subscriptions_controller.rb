@@ -45,133 +45,20 @@ class SubscriptionsController < ApplicationController
   end
 
   def express
-
-    authorize! :update, Subscription
-    
-    if params[:autodebit] == "1"
-      @autodebit = true
-    else
-      @autodebit = false
-    end
-
-    if params[:paper] == "1"
-      @paper = true
-    else
-      @paper = false
-    end
-
-    if params[:paper] == "2" or params[:paper_only] == "1"
-      @paper_only = true
-      # To handle /subscriptions/new
-      @paper = true
-    else
-      @paper_only = false
-    end
-
-    if params[:institution] == "1"
-      @institution = true
-    else
-      @institution = false
-    end
-
-    @express_purchase_subscription_duration = params[:duration].to_i
-    @express_purchase_price = Subscription.calculate_subscription_price(@express_purchase_subscription_duration, {autodebit: @autodebit, paper: @paper, paper_only: @paper_only, institution: @institution, special: params[:special]})
-    session[:express_autodebit] = @autodebit
-    session[:express_paper] = @paper
-    session[:express_paper_only] = @paper_only
-    session[:express_institution] = @institution
-    session[:express_purchase_price] = @express_purchase_price
-    session[:express_purchase_subscription_duration] = @express_purchase_subscription_duration
-
-    if @autodebit
-      # Autodebit setup
-      if @paper == true
-        if @paper_only
-          # Paper only
-          if @institution == true
-            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for a Paper institution subscription to New Internationalist Magazine."
-          else
-            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for a Paper subscription to New Internationalist Magazine."
-          end
-        else
-          # Paper & digital
-          if @institution == true
-            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper institution subscription to New Internationalist Magazine."
-          else
-            payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit for both a Digital and Paper subscription to New Internationalist Magazine."
-          end
-        end
-
-      else
-        # Just digital
-        if @institution == true
-          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit institution subscription to New Internationalist Digital Edition."
-        else
-          payment_description = "#{session[:express_purchase_subscription_duration]} monthly automatic-debit subscription to New Internationalist Digital Edition."
-        end
-      end
-      session[:express_purchase_description] = payment_description
-
-      ppr = PayPal::Recurring.new({
-        return_url: new_subscription_url,
-        cancel_url: new_subscription_url,
-        description: payment_description,
-        amount: (session[:express_purchase_price] / 100),
-        currency: 'AUD'
-      })
-      response = ppr.checkout
-      redirect_to response.checkout_url if response.valid?
-    else
-      if @paper == true
-        if @paper_only
-          # Paper only
-          if @institution == true
-            payment_description = "New Internationalist Magazine - institution subscription to the paper edition."
-          else
-            payment_description = "New Internationalist Magazine - subscription to the paper edition."
-          end
-        else
-          if @institution == true
-            payment_description = "New Internationalist Magazine - institution subscription to both the digital edition and the paper edition."
-          else
-            payment_description = "New Internationalist Magazine - subscription to both the digital edition and the paper edition."
-          end
-        end
-      else
-        if @institution == true
-          payment_description = "New Internationalist Magazine - institution subscription to the digital edition."
-        else
-          payment_description = "New Internationalist Magazine - subscription to the digital edition."
-        end
-      end
-      session[:express_purchase_description] = payment_description
-
-      response = EXPRESS_GATEWAY.setup_purchase(@express_purchase_price,
-        ip: request.remote_ip,
-        return_url: new_subscription_url,
-        cancel_return_url: new_subscription_url,
-        allow_note: true,
-        items: [{name: "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", quantity: 1, description: payment_description, amount: session[:express_purchase_price]}],
-        currency: 'AUD'
-      )
-      redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
-    end
+    redirect_to new_subscription_path(subscription_selection_params.to_h)
   end
 
   def new
 
     @user = current_user
-    @express_token = params[:token]
-    @express_payer_id = params[:PayerID]
-
-    @has_token = not(@express_token.blank? or @express_payer_id.blank?)
-
-    if @has_token
-      retrieve_paypal_express_details(@express_token, {autodebit: session[:express_autodebit]})
-      session[:express_token] = @express_token
-      session[:express_payer_id] = @express_payer_id
-    else
-      logger.info "*** No token. ***"
+    @subscription_options = SubscriptionCheckoutOption.available
+    @selected_subscription_option = SubscriptionCheckoutOption.from_params(subscription_selection_params)
+    @paypal_sdk_url = if @selected_subscription_option.present?
+      PaypalConfiguration.javascript_sdk_src(
+        currency: 'AUD',
+        intent: (@selected_subscription_option.autodebit? ? 'subscription' : nil),
+        vault: @selected_subscription_option.autodebit?
+      )
     end
 
   end
@@ -183,109 +70,132 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-
-    payment_complete = false
-    notice_message_for_user = "Something went wrong, sorry!"
     @user = current_user
-    @subscription = @user.subscriptions.build(valid_from: (@user.last_subscription.try(:expiry_date) or DateTime.now), duration: session[:express_purchase_subscription_duration], purchase_date: DateTime.now)
+    option = selected_subscription_option!
+    capture = paypal_client.capture_order(params.require(:paypal_order_id))
+    @subscription = build_subscription_for(option)
 
-    if session[:express_autodebit]
-      # It's an autodebit, so set that up
-      # 1. setup autodebit by requesting payment
-      ppr = PayPal::Recurring.new({
-        token: session[:express_token],
-        payer_id: session[:express_payer_id],
-        amount: (session[:express_purchase_price] / 100),
-        ipn_url: "#{payment_notifications_url}",
-        currency: 'AUD',
-        description: session[:express_purchase_description]
-      })
-      response_request = ppr.request_payment
-
-      if response_request.approved? and response_request.completed?
-        # 2. create profile & save recurring profile token
-        # Set :period to :daily and :frequency to 1 for testing IPN every minute
-        ppr = PayPal::Recurring.new({
-          token: session[:express_token],
-          payer_id: session[:express_payer_id],
-          amount: (session[:express_purchase_price] / 100),
-          currency: 'AUD',
-          description: session[:express_purchase_description],
-          frequency: session[:express_purchase_subscription_duration], # 1,
-          period: :monthly, # :daily,
-          reference: "#{current_user.id}",
-          ipn_url: "#{payment_notifications_url}",
-          start_at: (@subscription.valid_from + session[:express_purchase_subscription_duration].months), # Time.now
-          failed: 1,
-          outstanding: :next_billing
-        })
-
-        response_create = ppr.create_recurring_profile
-        if not(response_create.profile_id.blank?)
-          @subscription.paypal_profile_id = response_create.profile_id
-          # If successful, update the user's subscription date.
-          # update_subscription_expiry_date
-          # Reset refund if they had one in the past
-          @subscription.refund = nil
-
-          # TODO: Background task
-          # TODO: Check paypal recurring profile id still valid
-          # TODO: Setup future update_subscription_expiry_date
-
-          # Save the PayPal data to the @subscription model for receipts
-          save_paypal_data_to_subscription_model
-          payment_complete = true
-        else
-          # Why didn't this work? Log it.
-          logger.warn "create_recurring_profile failed: #{response_create.params}"
-        end
-      else
-        # Why didn't this work? Log it.
-        logger.warn "request_payment failed: #{response_request.params}"
-        notice_message_for_user = response_request.params[:L_LONGMESSAGE0]
-      end
-    else
-      # It's a single purchase so make the PayPal purchase
-      response = EXPRESS_GATEWAY.purchase(session[:express_purchase_price], express_purchase_options)
-
-      if response.success?
-        # If successful, update the user's subscription date.
-        # update_subscription_expiry_date
-        save_paypal_data_to_subscription_model
-        payment_complete = true
-      else
-        # The user probably hit back and refresh or paypal is broken.
-        logger.warn response.params
-        notice_message_for_user = response.message
-        # redirect_to user_path(current_user), notice: response.message
-        # return
-      end
-    end
-
-    # TODO: implement automatically purchase the current issue
+    assign_subscription_buyer_details(
+      payer: capture["payer"],
+      shipping: capture.dig("purchase_units", 0, "shipping")
+    )
 
     respond_to do |format|
-      if payment_complete and @subscription.save
-        # Send the user an email
-        begin
-          UserMailer.delay.subscription_confirmation(@subscription)
-          ApplicationHelper.start_delayed_jobs
-          if session[:express_institution]
-            # TODO: institutional subscription, upgrade user and send institutional email...
-            # UserMailer.subscription_institution_tell_admin(@subscription.user).deliver
-          end
-        rescue Exception
-          logger.error "500 - Email server is down..."
-        end
-        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (session[:express_purchase_price] / 100.0))
+      if capture_completed?(capture) && @subscription.save
+        deliver_subscription_confirmation
+        log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (option.price_cents / 100.0))
         format.html { redirect_to user_path(current_user), notice: 'Subscription was successfully purchased.' }
-        format.json { render json: @subscription, status: :created, location: @subscription }
+        format.json { render json: { redirect_url: user_path(current_user) }, status: :created }
       else
-        flash[:error] = notice_message_for_user
-        format.html { redirect_to user_path(current_user) }
-        format.json { render json: @subscription.errors, status: :unprocessable_entity }
+        format.html { redirect_to user_path(current_user), alert: 'Something went wrong, sorry.' }
+        format.json { render json: { error: 'Could not complete this PayPal order.' }, status: :unprocessable_entity }
       end
     end
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def paypal_order
+    authorize! :create, Subscription
+
+    option = selected_subscription_option!
+    order = paypal_client.create_order(
+      {
+        intent: "CAPTURE",
+        application_context: {
+          brand_name: ENV["APP_NAME"],
+          shipping_preference: (option.requires_shipping? ? "GET_FROM_FILE" : "NO_SHIPPING"),
+          user_action: "PAY_NOW"
+        },
+        purchase_units: [
+          {
+            custom_id: "subscription-#{option.key}-user-#{current_user.id}",
+            description: option.description,
+            amount: {
+              currency_code: "AUD",
+              value: option.price_value,
+              breakdown: {
+                item_total: {
+                  currency_code: "AUD",
+                  value: option.price_value
+                }
+              }
+            },
+            items: [
+              {
+                name: option.purchase_unit_name,
+                description: option.description,
+                quantity: "1",
+                unit_amount: {
+                  currency_code: "AUD",
+                  value: option.price_value
+                }
+              }
+            ]
+          }.compact
+        ]
+      }
+    )
+
+    render json: { id: order.fetch("id") }
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def paypal_subscription
+    authorize! :create, Subscription
+
+    option = selected_subscription_option!
+    plan = PaypalRest::PlanCatalog.new(client: paypal_client).ensure_plan!(option)
+    subscription = paypal_client.create_subscription(
+      {
+        plan_id: plan.fetch("id"),
+        custom_id: "subscription-#{option.key}-user-#{current_user.id}",
+        application_context: {
+          brand_name: ENV["APP_NAME"],
+          locale: "en-AU",
+          shipping_preference: (option.requires_shipping? ? "GET_FROM_FILE" : "NO_SHIPPING"),
+          user_action: "SUBSCRIBE_NOW",
+          return_url: user_url(current_user),
+          cancel_url: new_subscription_url(option.to_h)
+        }
+      }
+    )
+
+    render json: { id: subscription.fetch("id") }
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def paypal_subscription_approval
+    authorize! :create, Subscription
+
+    option = selected_subscription_option!
+    details = paypal_client.show_subscription(params.require(:paypal_subscription_id))
+    @user = current_user
+    valid_from = (@user.last_subscription.try(:expiry_date) || DateTime.now)
+    @subscription = @user.subscriptions.find_or_initialize_by(paypal_profile_id: details.fetch("id"))
+    was_new_record = @subscription.new_record?
+    @subscription.assign_attributes(
+      valid_from: valid_from,
+      duration: option.duration,
+      purchase_date: DateTime.now,
+      price_paid: option.price_cents,
+      paper_copy: option.paper?,
+      paper_only: option.paper_only?
+    )
+
+    assign_subscription_details_from_paypal(details)
+
+    if @subscription.save
+      deliver_subscription_confirmation if was_new_record
+      log_fb_event(ENV['FACEBOOK_CHECKOUT_CONVERSION'], (option.price_cents / 100.0))
+      render json: { redirect_url: user_path(current_user) }, status: :created
+    else
+      render json: { error: @subscription.errors.full_messages.to_sentence }, status: :unprocessable_entity
+    end
+  rescue PaypalRest::Error => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def update
@@ -351,65 +261,110 @@ class SubscriptionsController < ApplicationController
   private
 
   def cancel_recurring_subscription
-    ppr = PayPal::Recurring.new(profile_id: @subscription.paypal_profile_id)
-    response = ppr.cancel
-    if response.success?
-      # Don't nil out paypal recurring profile.
-      # @subscription.paypal_profile_id = nil
-      session[:express_autodebit] = false
-      return true
-    else
-      return false
-    end
-  end
-
-  def save_paypal_data_to_subscription_model
-    @subscription.paypal_payer_id = session[:express_payer_id]
-    @subscription.paypal_email = session[:express_email]
-    @subscription.paypal_first_name = session[:express_first_name]
-    @subscription.paypal_last_name = session[:express_last_name]
-    @subscription.price_paid = session[:express_purchase_price]
-    # @subscription.paypal_profile_id also saved for recurring payments earlier
-    @subscription.paypal_street1 = session[:express_street1]
-    @subscription.paypal_street2 = session[:express_street2]
-    @subscription.paypal_city_name = session[:express_city_name]
-    @subscription.paypal_state_or_province = session[:express_state_or_province]
-    @subscription.paypal_country_name = session[:express_country_name]
-    @subscription.paypal_country_code = session[:express_country_code]
-    @subscription.paypal_postal_code = session[:express_postal_code]
-    @subscription.paper_copy = session[:express_paper]
-    @subscription.paper_only = session[:express_paper_only]
-
-    # Add address details to @user model
-    if @user.address.blank?
-      @user.first_name = session[:express_first_name]
-      @user.last_name = session[:express_last_name]
-      @user.address = session[:express_street1]
-      @user.city = session[:express_city_name]
-      @user.postal_code = session[:express_postal_code]
-      @user.state = session[:express_state_or_province]
-      @user.country = ISO3166::Country.find_country_by_iso_short_name(session[:express_country_name].try(:titleize)).try(:alpha2)
-      # Update postal/renewal flags
-      @user.postal_mailable = 'Y'
-      @user.email_opt_in = 'M'
-      @user.paper_renewals = 'Y'
-      @user.digital_renewals = 'Y'
-      @user.save
-    end
-  end
-
-  def express_purchase_options
-    {
-    ip: request.remote_ip,
-    token: session[:express_token],
-    payer_id: session[:express_payer_id],
-    items: [{name: "#{session[:express_purchase_subscription_duration]} Month Subscription to NI", quantity: 1, description: "New Internationalist Magazine - subscription to the digital edition", amount: session[:express_purchase_price]}],
-    currency: 'AUD'
-    }
+    paypal_client.cancel_subscription(@subscription.paypal_profile_id, reason: "Cancelled by subscriber")
+    true
+  rescue PaypalRest::Error
+    false
   end
 
   def subscription_params
     params.fetch(:subscription, {}).permit(:valid_from, :duration, :cancellation_date, :user_id, :paypal_payer_id, :paypal_email, :paypal_profile_id, :paypal_first_name, :paypal_last_name, :refund, :purchase_date, :price_paid, :paper_copy, :paper_only)
+  end
+
+  def subscription_selection_params
+    params.slice(:duration, :autodebit, :paper, :paper_only, :institution, :special)
+  end
+
+  def selected_subscription_option!
+    option = SubscriptionCheckoutOption.from_params(subscription_selection_params)
+    raise PaypalRest::Error, "Unsupported subscription option." if option.blank?
+
+    option
+  end
+
+  def build_subscription_for(option)
+    @user.subscriptions.build(
+      valid_from: (@user.last_subscription.try(:expiry_date) || DateTime.now),
+      duration: option.duration,
+      purchase_date: DateTime.now,
+      price_paid: option.price_cents,
+      paper_copy: option.paper?,
+      paper_only: option.paper_only?
+    )
+  end
+
+  def assign_subscription_details_from_paypal(details)
+    subscriber = details.fetch("subscriber", {})
+    shipping_address = subscriber.dig("shipping_address", "address") || {}
+    shipping_name = subscriber.dig("shipping_address", "name", "full_name")
+    first_name, last_name = split_name(shipping_name.presence || [subscriber.dig("name", "given_name"), subscriber.dig("name", "surname")].compact.join(" "))
+
+    @subscription.paypal_profile_id = details["id"]
+    @subscription.paypal_payer_id = subscriber["payer_id"]
+    @subscription.paypal_email = subscriber["email_address"]
+    @subscription.paypal_first_name = subscriber.dig("name", "given_name").presence || first_name
+    @subscription.paypal_last_name = subscriber.dig("name", "surname").presence || last_name
+    assign_shipping_details(shipping_address)
+    update_user_address_from_subscription
+  end
+
+  def assign_subscription_buyer_details(payer:, shipping:)
+    @subscription.paypal_payer_id = payer["payer_id"]
+    @subscription.paypal_email = payer["email_address"]
+    @subscription.paypal_first_name = payer.dig("name", "given_name")
+    @subscription.paypal_last_name = payer.dig("name", "surname")
+    assign_shipping_details((shipping || {})["address"] || {})
+    update_user_address_from_subscription
+  end
+
+  def assign_shipping_details(address)
+    @subscription.paypal_street1 = address["address_line_1"]
+    @subscription.paypal_street2 = address["address_line_2"]
+    @subscription.paypal_city_name = address["admin_area_2"]
+    @subscription.paypal_state_or_province = address["admin_area_1"]
+    @subscription.paypal_country_name = ISO3166::Country[address["country_code"]].try(:name)
+    @subscription.paypal_country_code = address["country_code"]
+    @subscription.paypal_postal_code = address["postal_code"]
+  end
+
+  def update_user_address_from_subscription
+    return unless @user.address.blank?
+
+    @user.first_name = @subscription.paypal_first_name
+    @user.last_name = @subscription.paypal_last_name
+    @user.address = @subscription.paypal_street1
+    @user.city = @subscription.paypal_city_name
+    @user.postal_code = @subscription.paypal_postal_code
+    @user.state = @subscription.paypal_state_or_province
+    @user.country = @subscription.paypal_country_code
+    @user.postal_mailable = 'Y'
+    @user.email_opt_in = 'M'
+    @user.paper_renewals = 'Y'
+    @user.digital_renewals = 'Y'
+    @user.save
+  end
+
+  def deliver_subscription_confirmation
+    begin
+      UserMailer.delay.subscription_confirmation(@subscription)
+      ApplicationHelper.start_delayed_jobs
+    rescue Exception
+      logger.error "500 - Email server is down..."
+    end
+  end
+
+  def paypal_client
+    @paypal_client ||= PaypalRest::Client.new
+  end
+
+  def capture_completed?(capture)
+    capture.dig("status") == "COMPLETED" ||
+      capture.dig("purchase_units", 0, "payments", "captures", 0, "status") == "COMPLETED"
+  end
+
+  def split_name(full_name)
+    parts = full_name.to_s.split
+    [parts.first, parts[1..].to_a.join(" ")]
   end
   
 end

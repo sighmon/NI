@@ -54,8 +54,8 @@
 
       <div class="col-md-6"> 
         <div class="subscription-offer-two subscription-buttons"> 
-          <p><a href="/subscriptions/new/express?utf8=✓&duration=12&autodebit=1&commit=Pay+with+PayPal+Express" class="btn btn-success btn-lg"><strong>$<%= cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true)) %></strong> - digital subscription*</a> </p>
-          <p><a href="/subscriptions/new/express?utf8=✓&duration=12&autodebit=1&paper=1&commit=Pay+with+PayPal+Express" class="btn btn-success btn-lg"><strong>$<%= cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true, paper: true)) %></strong> - print &amp; digital subscription*</a> </p>
+          <p><%= link_to raw("<strong>$#{cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true))}</strong> - digital subscription*"), new_subscription_path(duration: 12, autodebit: 1), class: "btn btn-success btn-lg" %></p>
+          <p><%= link_to raw("<strong>$#{cents_to_dollars(Subscription.calculate_subscription_price(12,autodebit: true, paper: true))}</strong> - print &amp; digital subscription*"), new_subscription_path(duration: 12, autodebit: 1, paper: 1), class: "btn btn-success btn-lg" %></p>
         </div> 
       </div>
     </div>

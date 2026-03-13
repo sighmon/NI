@@ -44,6 +44,11 @@ Rails.application.routes.draw do
 
   resources :subscriptions do
     get :show
+    collection do
+      post :paypal_order
+      post :paypal_subscription
+      post :paypal_subscription_approval
+    end
     new do
       get :express
     end
@@ -97,6 +102,9 @@ Rails.application.routes.draw do
       get :hide_images
     end
     resources :purchases, only: [:new, :create, :show] do
+      collection do
+        post :paypal_order
+      end
       new do
         get :express
       end

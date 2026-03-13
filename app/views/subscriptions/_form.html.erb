@@ -39,16 +39,54 @@
 
 <% else %>
 
-	<%= simple_form_for(@subscription, url: { action: "express" }, method: :get) do |f| %>
-	  <hr />
-	  <p>Redirecting you to <a href="https://subscribe.newint.org"><strong>newint.org</strong></a> now...</p>
-	  <meta http-equiv="refresh" content="0; url=https://subscribe.newint.org" />
+	<div class="subscription-options">
+		<p>Select a subscription option, then complete checkout with PayPal.</p>
+		<table class="table table-striped subscription-price-table">
+			<thead>
+				<tr>
+					<th>Subscription option</th>
+					<th>Price</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @subscription_options.each do |option| %>
+					<tr>
+						<td><%= option.name %></td>
+						<td>$<%= cents_to_dollars(option.price_cents) %></td>
+						<td><%= link_to "Choose", new_subscription_path(option.to_h), class: "btn btn-success btn-sm" %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 
-	  <div class="form-actions">
-	  	<%= link_to 'Cancel', user_path(@user), class: 'btn btn-outline-secondary' %>
-	  </div>
+	<% if @selected_subscription_option.present? %>
+		<hr />
+		<div
+			class="selected-subscription-checkout"
+			data-paypal-subscription
+			data-option="<%= json_escape(@selected_subscription_option.to_h.to_json) %>"
+			data-create-order-url="<%= paypal_order_subscriptions_path %>"
+			data-create-subscription-url="<%= paypal_subscription_subscriptions_path %>"
+			data-finalize-order-url="<%= subscriptions_path %>"
+			data-finalize-subscription-url="<%= paypal_subscription_approval_subscriptions_path %>"
+			data-success-url="<%= user_path(@user) %>"
+			data-subscription-price="<%= cents_to_dollars(@selected_subscription_option.price_cents) %>"
+			data-subscription-type="<%= @selected_subscription_option.name %>"
+			data-purchase-id="user<%= @user.id %>subscription<%= @selected_subscription_option.key %>"
+			data-subscription-number="<%= @selected_subscription_option.duration %>">
+			<h3>Selected option</h3>
+			<p><strong><%= @selected_subscription_option.name %></strong></p>
+			<p>$<%= cents_to_dollars(@selected_subscription_option.price_cents) %></p>
+			<div id="paypal-subscription-button"></div>
+			<p class="alert alert-danger mt-3 d-none" data-paypal-error></p>
+		</div>
+
+		<% content_for :head do %>
+			<script src="<%= @paypal_sdk_url %>"></script>
+		<% end %>
 	<% end %>
 
 <% end %>
-
 

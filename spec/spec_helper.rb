@@ -20,8 +20,17 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     # Set subscription_price and issue_price for view tests
-    Settings.subscription_price = 600
-    Settings.issue_price = 750
+    if defined?(Settings)
+      Settings.subscription_price = 600
+      Settings.issue_price = 750
+    end
+  end
+
+  config.before(:each) do
+    if defined?(Settings)
+      Settings.subscription_price = 600
+      Settings.issue_price = 750
+    end
   end
 
 =begin

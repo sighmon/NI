@@ -3,17 +3,21 @@ class PaymentNotificationsController < ApplicationController
 	protect_from_forgery except: [:create]
 
 	def create
-		# logger.info params
-		
-		# TOFIX: Hack to handle 'cart' instant payment notifications.
-		if params[:txn_type] == "cart"
-			params[:rp_invoice_id] = "1"
+		payload = JSON.parse(request.raw_post)
+		verifier = PaypalRest::WebhookVerifier.new(headers: request.headers, payload: payload)
+
+		unless verifier.valid?
+			render json: { success: false }, status: :unprocessable_entity
+			return
 		end
 
-		# TODO: using activemerchant to validate the IPN: https://go.developer.ebay.com/developers/community/blogs/saranyan/paypal-ipn-using-rails-3.1-and-active-merchant
-
-		PaymentNotification.create!(params: params, user_id: params[:rp_invoice_id], status: params[:payment_status], transaction_id: params[:txn_id], transaction_type: params[:txn_type] )
+		PaypalRest::WebhookHandler.new(event: payload).process!
 		render json: {success: true}
+	rescue JSON::ParserError
+		render json: { success: false }, status: :bad_request
+	rescue PaypalConfiguration::ConfigurationError, PaypalRest::Error => e
+		logger.warn "PayPal webhook rejected: #{e.message}"
+		render json: { success: false }, status: :unprocessable_entity
 	end
 
 	private

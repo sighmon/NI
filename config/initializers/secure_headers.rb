@@ -22,8 +22,8 @@ SecureHeaders::Configuration.default do |config|
     # default_src: %w(https: 'self'),
     default_src: %W(https: 'self'),
     base_uri: %w('self'),
-    child_src: %w('self' *.recaptcha.net *.facebook.com *.facebook.net *.twitter.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com player.rss.com), # if child-src isn't supported, the value for frame-src will be set.
-    connect_src: %w('self' wss: *.google-analytics.com),
+    child_src: %w('self' *.recaptcha.net *.facebook.com *.facebook.net *.twitter.com *.youtube.com *.googletagmanager.com public.tableau.com uploads.knightlab.com player.vimeo.com *.google.com player.rss.com *.paypal.com), # if child-src isn't supported, the value for frame-src will be set.
+    connect_src: %w('self' wss: *.google-analytics.com *.paypal.com),
     font_src: %W('self' data: *.gstatic.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     # form_action: %w('self' github.com),
     form_action: %w('self' syndication.twitter.com *.paypal.com),
@@ -32,7 +32,7 @@ SecureHeaders::Configuration.default do |config|
     # media_src: %w(utoob.com),
     object_src: %w('self' *.youtube.com *.vimeo.com),
     # plugin_types: %w(application/x-shockwave-flash),
-    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.recaptcha.net *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net *.google.com *.gstatic.com),
+    script_src: %W('self' 'unsafe-inline' 'unsafe-eval' *.recaptcha.net *.ampproject.org public.tableau.com *.google-analytics.com *.twitter.com *.twimg.com *.facebook.com *.facebook.net *.googletagmanager.com *.googleadservices.com *.newrelic.com bam.nr-data.net #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net *.google.com *.gstatic.com *.paypal.com),
     style_src: %W('self' 'unsafe-inline' *.googleapis.com *.twitter.com *.twimg.com #{ENV['CLOUDFRONT_SERVER']}.cloudfront.net),
     upgrade_insecure_requests: Rails.env.production?, # see https://www.w3.org/TR/upgrade-insecure-requests/
     report_uri: %W(#{ENV["REPORT_URI_CSP"]})
