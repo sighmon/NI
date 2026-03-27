@@ -165,6 +165,7 @@ Rails.application.routes.draw do
   get "tweet_url", to: "home#tweet_url"
   get "wall_post_url", to: "home#wall_post_url"
   get "email_url", to: "home#email_url"
+  resource :newsletter, only: [:show, :create]
 
   # Change the page logged in users are directed to
   # authenticated :user do
