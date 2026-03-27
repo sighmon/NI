@@ -57,6 +57,7 @@ describe WhatCounts::NewsletterSubscription do
 
     expect(result).to be_success
     expect(result.message).to eq("That email is already subscribed to the newsletter.")
+    expect(result.subscribed).to eq(true)
   end
 
   it "fails fast when the WhatCounts configuration is missing" do
@@ -68,5 +69,73 @@ describe WhatCounts::NewsletterSubscription do
 
     expect(result).not_to be_success
     expect(result.message).to eq("Newsletter signup is not configured yet.")
+  end
+
+  it "returns the newsletter status from the list lookup" do
+    response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: {
+        "subscriberId" => 7160984,
+        "email" => "reader@example.com",
+        "firstName" => "Reader"
+      },
+      body: '{"subscriberId":7160984,"email":"reader@example.com"}'
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/rest/lists/13/subscribers?email=reader%40example.com",
+      hash_including(
+        headers: hash_including(
+          "Accept" => "application/vnd.whatcounts-v1+json",
+          "Content-Type" => "application/json"
+        ),
+        timeout: 10
+      )
+    ).and_return(response)
+
+    result = described_class.new(email: "reader@example.com").status
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(true)
+    expect(result.message).to eq("Subscribed to the email newsletter.")
+  end
+
+  it "deletes the subscription by subscriber id when unsubscribing" do
+    lookup_response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: {
+        "subscriberId" => 7160984,
+        "email" => "reader@example.com"
+      },
+      body: '{"subscriberId":7160984,"email":"reader@example.com"}'
+    )
+    unsubscribe_response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "SUCCESS: 1 record(s) processed.",
+      body: "SUCCESS: 1 record(s) processed."
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/rest/lists/13/subscribers?email=reader%40example.com",
+      hash_including(
+        headers: hash_including(
+          "Authorization" => "Basic #{Base64.strict_encode64("myRealm:secret")}"
+        ),
+        timeout: 10
+      )
+    ).ordered.and_return(lookup_response)
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/api_web?r=myRealm&p=secret&c=unsub&list_id=13&data=email%5Ereader%40example.com",
+      hash_including(timeout: 10)
+    ).ordered.and_return(unsubscribe_response)
+
+    result = described_class.new(email: "reader@example.com").unsubscribe
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(false)
+    expect(result.message).to eq("You have been unsubscribed from the newsletter.")
   end
 end

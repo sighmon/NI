@@ -40,7 +40,9 @@ Rails.application.routes.draw do
   # Create a route for users profile page
   # match 'users/:id', to: 'users#show', as: @user
   post "users/:id(.:format)", to: 'users#show', as: :user
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resource :newsletter_subscription, only: [:show, :create, :destroy], controller: "user_newsletter_subscriptions"
+  end
 
   resources :subscriptions do
     get :show

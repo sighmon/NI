@@ -92,6 +92,22 @@
 				<dd><%= link_to "Subscribe", new_subscription_path, class: 'btn btn-success' %></dd>
 			<% end %>
 		<% end %>
+			<% if current_user == @user and @user.email.present? and ENV["WHATCOUNTS_BASE_URL"].present? %>
+				<dt>Email newsletter:</dt>
+				<dd>
+					<div
+					class="newsletter-subscription"
+					data-status-url="<%= user_newsletter_subscription_path(@user) %>"
+					data-subscribe-url="<%= user_newsletter_subscription_path(@user) %>"
+					data-unsubscribe-url="<%= user_newsletter_subscription_path(@user) %>"
+					data-subscribed="">
+					<button type="button" class="btn btn-outline-secondary js-newsletter-toggle" disabled>
+						Checking newsletter status...
+					</button>
+					<div class="small text-muted mt-2 js-newsletter-subscription-message"></div>
+				</div>
+			</dd>
+		<% end %>
 	<% end %>
 <% end %>
 </dl>

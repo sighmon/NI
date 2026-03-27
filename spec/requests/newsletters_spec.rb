@@ -6,7 +6,7 @@ describe "Newsletters", type: :request do
       get newsletter_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Newsletter Sign-up")
+      expect(response.body).to include("Newsletter sign-up")
     end
   end
 
