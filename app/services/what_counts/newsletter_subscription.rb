@@ -57,7 +57,7 @@ module WhatCounts
         timeout: 10
       )
 
-      return success(SUCCESS_MESSAGE, response.code) if response.code.to_i == 200
+      return success(SUCCESS_MESSAGE, response.code, true) if response.code.to_i == 200
 
       error_message = extract_error_message(response)
 

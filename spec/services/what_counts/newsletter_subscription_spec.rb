@@ -40,6 +40,7 @@ describe WhatCounts::NewsletterSubscription do
     result = described_class.new(email: "jane.doe@example.com").call
 
     expect(result).to be_success
+    expect(result.subscribed).to eq(true)
     expect(result.message).to eq("Thanks for signing up to the newsletter.")
   end
 

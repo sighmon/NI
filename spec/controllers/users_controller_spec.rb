@@ -114,4 +114,45 @@ describe UsersController, type: :controller do
 
   end
 
+  describe "newsletter widget visibility" do
+    render_views
+
+    let(:user) { FactoryBot.create(:user) }
+
+    before(:each) do
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with("WHATCOUNTS_BASE_URL").and_return("https://mail.example.com")
+      sign_in user
+    end
+
+    it "shows the widget for a standard user" do
+      get :show, params: { id: user.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Email newsletter:")
+    end
+
+    it "does not show the widget for child users" do
+      child_user = FactoryBot.create(:child_user)
+
+      sign_in child_user
+
+      get :show, params: { id: child_user.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include("Email newsletter:")
+    end
+
+    it "does not show the widget for users with a uk_id" do
+      uk_user = FactoryBot.create(:uk_user)
+
+      sign_in uk_user
+
+      get :show, params: { id: uk_user.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include("Email newsletter:")
+    end
+  end
+
 end

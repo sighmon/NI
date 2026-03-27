@@ -92,7 +92,7 @@
 				<dd><%= link_to "Subscribe", new_subscription_path, class: 'btn btn-success' %></dd>
 			<% end %>
 		<% end %>
-			<% if current_user == @user and @user.email.present? and ENV["WHATCOUNTS_BASE_URL"].present? %>
+			<% if current_user == @user and not @user.parent and @user.uk_id.blank? and @user.email.present? and ENV["WHATCOUNTS_BASE_URL"].present? %>
 				<dt>Email newsletter:</dt>
 				<dd>
 					<div

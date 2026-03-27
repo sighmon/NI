@@ -22,11 +22,18 @@ class UserNewsletterSubscriptionsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
-    head :forbidden unless current_user == @user && can?(:manage, @user)
+    head :forbidden unless newsletter_access_allowed?
   end
 
   def newsletter_service
     @newsletter_service ||= WhatCounts::NewsletterSubscription.new(email: @user.email)
+  end
+
+  def newsletter_access_allowed?
+    current_user == @user &&
+      @user.parent.blank? &&
+      @user.uk_id.blank? &&
+      can?(:manage, @user)
   end
 
   def render_result(result)

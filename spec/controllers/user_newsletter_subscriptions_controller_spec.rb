@@ -83,5 +83,25 @@ describe UserNewsletterSubscriptionsController, type: :controller do
 
       expect(response).to have_http_status(:forbidden)
     end
+
+    it "rejects child users" do
+      child_user = FactoryBot.create(:child_user)
+
+      sign_in child_user
+
+      post :create, params: { user_id: child_user.id }, format: :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it "rejects users with a uk_id" do
+      uk_user = FactoryBot.create(:uk_user)
+
+      sign_in uk_user
+
+      delete :destroy, params: { user_id: uk_user.id }, format: :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
   end
 end
