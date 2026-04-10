@@ -314,7 +314,7 @@ class Admin::UsersController < Admin::BaseController
 			end
 			User.delay.update_subscriber_stats
 		end
-		view_context.start_delayed_jobs
+		view_context.start_delayed_jobs(size: 'standard-2x')
 		redirect_to admin_root_path, notice: 'Refreshing CSV...'
 	end
 
