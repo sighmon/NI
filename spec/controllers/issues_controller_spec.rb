@@ -180,4 +180,3 @@ describe IssuesController, type: :controller do
   end
 
 end
-
