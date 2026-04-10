@@ -820,7 +820,12 @@ class ArticlesController < ApplicationController
             product_id = p["productId"]
             purchase_token = p["purchaseToken"]
             purchase = Services::GooglePlayVerification.new(package_name, product_id, purchase_token)
-            result = purchase.verify_product
+            begin
+              result = purchase.verify_product
+            rescue Google::Apis::Error => e
+              logger.warn "Google Play product verification failed for article #{@article.id}: #{e.class} #{e.message}"
+              next
+            end
 
             if result.purchase_state == 0
               logger.info "Google Play: Purchase valid. #{result.order_id}"
@@ -838,7 +843,12 @@ class ArticlesController < ApplicationController
           product_id = p["productId"]
           purchase_token = p["purchaseToken"]
           purchase = Services::GooglePlayVerification.new(package_name, product_id, purchase_token)
-          result = purchase.verify_subscription
+          begin
+            result = purchase.verify_subscription
+          rescue Google::Apis::Error => e
+            logger.warn "Google Play subscription verification failed for article #{@article.id}: #{e.class} #{e.message}"
+            next
+          end
 
           if result.kind == "androidpublisher#subscriptionPurchase"
             # It's a subscription purchase, so test its expiryTimeMillis

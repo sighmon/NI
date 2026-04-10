@@ -24,7 +24,6 @@ module Services
   class GooglePlayVerification
     require 'google/apis/androidpublisher_v3'
     require 'googleauth'
-    require 'googleauth/stores/file_token_store'
 
     # These credentials come from creating an OAuth Web Application client ID
     # in the Google developer console
