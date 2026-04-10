@@ -275,18 +275,23 @@ module ApplicationHelper
       link_to title, {sort: column, direction: direction}, {class: css_class}
     end
 
-    def start_delayed_jobs
-        ApplicationHelper.start_delayed_jobs
+    def start_delayed_jobs(size: nil)
+        ApplicationHelper.start_delayed_jobs(size: size)
     end
 
-    def self.start_delayed_jobs
+    def self.start_delayed_jobs(size: nil)
         if Rails.env.production?
+            dyno_options = {
+                command: "bundle exec bin/delayed_job run --exit-on-complete"
+            }
+            dyno_options[:size] = size if size.present?
+
             PlatformAPI
                 .connect_oauth(ENV.fetch("HEROKU_OAUTH"))
                 .dyno
                 .create(
                     ENV.fetch("HEROKU_OAUTH_APP_NAME"),
-                    command: "bundle exec bin/delayed_job run --exit-on-complete"
+                    dyno_options
                 )
         else
             Delayed::Worker.exit_on_complete = true
