@@ -50,25 +50,20 @@ module WhatCounts
     def subscribe
       return failure(CONFIGURATION_ERROR_MESSAGE) if missing_configuration?
 
-      response = HTTParty.post(
-        request_url,
-        headers: headers,
-        body: payload.to_json,
+      response = HTTParty.get(
+        subscribe_url,
         timeout: 10
       )
 
-      return success(SUCCESS_MESSAGE, response.code, true) if response.code.to_i == 200
+      return success(SUCCESS_MESSAGE, response.code, true) if http_api_success?(response)
 
       error_message = extract_error_message(response)
+      return success(DUPLICATE_SUCCESS_MESSAGE, response.code, true) if duplicate_subscription?(error_message)
 
-      if duplicate_subscription?(error_message)
-        success(DUPLICATE_SUCCESS_MESSAGE, response.code, true)
-      else
-        Rails.logger.error(
-          "WhatCounts newsletter signup failed: status=#{response.code} error=#{error_message.presence || response.body}"
-        )
-        failure(friendly_error_message(error_message), response.code)
-      end
+      Rails.logger.error(
+        "WhatCounts newsletter signup failed: status=#{response.code} error=#{error_message.presence || response.body}"
+      )
+      failure(friendly_error_message(error_message), response.code)
     rescue StandardError => e
       Rails.logger.error("WhatCounts newsletter signup exception: #{e.class}: #{e.message}")
       failure(GENERIC_ERROR_MESSAGE)
@@ -121,16 +116,25 @@ module WhatCounts
       Result.new(success: false, message: message, status_code: status_code, subscribed: subscribed)
     end
 
-    def request_url
-      "#{base_url}/rest/lists/#{list_id}?format=2&duplicates=0"
+    def subscribe_url
+      "#{legacy_api_web_url}?#{URI.encode_www_form(
+        c: "sub",
+        r: realm_name,
+        p: api_password,
+        list_id: list_id,
+        format: 99,
+        data: subscribe_data,
+        override_confirmation: 1,
+        force_sub: 1
+      )}"
     end
 
     def subscribers_url
-      "#{base_url}/rest/lists/#{list_id}/subscribers?email=#{CGI.escape(email)}"
+      "#{rest_base_url}/lists/#{list_id}/subscribers?email=#{CGI.escape(email)}"
     end
 
     def unsubscribe_url
-      "#{base_url}/api_web?#{URI.encode_www_form(
+      "#{legacy_api_web_url}?#{URI.encode_www_form(
         r: realm_name,
         p: api_password,
         c: "unsub",
@@ -140,34 +144,22 @@ module WhatCounts
     end
 
     def headers
-      request_headers = {
-        "Authorization" => "Basic #{Base64.strict_encode64("#{realm_name}:#{api_password}")}",
+      {
+        "Authorization" => "Basic #{basic_auth}",
         "Accept" => ACCEPT_HEADER,
         "Content-Type" => CONTENT_TYPE_HEADER
-      }
-
-      if api_client_name.present? && api_client_auth_code.present?
-        request_headers["x-api-key"] = Base64.strict_encode64("#{api_client_name}:#{api_client_auth_code}")
+      }.tap do |request_headers|
+        if api_client_name.present? && api_client_auth_code.present?
+          request_headers["x-api-key"] = Base64.strict_encode64("#{api_client_name}:#{api_client_auth_code}")
+        end
       end
-
-      request_headers
     end
 
-    def payload
-      request_payload = {
-        subscriberId: 0,
-        email: email,
-        firstName: inferred_first_name
-      }
+    def subscribe_data
+      columns = ["email", "custom_pref_monthly_edition"]
+      values = [sanitize_http_api_value(email), "1"]
 
-      request_payload[:customerKey] = customer_key if customer_key.present?
-      request_payload
-    end
-
-    def inferred_first_name
-      local_part = email.split("@").first.to_s
-      inferred_name = local_part.tr("._-", " ").squish.titleize
-      inferred_name.presence || "Newsletter Subscriber"
+      "#{columns.join(",")}^#{values.join(",")}"
     end
 
     def lookup_subscribers
@@ -238,8 +230,8 @@ module WhatCounts
       response.body.to_s
     end
 
-    def duplicate_subscription?(error_message)
-      error_message.to_s.include?(DUPLICATE_SUBSCRIPTION_ERROR)
+    def http_api_success?(response)
+      response.code.to_i == 200 && response.body.to_s.start_with?("SUCCESS:")
     end
 
     def friendly_error_message(error_message)
@@ -248,8 +240,16 @@ module WhatCounts
       GENERIC_ERROR_MESSAGE
     end
 
+    def duplicate_subscription?(error_message)
+      error_message.to_s.include?(DUPLICATE_SUBSCRIPTION_ERROR)
+    end
+
     def invalid_email_error?(error_message)
       error_message.to_s.downcase.include?("email")
+    end
+
+    def sanitize_http_api_value(value)
+      value.to_s.gsub(/[,\^]/, " ").strip
     end
 
     def missing_configuration?
@@ -258,6 +258,24 @@ module WhatCounts
 
     def base_url
       ENV["WHATCOUNTS_BASE_URL"].to_s.sub(%r{/*\z}, "")
+    end
+
+    def rest_base_url
+      "#{whatcounts_host_url}/rest"
+    end
+
+    def legacy_api_web_url
+      return base_url if base_url.end_with?("/bin/api_web", "/api_web")
+
+      "#{whatcounts_host_url}/bin/api_web"
+    end
+
+    def whatcounts_host_url
+      base_url.sub(%r{/(?:bin/)?api_web\z}, "").sub(%r{/rest\z}, "")
+    end
+
+    def basic_auth
+      Base64.strict_encode64("#{realm_name}:#{api_password}")
     end
 
     def realm_name
