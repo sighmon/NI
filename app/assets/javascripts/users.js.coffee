@@ -25,10 +25,10 @@ jQuery(document).ready ->
     setUnavailableState = ->
       container.attr("data-subscribed", "unknown")
       button
-        .prop("disabled", false)
-        .removeClass("btn-danger btn-outline-secondary")
-        .addClass("btn-success")
-        .text("Subscribe to email newsletter")
+        .prop("disabled", true)
+        .removeClass("btn-success btn-danger")
+        .addClass("btn-outline-secondary")
+        .text("Newsletter status unavailable")
 
     setLoading = (label) ->
       button

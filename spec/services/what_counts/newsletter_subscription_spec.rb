@@ -144,6 +144,26 @@ describe WhatCounts::NewsletterSubscription do
     expect(result.message).to eq("Not subscribed to the email newsletter.")
   end
 
+  it "treats HTTP find failures as upstream errors" do
+    response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "FAILURE: Invalid credentials",
+      body: "FAILURE: Invalid credentials"
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=find&list_id=13&email=reader%40example.com",
+      hash_including(timeout: 10)
+    ).and_return(response)
+
+    result = described_class.new(email: "reader@example.com").status
+
+    expect(result).not_to be_success
+    expect(result.subscribed).to eq(false)
+    expect(result.message).to eq("We could not process your newsletter signup right now. Please try again later.")
+  end
+
   it "returns not subscribed when the subscriptions payload has no matching list" do
     lookup_response = instance_double(
       HTTParty::Response,
@@ -251,6 +271,26 @@ describe WhatCounts::NewsletterSubscription do
     expect(result).to be_success
     expect(result.subscribed).to eq(false)
     expect(result.message).to eq("You have been unsubscribed from the newsletter.")
+  end
+
+  it "does not treat HTTP find failures as already unsubscribed" do
+    lookup_response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "FAILURE: Invalid credentials",
+      body: "FAILURE: Invalid credentials"
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=find&list_id=13&email=reader%40example.com",
+      hash_including(timeout: 10)
+    ).and_return(lookup_response)
+
+    result = described_class.new(email: "reader@example.com").unsubscribe
+
+    expect(result).not_to be_success
+    expect(result.subscribed).to eq(false)
+    expect(result.message).to eq("We could not process your newsletter signup right now. Please try again later.")
   end
 
   it "includes api_client and client_auth in HTTP find lookup when unsubscribing" do

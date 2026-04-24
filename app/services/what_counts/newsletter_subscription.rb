@@ -173,6 +173,20 @@ module WhatCounts
 
       body = response.body.to_s
       lookup = parse_http_find_result(body)
+      if lookup[:error_message].present?
+        Rails.logger.error(
+          "WhatCounts newsletter lookup failed: status=#{response.code} error=#{lookup[:error_message]}"
+        )
+        return LookupResult.new(
+          success: false,
+          status_code: response.code,
+          subscribers: [],
+          subscribed: false,
+          subscriber_id: nil,
+          message: GENERIC_ERROR_MESSAGE
+        )
+      end
+
       if !lookup[:matched]
         Rails.logger.info("WhatCounts newsletter lookup returned no match for email=#{email}")
         return not_subscribed_lookup_result(response.code)
@@ -248,23 +262,35 @@ module WhatCounts
 
     def parse_http_find_result(body)
       normalized_body = body.to_s.strip
-      return { matched: false, subscriber_id: nil } if normalized_body.blank?
-      return { matched: false, subscriber_id: nil } if normalized_body.downcase.start_with?("failure:")
+      return { matched: false, subscriber_id: nil, error_message: nil } if normalized_body.blank?
+
+      if normalized_body.downcase.start_with?("failure:")
+        return {
+          matched: false,
+          subscriber_id: nil,
+          error_message: no_match_lookup_failure?(normalized_body) ? nil : normalized_body
+        }
+      end
 
       lines = normalized_body.split(/\r?\n/).map(&:strip).reject(&:blank?)
       matching_line = lines.find do |line|
         fields = line.split(/\s+/)
         fields[1].to_s.casecmp?(email)
       end
-      return { matched: false, subscriber_id: nil } if matching_line.blank?
+      return { matched: false, subscriber_id: nil, error_message: nil } if matching_line.blank?
 
       fields = matching_line.split(/\s+/, 3)
       subscriber_id = fields[0].to_i if fields[0].to_s.match?(/\A\d+\z/)
 
       {
         matched: true,
-        subscriber_id: subscriber_id
+        subscriber_id: subscriber_id,
+        error_message: nil
       }
+    end
+
+    def no_match_lookup_failure?(body)
+      body.to_s.downcase.include?("no matching record")
     end
 
     def extract_subscriptions(parsed_response)
