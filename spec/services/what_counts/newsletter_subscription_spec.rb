@@ -21,7 +21,7 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?c=sub&r=myRealm&p=secret&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%5Ejane.doe%40example.com%2C1&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%5Ejane.doe%40example.com%2C1&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 
@@ -71,7 +71,29 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?c=sub&r=myRealm&p=secret&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%5Ereader%40example.com%2C1&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%5Ereader%40example.com%2C1&override_confirmation=1&force_sub=1",
+      hash_including(timeout: 10)
+    ).and_return(response)
+
+    result = described_class.new(email: "reader@example.com").call
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(true)
+  end
+
+  it "includes api_client and client_auth in HTTP API calls when configured" do
+    allow(ENV).to receive(:[]).with("WHATCOUNTS_API_CLIENT_NAME").and_return("Australia")
+    allow(ENV).to receive(:[]).with("WHATCOUNTS_API_CLIENT_AUTH_CODE").and_return("client-key")
+
+    response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "SUCCESS: Total Records Processed 1, Total Subscriptions 1, Records Added 1, Records Updated 0, Records Ignored (Optout Error)0, Records Failed Other Error 0",
+      body: "SUCCESS: Total Records Processed 1, Total Subscriptions 1, Records Added 1, Records Updated 0, Records Ignored (Optout Error)0, Records Failed Other Error 0"
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?api_client=Australia&client_auth=client-key&r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%5Ereader%40example.com%2C1&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 
@@ -174,6 +196,41 @@ describe WhatCounts::NewsletterSubscription do
     ).ordered.and_return(lookup_response)
     expect(HTTParty).to receive(:get).with(
       "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=unsub&list_id=13&data=email%5Ereader%40example.com",
+      hash_including(timeout: 10)
+    ).ordered.and_return(unsubscribe_response)
+
+    result = described_class.new(email: "reader@example.com").unsubscribe
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(false)
+  end
+
+  it "includes api_client and client_auth when unsubscribing through the HTTP API" do
+    allow(ENV).to receive(:[]).with("WHATCOUNTS_API_CLIENT_NAME").and_return("Australia")
+    allow(ENV).to receive(:[]).with("WHATCOUNTS_API_CLIENT_AUTH_CODE").and_return("client-key")
+
+    lookup_response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: {
+        "subscriberId" => 7160984,
+        "email" => "reader@example.com"
+      },
+      body: '{"subscriberId":7160984,"email":"reader@example.com"}'
+    )
+    unsubscribe_response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "SUCCESS: 1 record(s) processed.",
+      body: "SUCCESS: 1 record(s) processed."
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/rest/lists/13/subscribers?email=reader%40example.com",
+      hash_including(timeout: 10)
+    ).ordered.and_return(lookup_response)
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?api_client=Australia&client_auth=client-key&r=myRealm&p=secret&c=unsub&list_id=13&data=email%5Ereader%40example.com",
       hash_including(timeout: 10)
     ).ordered.and_return(unsubscribe_response)
 

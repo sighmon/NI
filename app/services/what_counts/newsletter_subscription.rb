@@ -117,16 +117,14 @@ module WhatCounts
     end
 
     def subscribe_url
-      "#{legacy_api_web_url}?#{URI.encode_www_form(
+      http_api_url(
         c: "sub",
-        r: realm_name,
-        p: api_password,
         list_id: list_id,
         format: 99,
         data: subscribe_data,
         override_confirmation: 1,
         force_sub: 1
-      )}"
+      )
     end
 
     def subscribers_url
@@ -134,13 +132,11 @@ module WhatCounts
     end
 
     def unsubscribe_url
-      "#{legacy_api_web_url}?#{URI.encode_www_form(
-        r: realm_name,
-        p: api_password,
+      http_api_url(
         c: "unsub",
         list_id: list_id,
         data: "email^#{email}"
-      )}"
+      )
     end
 
     def headers
@@ -268,6 +264,19 @@ module WhatCounts
       return base_url if base_url.end_with?("/bin/api_web", "/api_web")
 
       "#{whatcounts_host_url}/bin/api_web"
+    end
+
+    def http_api_url(params)
+      "#{legacy_api_web_url}?#{URI.encode_www_form(http_api_params.merge(params))}"
+    end
+
+    def http_api_params
+      {
+        api_client: api_client_name.presence,
+        client_auth: api_client_auth_code.presence,
+        r: realm_name,
+        p: api_password
+      }.compact
     end
 
     def whatcounts_host_url
