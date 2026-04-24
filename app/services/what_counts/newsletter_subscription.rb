@@ -1,5 +1,5 @@
 require "base64"
-require "cgi"
+require "json"
 require "uri"
 
 module WhatCounts
@@ -89,7 +89,7 @@ module WhatCounts
       else
         error_message = extract_error_message(response)
         Rails.logger.error(
-          "WhatCounts newsletter unsubscribe failed: status=#{response.code} error=#{error_message.presence || response.body}"
+          "WhatCounts newsletter unsubscribe failed: status=#{response.code} error=#{error_message.presence || response.body} subscriber_id=#{lookup.subscriber_id.inspect}"
         )
         failure(GENERIC_ERROR_MESSAGE, response.code)
       end
@@ -102,7 +102,7 @@ module WhatCounts
 
     attr_reader :email
 
-    LookupResult = Struct.new(:success, :status_code, :subscribers, :subscribed, :message, keyword_init: true) do
+    LookupResult = Struct.new(:success, :status_code, :subscribers, :subscribed, :subscriber_id, :message, keyword_init: true) do
       def success?
         success
       end
@@ -127,8 +127,12 @@ module WhatCounts
       )
     end
 
-    def subscribers_url
-      "#{rest_base_url}/lists/#{list_id}/subscribers?email=#{CGI.escape(email)}"
+    def find_url
+      http_api_url(
+        c: "find",
+        list_id: list_id,
+        email: email
+      )
     end
 
     def unsubscribe_url
@@ -137,18 +141,6 @@ module WhatCounts
         list_id: list_id,
         data: "email^#{email}"
       )
-    end
-
-    def headers
-      {
-        "Authorization" => "Basic #{basic_auth}",
-        "Accept" => ACCEPT_HEADER,
-        "Content-Type" => CONTENT_TYPE_HEADER
-      }.tap do |request_headers|
-        if api_client_name.present? && api_client_auth_code.present?
-          request_headers["x-api-key"] = Base64.strict_encode64("#{api_client_name}:#{api_client_auth_code}")
-        end
-      end
     end
 
     def subscribe_data
@@ -160,8 +152,7 @@ module WhatCounts
 
     def lookup_subscribers
       response = HTTParty.get(
-        subscribers_url,
-        headers: headers,
+        find_url,
         timeout: 10
       )
 
@@ -175,40 +166,65 @@ module WhatCounts
           status_code: response.code,
           subscribers: [],
           subscribed: false,
+          subscriber_id: nil,
           message: GENERIC_ERROR_MESSAGE
         )
       end
 
-      subscribers = normalize_subscribers(response.parsed_response)
+      body = response.body.to_s
+      lookup = parse_http_find_result(body)
+      if !lookup[:matched]
+        Rails.logger.info("WhatCounts newsletter lookup returned no match for email=#{email}")
+        return not_subscribed_lookup_result(response.code)
+      end
+
+      subscriptions_response = HTTParty.get(
+        subscriptions_url(lookup[:subscriber_id]),
+        headers: rest_headers,
+        timeout: 10
+      )
+
+      if subscriptions_response.code.to_i != 200
+        error_message = extract_error_message(subscriptions_response)
+        Rails.logger.error(
+          "WhatCounts newsletter subscriptions lookup failed: status=#{subscriptions_response.code} error=#{error_message.presence || subscriptions_response.body} subscriber_id=#{lookup[:subscriber_id].inspect}"
+        )
+        return LookupResult.new(
+          success: false,
+          status_code: subscriptions_response.code,
+          subscribers: [],
+          subscribed: false,
+          subscriber_id: lookup[:subscriber_id],
+          message: GENERIC_ERROR_MESSAGE
+        )
+      end
+
+      subscriptions = extract_subscriptions(subscriptions_response.parsed_response)
+      subscribed = subscriptions.any? { |subscription| subscription_list_id(subscription).to_s == list_id.to_s }
+
+      Rails.logger.info(
+        "WhatCounts newsletter lookup email=#{email} subscriber_id=#{lookup[:subscriber_id].inspect} subscription_list_ids=#{subscriptions.map { |subscription| subscription_list_id(subscription) }.inspect}"
+      )
 
       LookupResult.new(
         success: true,
-        status_code: response.code,
-        subscribers: subscribers,
-        subscribed: subscribers.any?,
-        message: subscribers.any? ? STATUS_SUBSCRIBED_MESSAGE : STATUS_UNSUBSCRIBED_MESSAGE
+        status_code: subscriptions_response.code,
+        subscribers: subscriptions,
+        subscribed: subscribed,
+        subscriber_id: lookup[:subscriber_id],
+        message: subscribed ? STATUS_SUBSCRIBED_MESSAGE : STATUS_UNSUBSCRIBED_MESSAGE
       )
     end
 
-    def normalize_subscribers(parsed_response)
-      records =
-        case parsed_response
-        when Array
-          parsed_response
-        when Hash
-          if parsed_response["subscriberId"].present? || parsed_response[:subscriberId].present?
-            [parsed_response]
-          else
-            []
-          end
-        else
-          []
-        end
-
-      records.select do |record|
-        record_email = record["email"] || record[:email]
-        record_email.to_s.casecmp?(email)
-      end
+    def not_subscribed_lookup_result(status_code)
+      LookupResult.new(
+        success: true,
+        status_code: status_code,
+        subscribers: [],
+        subscribed: false,
+        subscriber_id: nil,
+        message: STATUS_UNSUBSCRIBED_MESSAGE
+      )
     end
 
     def extract_error_message(response)
@@ -228,6 +244,53 @@ module WhatCounts
 
     def http_api_success?(response)
       response.code.to_i == 200 && response.body.to_s.start_with?("SUCCESS:")
+    end
+
+    def parse_http_find_result(body)
+      normalized_body = body.to_s.strip
+      return { matched: false, subscriber_id: nil } if normalized_body.blank?
+      return { matched: false, subscriber_id: nil } if normalized_body.downcase.start_with?("failure:")
+
+      lines = normalized_body.split(/\r?\n/).map(&:strip).reject(&:blank?)
+      matching_line = lines.find do |line|
+        fields = line.split(/\s+/)
+        fields[1].to_s.casecmp?(email)
+      end
+      return { matched: false, subscriber_id: nil } if matching_line.blank?
+
+      fields = matching_line.split(/\s+/, 3)
+      subscriber_id = fields[0].to_i if fields[0].to_s.match?(/\A\d+\z/)
+
+      {
+        matched: true,
+        subscriber_id: subscriber_id
+      }
+    end
+
+    def extract_subscriptions(parsed_response)
+      normalized_response =
+        case parsed_response
+        when String
+          JSON.parse(parsed_response)
+        else
+          parsed_response
+        end
+
+      case normalized_response
+      when Hash
+        subscriptions = normalized_response["subscriptions"] || normalized_response[:subscriptions]
+        Array(subscriptions)
+      when Array
+        normalized_response
+      else
+        []
+      end
+    rescue JSON::ParserError
+      []
+    end
+
+    def subscription_list_id(subscription)
+      subscription["listId"] || subscription[:listId] || subscription.dig("dto", "listId") || subscription.dig(:dto, :listId)
     end
 
     def friendly_error_message(error_message)
@@ -256,14 +319,26 @@ module WhatCounts
       ENV["WHATCOUNTS_BASE_URL"].to_s.sub(%r{/*\z}, "")
     end
 
-    def rest_base_url
-      "#{whatcounts_host_url}/rest"
-    end
-
     def legacy_api_web_url
       return base_url if base_url.end_with?("/bin/api_web", "/api_web")
 
       "#{whatcounts_host_url}/bin/api_web"
+    end
+
+    def rest_headers
+      {
+        "Authorization" => "Basic #{basic_auth}",
+        "Accept" => ACCEPT_HEADER,
+        "Content-Type" => CONTENT_TYPE_HEADER
+      }.tap do |request_headers|
+        if api_client_name.present? && api_client_auth_code.present?
+          request_headers["x-api-key"] = Base64.strict_encode64("#{api_client_name}:#{api_client_auth_code}")
+        end
+      end
+    end
+
+    def subscriptions_url(subscriber_id)
+      "#{whatcounts_host_url}/rest/subscribers/#{subscriber_id}/subscriptions"
     end
 
     def http_api_url(params)
