@@ -1,7 +1,11 @@
 class NewsletterSignup
   include ActiveModel::Model
 
-  attr_accessor :email
+  attr_reader :email
+
+  def email=(value)
+    @email = value.to_s.strip
+  end
 
   validates :email,
     presence: true,

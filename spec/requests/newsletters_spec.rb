@@ -36,6 +36,22 @@ describe "Newsletters", type: :request do
       expect(response.body).to include("Thanks for signing up to the newsletter.")
     end
 
+    it "strips surrounding whitespace before attempting signup" do
+      result = instance_double(
+        WhatCounts::NewsletterSubscription::Result,
+        success?: true,
+        message: "Thanks for signing up to the newsletter."
+      )
+
+      expect(WhatCounts::NewsletterSubscription).to receive(:new)
+        .with(email: "reader@example.com")
+        .and_return(instance_double(WhatCounts::NewsletterSubscription, call: result))
+
+      post newsletter_path, params: { newsletter_signup: { email: "  reader@example.com  " } }
+
+      expect(response).to redirect_to(newsletter_path)
+    end
+
     it "re-renders the page when the signup fails" do
       result = instance_double(
         WhatCounts::NewsletterSubscription::Result,

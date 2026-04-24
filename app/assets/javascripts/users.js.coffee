@@ -22,6 +22,14 @@ jQuery(document).ready ->
           .addClass("btn-success")
           .text("Subscribe to email newsletter")
 
+    setUnavailableState = ->
+      container.attr("data-subscribed", "unknown")
+      button
+        .prop("disabled", false)
+        .removeClass("btn-danger btn-outline-secondary")
+        .addClass("btn-success")
+        .text("Subscribe to email newsletter")
+
     setLoading = (label) ->
       button
         .prop("disabled", true)
@@ -44,7 +52,7 @@ jQuery(document).ready ->
           "X-CSRF-Token": csrfToken
       )
 
-    loadStatus = ->
+    loadStatus = (failureMessage = "We could not load your newsletter status right now.") ->
       setLoading("Checking newsletter status...")
       request("GET", container.data("status-url"))
         .done (data) ->
@@ -52,8 +60,8 @@ jQuery(document).ready ->
           button.prop("disabled", false)
           updateMessage(data.message)
         .fail ->
-          setLoading("Newsletter status unavailable")
-          # updateMessage("We could not load your newsletter status right now.", true)
+          setUnavailableState()
+          updateMessage(failureMessage, true)
 
     button.on "click", (event) ->
       event.preventDefault()
@@ -72,7 +80,6 @@ jQuery(document).ready ->
           button.prop("disabled", false)
           updateMessage(data.message)
         .fail ->
-          loadStatus()
-          updateMessage("We could not update your newsletter preference right now.", true)
+          loadStatus("We could not update your newsletter preference right now.")
 
     loadStatus()
