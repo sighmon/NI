@@ -25,6 +25,7 @@ gem 'rails_serve_static_assets'
 # gem 'asset_sync'
 
 # Heroku platform-api
+gem 'multi_json'
 gem 'platform-api'
 
 # Bundle edge Rails instead:
