@@ -14,7 +14,7 @@ describe UserNewsletterSubscriptionsController, type: :controller do
 
       sign_in user
       expect(WhatCounts::NewsletterSubscription).to receive(:new)
-        .with(email: user.email)
+        .with(email: user.email, custom_is_subscriber: false)
         .and_return(instance_double(WhatCounts::NewsletterSubscription, status: result))
 
       get :show, params: { user_id: user.id }, format: :json
@@ -38,7 +38,7 @@ describe UserNewsletterSubscriptionsController, type: :controller do
 
       sign_in user
       expect(WhatCounts::NewsletterSubscription).to receive(:new)
-        .with(email: user.email)
+        .with(email: user.email, custom_is_subscriber: false)
         .and_return(instance_double(WhatCounts::NewsletterSubscription, subscribe: result))
 
       post :create, params: { user_id: user.id }, format: :json
@@ -62,7 +62,7 @@ describe UserNewsletterSubscriptionsController, type: :controller do
 
       sign_in user
       expect(WhatCounts::NewsletterSubscription).to receive(:new)
-        .with(email: user.email)
+        .with(email: user.email, custom_is_subscriber: false)
         .and_return(instance_double(WhatCounts::NewsletterSubscription, unsubscribe: result))
 
       delete :destroy, params: { user_id: user.id }, format: :json

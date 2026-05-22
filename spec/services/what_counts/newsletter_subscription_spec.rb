@@ -82,6 +82,44 @@ describe WhatCounts::NewsletterSubscription do
     expect(result.subscribed).to eq(true)
   end
 
+  it "includes custom_is_subscriber when the caller provides subscriber status" do
+    response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "SUCCESS: 1 record(s) processed.",
+      body: "SUCCESS: 1 record(s) processed."
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2C1&override_confirmation=1&force_sub=1",
+      hash_including(timeout: 10)
+    ).and_return(response)
+
+    result = described_class.new(email: "reader@example.com", custom_is_subscriber: true).call
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(true)
+  end
+
+  it "sets custom_is_subscriber to 0 when the caller provides false subscriber status" do
+    response = instance_double(
+      HTTParty::Response,
+      code: 200,
+      parsed_response: "SUCCESS: 1 record(s) processed.",
+      body: "SUCCESS: 1 record(s) processed."
+    )
+
+    expect(HTTParty).to receive(:get).with(
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2C0&override_confirmation=1&force_sub=1",
+      hash_including(timeout: 10)
+    ).and_return(response)
+
+    result = described_class.new(email: "reader@example.com", custom_is_subscriber: false).call
+
+    expect(result).to be_success
+    expect(result.subscribed).to eq(true)
+  end
+
   it "returns subscribed when the HTTP find lookup returns the email" do
     lookup_response = instance_double(
       HTTParty::Response,

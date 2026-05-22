@@ -23,8 +23,9 @@ module WhatCounts
       end
     end
 
-    def initialize(email:)
+    def initialize(email:, custom_is_subscriber: nil)
       @email = email.to_s.strip
+      @custom_is_subscriber = custom_is_subscriber
     end
 
     def call
@@ -100,7 +101,7 @@ module WhatCounts
 
     private
 
-    attr_reader :email
+    attr_reader :email, :custom_is_subscriber
 
     LookupResult = Struct.new(:success, :status_code, :subscribers, :subscribed, :subscriber_id, :message, keyword_init: true) do
       def success?
@@ -146,6 +147,10 @@ module WhatCounts
     def subscribe_data
       columns = ["email", "custom_pref_monthly_edition", "custom_aus_web_signup"]
       values = [sanitize_http_api_value(email), "1", "1"]
+      if !custom_is_subscriber.nil?
+        columns << "custom_is_subscriber"
+        values << (custom_is_subscriber ? "1" : "0")
+      end
 
       "#{columns.join(",")}^#{values.join(",")}"
     end

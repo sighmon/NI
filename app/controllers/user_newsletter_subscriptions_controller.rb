@@ -26,7 +26,10 @@ class UserNewsletterSubscriptionsController < ApplicationController
   end
 
   def newsletter_service
-    @newsletter_service ||= WhatCounts::NewsletterSubscription.new(email: @user.email)
+    @newsletter_service ||= WhatCounts::NewsletterSubscription.new(
+      email: @user.email,
+      custom_is_subscriber: @user.subscriber?
+    )
   end
 
   def newsletter_access_allowed?
