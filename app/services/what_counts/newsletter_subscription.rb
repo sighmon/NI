@@ -144,8 +144,8 @@ module WhatCounts
     end
 
     def subscribe_data
-      columns = ["email", "custom_pref_monthly_edition"]
-      values = [sanitize_http_api_value(email), "1"]
+      columns = ["email", "custom_pref_monthly_edition", "custom_aus_web_signup"]
+      values = [sanitize_http_api_value(email), "1", "1"]
 
       "#{columns.join(",")}^#{values.join(",")}"
     end
