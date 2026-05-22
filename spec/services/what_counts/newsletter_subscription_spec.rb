@@ -21,7 +21,7 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%5Ejane.doe%40example.com%2C1%2C1&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_source%5Ejane.doe%40example.com%2C1%2C1%2CAustralia+web+subscription&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 
@@ -72,7 +72,7 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?api_client=Australia&client_auth=client-key&r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%5Ereader%40example.com%2C1%2C1&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?api_client=Australia&client_auth=client-key&r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_source%5Ereader%40example.com%2C1%2C1%2CAustralia+web+subscription&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 
@@ -91,7 +91,7 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2C1&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_source%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2CAustralia+web+subscription%2C1&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 
@@ -110,7 +110,7 @@ describe WhatCounts::NewsletterSubscription do
     )
 
     expect(HTTParty).to receive(:get).with(
-      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2C0&override_confirmation=1&force_sub=1",
+      "https://mail.example.com/bin/api_web?r=myRealm&p=secret&c=sub&list_id=13&format=99&data=email%2Ccustom_pref_monthly_edition%2Ccustom_aus_web_signup%2Ccustom_source%2Ccustom_is_subscriber%5Ereader%40example.com%2C1%2C1%2CAustralia+web+subscription%2C0&override_confirmation=1&force_sub=1",
       hash_including(timeout: 10)
     ).and_return(response)
 

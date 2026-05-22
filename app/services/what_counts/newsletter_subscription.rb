@@ -145,8 +145,8 @@ module WhatCounts
     end
 
     def subscribe_data
-      columns = ["email", "custom_pref_monthly_edition", "custom_aus_web_signup"]
-      values = [sanitize_http_api_value(email), "1", "1"]
+      columns = ["email", "custom_pref_monthly_edition", "custom_aus_web_signup", "custom_source"]
+      values = [sanitize_http_api_value(email), "1", "1", "Australia web subscription"]
       if !custom_is_subscriber.nil?
         columns << "custom_is_subscriber"
         values << (custom_is_subscriber ? "1" : "0")
