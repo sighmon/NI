@@ -1,6 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
+  describe '.rpush_register_android_app' do
+    before do
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('development'))
+      allow(ENV).to receive(:fetch).with('RPUSH_ANDROID_DEVELOPMENT_APP_NAME').and_return('android-dev')
+      allow(ENV).to receive(:fetch).with('ANDROID_DEVELOPMENT_FIREBASE_PROJECT_ID').and_return('firebase-dev')
+      allow(ENV).to receive(:fetch).with('ANDROID_DEVELOPMENT_JSON_KEY').and_return('{"client_email":"firebase@example.com"}')
+    end
+
+    it 'creates an FCM app with Firebase service account settings' do
+      described_class.rpush_register_android_app
+
+      app = Rpush::Fcm::App.find_by!(name: 'android-dev')
+      expect(app.type).to eq('Rpush::Client::ActiveRecord::Fcm::App')
+      expect(app.environment).to eq('sandbox')
+      expect(app.firebase_project_id).to eq('firebase-dev')
+      expect(app.json_key).to eq('{"client_email":"firebase@example.com"}')
+      expect(app.connections).to eq(1)
+    end
+  end
+
+  describe '.rpush_create_android_push_notification' do
+    before do
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('development'))
+      allow(ENV).to receive(:fetch).with('RPUSH_ANDROID_DEVELOPMENT_APP_NAME').and_return('android-dev')
+
+      Rpush::Fcm::App.create!(
+        name: 'android-dev',
+        environment: 'sandbox',
+        firebase_project_id: 'firebase-dev',
+        json_key: '{"client_email":"firebase@example.com"}'
+      )
+    end
+
+    it 'creates one FCM notification per Android token' do
+      notifications = described_class.rpush_create_android_push_notification(
+        %w[token-one token-two],
+        {
+          body: 'Test message.',
+          deliver_after: Time.zone.parse('2026-05-22 10:00'),
+          railsID: '123'
+        }
+      )
+
+      expect(notifications.size).to eq(2)
+      expect(notifications.map(&:type).uniq).to eq(['Rpush::Client::ActiveRecord::Fcm::Notification'])
+      expect(notifications.map(&:device_token)).to eq(%w[token-one token-two])
+      expect(notifications.map(&:registration_ids)).to all(be_nil)
+      expect(notifications.first.notification).to include('body' => 'Test message.', 'icon' => 'ni_notification')
+      expect(notifications.first.data).to include('body' => 'Test message.', 'railsID' => '123')
+      expect(notifications.first.uri).to eq('newint://issues/123')
+    end
+  end
+
   describe '.start_delayed_jobs' do
     let(:dyno_client) { instance_double('DynoClient') }
     let(:platform_client) { instance_double('PlatformClient', dyno: dyno_client) }

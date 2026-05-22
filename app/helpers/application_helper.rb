@@ -343,16 +343,16 @@ module ApplicationHelper
 
     def self.rpush_register_android_app
         # Set-up Android push notifications
-        # TODO: Update this to Firebase
-        app = Rpush::Gcm::App.new
         if Rails.env.production?
-            app = Rpush::Gcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
-            app.environment = "production" # APNs environment.
-            app.auth_key = ENV.fetch("ANDROID_PRODUCTION_AUTH_KEY")
+            app = Rpush::Fcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
+            app.environment = "production"
+            app.firebase_project_id = ENV.fetch("ANDROID_PRODUCTION_FIREBASE_PROJECT_ID")
+            app.json_key = ENV.fetch("ANDROID_PRODUCTION_JSON_KEY")
         else
-            app = Rpush::Gcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
-            app.environment = "sandbox" # APNs environment.
-            app.auth_key = ENV.fetch("ANDROID_DEVELOPMENT_AUTH_KEY")
+            app = Rpush::Fcm::App.find_or_create_by(name: ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
+            app.environment = "sandbox"
+            app.firebase_project_id = ENV.fetch("ANDROID_DEVELOPMENT_FIREBASE_PROJECT_ID")
+            app.json_key = ENV.fetch("ANDROID_DEVELOPMENT_JSON_KEY")
         end
         app.connections = 1
         app.save!
@@ -361,34 +361,36 @@ module ApplicationHelper
     def self.rpush_create_android_push_notification(tokens, data)
         # Create Android push notifications (takes an array of android device tokens)
 
-        n = Rpush::Gcm::Notification.new
         if Rails.env.production?
-            n.app = Rpush::Gcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
+            app = Rpush::Fcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_PRODUCTION_APP_NAME"))
         else
-            n.app = Rpush::Gcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
+            app = Rpush::Fcm::App.find_by_name(ENV.fetch("RPUSH_ANDROID_DEVELOPMENT_APP_NAME"))
         end
         # To get the NI icon, data = {icon: 'ni_notification'}
         data[:icon] = 'ni_notification'
         data[:sound] = 'content://settings/system/notification_sound'
         # data[:vibrate] = 'Notification.DEFAULT_VIBRATE'
-        n.deliver_after = data[:deliver_after]
-        n.uri = generate_notification_uri(data)
-        n.sound = data[:sound]
-        n.registration_ids = tokens # Array of token strings
-        n.notification = { body: data[:body],
-                           icon: data[:icon],
-                           sound: data[:sound],
-                           vibrate: true
-                         }
-        n.data = data # { message: "hi mom!" }
-        n.priority = 'high'        # Optional, can be either 'normal' or 'high'
-        n.content_available = true # Optional
-        # Optional notification payload. See the reference below for more keys you can use!
-        # n.notification = { body: 'great match!',
-        #                    title: 'Portugal vs. Denmark',
-        #                    icon: 'myicon'
-        #                  }
-        n.save!
+        tokens.map do |token|
+            n = Rpush::Fcm::Notification.new
+            n.app = app
+            n.deliver_after = data[:deliver_after]
+            n.uri = generate_notification_uri(data)
+            n.sound = data[:sound]
+            n.device_token = token
+            n.notification = { body: data[:body],
+                               icon: data[:icon]
+                             }
+            n.data = data.transform_values(&:to_s) # FCM requires data payload values to be strings.
+            n.priority = 'high'        # Optional, can be either 'normal' or 'high'
+            n.content_available = true # Optional
+            # Optional notification payload. See the reference below for more keys you can use!
+            # n.notification = { body: 'great match!',
+            #                    title: 'Portugal vs. Denmark',
+            #                    icon: 'myicon'
+            #                  }
+            n.save!
+            n
+        end
     end
 
     def self.generate_notification_uri(data)
