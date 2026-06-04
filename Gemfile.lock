@@ -805,7 +805,6 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.8.2)
-    zipruby (0.3.6)
 
 PLATFORMS
   aarch64-linux
@@ -903,6 +902,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rspec
   ruby-prof
+  rubyzip
   sassc
   savon (~> 1.2.0)
   secure_headers
@@ -917,7 +917,6 @@ DEPENDENCIES
   timecop
   uglifier (>= 1.0.3)
   uri-js-rails
-  zipruby
 
 RUBY VERSION
    ruby 3.4.9p82

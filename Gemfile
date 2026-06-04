@@ -98,11 +98,7 @@ gem 'sitemap_generator'
 gem 'newrelic_rpm'#, '6.12.0.367'
 
 # rubyzip for zipping up the issues https://github.com/rubyzip/rubyzip
-# gem 'rubyzip'
-
-# trying zipruby instead to see if it has less memory problems on heroku
-# https://rubygems.org/gems/zipruby
-gem 'zipruby'
+gem 'rubyzip'
 
 # Rack Cache and memcached https://devcenter.heroku.com/articles/rack-cache-memcached-rails31
 # gem 'rack-cache'
