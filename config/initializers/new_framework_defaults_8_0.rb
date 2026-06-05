@@ -10,12 +10,8 @@
 # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html
 
 ###
-# Specifies whether `to_time` methods preserve the UTC offset of their receivers or preserves the timezone.
-# If set to `:zone`, `to_time` methods will use the timezone of their receivers.
-# If set to `:offset`, `to_time` methods will use the UTC offset.
-# If `false`, `to_time` methods will convert to the local system UTC offset instead.
+# Rails 8.1 always preserves the receiver timezone when calling `to_time`.
 #++
-# Rails.application.config.active_support.to_time_preserves_timezone = :zone
 
 ###
 # When both `If-Modified-Since` and `If-None-Match` are provided by the client
