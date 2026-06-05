@@ -12,16 +12,15 @@ describe "categories/index.html.erb", type: :view do
     allow(view).to receive(:retina_image_tag).and_return("<img />")
   end
 
-  it "renders category index structured data into the head slot" do
+  it "renders category index structured data in the cached action body" do
     allow(view).to receive(:can?).with(:update, category).and_return(false)
 
     render template: "categories/index"
 
-    structured_data = view.content_for(:structured_data)
-    expect(structured_data).to include('type="application/ld+json"')
-    expect(structured_data).to include('"@type":"CollectionPage"')
-    expect(structured_data).to include('"@type":"ItemList"')
-    expect(structured_data).to include('"name":"' + category.display_name + '"')
+    expect(rendered).to include('type="application/ld+json"')
+    expect(rendered).to include('"@type":"CollectionPage"')
+    expect(rendered).to include('"@type":"ItemList"')
+    expect(rendered).to include('"name":"' + category.display_name + '"')
   end
 
   context "when the user can update" do
