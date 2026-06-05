@@ -880,6 +880,7 @@ DEPENDENCIES
   net-smtp
   newrelic_rpm
   nokogiri (>= 1.13.4)
+  ostruct
   pagy (< 43)
   paypal-recurring
   pg

@@ -45,6 +45,8 @@ gem 'daemons'
 
 # No longer be part of the default gems starting from Ruby 3.5.0
 gem 'benchmark'
+# No longer part of the default gems starting from Ruby 4.0.0
+gem 'ostruct'
 
 # User authentication via Devise https://github.com/plataformatec/devise
 gem 'devise'
