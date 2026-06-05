@@ -457,7 +457,7 @@ class IssuesController < ApplicationController
 
     json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
     http.use_ssl = true
-    api_response, data = http.post(uri.path,json)
+    api_response, data = http.post(uri.path, json, "Content-Type" => "application/json")
 
     subscription_receipt_valid = false
 

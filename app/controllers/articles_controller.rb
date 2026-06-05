@@ -781,7 +781,7 @@ class ArticlesController < ApplicationController
   def send_receipt_to_itunes(uri,json)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    api_response, data = http.post(uri.path,json)
+    api_response, data = http.post(uri.path, json, "Content-Type" => "application/json")
 
     # Do a first check to see if the receipt is valid from iTunes
     itunes_response = JSON.parse(api_response.body)["status"]

@@ -659,7 +659,7 @@ class User < ActiveRecord::Base
 
     json = { "receipt-data" => request.raw_post, "password" => ENV["ITUNES_SECRET"] }.to_json
     http.use_ssl = true
-    api_response, data = http.post(uri.path,json)
+    api_response, data = http.post(uri.path, json, "Content-Type" => "application/json")
 
     # Do a first check to see if the receipt is valid from iTunes
     if JSON.parse(api_response.body)["status"] != 0

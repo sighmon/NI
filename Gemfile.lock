@@ -919,7 +919,7 @@ DEPENDENCIES
   uri-js-rails
 
 RUBY VERSION
-   ruby 3.4.9p82
+  ruby 4.0.5p0
 
 BUNDLED WITH
-   2.6.7
+  4.0.13
