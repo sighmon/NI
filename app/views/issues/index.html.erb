@@ -1,5 +1,9 @@
 <%- model_class = Issue -%>
 
+<% content_for :structured_data do %>
+  <%= json_ld_tag(issues_index_structured_data(@issues, @page_description)) %>
+<% end %>
+
 <div class="issue-search">
   <%= form_tag issues_path, class: 'form-search form-inline', method: :get do %>
       <div class="input-append">

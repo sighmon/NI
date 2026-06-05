@@ -2,6 +2,65 @@ module ArticlesHelper
 
   include ActionView::Helpers::AssetUrlHelper
 
+  def article_structured_data(article, issue)
+    data = {
+      "@context" => "https://schema.org",
+      "@type" => "Article",
+      "mainEntityOfPage" => {
+        "@type" => "WebPage",
+        "@id" => issue_article_url(issue, article)
+      },
+      "headline" => strip_tags(article.title.to_s),
+      "description" => strip_tags(article.teaser.to_s),
+      "datePublished" => issue.release.to_time.iso8601,
+      "dateModified" => article.updated_at.to_time.iso8601,
+      "publisher" => {
+        "@type" => "Organization",
+        "name" => "New Internationalist",
+        "url" => root_url,
+        "logo" => {
+          "@type" => "ImageObject",
+          "url" => asset_url("favicon-196x196.png"),
+          "width" => 196,
+          "height" => 196
+        }
+      }
+    }
+
+    if article.author.present?
+      data["author"] = {
+        "@type" => "Person",
+        "name" => strip_tags(article.author)
+      }
+    end
+
+    image = article_structured_data_image(article)
+    data["image"] = [image] if image
+
+    data
+  end
+
+  def article_structured_data_image(article)
+    if article.featured_image.present?
+      return {
+        "@type" => "ImageObject",
+        "url" => article.featured_image_url(:fullwidth).to_s,
+        "width" => 1890,
+        "height" => 800
+      }
+    end
+
+    image = article.first_image
+    return unless image
+
+    {
+      "@type" => "ImageObject",
+      "url" => image.data_url.to_s,
+      "width" => image.width,
+      "height" => image.height
+    }
+  end
+
   def source_to_body(article, options = {})
     debug = options[:debug] or false
     if not article.source.blank?

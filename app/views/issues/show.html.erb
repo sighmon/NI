@@ -1,5 +1,9 @@
 <%- model_class = Issue -%>
 
+<% content_for :structured_data do %>
+  <%= json_ld_tag(issue_structured_data(@issue, @page_description)) %>
+<% end %>
+
 <% if user_signed_in? and can? :update, @issue %>
 <div class="edit-issue-buttons">
   <%= link_to t('.edit', default: t("helpers.links.edit")),

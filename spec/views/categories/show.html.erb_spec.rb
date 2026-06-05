@@ -20,6 +20,7 @@ describe "categories/show.html.erb", type: :view do
     assign(:category, category)
     assign(:articles, [article])
     assign(:pagy, double("Pagy"))
+    assign(:page_description, "All articles about World / Politics.")
 
     # Helpers we don't want to exercise
     allow(view).to receive(:retina_image_tag).and_return("<img />")
@@ -28,6 +29,16 @@ describe "categories/show.html.erb", type: :view do
 
     # IMPORTANT: default can? stub for ANY arguments
     allow(view).to receive(:can?).and_return(false)
+  end
+
+  it "renders category structured data into the head slot" do
+    render template: "categories/show"
+
+    structured_data = view.content_for(:structured_data)
+    expect(structured_data).to include('type="application/ld+json"')
+    expect(structured_data).to include('"@type":"CollectionPage"')
+    expect(structured_data).to include('"@type":"ItemList"')
+    expect(structured_data).to include('"headline":"Democracy in crisis"')
   end
 
   context "when the user can update and destroy the category" do

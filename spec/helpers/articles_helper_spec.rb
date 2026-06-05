@@ -1,6 +1,34 @@
 require 'rails_helper'
 
 describe ArticlesHelper, type: :helper do
+  describe '#article_structured_data' do
+    let(:issue) { FactoryBot.create(:issue, release: Time.zone.parse("2026-05-01 00:00:00")) }
+    let(:article) do
+      FactoryBot.create(
+        :article,
+        issue: issue,
+        title: 'A "quoted" headline',
+        teaser: '<p>Article teaser</p>',
+        author: 'Jane Doe'
+      )
+    end
+
+    it 'builds Article JSON-LD data' do
+      data = helper.article_structured_data(article, issue)
+
+      expect(data["@context"]).to eq("https://schema.org")
+      expect(data["@type"]).to eq("Article")
+      expect(data["headline"]).to eq('A "quoted" headline')
+      expect(data["description"]).to eq("Article teaser")
+      expect(data["author"]).to eq(
+        "@type" => "Person",
+        "name" => "Jane Doe"
+      )
+      expect(data["publisher"]["@type"]).to eq("Organization")
+      expect(data["mainEntityOfPage"]["@id"]).to eq(issue_article_url(issue, article))
+    end
+  end
+
   describe '#source_to_body' do
     let(:base_xml) do
       <<~XML

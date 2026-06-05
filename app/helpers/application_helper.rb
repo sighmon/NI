@@ -2,6 +2,14 @@ module ApplicationHelper
 
     include Pagy::Frontend
 
+    def json_ld_tag(data)
+        content_tag(
+            :script,
+            json_escape(data.to_json).html_safe,
+            type: "application/ld+json"
+        )
+    end
+
     def issues_as_table(issues)
         if issues.try(:empty?)
             return "You haven't purchased any individual issues yet."

@@ -1,24 +1,26 @@
 <!-- Google Structured Data for search results -->
-<script type="application/ld+json">
-{
-  "@context": "http://schema.org",
-  "@type": "WebSite",
-  "name": "<%= ENV['APP_NAME'] %>",
-  "url": "<%= root_url %>",
-  "dateModified": "<%= @latest_issue.release.to_time.iso8601 %>",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://digital.newint.com.au/search?utf8=✓&query={search_term_string}",
-    "query-input": "required name=search_term_string"
-  },
-  "sameAs": [
-    "https://facebook.com/<%= ENV["FACEBOOK_PAGE_NAME"] %>",
-    "https://instagram.com/<%= ENV["INSTAGRAM_NAME"] %>",
-    "https://twitter.com/<%= ENV["TWITTER_NAME"] %>",
-    "https://plus.google.com/+<%= ENV["GOOGLE_PLUS_NAME"] %>"
-  ]
-}
-</script>
+<% content_for :structured_data do %>
+  <%= json_ld_tag(
+    {
+      "@context" => "https://schema.org",
+      "@type" => "WebSite",
+      "name" => ENV["APP_NAME"],
+      "url" => root_url,
+      "dateModified" => @latest_issue.release.to_time.iso8601,
+      "potentialAction" => {
+        "@type" => "SearchAction",
+        "target" => "https://digital.newint.com.au/search?utf8=✓&query={search_term_string}",
+        "query-input" => "required name=search_term_string"
+      },
+      "sameAs" => [
+        "https://facebook.com/#{ENV["FACEBOOK_PAGE_NAME"]}",
+        "https://instagram.com/#{ENV["INSTAGRAM_NAME"]}",
+        "https://twitter.com/#{ENV["TWITTER_NAME"]}",
+        "https://plus.google.com/+#{ENV["GOOGLE_PLUS_NAME"]}"
+      ]
+    }
+  ) %>
+<% end %>
 
 <% if @latest_issue.try(:keynote).try(:first_image) %>
 	<div id="myCarousel" class="carousel slide home-hero">

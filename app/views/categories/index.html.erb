@@ -1,5 +1,9 @@
 <%- model_class = Category -%>
 
+<% content_for :structured_data do %>
+  <%= json_ld_tag(categories_index_structured_data(@categories, @page_description)) %>
+<% end %>
+
 <% if can? :update, @category %>
 <div class="edit-issue-buttons">
   <%= link_to 'Update colours', update_categories_colours_path, class: 'btn btn-xs btn-success' %>

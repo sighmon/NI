@@ -1,5 +1,9 @@
 <%- model_class = Article -%>
 
+<% content_for :structured_data do %>
+  <%= json_ld_tag(article_structured_data(@article, @issue)) %>
+<% end %>
+
 <% if can? :update, @article %>
 <div class="edit-article-buttons">
   <%= link_to t('.edit', default: t("helpers.links.edit")),

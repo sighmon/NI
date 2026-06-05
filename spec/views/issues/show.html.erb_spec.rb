@@ -22,6 +22,22 @@ describe "issues/show", type: :view do
     Settings.issue_price = 750
   end
 
+    it "renders issue structured data into the head slot" do
+      assign(:issue, issue)
+      assign(:categories, [category, category_two])
+      assign(:web_exclusives, [])
+      assign(:blogs, [])
+      assign(:page_description, "May, 2026 - Issue teaser")
+
+      render
+
+      structured_data = view.content_for(:structured_data)
+      expect(structured_data).to include('type="application/ld+json"')
+      expect(structured_data).to include('"@type":"Product"')
+      expect(structured_data).to include('"name":"' + issue.title + '"')
+      expect(structured_data).to include('"hasPart"')
+    end
+
     it "should be able to read all articles" do
       # # assign(:article, article)
       assign(:issue, issue)
