@@ -12,8 +12,8 @@ module ArticlesHelper
       },
       "headline" => strip_tags(article.title.to_s),
       "description" => strip_tags(article.teaser.to_s),
-      "datePublished" => issue.release.to_time.iso8601,
-      "dateModified" => article.updated_at.to_time.iso8601,
+      "datePublished" => article_schema_datetime(issue.release),
+      "dateModified" => article_schema_datetime(article.updated_at),
       "publisher" => {
         "@type" => "Organization",
         "name" => "New Internationalist",
@@ -38,6 +38,10 @@ module ArticlesHelper
     data["image"] = [image] if image
 
     data
+  end
+
+  def article_schema_datetime(value)
+    value.in_time_zone.iso8601
   end
 
   def article_structured_data_image(article)

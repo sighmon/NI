@@ -11,6 +11,7 @@ describe "issues/show", type: :view do
     category.name = "/features/"
     keynote_article.categories << category
     keynote_article.keynote = true
+    keynote_article.author = "Jane Doe"
     category_two.name = "/columns/currents/"
     article.categories << category_two
     issue.published = true
@@ -36,6 +37,7 @@ describe "issues/show", type: :view do
       expect(structured_data).to include('"@type":"Product"')
       expect(structured_data).to include('"name":"' + issue.title + '"')
       expect(structured_data).to include('"hasPart"')
+      expect(structured_data).to include('"author":{"@type":"Person","name":"Jane Doe"}')
     end
 
     it "should be able to read all articles" do

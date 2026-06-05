@@ -63,15 +63,48 @@ module IssuesHelper
         articles = issue.ordered_articles.compact
         if articles.any?
             data["hasPart"] = articles.collect do |article|
-                {
+                article_data = {
                     "@type" => "Article",
                     "headline" => strip_tags(article.title.to_s),
                     "url" => issue_article_url(issue, article)
                 }
+
+                if article.author.present?
+                    article_data["author"] = {
+                        "@type" => "Person",
+                        "name" => strip_tags(article.author)
+                    }
+                end
+
+                image = issue_article_structured_data_image(article)
+                article_data["image"] = [image] if image
+
+                article_data
             end
         end
 
         data
+    end
+
+    def issue_article_structured_data_image(article)
+        if article.featured_image.present?
+            return {
+                "@type" => "ImageObject",
+                "url" => article.featured_image_url(:fullwidth).to_s,
+                "width" => 1890,
+                "height" => 800
+            }
+        end
+
+        image = article.first_image
+        return unless image
+
+        {
+            "@type" => "ImageObject",
+            "url" => image.data_url.to_s,
+            "width" => image.width,
+            "height" => image.height
+        }
     end
 
 	# Adds CSS class to unpublished issues in issues index.
