@@ -408,8 +408,15 @@ module ApplicationHelper
     end
 
     def self.rpush_consolidate_legacy_apps(current_app)
+        legacy_app_types = rpush_legacy_app_types(current_app)
+        return if legacy_app_types.empty?
+
         apps = Rpush::Client::ActiveRecord::App
-            .where(name: current_app.name)
+            .where(
+                name: current_app.name,
+                environment: current_app.environment,
+                type: legacy_app_types
+            )
             .where.not(id: current_app.id)
         legacy_app_ids = apps.pluck(:id)
         return if legacy_app_ids.empty?
@@ -429,6 +436,29 @@ module ApplicationHelper
             end
             apps.delete_all
         end
+    end
+
+    def self.rpush_legacy_app_types(current_app)
+        case current_app
+        when Rpush::Fcm::App
+            [
+                'Rpush::Gcm::App',
+                'Rpush::Client::ActiveRecord::Gcm::App',
+                'Rpush::Fcm::App',
+                Rpush::Fcm::App.name
+            ]
+        when Rpush::Apnsp8::App
+            [
+                'Rpush::Apns::App',
+                'Rpush::Client::ActiveRecord::Apns::App',
+                'Rpush::Apns2::App',
+                'Rpush::Client::ActiveRecord::Apns2::App',
+                'Rpush::Apnsp8::App',
+                Rpush::Apnsp8::App.name
+            ]
+        else
+            []
+        end.uniq
     end
 
     def self.rpush_convert_legacy_gcm_notifications(notifications, app_id, notification_type)

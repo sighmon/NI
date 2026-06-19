@@ -53,6 +53,33 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(notifications.first.id).to eq(notification_id)
       expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app_id)).not_to exist
     end
+
+    it 'does not consolidate a same-name app from another push service or environment' do
+      ios_app = Rpush::Apnsp8::App.new(name: 'android-dev', environment: 'sandbox')
+      ios_app.save!(validate: false)
+      ios_notification = Rpush::Apnsp8::Notification.new(
+        app: ios_app,
+        device_token: 'ios-token',
+        alert: 'iOS message'
+      )
+      ios_notification.save!(validate: false)
+
+      production_gcm_app = Rpush::Client::ActiveRecord::Apns::App.new(
+        name: 'android-dev',
+        environment: 'production'
+      )
+      production_gcm_app.save!(validate: false)
+      Rpush::Client::ActiveRecord::App
+        .where(id: production_gcm_app.id)
+        .update_all(type: 'Rpush::Gcm::App')
+
+      described_class.rpush_register_android_app
+
+      expect(Rpush::Client::ActiveRecord::App.where(id: ios_app.id)).to exist
+      expect(ios_notification.reload.app_id).to eq(ios_app.id)
+      expect(ios_notification.type).to eq('Rpush::Client::ActiveRecord::Apnsp8::Notification')
+      expect(Rpush::Client::ActiveRecord::App.where(id: production_gcm_app.id)).to exist
+    end
   end
 
   describe '.rpush_create_android_push_notification' do
