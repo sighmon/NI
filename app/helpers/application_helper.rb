@@ -408,13 +408,20 @@ module ApplicationHelper
     end
 
     def self.rpush_consolidate_legacy_apps(current_app)
-        Rpush::Client::ActiveRecord::App
+        apps = Rpush::Client::ActiveRecord::App
             .where(name: current_app.name)
             .where.not(id: current_app.id)
-            .find_each do |legacy_app|
-                legacy_app.notifications.update_all(app_id: current_app.id)
-                legacy_app.delete
-            end
+        legacy_app_ids = apps.pluck(:id)
+        return if legacy_app_ids.empty?
+
+        notification_type = current_app.class.name.sub(/::App\z/, '::Notification')
+
+        Rpush::Client::ActiveRecord::App.transaction do
+            Rpush::Client::ActiveRecord::Notification
+                .where(app_id: legacy_app_ids)
+                .update_all(app_id: current_app.id, type: notification_type)
+            apps.delete_all
+        end
     end
 
     def self.rpush_create_android_push_notification(tokens, data)

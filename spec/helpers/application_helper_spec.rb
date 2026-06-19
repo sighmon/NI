@@ -20,7 +20,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(app.connections).to eq(1)
     end
 
-    it 'moves notifications from a legacy app and removes the legacy app' do
+    it 'converts removed GCM STI records to FCM without instantiating them' do
       legacy_app = Rpush::Client::ActiveRecord::Apns::App.new(
         name: 'android-dev',
         environment: 'sandbox'
@@ -32,11 +32,26 @@ RSpec.describe ApplicationHelper, type: :helper do
         data: { message: 'Test' }
       )
       notification.save!(validate: false)
+      legacy_app_id = legacy_app.id
+      notification_id = notification.id
+
+      Rpush::Client::ActiveRecord::App
+        .where(id: legacy_app_id)
+        .update_all(type: 'Rpush::Gcm::App')
+      Rpush::Client::ActiveRecord::Notification
+        .where(id: notification_id)
+        .update_all(type: 'Rpush::Gcm::Notification')
 
       current_app = described_class.rpush_register_android_app
 
-      expect(notification.reload.app_id).to eq(current_app.id)
-      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app.id)).not_to exist
+      notification_values = Rpush::Client::ActiveRecord::Notification
+        .where(id: notification_id)
+        .pick(:app_id, :type)
+
+      expect(notification_values).to eq(
+        [current_app.id, 'Rpush::Client::ActiveRecord::Fcm::Notification']
+      )
+      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app_id)).not_to exist
     end
   end
 
