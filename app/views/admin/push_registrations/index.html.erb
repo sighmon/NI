@@ -34,7 +34,7 @@
     <tr>
       <td><%= pr.id %></td>
       <td><%= pr.device %></td>
-      <td><%= pr.token %></td>
+      <td class="push-registration-token"><%= pr.token %></td>
       <td><%= pr.updated_at.strftime("%d-%m-%Y %H:%M:%S") %></td>
       <td><%= link_to "Delete", push_registrations_path(id: pr.id), 
               method: 'delete', 
