@@ -113,7 +113,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(converted.pluck(:processing)).to eq([false, false])
     end
 
-    it 'retains a legacy app while it owns a processing notification' do
+    it 'moves a processing notification off an unsupported legacy app without splitting it' do
       legacy_app = Rpush::Client::ActiveRecord::Apns::App.new(
         name: 'android-dev',
         environment: 'sandbox'
@@ -132,13 +132,21 @@ RSpec.describe ApplicationHelper, type: :helper do
         .where(id: notification.id)
         .update_all(type: 'Rpush::Gcm::Notification')
 
-      described_class.rpush_register_android_app
+      current_app = described_class.rpush_register_android_app
 
-      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app.id)).to exist
+      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app.id)).not_to exist
       values = Rpush::Client::ActiveRecord::Notification
         .where(id: notification.id)
-        .pick(:app_id, :type, :processing)
-      expect(values).to eq([legacy_app.id, 'Rpush::Gcm::Notification', true])
+        .pick(:app_id, :type, :device_token, :processing)
+      expect(values).to eq(
+        [current_app.id, Rpush::Fcm::Notification.name, nil, true]
+      )
+      expect(
+        Rpush::Client::ActiveRecord::Notification.where(app_id: current_app.id).count
+      ).to eq(1)
+      expect(
+        Rpush::Client::ActiveRecord::Notification.find(notification.id).registration_ids
+      ).to eq(%w[active-legacy-one active-legacy-two])
     end
 
     it 'does not consolidate a same-name app from another push service or environment' do

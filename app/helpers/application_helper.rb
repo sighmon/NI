@@ -431,10 +431,13 @@ module ApplicationHelper
                     .update_all(app_id: current_app.id, type: notification_type)
             end
 
-            app_ids_with_notifications = Rpush::Client::ActiveRecord::Notification
-                .where(app_id: legacy_app_ids)
-                .select(:app_id)
-            apps.where.not(id: app_ids_with_notifications).delete_all
+            # Do not split notifications already owned by a runner, but move
+            # them off removed STI app classes so Rpush can synchronize apps.
+            legacy_notifications
+                .where(processing: true)
+                .update_all(app_id: current_app.id, type: notification_type)
+
+            apps.delete_all
         end
     end
 

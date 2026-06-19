@@ -36,11 +36,25 @@ describe "admin/push_notifications/index.html.erb", type: :view do
     )
   end
 
+  let(:legacy_android_notification) do
+    double(
+      "Legacy Android notification",
+      **common_attributes,
+      id: 3,
+      type: "Rpush::Gcm::Notification",
+      device_token: nil,
+      registration_ids: [nil, "legacy-android-token-12345678"]
+    )
+  end
+
   before do
-    assign(:pn_total, 2)
-    assign(:pn_undelivered, 2)
+    assign(:pn_total, 3)
+    assign(:pn_undelivered, 3)
     assign(:pagy, double("Pagy"))
-    assign(:push_notifications, [android_notification, ios_notification])
+    assign(
+      :push_notifications,
+      [android_notification, ios_notification, legacy_android_notification]
+    )
     allow(view).to receive(:pagy_bootstrap_nav).and_return("PAGY NAV")
 
     render template: "admin/push_notifications/index"
@@ -54,5 +68,9 @@ describe "admin/push_notifications/index.html.erb", type: :view do
   it "continues to label APNs notifications as iOS" do
     expect(rendered).to include("iOS:")
     expect(rendered).to include("ios-devi...12345678")
+  end
+
+  it "skips nil legacy registration IDs" do
+    expect(rendered).to include("legacy-a...12345678")
   end
 end
