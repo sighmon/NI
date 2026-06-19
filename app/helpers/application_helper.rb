@@ -408,20 +408,25 @@ module ApplicationHelper
             )
             .where.not(id: current_app.id)
         legacy_app_ids = apps.pluck(:id)
-        return if legacy_app_ids.empty?
-
         notification_type = current_app.class.name.sub(/::App\z/, '::Notification')
-        notifications = Rpush::Client::ActiveRecord::Notification.where(app_id: legacy_app_ids)
+        legacy_notifications = Rpush::Client::ActiveRecord::Notification.where(app_id: legacy_app_ids)
 
         Rpush::Client::ActiveRecord::App.transaction do
             if notification_type == Rpush::Fcm::Notification.name
                 rpush_convert_legacy_gcm_notifications(
-                    notifications,
+                    legacy_notifications,
+                    current_app.id,
+                    notification_type
+                )
+                rpush_convert_legacy_gcm_notifications(
+                    Rpush::Client::ActiveRecord::Notification
+                        .where(app_id: current_app.id)
+                        .where.not(registration_ids: nil),
                     current_app.id,
                     notification_type
                 )
             else
-                notifications.update_all(app_id: current_app.id, type: notification_type)
+                legacy_notifications.update_all(app_id: current_app.id, type: notification_type)
             end
             apps.delete_all
         end

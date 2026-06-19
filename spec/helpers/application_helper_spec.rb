@@ -54,6 +54,32 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app_id)).not_to exist
     end
 
+    it 'converts queued recipients already attached to the migrated FCM app' do
+      app = Rpush::Fcm::App.create!(
+        name: 'android-dev',
+        environment: 'sandbox',
+        firebase_project_id: 'old-project',
+        json_key: '{"client_email":"old@example.com"}'
+      )
+      notification = Rpush::Client::ActiveRecord::Apns::Notification.new(
+        app: app,
+        registration_ids: %w[current-token-one current-token-two],
+        data: { message: 'Queued before upgrade' }
+      )
+      notification.save!(validate: false)
+      Rpush::Client::ActiveRecord::Notification
+        .where(id: notification.id)
+        .update_all(type: Rpush::Fcm::Notification.name)
+
+      current_app = described_class.rpush_register_android_app
+
+      expect(current_app.id).to eq(app.id)
+      notifications = Rpush::Fcm::Notification.where(app_id: current_app.id).order(:id)
+      expect(notifications.pluck(:device_token)).to eq(%w[current-token-one current-token-two])
+      expect(notifications.pluck(:registration_ids)).to eq([nil, nil])
+      expect(notifications.map(&:data)).to all(eq('message' => 'Queued before upgrade'))
+    end
+
     it 'does not consolidate a same-name app from another push service or environment' do
       ios_app = Rpush::Apnsp8::App.new(name: 'android-dev', environment: 'sandbox')
       ios_app.save!(validate: false)
