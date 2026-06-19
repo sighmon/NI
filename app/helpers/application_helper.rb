@@ -415,13 +415,51 @@ module ApplicationHelper
         return if legacy_app_ids.empty?
 
         notification_type = current_app.class.name.sub(/::App\z/, '::Notification')
+        notifications = Rpush::Client::ActiveRecord::Notification.where(app_id: legacy_app_ids)
 
         Rpush::Client::ActiveRecord::App.transaction do
-            Rpush::Client::ActiveRecord::Notification
-                .where(app_id: legacy_app_ids)
-                .update_all(app_id: current_app.id, type: notification_type)
+            if notification_type == Rpush::Fcm::Notification.name
+                rpush_convert_legacy_gcm_notifications(
+                    notifications,
+                    current_app.id,
+                    notification_type
+                )
+            else
+                notifications.update_all(app_id: current_app.id, type: notification_type)
+            end
             apps.delete_all
         end
+    end
+
+    def self.rpush_convert_legacy_gcm_notifications(notifications, app_id, notification_type)
+        columns = Rpush::Client::ActiveRecord::Notification.column_names
+        notification_rows = notifications.pluck(*columns).map { |values| columns.zip(values).to_h }
+        duplicate_rows = []
+
+        notifications.update_all(app_id: app_id, type: notification_type)
+
+        notification_rows.each do |attributes|
+            registration_ids = Array(attributes['registration_ids']).compact_blank
+            next if registration_ids.empty?
+
+            notification_id = attributes.delete('id')
+            device_token = registration_ids.shift
+
+            Rpush::Client::ActiveRecord::Notification
+                .where(id: notification_id)
+                .update_all(device_token: device_token, registration_ids: nil)
+
+            registration_ids.each do |registration_id|
+                duplicate_rows << attributes.merge(
+                    'app_id' => app_id,
+                    'type' => notification_type,
+                    'device_token' => registration_id,
+                    'registration_ids' => nil
+                )
+            end
+        end
+
+        Rpush::Client::ActiveRecord::Notification.insert_all!(duplicate_rows) if duplicate_rows.any?
     end
 
     def self.rpush_create_android_push_notification(tokens, data)

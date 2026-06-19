@@ -28,8 +28,9 @@ RSpec.describe ApplicationHelper, type: :helper do
       legacy_app.save!(validate: false)
       notification = Rpush::Client::ActiveRecord::Apns::Notification.new(
         app: legacy_app,
-        device_token: 'legacy-token',
-        data: { message: 'Test' }
+        registration_ids: %w[legacy-token-one legacy-token-two],
+        data: { message: 'Test' },
+        deliver_after: Time.zone.parse('2026-06-20 10:00')
       )
       notification.save!(validate: false)
       legacy_app_id = legacy_app.id
@@ -44,13 +45,12 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       current_app = described_class.rpush_register_android_app
 
-      notification_values = Rpush::Client::ActiveRecord::Notification
-        .where(id: notification_id)
-        .pick(:app_id, :type)
-
-      expect(notification_values).to eq(
-        [current_app.id, 'Rpush::Client::ActiveRecord::Fcm::Notification']
-      )
+      notifications = Rpush::Fcm::Notification.where(app_id: current_app.id).order(:id)
+      expect(notifications.pluck(:device_token)).to eq(%w[legacy-token-one legacy-token-two])
+      expect(notifications.pluck(:registration_ids)).to eq([nil, nil])
+      expect(notifications.map(&:data)).to eq([{ 'message' => 'Test' }, { 'message' => 'Test' }])
+      expect(notifications.pluck(:deliver_after)).to all(eq(Time.zone.parse('2026-06-20 10:00')))
+      expect(notifications.first.id).to eq(notification_id)
       expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app_id)).not_to exist
     end
   end
