@@ -328,6 +328,8 @@ module ApplicationHelper
         end
         app.connections = 1
         app.save!
+        rpush_consolidate_legacy_apps(app)
+        app
     end
 
     def self.rpush_create_ios_push_notification(token, data)
@@ -364,6 +366,55 @@ module ApplicationHelper
         end
         app.connections = 1
         app.save!
+        rpush_consolidate_legacy_apps(app)
+        app
+    end
+
+    def self.rpush_prepare_apps
+        rpush_register_ios_app
+        rpush_register_android_app
+    end
+
+    def self.rpush_send_notifications
+        rpush_prepare_apps
+
+        notifications = Rpush::Client::ActiveRecord::Notification
+        stale_processing = notifications.where(processing: true, delivered: false, failed: false)
+                                        .where(updated_at: ...5.minutes.ago)
+        stale_processing.update_all(processing: false)
+
+        ready = notifications.where(processing: false, delivered: false, failed: false)
+                             .where("deliver_after IS NULL OR deliver_after < ?", Time.current)
+        notification_ids = ready.ids
+
+        return { attempted: 0, delivered: 0, failed: 0, pending: 0 } if notification_ids.empty?
+
+        Rpush.push
+
+        attempted = notifications.where(id: notification_ids)
+        result = {
+            attempted: notification_ids.size,
+            delivered: attempted.where(delivered: true).count,
+            failed: attempted.where(failed: true).count,
+            pending: attempted.where(delivered: false, failed: false).count
+        }
+
+        # Rpush marks a notification as processing before delivery. If its
+        # embedded runner exits without completing it, leave it retryable.
+        attempted.where(delivered: false, failed: false, processing: true)
+                 .update_all(processing: false)
+
+        result
+    end
+
+    def self.rpush_consolidate_legacy_apps(current_app)
+        Rpush::Client::ActiveRecord::App
+            .where(name: current_app.name)
+            .where.not(id: current_app.id)
+            .find_each do |legacy_app|
+                legacy_app.notifications.update_all(app_id: current_app.id)
+                legacy_app.delete
+            end
     end
 
     def self.rpush_create_android_push_notification(tokens, data)

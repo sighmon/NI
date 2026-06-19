@@ -8,8 +8,7 @@
           class: 'btn btn-warning' %></p>
   <p>This will send all notifications!</p>
   <p>To do it from the command line:<br />
-  $ Rpush.push<br />
-  $ Rpush.apns_feedback</p>
+  $ Rpush.push</p>
 </div>
 
 <div class="page-header">
@@ -37,13 +36,12 @@
   <% @push_notifications.each do |pn| %>
     <tr>
       <td><%= pn.id %></td>
-      <% if pn.device_token %>
-        <td>iOS: <br /><%= pn.device_token.truncate(19, omission: "...#{pn.device_token.last(8)}") unless pn.device_token.nil? %></td>
-      <% else %>
-        <td>Android: <br /><% pn.registration_ids.each do |rid| %>
-          <%= rid.truncate(19, omission: "...#{rid.last(8)}") unless rid.nil? %>, 
-        <% end %></td>
-      <% end %>
+      <td>
+        <%= android_push_notification?(pn) ? "Android" : "iOS" %>:<br />
+        <% push_notification_device_tokens(pn).each do |token| %>
+          <%= token.truncate(19, omission: "...#{token.last(8)}") %><br />
+        <% end %>
+      </td>
       <td><%= pn.data["body"] %></td>
       <% if pn.delivered %>
         <td><%= pn.delivered_at.try(:strftime, "%d-%m-%Y %H:%M:%S") %></td>

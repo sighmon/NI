@@ -41,38 +41,26 @@ class Admin::PushNotificationsController < ApplicationController
   def send_notifications
     # Another paranoid check
     if current_user and current_user.admin?
-      # Send the setup push notifications
-      rpush_response = Rpush.push
+      result = ApplicationHelper.rpush_send_notifications
 
-      # Check for Rpush.apns_feedback and send email to admin
-      rpush_apns_feedback = Rpush.apns_feedback
-
-      if rpush_apns_feedback
-        # Send email with feedback
-        if Rails.env.production?
-          begin
-            subject = "Rpush APN feedback from controller"
-            body = "This is an automated email with Rpush Apple push notification feedback from controller:<br /><br />#{rpush_apns_feedback.to_s}"
-            UserMailer.delay.admin_email(subject, body)
-            ApplicationHelper.start_delayed_jobs
-          rescue Exception
-            logger.error "500 - Email server is down..."
-          end
-        else
-          logger.info "RPUSH APNS FEEDBACK email would happen on production: #{rpush_apns_feedback.to_s}"
-        end
-      end
-
-      if rpush_response and rpush_response.empty?
-        # Success!
-        redirect_to admin_push_notifications_path, notice: "Push notifications sent without error!"
+      if result[:attempted].zero?
+        redirect_to admin_push_notifications_path, notice: "No push notifications were ready to send."
+      elsif result[:failed].zero? && result[:pending].zero?
+        redirect_to admin_push_notifications_path,
+                    notice: "#{result[:delivered]} push notifications delivered."
       else
-        # FAIL! server error.
-        redirect_to admin_push_notifications_path, flash: { error: "Failed to send push notifications. Error: #{rpush_response}" }
+        redirect_to admin_push_notifications_path,
+                    flash: {
+                      error: "Push delivery incomplete: #{result[:delivered]} delivered, " \
+                             "#{result[:failed]} failed, #{result[:pending]} pending."
+                    }
       end
     else
       redirect_to root_url
     end
+  rescue StandardError => error
+    logger.error "Failed to send push notifications: #{error.class}: #{error.message}"
+    redirect_to admin_push_notifications_path, flash: { error: "Failed to send push notifications: #{error.message}" }
   end
 
   private

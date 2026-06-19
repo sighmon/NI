@@ -19,6 +19,25 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(app.json_key).to eq('{"client_email":"firebase@example.com"}')
       expect(app.connections).to eq(1)
     end
+
+    it 'moves notifications from a legacy app and removes the legacy app' do
+      legacy_app = Rpush::Client::ActiveRecord::Apns::App.new(
+        name: 'android-dev',
+        environment: 'sandbox'
+      )
+      legacy_app.save!(validate: false)
+      notification = Rpush::Client::ActiveRecord::Apns::Notification.new(
+        app: legacy_app,
+        device_token: 'legacy-token',
+        data: { message: 'Test' }
+      )
+      notification.save!(validate: false)
+
+      current_app = described_class.rpush_register_android_app
+
+      expect(notification.reload.app_id).to eq(current_app.id)
+      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app.id)).not_to exist
+    end
   end
 
   describe '.rpush_create_android_push_notification' do
@@ -51,6 +70,56 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(notifications.first.notification).to include('body' => 'Test message.', 'icon' => 'ni_notification')
       expect(notifications.first.data).to include('body' => 'Test message.', 'railsID' => '123')
       expect(notifications.first.uri).to eq('newint://issues/123')
+    end
+  end
+
+  describe '.rpush_send_notifications' do
+    let(:app) do
+      Rpush::Fcm::App.create!(
+        name: 'android-dev',
+        environment: 'sandbox',
+        firebase_project_id: 'firebase-dev',
+        json_key: '{"client_email":"firebase@example.com"}'
+      )
+    end
+
+    before do
+      allow(described_class).to receive(:rpush_prepare_apps)
+    end
+
+    it 'releases stale processing notifications and reports delivery state' do
+      notification = Rpush::Fcm::Notification.create!(
+        app: app,
+        device_token: 'android-token',
+        notification: { body: 'Test' },
+        processing: true,
+        updated_at: 10.minutes.ago
+      )
+
+      allow(Rpush).to receive(:push) do
+        notification.reload.update!(delivered: true, delivered_at: Time.current, processing: false)
+      end
+
+      result = described_class.rpush_send_notifications
+
+      expect(Rpush).to have_received(:push)
+      expect(result).to eq(attempted: 1, delivered: 1, failed: 0, pending: 0)
+    end
+
+    it 'does not claim pending notifications were delivered' do
+      notification = Rpush::Fcm::Notification.create!(
+        app: app,
+        device_token: 'android-token',
+        notification: { body: 'Test' }
+      )
+      allow(Rpush).to receive(:push) do
+        notification.update!(processing: true)
+      end
+
+      result = described_class.rpush_send_notifications
+
+      expect(result).to eq(attempted: 1, delivered: 0, failed: 0, pending: 1)
+      expect(notification.reload.processing).to be(false)
     end
   end
 
