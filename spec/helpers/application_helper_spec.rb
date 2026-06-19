@@ -80,6 +80,67 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(notifications.map(&:data)).to all(eq('message' => 'Queued before upgrade'))
     end
 
+    it 'defers conversion while a migrated FCM notification is processing' do
+      app = Rpush::Fcm::App.create!(
+        name: 'android-dev',
+        environment: 'sandbox',
+        firebase_project_id: 'old-project',
+        json_key: '{"client_email":"old@example.com"}'
+      )
+      notification = Rpush::Client::ActiveRecord::Apns::Notification.new(
+        app: app,
+        registration_ids: %w[active-token-one active-token-two],
+        data: { message: 'In flight' },
+        processing: true
+      )
+      notification.save!(validate: false)
+      Rpush::Client::ActiveRecord::Notification
+        .where(id: notification.id)
+        .update_all(type: Rpush::Fcm::Notification.name)
+
+      described_class.rpush_register_android_app
+
+      in_flight = Rpush::Client::ActiveRecord::Notification.where(app_id: app.id)
+      expect(in_flight.count).to eq(1)
+      expect(in_flight.pick(:device_token, :processing)).to eq([nil, true])
+      expect(in_flight.first.registration_ids).to eq(%w[active-token-one active-token-two])
+
+      in_flight.update_all(processing: false)
+      described_class.rpush_register_android_app
+
+      converted = Rpush::Fcm::Notification.where(app_id: app.id).order(:id)
+      expect(converted.pluck(:device_token)).to eq(%w[active-token-one active-token-two])
+      expect(converted.pluck(:processing)).to eq([false, false])
+    end
+
+    it 'retains a legacy app while it owns a processing notification' do
+      legacy_app = Rpush::Client::ActiveRecord::Apns::App.new(
+        name: 'android-dev',
+        environment: 'sandbox'
+      )
+      legacy_app.save!(validate: false)
+      notification = Rpush::Client::ActiveRecord::Apns::Notification.new(
+        app: legacy_app,
+        registration_ids: %w[active-legacy-one active-legacy-two],
+        processing: true
+      )
+      notification.save!(validate: false)
+      Rpush::Client::ActiveRecord::App
+        .where(id: legacy_app.id)
+        .update_all(type: 'Rpush::Gcm::App')
+      Rpush::Client::ActiveRecord::Notification
+        .where(id: notification.id)
+        .update_all(type: 'Rpush::Gcm::Notification')
+
+      described_class.rpush_register_android_app
+
+      expect(Rpush::Client::ActiveRecord::App.where(id: legacy_app.id)).to exist
+      values = Rpush::Client::ActiveRecord::Notification
+        .where(id: notification.id)
+        .pick(:app_id, :type, :processing)
+      expect(values).to eq([legacy_app.id, 'Rpush::Gcm::Notification', true])
+    end
+
     it 'does not consolidate a same-name app from another push service or environment' do
       ios_app = Rpush::Apnsp8::App.new(name: 'android-dev', environment: 'sandbox')
       ios_app.save!(validate: false)

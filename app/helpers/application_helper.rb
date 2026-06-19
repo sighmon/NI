@@ -426,9 +426,15 @@ module ApplicationHelper
                     notification_type
                 )
             else
-                legacy_notifications.update_all(app_id: current_app.id, type: notification_type)
+                legacy_notifications
+                    .where(processing: false)
+                    .update_all(app_id: current_app.id, type: notification_type)
             end
-            apps.delete_all
+
+            app_ids_with_notifications = Rpush::Client::ActiveRecord::Notification
+                .where(app_id: legacy_app_ids)
+                .select(:app_id)
+            apps.where.not(id: app_ids_with_notifications).delete_all
         end
     end
 
@@ -456,6 +462,7 @@ module ApplicationHelper
     end
 
     def self.rpush_convert_legacy_gcm_notifications(notifications, app_id, notification_type)
+        notifications = notifications.where(processing: false)
         columns = Rpush::Client::ActiveRecord::Notification.column_names
         notification_rows = notifications.pluck(*columns).map { |values| columns.zip(values).to_h }
         duplicate_rows = []
