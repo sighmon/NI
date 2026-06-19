@@ -465,12 +465,17 @@ module ApplicationHelper
     end
 
     def self.rpush_convert_legacy_gcm_notifications(notifications, app_id, notification_type)
-        notifications = notifications.where(processing: false)
+        notifications = notifications.where(processing: false).lock(true)
         columns = Rpush::Client::ActiveRecord::Notification.column_names
         notification_rows = notifications.pluck(*columns).map { |values| columns.zip(values).to_h }
+        notification_ids = notification_rows.map { |attributes| attributes['id'] }
+        return if notification_ids.empty?
+
         duplicate_rows = []
 
-        notifications.update_all(app_id: app_id, type: notification_type)
+        Rpush::Client::ActiveRecord::Notification
+            .where(id: notification_ids)
+            .update_all(app_id: app_id, type: notification_type)
 
         notification_rows.each do |attributes|
             registration_ids = Array(attributes['registration_ids']).compact_blank

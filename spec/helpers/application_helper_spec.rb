@@ -43,9 +43,19 @@ RSpec.describe ApplicationHelper, type: :helper do
         .where(id: notification_id)
         .update_all(type: 'Rpush::Gcm::Notification')
 
-      current_app = described_class.rpush_register_android_app
+      lock_queries = []
+      sql_subscriber = lambda do |_name, _start, _finish, _id, payload|
+        lock_queries << payload[:sql] if payload[:sql].match?(/FOR UPDATE/i)
+      end
+      current_app = ActiveSupport::Notifications.subscribed(
+        sql_subscriber,
+        'sql.active_record'
+      ) do
+        described_class.rpush_register_android_app
+      end
 
       notifications = Rpush::Fcm::Notification.where(app_id: current_app.id).order(:id)
+      expect(lock_queries).to include(match(/rpush_notifications.*FOR UPDATE/i))
       expect(notifications.pluck(:device_token)).to eq(%w[legacy-token-one legacy-token-two])
       expect(notifications.pluck(:registration_ids)).to eq([nil, nil])
       expect(notifications.map(&:data)).to eq([{ 'message' => 'Test' }, { 'message' => 'Test' }])
