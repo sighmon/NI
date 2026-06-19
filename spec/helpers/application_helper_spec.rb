@@ -129,7 +129,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       allow(described_class).to receive(:rpush_prepare_apps)
     end
 
-    it 'releases stale processing notifications and reports delivery state' do
+    it 'does not reclaim processing notifications owned by another runner' do
       notification = Rpush::Fcm::Notification.create!(
         app: app,
         device_token: 'android-token',
@@ -138,17 +138,16 @@ RSpec.describe ApplicationHelper, type: :helper do
         updated_at: 10.minutes.ago
       )
 
-      allow(Rpush).to receive(:push) do
-        notification.reload.update!(delivered: true, delivered_at: Time.current, processing: false)
-      end
+      allow(Rpush).to receive(:push)
 
       result = described_class.rpush_send_notifications
 
-      expect(Rpush).to have_received(:push)
-      expect(result).to eq(attempted: 1, delivered: 1, failed: 0, pending: 0)
+      expect(Rpush).not_to have_received(:push)
+      expect(result).to eq(attempted: 0, delivered: 0, failed: 0, pending: 0)
+      expect(notification.reload.processing).to be(true)
     end
 
-    it 'does not claim pending notifications were delivered' do
+    it 'does not clear processing state set by a concurrent runner' do
       notification = Rpush::Fcm::Notification.create!(
         app: app,
         device_token: 'android-token',
@@ -161,7 +160,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       result = described_class.rpush_send_notifications
 
       expect(result).to eq(attempted: 1, delivered: 0, failed: 0, pending: 1)
-      expect(notification.reload.processing).to be(false)
+      expect(notification.reload.processing).to be(true)
     end
   end
 

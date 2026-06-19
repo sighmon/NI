@@ -379,10 +379,6 @@ module ApplicationHelper
         rpush_prepare_apps
 
         notifications = Rpush::Client::ActiveRecord::Notification
-        stale_processing = notifications.where(processing: true, delivered: false, failed: false)
-                                        .where(updated_at: ...5.minutes.ago)
-        stale_processing.update_all(processing: false)
-
         ready = notifications.where(processing: false, delivered: false, failed: false)
                              .where("deliver_after IS NULL OR deliver_after < ?", Time.current)
         notification_ids = ready.ids
@@ -398,13 +394,6 @@ module ApplicationHelper
             failed: attempted.where(failed: true).count,
             pending: attempted.where(delivered: false, failed: false).count
         }
-
-        # Rpush marks a notification as processing before delivery. If its
-        # embedded runner exits without completing it, leave it retryable.
-        attempted.where(delivered: false, failed: false, processing: true)
-                 .update_all(processing: false)
-
-        result
     end
 
     def self.rpush_consolidate_legacy_apps(current_app)
