@@ -265,38 +265,35 @@ class Article < ActiveRecord::Base
       return
     end
 
-    #HTTPI.log_level = :debug
-    HTTPI.adapter = :curb
-    Savon.configure do |config|
-      config.env_namespace = :soap
-    end
-    client = Savon.client do
-      wsdl.endpoint = "https://bric-new.newint.org/soap"
-      # wsdl.endpoint = "http://pixpad.local"
-      wsdl.namespace = "http://bricolage.sourceforge.net/Bric/SOAP/Auth"
-      http.auth.ssl.verify_mode = :none
-    end
-    response = client.request "auth", "login" do
-      # "env:encodingStyle" => "http://schemas.xmlsoap.org/soap/encoding/"
-      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Auth#login\""
-      soap.element_form_default = :qualified
-      soap.body = {
+    client = Savon.client(
+      endpoint: "https://bric-new.newint.org/soap",
+      # endpoint: "http://pixpad.local",
+      namespace: "http://bricolage.sourceforge.net/Bric/SOAP/Auth",
+      namespace_identifier: :auth,
+      env_namespace: :soap,
+      element_form_default: :qualified,
+      ssl_verify_mode: :none,
+      adapter: :curb
+    )
+    response = client.call(
+      :login,
+      soap_action: "http://bricolage.sourceforge.net/Bric/SOAP/Auth#login",
+      message: {
         "username" => ENV["BRICOLAGE_USERNAME"],
         "password" => ENV["BRICOLAGE_PASSWORD"],
-        :attributes! => { 
-          "username" => { "xsi:type" => "xsd:string" }, 
+        :attributes! => {
+          "username" => { "xsi:type" => "xsd:string" },
           "password" => { "xsi:type" => "xsd:string" }
         }
       }
-    end
+    )
     # Pull the media from the media_id
     media_id_block = media_ids.collect{|id| '<media_id xsi:type="xsd:int">%s</media_id>' % id}.join("\n")
-    response = client.request "media", "media_ids" do
-      http.headers["SOAPAction"] = "\"http://bricolage.sourceforge.net/Bric/SOAP/Media#export\""
-      http.set_cookies(response.http)
-      soap.element_form_default = :qualified
-      # TODO: implement article import
-      soap.xml = '<?xml version="1.0" encoding="UTF-8"?>
+    response = client.call(
+      :export,
+      soap_action: "http://bricolage.sourceforge.net/Bric/SOAP/Media#export",
+      cookies: response.http.cookies,
+      xml: '<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
@@ -311,8 +308,8 @@ class Article < ActiveRecord::Base
     </export>
   </soap:Body>
 </soap:Envelope>' % [media_ids.length, media_id_block]
-    end
-    doc = Nokogiri::XML(Base64.decode64(response[:export_response][:document]).force_encoding("UTF-8"))
+    )
+    doc = Nokogiri::XML(Base64.decode64(response.body[:export_response][:document]).force_encoding("UTF-8"))
     images = doc.xpath("//assets:media",'assets' => 'http://bricolage.sourceforge.net/assets.xsd')
     images.collect do |element|
       Image.create_from_media_element(self,element)

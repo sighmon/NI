@@ -76,8 +76,8 @@ gem 'rails-settings-cached'
 # Environment settings via Figaro https://github.com/laserlemon/figaro
 gem 'figaro'
 
-# SOAP client via Savon http://railscasts.com/episodes/290-soap-with-savon
-gem 'savon', '~>1.2.0'
+# SOAP client via Savon http://savonrb.com
+gem 'savon', '~> 2.17'
 
 # Different HTTPI adapter for Savon to solve missing cookie problem from Bricolage
 gem 'curb'
