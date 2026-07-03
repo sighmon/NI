@@ -12,6 +12,7 @@ describe "issues/index.html.erb", type: :view do
     allow(view).to receive(:retina_image_tag).and_return("<img />")
     allow(view).to receive(:pagy_bootstrap_nav).and_return("PAGY NAV")
     allow(view).to receive(:can?).and_return(false)
+    Settings.issue_price = 750
   end
 
   it "renders issues index structured data into the head slot" do
@@ -22,5 +23,8 @@ describe "issues/index.html.erb", type: :view do
     expect(structured_data).to include('"@type":"CollectionPage"')
     expect(structured_data).to include('"@type":"ItemList"')
     expect(structured_data).to include('"name":"June 2026 issue"')
+    expect(structured_data).to include('"offers":{"@type":"Offer"')
+    expect(structured_data).to include('"priceCurrency":"AUD"')
+    expect(structured_data).to include('"price":"7.50"')
   end
 end

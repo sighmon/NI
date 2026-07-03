@@ -18,7 +18,14 @@ module IssuesHelper
                             "url" => issue_url(issue),
                             "image" => issue.cover_url(:thumb).to_s,
                             "sku" => issue.number.to_s,
-                            "releaseDate" => issue.release.to_time.iso8601
+                            "releaseDate" => issue.release.to_time.iso8601,
+                            "offers" => {
+                                "@type" => "Offer",
+                                "availability" => "https://schema.org/InStock",
+                                "priceCurrency" => "AUD",
+                                "price" => cents_to_dollars(Settings.issue_price),
+                                "url" => issue_url(issue)
+                            }
                         }
                     }
                 end
