@@ -15,6 +15,11 @@ module IssuesHelper
                         "item" => {
                             "@type" => "Product",
                             "name" => strip_tags(issue.title.to_s),
+                            "description" => strip_tags(issue.keynote&.teaser.to_s),
+                            "brand" => {
+                                "@type" => "Brand",
+                                "name" => "New Internationalist"
+                            },
                             "url" => issue_url(issue),
                             "image" => issue.cover_url(:thumb).to_s,
                             "sku" => issue.number.to_s,
@@ -24,7 +29,8 @@ module IssuesHelper
                                 "availability" => "https://schema.org/InStock",
                                 "priceCurrency" => "AUD",
                                 "price" => cents_to_dollars(Settings.issue_price),
-                                "url" => issue_url(issue)
+                                "url" => issue_url(issue),
+                                "hasMerchantReturnPolicy" => issue_merchant_return_policy
                             }
                         }
                     }
@@ -52,7 +58,8 @@ module IssuesHelper
                 "availability" => "https://schema.org/InStock",
                 "priceCurrency" => "AUD",
                 "price" => cents_to_dollars(Settings.issue_price),
-                "url" => issue_url(issue)
+                "url" => issue_url(issue),
+                "hasMerchantReturnPolicy" => issue_merchant_return_policy
             },
             "publisher" => {
                 "@type" => "Organization",
@@ -91,6 +98,14 @@ module IssuesHelper
         end
 
         data
+    end
+
+    def issue_merchant_return_policy
+        {
+            "@type" => "MerchantReturnPolicy",
+            "applicableCountry" => "AU",
+            "returnPolicyCategory" => "https://schema.org/MerchantReturnNotPermitted"
+        }
     end
 
     def issue_article_structured_data_image(article)
