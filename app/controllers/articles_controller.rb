@@ -353,7 +353,15 @@ class ArticlesController < ApplicationController
       @related_articles += category.articles
     end
     @related_articles -= [@article]
-    @related_articles = @related_articles.uniq.sort_by(&:publication).reverse
+    @related_articles = @related_articles.uniq
+      .select { |article| article_available_for_navigation?(article) }
+      .sort_by(&:publication)
+      .reverse
+
+    @previous_article = @article.previous
+    @previous_article = nil unless article_available_for_navigation?(@previous_article)
+    @next_article = @article.next
+    @next_article = nil unless article_available_for_navigation?(@next_article)
 
     first_image_for_meta_data = @article.first_image.try(:data).to_s
 
@@ -737,6 +745,10 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def article_available_for_navigation?(article)
+    article.present? && (can?(:preview, article) || can?(:read, article))
+  end
 
   def request_has_valid_itunes_receipt
     if !request.post?

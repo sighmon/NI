@@ -54,4 +54,22 @@ describe "articles/show", type: :view do
     expect(rendered_html.css('.paywall-secondary-actions .btn.btn-outline-secondary').length).to eq(1)
   end
 
+  it "does not offer sign in to an authenticated preview reader" do
+    user = FactoryBot.create(:user)
+    article.update!(body: '<p>Preview paragraph</p><p>Paid paragraph</p>')
+    assign(:article, article)
+    assign(:issue, article.issue)
+    assign(:letters, [])
+    assign(:can_read_full_article, false)
+    allow(view).to receive(:current_user).and_return(user)
+    allow(view).to receive(:user_signed_in?).and_return(true)
+
+    render
+
+    rendered_html = Nokogiri::HTML.fragment(rendered)
+    expect(rendered_html.at_css('.paywall-primary-action')).to be_present
+    expect(rendered_html.at_css('.paywall-secondary-actions')).to be_nil
+    expect(rendered).not_to include('Already subscribed or purchased?')
+  end
+
 end
