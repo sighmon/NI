@@ -442,16 +442,35 @@ a.nav-link {
 	overflow: hidden;
 }
 
-.alert + #myCarousel.carousel.slide.home-hero {
-	margin-top: 1.25em;
+.flash-notifications {
+	position: fixed;
+	top: 3.75rem;
+	left: 0;
+	right: 0;
+	z-index: 1029;
+	pointer-events: none;
 }
 
-.alert {
-	position: absolute !important;
-	z-index: 1001;
-	margin-top: 1rem;
+.flash-notifications .alert {
+	position: relative !important;
+	margin: 0 auto;
 	width: 50%;
-	left: 25%;
+	border-radius: 0 0 0.313rem 0.313rem;
+	box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.18);
+	pointer-events: auto;
+	animation: flash-notification-slide-down 350ms ease-out both;
+}
+
+@keyframes flash-notification-slide-down {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
 
 .home-hero + .row .home-keynote, .home-hero + .row .home-keynote h3, .home-hero + .row .home-editor-note h4 {
@@ -1843,6 +1862,28 @@ mark, .mark {
 	padding-bottom: 0.5em;
 }
 
+.paywall {
+	margin: 2em (-$containerMarginLeftRight);
+	padding: 2em $containerMarginLeftRight;
+	text-align: center;
+	background-color: $gray-lighter;
+	@include gradient-gray;
+}
+
+.paywall h2 {
+	margin-top: 0;
+	font-size: 3rem;
+	line-height: 1.15;
+}
+
+.paywall-primary-action {
+	margin-bottom: 1em !important;
+}
+
+.paywall-secondary-actions {
+	margin-bottom: 0 !important;
+}
+
 .bold-list li {
 	margin-bottom: 1em;
 	line-height: 1.5em;
@@ -2715,8 +2756,15 @@ ul.ui-autocomplete {
 		width: 50%;
 	}
 	.footer {
-		margin: 0 -1em 0 -1em;
+		width: 100vw;
+		margin: 0 calc(50% - 50vw);
 		border-radius: 0em;
+		box-sizing: border-box;
+	}
+	.paywall {
+		width: 100vw;
+		margin: 2em calc(50% - 50vw);
+		box-sizing: border-box;
 	}
 	.span6.editors-letter {
 		background-color: #fdfdfd;
@@ -2734,7 +2782,10 @@ ul.ui-autocomplete {
 	}
 
 	#myCarousel.carousel.slide.home-hero {
+		width: 100vw;
+		margin: 0 calc(50% - 50vw) 2em;
 		height: auto;
+		box-sizing: border-box;
 	}
 
 	.home-latest-issue {
@@ -2776,9 +2827,8 @@ ul.ui-autocomplete {
 		background-color: transparent;
 		background: transparent;
 	}
-	.alert {
+	.flash-notifications .alert {
 		width: 80%;
-		left: 10%;
 	}
 }
  

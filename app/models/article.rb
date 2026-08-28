@@ -186,6 +186,13 @@ class Article < ActiveRecord::Base
     (not unpublished) and issue.published
   end
 
+  def freely_accessible?
+    trialarticle? || issue.trialissue? ||
+      has_category("/columns/letters/") ||
+      has_category("/blog/") ||
+      has_category("/features/web-exclusive/")
+  end
+
   def as_indexed_json(options = {})
     self.as_json(
       methods: [:published]

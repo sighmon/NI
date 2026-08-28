@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
-  load_and_authorize_resource except: [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
+  load_and_authorize_resource except: [:show, :body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
   newrelic_ignore only: [:email]
@@ -292,6 +292,8 @@ class ArticlesController < ApplicationController
   def show
     #@issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:id])
+    @can_read_full_article = can? :read, @article
+    authorize! :preview, @article unless @can_read_full_article
     @issue = Issue.find(@article.issue_id)
     #@article.is_valid_guest_pass(params[:utm_source])
     @newimage = Image.new

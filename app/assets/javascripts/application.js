@@ -28,11 +28,42 @@
 //= require URI
 //= require country_state_select
 
-window.setTimeout(function() { $(".alert").alert('close'); }, 10000);
-
 var flip = 0;
 
 jQuery(document).ready(function() {
+	var flashNotifications = $(".flash-notifications");
+
+	if (flashNotifications.length) {
+		var positionFlashNotifications = function() {
+			var navbarHeight = $(".navbar.fixed-top").outerHeight();
+			if (navbarHeight) {
+				flashNotifications.css("top", navbarHeight);
+			}
+		};
+
+		var dismissFlashNotification = function(notification) {
+			notification.stop(true, true).slideUp(350, function() {
+				notification.remove();
+			});
+		};
+
+		positionFlashNotifications();
+		$(window).on("resize", positionFlashNotifications);
+		$("#navbarCollapse").on("shown.bs.collapse hidden.bs.collapse", positionFlashNotifications);
+
+		flashNotifications.find(".alert").each(function(index) {
+			var notification = $(this);
+			window.setTimeout(function() {
+				dismissFlashNotification(notification);
+			}, 10000 + (index * 250));
+		});
+
+		flashNotifications.on("click", "[data-dismiss='alert']", function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			dismissFlashNotification($(this).closest(".alert"));
+		});
+	}
 
 	// Tooltips for Magazine list page
     // $(".issue-cover-list img").tooltip();
@@ -59,6 +90,5 @@ jQuery(document).ready(function() {
 	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
 });
-
 
 

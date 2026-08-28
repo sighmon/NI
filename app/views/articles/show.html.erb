@@ -207,10 +207,25 @@
     <div class="article-image no-shadow"><%= image_tag('section-view-from-brazil.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
-  <% if @article.body.blank? %>
-    <%= simple_format expand_image_tags(source_to_body(@article, debug: current_user.try(:admin?)), debug: current_user.try(:admin?)) %>
+  <% if @can_read_full_article %>
+    <%= article_body_html(@article, debug: current_user.try(:admin?)) %>
   <% else %>
-    <%= simple_format expand_image_tags(@article.body, debug: current_user.try(:admin?)) %>
+    <div class="article-preview">
+      <%= article_preview_html(@article, debug: current_user.try(:admin?)) %>
+    </div>
+
+    <aside class="paywall" aria-labelledby="paywall-heading">
+      <h2 id="paywall-heading">Subscribe for full access</h2>
+      <p>Subscribe to our digital or bundle magazine for full access to all our content.</p>
+      <p class="paywall-primary-action">
+        <%= link_to "Subscribe", "https://subscribe.newint.org/?utm_source=PreviewCTA&utm_medium=ArticleSample&utm_campaign=AuSite&utm_id=AuSite", class: "btn btn-danger btn-lg" %>
+      </p>
+      <p>Already subscribed or purchased?</p>
+      <div class="btn-group paywall-secondary-actions" role="group" aria-label="Account options">
+        <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-secondary" %>
+        <% link_to "Sign up", new_user_registration_path, class: "btn btn-outline-secondary" %>
+      </div>
+    </aside>
   <% end %>
 </div>
 
@@ -308,6 +323,6 @@
   </span>
 <% end %>
 
-<% if not current_user %>
+<% if not current_user and @can_read_full_article %>
   <%= link_to raw('<div class="subscription-advert"><p>Our independent global journalism is entirely subscriber-funded. <b>Subscribe</b> for instant access to our 8-year archive of award-winning magazines.&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></p></div>'), page_path('subscribe') %>
 <% end %>

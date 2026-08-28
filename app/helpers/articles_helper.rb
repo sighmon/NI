@@ -2,6 +2,8 @@ module ArticlesHelper
 
   include ActionView::Helpers::AssetUrlHelper
 
+  ARTICLE_PREVIEW_PARAGRAPHS = 2
+
   def article_structured_data(article, issue)
     data = {
       "@context" => "https://schema.org",
@@ -12,6 +14,7 @@ module ArticlesHelper
       },
       "headline" => strip_tags(article.title.to_s),
       "description" => strip_tags(article.teaser.to_s),
+      "isAccessibleForFree" => article.freely_accessible?,
       "datePublished" => article_schema_datetime(issue.release),
       "dateModified" => article_schema_datetime(article.updated_at),
       "publisher" => {
@@ -37,7 +40,27 @@ module ArticlesHelper
     image = article_structured_data_image(article)
     data["image"] = [image] if image
 
+    unless article.freely_accessible?
+      data["hasPart"] = {
+        "@type" => "WebPageElement",
+        "isAccessibleForFree" => false,
+        "cssSelector" => ".paywall"
+      }
+    end
+
     data
+  end
+
+  def article_body_html(article, debug: false)
+    body = article.body.presence || source_to_body(article, debug: debug)
+    simple_format(expand_image_tags(body, debug: debug))
+  end
+
+  def article_preview_html(article, paragraphs: ARTICLE_PREVIEW_PARAGRAPHS, debug: false)
+    document = Nokogiri::HTML::DocumentFragment.parse(article_body_html(article, debug: debug).to_s)
+    preview = document.css("p").select { |paragraph| paragraph.text.strip.present? }
+      .first(paragraphs).map(&:to_html).join
+    preview.html_safe
   end
 
   def article_schema_datetime(value)

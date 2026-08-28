@@ -28,6 +28,57 @@ describe ArticlesHelper, type: :helper do
       )
       expect(data["publisher"]["@type"]).to eq("Organization")
       expect(data["mainEntityOfPage"]["@id"]).to eq(issue_article_url(issue, article))
+      expect(data["isAccessibleForFree"]).to eq(false)
+      expect(data["hasPart"]).to eq(
+        "@type" => "WebPageElement",
+        "isAccessibleForFree" => false,
+        "cssSelector" => ".paywall"
+      )
+    end
+
+    it 'marks an inherently free article as freely accessible' do
+      article.update!(trialarticle: true)
+
+      data = helper.article_structured_data(article, issue)
+
+      expect(data["isAccessibleForFree"]).to eq(true)
+      expect(data).not_to have_key("hasPart")
+    end
+  end
+
+  describe '#article_preview_html' do
+    let(:article) do
+      FactoryBot.create(
+        :article,
+        body: '<p>First paragraph</p><p>Second paragraph</p><p>Paid paragraph</p>'
+      )
+    end
+
+    it 'returns the first two non-empty paragraphs from a stored body' do
+      preview = helper.article_preview_html(article)
+
+      expect(preview).to include('First paragraph', 'Second paragraph')
+      expect(preview).not_to include('Paid paragraph')
+      expect(Nokogiri::HTML.fragment(preview).css('p').length).to eq(2)
+    end
+
+    it 'derives a preview from the imported XML source when body is blank' do
+      article.update!(
+        body: nil,
+        hide_author_name: true,
+        source: <<~XML
+          <story><elements><container order="1" element_type="html">
+            <field type="paragraph">Source paragraph one</field>
+            <field type="paragraph">Source paragraph two</field>
+            <field type="paragraph">Source paragraph three</field>
+          </container></elements></story>
+        XML
+      )
+
+      preview = helper.article_preview_html(article)
+
+      expect(preview).to include('Source paragraph one', 'Source paragraph two')
+      expect(preview).not_to include('Source paragraph three')
     end
   end
 

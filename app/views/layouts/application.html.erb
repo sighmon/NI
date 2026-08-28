@@ -137,17 +137,19 @@
 
     </div> <!-- container -->
   </nav>
-	
-	<div class="container">
 
+  <div class="flash-notifications" aria-live="polite" aria-atomic="false">
 		<% flash.each do |name, msg| %>
       <% if msg.is_a?(String) %>
-        <div class="alert fade show alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+        <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <%= content_tag :div, msg, id: "flash_#{name}" %>
         </div>
       <% end %>
     <% end %>
+  </div>
+
+	<div class="container">
 
 		<%= yield %>
 
