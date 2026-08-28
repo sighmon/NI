@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   # Cancan authorisation
   # Except :body to allow for iTunes authentication.
-  load_and_authorize_resource except: [:body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
+  load_and_authorize_resource except: [:show, :body, :body_android, :ios_share, :android_share, :tweet, :wall_post, :email_article]
   # load_and_authorize_resource
 
   newrelic_ignore only: [:email]
@@ -292,6 +292,8 @@ class ArticlesController < ApplicationController
   def show
     #@issue = Issue.find(params[:issue_id])
     @article = Article.find(params[:id])
+    @can_read_full_article = can? :read, @article
+    authorize! :preview, @article unless @can_read_full_article
     @issue = Issue.find(@article.issue_id)
     #@article.is_valid_guest_pass(params[:utm_source])
     @newimage = Image.new
@@ -351,7 +353,15 @@ class ArticlesController < ApplicationController
       @related_articles += category.articles
     end
     @related_articles -= [@article]
-    @related_articles = @related_articles.uniq.sort_by(&:publication).reverse
+    @related_articles = @related_articles.uniq
+      .select { |article| article_available_for_navigation?(article) }
+      .sort_by(&:publication)
+      .reverse
+
+    @previous_article = @article.previous
+    @previous_article = nil unless article_available_for_navigation?(@previous_article)
+    @next_article = @article.next
+    @next_article = nil unless article_available_for_navigation?(@next_article)
 
     first_image_for_meta_data = @article.first_image.try(:data).to_s
 
@@ -735,6 +745,10 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def article_available_for_navigation?(article)
+    article.present? && (can?(:preview, article) || can?(:read, article))
+  end
 
   def request_has_valid_itunes_receipt
     if !request.post?

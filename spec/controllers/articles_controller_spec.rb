@@ -28,6 +28,15 @@ describe ArticlesController, type: :controller do
         expect(response.status).to eq(200)
       end 
 
+      it "can view the full published article page" do
+        article.issue.update!(published: true)
+
+        get :show, params: {id: article.id, issue_id: article.issue.id}
+
+        expect(response.status).to eq(200)
+        expect(assigns(:can_read_full_article)).to eq(true)
+      end
+
     end
 
     context "given an unpublished article" do
@@ -101,6 +110,51 @@ describe ArticlesController, type: :controller do
   end
 
   context "as a guest" do
+
+    describe "GET show" do
+      let(:issue) { FactoryBot.create(:published_issue) }
+      let(:article) do
+        FactoryBot.create(
+          :article,
+          issue: issue,
+          unpublished: false,
+          body: '<p>First paragraph</p><p>Second paragraph</p><p>Paid paragraph</p>'
+        )
+      end
+
+      it "allows a preview of a paid published article" do
+        get :show, params: {id: article.id, issue_id: issue.id}
+
+        expect(response.status).to eq(200)
+        expect(assigns(:can_read_full_article)).to eq(false)
+      end
+
+      it "does not expose an unpublished article page" do
+        article.update!(unpublished: true)
+
+        get :show, params: {id: article.id, issue_id: issue.id}
+
+        expect(response.status).to eq(302)
+      end
+
+      it "does not expose unpublished articles in preview navigation" do
+        theme = FactoryBot.create(:category, name: "/themes/test/")
+        published_related = FactoryBot.create(:article, issue: issue, unpublished: false)
+        unpublished_related = FactoryBot.create(:article, issue: issue, unpublished: true)
+        article.categories << theme
+        published_related.categories << theme
+        unpublished_related.categories << theme
+        allow_any_instance_of(Article).to receive(:previous).and_return(unpublished_related)
+        allow_any_instance_of(Article).to receive(:next).and_return(published_related)
+
+        get :show, params: {id: article.id, issue_id: issue.id}
+
+        expect(assigns(:related_articles)).to include(published_related)
+        expect(assigns(:related_articles)).not_to include(unpublished_related)
+        expect(assigns(:previous_article)).to be_nil
+        expect(assigns(:next_article)).to eq(published_related)
+      end
+    end
 
     describe "GET body" do
 

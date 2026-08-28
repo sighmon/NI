@@ -30,7 +30,7 @@
       	<% if user_signed_in? and can? :read, @latest_issue.keynote %>
 		        <%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050", loading: "eager", fetchpriority: "high", decoding: "async"), issue_article_path(@latest_issue,@latest_issue.keynote) %>
 	      <% else %>
-						<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050", loading: "eager", fetchpriority: "high", decoding: "async"), new_issue_purchase_path(@latest_issue) %>
+						<%= link_to image_tag(@latest_issue.keynote.first_image.data_url.to_s, alt: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", title: "#{strip_tags(@latest_issue.keynote.first_image.caption)} #{strip_tags(@latest_issue.keynote.first_image.credit)}", width: "1050", loading: "eager", fetchpriority: "high", decoding: "async"), issue_article_path(@latest_issue, @latest_issue.keynote) %>
 	      <% end %>
         <meta itemprop="url" content="<%= @latest_issue.keynote.first_image.data_url.to_s %>">
         <meta itemprop="width" content="2100">

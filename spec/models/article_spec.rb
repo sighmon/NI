@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Article, type: :model do
+  describe '#freely_accessible?' do
+    it 'is true for trial articles and false for ordinary paid articles' do
+      article = FactoryBot.create(:article)
+
+      expect(article.freely_accessible?).to eq(false)
+
+      article.update!(trialarticle: true)
+      expect(article.freely_accessible?).to eq(true)
+    end
+  end
+
   describe '.search' do
     let(:query_params) { { query: 'test', page: 1 } }
 

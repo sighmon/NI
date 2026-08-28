@@ -55,9 +55,9 @@ SitemapGenerator::Sitemap.create do
         href: "android-app://#{ENV['GOOGLE_PLAY_APP_PACKAGE_NAME']}/newint/issues/#{issue.id}"
       }]
 
-      # Add articles if it's a trial issue or trial article
+      # Add all published articles. Paid articles expose a server-rendered preview.
       issue.articles.each do |article|
-        if issue.trialissue? or article.trialarticle?
+        unless article.unpublished?
           add issue_article_path(issue,article), lastmod: article.updated_at, alternates: [{
             href: "ios-app://#{ENV['ITUNES_APP_ID']}/newint/issues/#{issue.id}/articles/#{article.id}"
           }, {

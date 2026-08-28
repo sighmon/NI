@@ -120,7 +120,7 @@
 
 <!-- Manually uploaded image slideshow -->
 
-<% if not @article.images.select{|i| i.media_id.nil?}.select{|i| not i.hidden?}.empty? %>
+<% if @can_read_full_article && @article.images.any? { |image| image.media_id.nil? && !image.hidden? } %>
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag :div, i do %>
@@ -207,10 +207,26 @@
     <div class="article-image no-shadow"><%= image_tag('section-view-from-brazil.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %></div>
   <% end %>
 
-  <% if @article.body.blank? %>
-    <%= simple_format expand_image_tags(source_to_body(@article, debug: current_user.try(:admin?)), debug: current_user.try(:admin?)) %>
+  <% if @can_read_full_article %>
+    <%= article_body_html(@article, debug: current_user.try(:admin?)) %>
   <% else %>
-    <%= simple_format expand_image_tags(@article.body, debug: current_user.try(:admin?)) %>
+    <div class="article-preview">
+      <%= article_preview_html(@article, debug: current_user.try(:admin?)) %>
+    </div>
+
+    <aside class="paywall" aria-labelledby="paywall-heading">
+      <h2 id="paywall-heading">Subscribe for full access</h2>
+      <p>Subscribe to our digital or bundle magazine for full access to all our content.</p>
+      <p class="paywall-primary-action">
+        <%= link_to "Subscribe", "https://subscribe.newint.org/?utm_source=PreviewCTA&utm_medium=ArticleSample&utm_campaign=AuSite&utm_id=AuSite", class: "btn btn-danger btn-lg" %>
+      </p>
+      <% unless user_signed_in? %>
+        <p>Already subscribed or purchased?</p>
+        <div class="btn-group paywall-secondary-actions" role="group" aria-label="Account options">
+          <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </aside>
   <% end %>
 </div>
 
@@ -246,7 +262,7 @@
 
 <div class="related-articles">
   <div class="article-next-previous">
-    <% if not @article.previous.nil? %><div class="article-previous"><i class='fa fa-arrow-left'></i> <%= link_to @article.previous.title, issue_article_path(@article.previous.issue, @article.previous) %></div><% end %> <% if not @article.next.nil? %><div class="article-next"><i class='fa fa-arrow-right'></i><%= link_to @article.next.title, issue_article_path(@article.next.issue, @article.next) %></div><% end %>
+    <% if @previous_article.present? %><div class="article-previous"><i class='fa fa-arrow-left'></i> <%= link_to @previous_article.title, issue_article_path(@previous_article.issue, @previous_article) %></div><% end %> <% if @next_article.present? %><div class="article-next"><i class='fa fa-arrow-right'></i><%= link_to @next_article.title, issue_article_path(@next_article.issue, @next_article) %></div><% end %>
   </div>
 
   <div class="clearfix"></div>
@@ -308,6 +324,6 @@
   </span>
 <% end %>
 
-<% if not current_user %>
+<% if not current_user and @can_read_full_article %>
   <%= link_to raw('<div class="subscription-advert"><p>Our independent global journalism is entirely subscriber-funded. <b>Subscribe</b> for instant access to our 8-year archive of award-winning magazines.&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></p></div>'), page_path('subscribe') %>
 <% end %>
