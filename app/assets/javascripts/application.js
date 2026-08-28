@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
 			var notification = $(this);
 			window.setTimeout(function() {
 				dismissFlashNotification(notification);
-			}, 10000 + (index * 250));
+			}, 5000 + (index * 250));
 		});
 
 		flashNotifications.on("click", "[data-dismiss='alert']", function(event) {
@@ -90,5 +90,4 @@ jQuery(document).ready(function() {
 	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
 });
-
 
