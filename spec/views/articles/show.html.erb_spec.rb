@@ -19,6 +19,14 @@ describe "articles/show", type: :view do
 
   it "shows two paragraphs and a paywall without exposing the remaining body" do
     article.update!(body: '<p>First paragraph</p><p>Second paragraph</p><p>Paid paragraph</p>')
+    FactoryBot.create(
+      :image,
+      article: article,
+      caption: 'Paid gallery caption',
+      credit: 'Paid gallery credit',
+      hidden: false,
+      media_id: nil
+    )
     assign(:article, article)
     assign(:issue, article.issue)
     assign(:letters, [])
@@ -33,6 +41,7 @@ describe "articles/show", type: :view do
       'Subscribe to our digital or bundle magazine for full access to all our content.'
     )
     expect(rendered).not_to include('Paid paragraph')
+    expect(rendered).not_to include('Paid gallery caption', 'Paid gallery credit', 'imageModal')
     expect(rendered).not_to include('Buy this issue')
     expect(rendered).to include('class="paywall"')
     expect(rendered).to include('class="btn btn-danger btn-lg"')

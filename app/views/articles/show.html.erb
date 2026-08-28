@@ -120,7 +120,7 @@
 
 <!-- Manually uploaded image slideshow -->
 
-<% if not @article.images.select{|i| i.media_id.nil?}.select{|i| not i.hidden?}.empty? %>
+<% if @can_read_full_article && @article.images.any? { |image| image.media_id.nil? && !image.hidden? } %>
 <div class="all-article-images<%= @image_css_string %>" <% if can? :manage, Image %>id="sortable-block" <% end %>data-update-url="<%= sort_issue_article_images_url(@issue,@article) %>">
   <% @article.images.order("position").select{|i| i.media_id.nil? and not i.hidden?}.each do |i| %>
     <%= content_tag :div, i do %>
@@ -223,7 +223,6 @@
       <p>Already subscribed or purchased?</p>
       <div class="btn-group paywall-secondary-actions" role="group" aria-label="Account options">
         <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-secondary" %>
-        <% link_to "Sign up", new_user_registration_path, class: "btn btn-outline-secondary" %>
       </div>
     </aside>
   <% end %>
