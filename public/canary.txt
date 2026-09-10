@@ -2,7 +2,7 @@
 Hash: SHA512
 
 Status: All good
-Period: August 2026
+Period: September 2026
 
     _   __             _       __ 
    / | / /__ _      __(_)___  / /_
@@ -21,7 +21,7 @@ Nor have we received, nor are we aware of, occurences of any of the above, with 
 
 This statement will continue to be updated monthly. Effectively, this means that if you can verify the validity of the signature below, then this warrant canary is still going strong. It was inspired by https://www.canarywatch.org
 
-  August 2026
+  September 2026
   Simon Loffler - Developer
   New Internationalist Publications Pty Ltd
   PO Box 28
@@ -30,17 +30,17 @@ This statement will continue to be updated monthly. Effectively, this means that
   digital.newint.com.au
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmqQyFYACgkQtsnG2UL7
-GPm6jw//Q5O91bdcDZ+Z54zM+XXMp9EZEAMS6I/3r2D6sr26yfXzNN2yS5zV4ckg
-ZCp1JRnj896Yvq09OD7aIat3R01D3LkDfUhTSS2AdOVFFvYuI51O0H4H7FSVlFlO
-HO+8TXB5hfR/+JbmOl1UoKGasi4dzBtnp00BLSd+ChdCHBhYuMADL2M/nfe8GwTf
-tqiOwbNAMF0H6EGIQhtn6mD9bJcyqoToYzmiSNvZ/ZsVsNlsjlrZvT2e0UYJWPVA
-Nu8GNTK9m7dc01MNu4RceKaI8OOJgSPKfy9pk6IQBUsBYnUNND5J7DYEGKmUxuK1
-Yu7hQaF2TsBFes6HjbqFODhXIBpiAM41EDMHMbKj2Sod+MpA6hxC52kR1uCxpS2Y
-7ucU9sll4ir5zKdY74z0JmylT5Ls9rU2GmSW+31Cu3CbFpJiY8rWS4VDlyL+jaNk
-6c943DmmoXJhqfSQe8YApJUzz6VAg6Y4v9kSQ5SWEG14ESmzw1KnsLrZXmkd1tB3
-MIwwDDOssg0DhvefFUdBwN4HmSGQNOrAhQjdQIFVGh7ORNy786YnpR2esGH8tjVq
-GOxglEGADxUHjbQtJTeH/IOZsnOs/Rz52exKaeniGsntvDrCTO9RHCVlG1ZQT0uh
-h8WzXVIuAzaoKDfiDz2mZIaIjtQtEKw2z7P2+0yVRVWTZwGlJ+s=
-=CfVp
+iQIzBAEBCgAdFiEEuKFk6JTrENNhoHp+tsnG2UL7GPkFAmqf9+QACgkQtsnG2UL7
+GPnJtBAA07tRuHKiJRbQgSi6USgsuTraMy5lvn04zD/pMzBK4VQElb+0KsZrnyuR
+aI6fH3+TnwX9tH4FBh+wu5pd0zi7NY51RX31vQUjeTDGSzO+EFHRN+D/e5freVwb
+gCXyJH+nT5DNzDmXFb6G+Zv44K0A1H3PDDjmJAzYX6bgMhwVpH51p1UdEIXBwKc/
+vYJ0GvnTdklmnPQtf9e0f4FQi8tdgsgvvqAaCow7JMABCkDunrOUMXsEMU5wtRYc
++KxRAUc1hMrNQ9c4t7sZ9AoaGrIKNzKpNdOsy+Qq5rcvO4tqbimWv5DtXrNULXUu
+3PksBP3jOryGBvIWPir34kKsW42pw3+lfzOIGAtC8UqFEocySplou5e6wK6yzUU9
+NehOKgQjI8f5SLr+So+MF8fGN33NDvUOEPqVHcDFro415Xbqn9y3kxkr8jmNR/UQ
+NDMUUcFPor9Xu3W/PeIi3W6jfIvwLNoNHZ4DBFuJl58SVKbP4vcRFSjaNCtNBPRj
+HCqmMUX2+JqHyfICjewmcpNnH82oCCAW1tneK1Y6gPcj5J/Ik6c+dXdwl7jWVTYf
+hlJCtZj58T0pC5PxlNgNNTXenlZfy10hJfkaFyfK2QHLPq4SaKG/Vra+YH7QUSkI
+nAncLqnzfoPj7C+ZqNm+9q8/MzXTPKYlwydoHFMq5c/BTQun6Qw=
+=ibCX
 -----END PGP SIGNATURE-----
