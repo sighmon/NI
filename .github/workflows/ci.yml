@@ -48,7 +48,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev imagemagick
+          sudo apt-get install -y libmagickwand-dev libcurl4-openssl-dev imagemagick libvips-dev
       - uses: actions/setup-node@v4
         with:
           node-version: 20
