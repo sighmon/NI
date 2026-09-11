@@ -242,10 +242,10 @@ gem 'country_select'
 gem 'country_state_select', git: 'https://github.com/sighmon/Country-State-Select.git', branch: 'add/rails-8-support'
 gem 'city-state'#, git: 'https://github.com/thecodecrate/city-state'
 
-# RMagick for image editing
-# Migrated to :vips with Rails 7
-# gem 'rmagick', require: false
-# gem 'mini_magick'
+# Image backends must be declared explicitly with image_processing 2.x.
+# Active Storage uses Vips; CarrierWave uploaders use MiniMagick.
+gem 'ruby-vips', '~> 2.0', require: false
+gem 'mini_magick', '~> 5.0'
 
 # CarrierWave for image uploading
 # https://github.com/jnicklas/carrierwave
