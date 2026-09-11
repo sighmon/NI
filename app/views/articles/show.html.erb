@@ -204,7 +204,13 @@
   <% end %>
 
   <% if @view_from_brazil and not @view_from_brazil.empty? %>
-    <div class="article-image no-shadow"><%= image_tag('section-view-from-brazil.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %></div>
+    <div class="article-image no-shadow">
+      <% if @article.publication.year > 2025 and @article.publication.month > 8 %>
+        <%= image_tag('section-view-from-brazil-2026.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %>
+      <% else %>
+        <%= image_tag('section-view-from-brazil.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %>
+      <% end %>
+    </div>
   <% end %>
 
   <% if @can_read_full_article %>
