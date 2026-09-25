@@ -43,23 +43,15 @@
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-africa/') %>
-              <% if article.publication.year > 2022 %>
-                <%= link_to retina_image_tag('section-view-from-africa-issue-2023.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-                <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue-2023.jpg').to_s %>">
-              <% else %>
-                <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-                <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue.jpg').to_s %>">
-              <% end %>
+              <% column_image = issue_view_from_africa_image(article) %>
+              <%= link_to retina_image_tag(column_image, class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url(column_image).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-india/') %>
-              <% if article.publication.year > 2024 and article.publication.month > 8 %>
-                <%= link_to retina_image_tag('section-view-from-india-issue-2025.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-                <meta itemprop="url" content="<%= image_url('section-view-from-india-issue-2025.png').to_s %>">
-              <% else %>
-                <%= link_to retina_image_tag('section-view-from-india-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-                <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
-              <% end %>
+              <% column_image = issue_view_from_india_image(article) %>
+              <%= link_to retina_image_tag(column_image, class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url(column_image).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/hall-of-infamy/') %>
@@ -73,7 +65,7 @@
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-brazil/') %>
-              <% if article.publication.year > 2025 and article.publication.month > 8 %>
+              <% if article.publication.to_date >= Date.new(2026, 9, 1) %>
                 <%= link_to retina_image_tag('section-view-from-brazil-issue-2026.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue-2026.png').to_s %>">
               <% else%>
@@ -133,13 +125,15 @@
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-africa/') %>
-              <%= link_to retina_image_tag('section-view-from-africa-issue.jpg', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-              <meta itemprop="url" content="<%= image_url('section-view-from-africa-issue.jpg').to_s %>">
+              <% column_image = issue_view_from_africa_image(article) %>
+              <%= link_to retina_image_tag(column_image, class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url(column_image).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-india/') %>
-              <%= link_to retina_image_tag('section-view-from-india-issue.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
-              <meta itemprop="url" content="<%= image_url('section-view-from-india-issue.png').to_s %>">
+              <% column_image = issue_view_from_india_image(article) %>
+              <%= link_to retina_image_tag(column_image, class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
+              <meta itemprop="url" content="<%= image_url(column_image).to_s %>">
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/hall-of-infamy/') %>
@@ -153,7 +147,7 @@
               <meta itemprop="width" content="1890">
               <meta itemprop="height" content="1063">
             <% elsif article.has_category('/columns/view-from-brazil/') %>
-              <% if article.publication.year > 2025 and article.publication.month > 8 %>
+              <% if article.publication.to_date >= Date.new(2026, 9, 1) %>
                 <%= link_to retina_image_tag('section-view-from-brazil-issue-2026.png', class: 'article-thumb', alt: "#{strip_tags(article.title)}", title: "#{strip_tags(article.title)}", width: 300, itemprop: "image", loading: "lazy", decoding: "async"), issue_article_path(article.issue,article) %>
                 <meta itemprop="url" content="<%= image_url('section-view-from-brazil-issue-2026.png').to_s %>">
               <% else %>

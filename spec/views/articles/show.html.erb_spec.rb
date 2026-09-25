@@ -3,6 +3,25 @@ require 'rails_helper'
 describe "articles/show", type: :view do
   let(:article) { FactoryBot.create(:article) }
 
+  { india: 2025, brazil: 2026 }.each do |column, year|
+    [Date.new(year, 8, 31), Date.new(year, 9, 1), Date.new(year + 1, 1, 1), Date.new(year + 1, 8, 31)].each do |publication|
+      it "shows the correct #{column} image on #{publication}" do
+        article.update!(publication: publication)
+        assign(:article, article)
+        assign(:issue, article.issue)
+        assign(:letters, [])
+        assign(:can_read_full_article, true)
+        assign("view_from_#{column}", [true])
+
+        render
+
+        suffix = publication >= Date.new(year, 9, 1) ? "-#{year}" : ''
+        image = "section-view-from-#{column}#{suffix}.png"
+        expect(Nokogiri::HTML.fragment(rendered).css('.article-image img').map { |img| img['src'] }).to include(view.image_path(image))
+      end
+    end
+  end
+
   it "shows the article" do
     #get issue_article_path(article.issue,article)
     #get :show, {id: article.id, issue_id: article.issue.id}

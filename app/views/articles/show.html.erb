@@ -191,7 +191,7 @@
 
   <% if @view_from_india and not @view_from_india.empty? %>
     <div class="article-image no-shadow">
-      <% if @article.publication.year > 2024 and @article.publication.month > 8 %>
+      <% if @article.publication.to_date >= Date.new(2025, 9, 1) %>
         <%= image_tag('section-view-from-india-2025.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %>
       <% else %>
         <%= image_tag('section-view-from-india.png', alt: 'View from India illustration by Kate Copeland.', title: 'View from India illustration by Kate Copeland.', width: 300) %>
@@ -205,7 +205,7 @@
 
   <% if @view_from_brazil and not @view_from_brazil.empty? %>
     <div class="article-image no-shadow">
-      <% if @article.publication.year > 2025 and @article.publication.month > 8 %>
+      <% if @article.publication.to_date >= Date.new(2026, 9, 1) %>
         <%= image_tag('section-view-from-brazil-2026.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %>
       <% else %>
         <%= image_tag('section-view-from-brazil.png', alt: 'View from Brazil illustration by Kate Copeland.', title: 'View from Brazil illustration by Kate Copeland.', width: 300) %>

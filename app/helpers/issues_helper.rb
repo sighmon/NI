@@ -1,4 +1,20 @@
 module IssuesHelper
+    def issue_view_from_africa_image(article)
+        if article.publication.to_date >= Date.new(2023, 1, 1)
+            'section-view-from-africa-issue-2023.jpg'
+        else
+            'section-view-from-africa-issue.jpg'
+        end
+    end
+
+    def issue_view_from_india_image(article)
+        if article.publication.to_date >= Date.new(2025, 9, 1)
+            'section-view-from-india-issue-2025.png'
+        else
+            'section-view-from-india-issue.png'
+        end
+    end
+
     def issues_index_structured_data(issues, description)
         {
             "@context" => "https://schema.org",
