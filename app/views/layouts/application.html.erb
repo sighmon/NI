@@ -77,13 +77,9 @@
               <% if current_user and (current_user.try(:subscriber?) or current_user.parent) %>
               <% else %>
                 <div class="dropdown-divider"></div>
-                <a>
-                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="dropdown-item">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="GSMBBM2JT2W28">
-                    <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate using PayPal</button>
-                  </form>
-                </a>
+                <div class="dropdown-item">
+                  <a href="https://newint.org/give" target="_top" class="btn btn-outline-secondary"><i class="fa fa-heart"></i> Donate</a>
+                </div>
               <% end %>
             </div>
           </li>
