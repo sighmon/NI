@@ -12,8 +12,8 @@ module ArticlesHelper
         "@type" => "WebPage",
         "@id" => issue_article_url(issue, article)
       },
-      "headline" => strip_tags(article.title.to_s),
-      "description" => strip_tags(article.teaser.to_s),
+      "headline" => CGI.unescapeHTML(strip_tags(article.title.to_s)),
+      "description" => CGI.unescapeHTML(strip_tags(article.teaser.to_s)),
       "isAccessibleForFree" => article.freely_accessible?,
       "datePublished" => article_schema_datetime(issue.release),
       "dateModified" => article_schema_datetime(article.updated_at),
@@ -33,7 +33,7 @@ module ArticlesHelper
     if article.author.present?
       data["author"] = {
         "@type" => "Person",
-        "name" => strip_tags(article.author)
+        "name" => CGI.unescapeHTML(strip_tags(article.author))
       }
     end
 

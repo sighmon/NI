@@ -8,8 +8,8 @@ describe ArticlesHelper, type: :helper do
         :article,
         issue: issue,
         title: 'A "quoted" headline',
-        teaser: '<p>Article teaser</p>',
-        author: 'Jane Doe'
+        teaser: '<p>Article "teaser" &amp; context</p>',
+        author: "Jane O'Doe"
       )
     end
 
@@ -19,12 +19,12 @@ describe ArticlesHelper, type: :helper do
       expect(data["@context"]).to eq("https://schema.org")
       expect(data["@type"]).to eq("Article")
       expect(data["headline"]).to eq('A "quoted" headline')
-      expect(data["description"]).to eq("Article teaser")
+      expect(data["description"]).to eq('Article "teaser" & context')
       expect(data["datePublished"]).to match(/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})\z/)
       expect(data["dateModified"]).to match(/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})\z/)
       expect(data["author"]).to eq(
         "@type" => "Person",
-        "name" => "Jane Doe"
+        "name" => "Jane O'Doe"
       )
       expect(data["publisher"]["@type"]).to eq("Organization")
       expect(data["mainEntityOfPage"]["@id"]).to eq(issue_article_url(issue, article))
